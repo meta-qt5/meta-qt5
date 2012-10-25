@@ -50,4 +50,8 @@ do_install() {
 	for i in findtr fixqt4headers.pl moc qdoc qmake rcc qdbuscpp2xml qdbusxml2cpp syncqt; do
 		install -v -m 0755 bin/${i} ${D}${bindir}/${i}
 	done
+	install -d ${D}${datadir}/qt5/
+	cp -PfR mkspecs ${D}${datadir}/qt5/
+	cp -f ${WORKDIR}/g++.conf ${D}${datadir}/qt5/mkspecs/common/g++-unix.conf
+	cp -f ${WORKDIR}/linux.conf ${D}${datadir}/qt5/mkspecs/common/
 }
