@@ -39,6 +39,8 @@ EXTRA_OECONF = "-prefix ${prefix} \
                 -no-iconv \
                 -no-fast \
                 -silent \
+                -nomake examples \
+                -nomake tests \
                 -no-rpath"
 
 do_configure() {
@@ -46,4 +48,10 @@ do_configure() {
 	unset LD
 
 	(echo o; echo yes) | ./configure ${EXTRA_OECONF} || die "Configuring qt failed. EXTRA_OECONF was ${EXTRA_OECONF}"
+}
+
+do_install() {
+    install -d ${D}${bindir}/
+    # Install only the qmake bin for now.
+    install -m 0755 ${S}/bin/qmake ${D}${bindir}/qmake
 }
