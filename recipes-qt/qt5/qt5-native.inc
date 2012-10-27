@@ -53,7 +53,8 @@ do_configure() {
 }
 
 do_install() {
-    install -d ${D}${bindir}/
-    # Install only the qmake bin for now.
-    install -m 0755 ${S}/bin/qmake ${D}${bindir}/qmake
+	install -d ${D}${bindir}/
+	for i in findtr fixqt4headers.pl moc qdoc qmake rcc qdbuscpp2xml qdbusxml2cpp syncqt; do
+		install -v -m 0755 bin/${i} ${D}${bindir}/${i}
+	done
 }
