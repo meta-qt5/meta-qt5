@@ -41,7 +41,9 @@ EXTRA_OECONF = "-prefix ${prefix} \
                 -silent \
                 -nomake examples \
                 -nomake tests \
-                -no-rpath"
+                -nomake demos \
+                -no-rpath \
+"
 
 do_configure() {
 	# Avoid setting QMAKE_LINK from LD (since we want the linker to be g++)
