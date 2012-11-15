@@ -4,14 +4,7 @@ SECTION = "libs"
 HOMEPAGE = "http://qt-project.org"
 PROVIDES = "qt5-tools-native"
 
-LICENSE = "LGPLv2.1 | GPLv3"
-LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=cc5963be04f8b19c3e3c46bc31f0f6e1 \
-                    file://LICENSE.GPL;md5=d32239bcb673463ab874e80d47fae504 \
-                    file://LGPL_EXCEPTION.txt;md5=411080a56ff917a5a1aa08c98acae354"
-
 INC_PR = "r0"
-
-include qt5.inc
 
 inherit native
 
