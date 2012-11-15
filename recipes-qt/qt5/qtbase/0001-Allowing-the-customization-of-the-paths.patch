@@ -1,0 +1,37 @@
+From 183cf66e2770f7fbc420cf7aa94a9a8564785044 Mon Sep 17 00:00:00 2001
+From: Mikko Levonmaa <mikko.levonmaa@palm.com>
+Date: Wed, 7 Nov 2012 14:48:46 -0800
+Subject: [PATCH] Allowing the customization of the paths
+
+Signed-off-by: Mikko Levonmaa <mikko.levonmaa@palm.com>
+---
+ src/corelib/global/qlibraryinfo.cpp |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
+index ccf0718..487b8eb 100644
+--- a/src/corelib/global/qlibraryinfo.cpp
++++ b/src/corelib/global/qlibraryinfo.cpp
+@@ -49,6 +49,7 @@
+ QT_BEGIN_NAMESPACE
+ extern QString qt_libraryInfoFile();
+ QT_END_NAMESPACE
++#include <stdlib.h>
+ #elif defined(QT_BOOTSTRAPPED)
+ QString qt_libraryInfoFile()
+ {
+@@ -164,6 +165,11 @@ QSettings *QLibraryInfoPrivate::findConfiguration()
+ 	    }
+     }
+ #endif
++    if (!QFile::exists(qtconfig)) {
++        QByteArray config = getenv("QT_CONF_PATH");
++        qtconfig = QFile::decodeName(config);
++        printf("Using qt.conf from: %s\n", qtconfig.toLatin1().data());
++    }
+     if (QFile::exists(qtconfig))
+         return new QSettings(qtconfig, QSettings::IniFormat);
+     return 0;     //no luck
+-- 
+1.7.4.1
+
