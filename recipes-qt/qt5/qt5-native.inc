@@ -10,32 +10,34 @@ inherit native
 
 QT_MODULE = "qtbase"
 
-EXTRA_OECONF = "-prefix ${prefix} \
-                -L ${STAGING_LIBDIR_NATIVE} \
-                -I ${STAGING_INCDIR_NATIVE} \
-                -system-zlib \
-                -no-libjpeg \
-                -no-libpng \
-                -no-gif \
-                -no-accessibility \
-                -no-cups \
-                -no-nis \
-                -no-gui \
-                -no-qml-debug \
-                -no-sql-mysql \
-                -no-sql-sqlite \
-                -no-opengl \
-                -no-openssl \
-                -verbose -release \
-                -headerdir ${includedir}/qt5 \
-                -no-glib \
-                -no-iconv \
-                -no-fast \
-                -silent \
-                -nomake examples \
-                -nomake tests \
-                -nomake demos \
-                -no-rpath \
+EXTRA_OECONF = " \
+  -prefix ${prefix} \
+  -L ${STAGING_LIBDIR_NATIVE} \
+  -I ${STAGING_INCDIR_NATIVE} \
+  -system-zlib \
+  -no-libjpeg \
+  -no-libpng \
+  -no-gif \
+  -no-accessibility \
+  -no-cups \
+  -no-nis \
+  -no-gui \
+  -no-qml-debug \
+  -no-sql-mysql \
+  -no-sql-sqlite \
+  -no-opengl \
+  -no-openssl \
+  -qt-xcb \
+  -verbose -release \
+  -headerdir ${includedir}/qt5 \
+  -no-glib \
+  -no-iconv \
+  -no-fast \
+  -silent \
+  -nomake examples \
+  -nomake tests \
+  -nomake demos \
+  -no-rpath \
 "
 
 do_configure() {
