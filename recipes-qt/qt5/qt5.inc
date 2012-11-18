@@ -18,11 +18,49 @@ require qt5_arch.inc
 
 QT_MODULE ?= "${PN}"
 
-QT_CONFIG_FLAGS ?= ""
+QT_DISTRO_FLAGS ?= "-no-accessibility -no-sm"
+QT_DISTRO_FLAGS_linuxstdbase = "-sm"
 
+# Some can be used only for certain QT_MODULEs, so define them here, 
+# but add them to QT_CONFIG_FLAGS e.g. in qtbase.inc
+QT_SQL_DRIVER_FLAGS ?= "-no-sql-ibase -no-sql-mysql -no-sql-psql -no-sql-odbc -plugin-sql-sqlite"
+QT_GLFLAGS ?= ""
+QT_QT3SUPPORT ?= "-qt3support"
+QT_XML ?= "-xmlpatterns"
+QT_WEBKIT ?= "-webkit"
+QT_PHONON ?= "-phonon"
+QT_DBUS ?= "-qdbus"
+QT_MULTIMEDIA ?= "${@base_contains('DISTRO_FEATURES', 'pulseaudio', '-pulseaudio', '-no-pulseaudio', d)}"
+QT_MODULE_FLAGS ?= ""
+QT_NAS ?= "-no-nas-sound"
+QT_NIS ?= "-no-nis"
+QT_CUPS ?= "-no-cups"
+QT_STL ?= "-stl"
+QT_SYSTEM_LIBS ?= "-system-libjpeg -system-libpng -system-zlib"
 QT_TESTS ?= "-nomake tests"
 QT_EXAMPLES ?= "-nomake examples"
 QT_DEMOS ?= "-nomake demos"
+
+QT_CONFIG_FLAGS += " \
+  -release \
+  -reduce-relocations \
+  -shared \
+  -silent \
+  -glib \
+  -no-pch \
+  -no-rpath \
+  -no-fast \
+  ${QT_SYSTEM_LIBS} \
+  ${QT_NIS} \
+  ${QT_CUPS} \
+  ${QT_SQL_DRIVER_FLAGS} \
+  ${QT_DISTRO_FLAGS} \
+  ${QT_MODULE_FLAGS} \
+  ${QT_GLFLAGS} \
+  ${QT_TESTS} \
+  ${QT_EXAMPLES} \
+  ${QT_DEMOS} \
+"
 
 
 EXTRA_OEMAKE = "-e"
@@ -60,14 +98,9 @@ do_configure() {
         -importdir ${libdir}/${QT_DIR_NAME}/imports \
         -translationdir ${datadir}/${QT_DIR_NAME}/translations \
         -examplesdir ${bindir}/${QT_DIR_NAME}/examples \
-        -shared \
-        -no-rpath \
         -platform build-oe-g++ \
         -xplatform ${TARGET_OS}-oe-g++ \
-        ${QT_TESTS} \
-        ${QT_EXAMPLES} \
-        ${QT_DEMOS} \
-        ${QT_CONFIG_FLAGS} -no-fast
+        ${QT_CONFIG_FLAGS}
 }
 
 do_compile() {

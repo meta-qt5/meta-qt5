@@ -10,6 +10,8 @@ SRC_URI += " \
 # to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h
 DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms"
 
+QT_MODULE_FLAGS ?= "-system-xcb"
+
 INC_PR = "r0"
 
 QT_BASE_NAME = "qt5"
