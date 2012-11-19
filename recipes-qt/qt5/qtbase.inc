@@ -5,7 +5,6 @@ SRC_URI += " \
   file://0002-qmake-is-already-built-in-qt5-tools-native.patch \
   file://0003-Allow-building-a-separate-qmake-for-the-target.patch \
 "
-#file://0001-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch
 
 # to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h
 DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms"
