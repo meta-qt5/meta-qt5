@@ -10,6 +10,12 @@ inherit native
 
 QT_MODULE = "qtbase"
 
+FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
+
+SRC_URI += " \
+  file://0001-qlibraryinfo-Allow-the-specification-of-where-to-loa.patch \
+"
+
 EXTRA_OECONF = " \
   -prefix ${prefix} \
   -L ${STAGING_LIBDIR_NATIVE} \
