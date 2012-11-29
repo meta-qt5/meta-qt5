@@ -37,6 +37,7 @@ EXTRA_OECONF = " \
   -qt-xcb \
   -verbose -release \
   -headerdir ${includedir}/qt5 \
+  -datadir ${datadir}/qt5 \
   -no-glib \
   -no-iconv \
   -no-fast \
