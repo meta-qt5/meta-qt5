@@ -6,8 +6,8 @@ SRC_URI += " \
   file://0003-Allow-building-a-separate-qmake-for-the-target.patch \
 "
 
-# to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h
-DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms"
+# to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h and dbus/dbus.h
+DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
 
 QT_MODULE_FLAGS ?= "-system-xcb"
 
@@ -15,8 +15,6 @@ INC_PR = "r0"
 
 QT_BASE_NAME = "qt5"
 QT_DIR_NAME = "qt5"
-
-export QMAKESPEC = "${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/${TARGET_OS}-oe-g++"
 
 # Qt uses atomic instructions not supported in thumb mode
 ARM_INSTRUCTION_SET = "arm"

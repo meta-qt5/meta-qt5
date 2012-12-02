@@ -38,6 +38,7 @@ EXTRA_OECONF = " \
   -verbose -release \
   -headerdir ${includedir}/qt5 \
   -datadir ${datadir}/qt5 \
+  -docdir ${docdir}/qt5 \
   -no-glib \
   -no-iconv \
   -no-fast \
@@ -62,6 +63,4 @@ do_install() {
 	done
 	install -d ${D}${datadir}/qt5/
 	cp -PfR mkspecs ${D}${datadir}/qt5/
-	cp -f ${WORKDIR}/g++.conf ${D}${datadir}/qt5/mkspecs/common/g++-unix.conf
-	cp -f ${WORKDIR}/linux.conf ${D}${datadir}/qt5/mkspecs/common/
 }

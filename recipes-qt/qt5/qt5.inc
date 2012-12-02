@@ -25,7 +25,6 @@ QT_DISTRO_FLAGS_linuxstdbase = "-sm"
 # but add them to QT_CONFIG_FLAGS e.g. in qtbase.inc
 QT_SQL_DRIVER_FLAGS ?= "-no-sql-ibase -no-sql-mysql -no-sql-psql -no-sql-odbc -plugin-sql-sqlite"
 QT_GLFLAGS ?= ""
-QT_QT3SUPPORT ?= "-qt3support"
 QT_XML ?= "-xmlpatterns"
 QT_WEBKIT ?= "-webkit"
 QT_PHONON ?= "-phonon"
@@ -50,6 +49,7 @@ QT_CONFIG_FLAGS += " \
   -no-pch \
   -no-rpath \
   -no-fast \
+  -pkg-config \
   ${QT_SYSTEM_LIBS} \
   ${QT_NIS} \
   ${QT_CUPS} \
@@ -84,26 +84,18 @@ do_configure() {
     cp -f ${WORKDIR}/qplatformdefs.h mkspecs/${TARGET_OS}-oe-g++
     bash ${WORKDIR}/qmake.conf.sh > mkspecs/${TARGET_OS}-oe-g++/qmake.conf
 
-    mkdir -p mkspecs/build-oe-g++
-    cp -f ${WORKDIR}/qplatformdefs.h mkspecs/build-oe-g++
-
-    ## FIXME, the file nameing is dumb...
-    cp ${WORKDIR}/qmake-build.conf.sh  mkspecs/build-oe-g++/qmake.conf
-
-    #export QT_CONF_PATH="${S}/qt.conf"
-
     echo "[Paths]"                                              > $QT_CONF_PATH
-    #echo "Prefix=${prefix}"                                    >> $QT_CONF_PATH
     echo "Binaries=${bindir}"                                   >> $QT_CONF_PATH
     echo "Headers=${includedir}/${QT_DIR_NAME}"                 >> $QT_CONF_PATH
+    echo "Documentation=${docdir}/${QT_DIR_NAME}"               >> $QT_CONF_PATH
     echo "Libraries=${libdir}"                                  >> $QT_CONF_PATH
-    echo "Plugins=${libdir}/qt5/plugins"                        >> $QT_CONF_PATH
+    echo "Plugins=${libdir}/${QT_DIR_NAME}/plugins"             >> $QT_CONF_PATH
     echo "Data=${datadir}/${QT_DIR_NAME}"                       >> $QT_CONF_PATH
     echo "Translations=${datadir}/${QT_DIR_NAME}/translations"  >> $QT_CONF_PATH
     echo "Settings=${sysconfdir}/${QT_DIR_NAME}"                >> $QT_CONF_PATH
     echo "Examples=${bindir}/${QT_DIR_NAME}/examples"           >> $QT_CONF_PATH
     echo "HostBinaries=${STAGING_BINDIR_NATIVE}"                >> $QT_CONF_PATH
-    echo "HostData=${S}"                                        >> $QT_CONF_PATH
+    echo "HostData=${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}"    >> $QT_CONF_PATH
 
     ./configure -v \
         -opensource -confirm-license \
@@ -121,21 +113,48 @@ do_configure() {
         -platform ${TARGET_OS}-oe-g++ \
         -xplatform ${TARGET_OS}-oe-g++ \
         ${QT_CONFIG_FLAGS}
+
+    ### Since we are utilizing the native tree for the mkspecs, update the target mkspecs there
+    if [ ! -e ${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs/${TARGET_OS}-oe-g++ ]; then
+        cp -rf mkspecs/${TARGET_OS}-oe-g++ ${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs/${TARGET_OS}-oe-g++
+    fi
+    ### qmodule.pri and qconfig.pri contain target specific stuff
+    cp -f mkspecs/qmodule.pri ${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs/qmodule.pri
+    cp -f mkspecs/qconfig.pri ${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs/qconfig.pri
 }
 
 do_compile() {
     unset CFLAGS CXXFLAGS AR
 
-    export QMAKESPEC="${S}/mkspecs/${TARGET_OS}-oe-g++"
-
     oe_runmake ${EXTRA_ENV}
+
+    # Build qmake for the target arch
+    cd ${S}/qmake
+    ${OE_QMAKE_QMAKE}
+    oe_runmake CC="${CC}" CXX="${CXX}"
+    cd ${S}
 }
 
 do_install() {
     oe_runmake install INSTALL_ROOT=${D}
+
+    # Fix up the binaries to the right location
+    install -d ${D}${bindir}/
+    mv ${D}/${STAGING_BINDIR_NATIVE}/* ${D}${bindir}/
+    rm -rf ${D}/${STAGING_BINDIR_NATIVE}/
+
+    # Install the right arch qmake
+    rm ${D}/${bindir}/qmake
+    install -m 0755 bin/qmake2 ${D}${bindir}/qmake
 }
 
 FILES_${PN} = "${libdir}/*.so.*"
 FILES_${PN}-dbg = "${libdir}/.debug/*.so.*"
+FILES_${PN}-plugins = "${libdir}/${QT_DIR_NAME}/platforms/*.so"
+FILES_${PN}-plugins-dbg = "${libdir}/${QT_DIR_NAME}/platforms/.debug/*.so"
+
 FILES_${PN}-dev = "${libdir}/cmake/* ${libdir}/pkgconfig/*.pc ${libdir}/*.la ${libdir}/*.prl ${includedir}/qt5/*"
 FILES_${PN}-staticdev = "${libdir}/libQt*.a"
+FILES_${PN}-tools = "${bindir}/qmake"
+FILES_${PN}-mkspecs = "${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs/*"
+FILES_${PN}-doc = "${STAGING_DATADIR_NATIVE}/doc/*"
