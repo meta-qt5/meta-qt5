@@ -14,6 +14,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 SRC_URI += " \
   file://0001-qlibraryinfo-Allow-the-specification-of-where-to-loa.patch \
+  file://0001-Always-build-uic.patch \
 "
 
 EXTRA_OECONF = " \
@@ -55,7 +56,7 @@ do_configure() {
 
 do_install() {
 	install -d ${D}${bindir}/
-	for i in findtr fixqt4headers.pl moc qdoc qmake rcc qdbuscpp2xml qdbusxml2cpp syncqt; do
+	for i in findtr fixqt4headers.pl moc qdoc qmake rcc qdbuscpp2xml qdbusxml2cpp syncqt uic; do
 		install -v -m 0755 bin/${i} ${D}${bindir}/${i}
 	done
 	install -d ${D}${datadir}/qt5/
