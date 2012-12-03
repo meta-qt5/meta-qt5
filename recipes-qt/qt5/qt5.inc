@@ -62,8 +62,13 @@ QT_CONFIG_FLAGS += " \
   ${QT_DEMOS} \
 "
 
+EXTRA_ENV = 'QMAKE="${STAGING_BINDIR_NATIVE}/qmake -d -after \
+             INCPATH+=${STAGING_INCDIR}/freetype2 LIBS+=-L${STAGING_LIBDIR}" \
+             LINK="${CXX} -Wl,-rpath-link,${STAGING_LIBDIR}" \
+             AR="${TARGET_PREFIX}ar cqs" \
+             MOC="${STAGING_BINDIR_NATIVE}/moc" UIC="${STAGING_BINDIR_NATIVE}/uic" MAKE="make -e"'
 
-EXTRA_OEMAKE = "-e"
+export QT_CONF_PATH="${S}/qt.conf"
 
 do_configure() {
     set_endian
@@ -85,6 +90,21 @@ do_configure() {
     ## FIXME, the file nameing is dumb...
     cp ${WORKDIR}/qmake-build.conf.sh  mkspecs/build-oe-g++/qmake.conf
 
+    #export QT_CONF_PATH="${S}/qt.conf"
+
+    echo "[Paths]"                                              > $QT_CONF_PATH
+    #echo "Prefix=${prefix}"                                    >> $QT_CONF_PATH
+    echo "Binaries=${bindir}"                                   >> $QT_CONF_PATH
+    echo "Headers=${includedir}/${QT_DIR_NAME}"                 >> $QT_CONF_PATH
+    echo "Libraries=${libdir}"                                  >> $QT_CONF_PATH
+    echo "Plugins=${libdir}/qt5/plugins"                        >> $QT_CONF_PATH
+    echo "Data=${datadir}/${QT_DIR_NAME}"                       >> $QT_CONF_PATH
+    echo "Translations=${datadir}/${QT_DIR_NAME}/translations"  >> $QT_CONF_PATH
+    echo "Settings=${sysconfdir}/${QT_DIR_NAME}"                >> $QT_CONF_PATH
+    echo "Examples=${bindir}/${QT_DIR_NAME}/examples"           >> $QT_CONF_PATH
+    echo "HostBinaries=${STAGING_BINDIR_NATIVE}"                >> $QT_CONF_PATH
+    echo "HostData=${S}"                                        >> $QT_CONF_PATH
+
     ./configure -v \
         -opensource -confirm-license \
         -prefix ${prefix} \
@@ -98,7 +118,7 @@ do_configure() {
         -importdir ${libdir}/${QT_DIR_NAME}/imports \
         -translationdir ${datadir}/${QT_DIR_NAME}/translations \
         -examplesdir ${bindir}/${QT_DIR_NAME}/examples \
-        -platform build-oe-g++ \
+        -platform ${TARGET_OS}-oe-g++ \
         -xplatform ${TARGET_OS}-oe-g++ \
         ${QT_CONFIG_FLAGS}
 }
@@ -108,7 +128,7 @@ do_compile() {
 
     export QMAKESPEC="${S}/mkspecs/${TARGET_OS}-oe-g++"
 
-    oe_runmake
+    oe_runmake ${EXTRA_ENV}
 }
 
 do_install() {
