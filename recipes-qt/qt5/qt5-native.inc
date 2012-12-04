@@ -34,7 +34,7 @@ EXTRA_OECONF = " \
   -no-sql-sqlite \
   -no-opengl \
   -no-openssl \
-  -qt-xcb \
+  -no-xcb \
   -verbose -release \
   -headerdir ${includedir}/qt5 \
   -datadir ${datadir}/qt5 \
