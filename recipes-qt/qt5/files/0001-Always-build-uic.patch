@@ -1,0 +1,31 @@
+From 1092de02d1ac256a8c56fb5b5e590a4df8188acb Mon Sep 17 00:00:00 2001
+From: Mikko Levonmaa <mikko.levonmaa@palm.com>
+Date: Tue, 27 Nov 2012 12:46:44 -0800
+Subject: [PATCH] Always build uic
+
+Even if we are not building gui or widgets. This tool is needed later
+as a native tool when compiling the target.
+
+Signed-off-by: Mikko Levonmaa <mikko.levonmaa@palm.com>
+---
+ src/tools/tools.pro |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/tools/tools.pro b/src/tools/tools.pro
+index c67d6bf..b6f3b39 100644
+--- a/src/tools/tools.pro
++++ b/src/tools/tools.pro
+@@ -1,8 +1,8 @@
+ TEMPLATE = subdirs
+ 
+-TOOLS_SUBDIRS = src_tools_bootstrap src_tools_moc src_tools_rcc src_tools_qdoc
++TOOLS_SUBDIRS = src_tools_bootstrap src_tools_moc src_tools_rcc src_tools_qdoc src_tools_uic
+ contains(QT_CONFIG, dbus): TOOLS_SUBDIRS += src_tools_qdbusxml2cpp src_tools_qdbuscpp2xml
+-!contains(QT_CONFIG, no-widgets): TOOLS_SUBDIRS += src_tools_uic
++
+ # Set subdir and respective target name
+ src_tools_bootstrap.subdir = $$PWD/bootstrap
+ src_tools_bootstrap.target = sub-tools-bootstrap
+-- 
+1.7.4.1
+
