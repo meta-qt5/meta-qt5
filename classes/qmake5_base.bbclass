@@ -18,10 +18,10 @@ do_generate_qt_config_file() {
 	cat > ${WORKDIR}/qt.conf <<EOF
 [Paths]
 Prefix =
-Binaries = ${STAGING_BINDIR_NATIVE}
+Binaries = ${bindir}
 Headers = ${STAGING_INCDIR}/qt5
-Plugins = ${STAGING_LIBDIR}/qt5/plugins/
-Libraries = ${STAGING_LIBDIR}
+Plugins = ${libdir}/qt5/plugins/
+Libraries = ${libdir}
 HostData = ${STAGING_DATADIR}/qt5
 HostBinaries = ${STAGING_BINDIR_NATIVE}/
 EOF
