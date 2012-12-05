@@ -84,6 +84,9 @@ do_configure() {
     cp -f ${WORKDIR}/qplatformdefs.h mkspecs/${TARGET_OS}-oe-g++
     bash ${WORKDIR}/qmake.conf.sh > mkspecs/${TARGET_OS}-oe-g++/qmake.conf
 
+    mkdir -p ${STAGING_DATADIR}/${QT_DIR_NAME}
+    cp -r ${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs
+
     echo "[Paths]"                                              > $QT_CONF_PATH
     echo "Binaries=${bindir}"                                   >> $QT_CONF_PATH
     echo "Headers=${includedir}/${QT_DIR_NAME}"                 >> $QT_CONF_PATH
@@ -95,7 +98,7 @@ do_configure() {
     echo "Settings=${sysconfdir}/${QT_DIR_NAME}"                >> $QT_CONF_PATH
     echo "Examples=${bindir}/${QT_DIR_NAME}/examples"           >> $QT_CONF_PATH
     echo "HostBinaries=${STAGING_BINDIR_NATIVE}"                >> $QT_CONF_PATH
-    echo "HostData=${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}"    >> $QT_CONF_PATH
+    echo "HostData=${STAGING_DATADIR}/${QT_DIR_NAME}"    >> $QT_CONF_PATH
 
     ./configure -v \
         -opensource -confirm-license \
@@ -114,13 +117,13 @@ do_configure() {
         -xplatform ${TARGET_OS}-oe-g++ \
         ${QT_CONFIG_FLAGS}
 
-    ### Since we are utilizing the native tree for the mkspecs, update the target mkspecs there
-    if [ ! -e ${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs/${TARGET_OS}-oe-g++ ]; then
-        cp -rf mkspecs/${TARGET_OS}-oe-g++ ${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs/${TARGET_OS}-oe-g++
+    ### Since we are pointing our host data we need to get them there before compile
+    if [ ! -e ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/${TARGET_OS}-oe-g++ ]; then
+        cp -rf mkspecs/${TARGET_OS}-oe-g++ ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/${TARGET_OS}-oe-g++
     fi
-    ### qmodule.pri and qconfig.pri contain target specific stuff
-    cp -f mkspecs/qmodule.pri ${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs/qmodule.pri
-    cp -f mkspecs/qconfig.pri ${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs/qconfig.pri
+    ### qmodule.pri and qconfig.pri contain target specific stuff copy them over as well
+    cp -f mkspecs/qmodule.pri ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/qmodule.pri
+    cp -f mkspecs/qconfig.pri ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/qconfig.pri
 }
 
 do_compile() {
@@ -150,11 +153,11 @@ do_install() {
 
 FILES_${PN} = "${libdir}/*.so.*"
 FILES_${PN}-dbg = "${libdir}/.debug/*.so.*"
-FILES_${PN}-plugins = "${libdir}/${QT_DIR_NAME}/platforms/*.so"
-FILES_${PN}-plugins-dbg = "${libdir}/${QT_DIR_NAME}/platforms/.debug/*.so"
+FILES_${PN}-plugins = "${libdir}/${QT_DIR_NAME}/platforms/*"
+FILES_${PN}-plugins-dbg = "${libdir}/${QT_DIR_NAME}/platforms/.debug/*"
 
 FILES_${PN}-dev = "${libdir}/cmake/* ${libdir}/pkgconfig/*.pc ${libdir}/*.la ${libdir}/*.prl ${includedir}/qt5/*"
 FILES_${PN}-staticdev = "${libdir}/libQt*.a"
-FILES_${PN}-tools = "${bindir}/qmake"
-FILES_${PN}-mkspecs = "${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs/*"
-FILES_${PN}-doc = "${STAGING_DATADIR_NATIVE}/doc/*"
+FILES_${PN}-tools = "${bindir}/*"
+FILES_${PN}-mkspecs = "${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/*"
+FILES_${PN}-doc = "${STAGING_DATADIR}/doc/*"

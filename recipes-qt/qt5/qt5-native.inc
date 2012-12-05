@@ -14,6 +14,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 SRC_URI += " \
   file://0001-qlibraryinfo-Allow-the-specification-of-where-to-loa.patch \
+  file://0003-qtbase-Allow-qt.conf-override-when-bootstrapping.patch \
   file://0001-Always-build-uic.patch \
 "
 
