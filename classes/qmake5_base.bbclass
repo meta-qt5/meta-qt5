@@ -17,13 +17,13 @@ do_generate_qt_config_file() {
 	export QT_CONF_PATH=${WORKDIR}/qt.conf
 	cat > ${WORKDIR}/qt.conf <<EOF
 [Paths]
-Prefix =
-Binaries = ${STAGING_BINDIR_NATIVE}
-Headers = ${STAGING_INCDIR}/qt5
-Plugins = ${STAGING_LIBDIR}/qt5/plugins/
-Libraries = ${STAGING_LIBDIR}
+Binaries = ${bindir}
+Headers = ${includedir}/qt5
+Plugins = ${libdir}/qt5/plugins
+Libraries = ${libdir}
+Data = ${datadir}/qt5
 HostData = ${STAGING_DATADIR}/qt5
-HostBinaries = ${STAGING_BINDIR_NATIVE}/
+HostBinaries = ${STAGING_BINDIR_NATIVE}
 EOF
 }
 
