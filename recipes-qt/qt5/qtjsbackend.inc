@@ -26,7 +26,7 @@ do_configure () {
     # of an error on the native recipe...
     cp ${WORKDIR}/qmake.conf ${S}/.qmake.conf
 
-    ${OE_QMAKE_QMAKE} -d
+    ${OE_QMAKE_QMAKE} -r -d
 }
 
 do_install() {
@@ -34,7 +34,7 @@ do_install() {
 }
 
 FILES_${PN}-dev += "\
-        ${STAGING_INCDIR}/qt5 \
-        ${STAGING_DATADIR}/qt5 \
+        ${incdir}/qt5/* \
+        ${datadir}/qt5/* \
         ${libdir}/*.prl \
 "
