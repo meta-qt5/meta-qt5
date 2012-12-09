@@ -80,23 +80,32 @@ do_configure() {
     # Avoid problems with the linkers, since we want the linker to be g++
     unset LD
 
+    ### Make sure that our mkspecs will eventually end up in STAGING_DATADIR
+    ${OE_QMAKE_QMAKE} -set OE_CROSS_INSTALL_DATA ${datadir}/${QT_DIR_NAME}
+    sed -i '/mkspecs\.path/s/QT_HOST_DATA/OE_CROSS_INSTALL_DATA/' qtbase.pro
+    sed -i '/pritarget/s/QT_HOST_DATA/OE_CROSS_INSTALL_DATA/' mkspecs/features/qt_installs.prf
+
+    ### Same applies to the module headers...
+    ${OE_QMAKE_QMAKE} -set OE_CROSS_INSTALL_HEADERS ${includedir}/${QT_DIR_NAME}
+    sed -i 's/QT_INSTALL_HEADERS/OE_CROSS_INSTALL_HEADERS/g' mkspecs/features/qt_installs.prf
+
+    ### Create the mkspec for the target
     mkdir -p mkspecs/${TARGET_OS}-oe-g++
     cp -f ${WORKDIR}/qplatformdefs.h mkspecs/${TARGET_OS}-oe-g++
     bash ${WORKDIR}/qmake.conf.sh > mkspecs/${TARGET_OS}-oe-g++/qmake.conf
 
-    ### This copying needs to take place every time as the installation will 
-    ### change.. CHECK THIS
+    ### Stage the base mkspecs so that 'HostData' will find them
     mkdir -p ${STAGING_DATADIR}/${QT_DIR_NAME}
     cp -r ${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/mkspecs ${STAGING_DATADIR}/${QT_DIR_NAME}/
-    ### Make sure that modules are installed correctly
-    sed -i '/pritarget/s/HOST_DATA/INSTALL_DATA/' ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/features/qt_installs.prf
+    ### Make sure that modules are installed correctly. During configure they will pick this one
+    ### instead of the one from ${S}/mkspecs...
+    sed -i '/pritarget/s/QT_HOST_DATA/OE_CROSS_INSTALL_DATA/' \
+            ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/features/qt_installs.prf
     rm -rf ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/modules*
+
+    ### Remove the old pri files
     rm ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/*.pri
 
-    ### This will make sure that our mkspecs wil leventually end up in STAGING_DATADIR
-    ### Consider doing this as a patch!!
-    sed -i '/mkspecs\.path/s/HOST_DATA/INSTALL_DATA/' qtbase.pro
-    sed -i '/pritarget/s/HOST_DATA/INSTALL_DATA/' mkspecs/features/qt_installs.prf
 
     echo "[Paths]"                                              > $QT_CONF_PATH
     echo "Binaries=${bindir}"                                   >> $QT_CONF_PATH
@@ -109,7 +118,7 @@ do_configure() {
     echo "Settings=${sysconfdir}/${QT_DIR_NAME}"                >> $QT_CONF_PATH
     echo "Examples=${bindir}/${QT_DIR_NAME}/examples"           >> $QT_CONF_PATH
     echo "HostBinaries=${STAGING_BINDIR_NATIVE}"                >> $QT_CONF_PATH
-    echo "HostData=${STAGING_DATADIR}/${QT_DIR_NAME}"    >> $QT_CONF_PATH
+    echo "HostData=${STAGING_DATADIR}/${QT_DIR_NAME}"           >> $QT_CONF_PATH
 
     ./configure -v \
         -dont-process \
@@ -129,7 +138,7 @@ do_configure() {
         -xplatform ${TARGET_OS}-oe-g++ \
         ${QT_CONFIG_FLAGS}
 
-    ### Since we are pointing our host data we need to get them there before compile
+    ### Since we are pointing our host data we need to get them there before compilation
     if [ ! -e ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/${TARGET_OS}-oe-g++ ]; then
         cp -rf mkspecs/${TARGET_OS}-oe-g++ ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/${TARGET_OS}-oe-g++
     fi
