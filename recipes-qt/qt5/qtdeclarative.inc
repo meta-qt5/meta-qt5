@@ -11,10 +11,6 @@ SRC_URI += " \
     file://module_qmake.conf \
     "
 
-# Bitbake will not respect the make order set by qmake and at times it will try to compile
-# parts of the source tree with out the 'mkv8snapshot' tool if it is enabled and that will fail
-#PARALLEL_MAKE = ""
-
 export QT_CONF_PATH="${WORKDIR}/qt.conf"
 
 do_configure () {
@@ -25,15 +21,25 @@ do_configure () {
     # of an error on the native recipe...
     cp ${WORKDIR}/module_qmake.conf ${S}/.qmake.conf
 
-    ${OE_QMAKE_QMAKE} -d
+    ${OE_QMAKE_QMAKE} -r -d
 }
 
 do_install() {
     oe_runmake install INSTALL_ROOT=${D}
 }
 
-FILES_${PN}-dev += "\
-        ${STAGING_INCDIR}/qt5 \
-        ${STAGING_DATADIR}/qt5 \
+FILES_${PN}-dev = "\
+        ${includedir}/qt5/* \
+        ${datadir}/qt5/mkspecs/* \
         ${libdir}/*.prl \
+        ${libdir}/cmake/* \
+        ${libdir}/pkgconfig/*.pc \
 "
+
+FILES_${PN}-staticdev = "${libdir}/*.la"
+FILES_${PN}-tools = "${bindir}/*"
+FILES_${PN}-qmlplugins = "${libdir}/qt5/qml/*"
+FILES_${PN}-qmltooling = "${libdir}/qt5/plugins/qmltooling/*"
+FILES_${PN}-qmltooling-dbg = "${libdir}/qt5/plugins/qmltooling/.debug/*"
+
+PACAKGES += "FILES_${PN}-tools FILES_${PN}-qmlplugins FILES_${PN}-qmltooling FILES_${PN}-qmltooling-dbg"
