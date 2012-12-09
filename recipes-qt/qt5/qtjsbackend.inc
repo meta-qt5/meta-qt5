@@ -8,7 +8,7 @@ INC_PR = "r0"
 inherit qmake5
 
 SRC_URI += " \
-    file://qmake.conf \
+    file://module_qmake.conf \
 	file://0002-Make-sure-that-we-pick-up-the-mkv8snapshot-tool.patch \
 	"
 
@@ -24,7 +24,7 @@ do_configure () {
 
 	# This should not be needed. Perhaps the lack of this file is an indication
     # of an error on the native recipe...
-    cp ${WORKDIR}/qmake.conf ${S}/.qmake.conf
+    cp ${WORKDIR}/module_qmake.conf ${S}/.qmake.conf
 
     ${OE_QMAKE_QMAKE} -r -d
 }

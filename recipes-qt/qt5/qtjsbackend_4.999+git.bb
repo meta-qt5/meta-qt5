@@ -1,4 +1,4 @@
-SRCREV = "89c7e60ca70d0ff8f26f311fa92b8109d275f6f9"
+SRCREV = "b41c2151fdfca3f63a6cd45f6c69ae678694b63e"
 SRC_URI += "git://gitorious.org/qt/qtjsbackend.git;protocol=git"
 S = "${WORKDIR}/git"
 

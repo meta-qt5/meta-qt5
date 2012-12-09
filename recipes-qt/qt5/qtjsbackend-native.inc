@@ -7,8 +7,6 @@ INC_PR = "r0"
 
 inherit native
 
-#FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtjsbacked:"
-
 SRC_URI += "\
     file://qmake.conf \
     file://0001-Install-the-mkv8snapshot-tool-to-the-native-side.patch \
