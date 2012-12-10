@@ -14,21 +14,22 @@ export OE_QMAKE_RPATH="-Wl,-rpath-link,"
 STRIP[unexport] = "1"
 
 do_generate_qt_config_file() {
-	export QT_CONF_PATH=${WORKDIR}/qt.conf
-	cat > ${WORKDIR}/qt.conf <<EOF
+
+    export QT_CONF_PATH=${WORKDIR}/qt.conf
+    cat > ${WORKDIR}/qt.conf <<EOF
 [Paths]
-Prefix =
-Binaries = ${STAGING_BINDIR_NATIVE}
+Binaries = ${bindir}
 Headers = ${STAGING_INCDIR}/qt5
-Plugins = ${STAGING_LIBDIR}/qt5/plugins/
-Libraries = ${STAGING_LIBDIR}
+Plugins = ${libdir}/qt5/plugins
+Libraries = ${libdir}
+Imports = ${datadir}/qt5/imports
+Qml2Imports = ${libdir}/qt5/qml
+Documentation=${docdir}/qt5
+Data = ${datadir}/qt5
 HostData = ${STAGING_DATADIR}/qt5
-HostBinaries = ${STAGING_BINDIR_NATIVE}/
+HostBinaries = ${STAGING_BINDIR_NATIVE}
 EOF
+
 }
 
 addtask generate_qt_config_file after do_patch before do_configure
-
-#EXPORT_FUNCTIONS do_configure
-
-#addtask configure after do_unpack do_patch before do_compile
