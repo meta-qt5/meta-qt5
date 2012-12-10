@@ -10,7 +10,7 @@ inherit native
 SRC_URI += "\
     file://qmake.conf \
     file://0001-Install-the-mkv8snapshot-tool-to-the-native-side.patch \
-    "
+"
 
 # Bitbake will not respect the make order set by qmake and at times it will try to compile
 # parts of the source tree with out the 'mkv8snapshot' tool if it is enabled and that will fail

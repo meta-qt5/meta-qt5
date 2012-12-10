@@ -9,8 +9,8 @@ inherit qmake5
 
 SRC_URI += " \
     file://module_qmake.conf \
-	file://0002-Make-sure-that-we-pick-up-the-mkv8snapshot-tool.patch \
-	"
+    file://0002-Make-sure-that-we-pick-up-the-mkv8snapshot-tool.patch \
+"
 
 # Bitbake will not respect the make order set by qmake and at times it will try to compile
 # parts of the source tree with out the 'mkv8snapshot' tool if it is enabled and that will fail
