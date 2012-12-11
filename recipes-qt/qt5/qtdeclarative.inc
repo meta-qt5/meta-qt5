@@ -43,4 +43,4 @@ FILES_${PN}-qmlplugins = "${libdir}/qt5/qml/*"
 FILES_${PN}-qmltooling = "${libdir}/qt5/plugins/qmltooling/*"
 FILES_${PN}-qmltooling-dbg = "${libdir}/qt5/plugins/qmltooling/.debug/*"
 
-PACAKGES += "FILES_${PN}-tools FILES_${PN}-qmlplugins FILES_${PN}-qmltooling FILES_${PN}-qmltooling-dbg"
+PACKAGES += "FILES_${PN}-tools FILES_${PN}-qmlplugins FILES_${PN}-qmltooling FILES_${PN}-qmltooling-dbg"
