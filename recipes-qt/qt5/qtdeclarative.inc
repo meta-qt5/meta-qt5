@@ -6,6 +6,8 @@ DEPENDS = "qtbase qtjsbackend"
 
 INC_PR = "r0"
 
+QT_MODULE = "${PN}"
+
 inherit qmake5
 
 SRC_URI += " \

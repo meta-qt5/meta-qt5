@@ -1,7 +1,9 @@
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffea8be556788b780"
 
-DEPENDS = "qtbase"
+DEPENDS = "qtbase qtjsbackend-native"
+
+QT_MODULE = "${PN}"
 
 INC_PR = "r0"
 

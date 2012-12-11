@@ -3,12 +3,14 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffe
 
 DEPENDS = "qt5-native"
 
+QT_MODULE = "qtjsbackend"
+
 INC_PR = "r0"
 
 inherit native
 
 SRC_URI += "\
-    file://qmake.conf \
+    file://module_qmake.conf \
     file://0001-Install-the-mkv8snapshot-tool-to-the-native-side.patch \
 "
 
@@ -16,15 +18,33 @@ SRC_URI += "\
 # parts of the source tree with out the 'mkv8snapshot' tool if it is enabled and that will fail
 PARALLEL_MAKE = ""
 
+export QT_CONF_PATH="${WORKDIR}/qt.conf"
+
 do_configure() {
     # Avoid setting QMAKE_LINK from LD (since we want the linker to be g++)
     unset LD
 
+    cat > ${WORKDIR}/qt.conf <<EOF
+[Paths]
+Prefix = ${prefix}
+Binaries = ${bindir}
+Headers = ${includedir}/qt5
+Plugins = ${libdir}/qt5/plugins
+Libraries = ${libdir}
+Imports = ${datadir}/qt5/imports
+Qml2Imports = ${libdir}/qt5/qml
+Documentation=${docdir}/qt5
+Data = ${datadir}/qt5
+HostPrefix = ${STAGING_DATADIR}
+HostData = ${STAGING_DATADIR}/qt5
+HostBinaries = ${STAGING_BINDIR_NATIVE}
+EOF
+
     # This should not be needed. Perhaps the lack of this file is an indication
     # of an error on the native recipe...
-    cp ${WORKDIR}/qmake.conf ${S}/.qmake.conf
+    cp ${WORKDIR}/module_qmake.conf ${S}/.qmake.conf
 
-    ${STAGING_BINDIR_NATIVE}/qmake -d
+    ${STAGING_BINDIR_NATIVE}/qmake -d -r
 }
 
 do_install() {
