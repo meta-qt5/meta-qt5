@@ -1,9 +1,9 @@
 # Copyright (C) 2012 O.S. Systems Software LTDA.
 
-QT_VERSION ?= "5.0.0-beta2"
+QT_VERSION ?= "5.0.0-rc1"
 
 SRC_URI += " \
-  http://releases.qt-project.org/qt5.0/beta2/submodules_tar/${QT_MODULE}-opensource-src-${QT_VERSION}.tar.xz \
+  http://releases.qt-project.org/qt5.0/rc1/submodules_tar/${QT_MODULE}-opensource-src-${QT_VERSION}.tar.xz \
   file://linux.conf \
   file://g++.conf \
 "
