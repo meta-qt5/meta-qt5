@@ -1,7 +1,9 @@
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffea8be556788b780"
 
-DEPENDS = "qtbase"
+DEPENDS = "qtbase qtjsbackend-native"
+
+QT_MODULE = "${PN}"
 
 INC_PR = "r0"
 
@@ -9,8 +11,8 @@ inherit qmake5
 
 SRC_URI += " \
     file://module_qmake.conf \
-	file://0002-Make-sure-that-we-pick-up-the-mkv8snapshot-tool.patch \
-	"
+    file://0002-Make-sure-that-we-pick-up-the-mkv8snapshot-tool.patch \
+"
 
 # Bitbake will not respect the make order set by qmake and at times it will try to compile
 # parts of the source tree with out the 'mkv8snapshot' tool if it is enabled and that will fail
