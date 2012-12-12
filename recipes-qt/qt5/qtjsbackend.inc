@@ -1,9 +1,10 @@
+require qt5.inc
+
+# FIXME!!!
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffea8be556788b780"
 
 DEPENDS = "qtbase qtjsbackend-native"
-
-QT_MODULE = "${PN}"
 
 INC_PR = "r0"
 
@@ -30,13 +31,3 @@ do_configure () {
 
     ${OE_QMAKE_QMAKE} -r -d
 }
-
-do_install() {
-    oe_runmake install INSTALL_ROOT=${D}
-}
-
-FILES_${PN}-dev += "\
-        ${incdir}/qt5/* \
-        ${datadir}/qt5/* \
-        ${libdir}/*.prl \
-"
