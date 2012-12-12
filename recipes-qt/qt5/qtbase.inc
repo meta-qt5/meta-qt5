@@ -120,3 +120,6 @@ do_install_append() {
     rm ${D}/${bindir}/qmake
     install -m 0755 bin/qmake2 ${D}${bindir}/qmake
 }
+
+PACKAGES =. "${PN}-fonts "
+FILES_${PN}-fonts = "${libdir}/fonts"

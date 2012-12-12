@@ -86,20 +86,14 @@ do_install() {
     oe_runmake install INSTALL_ROOT=${D}
 }
 
-PACKAGES .= "${PN}-tools ${PN}-plugins ${PN}-plugins-dbg"
-FILES_${PN} = "${libdir}/*.so.*"
-FILES_${PN}-dbg = "${libdir}/.debug/*.so.*"
-FILES_${PN}-plugins = "${libdir}/${QT_DIR_NAME}/plugins/*"
-FILES_${PN}-plugins-dbg = "${libdir}/${QT_DIR_NAME}/plugins/.debug/*"
+PACKAGES =. "${PN}-tools ${PN}-plugins ${PN}-plugins-dbg "
+FILES_${PN}-tools = "${bindir}/*"
+FILES_${PN}-plugins = "${libdir}/${QT_DIR_NAME}/plugins/*/*${SOLIBSDEV}"
+FILES_${PN}-plugins-dbg = "${libdir}/${QT_DIR_NAME}/plugins/*/.debug/*"
 
-FILES_${PN}-dev = " \
+FILES_${PN}-dev += " \
         ${libdir}/cmake/* \
-        ${libdir}/pkgconfig/*.pc \
-        ${libdir}/*.la \
         ${libdir}/*.prl \
         ${includedir}/qt5/* \
         ${datadir}/qt5/* \
 "
-FILES_${PN}-staticdev = "${libdir}/libQt*.a"
-FILES_${PN}-tools = "${bindir}/*"
-FILES_${PN}-doc = "${datadir}/doc/*"
