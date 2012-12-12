@@ -7,9 +7,12 @@ SRC_URI += " \
 "
 
 # to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h and dbus/dbus.h
-DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
+# DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
+# reenable when we switch to "-qt-xcb" and build of 
+# src/platformsupport/glxconvenience/ is resolved to be before build of
+# src/plugins/platforms/xcb/
 
-QT_MODULE_FLAGS ?= "-system-xcb"
+QT_MODULE_FLAGS = "-no-xcb"
 
 INC_PR = "r0"
 
