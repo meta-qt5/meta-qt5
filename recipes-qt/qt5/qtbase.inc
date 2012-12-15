@@ -53,6 +53,11 @@ do_configure_append() {
             ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/features/qt_installs.prf
     rm -rf ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/modules*
 
+    ### Fix up prl and pkgconfig lib paths, by default they will point to /usr/lib
+    ${OE_QMAKE_QMAKE} -set OE_CROSS_INSTALL_LIBS ${STAGING_LIBDIR}
+    sed -i 's/QT_INSTALL_LIBS\/raw/OE_CROSS_INSTALL_LIBS/g' mkspecs/features/qt_module.prf
+    sed -i 's/QT_INSTALL_LIBS\/raw/OE_CROSS_INSTALL_LIBS/g' ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/features/qt_module.prf
+
     ### Remove the old pri files
     rm ${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/*.pri
 
