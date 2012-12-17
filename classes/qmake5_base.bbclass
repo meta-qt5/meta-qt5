@@ -21,7 +21,7 @@ do_generate_qt_config_file() {
 Binaries = ${bindir}
 Headers = ${STAGING_INCDIR}/qt5
 Plugins = ${libdir}/qt5/plugins
-Libraries = ${libdir}
+Libraries = ${STAGING_LIBDIR}
 Imports = ${datadir}/qt5/imports
 Qml2Imports = ${libdir}/qt5/qml
 Documentation=${docdir}/qt5
