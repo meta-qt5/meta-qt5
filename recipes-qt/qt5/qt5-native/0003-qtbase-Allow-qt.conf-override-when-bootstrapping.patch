@@ -14,13 +14,12 @@ diff --git a/qmake/option.cpp b/qmake/option.cpp
 index 91c154a..a4f3a85 100644
 --- a/qmake/option.cpp
 +++ b/qmake/option.cpp
-@@ -647,6 +647,11 @@ qmakeAddCacheClear(qmakeCacheClearFunc func, void **data)
+@@ -647,6 +647,10 @@ qmakeAddCacheClear(qmakeCacheClearFunc func, void **data)
  
  QString qt_libraryInfoFile()
  {
 +    QString qtconfig = QFile::decodeName(getenv("QT_CONF_PATH"));
 +    if (QFile::exists(qtconfig)) {
-+        printf("Overriding with qt.conf from: %s\n", qtconfig.toLatin1().data());
 +        return qtconfig;
 +    }
      if (!Option::globals->qmake_abslocation.isEmpty())

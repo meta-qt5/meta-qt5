@@ -17,13 +17,12 @@ diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryin
 index a756577..0c92e12 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
-@@ -164,6 +164,10 @@ QSettings *QLibraryInfoPrivate::findConfiguration()
+@@ -164,6 +164,9 @@ QSettings *QLibraryInfoPrivate::findConfiguration()
  	    }
      }
  #endif
 +    if (!QFile::exists(qtconfig)) {
 +        qtconfig = QFile::decodeName(getenv("QT_CONF_PATH"));
-+        printf("Using qt.conf from: %s\n", qtconfig.toLatin1().data());
 +    }
      if (QFile::exists(qtconfig))
          return new QSettings(qtconfig, QSettings::IniFormat);
