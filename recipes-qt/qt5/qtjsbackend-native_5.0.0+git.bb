@@ -1,5 +1,5 @@
-require qtjsbackend-native.inc
-require qt5-4.999+git.inc
+require ${PN}.inc
+require qt5-5.0.0+git.inc
 
 PR = "${INC_PR}.0"
 

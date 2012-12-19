@@ -1,15 +1,14 @@
 # Copyright (C) 2012 O.S. Systems Software LTDA.
 
-# each module needs to define valid SRCREV
+QT_VERSION ?= "${PV}"
+
 SRC_URI += " \
-  git://qt.gitorious.org/qt/${QT_MODULE}.git;protocol=git;branch=stable \
+  http://releases.qt-project.org/qt5/${QT_VERSION}/submodules_tar/${QT_MODULE}-opensource-src-${QT_VERSION}.tar.xz \
   file://linux.conf \
   file://g++.conf \
 "
 
-S = "${WORKDIR}/git"
-
-PV = "4.999+5.0.0-rc1+git${SRCPV}"
+S = "${WORKDIR}/${QT_MODULE}-opensource-src-${QT_VERSION}"
 
 LICENSE = "GFDL-1.3 & LGPLv2.1 | GPLv3"
 LIC_FILES_CHKSUM ?= "file://LICENSE.LGPL;md5=02356821480f1d3d534b21e0343265b5 \
