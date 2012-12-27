@@ -62,6 +62,18 @@ do_configure() {
         ln -sf ${OE_QMAKE_QMAKE} bin/qmake
     fi
 
+    if [ ! -e mkspecs/${TARGET_OS}-oe-g++ ]; then
+        ln -sf linux-g++ mkspecs/${TARGET_OS}-oe-g++
+    fi
+
+    if [ -f mkspecs/common/g++-unix.conf ] ; then
+        # mkspecs were refactored for 4.8.0
+        cp -f ${WORKDIR}/g++.conf mkspecs/common/g++-unix.conf
+    else
+        cp -f ${WORKDIR}/g++.conf mkspecs/common/g++.conf
+    fi
+    cp -f ${WORKDIR}/linux.conf mkspecs/common/
+
     # Avoid problems with the linkers, since we want the linker to be g++
     unset LD
 }
