@@ -10,7 +10,7 @@ inherit native
 
 QT_MODULE = "qtbase"
 
-FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
+FILESEXTRAPATHS =. "${FILE_DIRNAME}/${PN}:${FILE_DIRNAME}/qtbase:"
 
 SRC_URI += " \
   file://0001-qlibraryinfo-Allow-the-specification-of-where-to-loa.patch \
