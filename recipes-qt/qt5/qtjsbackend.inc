@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffe
 
 DEPENDS = "qtbase qtjsbackend-native"
 
-INC_PR = "r0"
+INC_PR = "r3"
 
 inherit qmake5
 
@@ -30,4 +30,12 @@ do_configure () {
     cp ${WORKDIR}/module_qmake.conf ${S}/.qmake.conf
 
     ${OE_QMAKE_QMAKE} -r -d
+}
+
+do_install_append() {
+    ### Fix up the binaries to the right location
+    ### TODO: FIX
+    install -d ${D}${libdir}/
+    mv ${D}/${STAGING_LIBDIR}/* ${D}${libdir}/
+    rm -rf ${D}/${STAGING_LIBDIR}/
 }

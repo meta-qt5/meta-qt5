@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffe
 
 DEPENDS = "qtbase qtjsbackend"
 
-INC_PR = "r0"
+INC_PR = "r13"
 
 inherit qmake5
 
@@ -27,12 +27,25 @@ do_configure () {
     ${OE_QMAKE_QMAKE} -r -d
 }
 
-do_install() {
-    oe_runmake install INSTALL_ROOT=${D}
+do_install_append() {
+    ### Fix up the libraries to the right location
+    ### TODO: FIX
+    install -d ${D}${libdir}/
+    mv ${D}/${STAGING_LIBDIR}/* ${D}${libdir}/
+    rm -rf ${D}/${STAGING_LIBDIR}/
 }
 
-FILES_${PN}-qmlplugins = "${libdir}/qt5/qml/*"
-FILES_${PN}-qmltooling = "${libdir}/qt5/plugins/qmltooling/*"
-FILES_${PN}-qmltooling-dbg = "${libdir}/qt5/plugins/qmltooling/.debug/*"
+FILES_${PN}-qmlplugins = " \
+                          ${libdir}/qt5/qml \
+                         "
 
-PACKAGES .= "${PN}-qmlplugins ${PN}-qmltooling ${PN}-qmltooling-dbg"
+FILES_${PN}-qmlplugins-dbg = " \
+                              ${libdir}/qt5/qml/*/.debug/*.so \
+                              ${libdir}/qt5/qml/*/*/.debug/*.so \
+                              ${libdir}/qt5/qml/*/*/*/.debug/*.so \
+                             "
+
+FILES_${PN}-qmltooling = "${libdir}/qt5/plugins/qmltooling/*.so"
+FILES_${PN}-qmltooling-dbg = "${libdir}/qt5/plugins/qmltooling/.debug/*.so"
+
+PACKAGES =+ "${PN}-qmlplugins-dbg ${PN}-qmlplugins ${PN}-qmltooling ${PN}-qmltooling-dbg"

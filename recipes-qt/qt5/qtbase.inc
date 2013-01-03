@@ -9,17 +9,19 @@ SRC_URI += " \
   file://qplatformdefs.h \
 "
 
-DEPENDS += "qt5-tools-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}"
+DEPENDS += "qt5-tools-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}" 
+DEPENDS += "dbus" 
+DEPENDS += "directfb"
 
-# to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h and dbus/dbus.h
-# DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
-# reenable when we switch to "-qt-xcb" and build of 
-# src/platformsupport/glxconvenience/ is resolved to be before build of
-# src/plugins/platforms/xcb/
+#FIXME: right now Mesa in oe-core denzil doesn't provide gles, master does.
+QT_GLFLAGS = "-opengl es2"
 
-QT_MODULE_FLAGS = "-no-xcb"
+QT_MODULE_FLAGS += "-no-gtkstyle -qt-xcb"
 
-INC_PR = "r0"
+#FIXME: we need libxi 1.6 to get this, but its not in oe-core denzil yet.
+QT_MODULE_FLAGS += "-no-xinput2"
+
+INC_PR = "r3"
 
 QT_BASE_NAME = "qt5"
 QT_DIR_NAME = "qt5"
