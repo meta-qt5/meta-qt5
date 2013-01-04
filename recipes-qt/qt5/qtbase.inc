@@ -21,7 +21,7 @@ QT_MODULE_FLAGS += "-no-gtkstyle -qt-xcb"
 #FIXME: we need libxi 1.6 to get this, but its not in oe-core denzil yet.
 QT_MODULE_FLAGS += "-no-xinput2"
 
-INC_PR = "r3"
+INC_PR = "r5"
 
 QT_BASE_NAME = "qt5"
 QT_DIR_NAME = "qt5"
@@ -68,6 +68,7 @@ do_configure_append() {
     echo "Headers=${includedir}/${QT_DIR_NAME}"                 >> $QT_CONF_PATH
     echo "Documentation=${docdir}/${QT_DIR_NAME}"               >> $QT_CONF_PATH
     echo "Libraries=${libdir}"                                  >> $QT_CONF_PATH
+    echo "LibraryExecutables=${libexecdir}"                     >> $QT_CONF_PATH
     echo "Plugins=${libdir}/${QT_DIR_NAME}/plugins"             >> $QT_CONF_PATH
     echo "Data=${datadir}/${QT_DIR_NAME}"                       >> $QT_CONF_PATH
     echo "Translations=${datadir}/${QT_DIR_NAME}/translations"  >> $QT_CONF_PATH
@@ -82,6 +83,7 @@ do_configure_append() {
         -prefix ${prefix} \
         -bindir ${bindir} \
         -libdir ${libdir} \
+        -libexecdir ${libexecdir} \
         -datadir ${datadir}/${QT_DIR_NAME} \
         -sysconfdir ${sysconfdir}/${QT_DIR_NAME} \
         -docdir ${docdir}/${QT_DIR_NAME} \
