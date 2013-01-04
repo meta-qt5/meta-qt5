@@ -1,6 +1,6 @@
 require qt5module.inc
 
-DEPENDS += "qtjsbackend"
+DEPENDS += "qtjsbackend qtsvg qtxmlpatterns"
 
 INC_PR = "r0"
 
