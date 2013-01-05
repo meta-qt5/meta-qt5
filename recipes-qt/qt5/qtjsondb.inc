@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffe
 
 DEPENDS = "qtbase qtdeclarative icu"
 
-INC_PR = "r2"
+INC_PR = "r3"
 
 inherit qmake5
 
@@ -35,4 +35,12 @@ do_install_append() {
     install -d ${D}${libdir}
     mv ${D}/${STAGING_LIBDIR}/* ${D}${libdir}/
     rm -rf ${D}/${STAGING_LIBDIR}/
+    install -d ${D}${bindir}
+    mv ${D}/${STAGING_BINDIR}/* ${D}${bindir}/
+    rm -rf ${D}/${STAGING_BINDIR}/
 }
+
+PACKAGES += "${PN}-qmlplugins ${PN}-qmlplugins-dbg"
+
+FILES_${PN}-qmlplugins = "${libdir}/qt5/qml/QtJsonDb/qmldir ${libdir}/qt5/qml/QtJsonDb/libjsondbplugin.so"
+FILES_${PN}-qmlplugins-dbg = "${libdir}/qt5/qml/QtJsonDb/.debug"
