@@ -7,19 +7,8 @@ SRC_URI = " \
 SRC_URI[archive.md5sum] = "01305591073a76b65267f69f27d635a3"
 SRC_URI[archive.sha256sum] = "511b8da34f8e69ed24caf422964fb7ae747f3b1d8093f6b8aa2602164a475a5e"
 
-DEPENDS_append_x86 = " llvm2.8 "
-export WANT_LLVM_RELEASE = "2.8"
-
-DRIDRIVERS_append_x86 = ",radeon"
-DRIDRIVERS_append_x86-64 = ",radeon"
-GALLIUM_DRIVERS_x86 = "i915,r300,r600,swrast"
-GALLIUM_DRIVERS_x86-64 = "i915,r300,r600,swrast"
-
-EXTRA_OECONF := "${@oe_filter_out('--disable-gallium', '${EXTRA_OECONF}', d)}"
-EXTRA_OECONF := "${@oe_filter_out('--without-gallium-drivers', '${EXTRA_OECONF}', d)}"
 EXTRA_OECONF := "${@oe_filter_out('--disable-egl', '${EXTRA_OECONF}', d)}"
-EXTRA_OECONF += "--enable-gallium --with-gallium-drivers=${GALLIUM_DRIVERS}"
-EXTRA_OECONF += "--enable-gles1 --enable-gles2 --enable-openvg --enable-gallium-egl --enable-gallium-gbm --enable-gbm --enable-shared-glapi"
+EXTRA_OECONF += "--enable-gles1 --enable-gles2 --enable-openvg --enable-gbm --enable-shared-glapi"
 
 DEPENDS += "talloc"
 
