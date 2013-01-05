@@ -4,9 +4,9 @@ require qt5.inc
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffea8be556788b780"
 
-DEPENDS = "qtbase qtdeclarative qtjsondb udev bluez4 gconf" 
+DEPENDS = "qtbase qtdeclarative icu"
 
-INC_PR = "r3"
+INC_PR = "r2"
 
 inherit qmake5
 
@@ -36,16 +36,3 @@ do_install_append() {
     mv ${D}/${STAGING_LIBDIR}/* ${D}${libdir}/
     rm -rf ${D}/${STAGING_LIBDIR}/
 }
-
-PACKAGES += "${PN}-qmlplugins-dbg ${PN}-qmlplugins"
-
-FILES_${PN}-qmlplugins = " \
-                          ${libdir}/qt5/qml/*/*.so \
-                          ${libdir}/qt5/qml/*/qmldir \
-                          ${libdir}/qt5/qml/*/plugins.qmltypes \
-                         "
-
-FILES_${PN}-qmlplugins-dbg = " \
-                               ${libdir}/qt5/qml/*/.debug \
-                             "
-
