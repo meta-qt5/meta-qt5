@@ -2,7 +2,7 @@
 require recipes-graphics/directfb/directfb.inc
 
 RV = "1.6-0"
-PR = "r11"
+PR = "r13"
 
 DEPENDS += "sysfsutils virtual/libgl gstreamer gst-plugins-base"
 
@@ -14,16 +14,20 @@ EXTRA_OECONF = "\
   --enable-mesa \
   --enable-devmem \
   --enable-fbdev \
-  --with-gfxdrivers=all \
-  --with-inputdrivers=all \
   --enable-freetype=yes \
   --enable-zlib \
   --enable-gstreamer \
   --disable-sdl \
   --disable-vnc \
   --disable-x11 \
+  --with-gfxdrivers=${GFX_DRIVERS} \
+  --with-inputdrivers=${INPUT_DRIVERS} \
 "
 
+GFX_DRIVERS_x86 = "vmware,unichrome,sis315,radeon,nvidia,i810,i830,gl,gles2,ati128"
+GFX_DRIVERS_arm = "gl,gles2,omap"
+
+INPUT_DRIVERS = "all"
 LEAD_SONAME = "libdirectfb-1.6.so.0.2.0"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=dcf3c825659e82539645da41a7908589"
