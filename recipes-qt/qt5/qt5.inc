@@ -136,5 +136,6 @@ python populate_packages_prepend () {
         qtopia_split('iconengines',           'iconengine',           '^libq(.*)icon\.so$')
         qtopia_split('mediaservice',          'mediaservice',         '^lib(.*)\.so$')
         qtopia_split('playlistformats',       'playlistformat',       '^libqtmultimedia_(.*)\.so$')
+        qtopia_split('qmltooling',            'qmltooling',           '^libqmldbg_(.*)\.so$')
 }
 
