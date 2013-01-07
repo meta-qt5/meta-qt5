@@ -2,7 +2,7 @@
 require recipes-graphics/directfb/directfb.inc
 
 RV = "1.6-0"
-PR = "r13"
+PR = "r15"
 
 DEPENDS += "sysfsutils virtual/libgl gstreamer gst-plugins-base"
 
@@ -24,7 +24,7 @@ EXTRA_OECONF = "\
   --with-inputdrivers=${INPUT_DRIVERS} \
 "
 
-GFX_DRIVERS_x86 = "vmware,unichrome,sis315,radeon,nvidia,i810,i830,gl,gles2,ati128"
+GFX_DRIVERS_x86 = "vmware,sis315,nvidia,i810,i830,gl,gles2,ati128"
 GFX_DRIVERS_arm = "gl,gles2,omap"
 
 INPUT_DRIVERS = "all"
