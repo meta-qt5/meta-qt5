@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffe
 
 DEPENDS = "qtbase qtdeclarative icu ruby-native"
 
-INC_PR = "r8"
+INC_PR = "r11"
 
 inherit qmake5
 
@@ -39,7 +39,11 @@ do_install_append() {
     rm -rf ${D}/${STAGING_LIBDIR}/
 }
 
-PACKAGES += "${PN}-qmlplugins-dbg ${PN}-qmlplugins"
+PACKAGES = "${PN}-dbg ${PN}-dev ${PN}-qmlplugins-dbg ${PN}-qmlplugins ${PN}-widgets ${PN}-lib ${PN}-bin"
+
+FILES_${PN}-widgets = "${libdir}/*WebKitWidgets.so.*"
+FILES_${PN}-lib = "${libdir}/*WebKit.so.*"
+FILES_${PN}-bin = "/usr/libexec/QtWebPluginProcess /usr/libexec/QtWebProcess"
 
 FILES_${PN}-qmlplugins = " \
                           ${libdir}/qt5/qml/QtWebKit/libqmlwebkitplugin.so \

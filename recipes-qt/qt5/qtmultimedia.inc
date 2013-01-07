@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffe
 
 DEPENDS = "qtbase qtdeclarative gstreamer alsa-lib "
 
-INC_PR = "r8"
+INC_PR = "r11"
 
 inherit qmake5
 
@@ -35,7 +35,14 @@ do_install_append() {
     rm -rf ${D}/${STAGING_LIBDIR}/
 }
 
-PACKAGES += "${PN}-qmlplugins-dbg ${PN}-qmlplugins"
+PACKAGES = "${PN}-dbg ${PN}-dev ${PN}-lib ${PN}-qmlplugins-dbg ${PN}-qmlplugins ${PN}-widgets ${PN}-gsttools ${PN}-quick ${PN}-quick-p"
+
+FILES_${PN}-lib = "${libdir}/*Multimedia.so.*"
+FILES_${PN}-widgets = "${libdir}/*MultimediaWidgets.so.*"
+FILES_${PN}-gsttools = "${libdir}/libqgsttools_p.so.*"
+FILES_${PN}-quick = "${libdir}/*MultimediaQuick.so.*"
+FILES_${PN}-quick-p = "${libdir}/*MultimediaQuick_p.so.*"
+
 
 FILES_${PN}-qmlplugins = " \
                            ${libdir}/qt5/qml/QtMultimedia/qmldir \
