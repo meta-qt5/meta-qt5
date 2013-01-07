@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffe
 
 DEPENDS = "qtbase qtdeclarative gstreamer alsa-lib "
 
-INC_PR = "r6"
+INC_PR = "r8"
 
 inherit qmake5
 
@@ -34,9 +34,6 @@ do_install_append() {
     mv ${D}/${STAGING_LIBDIR}/* ${D}${libdir}/
     rm -rf ${D}/${STAGING_LIBDIR}/
 }
-
-FILES_${PN}-plugins = "/usr/lib/qt5/plugins/*/*.so"
-FILES_${PN}-plugins-dbg = "/usr/lib/qt5/plugins/*/.debug"
 
 PACKAGES += "${PN}-qmlplugins-dbg ${PN}-qmlplugins"
 

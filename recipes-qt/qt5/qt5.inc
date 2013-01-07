@@ -2,6 +2,9 @@
 
 inherit qmake5_base
 
+QT_DIR_NAME = "qt5"
+QT_BASE_NAME = "qt5"
+
 # Qt5 is dependent on icu for localization
 ICU = "icu "
 ICU_powerpc = "pango"
@@ -86,14 +89,52 @@ do_install() {
     oe_runmake install INSTALL_ROOT=${D}
 }
 
-PACKAGES =. "${PN}-tools ${PN}-plugins ${PN}-plugins-dbg "
-FILES_${PN}-tools = "${bindir}/*"
-FILES_${PN}-plugins = "${libdir}/${QT_DIR_NAME}/plugins/*/*${SOLIBSDEV}"
-FILES_${PN}-plugins-dbg = "${libdir}/${QT_DIR_NAME}/plugins/*/.debug/*"
-
 FILES_${PN}-dev += " \
         ${libdir}/cmake/* \
         ${libdir}/*.prl \
         ${includedir}/qt5/* \
         ${datadir}/qt5/* \
 "
+
+PACKAGES_DYNAMIC = "${QT_BASE_NAME}-plugin-*"
+
+python populate_packages_prepend () {
+
+        packages = []
+        # Package all the plugins and their -dbg version and create a meta package
+        def qtopia_split(path, name, glob):
+                """
+                Split the package into a normal and -dbg package and then add the
+                new packages to the meta package.
+                """
+                plugin_dir = d.expand('${libdir}/${QT_DIR_NAME}/plugins/%s/' % path)
+                if not os.path.exists("%s%s" % (d.expand('${D}'), plugin_dir)):
+                        bb.note("The path does not exist:", d.expand('${D}'), plugin_dir)
+                        return
+
+                plugin_name = d.expand('${QT_BASE_NAME}-plugin-%s-%%s' % name)
+                dev_packages = []
+                dev_hook = lambda file,pkg,b,c,d:dev_packages.append((file,pkg))
+                do_split_packages(d, plugin_dir, glob, plugin_name, '${PN} %s for %%s' % name, extra_depends='', hook=dev_hook)
+                # Create a -dbg package as well
+                plugin_dir_dbg = d.expand('${libdir}/${QT_DIR_NAME}/plugins/%s/.debug' % path)
+                packages = d.getVar('PACKAGES')
+                for (file,package) in dev_packages:
+                        packages = "%s %s-dbg" % (packages, package)
+                        file_name = os.path.join(plugin_dir_dbg, os.path.basename(file))
+                        d.setVar("FILES_%s-dbg" % package, file_name)
+                        d.setVar("DESCRIPTION_%s-dbg" % package, "${PN} %s for %s" % (name, package))
+
+                d.setVar('PACKAGES', packages)
+
+        qtopia_split('imageformats',          'imageformat',          '^libq(.*)\.so$')
+        qtopia_split('sqldrivers',            'sqldriver',            '^libq(.*)\.so$')
+        qtopia_split('bearer',                'bearer',               '^libq(.*)\.so$')
+        qtopia_split('platforms',             'platform',             '^libq(.*)\.so$')
+        qtopia_split('platforminputcontexts', 'platforminputcontext', '^lib(.*)platforminputcontextplugin\.so$')
+        qtopia_split('generic',               'generic',              '^libq(.*)\.so$')
+        qtopia_split('iconengines',           'iconengine',           '^libq(.*)icon\.so$')
+        qtopia_split('mediaservice',          'mediaservice',         '^lib(.*)\.so$')
+        qtopia_split('playlistformats',       'playlistformat',       '^libqtmultimedia_(.*)\.so$')
+}
+

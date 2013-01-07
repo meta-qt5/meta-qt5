@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffe
 
 DEPENDS = "qtbase"
 
-INC_PR = "r3"
+INC_PR = "r4"
 
 inherit qmake5
 
@@ -27,13 +27,3 @@ do_configure () {
     ${OE_QMAKE_QMAKE} -r -d
 }
 
-#do_install_append() {
-#    ### Fix up the libraries to the right location
-#    ### TODO: FIX
-#    install -d ${D}${libdir}
-#    mv ${D}/${STAGING_LIBDIR}/* ${D}${libdir}/
-#    rm -rf ${D}/${STAGING_LIBDIR}/
-#}
-
-FILES_${PN}-plugins = "${libdir}/qt5/plugins/imageformats/*.so"
-FILES_${PN}-plugins-dbg = "${libdir}/qt5/plugins/imageformats/.debug"
