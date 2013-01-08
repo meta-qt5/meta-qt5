@@ -1,9 +1,11 @@
 # Copyright (C) 2012 O.S. Systems Software LTDA.
 # Copyright (C) 2013 Martin Jansa <martin.jansa@gmail.com>
 
+QT_MODULE_BRANCH ?= "stable"
+
 # each module needs to define valid SRCREV
 SRC_URI += " \
-    git://qt.gitorious.org/qt/${QT_MODULE}.git;branch=stable \
+    git://qt.gitorious.org/qt/${QT_MODULE}.git;branch=${QT_MODULE_BRANCH} \
 "
 
 S = "${WORKDIR}/git"
