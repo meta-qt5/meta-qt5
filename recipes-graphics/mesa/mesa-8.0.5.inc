@@ -8,6 +8,9 @@ SRC_URI = " \
 SRC_URI[archive.md5sum] = "01305591073a76b65267f69f27d635a3"
 SRC_URI[archive.sha256sum] = "511b8da34f8e69ed24caf422964fb7ae747f3b1d8093f6b8aa2602164a475a5e"
 
+PROVIDES += "virtual/libgl virtual/libegl virtual/libgles1 virtual/libgles2"
+PROVIDES += "gl-dev egl-dev libgles1-dev libgles2-dev"
+
 EXTRA_OECONF := "${@oe_filter_out('--disable-egl', '${EXTRA_OECONF}', d)}"
 EXTRA_OECONF += "--enable-gles1 --enable-gles2 --enable-gbm --enable-shared-glapi"
 

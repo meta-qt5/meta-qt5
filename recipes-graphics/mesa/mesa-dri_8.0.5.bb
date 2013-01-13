@@ -3,7 +3,7 @@ require recipes-graphics/mesa/mesa-common.inc
 require recipes-graphics/mesa/mesa-dri.inc
 require mesa-${PV}.inc
 
-PR = "${INC_PR}.30"
+PR = "${INC_PR}.31"
 
 DEPENDS_append_x86 = " llvm2.8 "
 export WANT_LLVM_RELEASE = "2.8"
