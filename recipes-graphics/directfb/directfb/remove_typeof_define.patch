@@ -1,0 +1,15 @@
+X-Git-Url: http://git.directfb.org/?p=core%2FDirectFB.git;a=blobdiff_plain;f=lib%2Fdirect%2Fos%2Flinux%2Fglibc%2Ftypes.h;h=55c570b4573a218a7364e0c5a3c0eee98d11c32f;hp=acbfd5819446d9d7887239444db6e5982080d0e9;hb=e3f6c37e75196b5e76102b08c87cf290f6726a03;hpb=874dd4c7e6afd60b549a69d6b3a49fcac58cacbb
+
+diff --git a/lib/direct/os/linux/glibc/types.h b/lib/direct/os/linux/glibc/types.h
+index acbfd58..55c570b 100644
+--- a/lib/direct/os/linux/glibc/types.h
++++ b/lib/direct/os/linux/glibc/types.h
+@@ -77,7 +77,7 @@ typedef int64_t s64;
+ #define __no_instrument_function__      __attribute__((no_instrument_function))
+ #define __constructor__                 __attribute__((constructor))
+ #define __destructor__                  __attribute__((destructor))
+-#define __typeof__(x)                   typeof(x)
++/*#define __typeof__(x)                   __typeof__(x)*/
+ 
+ #ifndef __func__
+ #define __func__                        __FUNCTION__

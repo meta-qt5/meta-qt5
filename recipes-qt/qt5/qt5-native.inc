@@ -4,7 +4,7 @@ SECTION = "libs"
 HOMEPAGE = "http://qt-project.org"
 PROVIDES = "qt5-tools-native"
 
-INC_PR = "r0"
+INC_PR = "r5"
 
 inherit native
 
@@ -58,6 +58,10 @@ do_configure() {
 }
 
 do_install() {
+#        oe_runmake install INSTALL_ROOT=${D}
+        pushd ${S}/src/corelib; oe_runmake install INSTALL_ROOT=${D};popd
+        pushd ${S}/src/network; oe_runmake install INSTALL_ROOT=${D};popd
+        pushd ${S}/src/testlib; oe_runmake install INSTALL_ROOT=${D};popd
 	install -d ${D}${bindir}/
 	for i in findtr fixqt4headers.pl moc qdoc qmake rcc qdbuscpp2xml qdbusxml2cpp syncqt uic; do
 		install -v -m 0755 bin/${i} ${D}${bindir}/${i}

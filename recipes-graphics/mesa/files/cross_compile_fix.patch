@@ -1,0 +1,478 @@
+From 7649af5e0a6d7ff7b5b43774378409edc4128584 Mon Sep 17 00:00:00 2001
+From: Thierry Reding <thierry.reding@avionic-design.de>
+Date: Fri, 13 Jan 2012 09:29:18 +0100
+Subject: [PATCH] Don't cross-compile src/glsl/builtin_compiler.
+
+The builtin_compiler binary is used during the build process to generate
+code for the builtin GLSL functions. Since this binary needs to be run
+on the build host, it must not be cross-compiled.
+
+This patch fixes the build system to compile a second version of the
+source files and the builtin_compiler binary itself for the build
+system. It does so by defining the CC_FOR_BUILD and CXX_FOR_BUILD
+variables, which are searched for by the configure script and point to
+the location of native C and C++ compilers.
+
+Signed-off-by: Thierry Reding <thierry.reding@avionic-design.de>
+---
+ autogen.sh                  |    2 +-
+ configs/autoconf.in         |    5 ++
+ configure.ac                |    6 ++-
+ m4/ax_prog_cc_for_build.m4  |  140 +++++++++++++++++++++++++++++++++++++++++++
+ m4/ax_prog_cxx_for_build.m4 |  123 +++++++++++++++++++++++++++++++++++++
+ src/glsl/Makefile           |   48 ++++++++++++---
+ 6 files changed, 312 insertions(+), 12 deletions(-)
+ create mode 100644 m4/ax_prog_cc_for_build.m4
+ create mode 100644 m4/ax_prog_cxx_for_build.m4
+
+diff --git a/autogen.sh b/autogen.sh
+index b5f6ec4..7cd1a81 100755
+--- a/autogen.sh
++++ b/autogen.sh
+@@ -13,7 +13,7 @@ fi
+ 
+ MAKEFLAGS=""
+ 
+-autoreconf -v --install || exit 1
++autoreconf -v -I m4 --install || exit 1
+ 
+ if test -z "$NOCONFIGURE"; then
+     "$srcdir"/configure "$@"
+diff --git a/configs/autoconf.in b/configs/autoconf.in
+index 9ea7588..cd5b437 100644
+--- a/configs/autoconf.in
++++ b/configs/autoconf.in
+@@ -8,7 +8,9 @@ CONFIG_NAME = autoconf
+ 
+ # Compiler and flags
+ CC = @CC@
++CC_FOR_BUILD = @CC_FOR_BUILD@
+ CXX = @CXX@
++CXX_FOR_BUILD = @CXX_FOR_BUILD@
+ OPT_FLAGS = @OPT_FLAGS@
+ ARCH_FLAGS = @ARCH_FLAGS@
+ ASM_FLAGS = @ASM_FLAGS@
+@@ -21,8 +23,11 @@ CFLAGS_NOVISIBILITY = @CPPFLAGS@ @CFLAGS@ \
+ CXXFLAGS_NOVISIBILITY = @CPPFLAGS@ @CXXFLAGS@ \
+ 	$(OPT_FLAGS) $(PIC_FLAGS) $(ARCH_FLAGS) $(DEFINES)
+ CFLAGS = $(CFLAGS_NOVISIBILITY) @VISIBILITY_CFLAGS@
++CFLAGS_FOR_BUILD = @CFLAGS_FOR_BUILD@
+ CXXFLAGS = $(CXXFLAGS_NOVISIBILITY) @VISIBILITY_CXXFLAGS@
++CXXFLAGS_FOR_BUILD = @CXXFLAGS_FOR_BUILD@
+ LDFLAGS = @LDFLAGS@
++LDFLAGS_FOR_BUILD = @LDFLAGS_FOR_BUILD@
+ EXTRA_LIB_PATH = @EXTRA_LIB_PATH@
+ RADEON_CFLAGS = @RADEON_CFLAGS@
+ RADEON_LIBS = @RADEON_LIBS@
+diff --git a/configure.ac b/configure.ac
+index 7c50e3c..98fca9c 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -14,8 +14,9 @@ See docs/autoconf.html for more details on the options for Mesa.])
+ 
+ AC_INIT([Mesa],[mesa_version],
+     [https://bugs.freedesktop.org/enter_bug.cgi?product=Mesa])
++AC_CONFIG_MACRO_DIR([m4])
+ AC_CONFIG_AUX_DIR([bin])
+-AC_CANONICAL_HOST
++AC_CANONICAL_SYSTEM
+ AM_INIT_AUTOMAKE([foreign])
+ 
+ dnl Save user CFLAGS and CXXFLAGS so one can override the default ones
+@@ -41,6 +42,9 @@ AC_CHECK_PROGS([PYTHON2], [python2 python])
+ AC_PROG_SED
+ AC_PATH_PROG([MKDEP], [makedepend])
+ 
++AX_PROG_CC_FOR_BUILD
++AX_PROG_CXX_FOR_BUILD
++
+ if test "x$MKDEP" = "x"; then
+     AC_MSG_ERROR([makedepend is required to build Mesa])
+ fi
+diff --git a/m4/ax_prog_cc_for_build.m4 b/m4/ax_prog_cc_for_build.m4
+new file mode 100644
+index 0000000..08095a8
+--- /dev/null
++++ b/m4/ax_prog_cc_for_build.m4
+@@ -0,0 +1,140 @@
++# ===========================================================================
++#   http://www.gnu.org/software/autoconf-archive/ax_prog_cc_for_build.html
++# ===========================================================================
++#
++# SYNOPSIS
++#
++#   AX_PROG_CC_FOR_BUILD
++#
++# DESCRIPTION
++#
++#   This macro searches for a C compiler that generates native executables,
++#   that is a C compiler that surely is not a cross-compiler. This can be
++#   useful if you have to generate source code at compile-time like for
++#   example GCC does.
++#
++#   The macro sets the CC_FOR_BUILD and CPP_FOR_BUILD macros to anything
++#   needed to compile or link (CC_FOR_BUILD) and preprocess (CPP_FOR_BUILD).
++#   The value of these variables can be overridden by the user by specifying
++#   a compiler with an environment variable (like you do for standard CC).
++#
++#   It also sets BUILD_EXEEXT and BUILD_OBJEXT to the executable and object
++#   file extensions for the build platform, and GCC_FOR_BUILD to `yes' if
++#   the compiler we found is GCC. All these variables but GCC_FOR_BUILD are
++#   substituted in the Makefile.
++#
++# LICENSE
++#
++#   Copyright (c) 2008 Paolo Bonzini <bonzini@gnu.org>
++#
++#   Copying and distribution of this file, with or without modification, are
++#   permitted in any medium without royalty provided the copyright notice
++#   and this notice are preserved. This file is offered as-is, without any
++#   warranty.
++
++#serial 5
++
++AU_ALIAS([AC_PROG_CC_FOR_BUILD], [AX_PROG_CC_FOR_BUILD])
++AC_DEFUN([AX_PROG_CC_FOR_BUILD], [dnl
++AC_REQUIRE([AC_PROG_CC])dnl
++AC_REQUIRE([AC_PROG_CPP])dnl
++AC_REQUIRE([AC_EXEEXT])dnl
++AC_REQUIRE([AC_CANONICAL_SYSTEM])dnl
++dnl
++pushdef([AC_TRY_COMPILER], [
++cat > conftest.$ac_ext << EOF
++#line __oline__ "configure"
++#include "confdefs.h"
++[$1]
++EOF
++# If we can't run a trivial program, we are probably using a cross
++compiler.
++# Fail miserably.
++if AC_TRY_EVAL(ac_link) && test -s conftest${ac_exeext} && (./conftest;
++exit) 2>/dev/null; then
++  [$2]=yes
++else
++  echo "configure: failed program was:" >&AC_FD_CC
++  cat conftest.$ac_ext >&AC_FD_CC
++  [$2]=no
++fi
++[$3]=no
++rm -fr conftest*])dnl
++
++dnl Use the standard macros, but make them use other variable names
++dnl
++pushdef([cross_compiling], [#])dnl
++pushdef([ac_cv_prog_CPP], ac_cv_build_prog_CPP)dnl
++pushdef([ac_cv_prog_gcc], ac_cv_build_prog_gcc)dnl
++pushdef([ac_cv_prog_cc_works], ac_cv_build_prog_cc_works)dnl
++pushdef([ac_cv_prog_cc_cross], ac_cv_build_prog_cc_cross)dnl
++pushdef([ac_cv_prog_cc_g], ac_cv_build_prog_cc_g)dnl
++pushdef([ac_cv_exeext], ac_cv_build_exeext)dnl
++pushdef([ac_cv_objext], ac_cv_build_objext)dnl
++pushdef([ac_exeext], ac_build_exeext)dnl
++pushdef([ac_objext], ac_build_objext)dnl
++pushdef([CC], CC_FOR_BUILD)dnl
++pushdef([CPP], CPP_FOR_BUILD)dnl
++pushdef([CFLAGS], CFLAGS_FOR_BUILD)dnl
++pushdef([CPPFLAGS], CPPFLAGS_FOR_BUILD)dnl
++pushdef([LDFLAGS], LDFLAGS_FOR_BUILD)dnl
++pushdef([host], build)dnl
++pushdef([host_alias], build_alias)dnl
++pushdef([host_cpu], build_cpu)dnl
++pushdef([host_vendor], build_vendor)dnl
++pushdef([host_os], build_os)dnl
++pushdef([ac_cv_host], ac_cv_build)dnl
++pushdef([ac_cv_host_alias], ac_cv_build_alias)dnl
++pushdef([ac_cv_host_cpu], ac_cv_build_cpu)dnl
++pushdef([ac_cv_host_vendor], ac_cv_build_vendor)dnl
++pushdef([ac_cv_host_os], ac_cv_build_os)dnl
++pushdef([ac_cpp], ac_build_cpp)dnl
++pushdef([ac_compile], ac_build_compile)dnl
++pushdef([ac_link], ac_build_link)dnl
++pushdef([ac_tool_prefix], [#])dnl
++
++AC_PROG_CC
++AC_PROG_CPP
++AC_EXEEXT
++
++dnl Restore the old definitions
++dnl
++popdef([AC_TRY_COMPILER])dnl
++popdef([ac_tool_prefix])dnl
++popdef([ac_link])dnl
++popdef([ac_compile])dnl
++popdef([ac_cpp])dnl
++popdef([ac_cv_host_os])dnl
++popdef([ac_cv_host_vendor])dnl
++popdef([ac_cv_host_cpu])dnl
++popdef([ac_cv_host_alias])dnl
++popdef([ac_cv_host])dnl
++popdef([host_os])dnl
++popdef([host_vendor])dnl
++popdef([host_cpu])dnl
++popdef([host_alias])dnl
++popdef([host])dnl
++popdef([CPPFLAGS])dnl
++popdef([CFLAGS])dnl
++popdef([CPP])dnl
++popdef([CC])dnl
++popdef([ac_objext])dnl
++popdef([ac_exeext])dnl
++popdef([ac_cv_objext])dnl
++popdef([ac_cv_exeext])dnl
++popdef([ac_cv_prog_cc_g])dnl
++popdef([ac_cv_prog_cc_works])dnl
++popdef([ac_cv_prog_cc_cross])dnl
++popdef([ac_cv_prog_gcc])dnl
++popdef([cross_compiling])dnl
++
++dnl Finally, set Makefile variables
++dnl
++BUILD_EXEEXT=$ac_build_exeext
++BUILD_OBJEXT=$ac_build_objext
++AC_SUBST(BUILD_EXEEXT)dnl
++AC_SUBST(BUILD_OBJEXT)dnl
++AC_SUBST([CFLAGS_FOR_BUILD])dnl
++AC_SUBST([CPPFLAGS_FOR_BUILD])dnl
++AC_SUBST([LDFLAGS_FOR_BUILD])dnl
++])
+diff --git a/m4/ax_prog_cxx_for_build.m4 b/m4/ax_prog_cxx_for_build.m4
+new file mode 100644
+index 0000000..4a099f9
+--- /dev/null
++++ b/m4/ax_prog_cxx_for_build.m4
+@@ -0,0 +1,123 @@
++# ===========================================================================
++#   http://www.gnu.org/software/autoconf-archive/ax_prog_cxx_for_build.html
++# ===========================================================================
++#
++# SYNOPSIS
++#
++#   AX_PROG_CXX_FOR_BUILD
++#
++# DESCRIPTION
++#
++#   This macro searches for a C++ compiler that generates native executables,
++#   that is a C++ compiler that surely is not a cross-compiler. This can be
++#   useful if you have to generate source code at compile-time like for
++#   example GCC does.
++#
++#   The macro sets the CXX_FOR_BUILD and CXXCPP_FOR_BUILD macros to anything
++#   needed to compile or link (CXX_FOR_BUILD) and preprocess (CXXCPP_FOR_BUILD).
++#   The value of these variables can be overridden by the user by specifying
++#   a compiler with an environment variable (like you do for standard CXX).
++#
++# LICENSE
++#
++#   Copyright (c) 2008 Paolo Bonzini <bonzini@gnu.org>
++#   Copyright (c) 2012 Avionic Design GmbH
++#
++#   Based on the AX_PROG_CC_FOR_BUILD macro by Paolo Bonzini.
++#
++#   Copying and distribution of this file, with or without modification, are
++#   permitted in any medium without royalty provided the copyright notice
++#   and this notice are preserved. This file is offered as-is, without any
++#   warranty.
++
++#serial 5
++
++AU_ALIAS([AC_PROG_CXX_FOR_BUILD], [AX_PROG_CXX_FOR_BUILD])
++AC_DEFUN([AX_PROG_CXX_FOR_BUILD], [dnl
++AC_REQUIRE([AX_PROG_CC_FOR_BUILD])dnl
++AC_REQUIRE([AC_PROG_CXX])dnl
++AC_REQUIRE([AC_PROG_CXXCPP])dnl
++AC_REQUIRE([AC_CANONICAL_SYSTEM])dnl
++dnl
++pushdef([AC_TRY_COMPILER], [
++cat > conftest.$ac_ext << EOF
++#line __oline__ "configure"
++#include "confdefs.h"
++[$1]
++EOF
++# If we can't run a trivial program, we are probably using a cross
++compiler.
++# Fail miserably.
++if AC_TRY_EVAL(ac_link) && test -s conftest${ac_exeext} && (./conftest;
++exit) 2>/dev/null; then
++  [$2]=yes
++else
++  echo "configure: failed program was:" >&AC_FD_CC
++  cat conftest.$ac_ext >&AC_FD_CC
++  [$2]=no
++fi
++[$3]=no
++rm -fr conftest*])dnl
++
++dnl Use the standard macros, but make them use other variable names
++dnl
++pushdef([cross_compiling], [#])dnl
++pushdef([ac_cv_prog_CXXCPP], ac_cv_build_prog_CXXCPP)dnl
++pushdef([ac_cv_prog_gxx], ac_cv_build_prog_gxx)dnl
++pushdef([ac_cv_prog_cxx_works], ac_cv_build_prog_cxx_works)dnl
++pushdef([ac_cv_prog_cxx_cross], ac_cv_build_prog_cxx_cross)dnl
++pushdef([ac_cv_prog_cxx_g], ac_cv_build_prog_cxx_g)dnl
++pushdef([CXX], CXX_FOR_BUILD)dnl
++pushdef([CXXCPP], CXXCPP_FOR_BUILD)dnl
++pushdef([CXXFLAGS], CXXFLAGS_FOR_BUILD)dnl
++pushdef([CXXCPPFLAGS], CXXCPPFLAGS_FOR_BUILD)dnl
++pushdef([host], build)dnl
++pushdef([host_alias], build_alias)dnl
++pushdef([host_cpu], build_cpu)dnl
++pushdef([host_vendor], build_vendor)dnl
++pushdef([host_os], build_os)dnl
++pushdef([ac_cv_host], ac_cv_build)dnl
++pushdef([ac_cv_host_alias], ac_cv_build_alias)dnl
++pushdef([ac_cv_host_cpu], ac_cv_build_cpu)dnl
++pushdef([ac_cv_host_vendor], ac_cv_build_vendor)dnl
++pushdef([ac_cv_host_os], ac_cv_build_os)dnl
++pushdef([ac_cxxcpp], ac_build_cxxcpp)dnl
++pushdef([ac_compile], ac_build_compile)dnl
++pushdef([ac_link], ac_build_link)dnl
++pushdef([ac_tool_prefix], [#])dnl
++
++AC_PROG_CXX
++AC_PROG_CXXCPP
++
++dnl Restore the old definitions
++dnl
++popdef([AC_TRY_COMPILER])dnl
++popdef([ac_tool_prefix])dnl
++popdef([ac_link])dnl
++popdef([ac_compile])dnl
++popdef([ac_cxxcpp])dnl
++popdef([ac_cv_host_os])dnl
++popdef([ac_cv_host_vendor])dnl
++popdef([ac_cv_host_cpu])dnl
++popdef([ac_cv_host_alias])dnl
++popdef([ac_cv_host])dnl
++popdef([host_os])dnl
++popdef([host_vendor])dnl
++popdef([host_cpu])dnl
++popdef([host_alias])dnl
++popdef([host])dnl
++popdef([CXXCPPFLAGS])dnl
++popdef([CXXFLAGS])dnl
++popdef([CXXCPP])dnl
++popdef([CXX])dnl
++popdef([ac_cv_prog_cxx_g])dnl
++popdef([ac_cv_prog_cxx_works])dnl
++popdef([ac_cv_prog_cxx_cross])dnl
++popdef([ac_cv_prog_gxx])dnl
++popdef([cross_compiling])dnl
++
++dnl Finally, set Makefile variables
++dnl
++AC_SUBST([CXXFLAGS_FOR_BUILD])dnl
++AC_SUBST([CXXCPPFLAGS_FOR_BUILD])dnl
++])
+diff --git a/src/glsl/Makefile b/src/glsl/Makefile
+index d9ecbc8..25a7278 100644
+--- a/src/glsl/Makefile
++++ b/src/glsl/Makefile
+@@ -9,6 +9,12 @@ LIBNAME = glsl
+ 
+ include Makefile.sources
+ 
++MESA_PROGRAM_SYMLINKS = \
++	hash_table.c \
++	hash_table.h \
++	symbol_table.c \
++	symbol_table.h
++
+ GLCPP_SOURCES = \
+ 	$(LIBGLCPP_GENERATED_SOURCES) \
+ 	$(LIBGLCPP_SOURCES) \
+@@ -31,8 +37,8 @@ LIBS = \
+ APPS = glsl_compiler glsl_test glcpp/glcpp
+ 
+ GLSL2_C_SOURCES = \
+-	../mesa/program/hash_table.c \
+-	../mesa/program/symbol_table.c
++	hash_table.c \
++	symbol_table.c
+ GLSL2_CXX_SOURCES = \
+ 	$(GLSL_COMPILER_CXX_SOURCES)
+ 
+@@ -41,8 +47,8 @@ GLSL2_OBJECTS = \
+ 	$(GLSL2_CXX_SOURCES:.cpp=.o)
+ 
+ TEST_C_SOURCES = \
+-	../mesa/program/hash_table.c \
+-	../mesa/program/symbol_table.c
++	hash_table.c \
++	symbol_table.c
+ 
+ TEST_CXX_SOURCES = \
+ 	standalone_scaffolding.cpp \
+@@ -61,7 +67,7 @@ DEFINES += \
+ 
+ GLCPP_OBJECTS = \
+ 	$(GLCPP_SOURCES:.c=.o) \
+-	../mesa/program/hash_table.o
++	hash_table.o
+ 
+ OBJECTS = \
+ 	$(C_SOURCES:.c=.o) \
+@@ -70,6 +76,12 @@ OBJECTS = \
+ DRICORE_OBJ_DIR = obj-visible
+ OBJECTS_DRICORE = $(addprefix $(DRICORE_OBJ_DIR)/,$(OBJECTS))
+ 
++BUILD_TOOLS_DIR = build-tools
++OBJECTS_BUILD = \
++	$(addprefix $(BUILD_TOOLS_DIR)/,$(OBJECTS)) \
++	$(addprefix $(BUILD_TOOLS_DIR)/,$(GLSL2_OBJECTS)) \
++	$(addprefix $(BUILD_TOOLS_DIR)/,builtin_stubs.o)
++
+ INCLUDES = \
+ 	-I. \
+ 	-I../mesa \
+@@ -106,7 +118,9 @@ depend: $(ALL_SOURCES) Makefile
+ 
+ # Remove .o and backup files
+ clean: clean-dricore
+-	rm -f $(GLCPP_OBJECTS) $(GLSL2_OBJECTS) $(TEST_OBJECTS) $(OBJECTS) lib$(LIBNAME).a depend depend.bak builtin_function.cpp builtin_function.o builtin_stubs.o builtin_compiler
++	rm -f $(GLCPP_OBJECTS) $(GLSL2_OBJECTS) $(TEST_OBJECTS) $(OBJECTS) lib$(LIBNAME).a depend depend.bak builtin_function.cpp builtin_function.o
++	rm -f $(OBJECTS_BUILD) $(BUILD_TOOLS_DIR)/builtin_compiler $(SYMLINKS)
++	rmdir $(BUILD_TOOLS_DIR)/glcpp $(BUILD_TOOLS_DIR)
+ 	-rm -f $(APPS)
+ 
+ clean-dricore:
+@@ -126,6 +140,9 @@ install-dricore: default
+ 
+ ##### RULES #####
+ 
++$(MESA_PROGRAM_SYMLINKS): %: ../mesa/program/%
++	ln -s $< $@
++
+ glsl_compiler: $(GLSL2_OBJECTS) libglsl.a
+ 	$(APP_CXX) $(INCLUDES) $(CFLAGS) $(LDFLAGS) $(GLSL2_OBJECTS) $(LIBS) -o $@
+ 
+@@ -162,11 +179,22 @@ glcpp/glcpp-lex.c: glcpp/glcpp-lex.l
+ glcpp/glcpp-parse.c: glcpp/glcpp-parse.y
+ 	$(BISON) -v -o "$@" --defines=glcpp/glcpp-parse.h $<
+ 
+-builtin_compiler: $(GLSL2_OBJECTS) $(OBJECTS) builtin_stubs.o
+-	$(APP_CXX) $(INCLUDES) $(CXXFLAGS) $(LDFLAGS) $(OBJECTS) $(GLSL2_OBJECTS) builtin_stubs.o -o $@
++$(BUILD_TOOLS_DIR)/%.o: %.c
++	@mkdir -p $(dir $@)
++	$(CC_FOR_BUILD) $(INCLUDES) $(CFLAGS_FOR_BUILD) -o $@ -c $<
++
++$(BUILD_TOOLS_DIR)/%.o: %.cpp
++	@mkdir -p $(dir $@)
++	$(CXX_FOR_BUILD) $(INCLUDES) $(CXXFLAGS_FOR_BUILD) -o $@ -c $<
++
++$(BUILD_TOOLS_DIR)/builtin_compiler: $(OBJECTS_BUILD)
++	$(CXX_FOR_BUILD) $(INCLUDES) $(CXXFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) $(OBJECTS_BUILD) -o $@
+ 
+-builtin_function.cpp: builtins/profiles/* builtins/ir/* builtins/tools/generate_builtins.py builtins/tools/texture_builtins.py builtin_compiler
++builtin_function.cpp: builtins/profiles/* builtins/ir/* builtins/tools/generate_builtins.py builtins/tools/texture_builtins.py $(BUILD_TOOLS_DIR)/builtin_compiler
+ 	@echo Regenerating builtin_function.cpp...
+-	$(PYTHON2) $(PYTHON_FLAGS) builtins/tools/generate_builtins.py ./builtin_compiler > builtin_function.cpp || rm -f builtin_function.cpp
++	$(PYTHON2) $(PYTHON_FLAGS) builtins/tools/generate_builtins.py $(BUILD_TOOLS_DIR)/builtin_compiler > builtin_function.cpp || rm -f builtin_function.cpp
++
++symbol_table.o $(BUILD_TOOLS_DIR)/symbol_table.o: symbol_table.h
++hash_table.o $(BUILD_TOOLS_DIR)/hash_table.o: hash_table.h
+ 
+ -include depend
+-- 
+1.7.8.3
+

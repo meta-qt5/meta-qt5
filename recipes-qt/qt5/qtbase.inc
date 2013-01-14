@@ -8,20 +8,20 @@ SRC_URI += " \
   file://qplatformdefs.h \
 "
 
-DEPENDS += "qt5-tools-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}"
+DEPENDS += "qt5-tools-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}" 
+DEPENDS += "dbus" 
+DEPENDS += "directfb"
+DEPENDS += "libxcb"
 
-# to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h and dbus/dbus.h
-# DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
-# reenable when we switch to "-qt-xcb" and build of 
-# src/platformsupport/glxconvenience/ is resolved to be before build of
-# src/plugins/platforms/xcb/
+#FIXME: right now Mesa in oe-core denzil doesn't provide gles, master does.
+QT_GLFLAGS = "-opengl es2"
 
-QT_MODULE_FLAGS = "-no-xcb"
+QT_MODULE_FLAGS += "-no-gtkstyle -qt-xcb"
 
-INC_PR = "r0"
+#FIXME: we need libxi 1.6 to get this, but its not in oe-core denzil yet.
+QT_MODULE_FLAGS += "-no-xinput2"
 
-QT_BASE_NAME = "qt5"
-QT_DIR_NAME = "qt5"
+INC_PR = "r23"
 
 # Qt uses atomic instructions not supported in thumb mode
 ARM_INSTRUCTION_SET = "arm"
@@ -65,6 +65,7 @@ do_configure_append() {
     echo "Headers=${includedir}/${QT_DIR_NAME}"                 >> $QT_CONF_PATH
     echo "Documentation=${docdir}/${QT_DIR_NAME}"               >> $QT_CONF_PATH
     echo "Libraries=${libdir}"                                  >> $QT_CONF_PATH
+    echo "LibraryExecutables=${libexecdir}"                     >> $QT_CONF_PATH
     echo "Plugins=${libdir}/${QT_DIR_NAME}/plugins"             >> $QT_CONF_PATH
     echo "Data=${datadir}/${QT_DIR_NAME}"                       >> $QT_CONF_PATH
     echo "Translations=${datadir}/${QT_DIR_NAME}/translations"  >> $QT_CONF_PATH
@@ -79,6 +80,7 @@ do_configure_append() {
         -prefix ${prefix} \
         -bindir ${bindir} \
         -libdir ${libdir} \
+        -libexecdir ${libexecdir} \
         -datadir ${datadir}/${QT_DIR_NAME} \
         -sysconfdir ${sysconfdir}/${QT_DIR_NAME} \
         -docdir ${docdir}/${QT_DIR_NAME} \
@@ -124,5 +126,30 @@ do_install_append() {
     install -m 0755 bin/qmake2 ${D}${bindir}/qmake
 }
 
-PACKAGES =. "${PN}-fonts "
+PACKAGES = "${PN}-staticdev ${PN}-dev ${PN}-dbg ${PN}-doc ${PN}-gui ${PN}-concurrent ${PN}-core ${PN}-network ${PN}-widgets ${PN}-sql ${PN}-test ${PN}-dbus ${PN}-printsupport ${PN}-xml ${PN}-opengl"
+FILES_${PN}-gui = "${libdir}/*Gui.so.*"
+FILES_${PN}-concurrent = "${libdir}/*Concurrent.so.*"
+FILES_${PN}-core = "${libdir}/*Core.so.*"
+FILES_${PN}-network = "${libdir}/*Network.so.*"
+FILES_${PN}-widgets = "${libdir}/*Widgets.so.*"
+FILES_${PN}-sql = "${libdir}/*Sql.so.*"
+FILES_${PN}-test = "${libdir}/*Test.so.*"
+FILES_${PN}-dbus = "${libdir}/*DBus.so.*"
+FILES_${PN}-printsupport = "${libdir}/*PrintSupport.so.*"
+FILES_${PN}-xml = "${libdir}/*Xml.so.*"
+FILES_${PN}-opengl = "${libdir}/*OpenGL.so.*"
+
+PACKAGES += "${PN}-fonts "
 FILES_${PN}-fonts = "${libdir}/fonts"
+
+PACKAGES += "${PN}-tools"
+
+FILES_${PN}-tools += "${bindir}/*"
+
+FILES_${PN}-dbg += "/usr/src/debug ${libdir}/.debug ${bindir}/.debug"
+
+FILES_${PN}-doc += "${docdir}/${QT_DIR_NAME}/*"
+
+FILES_${PN}-staticdev += " \
+        ${libdir}/*.a \
+        "
