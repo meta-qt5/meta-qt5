@@ -42,7 +42,6 @@ QT_CONFIG_FLAGS += " \
   -glib \
   -no-pch \
   -no-rpath \
-  -no-fast \
   -pkg-config \
   ${QT_SYSTEM_LIBS} \
   ${QT_NIS} \

@@ -42,7 +42,6 @@ EXTRA_OECONF = " \
   -docdir ${docdir}/qt5 \
   -no-glib \
   -no-iconv \
-  -no-fast \
   -silent \
   -nomake examples \
   -nomake tests \
