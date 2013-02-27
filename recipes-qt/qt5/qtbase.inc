@@ -70,7 +70,7 @@ do_configure_append() {
     echo "Translations=${datadir}/${QT_DIR_NAME}/translations"  >> $QT_CONF_PATH
     echo "Settings=${sysconfdir}/${QT_DIR_NAME}"                >> $QT_CONF_PATH
     echo "Examples=${bindir}/${QT_DIR_NAME}/examples"           >> $QT_CONF_PATH
-    echo "HostBinaries=${STAGING_BINDIR_NATIVE}"                >> $QT_CONF_PATH
+    echo "HostBinaries=${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}" >> $QT_CONF_PATH
     echo "HostData=${STAGING_DATADIR}/${QT_DIR_NAME}"           >> $QT_CONF_PATH
 
     ./configure -v \

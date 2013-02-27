@@ -6,11 +6,6 @@ inherit qmake5_base
 QT5TOOLSDEPENDS ?= "qtbase-native "
 DEPENDS_prepend = "${QT5TOOLSDEPENDS}"
 
-export QMAKESPEC = "${STAGING_DATADIR}/qt5/mkspecs/${TARGET_OS}-oe-g++"
-export OE_QMAKE_UIC = "${STAGING_BINDIR_NATIVE}/uic"
-export OE_QMAKE_MOC = "${STAGING_BINDIR_NATIVE}/moc"
-export OE_QMAKE_RCC = "${STAGING_BINDIR_NATIVE}/rcc"
-export OE_QMAKE_QMAKE = "${STAGING_BINDIR_NATIVE}/qmake"
 export OE_QMAKE_LINK = "${CXX}"
 export OE_QMAKE_CXXFLAGS = "${CXXFLAGS}"
 export OE_QMAKE_INCDIR_QT = "${STAGING_INCDIR}/qt5"

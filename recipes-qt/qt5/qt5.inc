@@ -55,19 +55,11 @@ QT_CONFIG_FLAGS += " \
   ${QT_DEMOS} \
 "
 
-EXTRA_ENV = 'QMAKE="${STAGING_BINDIR_NATIVE}/qmake -d -after \
-             INCPATH+=${STAGING_INCDIR}/freetype2 LIBS+=-L${STAGING_LIBDIR}" \
-             LINK="${CXX} -Wl,-rpath-link,${STAGING_LIBDIR}" \
-             AR="${TARGET_PREFIX}ar cqs" \
-             MOC="${STAGING_BINDIR_NATIVE}/moc" UIC="${STAGING_BINDIR_NATIVE}/uic" MAKE="make -e ${PARALLEL_MAKE}"'
-
-export QT_CONF_PATH="${S}/qt.conf"
-
 do_configure() {
     set_endian
 
     if [ ! -e bin/qmake ]; then
-        ln -sf ${STAGING_BINDIR_NATIVE}/qmake bin/qmake
+        ln -sf ${OE_QMAKE_QMAKE} bin/qmake
     fi
 
     # Avoid problems with the linkers, since we want the linker to be g++

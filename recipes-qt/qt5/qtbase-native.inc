@@ -3,17 +3,23 @@ DEPENDS = "zlib-native dbus-native"
 SECTION = "libs"
 HOMEPAGE = "http://qt-project.org"
 
-INC_PR = "r0"
+INC_PR = "r1"
 
 inherit native
 
 QT_MODULE = "qtbase"
+
+SSTATE_SCAN_FILES += "*.pri *.prl"
+QT_DIR_NAME ?= "qt5"
 
 SRC_URI += " \
   file://0001-qlibraryinfo-Allow-the-specification-of-where-to-loa.patch \
   file://0003-qtbase-Allow-qt.conf-override-when-bootstrapping.patch \
   file://0001-Always-build-uic.patch \
 "
+
+EXTRA_ENV = 'MAKE="make -e ${PARALLEL_MAKE}"'
+EXTRA_OEMAKE = ' MAKEFLAGS=${PARALLEL_MAKE} '
 
 EXTRA_OECONF = " \
   -prefix ${prefix} \
@@ -34,9 +40,14 @@ EXTRA_OECONF = " \
   -no-openssl \
   -no-xcb \
   -verbose -release \
-  -headerdir ${includedir}/qt5 \
-  -datadir ${datadir}/qt5 \
-  -docdir ${docdir}/qt5 \
+  -prefix ${prefix} \
+  -bindir ${bindir}/${QT_DIR_NAME} \
+  -headerdir ${includedir}/${QT_DIR_NAME} \
+  -archdatadir ${libdir}/${QT_DIR_NAME} \
+  -datadir ${datadir}/${QT_DIR_NAME} \
+  -docdir ${docdir}/${QT_DIR_NAME} \
+  -hostdatadir ${datadir}/${QT_DIR_NAME} \
+  -hostbindir ${bindir}/${QT_DIR_NAME} \
   -no-glib \
   -no-iconv \
   -silent \
@@ -54,10 +65,10 @@ do_configure() {
 }
 
 do_install() {
-	install -d ${D}${bindir}/
-	for i in findtr fixqt4headers.pl moc qdoc qmake rcc qdbuscpp2xml qdbusxml2cpp syncqt uic; do
-		install -v -m 0755 bin/${i} ${D}${bindir}/${i}
-	done
-	install -d ${D}${datadir}/qt5/
-	cp -PfR mkspecs ${D}${datadir}/qt5/
+	oe_runmake install INSTALL_ROOT=${D}
+	ln -sf linux-g++ ${D}${datadir}/${QT_DIR_NAME}/mkspecs/${BUILD_OS}-oe-g++
+
+	# replace common files with our version
+	cp -f ${WORKDIR}/g++.conf ${D}${datadir}/${QT_DIR_NAME}/mkspecs/common/g++-unix.conf
+	cp -f ${WORKDIR}/linux.conf ${D}${datadir}/${QT_DIR_NAME}/mkspecs/common/linux.conf
 }
