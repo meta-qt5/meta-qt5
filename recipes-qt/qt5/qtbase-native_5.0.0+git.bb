@@ -1,4 +1,4 @@
-require qt5-native.inc
+require ${PN}.inc
 require qt5-5.0.0+git.inc
 
 PR = "${INC_PR}.0"

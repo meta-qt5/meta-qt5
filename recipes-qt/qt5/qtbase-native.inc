@@ -2,15 +2,12 @@ DESCRIPTION = "Native version of Qt/[X11|Mac|Embedded]"
 DEPENDS = "zlib-native dbus-native"
 SECTION = "libs"
 HOMEPAGE = "http://qt-project.org"
-PROVIDES = "qt5-tools-native"
 
 INC_PR = "r0"
 
 inherit native
 
 QT_MODULE = "qtbase"
-
-FILESEXTRAPATHS =. "${FILE_DIRNAME}/${PN}:${FILE_DIRNAME}/qtbase:"
 
 SRC_URI += " \
   file://0001-qlibraryinfo-Allow-the-specification-of-where-to-loa.patch \

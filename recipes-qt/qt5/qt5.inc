@@ -6,7 +6,7 @@ inherit qmake5_base
 ICU = "icu "
 ICU_powerpc = "pango"
 
-DEPENDS += "qt5-tools-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}"
+DEPENDS += "virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}"
 
 require qt5_arch.inc
 

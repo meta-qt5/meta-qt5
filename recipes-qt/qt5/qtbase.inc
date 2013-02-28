@@ -8,7 +8,7 @@ SRC_URI += " \
   file://qplatformdefs.h \
 "
 
-DEPENDS += "qt5-tools-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}"
+DEPENDS += "qtbase-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}"
 
 # to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h and dbus/dbus.h
 # DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
