@@ -1,7 +1,7 @@
-From f5d5c9778031fbb807753c67133ddda35f9a0e30 Mon Sep 17 00:00:00 2001
+From ccf2e79173cfd0fee9f1e603107792dd5aa8e775 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
-Subject: [PATCH 01/11] Add linux-oe-g++ platform
+Subject: [PATCH 01/12] Add linux-oe-g++ platform
 
 * This qmake.conf unlike other platforms reads most variables from
   shell environment, because it's easier for qt recipes to export
@@ -31,12 +31,13 @@ Subject: [PATCH 01/11] Add linux-oe-g++ platform
 
 Upstream-Status: Pending
 
+Change-Id: Ia0cc6a6b00ec78442d80ed2a3cf40b604588a0f6
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  configure                            |  54 ++++++++++++++++---
- mkspecs/linux-oe-g++/qmake.conf      |  39 ++++++++++++++
+ mkspecs/linux-oe-g++/qmake.conf      |  40 ++++++++++++++
  mkspecs/linux-oe-g++/qplatformdefs.h | 100 +++++++++++++++++++++++++++++++++++
- 3 files changed, 186 insertions(+), 7 deletions(-)
+ 3 files changed, 187 insertions(+), 7 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
@@ -149,10 +150,10 @@ index 89246c8..0ab8eee 100755
              EXTRA_CFLAGS="$EXTRA_CFLAGS -DQMAKE_OPENSOURCE_EDITION"
 diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
 new file mode 100644
-index 0000000..42966fe
+index 0000000..ca26b10
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qmake.conf
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,40 @@
 +#
 +# qmake configuration for linux-g++ with modifications for building with OpenEmbedded
 +#
@@ -166,6 +167,7 @@ index 0000000..42966fe
 +# QMAKE_<TOOL> (moc, uic, rcc) are gone, overwrite only ar and strip
 +QMAKE_AR              = $(OE_QMAKE_AR) cqs
 +QMAKE_STRIP           = $(OE_QMAKE_STRIP)
++QMAKE_WAYLAND_SCANNER = $(OE_QMAKE_WAYLAND_SCANNER)
 +
 +include(../common/gcc-base-unix.conf)
 +

@@ -1,0 +1,45 @@
+From 41a352655485234eda87b150154001ce89496505 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sun, 5 May 2013 11:18:34 +0200
+Subject: [PATCH 12/12] wayland-scanner: disable silent rules
+
+* for some reason "$$qtwayland-server-header.commands" on second line gets expanded as -server-header.commands
+
+Change-Id: I1ffb04c01311f08984bc2a8c1cc92cb963d3e147
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ mkspecs/features/wayland-scanner.prf | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/mkspecs/features/wayland-scanner.prf b/mkspecs/features/wayland-scanner.prf
+index 90e1e0f..0750849 100644
+--- a/mkspecs/features/wayland-scanner.prf
++++ b/mkspecs/features/wayland-scanner.prf
+@@ -10,7 +10,7 @@ wayland-server-header.variable_out = HEADERS
+ wayland-server-header.output = wayland-${QMAKE_FILE_BASE}-server-protocol$${first(QMAKE_EXT_H)}
+ wayland-server-header.commands = $$QMAKE_WAYLAND_SCANNER server-header < ${QMAKE_FILE_IN} > ${QMAKE_FILE_OUT}
+ 
+-silent:wayland-server-header.commands = @echo Wayland server header ${QMAKE_FILE_IN} && $$wayland-server-header.commands
++#silent:wayland-server-header.commands = @echo Wayland server header ${QMAKE_FILE_IN} && $$wayland-server-header.commands
+ QMAKE_EXTRA_COMPILERS += wayland-server-header
+ 
+ wayland-client-header.name = wayland ${QMAKE_FILE_BASE}
+@@ -19,7 +19,7 @@ wayland-client-header.variable_out = HEADERS
+ wayland-client-header.output = wayland-${QMAKE_FILE_BASE}-client-protocol$${first(QMAKE_EXT_H)}
+ wayland-client-header.commands = $$QMAKE_WAYLAND_SCANNER client-header < ${QMAKE_FILE_IN} > ${QMAKE_FILE_OUT}
+ 
+-silent:wayland-client-header.commands = @echo Wayland client header ${QMAKE_FILE_IN} && $$wayland-client-header.commands
++#silent:wayland-client-header.commands = @echo Wayland client header ${QMAKE_FILE_IN} && $$wayland-client-header.commands
+ QMAKE_EXTRA_COMPILERS += wayland-client-header
+ 
+ wayland-code.name = wayland ${QMAKE_FILE_BASE}
+@@ -28,5 +28,5 @@ wayland-code.variable_out = SOURCES
+ wayland-code.output = wayland-${QMAKE_FILE_BASE}-protocol.c
+ wayland-code.commands = $$QMAKE_WAYLAND_SCANNER code < ${QMAKE_FILE_IN} > ${QMAKE_FILE_OUT}
+ 
+-silent:wayland-code.commands = @echo Wayland code header ${QMAKE_FILE_IN} && $$wayland-code.commands
++#silent:wayland-code.commands = @echo Wayland code header ${QMAKE_FILE_IN} && $$wayland-code.commands
+ QMAKE_EXTRA_COMPILERS += wayland-code
+-- 
+1.8.2.1
+

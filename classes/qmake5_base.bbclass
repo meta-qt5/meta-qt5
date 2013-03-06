@@ -35,8 +35,11 @@ export OE_QMAKE_LINK = "${CXX}"
 export OE_QMAKE_LDFLAGS = "${LDFLAGS}"
 export OE_QMAKE_AR = "${AR}"
 export OE_QMAKE_STRIP = "echo"
+export OE_QMAKE_WAYLAND_SCANNER = "${STAGING_BINDIR_NATIVE}/wayland-scanner"
 export QT_CONF_PATH = "${WORKDIR}/qt.conf"
 export QT_DIR_NAME ?= "qt5"
+
+EXTRA_QMAKEVARS_PRE += "OE_QMAKE_WAYLAND_SCANNER=${STAGING_BINDIR_NATIVE}/wayland-scanner"
 
 OE_QMAKE_PATH_PREFIX = "${prefix}"
 OE_QMAKE_PATH_HEADERS = "${includedir}/${QT_DIR_NAME}"
