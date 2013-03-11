@@ -1,0 +1,39 @@
+From 27be7a832f017653ffda705407bb7a64246eda1f Mon Sep 17 00:00:00 2001
+From: Daniel d'Andrada <daniel.dandrada@canonical.com>
+Date: Tue, 18 Dec 2012 10:51:21 -0200
+Subject: [PATCH] Flickable: Fix bug when flicking twice using touches
+
+When you flick twice in rapid succession, in the same direction,
+the expected behavior is for flickable to be moving quite fast in the
+direction of the flicks.
+
+But when you flicked using touch events instead of mouse ones,
+the second flick caused Flickable to immediately halt. This change fixes it.
+
+Upstream-Status: Backport
+
+Change-Id: I02bd02fed30bd4a98959194e04f0a26b4420cd05
+Reviewed-by: Andras Becsi <andras.becsi@digia.com>
+---
+ src/quick/items/qquickflickable.cpp |    5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/quick/items/qquickflickable.cpp b/src/quick/items/qquickflickable.cpp
+index 6e5e6b7..88ef20f 100644
+--- a/src/quick/items/qquickflickable.cpp
++++ b/src/quick/items/qquickflickable.cpp
+@@ -2038,6 +2038,11 @@ bool QQuickFlickable::sendMouseEvent(QQuickItem *item, QMouseEvent *event)
+ 
+     QQuickWindow *c = window();
+     QQuickItem *grabber = c ? c->mouseGrabberItem() : 0;
++    if (grabber == this && d->stealMouse) {
++        // we are already the grabber and we do want the mouse event to ourselves.
++        return true;
++    }
++
+     bool grabberDisabled = grabber && !grabber->isEnabled();
+     bool stealThisEvent = d->stealMouse;
+     if ((stealThisEvent || contains(localPos)) && (!grabber || !grabber->keepMouseGrab() || grabberDisabled)) {
+-- 
+1.7.9.5
+
