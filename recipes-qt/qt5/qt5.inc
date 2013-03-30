@@ -56,6 +56,7 @@ QT_CONFIG_FLAGS += " \
 "
 
 do_configure() {
+#    set_arch
     set_endian
 
     if [ ! -e bin/qmake ]; then
@@ -66,13 +67,9 @@ do_configure() {
         ln -sf linux-g++ mkspecs/${TARGET_OS}-oe-g++
     fi
 
-    if [ -f mkspecs/common/g++-unix.conf ] ; then
-        # mkspecs were refactored for 4.8.0
-        cp -f ${WORKDIR}/g++.conf mkspecs/common/g++-unix.conf
-    else
-        cp -f ${WORKDIR}/g++.conf mkspecs/common/g++.conf
-    fi
-    cp -f ${WORKDIR}/linux.conf mkspecs/common/
+    # replace common files with our version
+    cp -f ${WORKDIR}/g++.conf mkspecs/common/g++-unix.conf
+    cp -f ${WORKDIR}/linux.conf mkspecs/common/linux.conf
 
     # Avoid problems with the linkers, since we want the linker to be g++
     unset LD
