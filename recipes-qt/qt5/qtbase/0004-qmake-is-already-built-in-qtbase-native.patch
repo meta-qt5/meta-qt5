@@ -1,29 +1,30 @@
-From aab01049543f4508f1dc92fb62b980d1d0c3bcc0 Mon Sep 17 00:00:00 2001
+From 956195c897287787b545e570ee976d1d2917eca8 Mon Sep 17 00:00:00 2001
 From: Michael Krelin <hacker@klever.net>
 Date: Mon, 29 Oct 2012 20:07:49 -0700
-Subject: [PATCH] qmake is already built in qt5-tools-native
+Subject: [PATCH 4/6] qmake is already built in qtbase-native
 
 Ported from OE by: Yu Ke <ke.yu@intel.com>
 Upstream-Status: Inappropriate [configuration]
 
 Signed-off-by: Mikko Levonmaa <mikko.levonmaa@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- configure |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index c3e61d6..5e43a19 100755
+index 50f1ef2..8710c28 100755
 --- a/configure
 +++ b/configure
-@@ -3594,7 +3594,7 @@ setBootstrapVariable()
- }
+@@ -3641,7 +3641,7 @@ setBootstrapEvalVariable()
+ 
  
  # build qmake
 -if true; then ###[ '!' -f "$outpath/bin/qmake" ];
 +if false; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake. Please wait..."
  
-     #mkspecs/default is used as a (gasp!) default mkspec so QMAKESPEC needn't be set once configured
+     mkdir -p "$outpath/qmake" || exit
 -- 
-1.7.4.1
+1.8.2.1
 

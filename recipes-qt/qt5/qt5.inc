@@ -55,12 +55,21 @@ QT_CONFIG_FLAGS += " \
     ${QT_DEMOS} \
 "
 
+SEPB = "${WORKDIR}/build"
+B = "${SEPB}"
+
 do_configure() {
     set_arch
     set_endian
 
     # Avoid problems with the linkers, since we want the linker to be g++
     unset LD
+
+    # Similar logic is in autotools.bbclass
+    if [ -d ${B} -a "${S}" != "${B}" ] ; then
+        # Existing separate build directory, exists, remove
+        rm -rf "${B}/*"
+    fi
 }
 
 do_compile() {

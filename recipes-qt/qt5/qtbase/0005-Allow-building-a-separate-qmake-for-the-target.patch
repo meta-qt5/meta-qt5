@@ -1,28 +1,29 @@
-From a2a01e1fd975e8e616b580423c3bf30db9c11b6d Mon Sep 17 00:00:00 2001
+From d33f33aed6744b5c4c561e6c6527d784481604f5 Mon Sep 17 00:00:00 2001
 From: Paul Eggleton <paul.eggleton@linux.intel.com>
 Date: Mon, 29 Oct 2012 20:26:36 -0700
-Subject: [PATCH] Allow building a separate qmake for the target
+Subject: [PATCH 5/6] Allow building a separate qmake for the target
 
 Upstream-Status: Inappropriate [config]
 
 Signed-off-by: Paul Eggleton <paul.eggleton@linux.intel.com>
 Signed-off-by: Mikko Levonmaa <mikko.levonmaa@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- qmake/qmake.pro |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ qmake/qmake.pro | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/qmake/qmake.pro b/qmake/qmake.pro
-index 0d92ac2..07fa80e 100644
+index 0d92ac2..9be0e9b 100644
 --- a/qmake/qmake.pro
 +++ b/qmake/qmake.pro
 @@ -9,6 +9,7 @@ CONFIG -= qt shared app_bundle uic
  DEFINES += QT_BUILD_QMAKE QT_BOOTSTRAPPED \
      PROEVALUATOR_FULL PROEVALUATOR_DEBUG
  DESTDIR = ../bin/
-+TARGET = qmake2
++TARGET = qmake
  
  OBJECTS_DIR = .
  MOC_DIR = .
 -- 
-1.7.4.1
+1.8.2.1
 
