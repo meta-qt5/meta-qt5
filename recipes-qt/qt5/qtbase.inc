@@ -4,6 +4,7 @@ SRC_URI += " \
   file://0001-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
   file://0002-qmake-is-already-built-in-qt5-tools-native.patch \
   file://0003-Allow-building-a-separate-qmake-for-the-target.patch \
+  file://0004-configure-eval-QMAKE_CXX.patch \
   file://qmake.conf.sh \
   file://qplatformdefs.h \
 "
