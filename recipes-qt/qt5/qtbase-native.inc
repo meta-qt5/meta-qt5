@@ -18,7 +18,7 @@ SRC_URI += " \
 "
 
 EXTRA_ENV = 'MAKE="make -e ${PARALLEL_MAKE}"'
-EXTRA_OEMAKE = ' MAKEFLAGS=${PARALLEL_MAKE} '
+EXTRA_OEMAKE = " MAKEFLAGS='${PARALLEL_MAKE}'"
 
 EXTRA_OECONF = " \
   -prefix ${prefix} \
