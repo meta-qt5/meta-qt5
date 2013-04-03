@@ -13,8 +13,7 @@ SSTATE_SCAN_FILES += "*.pri *.prl"
 QT_DIR_NAME ?= "qt5"
 
 SRC_URI += " \
-  file://0001-qlibraryinfo-Allow-the-specification-of-where-to-loa.patch \
-  file://0003-qtbase-Allow-qt.conf-override-when-bootstrapping.patch \
+  file://0001-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
   file://0001-Always-build-uic.patch \
 "
 
