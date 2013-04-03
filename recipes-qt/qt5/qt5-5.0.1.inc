@@ -4,8 +4,6 @@ QT_VERSION ?= "${PV}"
 
 SRC_URI += " \
   http://releases.qt-project.org/qt5/${QT_VERSION}/submodules_tar/${QT_MODULE}-opensource-src-${QT_VERSION}.tar.xz \
-  file://linux.conf \
-  file://g++.conf \
 "
 
 S = "${WORKDIR}/${QT_MODULE}-opensource-src-${QT_VERSION}"

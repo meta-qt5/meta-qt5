@@ -5,6 +5,7 @@ SRC_URI += " \
   file://0002-qmake-is-already-built-in-qt5-tools-native.patch \
   file://0003-Allow-building-a-separate-qmake-for-the-target.patch \
   file://0004-configure-eval-QMAKE_CXX.patch \
+  file://qmake.conf \
 "
 
 DEPENDS += "qtbase-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}"
@@ -48,9 +49,19 @@ EOF
 }
 
 # qtbase is exception, we need to use mkspecs from ${S}
+QMAKE_MKSPEC_PATH = "${S}/mkspecs"
 OE_XQMAKESPEC="${S}/mkspecs/${TARGET_OS}-oe-g++"
 
 do_configure_append() {
+    if [ ! -e ${OE_XQMAKESPEC} ]; then
+        mkdir -p ${OE_XQMAKESPEC}
+    fi
+    # use default qplatformdefs.h from linux-g++
+    cp -va ${QMAKE_MKSPEC_PATH}/linux-g++/qplatformdefs.h ${OE_XQMAKESPEC}/
+    # use modified qmake.conf which is using OE_QMAKE_* shell variables
+    # exported from qmake5_base.bbclass to define toolchain and flags
+    cp -va ${WORKDIR}/qmake.conf ${OE_XQMAKESPEC}/
+
     ./configure -v \
         -dont-process \
         -opensource -confirm-license \
