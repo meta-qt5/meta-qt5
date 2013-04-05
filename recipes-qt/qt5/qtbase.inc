@@ -8,7 +8,7 @@ SRC_URI += " \
   file://qmake.conf \
 "
 
-DEPENDS += "qtbase-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}"
+DEPENDS += "qtbase-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev"
 
 # to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h and dbus/dbus.h
 XCB_DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
