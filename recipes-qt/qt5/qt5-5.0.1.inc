@@ -2,8 +2,11 @@
 
 QT_VERSION ?= "${PV}"
 
+# it's different for RC versions
+QT_VERSION_DIR ?= "${QT_VERSION}"
+
 SRC_URI += " \
-  http://releases.qt-project.org/qt5/${QT_VERSION}/submodules_tar/${QT_MODULE}-opensource-src-${QT_VERSION}.tar.xz \
+    http://releases.qt-project.org/qt5/${QT_VERSION_DIR}/submodules_tar/${QT_MODULE}-opensource-src-${QT_VERSION}.tar.xz \
 "
 
 S = "${WORKDIR}/${QT_MODULE}-opensource-src-${QT_VERSION}"
