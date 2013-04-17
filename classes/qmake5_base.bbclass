@@ -43,6 +43,7 @@ Libraries = ${libdir}
 Headers = ${includedir}/${QT_DIR_NAME}
 Data = ${datadir}/${QT_DIR_NAME}
 ArchData = ${libdir}/${QT_DIR_NAME}
+Plugins = ${libdir}/${QT_DIR_NAME}/plugins
 Documentation = ${docdir}/${QT_DIR_NAME}
 HostData = ${QMAKE_MKSPEC_PATH}
 EOF
