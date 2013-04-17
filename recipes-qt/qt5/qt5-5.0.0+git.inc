@@ -2,7 +2,7 @@
 
 # each module needs to define valid SRCREV
 SRC_URI += " \
-  git://qt.gitorious.org/qt/${QT_MODULE}.git;protocol=git;branch=stable \
+    git://qt.gitorious.org/qt/${QT_MODULE}.git;protocol=git;branch=stable \
 "
 
 S = "${WORKDIR}/git"

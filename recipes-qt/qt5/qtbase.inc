@@ -1,11 +1,11 @@
 require qt5.inc
 
 SRC_URI += " \
-  file://0001-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
-  file://0002-qmake-is-already-built-in-qt5-tools-native.patch \
-  file://0003-Allow-building-a-separate-qmake-for-the-target.patch \
-  file://0004-configure-eval-QMAKE_CXX.patch \
-  file://qmake.conf \
+    file://0001-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
+    file://0002-qmake-is-already-built-in-qt5-tools-native.patch \
+    file://0003-Allow-building-a-separate-qmake-for-the-target.patch \
+    file://0004-configure-eval-QMAKE_CXX.patch \
+    file://qmake.conf \
 "
 
 DEPENDS += "qtbase-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev"
@@ -19,7 +19,6 @@ XCB_DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
 # src/plugins/platforms/xcb/
 
 QT_MODULE_FLAGS = "-no-xcb"
-
 
 INC_PR = "r0"
 

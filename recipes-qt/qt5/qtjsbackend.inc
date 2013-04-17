@@ -22,10 +22,10 @@ PARALLEL_MAKE = ""
 export QT_CONF_PATH="${WORKDIR}/qt.conf"
 
 do_configure () {
-	# Avoid setting QMAKE_LINK from LD (since we want the linker to be g++)
-	unset LD
+    # Avoid setting QMAKE_LINK from LD (since we want the linker to be g++)
+    unset LD
 
-	# This should not be needed. Perhaps the lack of this file is an indication
+    # This should not be needed. Perhaps the lack of this file is an indication
     # of an error on the native recipe...
     cp ${WORKDIR}/module_qmake.conf ${S}/.qmake.conf
 

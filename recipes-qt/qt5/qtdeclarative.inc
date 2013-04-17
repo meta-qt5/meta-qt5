@@ -12,7 +12,7 @@ inherit qmake5
 
 SRC_URI += " \
     file://module_qmake.conf \
-    "
+"
 
 export QT_CONF_PATH="${WORKDIR}/qt.conf"
 
