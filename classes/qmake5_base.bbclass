@@ -13,7 +13,6 @@ EXTRA_OEMAKE = " MAKEFLAGS='${PARALLEL_MAKE}'"
 EXTRA_ENV = 'QMAKE="${OE_QMAKE_QMAKE} -d -after \
              INCPATH+=${STAGING_INCDIR}/freetype2 LIBS+=-L${STAGING_LIBDIR}" \
              LINK="${CXX} -Wl,-rpath-link,${STAGING_LIBDIR}" \
-             AR="${OE_QMAKE_AR}" \
              STRIP="${OE_QMAKE_STRIP}" \
              MAKE="make -e ${PARALLEL_MAKE}"'
 
