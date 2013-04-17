@@ -84,23 +84,27 @@ do_configure_append() {
 
 do_compile_append() {
     # Build qmake for the target arch
-    cd ${S}/qmake
-    ${OE_QMAKE_QMAKE}
-    oe_runmake CC="${CC}" CXX="${CXX}"
-    cd ${S}
+    # Disable for now, because doesn't work well with separate ${B}
+    # cd ${S}/qmake
+    # ${OE_QMAKE_QMAKE}
+    # oe_runmake CC="${CC}" CXX="${CXX}"
+    # cd ${S}
 }
 
 do_install_append() {
     ### Fix up the binaries to the right location
     ### TODO: FIX
-    install -d ${D}${bindir}/
-    mv ${D}/${STAGING_BINDIR_NATIVE}/* ${D}${bindir}/
-    rm -rf ${D}/${STAGING_BINDIR_NATIVE}/
-
-    # Install the right arch qmake
-    rm ${D}/${bindir}/qmake
-    install -m 0755 bin/qmake2 ${D}${bindir}/qmake
+    # qemu built on host breaks do_package, remove it here (will be replaces with right qemu when do_compile is fixed
+    # ERROR: objcopy failed with exit code 1 (cmd was 'arm-oe-linux-gnueabi-objcopy' --only-keep-debug '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/qmake' '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/.debug/qmake')
+    rm -f ${D}/${bindir}/qmake
+    mv ${D}${B}/mkspecs ${D}${libdir}/${QT_DIR_NAME}/mkspecs
+    TMP=`dirname ${D}/${B}/mkspecs`
+    while test ${TMP} != ${D}; do
+        rmdir ${TMP}
+        TMP=`dirname ${TMP}`;
+    done
 }
 
-PACKAGES =. "${PN}-fonts "
+PACKAGES =. "${PN}-fonts ${PN}-mkspecs "
 FILES_${PN}-fonts = "${libdir}/fonts"
+FILES_${PN}-mkspecs = "${libdir}/${QT_DIR_NAME}/mkspecs"
