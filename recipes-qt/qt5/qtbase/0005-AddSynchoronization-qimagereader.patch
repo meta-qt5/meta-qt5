@@ -1,0 +1,37 @@
+commit e28c03cb829c229209090d7939a9aba1af1fdea9
+Author: aavit <eirik.aavitsland@digia.com>
+Date:   Tue Feb 19 18:11:16 2013 +0100
+
+    Fix reentrancy problem in image reading
+    
+    There were race conditions when accessing the plugin factory and
+    the image reader plugins from different threads; ref QTBUG-29281.
+    Added a mutex lock to avoid.
+    
+    Change-Id: Ic1a3b6cbaf5603f1bcf7025b58247a9a3f6d08a9
+    Reviewed-by: Samuel Rødal <samuel.rodal@digia.com>
+
+Upstream-Status: Backport (from 5.1.0)
+
+diff --git a/src/gui/image/qimagereader.cpp b/src/gui/image/qimagereader.cpp
+index 5eaf7bb..6847786 100644
+--- a/src/gui/image/qimagereader.cpp
++++ b/src/gui/image/qimagereader.cpp
+@@ -133,6 +133,7 @@
+ // factory loader
+ #include <qcoreapplication.h>
+ #include <private/qfactoryloader_p.h>
++#include <QMutexLocker>
+ 
+ // image handlers
+ #include <private/qbmphandler_p.h>
+@@ -232,6 +233,9 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
+     QByteArray suffix;
+ 
+ #ifndef QT_NO_IMAGEFORMATPLUGIN
++    static QMutex mutex;
++    QMutexLocker locker(&mutex);
++
+     typedef QMultiMap<int, QString> PluginKeyMap;
+ 
+     // check if we have plugins that support the image format
