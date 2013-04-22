@@ -11,7 +11,6 @@ INC_PR = "r0"
 inherit qmake5
 
 SRC_URI += " \
-    file://module_qmake.conf \
     file://0002-Make-sure-that-we-pick-up-the-mkv8snapshot-tool.patch \
 "
 
@@ -19,15 +18,18 @@ SRC_URI += " \
 # parts of the source tree with out the 'mkv8snapshot' tool if it is enabled and that will fail
 PARALLEL_MAKE = ""
 
-export QT_CONF_PATH="${WORKDIR}/qt.conf"
-
 do_configure () {
     # Avoid setting QMAKE_LINK from LD (since we want the linker to be g++)
     unset LD
 
-    # This should not be needed. Perhaps the lack of this file is an indication
-    # of an error on the native recipe...
-    cp ${WORKDIR}/module_qmake.conf ${S}/.qmake.conf
+    ${OE_QMAKE_QMAKE} -r -d ${S}
+}
 
-    ${OE_QMAKE_QMAKE} -r -d
+do_install_append () {
+    mv ${D}${QMAKE_MKSPEC_PATH}/mkspecs ${D}${libdir}/${QT_DIR_NAME}/mkspecs
+    TMP=`dirname ${D}/${QMAKE_MKSPEC_PATH}/mkspecs`
+    while test ${TMP} != ${D}; do
+        rmdir ${TMP}
+        TMP=`dirname ${TMP}`;
+    done
 }
