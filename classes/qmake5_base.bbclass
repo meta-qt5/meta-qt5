@@ -1,7 +1,7 @@
 # This is useful for target recipes to reference native mkspecs
 QMAKE_MKSPEC_PATH_NATIVE = "${STAGING_LIBDIR_NATIVE}/${QT_DIR_NAME}"
 
-QMAKE_MKSPEC_PATH = "${STAGING_DATADIR}/${QT_DIR_NAME}"
+QMAKE_MKSPEC_PATH = "${STAGING_LIBDIR}/${QT_DIR_NAME}"
 QMAKE_MKSPEC_PATH_class-native = "${QMAKE_MKSPEC_PATH_NATIVE}"
 
 # hardcode linux, because that's what 0001-Add-linux-oe-g-platform.patch adds
@@ -38,23 +38,15 @@ do_generate_qt_config_file() {
     cat > ${WORKDIR}/qt.conf <<EOF
 [Paths]
 Prefix = ${prefix}
-Binaries = ${bindir}
-Libraries = ${libdir}
+Binaries = ${bindir}/${QT_DIR_NAME}
+Libraries = ${libdir}/${QT_DIR_NAME}
 Headers = ${includedir}/${QT_DIR_NAME}
 Data = ${datadir}/${QT_DIR_NAME}
 ArchData = ${libdir}/${QT_DIR_NAME}
 Plugins = ${libdir}/${QT_DIR_NAME}/plugins
 Documentation = ${docdir}/${QT_DIR_NAME}
 HostData = ${QMAKE_MKSPEC_PATH}
-EOF
-}
-# ExternalHostBinaries is useful only for target recipes
-do_generate_qt_config_file_append_class-target() {
-    cat >> ${WORKDIR}/qt.conf <<EOF
 ExternalHostBinaries = ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}
-# This doesn't work in 5.0.1 (HostData is used in some cases)
-#HostSpec = ${QMAKE_MKSPEC_PATH_NATIVE}/mkspecs
-#TargetSpec = ${QMAKE_MKSPEC_PATH}/mkspecs
 EOF
 }
 
