@@ -10,21 +10,11 @@ INC_PR = "r0"
 
 inherit qmake5
 
-SRC_URI += " \
-    file://module_qmake.conf \
-"
-
-export QT_CONF_PATH="${WORKDIR}/qt.conf"
-
 do_configure () {
     # Avoid setting QMAKE_LINK from LD (since we want the linker to be g++)
     unset LD
 
-    # This should not be needed. Perhaps the lack of this file is an indication
-    # of an error on the native recipe...
-    cp ${WORKDIR}/module_qmake.conf ${S}/.qmake.conf
-
-    ${OE_QMAKE_QMAKE} -r -d
+    ${OE_QMAKE_QMAKE} -r -d ${S}
 }
 
 do_install() {
