@@ -74,6 +74,7 @@ do_configure_append() {
         -importdir ${libdir}/${QT_DIR_NAME}/imports \
         -translationdir ${datadir}/${QT_DIR_NAME}/translations \
         -examplesdir ${bindir}/${QT_DIR_NAME}/examples \
+        -hostbindir ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME} \
         -external-hostbindir ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME} \
         -platform ${OE_QMAKESPEC} \
         -xplatform linux-oe-g++ \
@@ -105,6 +106,5 @@ do_install_append() {
     done
 }
 
-PACKAGES =. "${PN}-fonts ${PN}-mkspecs "
-FILES_${PN}-fonts = "${libdir}/fonts"
-FILES_${PN}-mkspecs = "${libdir}/${QT_DIR_NAME}/mkspecs"
+PACKAGES =. "${PN}-fonts "
+FILES_${PN}-fonts = "${libdir}/${QT_DIR_NAME}/fonts"

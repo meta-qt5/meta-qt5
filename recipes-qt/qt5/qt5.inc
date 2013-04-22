@@ -82,14 +82,29 @@ do_install() {
     oe_runmake install INSTALL_ROOT=${D}
 }
 
-PACKAGES =. "${PN}-tools ${PN}-plugins ${PN}-plugins-dbg "
+PACKAGES =. "${PN}-tools ${PN}-plugins ${PN}-plugins-dbg ${PN}-mkspecs "
 FILES_${PN}-tools = "${bindir}/*"
 FILES_${PN}-plugins = "${libdir}/${QT_DIR_NAME}/plugins/*/*${SOLIBSDEV}"
 FILES_${PN}-plugins-dbg = "${libdir}/${QT_DIR_NAME}/plugins/*/.debug/*"
 
+FILES_${PN} += " \
+    ${libdir}/${QT_DIR_NAME}/lib*${SOLIBS} \
+"
 FILES_${PN}-dev += " \
-    ${libdir}/cmake/* \
-    ${libdir}/*.prl \
-    ${includedir}/qt5/* \
-    ${datadir}/qt5/* \
+    ${libdir}/${QT_DIR_NAME}/pkgconfig \
+    ${libdir}/${QT_DIR_NAME}/cmake/* \
+    ${libdir}/${QT_DIR_NAME}/*.prl \
+    ${libdir}/${QT_DIR_NAME}/*.la \
+    ${datadir}/${QT_DIR_NAME}/* \
+    ${includedir}/${QT_DIR_NAME}/* \
+"
+FILES_${PN}-dbg += " \
+    ${libdir}/${QT_DIR_NAME}/.debug \
+    ${libdir}/${QT_DIR_NAME}/lib*${SOLIBSDEV} \
+"
+FILES_${PN}-staticdev += " \
+    ${libdir}/${QT_DIR_NAME}/*.a \
+"
+FILES_${PN}-mkspecs += "\
+    ${libdir}/${QT_DIR_NAME}/mkspecs \
 "
