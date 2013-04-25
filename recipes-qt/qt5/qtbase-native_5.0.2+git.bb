@@ -3,4 +3,4 @@ require qt5-5.0.2+git.inc
 
 PR = "${INC_PR}.0"
 
-SRCREV = "8e127d9df868952d41c8aa622b6d4ead8139a835"
+SRCREV = "3d42f6fed220cd0cd24924eb55db4b2751eed74c"
