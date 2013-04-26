@@ -32,8 +32,8 @@ do_generate_qt_config_file() {
 #    echo >> ${WORKDIR}/qt.conf
 }
 
-#-dont-process 
 EXTRA_OECONF = " \
+    -dont-process \
     -prefix ${prefix} \
     -sysroot ${STAGING_DIR_NATIVE} \
     -no-gcc-sysroot \
@@ -81,7 +81,7 @@ do_configure_prepend() {
     unset LD
 
     (echo o; echo yes) | ${S}/configure ${EXTRA_OECONF} || die "Configuring qt failed. EXTRA_OECONF was ${EXTRA_OECONF}"
-#    bin/qmake -r -d ${S} || die "Configuring qt with qmake failed. EXTRA_OECONF was ${EXTRA_OECONF}"
+    bin/qmake -d ${S} -o Makefile || die "Configuring qt with qmake failed. EXTRA_OECONF was ${EXTRA_OECONF}"
 }
 
 do_install() {
