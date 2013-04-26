@@ -65,7 +65,7 @@ do_configure_append() {
         -no-gcc-sysroot \
         -prefix ${prefix} \
         -bindir ${bindir}/${QT_DIR_NAME} \
-        -libdir ${libdir}/${QT_DIR_NAME} \
+        -libdir ${libdir} \
         -datadir ${datadir}/${QT_DIR_NAME} \
         -sysconfdir ${sysconfdir}/${QT_DIR_NAME} \
         -docdir ${docdir}/${QT_DIR_NAME} \
@@ -98,7 +98,7 @@ do_install_append() {
     # qemu built on host breaks do_package, remove it here (will be replaces with right qemu when do_compile is fixed
     # ERROR: objcopy failed with exit code 1 (cmd was 'arm-oe-linux-gnueabi-objcopy' --only-keep-debug '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/qmake' '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/.debug/qmake')
     rm -f ${D}/${bindir}/qmake
-    mv ${D}${B}/mkspecs ${D}${libdir}/${QT_DIR_NAME}/mkspecs
+    mv ${D}${B}/mkspecs ${D}${libdir}/mkspecs
     TMP=`dirname ${D}/${B}/mkspecs`
     while test ${TMP} != ${D}; do
         rmdir ${TMP}

@@ -1,7 +1,7 @@
 # This is useful for target recipes to reference native mkspecs
-QMAKE_MKSPEC_PATH_NATIVE = "${STAGING_LIBDIR_NATIVE}/${QT_DIR_NAME}"
+QMAKE_MKSPEC_PATH_NATIVE = "${STAGING_LIBDIR_NATIVE}"
 
-QMAKE_MKSPEC_PATH = "${STAGING_LIBDIR}/${QT_DIR_NAME}"
+QMAKE_MKSPEC_PATH = "${STAGING_LIBDIR}"
 QMAKE_MKSPEC_PATH_class-native = "${QMAKE_MKSPEC_PATH_NATIVE}"
 
 # hardcode linux, because that's what 0001-Add-linux-oe-g-platform.patch adds
@@ -39,7 +39,7 @@ do_generate_qt_config_file() {
 [Paths]
 Prefix = ${prefix}
 Binaries = ${bindir}/${QT_DIR_NAME}
-Libraries = ${libdir}/${QT_DIR_NAME}
+Libraries = ${libdir}
 Headers = ${includedir}/${QT_DIR_NAME}
 Data = ${datadir}/${QT_DIR_NAME}
 ArchData = ${libdir}/${QT_DIR_NAME}

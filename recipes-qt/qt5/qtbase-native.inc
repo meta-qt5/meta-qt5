@@ -55,6 +55,7 @@ EXTRA_OECONF = " \
     -release \
     -prefix ${prefix} \
     -bindir ${bindir}/${QT_DIR_NAME} \
+    -libdir ${libdir} \
     -headerdir ${includedir}/${QT_DIR_NAME} \
     -archdatadir ${libdir}/${QT_DIR_NAME} \
     -datadir ${datadir}/${QT_DIR_NAME} \

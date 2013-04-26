@@ -26,7 +26,7 @@ do_configure () {
 }
 
 do_install_append () {
-    mv ${D}${QMAKE_MKSPEC_PATH}/mkspecs ${D}${libdir}/${QT_DIR_NAME}/mkspecs
+    mv ${D}${QMAKE_MKSPEC_PATH}/mkspecs ${D}${libdir}/mkspecs
     TMP=`dirname ${D}/${QMAKE_MKSPEC_PATH}/mkspecs`
     while test ${TMP} != ${D}; do
         rmdir ${TMP}
