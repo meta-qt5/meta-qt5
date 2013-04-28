@@ -1,14 +1,8 @@
-require qt5.inc
+require qt5module.inc
 
-DEPENDS = "qtbase qtjsbackend"
+DEPENDS += "qtjsbackend"
 
 INC_PR = "r0"
-
-inherit qmake5
-
-do_configure_append () {
-    ${OE_QMAKE_QMAKE} ${OE_QMAKE_DEBUG_OUTPUT} -r ${S}
-}
 
 FILES_${PN}-qmlplugins-dbg = " \
     ${libdir}/${QT_DIR_NAME}/qml/*/.debug \
