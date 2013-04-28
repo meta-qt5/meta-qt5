@@ -1,7 +1,8 @@
 # This is useful for target recipes to reference native mkspecs
-QMAKE_MKSPEC_PATH_NATIVE = "${STAGING_LIBDIR_NATIVE}"
+QMAKE_MKSPEC_PATH_NATIVE = "${STAGING_LIBDIR_NATIVE}/${QT_DIR_NAME}"
+QMAKE_MKSPEC_PATH_TARGET = "${STAGING_LIBDIR}/${QT_DIR_NAME}"
 
-QMAKE_MKSPEC_PATH = "${STAGING_LIBDIR}"
+QMAKE_MKSPEC_PATH = "${QMAKE_MKSPEC_PATH_TARGET}"
 QMAKE_MKSPEC_PATH_class-native = "${QMAKE_MKSPEC_PATH_NATIVE}"
 
 # hardcode linux, because that's what 0001-Add-linux-oe-g-platform.patch adds
@@ -46,13 +47,20 @@ Libraries = ${libdir}
 Headers = ${includedir}/${QT_DIR_NAME}
 Data = ${datadir}/${QT_DIR_NAME}
 ArchData = ${libdir}/${QT_DIR_NAME}
+LibraryExecutables = ${libdir}/${QT_DIR_NAME}/libexec
+Imports = ${libdir}/${QT_DIR_NAME}/imports
+Qml2Imports = ${libdir}/${QT_DIR_NAME}/qml
 Plugins = ${libdir}/${QT_DIR_NAME}/plugins
 Documentation = ${docdir}/${QT_DIR_NAME}
-HostData = ${QMAKE_MKSPEC_PATH}
+HostData = ${QMAKE_MKSPEC_PATH_TARGET}
+HostBinaries = ${bindir}/${QT_DIR_NAME}
+HostSpec = ${OE_QMAKESPEC}
+TartgetSpec = ${OE_XQMAKESPEC} 
 ExternalHostBinaries = ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}
+Sysroot = ${STAGING_DIR_TARGET}
 EOF
 }
-
+#
 # Allows to override following values (as in version 5.0.1)
 # Prefix The default prefix for all paths.
 # Documentation The location for documentation upon install.

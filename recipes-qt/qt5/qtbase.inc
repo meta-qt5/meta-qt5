@@ -29,40 +29,43 @@ INC_PR = "r0"
 QT_BASE_NAME = "qt5"
 QT_DIR_NAME = "qt5"
 
+SSTATE_SCAN_FILES += "*.pri *.prl"
+
 # Qt uses atomic instructions not supported in thumb mode
 ARM_INSTRUCTION_SET = "arm"
 
 inherit qmake5
 
+do_generate_qt_config_file_append() {
+    UNDO_SYSROOT_PREFIX=`echo ${STAGING_DIR_TARGET} | sed 's#/[^/]*#../#g'`
+    cat >> ${WORKDIR}/qt.conf <<EOF
 
-#do_generate_qt_config_file() {
-#    cat > ${WORKDIR}/qt.conf <<EOF
-#[Paths]
-#Binaries = ${bindir}
-#Libraries = ${libdir}
-#Prefix = ${prefix}
-#Headers = ${includedir}/${QT_DIR_NAME}
-#Data = ${datadir}/${QT_DIR_NAME}
-#ArchData = ${libdir}/${QT_DIR_NAME}
-#Documentation = ${docdir}/${QT_DIR_NAME}
-#HostSpec = ${QMAKE_MKSPEC_PATH_NATIVE}
-##HostData = ${S}
-#TargetSpec = ${S}
-#ExternalHostBinaries = ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}
-#EOF
-#}
+[EffectivePaths]
+Prefix=..
+#Prefix=$UNDO_SYSROOT_PREFIX
+EOF
+}
+
+EXTRA_ENV = 'QMAKE="bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} -after \
+             INCPATH+=${STAGING_INCDIR}/freetype2 LIBS+=-L${STAGING_LIBDIR}" \
+             LINK="${CXX} -Wl,-rpath-link,${STAGING_LIBDIR}" \
+             STRIP="${OE_QMAKE_STRIP}" \
+             MAKE="make -e ${PARALLEL_MAKE}"'
 
 # qtbase is exception, we need to use mkspecs from ${S}
 # QMAKE_MKSPEC_PATH = "${S}/mkspecs"
 QMAKE_MKSPEC_PATH = "${B}"
 
 do_configure_append() {
+    # we need symlink in path relative to source, because
+    # EffectivePaths:Prefix is relative to qmake location
     if [ ! -e ${B}/bin/qmake ]; then
         mkdir ${B}/bin
         ln -sf ${OE_QMAKE_QMAKE} ${B}/bin/qmake
     fi
 
     ${S}/configure -v \
+        -dont-process \
         -opensource -confirm-license \
         -sysroot ${STAGING_DIR_TARGET} \
         -no-gcc-sysroot \
@@ -73,11 +76,16 @@ do_configure_append() {
         -sysconfdir ${sysconfdir}/${QT_DIR_NAME} \
         -docdir ${docdir}/${QT_DIR_NAME} \
         -headerdir ${includedir}/${QT_DIR_NAME} \
+        -archdatadir ${libdir}/${QT_DIR_NAME} \
+        -libexecdir ${libdir}/${QT_DIR_NAME}/libexec \
         -plugindir ${libdir}/${QT_DIR_NAME}/plugins \
         -importdir ${libdir}/${QT_DIR_NAME}/imports \
+        -qmldir ${libdir}/${QT_DIR_NAME}/qml \
         -translationdir ${datadir}/${QT_DIR_NAME}/translations \
-        -examplesdir ${bindir}/${QT_DIR_NAME}/examples \
-        -hostbindir ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME} \
+        -testsdir ${datadir}/${QT_DIR_NAME}/tests \
+        -examplesdir ${datadir}/${QT_DIR_NAME}/examples \
+        -hostbindir ${bindir}/${QT_DIR_NAME} \
+        -hostdatadir ${libdir}/${QT_DIR_NAME} \
         -external-hostbindir ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME} \
         -platform ${OE_QMAKESPEC} \
         -xplatform linux-oe-g++ \
@@ -89,10 +97,13 @@ do_configure_append() {
 do_compile_append() {
     # Build qmake for the target arch
     # Disable for now, because doesn't work well with separate ${B}
-    # cd ${S}/qmake
+    # cp -ra ${S}/qmake ${B}
+    # cd ${B}/qmake
     # ${OE_QMAKE_QMAKE}
+    # Fix to use headers in ${B}
+    # sed '/INCPATH/s#${S}#${B}#g' -i Makefile
     # oe_runmake CC="${CC}" CXX="${CXX}"
-    # cd ${S}
+    # cd ${B}
 }
 
 do_install_append() {
@@ -100,9 +111,14 @@ do_install_append() {
     ### TODO: FIX
     # qemu built on host breaks do_package, remove it here (will be replaces with right qemu when do_compile is fixed
     # ERROR: objcopy failed with exit code 1 (cmd was 'arm-oe-linux-gnueabi-objcopy' --only-keep-debug '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/qmake' '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/.debug/qmake')
-    rm -f ${D}/${bindir}/qmake
-    mv ${D}${B}/mkspecs ${D}${libdir}/mkspecs
-    TMP=`dirname ${D}/${B}/mkspecs`
+    rm -f ${D}/${bindir}/${QT_DIR_NAME}/qmake
+
+    # everything except HostData and HostBinaries is prefixed with sysroot value, 
+    # but we cannot remove sysroot override, because that's useful for pkg-config etc
+    cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
+    rm -rf ${D}${STAGING_DIR_TARGET}
+    # remove empty dirs
+    TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
     while test ${TMP} != ${D}; do
         rmdir ${TMP}
         TMP=`dirname ${TMP}`;
