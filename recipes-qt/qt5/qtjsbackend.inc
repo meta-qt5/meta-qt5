@@ -28,8 +28,12 @@ do_configure () {
 }
 
 do_install_append () {
-    mv ${D}${QMAKE_MKSPEC_PATH}/mkspecs ${D}${libdir}/mkspecs
-    TMP=`dirname ${D}/${QMAKE_MKSPEC_PATH}/mkspecs`
+    # everything except HostData and HostBinaries is prefixed with sysroot value,
+    # but we cannot remove sysroot override, because that's useful for pkg-config etc
+    cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
+    rm -rf ${D}${STAGING_DIR_TARGET}
+    # remove empty dirs
+    TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
     while test ${TMP} != ${D}; do
         rmdir ${TMP}
         TMP=`dirname ${TMP}`;
