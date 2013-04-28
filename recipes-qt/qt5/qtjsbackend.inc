@@ -13,7 +13,7 @@ SSTATE_SCAN_FILES += "*.pri *.prl"
 inherit qmake5
 
 SRC_URI += " \
-    file://0002-Make-sure-that-we-pick-up-the-mkv8snapshot-tool.patch \
+    file://0002-v8.pro-respect-external-host-bindir-when-set.patch \
 "
 
 # Bitbake will not respect the make order set by qmake and at times it will try to compile
