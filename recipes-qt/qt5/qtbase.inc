@@ -105,17 +105,6 @@ do_install_append() {
     # qemu built on host breaks do_package, remove it here (will be replaces with right qemu when do_compile is fixed
     # ERROR: objcopy failed with exit code 1 (cmd was 'arm-oe-linux-gnueabi-objcopy' --only-keep-debug '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/qmake' '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/.debug/qmake')
     rm -f ${D}/${bindir}/${QT_DIR_NAME}/qmake
-
-    # everything except HostData and HostBinaries is prefixed with sysroot value, 
-    # but we cannot remove sysroot override, because that's useful for pkg-config etc
-    cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
-    rm -rf ${D}${STAGING_DIR_TARGET}
-    # remove empty dirs
-    TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
-    while test ${TMP} != ${D}; do
-        rmdir ${TMP}
-        TMP=`dirname ${TMP}`;
-    done
 }
 
 PACKAGES =. "${PN}-fonts "

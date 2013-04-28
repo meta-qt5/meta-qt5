@@ -17,22 +17,6 @@ SRC_URI += " \
     file://0002-v8.pro-respect-external-host-bindir-when-set.patch \
 "
 
-do_configure () {
-    # Avoid setting QMAKE_LINK from LD (since we want the linker to be g++)
-    unset LD
-
+do_configure_append () {
     ${OE_QMAKE_QMAKE} ${OE_QMAKE_DEBUG_OUTPUT} -r ${S}
-}
-
-do_install_append () {
-    # everything except HostData and HostBinaries is prefixed with sysroot value,
-    # but we cannot remove sysroot override, because that's useful for pkg-config etc
-    cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
-    rm -rf ${D}${STAGING_DIR_TARGET}
-    # remove empty dirs
-    TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
-    while test ${TMP} != ${D}; do
-        rmdir ${TMP}
-        TMP=`dirname ${TMP}`;
-    done
 }
