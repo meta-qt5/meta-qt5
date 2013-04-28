@@ -30,7 +30,6 @@ QT_CONF_PATH = "${B}/qt.conf"
 
 do_generate_qt_config_file() {
     :
-#    echo >> ${WORKDIR}/qt.conf
 }
 
 EXTRA_OECONF = " \

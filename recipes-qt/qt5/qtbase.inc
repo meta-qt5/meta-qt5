@@ -33,12 +33,10 @@ ARM_INSTRUCTION_SET = "arm"
 inherit qmake5
 
 do_generate_qt_config_file_append() {
-    UNDO_SYSROOT_PREFIX=`echo ${STAGING_DIR_TARGET} | sed 's#/[^/]*#../#g'`
     cat >> ${WORKDIR}/qt.conf <<EOF
 
 [EffectivePaths]
 Prefix=..
-#Prefix=$UNDO_SYSROOT_PREFIX
 EOF
 }
 
@@ -49,7 +47,6 @@ EXTRA_ENV = 'QMAKE="bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} -after \
              MAKE="make -e ${PARALLEL_MAKE}"'
 
 # qtbase is exception, we need to use mkspecs from ${S}
-# QMAKE_MKSPEC_PATH = "${S}/mkspecs"
 QMAKE_MKSPEC_PATH = "${B}"
 
 do_configure_append() {
