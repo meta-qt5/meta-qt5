@@ -6,8 +6,6 @@ inherit qmake5_base
 QT5TOOLSDEPENDS ?= "qtbase-native "
 DEPENDS_prepend = "${QT5TOOLSDEPENDS}"
 
-export OE_QMAKE_LINK = "${CXX}"
-export OE_QMAKE_CXXFLAGS = "${CXXFLAGS}"
 export OE_QMAKE_INCDIR_QT = "${STAGING_INCDIR}/qt5"
 export OE_QMAKE_LIBDIR_QT = "${STAGING_LIBDIR}"
 export OE_QMAKE_LIBS_QT = "qt"
