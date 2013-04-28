@@ -91,3 +91,26 @@ EOF
 # HostSpec The location where to install host mkspec
 
 addtask generate_qt_config_file after do_patch before do_configure
+
+qmake5_base_do_configure () {
+    if [ -z "${QMAKE_PROFILES}" ]; then
+        PROFILES="`ls ${S}/*.pro`"
+    else
+        PROFILES="${QMAKE_PROFILES}"
+        bbnote "qmake using profiles: '${QMAKE_PROFILES}'"
+    fi
+
+    if [ ! -z "${EXTRA_QMAKEVARS_POST}" ]; then
+        AFTER="-after"
+        QMAKE_VARSUBST_POST="${EXTRA_QMAKEVARS_POST}"
+        bbnote "qmake postvar substitution: '${EXTRA_QMAKEVARS_POST}'"
+    fi
+
+    if [ ! -z "${EXTRA_QMAKEVARS_PRE}" ]; then
+        QMAKE_VARSUBST_PRE="${EXTRA_QMAKEVARS_PRE}"
+        bbnote "qmake prevar substitution: '${EXTRA_QMAKEVARS_PRE}'"
+    fi
+
+    CMD="${OE_QMAKE_QMAKE} -makefile -o Makefile ${OE_QMAKE_DEBUG_OUTPUT} -r $QMAKE_VARSUBST_PRE $AFTER $PROFILES $QMAKE_VARSUBST_POST"
+    $CMD || die "Error calling $CMD"
+}

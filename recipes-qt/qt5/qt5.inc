@@ -1,6 +1,6 @@
 # Copyright (C) 2012 O.S. Systems Software LTDA.
 
-inherit qmake5_base
+inherit qmake5
 
 # Qt5 is dependent on icu for localization
 ICU = "icu "
@@ -71,6 +71,8 @@ do_configure() {
         # Existing separate build directory, exists, remove
         rm -rf "${B}/*"
     fi
+
+    qmake5_base_do_configure
 }
 
 do_compile() {

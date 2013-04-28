@@ -49,12 +49,28 @@ EXTRA_ENV = 'QMAKE="bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} -after \
 # qtbase is exception, we need to use mkspecs from ${S}
 QMAKE_MKSPEC_PATH = "${B}"
 
-do_configure_append() {
+# another exception is that we need to run bin/qmake, because EffectivePaths are relative to qmake location
+OE_QMAKE_QMAKE_ORIG := "${OE_QMAKE_QMAKE}"
+OE_QMAKE_QMAKE = "bin/qmake"
+
+do_configure() {
+    set_arch
+    set_endian
+
+    # Avoid problems with the linkers, since we want the linker to be g++
+    unset LD
+
+    # Similar logic is in autotools.bbclass
+    if [ -d ${B} -a "${S}" != "${B}" ] ; then
+        # Existing separate build directory, exists, remove
+        rm -rf "${B}/*"
+    fi
+
     # we need symlink in path relative to source, because
     # EffectivePaths:Prefix is relative to qmake location
     if [ ! -e ${B}/bin/qmake ]; then
         mkdir ${B}/bin
-        ln -sf ${OE_QMAKE_QMAKE} ${B}/bin/qmake
+        ln -sf ${OE_QMAKE_QMAKE_ORIG} ${B}/bin/qmake
     fi
 
     ${S}/configure -v \
@@ -83,8 +99,8 @@ do_configure_append() {
         -platform ${OE_QMAKESPEC} \
         -xplatform linux-oe-g++ \
         ${QT_CONFIG_FLAGS}
-	
-    bin/qmake -r ${OE_QMAKE_DEBUG_OUTPUT} ${S}
+
+    qmake5_base_do_configure
 }
 
 do_compile_append() {
