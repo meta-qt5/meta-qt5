@@ -8,9 +8,12 @@ QMAKE_MKSPEC_PATH_class-native = "${QMAKE_MKSPEC_PATH_NATIVE}"
 OE_QMAKE_PLATFORM_NATIVE = "linux-oe-g++"
 OE_QMAKE_PLATFORM = "linux-oe-g++"
 
+# Add -d to show debug output from every qmake call, but it prints *a lot*
+OE_QMAKE_DEBUG_OUTPUT = "-d"
+
 EXTRA_OEMAKE = " MAKEFLAGS='${PARALLEL_MAKE}'"
 
-EXTRA_ENV = 'QMAKE="${OE_QMAKE_QMAKE} -d -after \
+EXTRA_ENV = 'QMAKE="${OE_QMAKE_QMAKE} ${OE_QMAKE_DEBUG_OUTPUT} -after \
              INCPATH+=${STAGING_INCDIR}/freetype2 LIBS+=-L${STAGING_LIBDIR}" \
              LINK="${CXX} -Wl,-rpath-link,${STAGING_LIBDIR}" \
              STRIP="${OE_QMAKE_STRIP}" \

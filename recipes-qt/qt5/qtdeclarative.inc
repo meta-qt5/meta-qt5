@@ -14,7 +14,7 @@ do_configure () {
     # Avoid setting QMAKE_LINK from LD (since we want the linker to be g++)
     unset LD
 
-    ${OE_QMAKE_QMAKE} -r -d ${S}
+    ${OE_QMAKE_QMAKE} ${OE_QMAKE_DEBUG_OUTPUT} -r ${S}
 }
 
 do_install() {

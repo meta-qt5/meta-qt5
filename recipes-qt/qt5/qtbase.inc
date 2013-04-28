@@ -79,8 +79,8 @@ do_configure_append() {
         -platform ${OE_QMAKESPEC} \
         -xplatform linux-oe-g++ \
         ${QT_CONFIG_FLAGS}
-
-    ${OE_QMAKE_QMAKE} -r -d ${S}
+	
+    bin/qmake -r ${OE_QMAKE_DEBUG_OUTPUT} ${S}
 }
 
 do_compile_append() {
