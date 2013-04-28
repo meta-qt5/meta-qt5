@@ -17,7 +17,16 @@ SRC_URI += "\
 # parts of the source tree with out the 'mkv8snapshot' tool if it is enabled and that will fail
 #PARALLEL_MAKE = ""
 
+SEPB = "${WORKDIR}/build"
+B = "${SEPB}"
+
 do_configure() {
+    # Similar logic is in autotools.bbclass
+    if [ -d ${B} -a "${S}" != "${B}" ] ; then
+        # Existing separate build directory, exists, remove
+        rm -rf "${B}/*"
+    fi
+
     # Avoid setting QMAKE_LINK from LD (since we want the linker to be g++)
     unset LD
 
