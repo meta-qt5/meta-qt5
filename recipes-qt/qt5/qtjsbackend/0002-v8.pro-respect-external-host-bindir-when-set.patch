@@ -1,0 +1,31 @@
+From 79deac4cdb9d223ed22a989f1d3e86fc3504c78e Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sun, 28 Apr 2013 02:45:01 +0200
+Subject: [PATCH 2/2] v8.pro: respect external-host-bindir, when set
+
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/v8/v8.pro | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/v8/v8.pro b/src/v8/v8.pro
+index 2be6a19..d3da4e1 100644
+--- a/src/v8/v8.pro
++++ b/src/v8/v8.pro
+@@ -25,7 +25,10 @@ INCLUDEPATH -= $$MODULE_INCLUDES $$MODULE_INCLUDES/..
+ include(v8.pri)
+ 
+ contains(QT_CONFIG, v8snapshot) {
+-    mkv8snapshot.commands = ../../bin/mkv8snapshot$$qtPlatformTargetSuffix() ${QMAKE_FILE_OUT}
++    mkv8snapshot.tool=$$[QT_EXTERNAL_HOST_BINS]/mkv8snapshot$$qtPlatformTargetSuffix()
++    !exists($$mkv8snapshot.tool): \
++        mkv8snapshot.tool=../../bin/mkv8snapshot$$qtPlatformTargetSuffix()
++    mkv8snapshot.commands = $$mkv8snapshot.tool ${QMAKE_FILE_OUT}
+     DUMMY_FILE = v8.pro
+     mkv8snapshot.input = DUMMY_FILE
+     mkv8snapshot.output = $$V8_GENERATED_SOURCES_DIR/snapshot.cpp
+-- 
+1.8.2.1
+

@@ -1,33 +1,16 @@
-require qt5.inc
+require qt5module.inc
 
-# FIXME!!!
-LICENSE = "LGPLv2.1"
-LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffea8be556788b780"
+# doesn't have GFDL-1.3 like qtbase, LICENSE files are missing in 5.0.0 and 5.0.1, this is for 5.0.2 and git
+LICENSE = "LGPL-2.1 | GPL-3.0"
+LIC_FILES_CHKSUM ?= "file://LICENSE.LGPL;md5=4193e7f1d47a858f6b7c0f1ee66161de \
+                     file://LICENSE.GPL;md5=d32239bcb673463ab874e80d47fae504 \
+                     file://LGPL_EXCEPTION.txt;md5=0145c4d1b6f96a661c2c139dfb268fb6 \
+"
 
-DEPENDS = "qtbase qtjsbackend-native"
+DEPENDS += "qtjsbackend-native"
 
 INC_PR = "r0"
 
-inherit qmake5
-
 SRC_URI += " \
-    file://module_qmake.conf \
-    file://0002-Make-sure-that-we-pick-up-the-mkv8snapshot-tool.patch \
+    file://0002-v8.pro-respect-external-host-bindir-when-set.patch \
 "
-
-# Bitbake will not respect the make order set by qmake and at times it will try to compile
-# parts of the source tree with out the 'mkv8snapshot' tool if it is enabled and that will fail
-PARALLEL_MAKE = ""
-
-export QT_CONF_PATH="${WORKDIR}/qt.conf"
-
-do_configure () {
-	# Avoid setting QMAKE_LINK from LD (since we want the linker to be g++)
-	unset LD
-
-	# This should not be needed. Perhaps the lack of this file is an indication
-    # of an error on the native recipe...
-    cp ${WORKDIR}/module_qmake.conf ${S}/.qmake.conf
-
-    ${OE_QMAKE_QMAKE} -r -d
-}

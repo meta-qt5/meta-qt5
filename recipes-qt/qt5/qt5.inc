@@ -6,7 +6,7 @@ inherit qmake5_base
 ICU = "icu "
 ICU_powerpc = "pango"
 
-DEPENDS += "qt5-tools-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}"
+DEPENDS += "virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}"
 
 require qt5_arch.inc
 
@@ -33,49 +33,47 @@ QT_SYSTEM_LIBS ?= "-system-libjpeg -system-libpng -system-zlib"
 QT_TESTS ?= "-nomake tests"
 QT_EXAMPLES ?= "-nomake examples"
 QT_DEMOS ?= "-nomake demos"
+QT_RELEASE ?= "-release"
 
 QT_CONFIG_FLAGS += " \
-  -release \
-  -reduce-relocations \
-  -shared \
-  -silent \
-  -glib \
-  -no-pch \
-  -no-rpath \
-  -pkg-config \
-  ${QT_SYSTEM_LIBS} \
-  ${QT_NIS} \
-  ${QT_CUPS} \
-  ${QT_SQL_DRIVER_FLAGS} \
-  ${QT_DISTRO_FLAGS} \
-  ${QT_MODULE_FLAGS} \
-  ${QT_GLFLAGS} \
-  ${QT_TESTS} \
-  ${QT_EXAMPLES} \
-  ${QT_DEMOS} \
+    ${QT_RELEASE} \
+    -reduce-relocations \
+    -shared \
+    -silent \
+    -glib \
+    -no-pch \
+    -no-rpath \
+    -pkg-config \
+    ${QT_SYSTEM_LIBS} \
+    ${QT_NIS} \
+    ${QT_CUPS} \
+    ${QT_SQL_DRIVER_FLAGS} \
+    ${QT_DISTRO_FLAGS} \
+    ${QT_MODULE_FLAGS} \
+    ${QT_GLFLAGS} \
+    ${QT_TESTS} \
+    ${QT_EXAMPLES} \
+    ${QT_DEMOS} \
 "
 
-EXTRA_ENV = 'QMAKE="${STAGING_BINDIR_NATIVE}/qmake -d -after \
-             INCPATH+=${STAGING_INCDIR}/freetype2 LIBS+=-L${STAGING_LIBDIR}" \
-             LINK="${CXX} -Wl,-rpath-link,${STAGING_LIBDIR}" \
-             AR="${TARGET_PREFIX}ar cqs" \
-             MOC="${STAGING_BINDIR_NATIVE}/moc" UIC="${STAGING_BINDIR_NATIVE}/uic" MAKE="make -e ${PARALLEL_MAKE}"'
-
-export QT_CONF_PATH="${S}/qt.conf"
+SEPB = "${WORKDIR}/build"
+B = "${SEPB}"
 
 do_configure() {
+    set_arch
     set_endian
-
-    if [ ! -e bin/qmake ]; then
-        ln -sf ${STAGING_BINDIR_NATIVE}/qmake bin/qmake
-    fi
 
     # Avoid problems with the linkers, since we want the linker to be g++
     unset LD
+
+    # Similar logic is in autotools.bbclass
+    if [ -d ${B} -a "${S}" != "${B}" ] ; then
+        # Existing separate build directory, exists, remove
+        rm -rf "${B}/*"
+    fi
 }
 
 do_compile() {
-
     unset CFLAGS CXXFLAGS AR
 
     oe_runmake ${EXTRA_ENV}
@@ -83,16 +81,67 @@ do_compile() {
 
 do_install() {
     oe_runmake install INSTALL_ROOT=${D}
+
+    # everything except HostData and HostBinaries is prefixed with sysroot value,
+    # but we cannot remove sysroot override, because that's useful for pkg-config etc
+    if [ -d ${D}${STAGING_DIR_TARGET} ] ; then
+        cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
+        rm -rf ${D}${STAGING_DIR_TARGET}
+        # remove empty dirs
+        TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
+        while test ${TMP} != ${D}; do
+            rmdir ${TMP}
+            TMP=`dirname ${TMP}`;
+        done
+    fi
 }
 
-PACKAGES =. "${PN}-tools ${PN}-plugins ${PN}-plugins-dbg "
-FILES_${PN}-tools = "${bindir}/*"
-FILES_${PN}-plugins = "${libdir}/${QT_DIR_NAME}/plugins/*/*${SOLIBSDEV}"
-FILES_${PN}-plugins-dbg = "${libdir}/${QT_DIR_NAME}/plugins/*/.debug/*"
-
+PACKAGES =. "${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-tools ${PN}-plugins ${PN}-mkspecs "
+FILES_${PN}-tools-dbg = " \
+    ${bindir}/${QT_DIR_NAME}/.debug \
+    ${bindir}/.debug \
+"
+FILES_${PN}-plugins-dbg = " \
+    ${libdir}/${QT_DIR_NAME}/plugins/*/.debug/* \
+    ${libdir}/plugins/*/.debug/* \
+"
+FILES_${PN}-tools = " \
+    ${bindir}/${QT_DIR_NAME}/* \
+    ${bindir}/* \
+"
+FILES_${PN}-plugins = " \
+    ${libdir}/${QT_DIR_NAME}/plugins/*/*${SOLIBSDEV} \
+    ${libdir}/plugins/*/*${SOLIBSDEV} \
+"
+FILES_${PN}-mkspecs += "\
+    ${libdir}/${QT_DIR_NAME}/mkspecs \
+    ${libdir}/mkspecs \
+"
+FILES_${PN} += " \
+    ${libdir}/${QT_DIR_NAME}/lib*${SOLIBS} \
+    ${libdir}/lib*${SOLIBS} \
+"
 FILES_${PN}-dev += " \
-        ${libdir}/cmake/* \
-        ${libdir}/*.prl \
-        ${includedir}/qt5/* \
-        ${datadir}/qt5/* \
+    ${libdir}/${QT_DIR_NAME}/pkgconfig \
+    ${libdir}/${QT_DIR_NAME}/cmake/* \
+    ${libdir}/${QT_DIR_NAME}/*.prl \
+    ${libdir}/${QT_DIR_NAME}/*.la \
+    ${datadir}/${QT_DIR_NAME}/* \
+    ${includedir}/${QT_DIR_NAME}/* \
+    ${libdir}/pkgconfig \
+    ${libdir}/cmake/* \
+    ${libdir}/*.prl \
+    ${libdir}/*.la \
+    ${datadir}/* \
+    ${includedir}/* \
+"
+FILES_${PN}-dbg += " \
+    ${libdir}/${QT_DIR_NAME}/.debug \
+    ${libdir}/${QT_DIR_NAME}/lib*${SOLIBSDEV} \
+    ${libdir}/.debug \
+    ${libdir}/lib*${SOLIBSDEV} \
+"
+FILES_${PN}-staticdev += " \
+    ${libdir}/${QT_DIR_NAME}/*.a \
+    ${libdir}/*.a \
 "
