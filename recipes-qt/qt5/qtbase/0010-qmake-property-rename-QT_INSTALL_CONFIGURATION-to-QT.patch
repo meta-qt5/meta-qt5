@@ -1,0 +1,30 @@
+From b00e2fa5ade9bed1b75f4629cc7ba2c3ec9e429f Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sat, 27 Apr 2013 22:51:54 +0200
+Subject: [PATCH 10/10] qmake/property: rename QT_INSTALL_CONFIGURATION to
+ QT_INSTALL_SETTINGS
+
+* this variable is referenced from configure and configureapp.cpp as QT_INSTALL_SETTINGS
+  property.cpp was only place using name QT_INSTALL_CONFIGURATION
+
+Change-Id: I3ba40d5f8773fe9aea728c5b2418aa55cecc92da
+---
+ qmake/property.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/qmake/property.cpp b/qmake/property.cpp
+index dca0c58..8ebba3b 100644
+--- a/qmake/property.cpp
++++ b/qmake/property.cpp
+@@ -68,7 +68,7 @@ static const struct {
+     { "QT_INSTALL_IMPORTS", QLibraryInfo::ImportsPath, false },
+     { "QT_INSTALL_QML", QLibraryInfo::Qml2ImportsPath, false },
+     { "QT_INSTALL_TRANSLATIONS", QLibraryInfo::TranslationsPath, false },
+-    { "QT_INSTALL_CONFIGURATION", QLibraryInfo::SettingsPath, false },
++    { "QT_INSTALL_SETTINGS", QLibraryInfo::SettingsPath, false },
+     { "QT_INSTALL_EXAMPLES", QLibraryInfo::ExamplesPath, false },
+     { "QT_INSTALL_DEMOS", QLibraryInfo::ExamplesPath, false }, // Just backwards compat
+     { "QT_HOST_PREFIX", QLibraryInfo::HostPrefixPath, true },
+-- 
+1.8.2.1
+

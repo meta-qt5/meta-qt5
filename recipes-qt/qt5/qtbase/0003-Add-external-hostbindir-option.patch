@@ -118,7 +118,7 @@ index bbd4734..dca0c58 100644
      { "QT_HOST_PREFIX", QLibraryInfo::HostPrefixPath, true },
      { "QT_HOST_DATA", QLibraryInfo::HostDataPath, true },
      { "QT_HOST_BINS", QLibraryInfo::HostBinariesPath, true },
-+    { "QT_EXTERNAL_HOST_BINS", QLibraryInfo::ExternalHostBinariesPath, true },
++    { "QT_EXTERNAL_HOST_BINS", QLibraryInfo::ExternalHostBinariesPath, false },
      { "QMAKE_SPEC", QLibraryInfo::HostSpecPath, true },
      { "QMAKE_XSPEC", QLibraryInfo::TargetSpecPath, true },
  };

@@ -1,0 +1,28 @@
+From 1548dbf04ab1dbc45e514478fb82b4a0827140b1 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sat, 27 Apr 2013 22:33:33 +0200
+Subject: [PATCH 8/8] configureapp: Prefix default LIBDIRS and INCDIRS with
+ SYSROOT
+
+---
+ tools/configure/configureapp.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
+index 0e01ab5..6bb7986 100644
+--- a/tools/configure/configureapp.cpp
++++ b/tools/configure/configureapp.cpp
+@@ -3061,8 +3061,8 @@ void Configure::generateQConfigPri()
+         configStream << "QT_HOST_CPU_FEATURES = " << dictionary["QT_HOST_CPU_FEATURES"] << endl;
+         if (!dictionary["XQMAKESPEC"].isEmpty() && !dictionary["XQMAKESPEC"].startsWith("wince")) {
+             // FIXME: add detection
+-            configStream << "QMAKE_DEFAULT_LIBDIRS = /lib /usr/lib" << endl;
+-            configStream << "QMAKE_DEFAULT_INCDIRS = /usr/include /usr/local/include" << endl;
++            configStream << "QMAKE_DEFAULT_LIBDIRS = $$[QT_SYSROOT]/lib $$[QT_SYSROOT]/usr/lib" << endl;
++            configStream << "QMAKE_DEFAULT_INCDIRS = $$[QT_SYSROOT]/usr/include $$[QT_SYSROOT]/usr/local/include" << endl;
+         }
+         if (dictionary["QT_EDITION"].contains("OPENSOURCE"))
+             configStream << "QT_EDITION = " << QLatin1String("OpenSource") << endl;
+-- 
+1.8.2.1
+

@@ -17,6 +17,9 @@ SRC_URI += " \
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0003-Add-external-hostbindir-option.patch \
     file://0006-qt_functions-temporary-remove-isEmpty-check.patch \
+    file://0008-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
+    file://0009-qt_module-Fix-pkgconfig-replacement.patch \
+    file://0010-qmake-property-rename-QT_INSTALL_CONFIGURATION-to-QT.patch \
 "
 
 SEPB = "${WORKDIR}/build"
