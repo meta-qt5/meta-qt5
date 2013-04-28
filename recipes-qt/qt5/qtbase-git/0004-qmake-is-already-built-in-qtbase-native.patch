@@ -1,7 +1,7 @@
-From 915a980742cd072df6faa386daf3f937f5b5b215 Mon Sep 17 00:00:00 2001
+From d0f322cf4ee9ead48997bb3e3a2c137bba91141b Mon Sep 17 00:00:00 2001
 From: Michael Krelin <hacker@klever.net>
 Date: Mon, 29 Oct 2012 20:07:49 -0700
-Subject: [PATCH 4/6] qmake is already built in qtbase-native
+Subject: [PATCH 04/11] qmake is already built in qtbase-native
 
 Ported from OE by: Yu Ke <ke.yu@intel.com>
 Upstream-Status: Inappropriate [configuration]
@@ -13,7 +13,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index 93dbfab..dd5e646 100755
+index 65f4d26..dbf99a9 100755
 --- a/configure
 +++ b/configure
 @@ -3938,7 +3938,7 @@ setBootstrapEvalVariable()

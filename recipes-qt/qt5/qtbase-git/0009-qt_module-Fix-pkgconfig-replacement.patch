@@ -1,4 +1,4 @@
-From 4ba266bc0a7e4841cfd06d555b39888928a6e3a5 Mon Sep 17 00:00:00 2001
+From 72f1087fef0e506b9ab015498f5c7a4b3161c6f3 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
 Subject: [PATCH 09/11] qt_module: Fix pkgconfig replacement
@@ -26,13 +26,13 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 50e9469..9532377 100644
+index 3531d28..1c43972 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
-@@ -191,18 +191,30 @@ unix|win32-g++* {
+@@ -136,18 +136,30 @@ unix|win32-g++* {
        rplbase = $$dirname(_QMAKE_SUPER_CACHE_)/[^/][^/]*
     else: \
-       rplbase = $$[QT_INSTALL_PREFIX/get]
+       rplbase = $$MODULE_BASE_OUTDIR
 +   pkgconfig_include_replace.match = $$rplbase/include
 +   pkgconfig_include_replace.replace = "\$$\\{includedir}"
 +   pkgconfig_lib_replace.match = $$rplbase/lib
@@ -44,18 +44,18 @@ index 50e9469..9532377 100644
 -   QMAKE_PKGCONFIG_INSTALL_REPLACE += include_replace lib_replace
 +   lafile_replace.match = $$rplbase
 +   lafile_replace.replace = "=$$[QT_INSTALL_PREFIX/raw]"
-+   
++
 +   !isEmpty(SYSROOT): \
 +      rplbase = $$[SYSROOT] \
 +      lafile_replace.match = $$rplbase \
 +      lafile_replace.replace = "=" \
 +
 +   QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_include_replace pkgconfig_lib_replace
+    QMAKE_PRL_INSTALL_REPLACE += include_replace lib_replace
  }
  
  unix {
     CONFIG += create_libtool explicitlib
-    QMAKE_PRL_INSTALL_REPLACE += include_replace lib_replace
     QMAKE_LIBTOOL_LIBDIR = $$[QT_INSTALL_LIBS/raw]
 -   QMAKE_LIBTOOL_INSTALL_REPLACE += include_replace lib_replace
 +   QMAKE_LIBTOOL_INSTALL_REPLACE += lafile_replace

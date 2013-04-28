@@ -1,7 +1,7 @@
 From 753924949e1d72c63283ecc904e2134fa76888d7 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 17 Apr 2013 18:06:25 +0200
-Subject: [PATCH 6/6] qt_functions: temporary remove isEmpty check
+Subject: [PATCH 06/11] qt_functions: temporary remove isEmpty check
 
 * now we assume that every build will provide QT_EXTERNAL_HOST_BINS value
 

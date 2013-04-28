@@ -1,4 +1,4 @@
-From 5b01ec1b8da7fc949efea262647a9d6010c670f4 Mon Sep 17 00:00:00 2001
+From 6d816874a95cb85bdf96e06f763e21c098d92b89 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 22:51:54 +0200
 Subject: [PATCH 10/11] qmake/property: rename QT_INSTALL_CONFIGURATION to
@@ -16,7 +16,7 @@ Change-Id: I3ba40d5f8773fe9aea728c5b2418aa55cecc92da
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/qmake/property.cpp b/qmake/property.cpp
-index dca0c58..8ebba3b 100644
+index c1b7a9f..af2eacf 100644
 --- a/qmake/property.cpp
 +++ b/qmake/property.cpp
 @@ -68,7 +68,7 @@ static const struct {

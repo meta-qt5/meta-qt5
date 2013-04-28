@@ -1,7 +1,7 @@
-From 6d1c296d6df2c5efd8aec3272e7eacae1c093885 Mon Sep 17 00:00:00 2001
+From e356895802c2a1e596882c79161994ebbf361d65 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 17 Apr 2013 18:06:25 +0200
-Subject: [PATCH 6/6] qt_functions: temporary remove isEmpty check
+Subject: [PATCH 06/11] qt_functions: temporary remove isEmpty check
 
 * now we assume that every build will provide QT_EXTERNAL_HOST_BINS value
 
@@ -29,10 +29,10 @@ index 876f657..0e094a8 100644
          }
          contains(QMAKE_HOST.os, Windows):!contains($$1, .*\\.(exe|bat)$) {
 diff --git a/mkspecs/features/qt_tool.prf b/mkspecs/features/qt_tool.prf
-index 5758604..37b50d4 100644
+index c110ea5..34ee9ca 100644
 --- a/mkspecs/features/qt_tool.prf
 +++ b/mkspecs/features/qt_tool.prf
-@@ -36,8 +36,7 @@ load(qt_common)
+@@ -15,8 +15,7 @@ CONFIG += console
  
  # If we are doing a prefix build, create a "module" pri which enables
  # qtPrepareTool() to work with the non-installed build.

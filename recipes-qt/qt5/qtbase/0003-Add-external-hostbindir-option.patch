@@ -1,7 +1,7 @@
 From 72d8aaf00e3d722b56b66bd5fa1f1f3d3e8a8552 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 3/6] Add -external-hostbindir option
+Subject: [PATCH 03/11] Add -external-hostbindir option
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -118,7 +118,7 @@ index bbd4734..dca0c58 100644
      { "QT_HOST_PREFIX", QLibraryInfo::HostPrefixPath, true },
      { "QT_HOST_DATA", QLibraryInfo::HostDataPath, true },
      { "QT_HOST_BINS", QLibraryInfo::HostBinariesPath, true },
-+    { "QT_EXTERNAL_HOST_BINS", QLibraryInfo::ExternalHostBinariesPath, false },
++    { "QT_EXTERNAL_HOST_BINS", QLibraryInfo::ExternalHostBinariesPath, true },
      { "QMAKE_SPEC", QLibraryInfo::HostSpecPath, true },
      { "QMAKE_XSPEC", QLibraryInfo::TargetSpecPath, true },
  };

@@ -1,7 +1,7 @@
-From 21001bb1c68fdc22ee243c562549f7b3a8a8ed84 Mon Sep 17 00:00:00 2001
+From 0cdd1297e98edd3368a6b923923ff6cf0684d800 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
-Subject: [PATCH 1/6] Add linux-oe-g++ platform
+Subject: [PATCH 01/11] Add linux-oe-g++ platform
 
 * This qmake.conf unlike other platforms reads most variables from
   shell environment, because it's easier for qt recipes to export
@@ -41,7 +41,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index 55a643a..666576f 100755
+index 9c86fa1..7dea731 100755
 --- a/configure
 +++ b/configure
 @@ -284,6 +284,16 @@ getQMakeConf()

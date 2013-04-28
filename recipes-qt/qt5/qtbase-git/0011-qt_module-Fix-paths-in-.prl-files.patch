@@ -1,4 +1,4 @@
-From 1809b8b32d3b8a689eb5d40f096b3541345ff219 Mon Sep 17 00:00:00 2001
+From 57da761a8e1995a20250c6600bc99937a7b203b4 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sun, 28 Apr 2013 12:56:55 +0200
 Subject: [PATCH 11/11] qt_module: Fix paths in .prl files
@@ -18,10 +18,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 17 insertions(+), 11 deletions(-)
 
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 9532377..73053f7 100644
+index 1c43972..feec2d5 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
-@@ -195,17 +195,23 @@ unix|win32-g++* {
+@@ -140,17 +140,23 @@ unix|win32-g++* {
     pkgconfig_include_replace.replace = "\$$\\{includedir}"
     pkgconfig_lib_replace.match = $$rplbase/lib
     pkgconfig_lib_replace.replace = "\$$\\{libdir}"
@@ -31,7 +31,7 @@ index 9532377..73053f7 100644
 -   lib_replace.replace = $$[QT_INSTALL_LIBS/raw]
 -   lafile_replace.match = $$rplbase
 -   lafile_replace.replace = "=$$[QT_INSTALL_PREFIX/raw]"
--   
+-
 -   !isEmpty(SYSROOT): \
 -      rplbase = $$[SYSROOT] \
 -      lafile_replace.match = $$rplbase \
@@ -55,7 +55,7 @@ index 9532377..73053f7 100644
 +   }
  
     QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_include_replace pkgconfig_lib_replace
- }
+    QMAKE_PRL_INSTALL_REPLACE += include_replace lib_replace
 -- 
 1.8.2.1
 
