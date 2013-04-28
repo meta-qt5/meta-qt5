@@ -5,8 +5,6 @@ DEPENDS = "qtbase-native"
 
 QT_MODULE = "qtjsbackend"
 
-SSTATE_SCAN_FILES += "*.pri *.prl"
-
 INC_PR = "r0"
 
 inherit native qmake5_base

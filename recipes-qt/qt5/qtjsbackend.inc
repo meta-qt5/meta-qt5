@@ -8,8 +8,6 @@ DEPENDS = "qtbase qtjsbackend-native"
 
 INC_PR = "r0"
 
-SSTATE_SCAN_FILES += "*.pri *.prl"
-
 inherit qmake5
 
 SRC_URI += " \

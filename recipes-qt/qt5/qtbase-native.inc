@@ -9,8 +9,6 @@ inherit native qmake5_base
 
 QT_MODULE = "qtbase"
 
-SSTATE_SCAN_FILES += "*.pri *.prl"
-
 SRC_URI += " \
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \

@@ -12,6 +12,9 @@ OE_QMAKE_PLATFORM = "linux-oe-g++"
 # Add -d to show debug output from every qmake call, but it prints *a lot*
 OE_QMAKE_DEBUG_OUTPUT = "-d"
 
+# Paths in .prl files contain SYSROOT value
+SSTATE_SCAN_FILES += "*.pri *.prl"
+
 EXTRA_OEMAKE = " MAKEFLAGS='${PARALLEL_MAKE}'"
 
 EXTRA_ENV = 'QMAKE="${OE_QMAKE_QMAKE} ${OE_QMAKE_DEBUG_OUTPUT} -after \
