@@ -10,6 +10,7 @@ SRC_URI += " \
     file://0008-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
     file://0009-qt_module-Fix-pkgconfig-replacement.patch \
     file://0010-qmake-property-rename-QT_INSTALL_CONFIGURATION-to-QT.patch \
+    file://0011-qt_module-Fix-paths-in-.prl-files.patch \
 "
 
 DEPENDS += "qtbase-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev"
