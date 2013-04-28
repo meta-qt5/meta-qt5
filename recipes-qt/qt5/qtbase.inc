@@ -107,4 +107,4 @@ do_install_append() {
 }
 
 PACKAGES =. "${PN}-fonts "
-FILES_${PN}-fonts = "${libdir}/${QT_DIR_NAME}/fonts"
+FILES_${PN}-fonts = "${libdir}/${QT_DIR_NAME}/fonts ${libdir}/fonts"
