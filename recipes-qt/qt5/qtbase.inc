@@ -27,9 +27,6 @@ QT_MODULE_FLAGS = "-no-xcb"
 
 INC_PR = "r0"
 
-QT_BASE_NAME = "qt5"
-QT_DIR_NAME = "qt5"
-
 SSTATE_SCAN_FILES += "*.pri *.prl"
 
 # Qt uses atomic instructions not supported in thumb mode

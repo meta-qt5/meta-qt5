@@ -10,7 +10,6 @@ inherit native qmake5_base
 QT_MODULE = "qtbase"
 
 SSTATE_SCAN_FILES += "*.pri *.prl"
-QT_DIR_NAME ?= "qt5"
 
 SRC_URI += " \
     file://0001-Add-linux-oe-g-platform.patch \
