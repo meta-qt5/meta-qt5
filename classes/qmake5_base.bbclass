@@ -38,28 +38,52 @@ export OE_QMAKE_STRIP = "echo"
 export QT_CONF_PATH = "${WORKDIR}/qt.conf"
 export QT_DIR_NAME ?= "qt5"
 
+OE_QMAKE_PATH_PREFIX = "${prefix}"
+OE_QMAKE_PATH_HEADERS = "${includedir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_LIBS = "${libdir}"
+OE_QMAKE_PATH_ARCHDATA = "${libdir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_DATA = "${datadir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_BINS = "${bindir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_LIBEXECS = "${libdir}/${QT_DIR_NAME}/libexec"
+OE_QMAKE_PATH_PLUGINS = "${libdir}/${QT_DIR_NAME}/plugins"
+OE_QMAKE_PATH_IMPORTS = "${libdir}/${QT_DIR_NAME}/imports"
+OE_QMAKE_PATH_QML = "${libdir}/${QT_DIR_NAME}/qml"
+OE_QMAKE_PATH_TRANSLATIONS = "${datadir}/${QT_DIR_NAME}/translations"
+OE_QMAKE_PATH_DOCS = "${datadir}/${QT_DIR_NAME}/doc"
+OE_QMAKE_PATH_SETTINGS = "${sysconfdir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_EXAMPLES = "${datadir}/${QT_DIR_NAME}/examples"
+OE_QMAKE_PATH_TESTS = "${datadir}/${QT_DIR_NAME}/tests"
+OE_QMAKE_PATH_HOST_PREFIX = ""
+OE_QMAKE_PATH_HOST_BINS = "${bindir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_HOST_DATA = "${QMAKE_MKSPEC_PATH_TARGET}"
+OE_QMAKE_PATH_EXTERNAL_HOST_BINS = "${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}"
+
 # do not export STRIP to the environment
 STRIP[unexport] = "1"
 
 do_generate_qt_config_file() {
     cat > ${WORKDIR}/qt.conf <<EOF
 [Paths]
-Prefix = ${prefix}
-Binaries = ${bindir}/${QT_DIR_NAME}
-Libraries = ${libdir}
-Headers = ${includedir}/${QT_DIR_NAME}
-Data = ${datadir}/${QT_DIR_NAME}
-ArchData = ${libdir}/${QT_DIR_NAME}
-LibraryExecutables = ${libdir}/${QT_DIR_NAME}/libexec
-Imports = ${libdir}/${QT_DIR_NAME}/imports
-Qml2Imports = ${libdir}/${QT_DIR_NAME}/qml
-Plugins = ${libdir}/${QT_DIR_NAME}/plugins
-Documentation = ${docdir}/${QT_DIR_NAME}
-HostData = ${QMAKE_MKSPEC_PATH_TARGET}
-HostBinaries = ${bindir}/${QT_DIR_NAME}
+Prefix = ${OE_QMAKE_PATH_PREFIX}
+Headers = ${OE_QMAKE_PATH_HEADERS}
+Libraries = ${OE_QMAKE_PATH_LIBS}
+ArchData = ${OE_QMAKE_PATH_ARCHDATA}
+Data = ${OE_QMAKE_PATH_DATA}
+Binaries = ${OE_QMAKE_PATH_BINS}
+LibraryExecutables = ${OE_QMAKE_PATH_LIBEXECS}
+Plugins = ${OE_QMAKE_PATH_PLUGINS}
+Imports = ${OE_QMAKE_PATH_IMPORTS}
+Qml2Imports = ${OE_QMAKE_PATH_QML}
+Translations = ${OE_QMAKE_PATH_TRANSLATIONS}
+Documentation = ${OE_QMAKE_PATH_DOCS}
+Settings = ${OE_QMAKE_PATH_SETTINGS}
+Examples = ${OE_QMAKE_PATH_EXAMPLES}
+Tests = ${OE_QMAKE_PATH_TESTS}
+HostBinaries = ${OE_QMAKE_PATH_HOST_BINS}
+HostData = ${OE_QMAKE_PATH_HOST_DATA}
 HostSpec = ${OE_QMAKESPEC}
 TartgetSpec = ${OE_XQMAKESPEC} 
-ExternalHostBinaries = ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}
+ExternalHostBinaries = ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}
 Sysroot = ${STAGING_DIR_TARGET}
 EOF
 }

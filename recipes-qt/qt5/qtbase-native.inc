@@ -53,13 +53,14 @@ EXTRA_OECONF = " \
     -no-xcb \
     -verbose \
     -release \
-    -prefix ${prefix} \
-    -bindir ${bindir}/${QT_DIR_NAME} \
-    -libdir ${libdir} \
-    -headerdir ${includedir}/${QT_DIR_NAME} \
-    -archdatadir ${libdir}/${QT_DIR_NAME} \
-    -datadir ${datadir}/${QT_DIR_NAME} \
-    -docdir ${docdir}/${QT_DIR_NAME} \
+    -prefix ${OE_QMAKE_PATH_PREFIX} \
+    -bindir ${OE_QMAKE_PATH_BINS} \
+    -libdir ${OE_QMAKE_PATH_LIBS} \
+    -headerdir ${OE_QMAKE_PATH_HEADERS} \
+    -archdatadir ${OE_QMAKE_PATH_ARCHDATA} \
+    -datadir ${OE_QMAKE_PATH_DATA} \
+    -docdir ${OE_QMAKE_PATH_DOCS} \
+    -sysconfdir ${OE_QMAKE_PATH_SETTINGS} \
     -no-glib \
     -no-iconv \
     -silent \
