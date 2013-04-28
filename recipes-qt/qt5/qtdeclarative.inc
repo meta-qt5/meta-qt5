@@ -19,10 +19,31 @@ do_configure () {
 
 do_install() {
     oe_runmake install INSTALL_ROOT=${D}
+    # everything except HostData and HostBinaries is prefixed with sysroot value,
+    # but we cannot remove sysroot override, because that's useful for pkg-config etc
+    cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
+    rm -rf ${D}${STAGING_DIR_TARGET}
+    # remove empty dirs
+    TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
+    while test ${TMP} != ${D}; do
+        rmdir ${TMP}
+        TMP=`dirname ${TMP}`;
+    done
 }
 
-FILES_${PN}-qmlplugins = "${libdir}/qt5/qml/*"
-FILES_${PN}-qmltooling = "${libdir}/qt5/plugins/qmltooling/*"
-FILES_${PN}-qmltooling-dbg = "${libdir}/qt5/plugins/qmltooling/.debug/*"
+FILES_${PN}-qmlplugins-dbg = " \
+    ${libdir}/${QT_DIR_NAME}/qml/*/.debug \
+    ${libdir}/${QT_DIR_NAME}/qml/*/*/.debug \
+    ${libdir}/${QT_DIR_NAME}/qml/*/*/*/.debug \
+"
+FILES_${PN}-qmltooling-dbg = " \
+    ${libdir}/${QT_DIR_NAME}/plugins/qmltooling/.debug/* \
+"
+FILES_${PN}-qmlplugins = " \
+    ${libdir}/${QT_DIR_NAME}/qml/* \
+"
+FILES_${PN}-qmltooling = " \
+    ${libdir}/${QT_DIR_NAME}/plugins/qmltooling/* \
+"
 
-PACKAGES .= "${PN}-qmlplugins ${PN}-qmltooling ${PN}-qmltooling-dbg"
+PACKAGES .= " ${PN}-qmlplugins-dbg ${PN}-qmltooling-dbg ${PN}-qmlplugins ${PN}-qmltooling"
