@@ -33,9 +33,10 @@ QT_SYSTEM_LIBS ?= "-system-libjpeg -system-libpng -system-zlib"
 QT_TESTS ?= "-nomake tests"
 QT_EXAMPLES ?= "-nomake examples"
 QT_DEMOS ?= "-nomake demos"
+QT_RELEASE ?= "-release"
 
 QT_CONFIG_FLAGS += " \
-    -release \
+    ${QT_RELEASE} \
     -reduce-relocations \
     -shared \
     -silent \
