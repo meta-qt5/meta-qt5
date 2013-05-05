@@ -7,13 +7,3 @@ LIC_FILES_CHKSUM ?= "file://LICENSE.LGPL;md5=4ac745f4b16b419fa48a24d41e983c40 \
                      file://LICENSE.FDL;md5=f70ee9a6c44ae8917586fea34dff0ab5"
 
 INC_PR = "r1"
-
-FILES_${PN}-plugins += " \
-            ${libdir}/${QT_DIR_NAME}/qml/Qt3D/libqthreedqmlplugin.so \
-            ${libdir}/${QT_DIR_NAME}/qml/Qt3D/qmldir \
-            ${libdir}/${QT_DIR_NAME}/qml/Qt3D/plugins.qmltypes \
-            ${libdir}/${QT_DIR_NAME}/qml/Qt3D/Shapes \
-"
-FILES_${PN}-plugins-dbg += " \
-            ${libdir}/${QT_DIR_NAME}/qml/Qt3D/.debug \
-"

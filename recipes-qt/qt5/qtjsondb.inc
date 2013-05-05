@@ -10,13 +10,3 @@ LIC_FILES_CHKSUM = "file://${S}/doc/src/qtjsondb.qdoc;endline=26;md5=757f4eda130
 "
 
 INC_PR = "r0"
-
-PACKAGES += "${PN}-qmlplugins ${PN}-qmlplugins-dbg"
-
-FILES_${PN}-qmlplugins = " \
-    ${OE_QMAKE_PATH_QML}/QtJsonDb/qmldir \
-    ${OE_QMAKE_PATH_QML}/QtJsonDb/libjsondbplugin.so \
-"
-FILES_${PN}-qmlplugins-dbg = " \
-    ${OE_QMAKE_PATH_QML}/QtJsonDb/.debug \
-"

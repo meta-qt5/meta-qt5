@@ -10,15 +10,3 @@ LIC_FILES_CHKSUM = "file://${S}/src/imports/systeminfo/qsysteminfo.cpp;endline=4
 "
 
 INC_PR = "r0"
-
-PACKAGES += "${PN}-qmlplugins-dbg ${PN}-qmlplugins"
-
-FILES_${PN}-qmlplugins = " \
-    ${OE_QMAKE_PATH_QML}/*/*.so \
-    ${OE_QMAKE_PATH_QML}/*/qmldir \
-    ${OE_QMAKE_PATH_QML}/*/plugins.qmltypes \
-"
-
-FILES_${PN}-qmlplugins-dbg = " \
-    ${OE_QMAKE_PATH_QML}/*/.debug \
-"
