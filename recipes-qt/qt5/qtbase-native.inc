@@ -18,6 +18,7 @@ SRC_URI += " \
     file://0009-qt_module-Fix-pkgconfig-replacement.patch \
     file://0010-qmake-property-rename-QT_INSTALL_CONFIGURATION-to-QT.patch \
     file://0011-qt_module-Fix-paths-in-.prl-files.patch \
+    file://0012-wayland-scanner-disable-silent-rules.patch \
 "
 
 SEPB = "${WORKDIR}/build"
@@ -53,13 +54,14 @@ EXTRA_OECONF = " \
     -no-xcb \
     -verbose \
     -release \
-    -prefix ${prefix} \
-    -bindir ${bindir}/${QT_DIR_NAME} \
-    -libdir ${libdir} \
-    -headerdir ${includedir}/${QT_DIR_NAME} \
-    -archdatadir ${libdir}/${QT_DIR_NAME} \
-    -datadir ${datadir}/${QT_DIR_NAME} \
-    -docdir ${docdir}/${QT_DIR_NAME} \
+    -prefix ${OE_QMAKE_PATH_PREFIX} \
+    -bindir ${OE_QMAKE_PATH_BINS} \
+    -libdir ${OE_QMAKE_PATH_LIBS} \
+    -headerdir ${OE_QMAKE_PATH_HEADERS} \
+    -archdatadir ${OE_QMAKE_PATH_ARCHDATA} \
+    -datadir ${OE_QMAKE_PATH_DATA} \
+    -docdir ${OE_QMAKE_PATH_DOCS} \
+    -sysconfdir ${OE_QMAKE_PATH_SETTINGS} \
     -no-glib \
     -no-iconv \
     -silent \

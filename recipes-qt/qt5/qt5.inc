@@ -1,6 +1,6 @@
 # Copyright (C) 2012 O.S. Systems Software LTDA.
 
-inherit qmake5_base
+inherit qmake5
 
 # Qt5 is dependent on icu for localization
 ICU = "icu "
@@ -71,6 +71,8 @@ do_configure() {
         # Existing separate build directory, exists, remove
         rm -rf "${B}/*"
     fi
+
+    qmake5_base_do_configure
 }
 
 do_compile() {
@@ -80,68 +82,84 @@ do_compile() {
 }
 
 do_install() {
-    oe_runmake install INSTALL_ROOT=${D}
-
-    # everything except HostData and HostBinaries is prefixed with sysroot value,
-    # but we cannot remove sysroot override, because that's useful for pkg-config etc
-    if [ -d ${D}${STAGING_DIR_TARGET} ] ; then
-        cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
-        rm -rf ${D}${STAGING_DIR_TARGET}
-        # remove empty dirs
-        TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
-        while test ${TMP} != ${D}; do
-            rmdir ${TMP}
-            TMP=`dirname ${TMP}`;
-        done
-    fi
+    qmake5_base_do_install
 }
 
-PACKAGES =. "${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-tools ${PN}-plugins ${PN}-mkspecs "
+PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs "
+
+# extra -dbg packages
+FILES_${PN}-qmlplugins-dbg = " \
+    ${OE_QMAKE_PATH_QML}/*/.debug \
+    ${OE_QMAKE_PATH_QML}/*/*/.debug \
+    ${OE_QMAKE_PATH_QML}/*/*/*/.debug \
+    ${OE_QMAKE_PATH_IMPORTS}/*/.debug \
+    ${OE_QMAKE_PATH_IMPORTS}/*/*/.debug \
+    ${OE_QMAKE_PATH_IMPORTS}/*/*/*/.debug \
+"
 FILES_${PN}-tools-dbg = " \
-    ${bindir}/${QT_DIR_NAME}/.debug \
-    ${bindir}/.debug \
+    ${OE_QMAKE_PATH_BINS}/.debug \
 "
 FILES_${PN}-plugins-dbg = " \
-    ${libdir}/${QT_DIR_NAME}/plugins/*/.debug/* \
-    ${libdir}/plugins/*/.debug/* \
+    ${OE_QMAKE_PATH_PLUGINS}/*/.debug/* \
+"
+
+# extra packages
+# qmlplugins 1-3 levels of subdirs qmldir + *{.so,*.qmltypes,*.qml,*js}
+FILES_${PN}-qmlplugins = " \
+    ${OE_QMAKE_PATH_QML}/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_QML}/*/qmldir \
+    ${OE_QMAKE_PATH_QML}/*/*.qmltypes \
+    ${OE_QMAKE_PATH_QML}/*/*.qml \
+    ${OE_QMAKE_PATH_QML}/*/*.js \
+    ${OE_QMAKE_PATH_QML}/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_QML}/*/*/qmldir \
+    ${OE_QMAKE_PATH_QML}/*/*/*.qmltypes \
+    ${OE_QMAKE_PATH_QML}/*/*/*.qml \
+    ${OE_QMAKE_PATH_QML}/*/*/*.js \
+    ${OE_QMAKE_PATH_QML}/*/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_QML}/*/*/*/qmldir \
+    ${OE_QMAKE_PATH_QML}/*/*/*/*.qmltypes \
+    ${OE_QMAKE_PATH_QML}/*/*/*/*.qml \
+    ${OE_QMAKE_PATH_QML}/*/*/*/*.js \
+    ${OE_QMAKE_PATH_IMPORTS}/*.qmltypes \
+    ${OE_QMAKE_PATH_IMPORTS}/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_IMPORTS}/*/*.qmltypes \
+    ${OE_QMAKE_PATH_IMPORTS}/*/qmldir \
+    ${OE_QMAKE_PATH_IMPORTS}/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_IMPORTS}/*/*/*.qmltypes \
+    ${OE_QMAKE_PATH_IMPORTS}/*/*/qmldir \
+    ${OE_QMAKE_PATH_IMPORTS}/*/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_IMPORTS}/*/*/*/*.qmltypes \
+    ${OE_QMAKE_PATH_IMPORTS}/*/*/*/qmldir \
 "
 FILES_${PN}-tools = " \
-    ${bindir}/${QT_DIR_NAME}/* \
-    ${bindir}/* \
+    ${OE_QMAKE_PATH_BINS}/* \
 "
 FILES_${PN}-plugins = " \
-    ${libdir}/${QT_DIR_NAME}/plugins/*/*${SOLIBSDEV} \
-    ${libdir}/plugins/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_PLUGINS}/*/*${SOLIBSDEV} \
 "
-FILES_${PN}-mkspecs += "\
-    ${libdir}/${QT_DIR_NAME}/mkspecs \
-    ${libdir}/mkspecs \
+FILES_${PN}-mkspecs = "\
+    ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
 "
+
+# modifications to normal packages
 FILES_${PN} += " \
-    ${libdir}/${QT_DIR_NAME}/lib*${SOLIBS} \
-    ${libdir}/lib*${SOLIBS} \
+    ${OE_QMAKE_PATH_LIBS}/lib*${SOLIBS} \
+    ${OE_QMAKE_PATH_LIBEXECS} \
 "
 FILES_${PN}-dev += " \
-    ${libdir}/${QT_DIR_NAME}/pkgconfig \
-    ${libdir}/${QT_DIR_NAME}/cmake/* \
-    ${libdir}/${QT_DIR_NAME}/*.prl \
-    ${libdir}/${QT_DIR_NAME}/*.la \
-    ${datadir}/${QT_DIR_NAME}/* \
-    ${includedir}/${QT_DIR_NAME}/* \
-    ${libdir}/pkgconfig \
-    ${libdir}/cmake/* \
-    ${libdir}/*.prl \
-    ${libdir}/*.la \
-    ${datadir}/* \
-    ${includedir}/* \
+    ${OE_QMAKE_PATH_LIBS}/lib*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_LIBS}/pkgconfig \
+    ${OE_QMAKE_PATH_LIBS}/cmake/* \
+    ${OE_QMAKE_PATH_LIBS}/*.prl \
+    ${OE_QMAKE_PATH_LIBS}/*.la \
+    ${OE_QMAKE_PATH_DATA}/* \
+    ${OE_QMAKE_PATH_HEADERS}/* \
 "
 FILES_${PN}-dbg += " \
-    ${libdir}/${QT_DIR_NAME}/.debug \
-    ${libdir}/${QT_DIR_NAME}/lib*${SOLIBSDEV} \
-    ${libdir}/.debug \
-    ${libdir}/lib*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_LIBS}/.debug \
+    ${OE_QMAKE_PATH_LIBEXECS}/.debug \
 "
 FILES_${PN}-staticdev += " \
-    ${libdir}/${QT_DIR_NAME}/*.a \
-    ${libdir}/*.a \
+    ${OE_QMAKE_PATH_LIBS}/*.a \
 "

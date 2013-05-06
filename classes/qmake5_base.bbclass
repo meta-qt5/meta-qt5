@@ -35,8 +35,31 @@ export OE_QMAKE_LINK = "${CXX}"
 export OE_QMAKE_LDFLAGS = "${LDFLAGS}"
 export OE_QMAKE_AR = "${AR}"
 export OE_QMAKE_STRIP = "echo"
+export OE_QMAKE_WAYLAND_SCANNER = "${STAGING_BINDIR_NATIVE}/wayland-scanner"
 export QT_CONF_PATH = "${WORKDIR}/qt.conf"
 export QT_DIR_NAME ?= "qt5"
+
+EXTRA_QMAKEVARS_PRE += "OE_QMAKE_WAYLAND_SCANNER=${STAGING_BINDIR_NATIVE}/wayland-scanner"
+
+OE_QMAKE_PATH_PREFIX = "${prefix}"
+OE_QMAKE_PATH_HEADERS = "${includedir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_LIBS = "${libdir}"
+OE_QMAKE_PATH_ARCHDATA = "${libdir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_DATA = "${datadir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_BINS = "${bindir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_LIBEXECS = "${libdir}/${QT_DIR_NAME}/libexec"
+OE_QMAKE_PATH_PLUGINS = "${libdir}/${QT_DIR_NAME}/plugins"
+OE_QMAKE_PATH_IMPORTS = "${libdir}/${QT_DIR_NAME}/imports"
+OE_QMAKE_PATH_QML = "${libdir}/${QT_DIR_NAME}/qml"
+OE_QMAKE_PATH_TRANSLATIONS = "${datadir}/${QT_DIR_NAME}/translations"
+OE_QMAKE_PATH_DOCS = "${datadir}/${QT_DIR_NAME}/doc"
+OE_QMAKE_PATH_SETTINGS = "${sysconfdir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_EXAMPLES = "${datadir}/${QT_DIR_NAME}/examples"
+OE_QMAKE_PATH_TESTS = "${datadir}/${QT_DIR_NAME}/tests"
+OE_QMAKE_PATH_HOST_PREFIX = ""
+OE_QMAKE_PATH_HOST_BINS = "${bindir}/${QT_DIR_NAME}"
+OE_QMAKE_PATH_HOST_DATA = "${QMAKE_MKSPEC_PATH_TARGET}"
+OE_QMAKE_PATH_EXTERNAL_HOST_BINS = "${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}"
 
 # do not export STRIP to the environment
 STRIP[unexport] = "1"
@@ -44,22 +67,26 @@ STRIP[unexport] = "1"
 do_generate_qt_config_file() {
     cat > ${WORKDIR}/qt.conf <<EOF
 [Paths]
-Prefix = ${prefix}
-Binaries = ${bindir}/${QT_DIR_NAME}
-Libraries = ${libdir}
-Headers = ${includedir}/${QT_DIR_NAME}
-Data = ${datadir}/${QT_DIR_NAME}
-ArchData = ${libdir}/${QT_DIR_NAME}
-LibraryExecutables = ${libdir}/${QT_DIR_NAME}/libexec
-Imports = ${libdir}/${QT_DIR_NAME}/imports
-Qml2Imports = ${libdir}/${QT_DIR_NAME}/qml
-Plugins = ${libdir}/${QT_DIR_NAME}/plugins
-Documentation = ${docdir}/${QT_DIR_NAME}
-HostData = ${QMAKE_MKSPEC_PATH_TARGET}
-HostBinaries = ${bindir}/${QT_DIR_NAME}
+Prefix = ${OE_QMAKE_PATH_PREFIX}
+Headers = ${OE_QMAKE_PATH_HEADERS}
+Libraries = ${OE_QMAKE_PATH_LIBS}
+ArchData = ${OE_QMAKE_PATH_ARCHDATA}
+Data = ${OE_QMAKE_PATH_DATA}
+Binaries = ${OE_QMAKE_PATH_BINS}
+LibraryExecutables = ${OE_QMAKE_PATH_LIBEXECS}
+Plugins = ${OE_QMAKE_PATH_PLUGINS}
+Imports = ${OE_QMAKE_PATH_IMPORTS}
+Qml2Imports = ${OE_QMAKE_PATH_QML}
+Translations = ${OE_QMAKE_PATH_TRANSLATIONS}
+Documentation = ${OE_QMAKE_PATH_DOCS}
+Settings = ${OE_QMAKE_PATH_SETTINGS}
+Examples = ${OE_QMAKE_PATH_EXAMPLES}
+Tests = ${OE_QMAKE_PATH_TESTS}
+HostBinaries = ${OE_QMAKE_PATH_HOST_BINS}
+HostData = ${OE_QMAKE_PATH_HOST_DATA}
 HostSpec = ${OE_QMAKESPEC}
 TartgetSpec = ${OE_XQMAKESPEC} 
-ExternalHostBinaries = ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}
+ExternalHostBinaries = ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}
 Sysroot = ${STAGING_DIR_TARGET}
 EOF
 }
@@ -91,3 +118,49 @@ EOF
 # HostSpec The location where to install host mkspec
 
 addtask generate_qt_config_file after do_patch before do_configure
+
+qmake5_base_do_configure () {
+    if [ -z "${QMAKE_PROFILES}" ]; then
+        PROFILES="`ls ${S}/*.pro`"
+    else
+        PROFILES="${QMAKE_PROFILES}"
+        bbnote "qmake using profiles: '${QMAKE_PROFILES}'"
+    fi
+
+    if [ ! -z "${EXTRA_QMAKEVARS_POST}" ]; then
+        AFTER="-after"
+        QMAKE_VARSUBST_POST="${EXTRA_QMAKEVARS_POST}"
+        bbnote "qmake postvar substitution: '${EXTRA_QMAKEVARS_POST}'"
+    fi
+
+    if [ ! -z "${EXTRA_QMAKEVARS_PRE}" ]; then
+        QMAKE_VARSUBST_PRE="${EXTRA_QMAKEVARS_PRE}"
+        bbnote "qmake prevar substitution: '${EXTRA_QMAKEVARS_PRE}'"
+    fi
+
+    CMD="${OE_QMAKE_QMAKE} -makefile -o Makefile ${OE_QMAKE_DEBUG_OUTPUT} -r $QMAKE_VARSUBST_PRE $AFTER $PROFILES $QMAKE_VARSUBST_POST"
+    $CMD || die "Error calling $CMD"
+}
+
+qmake5_base_do_install() {
+    # Fix install paths for all
+    find -name "Makefile*" | xargs sed -i "s,(INSTALL_ROOT)${STAGING_DIR_TARGET},(INSTALL_ROOT),g"
+
+    oe_runmake install INSTALL_ROOT=${D}
+
+    # everything except HostData and HostBinaries is prefixed with sysroot value,
+    # but we cannot remove sysroot override, because that's useful for pkg-config etc
+    # In some cases like QtQmlDevTools in qtdeclarative, the sed above does not work,
+    # fix them manually
+    if [ -d ${D}${STAGING_DIR_TARGET} ] ; then
+        echo "Some files are installed in wrong directory ${D}${STAGING_DIR_TARGET}"
+        cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
+        rm -rf ${D}${STAGING_DIR_TARGET}
+        # remove empty dirs
+        TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
+        while test ${TMP} != ${D}; do
+            rmdir ${TMP}
+            TMP=`dirname ${TMP}`;
+        done
+    fi
+}
