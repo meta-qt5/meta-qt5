@@ -8,4 +8,4 @@ PR = "${INC_PR}.0"
 
 QT_MODULE_BRANCH = "master"
 
-SRCREV = "d723769d90331f4cde8dcb5aa3973e5c6bad8753"
+SRCREV = "0158ce783a61bac3e4f4ff619b0601daf9174ce6"
