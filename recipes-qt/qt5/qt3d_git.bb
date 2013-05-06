@@ -1,5 +1,5 @@
-require ${PN}.inc
 require qt5-git.inc
+require ${PN}.inc
 
 # last tag before this SRCREV is 5.0.0-beta1
 PV = "4.999+5.0.0-beta1+git${SRCPV}"

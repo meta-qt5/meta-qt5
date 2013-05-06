@@ -1,5 +1,5 @@
-require ${PN}.inc
 require qt5-git.inc
+require ${PN}.inc
 
 # LICENSE files are missing in this old SRCREV, remove when upgraded
 # commit cf831b83142dee8114df3bc37c29116a66945f5f

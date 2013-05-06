@@ -1,5 +1,5 @@
-require ${PN}.inc
 require qt5-${PV}.inc
+require ${PN}.inc
 
 # LICENSE files are missing in 5.0.1
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffea8be556788b780 \

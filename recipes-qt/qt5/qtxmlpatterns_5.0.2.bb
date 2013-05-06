@@ -1,5 +1,5 @@
-require ${PN}.inc
 require qt5-${PV}.inc
+require ${PN}.inc
 
 # LICENSE.FDL is missing in 5.0.2, added a bit later:
 # commit 3bc0756a63d348d3446d9581f45429c417fd9c29
