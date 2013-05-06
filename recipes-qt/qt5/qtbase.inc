@@ -11,6 +11,7 @@ SRC_URI += " \
     file://0009-qt_module-Fix-pkgconfig-replacement.patch \
     file://0010-qmake-property-rename-QT_INSTALL_CONFIGURATION-to-QT.patch \
     file://0011-qt_module-Fix-paths-in-.prl-files.patch \
+    file://0012-wayland-scanner-disable-silent-rules.patch \
 "
 
 DEPENDS += "qtbase-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev"
@@ -49,12 +50,28 @@ EXTRA_ENV = 'QMAKE="bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} -after \
 # qtbase is exception, we need to use mkspecs from ${S}
 QMAKE_MKSPEC_PATH = "${B}"
 
-do_configure_append() {
+# another exception is that we need to run bin/qmake, because EffectivePaths are relative to qmake location
+OE_QMAKE_QMAKE_ORIG := "${OE_QMAKE_QMAKE}"
+OE_QMAKE_QMAKE = "bin/qmake"
+
+do_configure() {
+    set_arch
+    set_endian
+
+    # Avoid problems with the linkers, since we want the linker to be g++
+    unset LD
+
+    # Similar logic is in autotools.bbclass
+    if [ -d ${B} -a "${S}" != "${B}" ] ; then
+        # Existing separate build directory, exists, remove
+        rm -rf "${B}/*"
+    fi
+
     # we need symlink in path relative to source, because
     # EffectivePaths:Prefix is relative to qmake location
     if [ ! -e ${B}/bin/qmake ]; then
         mkdir ${B}/bin
-        ln -sf ${OE_QMAKE_QMAKE} ${B}/bin/qmake
+        ln -sf ${OE_QMAKE_QMAKE_ORIG} ${B}/bin/qmake
     fi
 
     ${S}/configure -v \
@@ -62,29 +79,29 @@ do_configure_append() {
         -opensource -confirm-license \
         -sysroot ${STAGING_DIR_TARGET} \
         -no-gcc-sysroot \
-        -prefix ${prefix} \
-        -bindir ${bindir}/${QT_DIR_NAME} \
-        -libdir ${libdir} \
-        -datadir ${datadir}/${QT_DIR_NAME} \
-        -sysconfdir ${sysconfdir}/${QT_DIR_NAME} \
-        -docdir ${docdir}/${QT_DIR_NAME} \
-        -headerdir ${includedir}/${QT_DIR_NAME} \
-        -archdatadir ${libdir}/${QT_DIR_NAME} \
-        -libexecdir ${libdir}/${QT_DIR_NAME}/libexec \
-        -plugindir ${libdir}/${QT_DIR_NAME}/plugins \
-        -importdir ${libdir}/${QT_DIR_NAME}/imports \
-        -qmldir ${libdir}/${QT_DIR_NAME}/qml \
-        -translationdir ${datadir}/${QT_DIR_NAME}/translations \
-        -testsdir ${datadir}/${QT_DIR_NAME}/tests \
-        -examplesdir ${datadir}/${QT_DIR_NAME}/examples \
-        -hostbindir ${bindir}/${QT_DIR_NAME} \
-        -hostdatadir ${libdir}/${QT_DIR_NAME} \
-        -external-hostbindir ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME} \
+        -prefix ${OE_QMAKE_PATH_PREFIX} \
+        -bindir ${OE_QMAKE_PATH_BINS} \
+        -libdir ${OE_QMAKE_PATH_LIBS} \
+        -datadir ${OE_QMAKE_PATH_DATA} \
+        -sysconfdir ${OE_QMAKE_PATH_SETTINGS} \
+        -docdir ${OE_QMAKE_PATH_DOCS} \
+        -headerdir ${OE_QMAKE_PATH_HEADERS} \
+        -archdatadir ${OE_QMAKE_PATH_ARCHDATA} \
+        -libexecdir ${OE_QMAKE_PATH_LIBEXECS} \
+        -plugindir ${OE_QMAKE_PATH_PLUGINS} \
+        -importdir ${OE_QMAKE_PATH_IMPORTS} \
+        -qmldir ${OE_QMAKE_PATH_QML} \
+        -translationdir ${OE_QMAKE_PATH_TRANSLATIONS} \
+        -testsdir ${OE_QMAKE_PATH_TESTS} \
+        -examplesdir ${OE_QMAKE_PATH_EXAMPLES} \
+        -hostbindir ${OE_QMAKE_PATH_HOST_BINS} \
+        -hostdatadir ${OE_QMAKE_PATH_HOST_DATA} \
+        -external-hostbindir ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS} \
         -platform ${OE_QMAKESPEC} \
         -xplatform linux-oe-g++ \
         ${QT_CONFIG_FLAGS}
-	
-    bin/qmake -r ${OE_QMAKE_DEBUG_OUTPUT} ${S}
+
+    qmake5_base_do_configure
 }
 
 do_compile_append() {

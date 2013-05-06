@@ -1,6 +1,6 @@
 # Copyright (C) 2012 O.S. Systems Software LTDA.
 
-inherit qmake5_base
+inherit qmake5
 
 # Qt5 is dependent on icu for localization
 ICU = "icu "
@@ -71,6 +71,8 @@ do_configure() {
         # Existing separate build directory, exists, remove
         rm -rf "${B}/*"
     fi
+
+    qmake5_base_do_configure
 }
 
 do_compile() {
@@ -80,20 +82,7 @@ do_compile() {
 }
 
 do_install() {
-    oe_runmake install INSTALL_ROOT=${D}
-
-    # everything except HostData and HostBinaries is prefixed with sysroot value,
-    # but we cannot remove sysroot override, because that's useful for pkg-config etc
-    if [ -d ${D}${STAGING_DIR_TARGET} ] ; then
-        cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
-        rm -rf ${D}${STAGING_DIR_TARGET}
-        # remove empty dirs
-        TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
-        while test ${TMP} != ${D}; do
-            rmdir ${TMP}
-            TMP=`dirname ${TMP}`;
-        done
-    fi
+    qmake5_base_do_install
 }
 
 PACKAGES =. "${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-tools ${PN}-plugins ${PN}-mkspecs "

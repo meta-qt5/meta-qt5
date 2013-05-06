@@ -1,5 +1,5 @@
 require ${PN}.inc
-require qt5-5.0.2+git.inc
+require qt5-git.inc
 
 PR = "${INC_PR}.0"
 
