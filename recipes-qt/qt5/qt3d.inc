@@ -7,3 +7,8 @@ LIC_FILES_CHKSUM ?= "file://LICENSE.LGPL;md5=4ac745f4b16b419fa48a24d41e983c40 \
                      file://LICENSE.FDL;md5=f70ee9a6c44ae8917586fea34dff0ab5"
 
 INC_PR = "r1"
+
+FILES_${PN}-qmlplugins += " \
+    ${OE_QMAKE_PATH_QML}/*/*/*.bez \
+    ${OE_QMAKE_PATH_QML}/*/*/*.obj \
+"
