@@ -9,6 +9,7 @@ inherit native qmake5_base
 
 QT_MODULE = "qtbase"
 
+# shared with target qtbase
 SRC_URI += " \
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
@@ -20,6 +21,9 @@ SRC_URI += " \
     file://0011-qt_module-Fix-paths-in-.prl-files.patch \
     file://0012-wayland-scanner-disable-silent-rules.patch \
 "
+
+# specific for native version
+SRC_URI += "file://0001-Always-build-uic.patch"
 
 SEPB = "${WORKDIR}/build"
 B = "${SEPB}"
