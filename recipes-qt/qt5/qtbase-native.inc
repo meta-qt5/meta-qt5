@@ -81,9 +81,6 @@ do_configure_prepend() {
         rm -rf "${B}/*"
     fi  
 
-    # Avoid setting QMAKE_LINK from LD (since we want the linker to be g++)
-    unset LD
-
     (echo o; echo yes) | ${S}/configure ${EXTRA_OECONF} || die "Configuring qt failed. EXTRA_OECONF was ${EXTRA_OECONF}"
     bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} ${S} -o Makefile || die "Configuring qt with qmake failed. EXTRA_OECONF was ${EXTRA_OECONF}"
 }
