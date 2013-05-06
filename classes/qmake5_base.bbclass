@@ -15,13 +15,7 @@ OE_QMAKE_DEBUG_OUTPUT = "-d"
 # Paths in .prl files contain SYSROOT value
 SSTATE_SCAN_FILES += "*.pri *.prl"
 
-EXTRA_OEMAKE = " MAKEFLAGS='${PARALLEL_MAKE}'"
-
-EXTRA_ENV = 'QMAKE="${OE_QMAKE_QMAKE} ${OE_QMAKE_DEBUG_OUTPUT} -after \
-             INCPATH+=${STAGING_INCDIR}/freetype2 LIBS+=-L${STAGING_LIBDIR}" \
-             LINK="${CXX} -Wl,-rpath-link,${STAGING_LIBDIR}" \
-             STRIP="${OE_QMAKE_STRIP}" \
-             MAKE="make -e ${PARALLEL_MAKE}"'
+EXTRA_OEMAKE += " MAKEFLAGS='${PARALLEL_MAKE}'"
 
 export OE_QMAKESPEC = "${QMAKE_MKSPEC_PATH_NATIVE}/mkspecs/${OE_QMAKE_PLATFORM_NATIVE}"
 export OE_XQMAKESPEC = "${QMAKE_MKSPEC_PATH}/mkspecs/${OE_QMAKE_PLATFORM}"

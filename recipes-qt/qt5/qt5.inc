@@ -75,12 +75,6 @@ do_configure() {
     qmake5_base_do_configure
 }
 
-do_compile() {
-    unset CFLAGS CXXFLAGS AR
-
-    oe_runmake ${EXTRA_ENV}
-}
-
 do_install() {
     qmake5_base_do_install
 }

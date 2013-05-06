@@ -41,12 +41,6 @@ Prefix=..
 EOF
 }
 
-EXTRA_ENV = 'QMAKE="bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} -after \
-             INCPATH+=${STAGING_INCDIR}/freetype2 LIBS+=-L${STAGING_LIBDIR}" \
-             LINK="${CXX} -Wl,-rpath-link,${STAGING_LIBDIR}" \
-             STRIP="${OE_QMAKE_STRIP}" \
-             MAKE="make -e ${PARALLEL_MAKE}"'
-
 # qtbase is exception, we need to use mkspecs from ${S}
 QMAKE_MKSPEC_PATH = "${B}"
 

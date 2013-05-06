@@ -28,9 +28,6 @@ SRC_URI += "file://0001-Always-build-uic.patch"
 SEPB = "${WORKDIR}/build"
 B = "${SEPB}"
 
-EXTRA_ENV = 'MAKE="make -e ${PARALLEL_MAKE}"'
-EXTRA_OEMAKE = " MAKEFLAGS='${PARALLEL_MAKE}'"
-
 QT_CONF_PATH = "${B}/qt.conf"
 
 do_generate_qt_config_file() {
