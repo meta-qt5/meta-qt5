@@ -20,18 +20,59 @@ DEPENDS += "qtbase-native virtual/libgl freetype jpeg libpng zlib openssl glib-2
 XCB_DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
 # reenable when we switch to "-qt-xcb" and build of 
 # DEPENDS += "${XCB_DEPENDS}"
-# QT_MODULE_FLAGS = "-qt-xcb"
+# QT_XCB = "-qt-xcb"
 # src/platformsupport/glxconvenience/ is resolved to be before build of
 # src/plugins/platforms/xcb/
 
-QT_MODULE_FLAGS = "-no-xcb"
+QT_XCB ?= "-no-xcb"
+
+QT_DISTRO_FLAGS ?= "-no-accessibility -no-sm"
+QT_DISTRO_FLAGS_linuxstdbase = "-sm"
+
+# Some can be used only for certain QT_MODULEs, so define them here, 
+# but add them to QT_CONFIG_FLAGS e.g. in qtbase.inc
+QT_SQL_DRIVER_FLAGS ?= "-no-sql-ibase -no-sql-mysql -no-sql-psql -no-sql-odbc -plugin-sql-sqlite"
+QT_GLFLAGS ?= ""
+QT_XML ?= "-xmlpatterns"
+QT_WEBKIT ?= "-webkit"
+QT_PHONON ?= "-phonon"
+QT_DBUS ?= "-qdbus"
+QT_MULTIMEDIA ?= "${@base_contains('DISTRO_FEATURES', 'pulseaudio', '-pulseaudio', '-no-pulseaudio', d)}"
+QT_NAS ?= "-no-nas-sound"
+QT_NIS ?= "-no-nis"
+QT_CUPS ?= "-no-cups"
+QT_STL ?= "-stl"
+QT_SYSTEM_LIBS ?= "-system-libjpeg -system-libpng -system-zlib"
+QT_TESTS ?= "-nomake tests"
+QT_EXAMPLES ?= "-nomake examples"
+QT_DEMOS ?= "-nomake demos"
+QT_RELEASE ?= "-release"
+
+QT_CONFIG_FLAGS += " \
+    ${QT_RELEASE} \
+    -reduce-relocations \
+    -shared \
+    -silent \
+    -glib \
+    -no-pch \
+    -no-rpath \
+    -pkg-config \
+    ${QT_SYSTEM_LIBS} \
+    ${QT_NIS} \
+    ${QT_CUPS} \
+    ${QT_SQL_DRIVER_FLAGS} \
+    ${QT_DISTRO_FLAGS} \
+    ${QT_XCB} \
+    ${QT_GLFLAGS} \
+    ${QT_TESTS} \
+    ${QT_EXAMPLES} \
+    ${QT_DEMOS} \
+"
 
 INC_PR = "r0"
 
 # Qt uses atomic instructions not supported in thumb mode
 ARM_INSTRUCTION_SET = "arm"
-
-inherit qmake5
 
 do_generate_qt_config_file_append() {
     cat >> ${WORKDIR}/qt.conf <<EOF
