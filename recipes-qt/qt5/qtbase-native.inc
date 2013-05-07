@@ -88,5 +88,20 @@ do_configure_prepend() {
 }
 
 do_install() {
+    # Fix install paths for all
+    find -name "Makefile*" | xargs sed -i "s,(INSTALL_ROOT)${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE},(INSTALL_ROOT)${STAGING_DIR_NATIVE},g"
+
     oe_runmake install INSTALL_ROOT=${D}
+
+    if [ -d ${D}${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE} ] ; then
+        echo "Some files are installed in wrong directory ${D}${STAGING_DIR_NATIVE}"
+        cp -ra ${D}${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE}/* ${D}${STAGING_DIR_NATIVE}
+        rm -rf ${D}${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE}
+        # remove empty dirs
+        TMP=`dirname ${D}/${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE}`
+        while test ${TMP} != ${D}${STAGING_DIR_NATIVE}; do
+            rmdir ${TMP}
+            TMP=`dirname ${TMP}`;
+        done
+    fi
 }
