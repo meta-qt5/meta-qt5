@@ -1,4 +1,4 @@
-require qt5module.inc
+require qt5.inc
 
 LICENSE = "GFDL-1.3 & LGPL-2.1 & PREVIEW.COMMERCIAL"
 LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=4ac745f4b16b419fa48a24d41e983c40 \

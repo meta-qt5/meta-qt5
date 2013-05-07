@@ -1,4 +1,4 @@
-require qt5module.inc
+require qt5.inc
 
 # doesn't have GFDL-1.3 like qtbase, LICENSE files are missing in 5.0.0 and 5.0.1, this is for 5.0.2 and git
 LICENSE = "LGPL-2.1 | GPL-3.0"
@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=4193e7f1d47a858f6b7c0f1ee66161de \
                     file://LGPL_EXCEPTION.txt;md5=0145c4d1b6f96a661c2c139dfb268fb6 \
 "
 
-DEPENDS += "qtjsbackend-native"
+DEPENDS += "qtbase qtjsbackend-native"
 
 INC_PR = "r0"
 

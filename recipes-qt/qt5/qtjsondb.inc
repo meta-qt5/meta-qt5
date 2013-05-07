@@ -1,4 +1,4 @@
-require qt5module.inc
+require qt5.inc
 
 DEPENDS += "qtdeclarative ${ICU}"
 

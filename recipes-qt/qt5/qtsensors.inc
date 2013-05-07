@@ -1,5 +1,5 @@
-require qt5module.inc
+require qt5.inc
 
-DEPENDS += "qtdeclarative"
+DEPENDS += "qtbase qtdeclarative"
 
 INC_PR = "r0"
