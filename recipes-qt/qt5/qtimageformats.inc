@@ -1,3 +1,5 @@
-require qt5module.inc
+require qt5.inc
+
+DEPENDS += "qtbase"
 
 INC_PR = "r0"

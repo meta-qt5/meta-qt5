@@ -1,4 +1,4 @@
-require qt5module.inc
+require qt5.inc
 
 LICENSE = "BSD & LGPL-2.1 | GPL-3.0"
 LIC_FILES_CHKSUM = "file://${S}/src/compositor/compositor_api/qwaylandsurfacenode.cpp;endline=40;md5=e38eccd7e9a6a149c9e31b6fb47daac1 \
@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "file://${S}/src/compositor/compositor_api/qwaylandsurfacenod
 # make it easier to remove by .bbappend (e.g. for building qtwayland with danny which doesn't
 # have libxkbcommon in oe-core).
 XKB_DEPENDS = "libxkbcommon"
-DEPENDS += "qtdeclarative wayland wayland-native ${XKB_DEPENDS}"
+DEPENDS += "qtbase qtdeclarative wayland wayland-native ${XKB_DEPENDS}"
 
 INC_PR = "r1"
 

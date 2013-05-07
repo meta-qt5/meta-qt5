@@ -1,6 +1,6 @@
-require qt5module.inc
+require qt5.inc
 
-DEPENDS += "qtdeclarative icu"
+DEPENDS += "qtdeclarative ${ICU}"
 
 LICENSE = "BSD & LGPL-2.1 & GFDL-1.3"
 # this is for latest SRCREV:

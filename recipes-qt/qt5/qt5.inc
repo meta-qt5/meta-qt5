@@ -1,4 +1,5 @@
 # Copyright (C) 2012 O.S. Systems Software LTDA.
+# Copyright (C) 2013 Martin Jansa <martin.jansa@gmail.com>
 
 inherit qmake5
 
@@ -6,55 +7,9 @@ inherit qmake5
 ICU = "icu "
 ICU_powerpc = "pango"
 
-DEPENDS += "virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU}"
-
 require qt5_arch.inc
 
 QT_MODULE ?= "${BPN}"
-
-QT_DISTRO_FLAGS ?= "-no-accessibility -no-sm"
-QT_DISTRO_FLAGS_linuxstdbase = "-sm"
-
-# Some can be used only for certain QT_MODULEs, so define them here, 
-# but add them to QT_CONFIG_FLAGS e.g. in qtbase.inc
-QT_SQL_DRIVER_FLAGS ?= "-no-sql-ibase -no-sql-mysql -no-sql-psql -no-sql-odbc -plugin-sql-sqlite"
-QT_GLFLAGS ?= ""
-QT_XML ?= "-xmlpatterns"
-QT_WEBKIT ?= "-webkit"
-QT_PHONON ?= "-phonon"
-QT_DBUS ?= "-qdbus"
-QT_MULTIMEDIA ?= "${@base_contains('DISTRO_FEATURES', 'pulseaudio', '-pulseaudio', '-no-pulseaudio', d)}"
-QT_MODULE_FLAGS ?= ""
-QT_NAS ?= "-no-nas-sound"
-QT_NIS ?= "-no-nis"
-QT_CUPS ?= "-no-cups"
-QT_STL ?= "-stl"
-QT_SYSTEM_LIBS ?= "-system-libjpeg -system-libpng -system-zlib"
-QT_TESTS ?= "-nomake tests"
-QT_EXAMPLES ?= "-nomake examples"
-QT_DEMOS ?= "-nomake demos"
-QT_RELEASE ?= "-release"
-
-QT_CONFIG_FLAGS += " \
-    ${QT_RELEASE} \
-    -reduce-relocations \
-    -shared \
-    -silent \
-    -glib \
-    -no-pch \
-    -no-rpath \
-    -pkg-config \
-    ${QT_SYSTEM_LIBS} \
-    ${QT_NIS} \
-    ${QT_CUPS} \
-    ${QT_SQL_DRIVER_FLAGS} \
-    ${QT_DISTRO_FLAGS} \
-    ${QT_MODULE_FLAGS} \
-    ${QT_GLFLAGS} \
-    ${QT_TESTS} \
-    ${QT_EXAMPLES} \
-    ${QT_DEMOS} \
-"
 
 SEPB = "${WORKDIR}/build"
 B = "${SEPB}"

@@ -1,5 +1,6 @@
-require qt5module.inc
+require qt5.inc
 
-DEPENDS += "qt3d qtdeclarative"
+DEPENDS += "qtbase qt3d qtjsondb"
+# qtsystems qtmultimedia
 
 INC_PR = "r0"

@@ -9,8 +9,8 @@ QMAKE_MKSPEC_PATH_class-native = "${QMAKE_MKSPEC_PATH_NATIVE}"
 OE_QMAKE_PLATFORM_NATIVE = "linux-oe-g++"
 OE_QMAKE_PLATFORM = "linux-oe-g++"
 
-# Add -d to show debug output from every qmake call, but it prints *a lot*
-OE_QMAKE_DEBUG_OUTPUT = "-d"
+# Add -d to show debug output from every qmake call, but it prints *a lot*, better to add it only to debugged recipe
+OE_QMAKE_DEBUG_OUTPUT ?= ""
 
 # Paths in .prl files contain SYSROOT value
 SSTATE_SCAN_FILES += "*.pri *.prl"
