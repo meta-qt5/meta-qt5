@@ -20,6 +20,7 @@ SRC_URI += " \
     file://0010-qmake-property-rename-QT_INSTALL_CONFIGURATION-to-QT.patch \
     file://0011-qt_module-Fix-paths-in-.prl-files.patch \
     file://0012-wayland-scanner-disable-silent-rules.patch \
+    file://0013-configure-don-t-export-SYSTEM_VARIABLES-to-.qmake.va.patch \
 "
 
 # specific for native version
