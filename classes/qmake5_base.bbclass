@@ -74,7 +74,7 @@ OE_QMAKE_PATH_EXTERNAL_HOST_BINS = "${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}"
 STRIP[unexport] = "1"
 
 do_generate_qt_config_file() {
-    cat > ${WORKDIR}/qt.conf <<EOF
+    cat > ${QT_CONF_PATH} <<EOF
 [Paths]
 Prefix = ${OE_QMAKE_PATH_PREFIX}
 Headers = ${OE_QMAKE_PATH_HEADERS}

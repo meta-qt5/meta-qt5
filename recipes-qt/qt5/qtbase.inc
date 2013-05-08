@@ -75,7 +75,7 @@ INC_PR = "r0"
 ARM_INSTRUCTION_SET = "arm"
 
 do_generate_qt_config_file_append() {
-    cat >> ${WORKDIR}/qt.conf <<EOF
+    cat >> ${QT_CONF_PATH} <<EOF
 
 [EffectivePaths]
 Prefix=..
