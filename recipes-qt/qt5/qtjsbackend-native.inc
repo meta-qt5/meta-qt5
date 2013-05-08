@@ -9,9 +9,9 @@ DEPENDS = "qtbase-native"
 
 QT_MODULE = "qtjsbackend"
 
-INC_PR = "r0"
+require qt5-native.inc
 
-inherit native qmake5_base
+INC_PR = "r0"
 
 SRC_URI += "\
     file://0001-Install-the-mkv8snapshot-tool-to-the-native-side.patch \

@@ -5,9 +5,9 @@ HOMEPAGE = "http://qt-project.org"
 
 INC_PR = "r1"
 
-inherit native qmake5_base
-
 QT_MODULE = "qtbase"
+
+require qt5-native.inc
 
 # shared with target qtbase
 SRC_URI += " \
