@@ -15,16 +15,16 @@ SRC_URI += " \
     file://0013-configure-don-t-export-SYSTEM_VARIABLES-to-.qmake.va.patch \
 "
 
-DEPENDS += "qtbase-native virtual/libgl freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev"
+DEPENDS += "qtbase-native freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev ${XCB_DEPENDS} ${GL_DEPENDS}"
 
 # to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h and dbus/dbus.h
-XCB_DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
+# XCB_DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
 # reenable when we switch to "-qt-xcb" and build of 
-# DEPENDS += "${XCB_DEPENDS}"
 # QT_XCB = "-qt-xcb"
 # src/platformsupport/glxconvenience/ is resolved to be before build of
 # src/plugins/platforms/xcb/
 
+XCB_DEPENDS ?= ""
 QT_XCB ?= "-no-xcb"
 
 QT_DISTRO_FLAGS ?= "-no-accessibility -no-sm"
@@ -33,7 +33,13 @@ QT_DISTRO_FLAGS_linuxstdbase = "-sm"
 # Some can be used only for certain QT_MODULEs, so define them here, 
 # but add them to QT_CONFIG_FLAGS e.g. in qtbase.inc
 QT_SQL_DRIVER_FLAGS ?= "-no-sql-ibase -no-sql-mysql -no-sql-psql -no-sql-odbc -plugin-sql-sqlite"
-QT_GLFLAGS ?= ""
+
+# if you want to enable egl/gles2 in your .bbappend, don't forget to add right dependencies, e.g.
+# GL_DEPENDS = "virtual/libgles2 virtual/libegl"
+# QT_GLFLAGS = "-opengl es2 -eglfs"
+GL_DEPENDS ?= "virtual/libgl"
+QT_GLFLAGS ?= "-opengl"
+
 QT_XML ?= "-xmlpatterns"
 QT_WEBKIT ?= "-webkit"
 QT_PHONON ?= "-phonon"
@@ -70,7 +76,7 @@ QT_CONFIG_FLAGS += " \
     ${QT_DEMOS} \
 "
 
-INC_PR = "r0"
+INC_PR = "r1"
 
 # Qt uses atomic instructions not supported in thumb mode
 ARM_INSTRUCTION_SET = "arm"
