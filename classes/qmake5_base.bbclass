@@ -15,7 +15,24 @@ OE_QMAKE_DEBUG_OUTPUT ?= ""
 # Paths in .prl files contain SYSROOT value
 SSTATE_SCAN_FILES += "*.pri *.prl"
 
-EXTRA_OEMAKE += " MAKEFLAGS='${PARALLEL_MAKE}'"
+# drop default -e and add needed OE_QMAKE vars explicitly
+# the problem is that when generated Makefile has:
+# CFLAGS = -pipe $(OE_QMAKE_CFLAGS) -O2 -pthread -D_REENTRANT -Wall -W -fPIC $(DEFINES)
+# then OE_QMAKE_CFLAGS are exported and used correctly, but then whole CFLAGS is overwritten from env (and -fPIC lost and build fails)
+EXTRA_OEMAKE = " \
+    MAKEFLAGS='${PARALLEL_MAKE}' \
+    OE_QMAKE_COMPILER='${OE_QMAKE_COMPILER}' \
+    OE_QMAKE_CC='${OE_QMAKE_CC}' \
+    OE_QMAKE_CXX='${OE_QMAKE_CXX}' \
+    OE_QMAKE_CFLAGS='${OE_QMAKE_CFLAGS}' \
+    OE_QMAKE_CXXFLAGS='${OE_QMAKE_CXXFLAGS}' \
+    OE_QMAKE_LINK='${OE_QMAKE_LINK}' \
+    OE_QMAKE_LDFLAGS='${OE_QMAKE_LDFLAGS}' \
+    OE_QMAKE_AR='${OE_QMAKE_AR}' \
+    OE_QMAKE_STRIP='${OE_QMAKE_STRIP}' \
+    OE_QMAKE_WAYLAND_SCANNER='${OE_QMAKE_WAYLAND_SCANNER}' \
+    OE_QMAKE_QT_CONFIG='${OE_QMAKE_QT_CONFIG}' \
+"
 
 export OE_QMAKESPEC = "${QMAKE_MKSPEC_PATH_NATIVE}/mkspecs/${OE_QMAKE_PLATFORM_NATIVE}"
 export OE_XQMAKESPEC = "${QMAKE_MKSPEC_PATH}/mkspecs/${OE_QMAKE_PLATFORM}"
@@ -32,8 +49,6 @@ export OE_QMAKE_STRIP = "echo"
 export OE_QMAKE_WAYLAND_SCANNER = "${STAGING_BINDIR_NATIVE}/wayland-scanner"
 export QT_CONF_PATH = "${WORKDIR}/qt.conf"
 export QT_DIR_NAME ?= "qt5"
-
-EXTRA_QMAKEVARS_PRE += "OE_QMAKE_WAYLAND_SCANNER=${STAGING_BINDIR_NATIVE}/wayland-scanner"
 
 OE_QMAKE_PATH_PREFIX = "${prefix}"
 OE_QMAKE_PATH_HEADERS = "${includedir}/${QT_DIR_NAME}"
