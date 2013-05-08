@@ -90,6 +90,17 @@ QMAKE_MKSPEC_PATH = "${B}"
 OE_QMAKE_QMAKE_ORIG := "${OE_QMAKE_QMAKE}"
 OE_QMAKE_QMAKE = "bin/qmake"
 
+# qtbase is exception, configure script is using our get(X)QEvalMakeConf and setBootstrapEvalVariable functions to read it from shell
+export OE_QMAKE_COMPILER
+export OE_QMAKE_CC
+export OE_QMAKE_CFLAGS
+export OE_QMAKE_CXX
+export OE_QMAKE_CXXFLAGS
+export OE_QMAKE_LINK
+export OE_QMAKE_LDFLAGS
+export OE_QMAKE_AR
+export OE_QMAKE_STRIP
+
 do_configure() {
     set_arch
     set_endian
