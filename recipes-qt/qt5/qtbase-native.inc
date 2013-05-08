@@ -26,9 +26,6 @@ SRC_URI += " \
 # specific for native version
 SRC_URI += "file://0001-Always-build-uic.patch"
 
-SEPB = "${WORKDIR}/build"
-B = "${SEPB}"
-
 QT_CONF_PATH = "${B}/qt.conf"
 
 do_generate_qt_config_file() {
@@ -86,12 +83,6 @@ export OE_QMAKE_AR
 export OE_QMAKE_STRIP
 
 do_configure_prepend() {
-    # Similar logic is in autotools.bbclass
-    if [ -d ${B} -a "${S}" != "${B}" ] ; then
-        # Existing separate build directory, exists, remove
-        rm -rf "${B}/*"
-    fi  
-
     (echo o; echo yes) | ${S}/configure ${EXTRA_OECONF} || die "Configuring qt failed. EXTRA_OECONF was ${EXTRA_OECONF}"
     bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} ${S} -o Makefile || die "Configuring qt with qmake failed. EXTRA_OECONF was ${EXTRA_OECONF}"
 }

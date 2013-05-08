@@ -17,16 +17,7 @@ SRC_URI += "\
     file://0001-Install-the-mkv8snapshot-tool-to-the-native-side.patch \
 "
 
-SEPB = "${WORKDIR}/build"
-B = "${SEPB}"
-
 do_configure() {
-    # Similar logic is in autotools.bbclass
-    if [ -d ${B} -a "${S}" != "${B}" ] ; then
-        # Existing separate build directory, exists, remove
-        rm -rf "${B}/*"
-    fi
-
     ${OE_QMAKE_QMAKE} ${OE_QMAKE_DEBUG_OUTPUT} -r ${S}
 }
 

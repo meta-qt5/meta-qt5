@@ -124,6 +124,33 @@ EOF
 # TargetSpec The location where to install target mkspec
 # HostSpec The location where to install host mkspec
 
+# qmake works fine with separate B, use it by default
+SEPB = "${WORKDIR}/build"
+B = "${SEPB}"
+
+CONFIGURESTAMPFILE = "${WORKDIR}/qmake5_base_configure.sstate"
+
+qmake5_base_preconfigure() {
+        if [ -n "${CONFIGURESTAMPFILE}" -a -e "${CONFIGURESTAMPFILE}" ]; then
+                if [ "`cat ${CONFIGURESTAMPFILE}`" != "${BB_TASKHASH}" -a "${S}" != "${B}" ]; then
+                        echo "Previously configured separate build directory detected, cleaning ${B}"
+                        rm -rf ${B}
+                        mkdir ${B}
+                fi
+        fi
+}
+
+qmake5_base_postconfigure(){
+        if [ -n "${CONFIGURESTAMPFILE}" ]; then
+                echo ${BB_TASKHASH} > ${CONFIGURESTAMPFILE}
+        fi
+}
+
+EXTRAQCONFFUNCS ??= ""
+
+do_configure[prefuncs] += "qmake5_base_preconfigure ${EXTRAQCONFFUNCS}"
+do_configure[postfuncs] += "qmake5_base_postconfigure"
+
 addtask generate_qt_config_file after do_patch before do_configure
 
 qmake5_base_do_configure () {

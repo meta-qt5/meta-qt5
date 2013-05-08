@@ -105,12 +105,6 @@ do_configure() {
     set_arch
     set_endian
 
-    # Similar logic is in autotools.bbclass
-    if [ -d ${B} -a "${S}" != "${B}" ] ; then
-        # Existing separate build directory, exists, remove
-        rm -rf "${B}/*"
-    fi
-
     # we need symlink in path relative to source, because
     # EffectivePaths:Prefix is relative to qmake location
     if [ ! -e ${B}/bin/qmake ]; then

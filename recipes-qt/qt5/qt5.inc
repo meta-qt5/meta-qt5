@@ -11,18 +11,9 @@ require qt5_arch.inc
 
 QT_MODULE ?= "${BPN}"
 
-SEPB = "${WORKDIR}/build"
-B = "${SEPB}"
-
 do_configure() {
     set_arch
     set_endian
-
-    # Similar logic is in autotools.bbclass
-    if [ -d ${B} -a "${S}" != "${B}" ] ; then
-        # Existing separate build directory, exists, remove
-        rm -rf "${B}/*"
-    fi
 
     qmake5_base_do_configure
 }

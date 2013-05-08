@@ -11,5 +11,5 @@ INC_PR = "r0"
 
 do_configure_append() {
     # Fix rpaths for QtWebProcess
-    find -name "Makefile*" | xargs sed -i "s|-Wl,-rpath,${SEPB}/lib||g"
+    find -name "Makefile*" | xargs sed -i "s|-Wl,-rpath,${B}/lib||g"
 }
