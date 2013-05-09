@@ -13,6 +13,7 @@ SRC_URI += " \
     file://0011-qt_module-Fix-paths-in-.prl-files.patch \
     file://0012-wayland-scanner-disable-silent-rules.patch \
     file://0013-configure-don-t-export-SYSTEM_VARIABLES-to-.qmake.va.patch \
+    file://0014-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
 "
 
 DEPENDS += "qtbase-native freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev ${XCB_DEPENDS} ${GL_DEPENDS}"

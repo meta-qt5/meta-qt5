@@ -1,0 +1,35 @@
+From 01653e270c4a9169a32c0002a87a6644727d0b11 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Thu, 9 May 2013 10:06:50 +0200
+Subject: [PATCH 14/14] configure.prf: Allow to add extra arguments to make
+
+* sometimes we would like to add -e or define some variable and respect it from both
+  Makefiles used in configure tests and also Maakefiles to build the application
+
+Change-Id: Ib29beb89cc9b179dddd40d3b212b7c200d29a469
+---
+ mkspecs/features/configure.prf | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
+index 39144e7..1864ba8 100644
+--- a/mkspecs/features/configure.prf
++++ b/mkspecs/features/configure.prf
+@@ -54,12 +54,12 @@ defineTest(qtCompileTest) {
+     qmake_configs = "\"CONFIG -= qt debug_and_release app_bundle lib_bundle\""
+ 
+     # Clean up after previous run
+-    exists($$test_out_dir/Makefile):qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE distclean")
++    exists($$test_out_dir/Makefile):qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE $$(QMAKE_MAKE_ARGS) distclean")
+ 
+     mkpath($$test_out_dir)|error("Aborting.")
+ 
+     qtRunLoggedCommand("$$test_cmd_base $$system_quote($$system_path($$QMAKE_QMAKE)) $$qmake_configs $$shell_quote($$test_dir)") {
+-        qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE") {
++        qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE $$(QMAKE_MAKE_ARGS)") {
+             log("yes$$escape_expand(\\n)")
+             msg = "test $$1 succeeded"
+             write_file($$QMAKE_CONFIG_LOG, msg, append)
+-- 
+1.8.2.1
+

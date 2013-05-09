@@ -172,8 +172,11 @@ qmake5_base_do_configure () {
         bbnote "qmake prevar substitution: '${EXTRA_QMAKEVARS_PRE}'"
     fi
 
+    # for config.tests to read this
+    export QMAKE_MAKE_ARGS="${EXTRA_OEMAKE}"
+
     CMD="${OE_QMAKE_QMAKE} -makefile -o Makefile ${OE_QMAKE_DEBUG_OUTPUT} -r $QMAKE_VARSUBST_PRE $AFTER $PROFILES $QMAKE_VARSUBST_POST"
-    $CMD || die "Error calling $CMD"
+    ${OE_QMAKE_QMAKE} -makefile -o Makefile ${OE_QMAKE_DEBUG_OUTPUT} -r $QMAKE_VARSUBST_PRE $AFTER $PROFILES $QMAKE_VARSUBST_POST || die "Error calling $CMD"
 }
 
 qmake5_base_do_install() {
