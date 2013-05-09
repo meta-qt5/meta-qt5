@@ -51,25 +51,7 @@ QT_DIR_NAME ?= "qt5"
 # this one needs to be exported, because qmake reads it from shell env
 export QT_CONF_PATH = "${WORKDIR}/qt.conf"
 
-OE_QMAKE_PATH_PREFIX = "${prefix}"
-OE_QMAKE_PATH_HEADERS = "${includedir}"
-OE_QMAKE_PATH_LIBS = "${libdir}"
-OE_QMAKE_PATH_ARCHDATA = "${libdir}"
-OE_QMAKE_PATH_DATA = "${datadir}"
-OE_QMAKE_PATH_BINS = "${bindir}"
-OE_QMAKE_PATH_LIBEXECS = "${libdir}/${QT_DIR_NAME}/libexec"
-OE_QMAKE_PATH_PLUGINS = "${libdir}/${QT_DIR_NAME}/plugins"
-OE_QMAKE_PATH_IMPORTS = "${libdir}/${QT_DIR_NAME}/imports"
-OE_QMAKE_PATH_QML = "${libdir}/${QT_DIR_NAME}/qml"
-OE_QMAKE_PATH_TRANSLATIONS = "${datadir}/translations"
-OE_QMAKE_PATH_DOCS = "${docdir}"
-OE_QMAKE_PATH_SETTINGS = "${sysconfdir}"
-OE_QMAKE_PATH_EXAMPLES = "${datadir}/examples"
-OE_QMAKE_PATH_TESTS = "${datadir}/tests"
-OE_QMAKE_PATH_HOST_PREFIX = ""
-OE_QMAKE_PATH_HOST_BINS = "${bindir}/${QT_DIR_NAME}"
-OE_QMAKE_PATH_HOST_DATA = "${QMAKE_MKSPEC_PATH_TARGET}"
-OE_QMAKE_PATH_EXTERNAL_HOST_BINS = "${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}"
+inherit qmake5_paths
 
 do_generate_qt_config_file() {
     cat > ${QT_CONF_PATH} <<EOF
