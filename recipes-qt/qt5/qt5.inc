@@ -7,14 +7,9 @@ inherit qmake5
 ICU = "icu "
 ICU_powerpc = "pango"
 
-require qt5_arch.inc
-
 QT_MODULE ?= "${BPN}"
 
 do_configure() {
-    set_arch
-    set_endian
-
     qmake5_base_do_configure
 }
 

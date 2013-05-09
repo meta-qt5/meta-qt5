@@ -109,9 +109,6 @@ export OE_QMAKE_AR
 export OE_QMAKE_STRIP
 
 do_configure() {
-    set_arch
-    set_endian
-
     # we need symlink in path relative to source, because
     # EffectivePaths:Prefix is relative to qmake location
     if [ ! -e ${B}/bin/qmake ]; then
