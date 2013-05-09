@@ -9,14 +9,6 @@ ICU_powerpc = "pango"
 
 QT_MODULE ?= "${BPN}"
 
-do_configure() {
-    qmake5_base_do_configure
-}
-
-do_install() {
-    qmake5_base_do_install
-}
-
 # we don't want conflicts with qt4
 OE_QMAKE_PATH_HEADERS = "${includedir}/${QT_DIR_NAME}"
 OE_QMAKE_PATH_ARCHDATA = "${libdir}/${QT_DIR_NAME}"

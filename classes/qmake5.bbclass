@@ -14,3 +14,11 @@ DEPENDS_prepend = "${QT5TOOLSDEPENDS}"
 #OE_QMAKE_LIBS_X11SM = "-lSM -lICE"
 #OE_QMAKE_LRELEASE = "${STAGING_BINDIR_NATIVE}/lrelease5"
 #OE_QMAKE_LUPDATE = "${STAGING_BINDIR_NATIVE}/lupdate5"
+
+do_configure() {
+    qmake5_base_do_configure
+}
+
+do_install() {
+    qmake5_base_do_install
+}
