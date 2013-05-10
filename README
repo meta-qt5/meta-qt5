@@ -4,6 +4,11 @@ URI: git://github.com/openembedded/oe-core.git
 branch: master
 revision: HEAD
 
+URI: git://github.com/openembedded/meta-oe.git
+layers: meta-ruby
+branch: master
+revision: HEAD
+
 Send pull requests to openembedded-devel@lists.openembedded.org with '[meta-qt5]' in the subject'
 
 When sending single patches, please using something like:
