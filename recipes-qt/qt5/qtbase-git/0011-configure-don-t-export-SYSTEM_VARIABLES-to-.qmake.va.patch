@@ -1,22 +1,23 @@
-From ec6de65fc787c8a5e782b48b6794646f274da43a Mon Sep 17 00:00:00 2001
+From 9ffc6dba623bb44e1787f4e4af13af03f9f7a0d2 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 8 May 2013 23:54:35 +0200
-Subject: [PATCH 13/13] configure: don't export SYSTEM_VARIABLES to .qmake.vars
+Subject: [PATCH 11/12] configure: don't export SYSTEM_VARIABLES to .qmake.vars
 
 * linux-oe-g++ should handle this correctly and exporting LD as QMAKE_LINK is
   causing issues as we need g++ to be used as linker
 
-Change-Id: I22e32aabd502df9f84cebb82f17bec4099363c8e
+Upstream-Status: Pending
+
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  configure | 15 +--------------
  1 file changed, 1 insertion(+), 14 deletions(-)
 
 diff --git a/configure b/configure
-index feb1435..6d3d1e2 100755
+index dbf99a9..9ca23a4 100755
 --- a/configure
 +++ b/configure
-@@ -740,20 +740,7 @@ fi'`
+@@ -840,20 +840,7 @@ fi'`
  done
  
  SYSTEM_VARIABLES="RANLIB STRIP OBJDUMP LD CC CXX CFLAGS CXXFLAGS LDFLAGS"

@@ -1,7 +1,7 @@
-From 7d3de13a6d7a3142da0a5c6ebd815d343a356a23 Mon Sep 17 00:00:00 2001
+From a836731e94223d49ef05fdabe7905dd1b25c647c Mon Sep 17 00:00:00 2001
 From: Holger Freyther <zecke@selfish.org>
 Date: Wed, 26 Sep 2012 17:22:30 +0200
-Subject: [PATCH 02/14] qlibraryinfo: allow to set qt.conf from the outside
+Subject: [PATCH 02/12] qlibraryinfo: allow to set qt.conf from the outside
  using the environment
 
 Allow to set a qt.conf from the outside using the environment. This allows
@@ -10,7 +10,6 @@ the same qmake binary to build qt/x11 and qt/embedded
 
 Upstream-Status: Pending
 
-Change-Id: I9247949c20a39eac8e815c175510ea3fb5bf9d33
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  src/corelib/global/qlibraryinfo.cpp | 5 ++++-

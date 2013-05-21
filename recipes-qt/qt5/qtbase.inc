@@ -4,16 +4,15 @@ SRC_URI += " \
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0003-Add-external-hostbindir-option.patch \
-    file://0004-qmake-is-already-built-in-qtbase-native.patch \
-    file://0005-Allow-building-a-separate-qmake-for-the-target.patch \
-    file://0006-qt_functions-temporary-remove-isEmpty-check.patch \
-    file://0008-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
-    file://0009-qt_module-Fix-pkgconfig-replacement.patch \
-    file://0010-qmake-property-rename-QT_INSTALL_CONFIGURATION-to-QT.patch \
-    file://0011-qt_module-Fix-paths-in-.prl-files.patch \
-    file://0012-wayland-scanner-disable-silent-rules.patch \
-    file://0013-configure-don-t-export-SYSTEM_VARIABLES-to-.qmake.va.patch \
-    file://0014-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
+    file://0004-qt_functions-temporary-remove-isEmpty-check.patch \
+    file://0005-qmake-is-already-built-in-qtbase-native.patch \
+    file://0006-Allow-building-a-separate-qmake-for-the-target.patch \
+    file://0007-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
+    file://0008-qt_module-Fix-pkgconfig-replacement.patch \
+    file://0009-qt_module-Fix-paths-in-.prl-files.patch \
+    file://0010-wayland-scanner-disable-silent-rules.patch \
+    file://0011-configure-don-t-export-SYSTEM_VARIABLES-to-.qmake.va.patch \
+    file://0012-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
 "
 
 DEPENDS += "qtbase-native freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev ${XCB_DEPENDS} ${GL_DEPENDS}"

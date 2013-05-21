@@ -1,10 +1,10 @@
-From 6c494ea0e73c9ef60f45e7fdc0de40bb51ad5ac6 Mon Sep 17 00:00:00 2001
+From 98d14c01a92c5caad2bb0e0b4a097ae11d83b58e Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 22:33:33 +0200
-Subject: [PATCH 08/11] configureapp: Prefix default LIBDIRS and INCDIRS with
+Subject: [PATCH 07/12] configureapp: Prefix default LIBDIRS and INCDIRS with
  SYSROOT
 
-Change-Id: I464c25888ab8b99ced6bd669b5c6448d491725a8
+Upstream-Status: Pending
 ---
  tools/configure/configureapp.cpp | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)

@@ -1,12 +1,14 @@
-From c244c6a89f6f70a2443748475f482cc97e3ac118 Mon Sep 17 00:00:00 2001
+From c9bf00e21ae398575adf4411e67b35cdf44920e5 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 03/11] Add -external-hostbindir option
+Subject: [PATCH 03/12] Add -external-hostbindir option
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
 
 * this way we can skip bootstraping tools we already have
+
+Upstream-Status: Pending
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
@@ -156,10 +158,10 @@ index 4c41cff..997ea6d 100644
  
  # If we are doing a prefix build, create a "module" pri which enables
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index acd11f5..bba0861 100644
+index 6b40731..139a60f 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
-@@ -272,7 +272,7 @@ QLibraryInfo::isDebugBuild()
+@@ -270,7 +270,7 @@ QLibraryInfo::isDebugBuild()
   */
  
  static const struct {
@@ -168,7 +170,7 @@ index acd11f5..bba0861 100644
  } qtConfEntries[] = {
      { "Prefix", "." },
      { "Documentation", "doc" }, // should be ${Data}/doc
-@@ -297,6 +297,7 @@ static const struct {
+@@ -295,6 +295,7 @@ static const struct {
      { "HostPrefix", "" },
      { "HostBinaries", "bin" },
      { "HostData", "." },

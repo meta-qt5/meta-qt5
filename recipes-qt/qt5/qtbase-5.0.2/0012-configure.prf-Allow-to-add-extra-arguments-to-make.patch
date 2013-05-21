@@ -1,18 +1,20 @@
-From 68c459603bcf545637e852e08613c6fca4da9ef9 Mon Sep 17 00:00:00 2001
+From dd7756dd5a3c3eb677c3bacce257c1c8bbf03098 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Thu, 9 May 2013 10:06:50 +0200
-Subject: [PATCH 14/14] configure.prf: Allow to add extra arguments to make
+Subject: [PATCH 12/12] configure.prf: Allow to add extra arguments to make
 
 * sometimes we would like to add -e or define some variable and respect it from both
-  Makefiles used in configure tests and also Maakefiles to build the application
+  Makefiles used in configure tests and also Makefiles to build the application
 
-Change-Id: Ib29beb89cc9b179dddd40d3b212b7c200d29a469
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  mkspecs/features/configure.prf | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
-index 39144e7..1864ba8 100644
+index 39144e7..de48b07 100644
 --- a/mkspecs/features/configure.prf
 +++ b/mkspecs/features/configure.prf
 @@ -54,12 +54,12 @@ defineTest(qtCompileTest) {
