@@ -1,7 +1,7 @@
-From 29812cee9589dedd10a94b66ed5279549ed62f36 Mon Sep 17 00:00:00 2001
+From 7d3de13a6d7a3142da0a5c6ebd815d343a356a23 Mon Sep 17 00:00:00 2001
 From: Holger Freyther <zecke@selfish.org>
 Date: Wed, 26 Sep 2012 17:22:30 +0200
-Subject: [PATCH 02/11] qlibraryinfo: allow to set qt.conf from the outside
+Subject: [PATCH 02/14] qlibraryinfo: allow to set qt.conf from the outside
  using the environment
 
 Allow to set a qt.conf from the outside using the environment. This allows
@@ -10,13 +10,14 @@ the same qmake binary to build qt/x11 and qt/embedded
 
 Upstream-Status: Pending
 
+Change-Id: I9247949c20a39eac8e815c175510ea3fb5bf9d33
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- src/corelib/global/qlibraryinfo.cpp | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ src/corelib/global/qlibraryinfo.cpp | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index a8dc086..c16dfcb 100644
+index a8dc086..8138fff 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
 @@ -138,7 +138,10 @@ QLibrarySettings::QLibrarySettings()
@@ -31,16 +32,6 @@ index a8dc086..c16dfcb 100644
  #ifdef QT_BOOTSTRAPPED
      if(!QFile::exists(qtconfig))
          qtconfig = qt_libraryInfoFile();
-@@ -165,7 +168,9 @@ QSettings *QLibraryInfoPrivate::findConfiguration()
-     }
- #endif
-     if (QFile::exists(qtconfig))
-+        printf("Using qt.conf from: %s\n", qtconfig.toLatin1().data());
-         return new QSettings(qtconfig, QSettings::IniFormat);
-+    printf("qt.conf wasn't found!!\n");
-     return 0;     //no luck
- }
- 
 -- 
 1.8.2.1
 
