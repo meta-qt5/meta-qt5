@@ -1,7 +1,7 @@
-From 0bd37923dec93270066fc4362db7e443475a4b06 Mon Sep 17 00:00:00 2001
+From 8a97079c1b17f27256a4a816e5cc85344c29ac6f Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
-Subject: [PATCH 09/11] qt_module: Fix pkgconfig replacement
+Subject: [PATCH 08/12] qt_module: Fix pkgconfig replacement
 
 * in situation like this:
   QT_SYSROOT:/OE/oe-core/tmp-eglibc/sysroots/qemuarm
@@ -19,7 +19,8 @@ Subject: [PATCH 09/11] qt_module: Fix pkgconfig replacement
   cross-compile unfriendly, keeping ${libdir}/${includedir} works better
   in my case
 
-Change-Id: Id0f9143c012b7fe7bb7bab0055687f4e0517f653
+Upstream-Status: Pending
+
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  mkspecs/features/qt_module.prf | 16 ++++++++++++++--

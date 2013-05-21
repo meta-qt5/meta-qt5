@@ -1,4 +1,4 @@
-From ccf2e79173cfd0fee9f1e603107792dd5aa8e775 Mon Sep 17 00:00:00 2001
+From 4edde46f33aacc24fffa021adcc7e0d68ba414a3 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH 01/12] Add linux-oe-g++ platform
@@ -31,7 +31,6 @@ Subject: [PATCH 01/12] Add linux-oe-g++ platform
 
 Upstream-Status: Pending
 
-Change-Id: Ia0cc6a6b00ec78442d80ed2a3cf40b604588a0f6
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  configure                            |  54 ++++++++++++++++---

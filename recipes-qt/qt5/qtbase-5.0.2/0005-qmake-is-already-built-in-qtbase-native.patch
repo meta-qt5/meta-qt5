@@ -1,7 +1,7 @@
-From 1dd6ee9bb2aafb8d77d9c7e465b9cf6d778bc283 Mon Sep 17 00:00:00 2001
+From 7b37f7fa8c68c1807eeb45936154a42c34cda666 Mon Sep 17 00:00:00 2001
 From: Michael Krelin <hacker@klever.net>
 Date: Mon, 29 Oct 2012 20:07:49 -0700
-Subject: [PATCH 04/11] qmake is already built in qtbase-native
+Subject: [PATCH 05/12] qmake is already built in qtbase-native
 
 Ported from OE by: Yu Ke <ke.yu@intel.com>
 Upstream-Status: Inappropriate [configuration]
