@@ -16,6 +16,9 @@ SRC_URI += " \
     file://0013-Disable-mkv8snapshot.patch \
     file://0014-enables-tslib-device-to-be-read-from-env-variable.patch \
     file://0015-qtbase-allow-build-of-examples.patch \
+    file://0018-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0019-Fix-FBO-restoring-in-QOpenGLTextureGlyphCache.patch \
+    file://0020-Use-BGRA-extension-in-bindTexture.patch \
 "
 
 DEPENDS += "qtbase-native freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev ${XCB_DEPENDS} ${GL_DEPENDS} ${TSLIB_DEPENDS}"
@@ -86,7 +89,7 @@ QT_CONFIG_FLAGS += " \
     ${QT_TSLIB} \
 "
 
-INC_PR = "r1"
+INC_PR = "r2"
 
 # Qt uses atomic instructions not supported in thumb mode
 ARM_INSTRUCTION_SET = "arm"
