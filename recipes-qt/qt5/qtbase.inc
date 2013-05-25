@@ -40,6 +40,7 @@ QT_SQL_DRIVER_FLAGS ?= "-no-sql-ibase -no-sql-mysql -no-sql-psql -no-sql-odbc -p
 GL_DEPENDS ?= "virtual/libgl"
 QT_GLFLAGS ?= "-opengl"
 
+QT_WIDGETS ?= "-widgets"
 QT_XML ?= "-xmlpatterns"
 QT_WEBKIT ?= "-webkit"
 QT_PHONON ?= "-phonon"
@@ -64,6 +65,7 @@ QT_CONFIG_FLAGS += " \
     -no-pch \
     -no-rpath \
     -pkg-config \
+    ${QT_WIDGETS} \
     ${QT_SYSTEM_LIBS} \
     ${QT_NIS} \
     ${QT_CUPS} \
