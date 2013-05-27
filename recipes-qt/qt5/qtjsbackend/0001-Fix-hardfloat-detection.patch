@@ -1,0 +1,33 @@
+From 05a87fccb76447ce3cb4b926128af929f26469bb Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
+Date: Wed, 22 May 2013 18:50:01 +0200
+Subject: [PATCH] Fix hardfloat detection
+
+based on the same patch for nodejs which says :
+
+gcc has a builtin define to denote hard abi when in use, e.g. when
+using -mfloat-abi=hard it will define __ARM_PCS_VFP to 1 and therefore
+we should check that to determine which calling convention is in use
+and not __VFP_FP__ which merely indicates presence of VFP unit
+
+The fix has been provided by Khem Raj <raj.khem@gmail.com>
+---
+ src/3rdparty/v8/src/platform-linux.cc |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/3rdparty/v8/src/platform-linux.cc b/src/3rdparty/v8/src/platform-linux.cc
+index f6db423..8ae2249 100644
+--- a/src/3rdparty/v8/src/platform-linux.cc
++++ b/src/3rdparty/v8/src/platform-linux.cc
+@@ -167,7 +167,7 @@ bool OS::ArmCpuHasFeature(CpuFeature feature) {
+ // calling this will return 1.0 and otherwise 0.0.
+ static void ArmUsingHardFloatHelper() {
+   asm("mov r0, #0":::"r0");
+-#if defined(__VFP_FP__) && !defined(__SOFTFP__)
++#if defined(__ARM_PCS_VFP) && !defined(__SOFTFP__)
+   // Load 0x3ff00000 into r1 using instructions available in both ARM
+   // and Thumb mode.
+   asm("mov r1, #3":::"r1");
+-- 
+1.7.10.4
+
