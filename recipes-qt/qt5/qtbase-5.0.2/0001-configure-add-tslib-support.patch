@@ -1,0 +1,78 @@
+From b4edefdc1fb5ba67b202fad7df5a8def554d16fd Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
+Date: Mon, 27 May 2013 18:45:03 +0200
+Subject: [PATCH] configure: add tslib support
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Eric Bénard <eric@eukrea.com>
+---
+ configure                       | 24 ++++++++++++++++++++++++
+ src/plugins/generic/generic.pro |  4 ++++
+ 2 files changed, 28 insertions(+)
+
+diff --git a/configure b/configure
+index 2ea1ea4..727fed9 100755
+--- a/configure
++++ b/configure
+@@ -810,6 +810,7 @@ CFG_KMS=auto
+ CFG_LIBUDEV=auto
+ CFG_OBSOLETE_WAYLAND=no
+ CFG_EVDEV=auto
++CFG_TSLIB=auto
+ CFG_NIS=auto
+ CFG_CUPS=auto
+ CFG_ICONV=auto
+@@ -1782,6 +1783,13 @@ while [ "$#" -gt 0 ]; do
+             UNKNOWN_OPT=yes
+         fi
+         ;;
++    tslib)
++        if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
++            CFG_TSLIB="$VAL"
++        else
++            UNKNOWN_OPT=yes
++        fi
++        ;;
+     cups)
+         if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
+             CFG_CUPS="$VAL"
+@@ -4775,6 +4783,22 @@ if [ "$CFG_EVDEV" = "no" ]; then
+     QMakeVar add DEFINES QT_NO_EVDEV
+ fi
+ 
++if [ "$CFG_TSLIB" != "no" ]; then
++    if compileTest unix/tslib "tslib"; then
++        CFG_TSLIB=yes
++        QT_CONFIG="$QT_CONFIG tslib"
++    elif [ "$CFG_TSLIB" = "yes" ]; then
++        echo "The tslib functionality test failed!"
++        exit 1
++    else
++        CFG_TSLIB=no
++    fi
++fi
++if [ "$CFG_TSLIB" = "no" ]; then
++    QMakeVar add DEFINES QT_NO_TSLIB
++fi
++
++
+ # Check we actually have X11 :-)
+ if compileTest x11/xlib "XLib"; then
+     QT_CONFIG="$QT_CONFIG xlib"
+diff --git a/src/plugins/generic/generic.pro b/src/plugins/generic/generic.pro
+index 078db2f..18a8295 100644
+--- a/src/plugins/generic/generic.pro
++++ b/src/plugins/generic/generic.pro
+@@ -5,3 +5,7 @@ TEMPLATE = subdirs
+ contains(QT_CONFIG, evdev) {
+     SUBDIRS += evdevmouse evdevtouch evdevkeyboard evdevtablet
+ }
++
++contains(QT_CONFIG, tslib) {
++    SUBDIRS += tslib
++}
+-- 
+1.8.1.4
+
