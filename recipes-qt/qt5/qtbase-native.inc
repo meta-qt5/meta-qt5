@@ -69,7 +69,6 @@ EXTRA_OECONF = " \
     -silent \
     -nomake examples \
     -nomake tests \
-    -nomake demos \
     -no-rpath \
     -platform linux-oe-g++ \
 "
