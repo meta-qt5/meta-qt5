@@ -5,6 +5,8 @@ PR = "${INC_PR}.0"
 
 SRC_URI += "file://0004-Disable-mkv8snapshot.patch \
     file://0001-qtbase-allow-build-of-examples.patch \
+    file://0001-enables-tslib-device-to-be-read-from-env-variable.patch \
+    file://0001-configure-add-tslib-support.patch \
     "
 
 SRC_URI[md5sum] = "a4fec8ed03867c4ee4fe5a46001a11f0"

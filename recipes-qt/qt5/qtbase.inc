@@ -15,7 +15,7 @@ SRC_URI += " \
     file://0012-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
 "
 
-DEPENDS += "qtbase-native freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev ${XCB_DEPENDS} ${GL_DEPENDS}"
+DEPENDS += "qtbase-native freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev ${XCB_DEPENDS} ${GL_DEPENDS} ${TSLIB_DEPENDS}"
 
 # to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h and dbus/dbus.h
 # XCB_DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
@@ -39,6 +39,12 @@ QT_SQL_DRIVER_FLAGS ?= "-no-sql-ibase -no-sql-mysql -no-sql-psql -no-sql-odbc -p
 # QT_GLFLAGS = "-opengl es2 -eglfs"
 GL_DEPENDS ?= "virtual/libgl"
 QT_GLFLAGS ?= "-opengl"
+
+# if you want to enable tslib in your .bbappend, don't forget to add tslib dependencies
+# TSLIB_DEPENDS = "tslib"
+# QT_TSLIB = "-tslib"
+TSLIB_DEPENDS ?= ""
+QT_TSLIB ?= "-no-tslib"
 
 QT_WIDGETS ?= "-widgets"
 QT_XML ?= "-xmlpatterns"
@@ -74,6 +80,7 @@ QT_CONFIG_FLAGS += " \
     ${QT_GLFLAGS} \
     ${QT_TESTS} \
     ${QT_EXAMPLES} \
+    ${QT_TSLIB} \
 "
 
 INC_PR = "r1"
