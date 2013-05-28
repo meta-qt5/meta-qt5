@@ -1,7 +1,7 @@
-From b4edefdc1fb5ba67b202fad7df5a8def554d16fd Mon Sep 17 00:00:00 2001
+From 3038a3c7678867f8a7a30de7973d0eca8c0d737f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
 Date: Mon, 27 May 2013 18:45:03 +0200
-Subject: [PATCH] configure: add tslib support
+Subject: [PATCH 16/16] configure: add tslib support
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -13,10 +13,10 @@ Signed-off-by: Eric Bénard <eric@eukrea.com>
  2 files changed, 28 insertions(+)
 
 diff --git a/configure b/configure
-index 2ea1ea4..727fed9 100755
+index ac09bbf..f1252a0 100755
 --- a/configure
 +++ b/configure
-@@ -810,6 +810,7 @@ CFG_KMS=auto
+@@ -829,6 +829,7 @@ CFG_KMS=auto
  CFG_LIBUDEV=auto
  CFG_OBSOLETE_WAYLAND=no
  CFG_EVDEV=auto
@@ -24,7 +24,7 @@ index 2ea1ea4..727fed9 100755
  CFG_NIS=auto
  CFG_CUPS=auto
  CFG_ICONV=auto
-@@ -1782,6 +1783,13 @@ while [ "$#" -gt 0 ]; do
+@@ -1805,6 +1806,13 @@ while [ "$#" -gt 0 ]; do
              UNKNOWN_OPT=yes
          fi
          ;;
@@ -38,7 +38,7 @@ index 2ea1ea4..727fed9 100755
      cups)
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_CUPS="$VAL"
-@@ -4775,6 +4783,22 @@ if [ "$CFG_EVDEV" = "no" ]; then
+@@ -4815,6 +4823,22 @@ if [ "$CFG_EVDEV" = "no" ]; then
      QMakeVar add DEFINES QT_NO_EVDEV
  fi
  
@@ -74,5 +74,5 @@ index 078db2f..18a8295 100644
 +    SUBDIRS += tslib
 +}
 -- 
-1.8.1.4
+1.8.2.1
 

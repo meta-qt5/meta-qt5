@@ -13,6 +13,9 @@ SRC_URI += " \
     file://0010-wayland-scanner-disable-silent-rules.patch \
     file://0011-configure-don-t-export-SYSTEM_VARIABLES-to-.qmake.va.patch \
     file://0012-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
+    file://0013-Disable-mkv8snapshot.patch \
+    file://0014-enables-tslib-device-to-be-read-from-env-variable.patch \
+    file://0015-qtbase-allow-build-of-examples.patch \
 "
 
 DEPENDS += "qtbase-native freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev ${XCB_DEPENDS} ${GL_DEPENDS} ${TSLIB_DEPENDS}"
