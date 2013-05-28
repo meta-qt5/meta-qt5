@@ -1,26 +1,24 @@
-From 3038a3c7678867f8a7a30de7973d0eca8c0d737f Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
-Date: Mon, 27 May 2013 18:45:03 +0200
-Subject: [PATCH 16/16] configure: add tslib support
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From 665841d6c38faecbf7848c0f4bbf3b0537b6a0a1 Mon Sep 17 00:00:00 2001
+From: Michael Brasser <michael.brasser@live.com>
+Date: Tue, 26 Mar 2013 09:22:51 -0500
+Subject: [PATCH 16/16] Allow tslib to be specified at configure time.
 
-Signed-off-by: Eric Bénard <eric@eukrea.com>
+Change-Id: I0ebf0eeea7e6a0b8136fb805f34f04082bc58c5e
+Reviewed-by: Oswald Buddenhagen <oswald.buddenhagen@digia.com>
 ---
- configure                       | 24 ++++++++++++++++++++++++
+ configure                       | 20 ++++++++++++++++++++
  src/plugins/generic/generic.pro |  4 ++++
- 2 files changed, 28 insertions(+)
+ 2 files changed, 24 insertions(+)
 
 diff --git a/configure b/configure
-index ac09bbf..f1252a0 100755
+index ac09bbf..188e941 100755
 --- a/configure
 +++ b/configure
 @@ -829,6 +829,7 @@ CFG_KMS=auto
  CFG_LIBUDEV=auto
  CFG_OBSOLETE_WAYLAND=no
  CFG_EVDEV=auto
-+CFG_TSLIB=auto
++CFG_TSLIB=no
  CFG_NIS=auto
  CFG_CUPS=auto
  CFG_ICONV=auto
@@ -38,7 +36,7 @@ index ac09bbf..f1252a0 100755
      cups)
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_CUPS="$VAL"
-@@ -4815,6 +4823,22 @@ if [ "$CFG_EVDEV" = "no" ]; then
+@@ -4815,6 +4823,18 @@ if [ "$CFG_EVDEV" = "no" ]; then
      QMakeVar add DEFINES QT_NO_EVDEV
  fi
  
@@ -53,10 +51,6 @@ index ac09bbf..f1252a0 100755
 +        CFG_TSLIB=no
 +    fi
 +fi
-+if [ "$CFG_TSLIB" = "no" ]; then
-+    QMakeVar add DEFINES QT_NO_TSLIB
-+fi
-+
 +
  # Check we actually have X11 :-)
  if compileTest x11/xlib "XLib"; then
