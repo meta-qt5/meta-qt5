@@ -173,7 +173,35 @@ do_install_append() {
     # qemu built on host breaks do_package, remove it here (will be replaces with right qemu when do_compile is fixed
     # ERROR: objcopy failed with exit code 1 (cmd was 'arm-oe-linux-gnueabi-objcopy' --only-keep-debug '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/qmake' '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/.debug/qmake')
     rm -f ${D}/${bindir}/${QT_DIR_NAME}/qmake
+    # install fonts manually if they are missing
+    if [ ! -d ${D}/${OE_QMAKE_PATH_LIBS}/fonts ]; then
+        cp -a ${S}/lib/fonts ${D}/${OE_QMAKE_PATH_LIBS}
+    fi
 }
 
-PACKAGES =. "${PN}-fonts "
-FILES_${PN}-fonts = "${libdir}/${QT_DIR_NAME}/fonts ${libdir}/fonts"
+PACKAGES =. " \
+    ${PN}-fonts \
+    ${PN}-fonts-ttf-vera \
+    ${PN}-fonts-ttf-dejavu \
+    ${PN}-fonts-pfa \
+    ${PN}-fonts-pfb \
+    ${PN}-fonts-qpf \
+"
+
+RRECOMMENDS_${PN}-fonts = " \
+    ${PN}-fonts-ttf-vera \
+    ${PN}-fonts-ttf-dejavu \
+    ${PN}-fonts-pfa \
+    ${PN}-fonts-pfb \
+    ${PN}-fonts-qpf \
+"
+
+ALLOW_EMPTY_${PN}-fonts = "1"
+
+FILES_${PN}-fonts-ttf-vera       = "${OE_QMAKE_PATH_LIBS}/fonts/Vera*.ttf"
+FILES_${PN}-fonts-ttf-dejavu     = "${OE_QMAKE_PATH_LIBS}/fonts/DejaVu*.ttf"
+FILES_${PN}-fonts-pfa            = "${OE_QMAKE_PATH_LIBS}/fonts/*.pfa"
+FILES_${PN}-fonts-pfb            = "${OE_QMAKE_PATH_LIBS}/fonts/*.pfb"
+FILES_${PN}-fonts-qpf            = "${OE_QMAKE_PATH_LIBS}/fonts/*.qpf*"
+FILES_${PN}-fonts                = "${OE_QMAKE_PATH_LIBS}/fonts/README \
+                                    ${OE_QMAKE_PATH_LIBS}/fonts/fontdir"
