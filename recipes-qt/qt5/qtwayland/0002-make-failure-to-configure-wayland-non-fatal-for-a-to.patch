@@ -1,0 +1,44 @@
+From 3b06f60a5d1cd83e0bab37d0a6aa4fbe321c9e2d Mon Sep 17 00:00:00 2001
+From: Oswald Buddenhagen <oswald.buddenhagen@digia.com>
+Date: Mon, 8 Apr 2013 12:54:58 +0200
+Subject: [PATCH 2/2] make failure to configure wayland non-fatal for a
+ top-level build of qt
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Change-Id: Ibd0557158ffa00cbacd64b4780961a684ab40afb
+Reviewed-by: Jørgen Lind <jorgen.lind@digia.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ qtwayland.pro | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/qtwayland.pro b/qtwayland.pro
+index 24e104b..180aeb5 100644
+--- a/qtwayland.pro
++++ b/qtwayland.pro
+@@ -11,15 +11,18 @@ qtCompileTest(xcomposite)
+ load(qt_parts)
+ 
+ !config_wayland {
+-    error(QtWayland requires Wayland 1.0.3 or higher)
++    warning("QtWayland requires Wayland 1.0.3 or higher")
++    SUBDIRS =
+ }
+ 
+ !config_xkbcommon {
+     warning("No xkbcommon 0.2.0 or higher found, disabling support for it")
++    SUBDIRS =
+ }
+ 
+ !config_wayland_scanner {
+-    error(QtWayland requires wayland-scanner)
++    warning("QtWayland requires wayland-scanner")
++    SUBDIRS =
+ }
+ 
+ !config_wayland_egl {
+-- 
+1.8.2.1
+
