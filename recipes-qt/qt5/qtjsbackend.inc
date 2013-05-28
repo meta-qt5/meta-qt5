@@ -13,5 +13,4 @@ INC_PR = "r0"
 
 SRC_URI += " \
     file://0002-v8.pro-respect-external-host-bindir-when-set.patch \
-    file://0001-Fix-hardfloat-detection.patch \
 "

@@ -1,7 +1,7 @@
-From 2719aaabbf29a0f28638e5d67f4d68d548b593a7 Mon Sep 17 00:00:00 2001
+From c3e47eeb4dec8348c3a9f2cf9044c568c5334070 Mon Sep 17 00:00:00 2001
 From: Mikko Levonmaa <mikko.levonmaa@palm.com>
 Date: Tue, 8 Jan 2013 15:58:29 -0800
-Subject: [PATCH] Disable mkv8snapshot
+Subject: [PATCH 13/15] Disable mkv8snapshot
 
 It seems to generate code that throws SIGILL, so disabling it
 
@@ -24,16 +24,17 @@ Program received signal SIGILL, Illegal instruction.
     parent=<optimized out>) at qml/v8/qjsengine.cpp:192
 
 Signed-off-by: Mikko Levonmaa <mikko.levonmaa@palm.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- configure |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index 89246c8..b7d1cb5 100755
+index 9ca23a4..96965b6 100755
 --- a/configure
 +++ b/configure
-@@ -779,7 +779,7 @@ CFG_BUILD_PARTS=""
- CFG_NOBUILD_PARTS=""
+@@ -899,7 +899,7 @@ CFG_NOBUILD_PARTS=""
+ CFG_SKIP_MODULES=""
  CFG_RELEASE_QMAKE=no
  CFG_AUDIO_BACKEND=auto
 -CFG_V8SNAPSHOT=auto
@@ -42,5 +43,5 @@ index 89246c8..b7d1cb5 100755
  CFG_JAVASCRIPTCORE_JIT=auto
  CFG_PKGCONFIG=auto
 -- 
-1.7.4.1
+1.8.2.1
 

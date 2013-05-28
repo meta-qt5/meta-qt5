@@ -1,7 +1,7 @@
 From 8a97079c1b17f27256a4a816e5cc85344c29ac6f Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
-Subject: [PATCH 08/12] qt_module: Fix pkgconfig replacement
+Subject: [PATCH 08/16] qt_module: Fix pkgconfig replacement
 
 * in situation like this:
   QT_SYSROOT:/OE/oe-core/tmp-eglibc/sysroots/qemuarm

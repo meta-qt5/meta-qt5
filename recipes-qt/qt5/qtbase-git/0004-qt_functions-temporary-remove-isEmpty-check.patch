@@ -1,7 +1,7 @@
 From e561978ab73e72d7b088c9927fb6a87d2eff6833 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 17 Apr 2013 18:06:25 +0200
-Subject: [PATCH 04/12] qt_functions: temporary remove isEmpty check
+Subject: [PATCH 04/15] qt_functions: temporary remove isEmpty check
 
 * now we assume that every build will provide QT_EXTERNAL_HOST_BINS value
 * isEmpty works correctly only with qmake variables (e.g. $$FOO -

@@ -1,7 +1,7 @@
 From 505bbe468956de2fdf2f27e8905582fe438d3b35 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sun, 5 May 2013 11:18:34 +0200
-Subject: [PATCH 10/12] wayland-scanner: disable silent rules
+Subject: [PATCH 10/16] wayland-scanner: disable silent rules
 
 * for some reason "$$qtwayland-server-header.commands" on second line gets expanded as -server-header.commands
 

@@ -1,30 +1,28 @@
-From b4edefdc1fb5ba67b202fad7df5a8def554d16fd Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
-Date: Mon, 27 May 2013 18:45:03 +0200
-Subject: [PATCH] configure: add tslib support
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From 665841d6c38faecbf7848c0f4bbf3b0537b6a0a1 Mon Sep 17 00:00:00 2001
+From: Michael Brasser <michael.brasser@live.com>
+Date: Tue, 26 Mar 2013 09:22:51 -0500
+Subject: [PATCH 16/16] Allow tslib to be specified at configure time.
 
-Signed-off-by: Eric Bénard <eric@eukrea.com>
+Change-Id: I0ebf0eeea7e6a0b8136fb805f34f04082bc58c5e
+Reviewed-by: Oswald Buddenhagen <oswald.buddenhagen@digia.com>
 ---
- configure                       | 24 ++++++++++++++++++++++++
+ configure                       | 20 ++++++++++++++++++++
  src/plugins/generic/generic.pro |  4 ++++
- 2 files changed, 28 insertions(+)
+ 2 files changed, 24 insertions(+)
 
 diff --git a/configure b/configure
-index 2ea1ea4..727fed9 100755
+index ac09bbf..188e941 100755
 --- a/configure
 +++ b/configure
-@@ -810,6 +810,7 @@ CFG_KMS=auto
+@@ -829,6 +829,7 @@ CFG_KMS=auto
  CFG_LIBUDEV=auto
  CFG_OBSOLETE_WAYLAND=no
  CFG_EVDEV=auto
-+CFG_TSLIB=auto
++CFG_TSLIB=no
  CFG_NIS=auto
  CFG_CUPS=auto
  CFG_ICONV=auto
-@@ -1782,6 +1783,13 @@ while [ "$#" -gt 0 ]; do
+@@ -1805,6 +1806,13 @@ while [ "$#" -gt 0 ]; do
              UNKNOWN_OPT=yes
          fi
          ;;
@@ -38,7 +36,7 @@ index 2ea1ea4..727fed9 100755
      cups)
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_CUPS="$VAL"
-@@ -4775,6 +4783,22 @@ if [ "$CFG_EVDEV" = "no" ]; then
+@@ -4815,6 +4823,18 @@ if [ "$CFG_EVDEV" = "no" ]; then
      QMakeVar add DEFINES QT_NO_EVDEV
  fi
  
@@ -53,10 +51,6 @@ index 2ea1ea4..727fed9 100755
 +        CFG_TSLIB=no
 +    fi
 +fi
-+if [ "$CFG_TSLIB" = "no" ]; then
-+    QMakeVar add DEFINES QT_NO_TSLIB
-+fi
-+
 +
  # Check we actually have X11 :-)
  if compileTest x11/xlib "XLib"; then
@@ -74,5 +68,5 @@ index 078db2f..18a8295 100644
 +    SUBDIRS += tslib
 +}
 -- 
-1.8.1.4
+1.8.2.1
 
