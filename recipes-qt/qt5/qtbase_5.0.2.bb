@@ -4,7 +4,7 @@ require ${PN}.inc
 PR = "${INC_PR}.0"
 
 SRC_URI += " \
-    file://0016-configure-add-tslib-support.patch \
+    file://0016-Allow-tslib-to-be-specified-at-configure-time.patch \
 "
 
 SRC_URI[md5sum] = "a4fec8ed03867c4ee4fe5a46001a11f0"
