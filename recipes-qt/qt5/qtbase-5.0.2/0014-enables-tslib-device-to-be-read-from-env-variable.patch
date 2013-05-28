@@ -1,7 +1,7 @@
-From cb7d4b978d7b29e3f4ef5dba1ca1319ccd289a0d Mon Sep 17 00:00:00 2001
+From f8336efd143109c3478e5548360248f99b645548 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
 Date: Mon, 27 May 2013 18:32:37 +0200
-Subject: [PATCH] enables tslib device to be read from env variable
+Subject: [PATCH 14/16] enables tslib device to be read from env variable
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -30,5 +30,5 @@ index 6986fd5..2ed4a69 100644
          device = specification.toLocal8Bit();
  
 -- 
-1.8.1.4
+1.8.2.1
 

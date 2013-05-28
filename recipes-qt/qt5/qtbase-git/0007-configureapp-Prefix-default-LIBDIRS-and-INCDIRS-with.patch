@@ -1,7 +1,7 @@
 From 98d14c01a92c5caad2bb0e0b4a097ae11d83b58e Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 22:33:33 +0200
-Subject: [PATCH 07/12] configureapp: Prefix default LIBDIRS and INCDIRS with
+Subject: [PATCH 07/15] configureapp: Prefix default LIBDIRS and INCDIRS with
  SYSROOT
 
 Upstream-Status: Pending

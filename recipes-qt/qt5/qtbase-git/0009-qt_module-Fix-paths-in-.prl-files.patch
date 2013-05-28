@@ -1,7 +1,7 @@
 From 111583f7a46871d130ac1c6688972ebf98452af4 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sun, 28 Apr 2013 12:56:55 +0200
-Subject: [PATCH 09/12] qt_module: Fix paths in .prl files
+Subject: [PATCH 09/15] qt_module: Fix paths in .prl files
 
 * qmake does not prefix them with QT_SYSROOT when using them
   so e.g. when building qtdeclarative we get -L/usr/lib to LINKAGE

@@ -1,7 +1,7 @@
 From 9ffc6dba623bb44e1787f4e4af13af03f9f7a0d2 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 8 May 2013 23:54:35 +0200
-Subject: [PATCH 11/12] configure: don't export SYSTEM_VARIABLES to .qmake.vars
+Subject: [PATCH 11/15] configure: don't export SYSTEM_VARIABLES to .qmake.vars
 
 * linux-oe-g++ should handle this correctly and exporting LD as QMAKE_LINK is
   causing issues as we need g++ to be used as linker

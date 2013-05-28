@@ -1,7 +1,7 @@
 From 8be64919365240728dcce02fac44e5018aaec191 Mon Sep 17 00:00:00 2001
 From: Paul Eggleton <paul.eggleton@linux.intel.com>
 Date: Mon, 29 Oct 2012 20:26:36 -0700
-Subject: [PATCH 06/12] Allow building a separate qmake for the target
+Subject: [PATCH 06/15] Allow building a separate qmake for the target
 
 Upstream-Status: Inappropriate [config]
 
