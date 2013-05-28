@@ -6,8 +6,6 @@ QT_VERSION ?= "${PV}"
 # it's different for RC versions
 QT_VERSION_DIR ?= "${QT_VERSION}"
 
-DEFAULT_PREFERENCE = "-1"
-
 SRC_URI += " \
     http://releases.qt-project.org/qt5/${QT_VERSION_DIR}/submodules/${QT_MODULE}-opensource-src-${QT_VERSION}.tar.xz \
 "
