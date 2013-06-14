@@ -1,0 +1,37 @@
+From b47cfc601cf5d3c67289f72f43293846371993e2 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Florian=20H=C3=A4nel?= <florian.haenel@basyskom.com>
+Date: Mon, 3 Jun 2013 13:40:09 +0200
+Subject: [PATCH 2/2] Fix null-pointer access in QQuickVisualDataModelPrivate
+
+I observed null cachItem->contextData which lead to null-pointer access
+on cacheItem->contextData->destroy().
+
+Task-number: QTBUG-31439
+
+Upstream-Status: Backport https://codereview.qt-project.org/57789
+
+Signed-of-by: Florian Haenel <florian.haenel@lge.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+
+Change-Id: I91f28a3ee1ac83446ecde1801a1cb7962fb883f3
+---
+ src/qml/types/qqmldelegatemodel.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/qml/types/qqmldelegatemodel.cpp b/src/qml/types/qqmldelegatemodel.cpp
+index 16572c4..f457538 100644
+--- a/src/qml/types/qqmldelegatemodel.cpp
++++ b/src/qml/types/qqmldelegatemodel.cpp
+@@ -835,7 +835,8 @@ void QQmlDelegateModelPrivate::incubatorStatusChanged(QQDMIncubationTask *incuba
+         delete cacheItem->object;
+         cacheItem->object = 0;
+         cacheItem->scriptRef -= 1;
+-        cacheItem->contextData->destroy();
++        if (cacheItem->contextData)
++            cacheItem->contextData->destroy();
+         cacheItem->contextData = 0;
+ 
+         if (!cacheItem->isReferenced()) {
+-- 
+1.8.2.1
+
