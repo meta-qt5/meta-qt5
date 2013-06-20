@@ -41,7 +41,7 @@ QT_DISTRO_FLAGS_linuxstdbase = "-sm"
 QT_SQL_DRIVER_FLAGS ?= "-no-sql-ibase -no-sql-mysql -no-sql-psql -no-sql-odbc -plugin-sql-sqlite"
 
 # if you want to enable egl/gles2 in your .bbappend, don't forget to add right dependencies, e.g.
-# GL_DEPENDS = "virtual/libgles2 virtual/libegl"
+# GL_DEPENDS = "virtual/libgles2 virtual/egl"
 # QT_GLFLAGS = "-opengl es2 -eglfs"
 GL_DEPENDS ?= "virtual/libgl"
 QT_GLFLAGS ?= "-opengl"
