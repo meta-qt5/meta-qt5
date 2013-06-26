@@ -21,7 +21,7 @@ SRC_URI += " \
     file://0020-Use-BGRA-extension-in-bindTexture.patch \
 "
 
-DEPENDS += "qtbase-native freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev ${XCB_DEPENDS} ${GL_DEPENDS} ${TSLIB_DEPENDS}"
+DEPENDS += "qtbase-native freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev ${XCB_DEPENDS} ${GL_DEPENDS} ${TSLIB_DEPENDS} ${FONTCONFIG_DEPENDS}"
 
 # to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h and dbus/dbus.h
 # XCB_DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
@@ -51,6 +51,11 @@ QT_GLFLAGS ?= "-opengl"
 # QT_TSLIB = "-tslib"
 TSLIB_DEPENDS ?= ""
 QT_TSLIB ?= "-no-tslib"
+
+# FONTCONFIG_DEPENDS = "fontconfig"
+# QT_FONTCONFIG = "-fontconfig"
+FONTCONFIG_DEPENDS ?= ""
+QT_FONTCONFIG ?= "-no-fontconfig"
 
 QT_WIDGETS ?= "-widgets"
 QT_XML ?= "-xmlpatterns"
@@ -87,6 +92,7 @@ QT_CONFIG_FLAGS += " \
     ${QT_TESTS} \
     ${QT_EXAMPLES} \
     ${QT_TSLIB} \
+    ${QT_FONTCONFIG} \
 "
 
 INC_PR = "r2"
