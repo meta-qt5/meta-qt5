@@ -7,6 +7,10 @@ LIC_FILES_CHKSUM = "file://Source/WebCore/rendering/RenderApplet.h;endline=22;md
 
 DEPENDS += "qtdeclarative qtlocation qtsensors ${ICU} ruby-native sqlite3"
 
+# qtwebkit gets terribly big when linking with all debug info, disable by default
+QTWEBKIT_DEBUG = "QMAKE_CFLAGS+=-g0 QMAKE_CXXFLAGS+=-g0"
+EXTRA_QMAKEVARS_PRE += "${QTWEBKIT_DEBUG}"
+
 INC_PR = "r0"
 
 do_configure_append() {
