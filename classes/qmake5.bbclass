@@ -3,8 +3,8 @@
 #
 inherit qmake5_base
 
-QT5TOOLSDEPENDS ?= "qtbase-native "
-DEPENDS_prepend = "${QT5TOOLSDEPENDS}"
+QT5TOOLSDEPENDS ?= "qtbase-native"
+DEPENDS_prepend = "${QT5TOOLSDEPENDS} "
 
 # do we still need to export these?
 #OE_QMAKE_INCDIR_QT = "${STAGING_INCDIR}/qt5"
