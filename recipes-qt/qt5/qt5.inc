@@ -67,6 +67,7 @@ FILES_${PN}-qmlplugins = " \
     ${OE_QMAKE_PATH_IMPORTS}/*/*/*/*.qmltypes \
     ${OE_QMAKE_PATH_IMPORTS}/*/*/*/qmldir \
 "
+
 FILES_${PN}-tools = " \
     ${OE_QMAKE_PATH_BINS}/* \
 "

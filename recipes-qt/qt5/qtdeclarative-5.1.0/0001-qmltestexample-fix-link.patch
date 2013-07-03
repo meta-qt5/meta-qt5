@@ -1,0 +1,46 @@
+From ea698b0a2588585356d1ea5139ca6feb7110611a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
+Date: Sun, 26 May 2013 14:26:19 +0200
+Subject: [PATCH 1/3] qmltestexample: fix link
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+else we get :
+ld: warning: libQt5Quick.so.5, needed by libQt5QuickTest.so, not found
+
+Upstream-Status: Inappropriate
+
+Signed-off-by: Eric Bénard <eric@eukrea.com>
+---
+ examples/qmltest/qmltest/qmltest.pro  | 2 +-
+ tools/qmltestrunner/qmltestrunner.pro | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/examples/qmltest/qmltest/qmltest.pro b/examples/qmltest/qmltest/qmltest.pro
+index b5893c5..1b00e6c 100644
+--- a/examples/qmltest/qmltest/qmltest.pro
++++ b/examples/qmltest/qmltest/qmltest.pro
+@@ -14,7 +14,7 @@ TESTDATA += tst_basic.qml tst_item.qml
+ # This code exists solely for the purpose of building this example
+ # inside the examples/ hierarchy.
+ 
+-QT += qml qmltest
++QT += qml qmltest quick
+ 
+ macx: CONFIG -= app_bundle
+ 
+diff --git a/tools/qmltestrunner/qmltestrunner.pro b/tools/qmltestrunner/qmltestrunner.pro
+index 5184c1f..668cf17 100644
+--- a/tools/qmltestrunner/qmltestrunner.pro
++++ b/tools/qmltestrunner/qmltestrunner.pro
+@@ -1,5 +1,5 @@
+ SOURCES += main.cpp
+ 
+-QT += qml qmltest
++QT += qml qmltest quick
+ 
+ load(qt_tool)
+-- 
+1.8.3.2
+

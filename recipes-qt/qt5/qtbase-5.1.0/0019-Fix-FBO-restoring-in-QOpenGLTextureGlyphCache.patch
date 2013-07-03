@@ -1,0 +1,49 @@
+From 7c4453b5203e908f0c851c2a34231d81eb2f73c2 Mon Sep 17 00:00:00 2001
+From: Valery Volgutov <valery.volgutov@lge.com>
+Date: Tue, 21 May 2013 12:02:19 -0700
+Subject: [PATCH 19/23] Fix FBO restoring in QOpenGLTextureGlyphCache
+
+QOpenGLTextureGlyphCache::restoreTextureData restores FBO which
+was binded before restoreTextureData call. More specifically,
+it restores QOpenGLContextPrivate's current_fbo member. This works
+if FBO was binded by QOpenGLFramebufferObject but not if FBO was
+binded using glBindFramebufferObject and rendering done via
+QOpenGLPaintDevice.
+
+This patch fixes it by querying current FBO using
+GL_FRAMEBUFFER_BINDING query and restoring it.
+
+Upstream-Status: Backport
+https://codereview.qt-project.org/#change,56608
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/gui/opengl/qopengltextureglyphcache.cpp | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/gui/opengl/qopengltextureglyphcache.cpp b/src/gui/opengl/qopengltextureglyphcache.cpp
+index ec29900..9bda1db 100644
+--- a/src/gui/opengl/qopengltextureglyphcache.cpp
++++ b/src/gui/opengl/qopengltextureglyphcache.cpp
+@@ -147,6 +147,9 @@ void QOpenGLTextureGlyphCache::resizeTextureData(int width, int height)
+         return;
+     }
+ 
++    GLuint saveFbo;
++    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &saveFbo);
++
+     int oldWidth = m_textureResource->m_width;
+     int oldHeight = m_textureResource->m_height;
+ 
+@@ -265,7 +268,7 @@ void QOpenGLTextureGlyphCache::resizeTextureData(int width, int height)
+     glDeleteTextures(1, &tmp_texture);
+     glDeleteTextures(1, &oldTexture);
+ 
+-    funcs.glBindFramebuffer(GL_FRAMEBUFFER, ctx->d_func()->current_fbo);
++    funcs.glBindFramebuffer(GL_FRAMEBUFFER, saveFbo);
+ 
+     if (pex != 0) {
+         glViewport(pex->x, pex->y, pex->width, pex->height);
+-- 
+1.8.3.2
+
