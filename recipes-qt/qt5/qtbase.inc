@@ -19,80 +19,106 @@ SRC_URI += " \
     file://0018-QOpenGLPaintDevice-sub-area-support.patch \
     file://0019-Fix-FBO-restoring-in-QOpenGLTextureGlyphCache.patch \
     file://0020-Use-BGRA-extension-in-bindTexture.patch \
+    file://0021-configure-make-pulseaudio-a-configurable-option.patch \
+    file://0022-configure-make-alsa-a-configurable-option.patch \
+    file://0023-configure-make-freetype-a-configurable-option.patch \
 "
 
-DEPENDS += "qtbase-native freetype jpeg libpng zlib openssl glib-2.0 ${ICU} udev ${XCB_DEPENDS} ${GL_DEPENDS} ${TSLIB_DEPENDS} ${FONTCONFIG_DEPENDS}"
+DEPENDS += "qtbase-native"
 
-# to provide xcb/xcb_icccm.h, xcb/xcb_image.h, xcb/xcb_keysyms.h and dbus/dbus.h
-# XCB_DEPENDS += "xcb-util-wm xcb-util-image xcb-util-keysyms dbus"
-# reenable when we switch to "-qt-xcb" and build of 
-# QT_XCB = "-qt-xcb"
-# src/platformsupport/glxconvenience/ is resolved to be before build of
-# src/plugins/platforms/xcb/
+# separate some parts of PACKAGECONFIG which are often changed
+# be aware that you need to add icu to build qtwebkit, default
+# PACKAGECONFIG is kept rather minimal for people who don't need
+# stuff like webkit (and it's easier to add options than remove)
 
-XCB_DEPENDS ?= ""
-QT_XCB ?= "-no-xcb"
+# gl or gles needs to be enabled in order to build qtdeclarative
+# http://qt.gitorious.org/qt/qtdeclarative/commit/e988998a08b1420ed10bd02d9d4b3b8ed2289df9
+PACKAGECONFIG_GL ?= "${@base_contains('DISTRO_FEATURES', 'opengl', 'gl', '', d)}"
+PACKAGECONFIG_FB ?= "${@base_contains('DISTRO_FEATURES', 'directfb', 'directfb', '', d)}"
+PACKAGECONFIG_X11 ?= "${@base_contains('DISTRO_FEATURES', 'x11', 'xcb xvideo xsync xshape xrender xrandr xfixes xinput2 xinput xinerama xcursor gtkstyle', '', d)}"
+PACKAGECONFIG_FONTS ?= "fontconfig freetype"
+PACKAGECONFIG_SYSTEM ?= "jpeg libpng zlib"
+PACKAGECONFIG_MULTIMEDIA ?= "${@base_contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)}"
+PACKAGECONFIG_DISTRO ?= ""
 
-QT_DISTRO_FLAGS ?= "-no-accessibility -no-sm"
-QT_DISTRO_FLAGS_linuxstdbase = "-sm"
+PACKAGECONFIG ??= " \
+    release \
+    dbus \
+    udev \
+    evdev \
+    widgets \
+    openssl \
+    ${PACKAGECONFIG_GL} \
+    ${PACKAGECONFIG_FB} \
+    ${PACKAGECONFIG_X11} \
+    ${PACKAGECONFIG_FONTS} \
+    ${PACKAGECONFIG_SYSTEM} \
+    ${PACKAGECONFIG_MULTIMEDIA} \
+    ${PACKAGECONFIG_DISTRO} \
+"
 
-# Some can be used only for certain QT_MODULEs, so define them here, 
-# but add them to QT_CONFIG_FLAGS e.g. in qtbase.inc
-QT_SQL_DRIVER_FLAGS ?= "-no-sql-ibase -no-sql-mysql -no-sql-psql -no-sql-odbc -plugin-sql-sqlite"
-
-# if you want to enable egl/gles2 in your .bbappend, don't forget to add right dependencies, e.g.
-# GL_DEPENDS = "virtual/libgles2 virtual/egl"
-# QT_GLFLAGS = "-opengl es2 -eglfs"
-GL_DEPENDS ?= "virtual/libgl"
-QT_GLFLAGS ?= "-opengl"
-
-# if you want to enable tslib in your .bbappend, don't forget to add tslib dependencies
-# TSLIB_DEPENDS = "tslib"
-# QT_TSLIB = "-tslib"
-TSLIB_DEPENDS ?= ""
-QT_TSLIB ?= "-no-tslib"
-
-# FONTCONFIG_DEPENDS = "fontconfig"
-# QT_FONTCONFIG = "-fontconfig"
-FONTCONFIG_DEPENDS ?= ""
-QT_FONTCONFIG ?= "-no-fontconfig"
-
-QT_WIDGETS ?= "-widgets"
-QT_XML ?= "-xmlpatterns"
-QT_WEBKIT ?= "-webkit"
-QT_PHONON ?= "-phonon"
-QT_DBUS ?= "-qdbus"
-QT_MULTIMEDIA ?= "${@base_contains('DISTRO_FEATURES', 'pulseaudio', '-pulseaudio', '-no-pulseaudio', d)}"
-QT_NAS ?= "-no-nas-sound"
-QT_NIS ?= "-no-nis"
-QT_CUPS ?= "-no-cups"
-QT_STL ?= "-stl"
-QT_SYSTEM_LIBS ?= "-system-libjpeg -system-libpng -system-zlib"
-QT_TESTS ?= "-nomake tests"
-QT_EXAMPLES ?= "-nomake examples"
-QT_RELEASE ?= "-release"
+PACKAGECONFIG[release] = "-release,-debug"
+PACKAGECONFIG[sm] = "-sm,-no-sm"
+PACKAGECONFIG[tests] = ",-nomake tests"
+PACKAGECONFIG[examples] = ",-nomake examples"
+PACKAGECONFIG[accessibility] = "-accessibility,-no-accessibility"
+PACKAGECONFIG[glib] = "-glib,-no-glib,glib-2.0"
+PACKAGECONFIG[freetype] = "-system-freetype,-no-freetype,freetype"
+PACKAGECONFIG[jpeg] = "-system-libjpeg,-no-libjpeg,jpeg"
+PACKAGECONFIG[libpng] = "-system-libpng,-no-libpng,libpng"
+PACKAGECONFIG[zlib] = "-system-zlib,-qt-zlib,zlib"
+PACKAGECONFIG[pcre] = "-system-pcre,-qt-pcre,pcre"
+PACKAGECONFIG[gl] = "-opengl -no-eglfs,,virtual/libgl"
+PACKAGECONFIG[gles2] = "-opengl es2 -eglfs,,virtual/libgles2 virtual/egl"
+PACKAGECONFIG[tslib] = "-tslib,-no-tslib,tslib"
+PACKAGECONFIG[dbus] = "-dbus,-no-dbus,dbus"
+PACKAGECONFIG[xcb] = "-xcb,-no-xcb,xcb-util-wm xcb-util-image xcb-util-keysyms"
+PACKAGECONFIG[sql-ibase] = "-sql-ibase,-no-sql-ibase"
+PACKAGECONFIG[sql-mysql] = "-sql-mysql,-no-sql-mysql,mysql"
+PACKAGECONFIG[sql-psql] = "-sql-psql,-no-sql-psql,postgresql"
+PACKAGECONFIG[sql-odbc] = "-sql-odbc,-no-sql-odbc"
+PACKAGECONFIG[sql-oci] = "-sql-oci,-no-sql-oci"
+PACKAGECONFIG[sql-tds] = "-sql-tds,-no-sql-tds"
+PACKAGECONFIG[sql-db2] = "-sql-db2,-no-sql-db2"
+PACKAGECONFIG[sql-sqlite2] = "-sql-sqlite2,-no-sql-sqlite2,sqlite"
+PACKAGECONFIG[sql-sqlite] = "-sql-sqlite,-no-sql-sqlite,sqlite3"
+PACKAGECONFIG[xcursor] = "-xcursor,-no-xcursor,libxcursor"
+PACKAGECONFIG[xinerama] = "-xinerama,-no-xinerama,libxinerama"
+PACKAGECONFIG[xinput] = "-xinput,-no-xinput"
+PACKAGECONFIG[xinput2] = "-xinput2,-no-xinput2"
+PACKAGECONFIG[xfixes] = "-xfixes,-no-xfixes,libxfixes"
+PACKAGECONFIG[xrandr] = "-xrandr,-no-xrandr,libxrandr"
+PACKAGECONFIG[xrender] = "-xrender,-no-xrender,libxrender"
+PACKAGECONFIG[xshape] = "-xshape,-no-xshape"
+PACKAGECONFIG[xsync] = "-xsync,-no-xsync"
+PACKAGECONFIG[xvideo] = "-xvideo,-no-xvideo"
+PACKAGECONFIG[openvg] = "-openvg,-no-openvg"
+PACKAGECONFIG[iconv] = "-iconv,-no-iconv,virtual/libiconv"
+PACKAGECONFIG[xkb] = "-xkb,-no-xkb,libxkbcommon"
+PACKAGECONFIG[evdev] = "-evdev,-no-evdev"
+PACKAGECONFIG[gstreamer] = "-gstreamer,-no-gstreamer,gstreamer"
+PACKAGECONFIG[fontconfig] = "-fontconfig,-no-fontconfig,fontconfig"
+PACKAGECONFIG[gtkstyle] = "-gtkstyle,-no-gtkstyle,gtk+"
+PACKAGECONFIG[directfb] = "-directfb,-no-directfb,directfb"
+PACKAGECONFIG[linuxfb] = "-linuxfb,-no-linuxfb,linuxfb"
+PACKAGECONFIG[mitshm] = "-mitshm,-no-mitshm,mitshm"
+PACKAGECONFIG[kms] = "-kms,-no-kms,kms"
+PACKAGECONFIG[icu] = "-icu,-no-icu,${ICU}"
+PACKAGECONFIG[udev] = "-libudev,-no-libudev,udev"
+PACKAGECONFIG[openssl] = "-openssl,-no-openssl,openssl"
+PACKAGECONFIG[alsa] = "-alsa,-no-alsa,alsa-lib"
+PACKAGECONFIG[pulseaudio] = "-pulseaudio,-no-pulseaudio,pulseaudio"
+PACKAGECONFIG[nis] = "-nis,-no-nis"
+PACKAGECONFIG[widgets] = "-widgets,-no-widgets"
 
 QT_CONFIG_FLAGS += " \
-    ${QT_RELEASE} \
     -reduce-relocations \
     -shared \
     -silent \
-    -glib \
     -no-pch \
     -no-rpath \
     -pkg-config \
-    ${QT_WIDGETS} \
-    ${QT_SYSTEM_LIBS} \
-    ${QT_NIS} \
-    ${QT_CUPS} \
-    ${QT_SQL_DRIVER_FLAGS} \
-    ${QT_DISTRO_FLAGS} \
-    ${QT_XCB} \
-    ${QT_GLFLAGS} \
-    ${QT_TESTS} \
-    ${QT_EXAMPLES} \
-    ${QT_TSLIB} \
-    ${QT_FONTCONFIG} \
+    ${EXTRA_OECONF} \
 "
 
 INC_PR = "r2"
