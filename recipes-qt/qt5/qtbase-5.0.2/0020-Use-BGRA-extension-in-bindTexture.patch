@@ -1,17 +1,17 @@
-From 9108a53309ae584d6622881b418742a9213cb9f1 Mon Sep 17 00:00:00 2001
+From 87380175cdb88ceadeec5773d8bc40ec08c4e3d6 Mon Sep 17 00:00:00 2001
 From: Jani Hautakangas <jani.hautakangas@ixonos.com>
 Date: Mon, 27 May 2013 15:25:25 -0700
-Subject: [PATCH] Use BGRA extension in bindTexture
+Subject: [PATCH 20/22] Use BGRA extension in bindTexture
 
 Upstream-Status: Pending
 
 Change-Id: I18aecc87c5c7d4483cabe5555da33ca6bb8580f1
 ---
- src/gui/opengl/qopengltexturecache.cpp |    6 ++----
+ src/gui/opengl/qopengltexturecache.cpp | 6 ++----
  1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/src/gui/opengl/qopengltexturecache.cpp b/src/gui/opengl/qopengltexturecache.cpp
-index 05e9bd4..a268f23 100644
+index fffc368..11c8b59 100644
 --- a/src/gui/opengl/qopengltexturecache.cpp
 +++ b/src/gui/opengl/qopengltexturecache.cpp
 @@ -171,7 +171,7 @@ static inline void qgl_byteSwapImage(QImage &img)
@@ -35,5 +35,5 @@ index 05e9bd4..a268f23 100644
      int cost = tx.width() * tx.height() * 4 / 1024;
      m_cache.insert(key, new QOpenGLCachedTexture(id, context), cost);
 -- 
-1.7.9.5
+1.8.3.2
 

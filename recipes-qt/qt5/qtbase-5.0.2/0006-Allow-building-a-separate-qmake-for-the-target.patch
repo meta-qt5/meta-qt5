@@ -1,7 +1,7 @@
 From 76537aca4118f5f7c336b7d17594c9644b6272b5 Mon Sep 17 00:00:00 2001
 From: Paul Eggleton <paul.eggleton@linux.intel.com>
 Date: Mon, 29 Oct 2012 20:26:36 -0700
-Subject: [PATCH 06/16] Allow building a separate qmake for the target
+Subject: [PATCH 06/22] Allow building a separate qmake for the target
 
 Upstream-Status: Inappropriate [config]
 
@@ -25,5 +25,5 @@ index 0d92ac2..9be0e9b 100644
  OBJECTS_DIR = .
  MOC_DIR = .
 -- 
-1.8.2.1
+1.8.3.2
 

@@ -1,7 +1,7 @@
 From 665841d6c38faecbf7848c0f4bbf3b0537b6a0a1 Mon Sep 17 00:00:00 2001
 From: Michael Brasser <michael.brasser@live.com>
 Date: Tue, 26 Mar 2013 09:22:51 -0500
-Subject: [PATCH 16/16] Allow tslib to be specified at configure time.
+Subject: [PATCH 16/22] Allow tslib to be specified at configure time.
 
 Change-Id: I0ebf0eeea7e6a0b8136fb805f34f04082bc58c5e
 Reviewed-by: Oswald Buddenhagen <oswald.buddenhagen@digia.com>
@@ -68,5 +68,5 @@ index 078db2f..18a8295 100644
 +    SUBDIRS += tslib
 +}
 -- 
-1.8.2.1
+1.8.3.2
 

@@ -1,7 +1,7 @@
 From 126d2c4beff40bc51a1912a752b23c178eac59b5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?David=20E=2E=20Narv=C3=A1ez?= <david.narvaez@computer.org>
 Date: Sat, 23 Feb 2013 23:14:50 -0500
-Subject: [PATCH 17/17] Rename qAbs Function for timeval
+Subject: [PATCH 17/22] Rename qAbs Function for timeval
 
 This decouples it from qAbs which is declared as a constexpr under
 certain compilation flags and enables for qtbase to be compiled with
@@ -40,5 +40,5 @@ index 0eee425..7a29247 100644
  
  /*
 -- 
-1.8.2.1
+1.8.3.2
 

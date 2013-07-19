@@ -1,7 +1,7 @@
 From 78b716520396b5317a8b91dbca183483bea8b1d2 Mon Sep 17 00:00:00 2001
 From: Mikko Levonmaa <mikko.levonmaa@palm.com>
 Date: Tue, 8 Jan 2013 15:58:29 -0800
-Subject: [PATCH 13/16] Disable mkv8snapshot
+Subject: [PATCH 13/22] Disable mkv8snapshot
 
 It seems to generate code that throws SIGILL, so disabling it
 
@@ -42,5 +42,5 @@ index 34074ee..ac09bbf 100755
  CFG_JAVASCRIPTCORE_JIT=auto
  CFG_PKGCONFIG=auto
 -- 
-1.8.2.1
+1.8.3.2
 
