@@ -13,13 +13,10 @@ LIC_FILES_CHKSUM = "file://${S}/src/compositor/compositor_api/qwaylandsurfacenod
 XKB_DEPENDS = "libxkbcommon xproto"
 DEPENDS += "qtbase qtdeclarative wayland wayland-native ${XKB_DEPENDS}"
 
-INC_PR = "r1"
-
 SRC_URI += " \
     file://0001-xcbcommon-should-not-be-a-mandatory-dependency.patch \
     file://0002-Temporarily-patching-this-out-as-Qt5.0.0-does-not-ha.patch \
     file://0003-eglCreateImageKHR-requires-the-context-to-be-NULL.patch \
-    file://0004-EGL-Specify-vec2d-precision-qualifier-in-fragment-sh.patch \
 "
 
 QT_WAYLAND_CONFIG ?= "wayland-compositor"

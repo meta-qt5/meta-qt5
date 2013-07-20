@@ -1,0 +1,33 @@
+From 5b7c89d211a193acfd182eb0519b658629af3193 Mon Sep 17 00:00:00 2001
+From: Mikko Levonmaa <mikko.levonmaa@palm.com>
+Date: Fri, 1 Mar 2013 13:00:53 -0800
+Subject: [PATCH 2/3] Temporarily patching this out as Qt5.0.0 does not have
+ qtHaveModule
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/compositor/compositor_api/compositor_api.pri | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/compositor/compositor_api/compositor_api.pri b/src/compositor/compositor_api/compositor_api.pri
+index f0bbe76..e7905e5 100644
+--- a/src/compositor/compositor_api/compositor_api.pri
++++ b/src/compositor/compositor_api/compositor_api.pri
+@@ -12,7 +12,7 @@ SOURCES += \
+ 
+ QT += core-private
+ 
+-qtHaveModule(quick) {
++#qtHaveModule(quick) {
+     SOURCES += \
+         compositor_api/qwaylandsurfaceitem.cpp \
+         compositor_api/qwaylandsurfacenode.cpp \
+@@ -27,4 +27,4 @@ qtHaveModule(quick) {
+ 
+     QT += qml quick
+     QT += quick-private gui-private
+-}
++#}
+-- 
+1.8.2.1
+

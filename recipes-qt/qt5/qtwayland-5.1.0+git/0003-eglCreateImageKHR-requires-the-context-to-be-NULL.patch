@@ -1,0 +1,71 @@
+From 2d707f8dc9f0658d889aef4f4c5a62595598402c Mon Sep 17 00:00:00 2001
+From: Mikko Levonmaa <mikko.levonmaa@palm.com>
+Date: Wed, 6 Mar 2013 10:18:49 -0800
+Subject: [PATCH 3/3] eglCreateImageKHR requires the context to be NULL
+
+As per the EGL spec the context passed to that function should
+be null.
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ .../wayland-egl/waylandeglintegration.cpp                | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
+
+diff --git a/src/plugins/waylandcompositors/wayland-egl/waylandeglintegration.cpp b/src/plugins/waylandcompositors/wayland-egl/waylandeglintegration.cpp
+index 73877c4..16e77fb 100644
+--- a/src/plugins/waylandcompositors/wayland-egl/waylandeglintegration.cpp
++++ b/src/plugins/waylandcompositors/wayland-egl/waylandeglintegration.cpp
+@@ -101,7 +101,6 @@ public:
+ 
+     PFNGLEGLIMAGETARGETTEXTURE2DOESPROC gl_egl_image_target_texture_2d;
+ 
+-    QPlatformNativeInterface::NativeResourceForContextFunction get_egl_context;
+ };
+ 
+ WaylandEglIntegration::WaylandEglIntegration()
+@@ -121,10 +120,6 @@ void WaylandEglIntegration::initializeHardware(QtWayland::Display *waylandDispla
+             const char *extensionString = eglQueryString(d->egl_display, EGL_EXTENSIONS);
+             if (extensionString && strstr(extensionString, "EGL_WL_bind_wayland_display"))
+             {
+-                d->get_egl_context = nativeInterface->nativeResourceFunctionForContext("get_egl_context");
+-                if (!d->get_egl_context) {
+-                    qWarning("Failed to retrieve the get_egl_context function");
+-                }
+                 d->egl_bind_wayland_display =
+                         reinterpret_cast<PFNEGLBINDWAYLANDDISPLAYWL>(eglGetProcAddress("eglBindWaylandDisplayWL"));
+                 d->egl_unbind_wayland_display =
+@@ -137,7 +132,6 @@ void WaylandEglIntegration::initializeHardware(QtWayland::Display *waylandDispla
+                         reinterpret_cast<PFNGLEGLIMAGETARGETTEXTURE2DOESPROC>(eglGetProcAddress("glEGLImageTargetTexture2DOES"));
+ 
+                 if (d->egl_bind_wayland_display
+-                        && d->get_egl_context
+                         && d->egl_unbind_wayland_display
+                         && d->egl_create_image
+                         && d->egl_destroy_image
+@@ -162,10 +156,7 @@ GLuint WaylandEglIntegration::createTextureFromBuffer(wl_buffer *buffer, QOpenGL
+         return 0;
+     }
+ 
+-    QPlatformNativeInterface *nativeInterface = QGuiApplication::platformNativeInterface();
+-    EGLContext egl_context = d->get_egl_context(context);
+-
+-    EGLImageKHR image = d->egl_create_image(d->egl_display, egl_context,
++    EGLImageKHR image = d->egl_create_image(d->egl_display, NULL,
+                                           EGL_WAYLAND_BUFFER_WL,
+                                           buffer, NULL);
+ 
+@@ -229,10 +220,7 @@ void *WaylandEglIntegration::lockNativeBuffer(struct wl_buffer *buffer, QOpenGLC
+ {
+     Q_D(const WaylandEglIntegration);
+ 
+-    QPlatformNativeInterface *nativeInterface = QGuiApplication::platformNativeInterface();
+-    EGLContext egl_context = d->get_egl_context(context);
+-
+-    EGLImageKHR image = d->egl_create_image(d->egl_display, egl_context,
++    EGLImageKHR image = d->egl_create_image(d->egl_display, NULL,
+                                           EGL_WAYLAND_BUFFER_WL,
+                                           buffer, NULL);
+     return image;
+-- 
+1.8.2.1
+
