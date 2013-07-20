@@ -1,7 +1,7 @@
-From c9bf00e21ae398575adf4411e67b35cdf44920e5 Mon Sep 17 00:00:00 2001
+From 6e92a3eac477a534226f916018a6ba6996eff318 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 03/15] Add -external-hostbindir option
+Subject: [PATCH 03/23] Add -external-hostbindir option
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -12,40 +12,39 @@ Upstream-Status: Pending
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- configure                           | 15 ++++++++++++++-
+ configure                           | 14 ++++++++++++++
  mkspecs/features/qt_functions.prf   |  5 ++++-
  mkspecs/features/qt_tool.prf        |  2 +-
  qmake/property.cpp                  |  1 +
- qtbase.pro                          | 15 +++++++++++----
+ qtbase.pro                          | 12 +++++++++---
  src/corelib/global/qlibraryinfo.cpp |  3 ++-
  src/corelib/global/qlibraryinfo.h   |  1 +
  tools/configure/configureapp.cpp    |  8 ++++++++
- 8 files changed, 42 insertions(+), 8 deletions(-)
+ 8 files changed, 40 insertions(+), 6 deletions(-)
 
 diff --git a/configure b/configure
-index 7dea731..65f4d26 100755
+index dacfd30..25980c0 100755
 --- a/configure
 +++ b/configure
-@@ -1034,6 +1034,7 @@ CFG_GCC_SYSROOT="yes"
- QT_HOST_PREFIX=
+@@ -1046,6 +1046,7 @@ QT_HOST_PREFIX=
  QT_HOST_BINS=
+ QT_HOST_LIBS=
  QT_HOST_DATA=
 +QT_EXTERNAL_HOST_BINS=
  
  #flags for SQL drivers
  QT_CFLAGS_PSQL=
-@@ -1141,7 +1142,7 @@ while [ "$#" -gt 0 ]; do
-         VAL=no
-         ;;
-     #Qt style options that pass an argument
--    -prefix|-docdir|-headerdir|-plugindir|-importdir|-qmldir|-archdatadir|-datadir|-libdir|-bindir|-libexecdir|-translationdir|-sysconfdir|-examplesdir|-testsdir|-depths|-make|-nomake|-skip|-platform|-xplatform|-device|-device-option|-sdk|-arch|-host-arch|-mysql_config|-sysroot|-hostdatadir|-hostbindir|-qpa|-qconfig|-android-sdk|-android-ndk|-android-ndk-platform|-android-ndk-host|-android-arch|-android-toolchain-version)
-+    -prefix|-docdir|-headerdir|-plugindir|-importdir|-qmldir|-archdatadir|-datadir|-libdir|-bindir|-libexecdir|-translationdir|-sysconfdir|-examplesdir|-testsdir|-depths|-make|-nomake|-skip|-platform|-xplatform|-device|-device-option|-sdk|-arch|-host-arch|-mysql_config|-sysroot|-hostdatadir|-hostbindir|-qpa|-qconfig|-android-sdk|-android-ndk|-android-ndk-platform|-android-ndk-host|-android-arch|-android-toolchain-version|-external-hostbindir)
-         VAR=`echo $1 | sed "s,^-\(.*\),\1,"`
-         shift
-         VAL="$1"
-@@ -1326,6 +1327,9 @@ while [ "$#" -gt 0 ]; do
-     hostbindir)
-         QT_HOST_BINS="$VAL"
+@@ -1170,6 +1171,7 @@ while [ "$#" -gt 0 ]; do
+     -testsdir| \
+     -hostdatadir| \
+     -hostbindir| \
++    -external-hostbindir| \
+     -hostlibdir| \
+     -sysroot| \
+     -depths| \
+@@ -1379,6 +1381,9 @@ while [ "$#" -gt 0 ]; do
+     hostlibdir)
+         QT_HOST_LIBS="$VAL"
          ;;
 +    external-hostbindir)
 +        QT_EXTERNAL_HOST_BINS="$VAL"
@@ -53,8 +52,8 @@ index 7dea731..65f4d26 100755
      pkg-config)
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_PKGCONFIG="$VAL"
-@@ -3180,6 +3184,11 @@ else
-     QT_HOST_DATA=`"$relpath/config.tests/unix/makeabs" "$QT_HOST_DATA"`
+@@ -3248,6 +3253,11 @@ if [ "$CFG_COMPILE_EXAMPLES" = "yes" ]; then
+     QMAKE_CONFIG="$QMAKE_CONFIG compile_examples"
  fi
  
 +# default is empty, don't call makeabs if it is empty
@@ -65,7 +64,7 @@ index 7dea731..65f4d26 100755
  #-------------------------------------------------------------------------------
  # help - interactive parts of the script _after_ this section please
  #-------------------------------------------------------------------------------
-@@ -3346,6 +3355,9 @@ Installation options:
+@@ -3416,6 +3426,9 @@ Installation options:
      -hostdatadir <dir> . Data used by qmake will be installed to <dir>
                           (default HOSTPREFIX)
  
@@ -75,32 +74,32 @@ index 7dea731..65f4d26 100755
  Configure options:
  
   The defaults (*) are usually acceptable. A plus (+) denotes a default value
-@@ -3855,6 +3867,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
-     "qt_hpfxpath=$QT_HOST_PREFIX",
+@@ -3931,6 +3944,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
      "qt_hbinpath=$QT_HOST_BINS",
+     "qt_hlibpath=$QT_HOST_LIBS",
      "qt_hdatpath=$QT_HOST_DATA",
 +    "qt_ebinpath=$QT_EXTERNAL_HOST_BINS",
      "qt_targspec=$shortxspec",
      "qt_hostspec=$shortspec",
  #endif
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 8cd2473..876f657 100644
+index 2f2c94c..4e12d3d 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -193,7 +193,10 @@ defineTest(qtAddRpathLink) {
+@@ -194,7 +194,10 @@ defineTest(qtAddRpathLink) {
  defineTest(qtPrepareTool) {
-     $$1 = $$eval(QT_TOOL.$${2}.command)
+     $$1 = $$eval(QT_TOOL.$${2}.binary)
      isEmpty($$1) {
 -        $$1 = $$[QT_HOST_BINS]/$$2
 +        $$1 = $$[QT_EXTERNAL_HOST_BINS]/$$2
 +        isEmpty($$[QT_EXTERNAL_HOST_BINS]) {
 +            $$1 = $$[QT_HOST_BINS]/$$2
 +        }
-         contains(QMAKE_HOST.os, Windows):!contains($$1, .*\\.(exe|bat)$) {
-             exists($$eval($$1).bat) {
-                 $$1 = $$eval($$1).bat
+         exists($$eval($$1).pl) {
+             $$1 = perl -w $$eval($$1).pl
+         } else: contains(QMAKE_HOST.os, Windows) {
 diff --git a/mkspecs/features/qt_tool.prf b/mkspecs/features/qt_tool.prf
-index 0a58880..c110ea5 100644
+index 9a6b963..83ef3a0 100644
 --- a/mkspecs/features/qt_tool.prf
 +++ b/mkspecs/features/qt_tool.prf
 @@ -16,7 +16,7 @@ CONFIG += console
@@ -111,24 +110,24 @@ index 0a58880..c110ea5 100644
 +!build_pass:if(!host_build|!force_bootstrap|force_independent):isEmpty($$[QT_EXTERNAL_HOST_BINS]) {
      isEmpty(MODULE):MODULE = $$TARGET
  
-     MODULE_DEPENDS = $$replace(QT, -private$, )
+     !host_build|!force_bootstrap: MODULE_DEPENDS = $$replace(QT, -private$, )
 diff --git a/qmake/property.cpp b/qmake/property.cpp
-index c4fbcd6..c1b7a9f 100644
+index 4685440..93eb1d4 100644
 --- a/qmake/property.cpp
 +++ b/qmake/property.cpp
-@@ -74,6 +74,7 @@ static const struct {
-     { "QT_HOST_PREFIX", QLibraryInfo::HostPrefixPath, true },
+@@ -75,6 +75,7 @@ static const struct {
      { "QT_HOST_DATA", QLibraryInfo::HostDataPath, true },
      { "QT_HOST_BINS", QLibraryInfo::HostBinariesPath, true },
+     { "QT_HOST_LIBS", QLibraryInfo::HostLibrariesPath, true },
 +    { "QT_EXTERNAL_HOST_BINS", QLibraryInfo::ExternalHostBinariesPath, true },
      { "QMAKE_SPEC", QLibraryInfo::HostSpecPath, true },
      { "QMAKE_XSPEC", QLibraryInfo::TargetSpecPath, true },
  };
 diff --git a/qtbase.pro b/qtbase.pro
-index 4c41cff..997ea6d 100644
+index d6726b5..28ca7d5 100644
 --- a/qtbase.pro
 +++ b/qtbase.pro
-@@ -68,17 +68,24 @@ CONFIG -= qt
+@@ -70,16 +70,22 @@ CONFIG -= qt
  
  #qmake
  qmake.path = $$[QT_HOST_BINS]
@@ -146,19 +145,16 @@ index 4c41cff..997ea6d 100644
  
  #syncqt
  syncqt.path = $$[QT_HOST_BINS]
- syncqt.files = $$PWD/bin/syncqt
--equals(QMAKE_HOST.os, Windows):syncqt.files += $$PWD/bin/syncqt.bat
+ syncqt.files = $$PWD/bin/syncqt.pl
++syncqt.files = $$PWD/bin/syncqt.pl
 +!isEmpty($$[QT_EXTERNAL_HOST_BINS]) {
-+   syncqt.files = $$[QT_EXTERNAL_HOST_BINS]/bin/syncqt
-+}
-+equals(QMAKE_HOST.os, Windows) {
-+   syncqt.files = $${syncqt.files}.bat
++   syncqt.files = $$[QT_EXTERNAL_HOST_BINS]/bin/syncqt.pl
 +}
  INSTALLS += syncqt
  
  # If we are doing a prefix build, create a "module" pri which enables
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index 6b40731..139a60f 100644
+index 8ca2102..9f5d444 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
 @@ -270,7 +270,7 @@ QLibraryInfo::isDebugBuild()
@@ -170,31 +166,31 @@ index 6b40731..139a60f 100644
  } qtConfEntries[] = {
      { "Prefix", "." },
      { "Documentation", "doc" }, // should be ${Data}/doc
-@@ -295,6 +295,7 @@ static const struct {
-     { "HostPrefix", "" },
+@@ -296,6 +296,7 @@ static const struct {
      { "HostBinaries", "bin" },
+     { "HostLibraries", "lib" },
      { "HostData", "." },
 +    { "ExternalHostBinaries", "" },
      { "TargetSpec", "" },
      { "HostSpec", "" },
  #endif
 diff --git a/src/corelib/global/qlibraryinfo.h b/src/corelib/global/qlibraryinfo.h
-index 1a00a14..7e4829c 100644
+index b275e01..0e6baed 100644
 --- a/src/corelib/global/qlibraryinfo.h
 +++ b/src/corelib/global/qlibraryinfo.h
-@@ -83,6 +83,7 @@ public:
-         HostPrefixPath,
+@@ -84,6 +84,7 @@ public:
          HostBinariesPath,
+         HostLibrariesPath,
          HostDataPath,
 +        ExternalHostBinariesPath,
          TargetSpecPath,
          HostSpecPath,
          LastHostPath = HostSpecPath,
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index a18aac3..57409b1 100644
+index 5b62e8f..c752df3 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
-@@ -1173,6 +1173,13 @@ void Configure::parseCmdLine()
+@@ -1162,6 +1162,13 @@ void Configure::parseCmdLine()
              dictionary[ "QT_HOST_DATA" ] = configCmdLine.at(i);
          }
  
@@ -208,14 +204,14 @@ index a18aac3..57409b1 100644
          else if (configCmdLine.at(i) == "-make-tool") {
              ++i;
              if (i == argCount)
-@@ -3775,6 +3782,7 @@ void Configure::generateQConfigCpp()
-                   << "    \"qt_hpfxpath=" << formatPath(dictionary["QT_HOST_PREFIX"]) << "\"," << endl
+@@ -3715,6 +3722,7 @@ void Configure::generateQConfigCpp()
                    << "    \"qt_hbinpath=" << formatPath(dictionary["QT_HOST_BINS"]) << "\"," << endl
+                   << "    \"qt_hlibpath=" << formatPath(dictionary["QT_HOST_LIBS"]) << "\"," << endl
                    << "    \"qt_hdatpath=" << formatPath(dictionary["QT_HOST_DATA"]) << "\"," << endl
 +                  << "    \"qt_ebinpath=" << formatPath(dictionary["QT_EXTERNAL_HOST_BINS"]) << "\"," << endl
                    << "    \"qt_targspec=" << targSpec << "\"," << endl
                    << "    \"qt_hostspec=" << hostSpec << "\"," << endl
                    << "#endif" << endl
 -- 
-1.8.2.1
+1.8.3.2
 

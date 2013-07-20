@@ -1,4 +1,4 @@
-From 6729c056b4d3ab43e59ce1c8303ae58d7c6ba8cf Mon Sep 17 00:00:00 2001
+From 059904ca921dfbdc9d702be67dcce66957ef6ecd Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 20 Jul 2013 10:56:37 +0200
 Subject: [PATCH 23/23] configure: make freetype a configurable option
@@ -13,10 +13,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 7 insertions(+)
 
 diff --git a/configure b/configure
-index 864967c..1b4225a 100755
+index 5e9bfd4..5b1f5f2 100755
 --- a/configure
 +++ b/configure
-@@ -1973,6 +1973,13 @@ while [ "$#" -gt 0 ]; do
+@@ -2053,6 +2053,13 @@ while [ "$#" -gt 0 ]; do
              UNKNOWN_OPT=yes
          fi
          ;;

@@ -1,4 +1,4 @@
-From ebe1148e38c5deb3c67dc041e68cd1623531d67b Mon Sep 17 00:00:00 2001
+From a911109ed920e6a7466b65df86270ed836dd529c Mon Sep 17 00:00:00 2001
 From: Mikko Levonmaa <mikko.levonmaa@palm.com>
 Date: Tue, 27 Nov 2012 12:46:44 -0800
 Subject: [PATCH] Always build uic
@@ -36,5 +36,5 @@ index b4c9602..f30ec1f 100644
  nacl: SUBDIRS -= src_network src_testlib
  
 -- 
-1.8.2.1
+1.8.3.2
 

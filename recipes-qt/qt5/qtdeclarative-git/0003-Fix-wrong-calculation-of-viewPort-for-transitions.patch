@@ -1,7 +1,7 @@
-From b93b61260b8eda33c01cef542777efbae2e8c570 Mon Sep 17 00:00:00 2001
+From 3919fe89e7adbc9f163eabce9269a924273c64ec Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Florian=20H=C3=A4nel?= <florian.haenel@basyskom.com>
 Date: Wed, 5 Jun 2013 19:23:32 +0200
-Subject: [PATCH 1/2] Fix wrong calculation of viewPort for transitions
+Subject: [PATCH 2/2] Fix wrong calculation of viewPort for transitions
 
 Viewport is calculated wrong for horizontal layout in a second instance
 
@@ -24,7 +24,7 @@ Change-Id: I136ae4484278d14f796613505e3f38c65ec51ebe
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/quick/items/qquickitemview.cpp b/src/quick/items/qquickitemview.cpp
-index d774091..aa489eb 100644
+index a6dabee..290f283 100644
 --- a/src/quick/items/qquickitemview.cpp
 +++ b/src/quick/items/qquickitemview.cpp
 @@ -1815,7 +1815,7 @@ void QQuickItemViewPrivate::layout()
@@ -37,5 +37,5 @@ index d774091..aa489eb 100644
               it != releasePendingTransition.end(); ) {
              FxViewItem *item = *it;
 -- 
-1.8.2.1
+1.8.3.2
 

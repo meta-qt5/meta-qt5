@@ -17,7 +17,6 @@ SRC_URI += " \
     file://0014-enables-tslib-device-to-be-read-from-env-variable.patch \
     file://0015-qtbase-allow-build-of-examples.patch \
     file://0018-QOpenGLPaintDevice-sub-area-support.patch \
-    file://0019-Fix-FBO-restoring-in-QOpenGLTextureGlyphCache.patch \
     file://0020-Use-BGRA-extension-in-bindTexture.patch \
     file://0021-configure-make-pulseaudio-a-configurable-option.patch \
     file://0022-configure-make-alsa-a-configurable-option.patch \

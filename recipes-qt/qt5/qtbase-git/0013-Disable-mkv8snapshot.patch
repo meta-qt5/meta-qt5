@@ -1,7 +1,7 @@
-From c3e47eeb4dec8348c3a9f2cf9044c568c5334070 Mon Sep 17 00:00:00 2001
+From 4d9e581943ed3a7440e8176ab81c82fe949ae300 Mon Sep 17 00:00:00 2001
 From: Mikko Levonmaa <mikko.levonmaa@palm.com>
 Date: Tue, 8 Jan 2013 15:58:29 -0800
-Subject: [PATCH 13/15] Disable mkv8snapshot
+Subject: [PATCH 13/23] Disable mkv8snapshot
 
 It seems to generate code that throws SIGILL, so disabling it
 
@@ -30,11 +30,11 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index 9ca23a4..96965b6 100755
+index 7a9a77c..69e30b5 100755
 --- a/configure
 +++ b/configure
-@@ -899,7 +899,7 @@ CFG_NOBUILD_PARTS=""
- CFG_SKIP_MODULES=""
+@@ -910,7 +910,7 @@ CFG_SKIP_MODULES=""
+ CFG_COMPILE_EXAMPLES=auto
  CFG_RELEASE_QMAKE=no
  CFG_AUDIO_BACKEND=auto
 -CFG_V8SNAPSHOT=auto
@@ -43,5 +43,5 @@ index 9ca23a4..96965b6 100755
  CFG_JAVASCRIPTCORE_JIT=auto
  CFG_PKGCONFIG=auto
 -- 
-1.8.2.1
+1.8.3.2
 

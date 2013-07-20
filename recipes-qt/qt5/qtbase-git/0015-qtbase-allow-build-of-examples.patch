@@ -1,7 +1,7 @@
-From 3d83f570e081e23a6cf6d0ccf57ad8db34c5ca3e Mon Sep 17 00:00:00 2001
+From 1936e953e2273c204230c931c0b86b34107340c7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
 Date: Sat, 25 May 2013 17:34:32 +0200
-Subject: [PATCH 15/15] qtbase: allow build of examples
+Subject: [PATCH 15/23] qtbase: allow build of examples
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -24,20 +24,19 @@ Date:   Fri Dec 21 19:36:12 2012 +0100
 
 Signed-off-by: Eric Bénard <eric@eukrea.com>
 ---
- mkspecs/features/qt_example_installs.prf | 8 --------
- 1 file changed, 8 deletions(-)
+ mkspecs/features/qt_example_installs.prf | 7 -------
+ 1 file changed, 7 deletions(-)
 
 diff --git a/mkspecs/features/qt_example_installs.prf b/mkspecs/features/qt_example_installs.prf
-index 479a16a..ca1b0c7 100644
+index 2db752c..ca1b0c7 100644
 --- a/mkspecs/features/qt_example_installs.prf
 +++ b/mkspecs/features/qt_example_installs.prf
-@@ -92,12 +92,4 @@ probase = $$relative_path($$_PRO_FILE_PWD_, $$dirname(_QMAKE_CONF_)/examples)
+@@ -92,11 +92,4 @@ probase = $$relative_path($$_PRO_FILE_PWD_, $$dirname(_QMAKE_CONF_)/examples)
          allfiles -= doc
          !isEmpty(allfiles): warning("remaining files in $$_PRO_FILE_PWD_: $$allfiles")
      }
 -
--    # Do not actually build the examples in production builds with -prefix
--    !equals(TEMPLATE, subdirs):prefix_build:!contains(QT_CONFIG, private_tests) {
+-    !equals(TEMPLATE, subdirs):!compile_examples {
 -        TEMPLATE = aux
 -        CONFIG -= have_target qt staticlib dll
 -        SOURCES =
@@ -45,5 +44,5 @@ index 479a16a..ca1b0c7 100644
 -    }
  }
 -- 
-1.8.2.1
+1.8.3.2
 

@@ -6,6 +6,7 @@ PR = "${INC_PR}.0"
 SRC_URI += " \
     file://0016-Allow-tslib-to-be-specified-at-configure-time.patch \
     file://0017-Rename-qAbs-Function-for-timeval.patch \
+    file://0019-Fix-FBO-restoring-in-QOpenGLTextureGlyphCache.patch \
 "
 
 SRC_URI[md5sum] = "a4fec8ed03867c4ee4fe5a46001a11f0"

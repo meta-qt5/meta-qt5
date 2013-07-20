@@ -1,7 +1,7 @@
-From 2efd051d3093ee4e4091a8947f28d9bd528f2e9e Mon Sep 17 00:00:00 2001
+From b485950725b776bc1f0cf4edd5330d61732262cb Mon Sep 17 00:00:00 2001
 From: Jani Hautakangas <jani.hautakangas@ixonos.com>
 Date: Thu, 16 May 2013 09:52:07 +0300
-Subject: [PATCH] QOpenGLPaintDevice sub-area support
+Subject: [PATCH 18/23] QOpenGLPaintDevice sub-area support
 
 Allows creating QOpenGLPaintDevice targetting sub-area
 of binded framebuffer.
@@ -9,12 +9,14 @@ of binded framebuffer.
 Upstream-Status: Pending
 
 Change-Id: Ida2f079aa1ac0b87d36b54129e226399dbcdda80
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- src/gui/opengl/qopenglpaintdevice.cpp       |   12 ++++++++++++
- src/gui/opengl/qopenglpaintdevice.h         |    2 ++
- src/gui/opengl/qopenglpaintengine.cpp       |   10 +++++++---
- src/gui/opengl/qopenglpaintengine_p.h       |    1 +
- src/gui/opengl/qopengltextureglyphcache.cpp |    2 +-
+ src/gui/opengl/qopenglpaintdevice.cpp       | 12 ++++++++++++
+ src/gui/opengl/qopenglpaintdevice.h         |  2 ++
+ src/gui/opengl/qopenglpaintengine.cpp       | 10 +++++++---
+ src/gui/opengl/qopenglpaintengine_p.h       |  1 +
+ src/gui/opengl/qopengltextureglyphcache.cpp |  2 +-
  5 files changed, 23 insertions(+), 4 deletions(-)
 
 diff --git a/src/gui/opengl/qopenglpaintdevice.cpp b/src/gui/opengl/qopenglpaintdevice.cpp
@@ -74,10 +76,10 @@ index c05571c..01eb1bc 100644
      void setSize(const QSize &size);
      void setDevicePixelRatio(qreal devicePixelRatio);
 diff --git a/src/gui/opengl/qopenglpaintengine.cpp b/src/gui/opengl/qopenglpaintengine.cpp
-index 0782e42..52afc60 100644
+index 78f5080..20db620 100644
 --- a/src/gui/opengl/qopenglpaintengine.cpp
 +++ b/src/gui/opengl/qopenglpaintengine.cpp
-@@ -1978,7 +1978,10 @@ bool QOpenGL2PaintEngineEx::begin(QPaintDevice *pdev)
+@@ -2004,7 +2004,10 @@ bool QOpenGL2PaintEngineEx::begin(QPaintDevice *pdev)
      for (int i = 0; i < QT_GL_VERTEX_ARRAY_TRACKED_COUNT; ++i)
          d->vertexAttributeArraysEnabledState[i] = false;
  
@@ -88,7 +90,7 @@ index 0782e42..52afc60 100644
      d->width = sz.width();
      d->height = sz.height();
      d->mode = BrushDrawingMode;
-@@ -2066,7 +2069,7 @@ void QOpenGL2PaintEngineEx::ensureActive()
+@@ -2092,7 +2095,7 @@ void QOpenGL2PaintEngineEx::ensureActive()
          d->device->ensureActiveTarget();
  
          d->transferMode(BrushDrawingMode);
@@ -97,7 +99,7 @@ index 0782e42..52afc60 100644
          d->needsSync = false;
          d->lastMaskTextureUsed = 0;
          d->shaderManager->setDirty();
-@@ -2109,6 +2112,7 @@ void QOpenGL2PaintEngineExPrivate::updateClipScissorTest()
+@@ -2135,6 +2138,7 @@ void QOpenGL2PaintEngineExPrivate::updateClipScissorTest()
      if (bounds == QRect(0, 0, width, height)) {
          glDisable(GL_SCISSOR_TEST);
      } else {
@@ -105,7 +107,7 @@ index 0782e42..52afc60 100644
          glEnable(GL_SCISSOR_TEST);
          setScissor(bounds);
      }
-@@ -2117,14 +2121,14 @@ void QOpenGL2PaintEngineExPrivate::updateClipScissorTest()
+@@ -2143,14 +2147,14 @@ void QOpenGL2PaintEngineExPrivate::updateClipScissorTest()
  
  void QOpenGL2PaintEngineExPrivate::setScissor(const QRect &rect)
  {
@@ -135,11 +137,11 @@ index d51f0e5..0d4b38d 100644
      QOpenGLContext *ctx;
      EngineMode mode;
 diff --git a/src/gui/opengl/qopengltextureglyphcache.cpp b/src/gui/opengl/qopengltextureglyphcache.cpp
-index 83f4075..ec29900 100644
+index 7d49c03..d9eb3fe 100644
 --- a/src/gui/opengl/qopengltextureglyphcache.cpp
 +++ b/src/gui/opengl/qopengltextureglyphcache.cpp
-@@ -268,7 +268,7 @@ void QOpenGLTextureGlyphCache::resizeTextureData(int width, int height)
-     funcs.glBindFramebuffer(GL_FRAMEBUFFER, ctx->d_func()->current_fbo);
+@@ -271,7 +271,7 @@ void QOpenGLTextureGlyphCache::resizeTextureData(int width, int height)
+     funcs.glBindFramebuffer(GL_FRAMEBUFFER, (GLuint)oldFbo);
  
      if (pex != 0) {
 -        glViewport(0, 0, pex->width, pex->height);
@@ -148,5 +150,5 @@ index 83f4075..ec29900 100644
      } else {
          m_blitProgram->disableAttributeArray(int(QT_VERTEX_COORDS_ATTR));
 -- 
-1.7.9.5
+1.8.3.2
 

@@ -1,7 +1,7 @@
-From 1224e23a7990ac877265a2736827a98c300a8bf7 Mon Sep 17 00:00:00 2001
+From 346e27a30ee7e480c5bdb789d12aa41e8e2efad5 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sun, 5 May 2013 11:18:34 +0200
-Subject: [PATCH 10/15] wayland-scanner: disable silent rules
+Subject: [PATCH 10/23] wayland-scanner: disable silent rules
 
 * for some reason "$$qtwayland-server-header.commands" on second line gets expanded as -server-header.commands
 
@@ -78,5 +78,5 @@ index 2ec064f..847d0f7 100644
 +#silent:qtwayland-server-code.commands = @echo QtWayland server code ${QMAKE_FILE_IN} && $$qtwayland-server-code.commands
  QMAKE_EXTRA_COMPILERS += qtwayland-server-code
 -- 
-1.8.2.1
+1.8.3.2
 
