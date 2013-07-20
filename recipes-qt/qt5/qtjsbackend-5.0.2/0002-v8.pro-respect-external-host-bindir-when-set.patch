@@ -1,7 +1,7 @@
-From 79deac4cdb9d223ed22a989f1d3e86fc3504c78e Mon Sep 17 00:00:00 2001
+From fa85676a52fb6e12e6db85ace4b6a2cfc1d5239a Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sun, 28 Apr 2013 02:45:01 +0200
-Subject: [PATCH 2/2] v8.pro: respect external-host-bindir, when set
+Subject: [PATCH 2/3] v8.pro: respect external-host-bindir, when set
 
 Upstream-Status: Pending
 
@@ -27,5 +27,5 @@ index 2be6a19..d3da4e1 100644
      mkv8snapshot.input = DUMMY_FILE
      mkv8snapshot.output = $$V8_GENERATED_SOURCES_DIR/snapshot.cpp
 -- 
-1.8.2.1
+1.8.3.2
 
