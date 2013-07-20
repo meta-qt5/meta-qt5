@@ -1,7 +1,7 @@
 require qt5-${PV}.inc
 require ${PN}.inc
 
-PR = "${INC_PR}.0"
+PR = "r1"
 
 SRC_URI += " \
     file://0003-V8-Cleanup-hardfp-ABI-detection.-This-work-was-trigg.patch \

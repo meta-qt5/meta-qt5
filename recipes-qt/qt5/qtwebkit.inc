@@ -11,8 +11,6 @@ DEPENDS += "qtdeclarative qtlocation qtsensors ${ICU} ruby-native sqlite3"
 QTWEBKIT_DEBUG = "QMAKE_CFLAGS+=-g0 QMAKE_CXXFLAGS+=-g0"
 EXTRA_QMAKEVARS_PRE += "${QTWEBKIT_DEBUG}"
 
-INC_PR = "r0"
-
 do_configure_append() {
     # Fix rpaths for QtWebProcess
     find -name "Makefile*" | xargs sed -i "s|-Wl,-rpath,${B}/lib||g"

@@ -11,8 +11,6 @@ QT_MODULE = "qtjsbackend"
 
 require qt5-native.inc
 
-INC_PR = "r0"
-
 SRC_URI += "\
     file://0001-Install-the-mkv8snapshot-tool-to-the-native-side.patch \
 "

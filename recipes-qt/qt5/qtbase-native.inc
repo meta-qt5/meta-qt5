@@ -3,8 +3,6 @@ DEPENDS = "zlib-native dbus-native"
 SECTION = "libs"
 HOMEPAGE = "http://qt-project.org"
 
-INC_PR = "r1"
-
 QT_MODULE = "qtbase"
 
 require qt5-native.inc

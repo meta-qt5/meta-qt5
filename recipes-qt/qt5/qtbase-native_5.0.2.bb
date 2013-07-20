@@ -1,7 +1,7 @@
 require qt5-${PV}.inc
 require ${PN}.inc
 
-PR = "${INC_PR}.0"
+PR = "r3"
 
 SRC_URI += " \
     file://0017-Rename-qAbs-Function-for-timeval.patch \

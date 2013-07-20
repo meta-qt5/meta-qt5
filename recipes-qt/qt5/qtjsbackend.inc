@@ -9,8 +9,6 @@ LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=4193e7f1d47a858f6b7c0f1ee66161de \
 
 DEPENDS += "qtbase qtjsbackend-native"
 
-INC_PR = "r0"
-
 SRC_URI += " \
     file://0002-v8.pro-respect-external-host-bindir-when-set.patch \
 "
