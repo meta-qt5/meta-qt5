@@ -4,7 +4,8 @@ require ${PN}.inc
 # qtsystems wasn't released yet, last tag before this SRCREV is 5.0.0-beta1
 PV = "4.999+5.0.0-beta1+git${SRCPV}"
 
-PR = "${INC_PR}.0"
+# drop when bumping SRCREV
+PR = "r1"
 
 QT_MODULE_BRANCH = "master"
 
