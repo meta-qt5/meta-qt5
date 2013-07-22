@@ -1,3 +1,3 @@
 require qt5.inc
 
-DEPENDS += "qtbase"
+DEPENDS += "qtbase tiff"
