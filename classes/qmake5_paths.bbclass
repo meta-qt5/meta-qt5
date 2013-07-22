@@ -2,6 +2,8 @@
 # about conflicts with qt4, then you can add qmake5_paths.bbclass
 # to your distro layer and flatten all QT_DIR_NAME directories
 
+QT_DIR_NAME ?= "qt5"
+
 OE_QMAKE_PATH_PREFIX = "${prefix}"
 OE_QMAKE_PATH_HEADERS = "${includedir}"
 OE_QMAKE_PATH_LIBS = "${libdir}"
