@@ -21,6 +21,7 @@ SRC_URI += " \
     file://0021-configure-make-pulseaudio-a-configurable-option.patch \
     file://0022-configure-make-alsa-a-configurable-option.patch \
     file://0023-configure-make-freetype-a-configurable-option.patch \
+    file://0024-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-determine-pa.patch \
 "
 
 DEPENDS += "qtbase-native"
