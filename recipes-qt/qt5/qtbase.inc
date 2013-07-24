@@ -25,6 +25,9 @@ SRC_URI += " \
 
 DEPENDS += "qtbase-native"
 
+# for syncqt
+RDEPENDS_${PN}-tools += "perl"
+
 # separate some parts of PACKAGECONFIG which are often changed
 # be aware that you need to add icu to build qtwebkit, default
 # PACKAGECONFIG is kept rather minimal for people who don't need
