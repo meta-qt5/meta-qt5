@@ -5,6 +5,9 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/${BPN}-5.1.0+git:"
 
 DEPENDS += "qtwayland-native"
 
+# qtwayland_git has -1 and should be default
+DEFAULT_PREFERRENCE = "-2"
+
 # qtwayland wasn't released yet, last tag before this SRCREV is 5.0.0-beta1
 # this PV is only to indicate that this recipe is compatible with qt5 5.1.0
 # while qtwayland_git stays compatible with 5.0.2
