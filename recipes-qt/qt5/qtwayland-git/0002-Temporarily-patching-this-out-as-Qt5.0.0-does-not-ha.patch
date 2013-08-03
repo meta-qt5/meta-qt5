@@ -1,7 +1,7 @@
-From ae72fc41609c15293b1027ca3f2c4d712e4ae478 Mon Sep 17 00:00:00 2001
+From 5b7c89d211a193acfd182eb0519b658629af3193 Mon Sep 17 00:00:00 2001
 From: Mikko Levonmaa <mikko.levonmaa@palm.com>
 Date: Fri, 1 Mar 2013 13:00:53 -0800
-Subject: [PATCH 2/4] Temporarily patching this out as Qt5.0.0 does not have
+Subject: [PATCH 2/3] Temporarily patching this out as Qt5.0.0 does not have
  qtHaveModule
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>

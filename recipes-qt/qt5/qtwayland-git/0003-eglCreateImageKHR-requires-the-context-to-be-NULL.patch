@@ -1,7 +1,7 @@
-From ca1f46a6192061e254deca1810d25ba423acb8de Mon Sep 17 00:00:00 2001
+From 2d707f8dc9f0658d889aef4f4c5a62595598402c Mon Sep 17 00:00:00 2001
 From: Mikko Levonmaa <mikko.levonmaa@palm.com>
 Date: Wed, 6 Mar 2013 10:18:49 -0800
-Subject: [PATCH 3/4] eglCreateImageKHR requires the context to be NULL
+Subject: [PATCH 3/3] eglCreateImageKHR requires the context to be NULL
 
 As per the EGL spec the context passed to that function should
 be null.
@@ -12,7 +12,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 2 insertions(+), 14 deletions(-)
 
 diff --git a/src/plugins/waylandcompositors/wayland-egl/waylandeglintegration.cpp b/src/plugins/waylandcompositors/wayland-egl/waylandeglintegration.cpp
-index 2a923ce..2be1e4c 100644
+index 73877c4..16e77fb 100644
 --- a/src/plugins/waylandcompositors/wayland-egl/waylandeglintegration.cpp
 +++ b/src/plugins/waylandcompositors/wayland-egl/waylandeglintegration.cpp
 @@ -101,7 +101,6 @@ public:

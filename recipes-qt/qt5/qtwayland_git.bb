@@ -1,22 +1,10 @@
 require qt5-git.inc
 require ${PN}.inc
 
-# qtwayland wasn't released yet, last tag before this SRCREV is 5.0.0-beta1,
-# but we'll use 5.0.2+git to indicate this version is compatible with 5.0.2
-PV = "5.0.2+git${SRCPV}"
+# qtwayland wasn't released yet, last tag before this SRCREV is 5.0.0-beta1
+# this PV is only to indicate that this recipe is compatible with qt5 5.1.0
+PV = "5.1.0+git${SRCPV}"
 
-# drop when bumping SRCREV
-PR = "r2"
-
-SRCREV = "5cb159395eccb1d96fb73a78e499eef30aacb46d"
-
-SRC_URI += " \
-    file://0004-EGL-Specify-vec2d-precision-qualifier-in-fragment-sh.patch \
-"
-
-do_configure_prepend() {
-    # Temporary hack to get qtwayland build for Qt 5.0.2
-    if ! grep -q MODULE_VERSION ${S}/.qmake.conf; then
-        echo "MODULE_VERSION = 0.0.0" >> ${S}/.qmake.conf
-    fi
-}
+# newer revisions depend on newer wayland-1.1 APIs
+SRCREV = "87dba733acfddecd8562e8e26ce5f994aa499fe3"
+# SRCREV = "ede872db1cdfdc2810c2dd29edd5fb6e1cdac0f5"

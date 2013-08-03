@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "file://${S}/src/compositor/compositor_api/qwaylandsurfacenod
 # make it easier to remove by .bbappend (e.g. for building qtwayland with danny which doesn't
 # have libxkbcommon in oe-core).
 XKB_DEPENDS = "libxkbcommon xproto"
-DEPENDS += "qtbase qtdeclarative wayland wayland-native ${XKB_DEPENDS}"
+DEPENDS += "qtbase qtdeclarative wayland wayland-native qtwayland-native ${XKB_DEPENDS}"
 
 SRC_URI += " \
     file://0001-xcbcommon-should-not-be-a-mandatory-dependency.patch \
