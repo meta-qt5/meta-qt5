@@ -7,7 +7,7 @@ QT_VERSION ?= "${PV}"
 QT_VERSION_DIR ?= "${QT_VERSION}"
 
 SRC_URI += " \
-    http://releases.qt-project.org/archive/qt/5.0/${QT_VERSION_DIR}/submodules/${QT_MODULE}-opensource-src-${QT_VERSION}.tar.xz \
+    http://download.qt-project.org/archive/qt/5.0/${QT_VERSION_DIR}/submodules/${QT_MODULE}-opensource-src-${QT_VERSION}.tar.xz \
 "
 
 S = "${WORKDIR}/${QT_MODULE}-opensource-src-${QT_VERSION}"
