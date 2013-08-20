@@ -16,6 +16,7 @@ PREFERRED_VERSION_qtsensors = "${QT5_VERSION}"
 PREFERRED_VERSION_qtscript = "${QT5_VERSION}"
 PREFERRED_VERSION_qtsvg = "${QT5_VERSION}"
 PREFERRED_VERSION_qtwebkit = "${QT5_VERSION}"
+PREFERRED_VERSION_qtwebkit-examples = "${QT5_VERSION}"
 PREFERRED_VERSION_qtxmlpatterns = "${QT5_VERSION}"
 
 # append % only if it isn't included already
