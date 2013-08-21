@@ -1,18 +1,20 @@
-From 27465c65419c1b5bdc8ed50e56428ff5fd64f62b Mon Sep 17 00:00:00 2001
+From 0e6b7bcb1c02750368722d1770b0098ce9b28327 Mon Sep 17 00:00:00 2001
 From: Simon Busch <morphis@gravedo.de>
 Date: Mon, 22 Jul 2013 21:09:41 +0000
-Subject: [PATCH 24/24] Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS to determine path
- to host binaries
+Subject: [PATCH] Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS to determine path to
+ host binaries
 
 Upstream-Status: Inappropiate (configuration)
 
 Signed-off-by: Simon Busch <morphis@gravedo.de>
 ---
- src/corelib/Qt5CoreConfigExtras.cmake.in | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ src/corelib/Qt5CoreConfigExtras.cmake.in    | 6 +++---
+ src/dbus/Qt5DBusConfigExtras.cmake.in       | 4 ++--
+ src/widgets/Qt5WidgetsConfigExtras.cmake.in | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/src/corelib/Qt5CoreConfigExtras.cmake.in b/src/corelib/Qt5CoreConfigExtras.cmake.in
-index 4e0fcda..2bbb54c 100644
+index 4e0fcda..925a335 100644
 --- a/src/corelib/Qt5CoreConfigExtras.cmake.in
 +++ b/src/corelib/Qt5CoreConfigExtras.cmake.in
 @@ -6,7 +6,7 @@ if (NOT TARGET Qt5::qmake)
@@ -42,6 +44,41 @@ index 4e0fcda..2bbb54c 100644
  !!ENDIF
      )
  endif()
+diff --git a/src/dbus/Qt5DBusConfigExtras.cmake.in b/src/dbus/Qt5DBusConfigExtras.cmake.in
+index 8ecf7ce..af86a88 100644
+--- a/src/dbus/Qt5DBusConfigExtras.cmake.in
++++ b/src/dbus/Qt5DBusConfigExtras.cmake.in
+@@ -6,7 +6,7 @@ if (NOT TARGET Qt5::qdbuscpp2xml)
+ !!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
+         IMPORTED_LOCATION \"${_qt5DBus_install_prefix}/$${CMAKE_BIN_DIR}qdbuscpp2xml$$CMAKE_BIN_SUFFIX\"
+ !!ELSE
+-        IMPORTED_LOCATION \"$${CMAKE_BIN_DIR}qdbuscpp2xml$$CMAKE_BIN_SUFFIX\"
++        IMPORTED_LOCATION \"${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qdbuscpp2xml$$CMAKE_BIN_SUFFIX\"
+ !!ENDIF
+     )
+ endif()
+@@ -18,7 +18,7 @@ if (NOT TARGET Qt5::qdbusxml2cpp)
+ !!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
+         IMPORTED_LOCATION \"${_qt5DBus_install_prefix}/$${CMAKE_BIN_DIR}qdbusxml2cpp$$CMAKE_BIN_SUFFIX\"
+ !!ELSE
+-        IMPORTED_LOCATION \"$${CMAKE_BIN_DIR}qdbusxml2cpp$$CMAKE_BIN_SUFFIX\"
++        IMPORTED_LOCATION \"${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qdbusxml2cpp$$CMAKE_BIN_SUFFIX\"
+ !!ENDIF
+     )
+ endif()
+diff --git a/src/widgets/Qt5WidgetsConfigExtras.cmake.in b/src/widgets/Qt5WidgetsConfigExtras.cmake.in
+index d9abb45..ca17862 100644
+--- a/src/widgets/Qt5WidgetsConfigExtras.cmake.in
++++ b/src/widgets/Qt5WidgetsConfigExtras.cmake.in
+@@ -6,7 +6,7 @@ if (NOT TARGET Qt5::uic)
+ !!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
+         IMPORTED_LOCATION \"${_qt5Widgets_install_prefix}/$${CMAKE_BIN_DIR}uic$$CMAKE_BIN_SUFFIX\"
+ !!ELSE
+-        IMPORTED_LOCATION \"$${CMAKE_BIN_DIR}uic$$CMAKE_BIN_SUFFIX\"
++        IMPORTED_LOCATION \"${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/uic$$CMAKE_BIN_SUFFIX\"
+ !!ENDIF
+     )
+ endif()
 -- 
-1.8.3.2
+1.8.1.2
 
