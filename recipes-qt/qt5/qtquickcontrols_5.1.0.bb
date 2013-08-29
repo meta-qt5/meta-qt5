@@ -1,0 +1,5 @@
+require qt5-${PV}.inc
+require ${PN}.inc
+
+SRC_URI[md5sum] = "b3825124a173a36f63c2f8380dc61e81"
+SRC_URI[sha256sum] = "88d39421d78464c3900c37616e8369fc8d998c1b0f611980e6e082f46569646b"

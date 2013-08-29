@@ -52,6 +52,8 @@ PACKAGECONFIG ??= " \
     evdev \
     widgets \
     openssl \
+    # accessibility is required to compile qtquickcontrols. uncomment if needed \
+    # accessibility \
     ${PACKAGECONFIG_GL} \
     ${PACKAGECONFIG_FB} \
     ${PACKAGECONFIG_X11} \
