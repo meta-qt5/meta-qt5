@@ -65,6 +65,7 @@ PACKAGECONFIG[release] = "-release,-debug"
 PACKAGECONFIG[sm] = "-sm,-no-sm"
 PACKAGECONFIG[tests] = ",-nomake tests"
 PACKAGECONFIG[examples] = ",-nomake examples"
+# accessibility is required to compile qtquickcontrols
 PACKAGECONFIG[accessibility] = "-accessibility,-no-accessibility"
 PACKAGECONFIG[glib] = "-glib,-no-glib,glib-2.0"
 PACKAGECONFIG[freetype] = "-system-freetype,-no-freetype,freetype"
