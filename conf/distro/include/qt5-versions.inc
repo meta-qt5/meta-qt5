@@ -12,6 +12,8 @@ PREFERRED_VERSION_qtgraphicaleffects = "${QT5_VERSION}"
 PREFERRED_VERSION_qtimageformats = "${QT5_VERSION}"
 PREFERRED_VERSION_qtmultimedia = "${QT5_VERSION}"
 PREFERRED_VERSION_qtquick1 = "${QT5_VERSION}"
+# NOTE: qtquickcontrols is not supported with 5.0.2
+PREFERRED_VERSION_qtquickcontrols = "${QT5_VERSION}"
 PREFERRED_VERSION_qtsensors = "${QT5_VERSION}"
 PREFERRED_VERSION_qtscript = "${QT5_VERSION}"
 PREFERRED_VERSION_qtsvg = "${QT5_VERSION}"
