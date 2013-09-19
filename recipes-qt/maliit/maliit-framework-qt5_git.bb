@@ -4,43 +4,45 @@ HOMEPAGE = "https://wiki.maliit.org/Main_Page"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=5c917f6ce94ceb8d8d5e16e2fca5b9ad"
 
-#inherit autotools qt4x11 gtk-immodules-cache
+inherit qmake5
+
+# Set path of qt5 headers as qmake5_base.bbclass sets this to just ${includedir}
+# but
+# actually it is ${includedir}/qt5
+OE_QMAKE_PATH_HEADERS = "${OE_QMAKE_PATH_QT_HEADERS}"
 
 
-SRC_URI = "git://gitorious.org/maliit/maliit-framework.git;branch=master \
+SRC_URI = "git://github.com/maliit/framework.git;branch=master \
     file://0001-Fix-MALIIT_INSTALL_PRF-to-allow-the-build-with-opene.patch \
-    file://0001-Fix-QT_IM_PLUGIN_PATH-to-allow-openembedded-to-build.patch \
-    file://0001-Link-to-libmaliit-1-0-in-inputcontext-plugin.patch \
     file://maliit-server.desktop \
 "
 
-SRCREV = "750842dec74a9b17dca91ef779c4fc5a43c4d9dc"
-PV = "0.92.3+git${SRCPV}"
+SRCREV = "dbc0403f329d7f6ce2f5a09e6ff5adbd2548a8c9"
+PV = "0.99.0+git${SRCPV}"
 
 
 PACKAGES =+ "${PN}-gtk"
 GTKIMMODULES_PACKAGES = "${PN}-gtk"
 
-RDEPENDS_${PN} = "qt4-plugin-inputmethod-imsw-multi libqtsvg4"
+# FIXME: Do we need something like this with qt5?
+#RDEPENDS_${PN} = "qt4-plugin-inputmethod-imsw-multi libqtsvg4"
 
-RRECOMMENDS_${PN} = "maliit-plugins"
-
+RRECOMMENDS_${PN} = "maliit-plugins-qt5"
 
 FILES_${PN} += "\
-    ${libdir}/maliit/plugins-*/factories/libmaliit-plugins-quick-factory-*.so \
-    ${libdir}/qt4/plugins/inputmethods/*.so \
+    ${libdir}/*.so* \
+    ${libdir}/pkgconfig \
+    ${libdir}/qt5 \
+    ${bindir}/maliit-server \
+    ${includedir}/maliit \
     ${datadir}/applications/maliit-server.desktop \
 "
 
 FILES_${PN}-dbg += "\
     ${libdir}/maliit-framework-tests \
-    ${libdir}/gtk-*/*/immodules/.debug \
-    ${libdir}/maliit/plugins-*/factories/.debug \
-    ${libdir}/qt4/plugins/.debug \
-    ${libdir}/qt4/plugins/inputmethods/.debug \
 "
 
-FILES_${PN}-dev += "${datadir}/qt4"
+FILES_${PN}-dev += "${datadir}"
 
 FILES_${PN}-gtk +="\
     ${bindir}/maliit-exampleapp-gtk* \
@@ -58,6 +60,8 @@ EXTRA_QMAKEVARS_PRE = "\
     CONFIG+=disable-gtk-cache-update \
     CONFIG+=local-install \
     CONFIG+=nosdk \
+    CONFIG+=nodoc \
+    CONFIG+=noxcb \
 "
 
 EXTRA_OEMAKE += "INSTALL_ROOT=${D}"
