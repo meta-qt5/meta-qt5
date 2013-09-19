@@ -4,16 +4,22 @@ HOMEPAGE = "https://wiki.maliit.org/Main_Page"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=f29b21caa8e460097bfad9c026a33621"
 
-inherit autotools qt4x11
+inherit qmake5
+
+# Set path of qt5 headers as qmake5_base.bbclass sets this to just ${includedir}
+# but
+# actually it is ${includedir}/qt5
+OE_QMAKE_PATH_HEADERS = "${OE_QMAKE_PATH_QT_HEADERS}"
 
 DEPENDS = "maliit-framework-qt5"
 
-RDEPENDS_${PN} += "qt4-plugin-iconengine-svgicon qt4-plugin-imageformat-svg"
+# FIXME: Do we need something like this with qt5?
+#RDEPENDS_${PN} += "qt4-plugin-iconengine-svgicon qt4-plugin-imageformat-svg"
 
-SRC_URI = "git://gitorious.org/maliit/maliit-plugins.git;branch=master"
+SRC_URI = "git://github.com/maliit/plugins.git;branch=master"
 
-SRCREV = "0760e585df494b394df1b887e5138ffef19c481f"
-PV = "0.92.3+git${SRCPV}"
+SRCREV = "c6a348592607248a771a3dde5a0e33dc3c433a2a"
+PV = "0.99.0+git${SRCPV}"
 
 EXTRA_QMAKEVARS_PRE = "\
     PREFIX=${prefix} \
@@ -26,7 +32,7 @@ FILES_${PN} += "\
     ${datadir} \
 "
 
-FILES_${PN}-dbg += "${libdir}/maliit/plugins-*/.debug"
+FILES_${PN}-dbg += "${libdir}/maliit/plugins/.debug"
 
 S= "${WORKDIR}/git"
 
