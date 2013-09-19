@@ -23,6 +23,7 @@ PV = "0.99.0+git${SRCPV}"
 
 EXTRA_QMAKEVARS_PRE = "\
     PREFIX=${prefix} \
+    MALIIT_INSTALL_PRF=${QMAKE_MKSPEC_PATH}/mkspecs/features \
     LIBDIR=${libdir} \
     CONFIG+=nodoc \
 "
