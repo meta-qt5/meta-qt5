@@ -31,23 +31,19 @@ RRECOMMENDS_${PN} = "maliit-plugins-qt5"
 
 FILES_${PN} += "\
     ${libdir}/*.so* \
-    ${libdir}/pkgconfig \
-    ${libdir}/qt5 \
-    ${bindir}/maliit-server \
-    ${includedir}/maliit \
+    ${bindir} \
     ${datadir}/applications/maliit-server.desktop \
+    ${datadir}/dbus-1 \
 "
 
 FILES_${PN}-dbg += "\
     ${libdir}/maliit-framework-tests \
 "
 
-FILES_${PN}-dev += "${datadir}"
-
-FILES_${PN}-gtk +="\
-    ${bindir}/maliit-exampleapp-gtk* \
-    \
-    ${libdir}/gtk-*/*/immodules/libim-maliit.so\
+FILES_${PN}-dev += "\
+    ${includedir}/maliit \
+    ${libdir}/pkgconfig \
+    ${libdir}/qt5 \
 "
 
 EXTRA_QMAKEVARS_PRE = "\
@@ -62,6 +58,7 @@ EXTRA_QMAKEVARS_PRE = "\
     CONFIG+=nosdk \
     CONFIG+=nodoc \
     CONFIG+=noxcb \
+    CONFIG+=enable-dbus-activation \
 "
 
 EXTRA_OEMAKE += "INSTALL_ROOT=${D}"
