@@ -13,7 +13,4 @@ EXTRA_QMAKEVARS_PRE += "${QTWEBKIT_DEBUG}"
 
 INC_PR = "r0"
 
-do_configure_append() {
-    # Fix rpaths for QtWebProcess
-    find -name "Makefile*" | xargs sed -i "s|-Wl,-rpath,${B}/lib||g"
-}
+SRC_URI += "file://fix-rpath.patch"
