@@ -9,6 +9,10 @@ layers: meta-ruby
 branch: master
 revision: HEAD
 
+When building stuff like qtdeclarative, qtquick, qtwebkit, make sure that
+you have required PACKAGECONFIG options enabled in qtbase build, see qtbase.inc
+for detail.
+
 Send pull requests to openembedded-devel@lists.openembedded.org with '[meta-qt5]' in the subject'
 
 When sending single patches, please using something like:
