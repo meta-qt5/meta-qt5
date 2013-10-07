@@ -1,7 +1,7 @@
-From fb16e96ffef959e45c9cbcbef4cc4f51065f2e47 Mon Sep 17 00:00:00 2001
+From 5aaec8299901e0093cec2b704a724bc3254b8b8d Mon Sep 17 00:00:00 2001
 From: Jani Hautakangas <jani.hautakangas@ixonos.com>
 Date: Mon, 27 May 2013 15:25:25 -0700
-Subject: [PATCH 20/23] Use BGRA extension in bindTexture
+Subject: [PATCH 17/22] Use BGRA extension in bindTexture
 
 Upstream-Status: Pending
 
@@ -30,5 +30,5 @@ index 94b8288..5c8aa3c 100644
      int cost = tx.width() * tx.height() * 4 / 1024;
      m_cache.insert(key, new QOpenGLCachedTexture(id, context), cost);
 -- 
-1.8.3.2
+1.8.3.1
 

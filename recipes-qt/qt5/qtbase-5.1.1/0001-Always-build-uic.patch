@@ -1,7 +1,7 @@
-From 28cb656a49b80364f4bfc4387849f1e9ac56fbf2 Mon Sep 17 00:00:00 2001
+From f794542b10ccbf9c4cecaf23cf24658d64594cf3 Mon Sep 17 00:00:00 2001
 From: Mikko Levonmaa <mikko.levonmaa@palm.com>
 Date: Tue, 27 Nov 2012 12:46:44 -0800
-Subject: [PATCH] Always build uic
+Subject: [PATCH 22/22] Always build uic
 
 Even if we are not building gui or widgets. This tool is needed later
 as a native tool when compiling the target.
@@ -36,5 +36,5 @@ index b4c9602..f30ec1f 100644
  nacl: SUBDIRS -= src_network src_testlib
  
 -- 
-1.8.3.2
+1.8.3.1
 

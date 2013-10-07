@@ -1,7 +1,7 @@
-From 1db1ad1ef3c57f531bf67be33a4cc43528864543 Mon Sep 17 00:00:00 2001
+From 0089c1ecba912aed6a8cd6126297300e0f7ffcb9 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
-Subject: [PATCH 08/23] qt_module: Fix pkgconfig replacement
+Subject: [PATCH 08/22] qt_module: Fix pkgconfig replacement
 
 * in situation like this:
   QT_SYSROOT:/OE/oe-core/tmp-eglibc/sysroots/qemuarm
@@ -27,7 +27,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 53a5499..9dfc1dd 100644
+index 390fb49..e85c2a8 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
 @@ -140,18 +140,30 @@ unix|win32-g++* {
@@ -66,5 +66,5 @@ index 53a5499..9dfc1dd 100644
  
  unix|win32-g++* {
 -- 
-1.8.3.2
+1.8.3.1
 

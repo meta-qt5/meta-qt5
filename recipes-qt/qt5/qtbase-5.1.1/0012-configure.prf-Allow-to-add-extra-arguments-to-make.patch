@@ -1,7 +1,7 @@
-From b115685d8c684181a0af79e44a1d170a5a8bfd05 Mon Sep 17 00:00:00 2001
+From b4f8c636cb265951979868a65006ce49f442e5e7 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Thu, 9 May 2013 10:06:50 +0200
-Subject: [PATCH 12/23] configure.prf: Allow to add extra arguments to make
+Subject: [PATCH 12/22] configure.prf: Allow to add extra arguments to make
 
 * sometimes we would like to add -e or define some variable and respect it from both
   Makefiles used in configure tests and also Makefiles to build the application
@@ -33,5 +33,5 @@ index b4569df..d189e50 100644
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 -- 
-1.8.3.2
+1.8.3.1
 

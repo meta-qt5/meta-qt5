@@ -1,7 +1,7 @@
-From 7244ed3ca9326f3521de8961dbe7f9759f8e8041 Mon Sep 17 00:00:00 2001
+From b91e232e603df102a1d305aceb0dbedc6ce3e89c Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
-Subject: [PATCH 01/23] Add linux-oe-g++ platform
+Subject: [PATCH 01/22] Add linux-oe-g++ platform
 
 * This qmake.conf unlike other platforms reads most variables from
   shell environment, because it's easier for qt recipes to export
@@ -41,10 +41,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index d7c9674..45e0586 100755
+index 140c7b4..397d53f 100755
 --- a/configure
 +++ b/configure
-@@ -284,6 +284,16 @@ getQMakeConf()
+@@ -291,6 +291,16 @@ getQMakeConf()
      getSingleQMakeVariable "$1" "$specvals"
  }
  
@@ -61,7 +61,7 @@ index d7c9674..45e0586 100755
  getXQMakeConf()
  {
      if [ -z "$xspecvals" ]; then
-@@ -293,6 +303,16 @@ getXQMakeConf()
+@@ -300,6 +310,16 @@ getXQMakeConf()
      getSingleQMakeVariable "$1" "$xspecvals"
  }
  
@@ -78,7 +78,7 @@ index d7c9674..45e0586 100755
  compilerSupportsFlag()
  {
      cat >conftest.cpp <<EOF
-@@ -809,6 +829,18 @@ fi
+@@ -816,6 +836,18 @@ fi
  # initalize variables
  #-------------------------------------------------------------------------------
  
@@ -97,7 +97,7 @@ index d7c9674..45e0586 100755
  SYSTEM_VARIABLES="RANLIB STRIP OBJDUMP LD CC CXX CFLAGS CXXFLAGS LDFLAGS"
  for varname in $SYSTEM_VARIABLES; do
      qmakevarname="${varname}"
-@@ -2836,7 +2868,7 @@ if [ "$BUILD_ON_MAC" = "yes" ] && [ "$CFG_QGTKSTYLE" = "auto" ]; then
+@@ -2894,7 +2926,7 @@ if [ "$BUILD_ON_MAC" = "yes" ] && [ "$CFG_QGTKSTYLE" = "auto" ]; then
      CFG_QGTKSTYLE=no
  fi
  
@@ -106,7 +106,7 @@ index d7c9674..45e0586 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -2871,7 +2903,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
+@@ -2929,7 +2961,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
          exit 1
      fi
  fi
@@ -115,7 +115,7 @@ index d7c9674..45e0586 100755
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3909,6 +3941,14 @@ setBootstrapVariable()
+@@ -3959,6 +3991,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -130,7 +130,7 @@ index d7c9674..45e0586 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -3947,11 +3987,11 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -3997,11 +4037,11 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          fi
  
          [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=
@@ -300,5 +300,5 @@ index 0000000..dd12003
 +
 +#endif // QPLATFORMDEFS_H
 -- 
-1.8.3.2
+1.8.3.1
 

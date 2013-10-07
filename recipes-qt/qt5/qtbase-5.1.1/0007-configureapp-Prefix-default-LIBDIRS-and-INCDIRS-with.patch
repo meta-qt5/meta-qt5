@@ -1,7 +1,7 @@
-From 662115f5e837fc397533810ca659af0f66749ce4 Mon Sep 17 00:00:00 2001
+From c2cc1f9251953f680191c5cf53b019d5d480c79e Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 22:33:33 +0200
-Subject: [PATCH 07/23] configureapp: Prefix default LIBDIRS and INCDIRS with
+Subject: [PATCH 07/22] configureapp: Prefix default LIBDIRS and INCDIRS with
  SYSROOT
 
 Upstream-Status: Pending
@@ -10,10 +10,10 @@ Upstream-Status: Pending
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index 8f0bd0e..f7ff15c 100644
+index aed85ce..0575520 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
-@@ -3118,8 +3118,8 @@ void Configure::generateQConfigPri()
+@@ -3111,8 +3111,8 @@ void Configure::generateQConfigPri()
          configStream << "QT_HOST_CPU_FEATURES = " << dictionary["QT_HOST_CPU_FEATURES"] << endl;
          if (dictionary.contains("XQMAKESPEC") && !dictionary["XQMAKESPEC"].startsWith("wince")) {
              // FIXME: add detection
@@ -25,5 +25,5 @@ index 8f0bd0e..f7ff15c 100644
          if (dictionary["QT_EDITION"].contains("OPENSOURCE"))
              configStream << "QT_EDITION = " << QLatin1String("OpenSource") << endl;
 -- 
-1.8.3.2
+1.8.3.1
 

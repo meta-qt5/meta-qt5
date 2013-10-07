@@ -7,5 +7,5 @@ do_install_append() {
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
 }
 
-SRC_URI[md5sum] = "0f8d14bb4039a2996c501a376ca7dae0"
-SRC_URI[sha256sum] = "1fa8c591adab9d45e4f322edea9a55a517ebf1a006dd481eace0236623adc90a"
+SRC_URI[md5sum] = "955d1e4da875f3872ef3208f21a757dd"
+SRC_URI[sha256sum] = "d4620e0b1aff6d2b6f4d8066e6f8258e012a8b5507af7c03b661029a1ffa75c9"
