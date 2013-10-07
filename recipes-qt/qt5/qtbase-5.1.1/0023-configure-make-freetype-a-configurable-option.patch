@@ -1,9 +1,9 @@
-From a51b5c64a33a0c8b411aa4317356c7dfcb99e452 Mon Sep 17 00:00:00 2001
+From 98201094967e2e4224c394d0c92c0be7d39582a6 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
-Date: Fri, 19 Jul 2013 23:21:28 +0200
-Subject: [PATCH 22/23] configure: make alsa a configurable option
+Date: Sat, 20 Jul 2013 10:56:37 +0200
+Subject: [PATCH 20/22] configure: make freetype a configurable option
 
-Allows disabling alsa support at configure time.
+Allows disabling freetype support at configure time.
 
 Upstream-Status: Pending
 
@@ -13,16 +13,16 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 7 insertions(+)
 
 diff --git a/configure b/configure
-index 3b511d4..2a0be04 100755
+index 3470b32..b0ec977 100755
 --- a/configure
 +++ b/configure
-@@ -1987,6 +1987,13 @@ while [ "$#" -gt 0 ]; do
+@@ -2053,6 +2053,13 @@ while [ "$#" -gt 0 ]; do
              UNKNOWN_OPT=yes
          fi
          ;;
-+    alsa)
-+        if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
-+            CFG_ALSA="$VAL"
++    freetype)
++        if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ] || [ "$VAL" = "system" ]; then
++            CFG_LIBFREETYPE="$VAL"
 +        else
 +            UNKNOWN_OPT=yes
 +        fi
@@ -31,5 +31,5 @@ index 3b511d4..2a0be04 100755
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_QGTKSTYLE="$VAL"
 -- 
-1.8.3.2
+1.8.3.1
 

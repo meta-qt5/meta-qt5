@@ -1,8 +1,8 @@
-From ac4f17fd4c9145c54d9b10aa794cabe0d044b4fc Mon Sep 17 00:00:00 2001
+From b4d383bf47374c7132ecbcaec2c6aea31f858f54 Mon Sep 17 00:00:00 2001
 From: Simon Busch <morphis@gravedo.de>
 Date: Mon, 22 Jul 2013 21:09:41 +0000
-Subject: [PATCH] Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS to determine path to
- host binaries
+Subject: [PATCH 21/22] Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS to determine path
+ to host binaries
 
 Upstream-Status: Inappropiate (configuration)
 
@@ -14,7 +14,7 @@ Signed-off-by: Simon Busch <morphis@gravedo.de>
  3 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/src/corelib/Qt5CoreConfigExtras.cmake.in b/src/corelib/Qt5CoreConfigExtras.cmake.in
-index a804278..b6fbbea 100644
+index e01b448..5382730 100644
 --- a/src/corelib/Qt5CoreConfigExtras.cmake.in
 +++ b/src/corelib/Qt5CoreConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::qmake)
@@ -45,7 +45,7 @@ index a804278..b6fbbea 100644
      _qt5_Core_check_file_exists(${imported_location})
  
 diff --git a/src/dbus/Qt5DBusConfigExtras.cmake.in b/src/dbus/Qt5DBusConfigExtras.cmake.in
-index 1d94715..3209e42 100644
+index 1d94715..301af8f 100644
 --- a/src/dbus/Qt5DBusConfigExtras.cmake.in
 +++ b/src/dbus/Qt5DBusConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::qdbuscpp2xml)
@@ -67,7 +67,7 @@ index 1d94715..3209e42 100644
      _qt5_DBus_check_file_exists(${imported_location})
  
 diff --git a/src/widgets/Qt5WidgetsConfigExtras.cmake.in b/src/widgets/Qt5WidgetsConfigExtras.cmake.in
-index e5650ff..7fb8b21 100644
+index e5650ff..16ff007 100644
 --- a/src/widgets/Qt5WidgetsConfigExtras.cmake.in
 +++ b/src/widgets/Qt5WidgetsConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::uic)
@@ -80,5 +80,5 @@ index e5650ff..7fb8b21 100644
      _qt5_Widgets_check_file_exists(${imported_location})
  
 -- 
-1.8.1.2
+1.8.3.1
 

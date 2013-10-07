@@ -1,7 +1,7 @@
-From 94a5ed9c22ed927123df3007d426de5d19e4f692 Mon Sep 17 00:00:00 2001
+From 52172f09d646949c32f7b70188f1ffc779adbdef Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
 Date: Sat, 25 May 2013 17:34:32 +0200
-Subject: [PATCH 15/23] qtbase: allow build of examples
+Subject: [PATCH 15/22] qtbase: allow build of examples
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -44,5 +44,5 @@ index 2db752c..ca1b0c7 100644
 -    }
  }
 -- 
-1.8.3.2
+1.8.3.1
 
