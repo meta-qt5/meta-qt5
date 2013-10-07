@@ -1,6 +1,6 @@
 require qt5.inc
 
-DEPENDS += "qtbase qtdeclarative qtjsondb udev bluez4 gconf" 
+DEPENDS += "qtbase qtdeclarative udev bluez4 gconf"
 
 LICENSE = "BSD & LGPL-2.1 & GFDL-1.3"
 # LICENSE files are missing in 5.0.0
