@@ -6,8 +6,8 @@ SRC_URI += " \
     file://0003-Fix-wrong-calculation-of-viewPort-for-transitions.patch \
 "
 
-SRC_URI[md5sum] = "604a6e3ae051a21aac0024694d55cb3b"
-SRC_URI[sha256sum] = "d8849755c17fca9bb44c09c442001bc5593c24986ea616c536719414e85d90cc"
+SRC_URI[md5sum] = "486fc16ad7b7d0c1488ba5482536d66c"
+SRC_URI[sha256sum] = "0ee989a5d45a94e927609b22e2413c7f2788a7b4a23af66ecfa15c31db2a9b31"
 
 # /usr/lib/qt5/qml/QtQuick/Dialogs/images/*.png
 FILES_${PN}-qmlplugins += " \
