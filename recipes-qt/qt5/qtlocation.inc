@@ -1,4 +1,4 @@
 require qt5.inc
 
-DEPENDS += "qtbase qt3d qtjsondb"
+DEPENDS += "qtbase qt3d"
 # qtsystems qtmultimedia
