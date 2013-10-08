@@ -109,6 +109,8 @@ FILES_${PN}-examples-dev = " \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*${SOLIBSDEV} \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*${SOLIBSDEV} \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*/*${SOLIBSDEV} \
 "
 FILES_${PN}-examples-dbg = " \
     ${OE_QMAKE_PATH_EXAMPLES}/.debug \
@@ -117,6 +119,8 @@ FILES_${PN}-examples-dbg = " \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/.debug \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/.debug \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/.debug \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/.debug \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*/.debug \
 "
 FILES_${PN}-examples-staticdev = " \
     ${OE_QMAKE_PATH_EXAMPLES}/*.a \
@@ -125,6 +129,8 @@ FILES_${PN}-examples-staticdev = " \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*.a \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*.a \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*.a \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*.a \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*/*.a \
 "
 
 PATH_prepend = "${STAGING_DIR_NATIVE}${OE_QMAKE_PATH_QT_BINS}:"
