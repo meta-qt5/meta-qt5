@@ -1,4 +1,4 @@
-From 4df58d96ea516358d2762a219c0b196e56c8e89b Mon Sep 17 00:00:00 2001
+From 9337242944c936104db5eee64df804a27fb02bb8 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.jansa@gmail.com>
 Date: Wed, 11 Sep 2013 18:30:08 +0200
 Subject: [PATCH] Allow to build only lrelease + lupdate + lconvert
@@ -15,8 +15,8 @@ Signed-off-by: Martin Jansa <Martin.jansa@gmail.com>
  src/designer/src/src.pro  | 16 +++++++++-------
  src/linguist/linguist.pro |  2 +-
  src/src.pro               | 10 ++++++----
- tests/auto/auto.pro       | 20 +++++++++++---------
- 5 files changed, 29 insertions(+), 23 deletions(-)
+ tests/auto/auto.pro       | 22 ++++++++++++----------
+ 5 files changed, 30 insertions(+), 24 deletions(-)
 
 diff --git a/examples/examples.pro b/examples/examples.pro
 index 4955969..8e86419 100644
@@ -103,10 +103,10 @@ index c8756db..d71c4a0 100644
  qtNomakeTools( \
      pixeltool \
 diff --git a/tests/auto/auto.pro b/tests/auto/auto.pro
-index 074aa34..a744d46 100644
+index eaf440b..1778ad1 100644
 --- a/tests/auto/auto.pro
 +++ b/tests/auto/auto.pro
-@@ -1,13 +1,15 @@
+@@ -1,14 +1,16 @@
  TEMPLATE=subdirs
 -SUBDIRS=\
 -    linguist \
@@ -116,7 +116,8 @@ index 074aa34..a744d46 100644
 -    qhelpgenerator \
 -    qhelpindexmodel \
 -    qhelpprojectdata \
--    cmake
+-    cmake \
+-    installed_cmake
 +!linguistonly {
 +    SUBDIRS=\
 +        linguist \
@@ -126,11 +127,12 @@ index 074aa34..a744d46 100644
 +        qhelpgenerator \
 +        qhelpindexmodel \
 +        qhelpprojectdata \
-+        cmake
++        cmake \
++        installed_cmake
 +}
  
- # These tests don't make sense for cross-compiled builds
- cross_compile:SUBDIRS -= host.pro
+ installed_cmake.depends = cmake
+ 
 -- 
-1.8.3.2
+1.8.3.1
 

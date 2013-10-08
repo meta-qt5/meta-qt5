@@ -6,5 +6,5 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffe
                     file://${COMMON_LICENSE_DIR}/GPL-3.0;md5=c79ff39f19dfec6d293b95dea7b07891 \
 "
 
-SRC_URI[md5sum] = "f3cc602d4b720a847f4ab0953a82d8ef"
-SRC_URI[sha256sum] = "9b9aa948e01bf9d0fc7fa4584ededf9b5b280ee74c334c5790dbc6f9015b3738"
+SRC_URI[md5sum] = "022073d32ff9d408de0182b5d1f01781"
+SRC_URI[sha256sum] = "2b42c6d5feeccffb67e890b86a150bae64dd2ff550be39a3cc449ee0e95462b6"
