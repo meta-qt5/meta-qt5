@@ -68,7 +68,10 @@ PACKAGECONFIG[examples] = ",-nomake examples"
 # accessibility is required to compile qtquickcontrols
 PACKAGECONFIG[accessibility] = "-accessibility,-no-accessibility"
 PACKAGECONFIG[glib] = "-glib,-no-glib,glib-2.0"
-PACKAGECONFIG[freetype] = "-system-freetype,-no-freetype,freetype"
+# use either system freetype or bundled freetype, if you disable freetype completely
+# fontdatabases/basic/qbasicfontdatabase.cpp will fail to build and system freetype
+# works only together with fontconfig
+PACKAGECONFIG[freetype] = "-system-freetype,-freetype,freetype"
 PACKAGECONFIG[jpeg] = "-system-libjpeg,-no-libjpeg,jpeg"
 PACKAGECONFIG[libpng] = "-system-libpng,-no-libpng,libpng"
 PACKAGECONFIG[zlib] = "-system-zlib,-qt-zlib,zlib"
