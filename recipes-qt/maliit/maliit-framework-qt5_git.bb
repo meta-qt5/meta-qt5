@@ -49,6 +49,7 @@ FILES_${PN}-dev += "\
 EXTRA_QMAKEVARS_PRE = "\
     PREFIX=${prefix} \
     LIBDIR=${libdir} \
+    DATADIR=${datadir} \
     QT_IM_PLUGIN_PATH=${libdir}/qt4/plugins/inputmethods \
     MALIIT_INSTALL_PRF=${QMAKE_MKSPEC_PATH}/mkspecs/features \
     SCHEMADIR=${sysconfdir}/gconf/schemas \
