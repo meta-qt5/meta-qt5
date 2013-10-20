@@ -43,7 +43,7 @@ FILES_${PN}-dbg += "\
 FILES_${PN}-dev += "\
     ${includedir}/maliit \
     ${libdir}/pkgconfig \
-    ${libdir}/qt5 \
+    ${libdir}/qt5/mkspecs \
 "
 
 EXTRA_QMAKEVARS_PRE = "\
