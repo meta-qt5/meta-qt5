@@ -9,3 +9,4 @@ SRC_URI += " \
 "
 
 DEPENDS += "qtwebkit"
+RDEPENDS_${PN}-examples += "qtwebkit-qmlplugins"
