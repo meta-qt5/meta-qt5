@@ -23,6 +23,7 @@ SRC_URI += " \
     file://0023-configure-make-freetype-a-configurable-option.patch \
     file://0024-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-determine-pa.patch \
     file://0026-Ensure-lastPixel.y-is-also-initalized-to-1-when-nece.patch \
+    file://0027-Fix-misaligned-selection-region-with-text-when-cente.patch \
 "
 
 DEPENDS += "qtbase-native"
