@@ -24,6 +24,8 @@ PV = "0.99.0+git${SRCPV}"
 PACKAGES =+ "${PN}-gtk"
 GTKIMMODULES_PACKAGES = "${PN}-gtk"
 
+DEPENDS = "qtbase"
+
 # FIXME: Do we need something like this with qt5?
 #RDEPENDS_${PN} = "qt4-plugin-inputmethod-imsw-multi libqtsvg4"
 
