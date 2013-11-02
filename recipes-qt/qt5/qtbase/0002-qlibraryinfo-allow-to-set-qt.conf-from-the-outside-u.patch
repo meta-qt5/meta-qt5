@@ -1,0 +1,36 @@
+From c6c1e780ed6a443a0c68c3200aeea9ced76f444c Mon Sep 17 00:00:00 2001
+From: Holger Freyther <zecke@selfish.org>
+Date: Wed, 26 Sep 2012 17:22:30 +0200
+Subject: [PATCH 02/14] qlibraryinfo: allow to set qt.conf from the outside
+ using the environment
+
+Allow to set a qt.conf from the outside using the environment. This allows
+to inject new prefixes and other paths into qmake. This is needed when using
+the same qmake binary to build qt/x11 and qt/embedded
+
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/corelib/global/qlibraryinfo.cpp | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
+index 1c3b09f..c647a16 100644
+--- a/src/corelib/global/qlibraryinfo.cpp
++++ b/src/corelib/global/qlibraryinfo.cpp
+@@ -149,7 +149,10 @@ QLibrarySettings::QLibrarySettings()
+ 
+ QSettings *QLibraryInfoPrivate::findConfiguration()
+ {
+-    QString qtconfig = QStringLiteral(":/qt/etc/qt.conf");
++    QByteArray config = getenv("QT_CONF_PATH");
++    QString qtconfig = QFile::decodeName(config);
++    if(!QFile::exists(qtconfig))
++        qtconfig = QStringLiteral(":/qt/etc/qt.conf");
+ #ifdef QT_BOOTSTRAPPED
+     if(!QFile::exists(qtconfig))
+         qtconfig = qt_libraryInfoFile();
+-- 
+1.8.5.2
+

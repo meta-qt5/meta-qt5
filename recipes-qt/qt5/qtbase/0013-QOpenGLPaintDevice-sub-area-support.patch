@@ -1,0 +1,154 @@
+From 4a169ec0dffdb2dc501533a4bca3648ba3a220bf Mon Sep 17 00:00:00 2001
+From: Jani Hautakangas <jani.hautakangas@ixonos.com>
+Date: Thu, 16 May 2013 09:52:07 +0300
+Subject: [PATCH 13/14] QOpenGLPaintDevice sub-area support
+
+Allows creating QOpenGLPaintDevice targetting sub-area
+of binded framebuffer.
+
+Upstream-Status: Pending
+
+Change-Id: Ida2f079aa1ac0b87d36b54129e226399dbcdda80
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/gui/opengl/qopenglpaintdevice.cpp       | 12 ++++++++++++
+ src/gui/opengl/qopenglpaintdevice.h         |  2 ++
+ src/gui/opengl/qopenglpaintengine.cpp       | 10 +++++++---
+ src/gui/opengl/qopenglpaintengine_p.h       |  1 +
+ src/gui/opengl/qopengltextureglyphcache.cpp |  2 +-
+ 5 files changed, 23 insertions(+), 4 deletions(-)
+
+diff --git a/src/gui/opengl/qopenglpaintdevice.cpp b/src/gui/opengl/qopenglpaintdevice.cpp
+index fa392d1..5df1762 100644
+--- a/src/gui/opengl/qopenglpaintdevice.cpp
++++ b/src/gui/opengl/qopenglpaintdevice.cpp
+@@ -111,6 +111,7 @@ class QOpenGLPaintDevicePrivate
+ public:
+     QOpenGLPaintDevicePrivate(const QSize &size);
+ 
++    QPoint offset;
+     QSize size;
+     QOpenGLContext *ctx;
+ 
+@@ -159,6 +160,12 @@ QOpenGLPaintDevice::QOpenGLPaintDevice(int width, int height)
+ {
+ }
+ 
++QOpenGLPaintDevice::QOpenGLPaintDevice(int x, int y, int width, int height)
++    : d_ptr(new QOpenGLPaintDevicePrivate(QSize(width, height)))
++{
++    d_ptr->offset = QPoint(x,y);
++}
++
+ /*!
+     Destroys the QOpenGLPaintDevice.
+ */
+@@ -228,6 +235,11 @@ QOpenGLContext *QOpenGLPaintDevice::context() const
+     return d_ptr->ctx;
+ }
+ 
++QPoint QOpenGLPaintDevice::offset() const
++{
++    return d_ptr->offset;
++}
++
+ /*!
+     Returns the pixel size of the paint device.
+ 
+diff --git a/src/gui/opengl/qopenglpaintdevice.h b/src/gui/opengl/qopenglpaintdevice.h
+index c05571c..01eb1bc 100644
+--- a/src/gui/opengl/qopenglpaintdevice.h
++++ b/src/gui/opengl/qopenglpaintdevice.h
+@@ -62,12 +62,14 @@ public:
+     QOpenGLPaintDevice();
+     explicit QOpenGLPaintDevice(const QSize &size);
+     QOpenGLPaintDevice(int width, int height);
++    QOpenGLPaintDevice(int x, int y, int width, int height);
+     virtual ~QOpenGLPaintDevice();
+ 
+     int devType() const { return QInternal::OpenGL; }
+     QPaintEngine *paintEngine() const;
+ 
+     QOpenGLContext *context() const;
++    QPoint offset() const;
+     QSize size() const;
+     void setSize(const QSize &size);
+     void setDevicePixelRatio(qreal devicePixelRatio);
+diff --git a/src/gui/opengl/qopenglpaintengine.cpp b/src/gui/opengl/qopenglpaintengine.cpp
+index 0513551..f6aeb15 100644
+--- a/src/gui/opengl/qopenglpaintengine.cpp
++++ b/src/gui/opengl/qopenglpaintengine.cpp
+@@ -1985,7 +1985,10 @@ bool QOpenGL2PaintEngineEx::begin(QPaintDevice *pdev)
+     for (int i = 0; i < QT_GL_VERTEX_ARRAY_TRACKED_COUNT; ++i)
+         d->vertexAttributeArraysEnabledState[i] = false;
+ 
++    const QPoint offset = d->device->offset();
+     const QSize sz = d->device->size();
++    d->x = offset.x();
++    d->y = offset.y();
+     d->width = sz.width();
+     d->height = sz.height();
+     d->mode = BrushDrawingMode;
+@@ -2073,7 +2076,7 @@ void QOpenGL2PaintEngineEx::ensureActive()
+         d->device->ensureActiveTarget();
+ 
+         d->transferMode(BrushDrawingMode);
+-        glViewport(0, 0, d->width, d->height);
++        glViewport(d->x, d->y, d->width, d->height);
+         d->needsSync = false;
+         d->lastMaskTextureUsed = 0;
+         d->shaderManager->setDirty();
+@@ -2116,6 +2119,7 @@ void QOpenGL2PaintEngineExPrivate::updateClipScissorTest()
+     if (bounds == QRect(0, 0, width, height)) {
+         glDisable(GL_SCISSOR_TEST);
+     } else {
++        bounds = QRect(bounds.x(), bounds.y(), bounds.width(), bounds.height());
+         glEnable(GL_SCISSOR_TEST);
+         setScissor(bounds);
+     }
+@@ -2124,14 +2128,14 @@ void QOpenGL2PaintEngineExPrivate::updateClipScissorTest()
+ 
+ void QOpenGL2PaintEngineExPrivate::setScissor(const QRect &rect)
+ {
+-    const int left = rect.left();
++    const int left = rect.left() + x;
+     const int width = rect.width();
+     int bottom = height - (rect.top() + rect.height());
+     if (device->paintFlipped()) {
+         bottom = rect.top();
+     }
++    bottom += y;
+     const int height = rect.height();
+-
+     glScissor(left, bottom, width, height);
+ }
+ 
+diff --git a/src/gui/opengl/qopenglpaintengine_p.h b/src/gui/opengl/qopenglpaintengine_p.h
+index d51f0e5..0d4b38d 100644
+--- a/src/gui/opengl/qopenglpaintengine_p.h
++++ b/src/gui/opengl/qopenglpaintengine_p.h
+@@ -264,6 +264,7 @@ public:
+     QOpenGL2PaintEngineEx* q;
+     QOpenGLEngineShaderManager* shaderManager;
+     QOpenGLPaintDevice* device;
++    int x, y;
+     int width, height;
+     QOpenGLContext *ctx;
+     EngineMode mode;
+diff --git a/src/gui/opengl/qopengltextureglyphcache.cpp b/src/gui/opengl/qopengltextureglyphcache.cpp
+index 3b62d1d..a5d1f7e 100644
+--- a/src/gui/opengl/qopengltextureglyphcache.cpp
++++ b/src/gui/opengl/qopengltextureglyphcache.cpp
+@@ -273,7 +273,7 @@ void QOpenGLTextureGlyphCache::resizeTextureData(int width, int height)
+     funcs.glBindFramebuffer(GL_FRAMEBUFFER, (GLuint)oldFbo);
+ 
+     if (pex != 0) {
+-        glViewport(0, 0, pex->width, pex->height);
++        glViewport(pex->x, pex->y, pex->width, pex->height);
+         pex->updateClipScissorTest();
+     } else {
+         m_blitProgram->disableAttributeArray(int(QT_VERTEX_COORDS_ATTR));
+-- 
+1.8.5.2
+

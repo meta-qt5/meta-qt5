@@ -1,29 +1,24 @@
 require qt5.inc
 
-SRC_URI += " \
+# common with -native
+SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0003-Add-external-hostbindir-option.patch \
-    file://0004-qt_functions-temporary-remove-isEmpty-check.patch \
-    file://0005-qmake-is-already-built-in-qtbase-native.patch \
-    file://0006-Allow-building-a-separate-qmake-for-the-target.patch \
-    file://0007-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
-    file://0008-qt_module-Fix-pkgconfig-replacement.patch \
-    file://0009-qt_module-Fix-paths-in-.prl-files.patch \
-    file://0010-wayland-scanner-disable-silent-rules.patch \
-    file://0011-configure-don-t-export-SYSTEM_VARIABLES-to-.qmake.va.patch \
-    file://0012-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
-    file://0013-Disable-mkv8snapshot.patch \
+    file://0004-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
+    file://0005-qt_module-Fix-pkgconfig-replacement.patch \
+    file://0006-configure-don-t-export-SYSTEM_VARIABLES-to-.qmake.va.patch \
+    file://0007-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
+    file://0008-configure-make-pulseaudio-alsa-freetype-a-configurab.patch \
+    file://0009-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-determ.patch \
+"
+
+SRC_URI += "\
+    file://0010-qmake-is-already-built-in-qtbase-native.patch \
+    file://0011-Allow-building-a-separate-qmake-for-the-target.patch \
+    file://0012-qtbase-allow-build-of-examples.patch \
+    file://0013-QOpenGLPaintDevice-sub-area-support.patch \
     file://0014-enables-tslib-device-to-be-read-from-env-variable.patch \
-    file://0015-qtbase-allow-build-of-examples.patch \
-    file://0018-QOpenGLPaintDevice-sub-area-support.patch \
-    file://0020-Use-BGRA-extension-in-bindTexture.patch \
-    file://0021-configure-make-pulseaudio-a-configurable-option.patch \
-    file://0022-configure-make-alsa-a-configurable-option.patch \
-    file://0023-configure-make-freetype-a-configurable-option.patch \
-    file://0024-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-determine-pa.patch \
-    file://0026-Ensure-lastPixel.y-is-also-initalized-to-1-when-nece.patch \
-    file://0027-Fix-misaligned-selection-region-with-text-when-cente.patch \
 "
 
 DEPENDS += "qtbase-native"

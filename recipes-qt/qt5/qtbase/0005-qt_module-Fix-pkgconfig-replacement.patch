@@ -1,0 +1,117 @@
+From 33bbb10c66df59abfad9f4576462f63dfb500149 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sat, 27 Apr 2013 23:15:37 +0200
+Subject: [PATCH 05/14] qt_module: Fix pkgconfig replacement
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+* in situation like this:
+  QT_SYSROOT:/OE/oe-core/tmp-eglibc/sysroots/qemuarm
+  QT_INSTALL_LIBS:/OE/oe-core/tmp-eglibc/sysroots/qemuarm/usr/lib
+  QT_INSTALL_LIBS/raw:/usr/lib
+  QT_INSTALL_LIBS/get:/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.0-r0.0/build/lib
+
+  I don't want the replacement like this:
+  sed
+    -e "s,/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.0-r0.0/build/include,/usr/include/qt5,g"
+    -e "s,/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.0-r0.0/build/lib,/usr/lib,g"
+    "../../lib/pkgconfig/Qt5Core.pc"
+    >"/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.0-r0.0/image/OE/oe-core/tmp-eglibc/sysroots/qemuarm/usr/lib/pkgconfig/Qt5Core.pc"
+  because that way I'll end with -L/usr/lib in .pc file which is
+  cross-compile unfriendly, keeping ${libdir}/${includedir} works better
+  in my case
+
+* qt_module: Fix paths in .prl files
+* qmake does not prefix them with QT_SYSROOT when using them
+  so e.g. when building qtdeclarative we get -L/usr/lib to LINKAGE
+  variable, which is unsafe for cross-compilation
+* writting QT_SYSROOT in .prl files is dangerous for sstate when
+  builds are in different directories, so we need
+  SSTATE_SCAN_FILES += "*.pri *.prl"
+  to make them relocateble
+
+* fix paths in packageconfig files
+  This reverts parts of:
+  enable path replacement in installed prl files on all platforms
+  Task-number: QTBUG-33794
+  Change-Id: Id0d38715673b8a1c0c034e9c15783eb255c4315b
+  Reviewed-by: Joerg Bornemann <joerg.bornemann@digia.com>
+
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ mkspecs/features/qt_module.prf | 43 ++++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
+
+diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
+index 11509ee..2f95684 100644
+--- a/mkspecs/features/qt_module.prf
++++ b/mkspecs/features/qt_module.prf
+@@ -135,30 +135,49 @@ load(qt_installs)
+     rplbase = $$dirname(_QMAKE_SUPER_CACHE_)/[^/][^/]*
+ else: \
+     rplbase = $$MODULE_BASE_OUTDIR
+-include_replace.match = $$rplbase/include
+-include_replace.replace = $$[QT_INSTALL_HEADERS/raw]
+-include_replace.CONFIG = path
+-lib_replace.match = $$rplbase/lib
+-host_build: \
+-    lib_replace.replace = $$[QT_HOST_LIBS]
+-else: \
++pkgconfig_include_replace.match = $$rplbase/include
++pkgconfig_include_replace.replace = "\$$\\{includedir}"
++pkgconfig_lib_replace.match = $$rplbase/lib
++pkgconfig_lib_replace.replace = "\$$\\{libdir}"
++!exists($$[QT_SYSROOT]) {
++    include_replace.match = $$rplbase/include
++    include_replace.replace = $$[QT_INSTALL_HEADERS/raw]
++    include_replace.CONFIG = path
++    lib_replace.match = $$rplbase/lib
+     lib_replace.replace = $$[QT_INSTALL_LIBS/raw]
+-lib_replace.CONFIG = path
++    lib_replace.CONFIG = path
++    lafile_replace.match = $$rplbase
++    lafile_replace.replace = "$$[QT_INSTALL_PREFIX/raw]"
++} else {
++    # include_replace and lib_replace are duplicate, but we don't want to
++    # make QMAKE_PKGCONFIG_INSTALL_REPLACE, QMAKE_PRL_INSTALL_REPLACE conditional
++    include_replace.match = $$rplbase
++    include_replace.replace = $$[QT_SYSROOT]$$[QT_INSTALL_PREFIX/raw]
++    include_replace.CONFIG = path
++    lib_replace.match = $$rplbase
++    lib_replace.replace = $$[QT_SYSROOT]$$[QT_INSTALL_PREFIX/raw]
++    lib_replace.CONFIG = path
++    lafile_replace.match = $$rplbase
++    lafile_replace.replace = "=$$[QT_INSTALL_PREFIX/raw]"
++}
+ QMAKE_PRL_INSTALL_REPLACE += include_replace lib_replace
+ 
+ unix|win32-g++* {
+    CONFIG += create_pc
+-   QMAKE_PKGCONFIG_LIBDIR = $$lib_replace.replace
+-   QMAKE_PKGCONFIG_INCDIR = $$include_replace.replace
++   host_build: \
++       QMAKE_PKGCONFIG_LIBDIR = $$[QT_HOST_LIBS]
++   else: \
++       QMAKE_PKGCONFIG_LIBDIR = $$[QT_INSTALL_LIBS/raw]
++   QMAKE_PKGCONFIG_INCDIR = $$[QT_INSTALL_HEADERS/raw]
+    QMAKE_PKGCONFIG_CFLAGS = -I${includedir}/$$MODULE_INCNAME
+    QMAKE_PKGCONFIG_DESTDIR = pkgconfig
+-   QMAKE_PKGCONFIG_INSTALL_REPLACE += include_replace lib_replace
++   QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_include_replace pkgconfig_lib_replace
+ }
+ 
+ unix {
+    CONFIG += create_libtool explicitlib
+    QMAKE_LIBTOOL_LIBDIR = $$lib_replace.replace
+-   QMAKE_LIBTOOL_INSTALL_REPLACE += include_replace lib_replace
++   QMAKE_LIBTOOL_INSTALL_REPLACE += include_replace lib_replace lafile_replace
+ }
+ 
+ unix|win32-g++* {
+-- 
+1.8.5.2
+

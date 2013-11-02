@@ -1,0 +1,43 @@
+From ce1afee66a6310f362644e71d17f8d1eb3f848da Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Wed, 8 May 2013 23:54:35 +0200
+Subject: [PATCH 06/14] configure: don't export SYSTEM_VARIABLES to .qmake.vars
+
+* linux-oe-g++ should handle this correctly and exporting LD as QMAKE_LINK is
+  causing issues as we need g++ to be used as linker
+
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ configure | 14 --------------
+ 1 file changed, 14 deletions(-)
+
+diff --git a/configure b/configure
+index 46f7230..96c56c8 100755
+--- a/configure
++++ b/configure
+@@ -581,20 +581,6 @@ fi'`
+ done
+ 
+ SYSTEM_VARIABLES="RANLIB STRIP OBJDUMP LD CC CXX CFLAGS CXXFLAGS LDFLAGS"
+-for varname in $SYSTEM_VARIABLES; do
+-    qmakevarname="${varname}"
+-    # use LDFLAGS for autoconf compat, but qmake uses QMAKE_LFLAGS
+-    if [ "${varname}" = "LDFLAGS" ]; then
+-        qmakevarname="LFLAGS"
+-    elif [ "${varname}" = "LD" ]; then
+-        qmakevarname="LINK"
+-    fi
+-    cmd=`echo \
+-'if [ -n "\$'${varname}'" ]; then
+-    QMakeVar set QMAKE_'${qmakevarname}' "\$'${varname}'"
+-fi'`
+-    eval "$cmd"
+-done
+ # Use CC/CXX to run config.tests
+ mkdir -p "$outpath/config.tests"
+ rm -f "$outpath/config.tests/.qmake.cache"
+-- 
+1.8.5.2
+

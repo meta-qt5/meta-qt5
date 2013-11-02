@@ -1,4 +1,4 @@
 require qt5-git.inc
 require ${PN}.inc
 
-SRCREV = "08118e862731b5ce91368d326a04b4a565e7f483"
+SRCREV = "634cddbfef6a40b991bcdf8e68e5329747f43c57"

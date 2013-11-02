@@ -7,28 +7,24 @@ QT_MODULE = "qtbase"
 
 require qt5-native.inc
 
-# shared with target qtbase, all except 
-# 0005-qmake-is-already-built-in-qtbase-native.patch
-# 0006-Allow-building-a-separate-qmake-for-the-target.patch
-
-SRC_URI += " \
+# common with target version
+# common with -native and target version
+SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0003-Add-external-hostbindir-option.patch \
-    file://0004-qt_functions-temporary-remove-isEmpty-check.patch \
-    file://0007-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
-    file://0008-qt_module-Fix-pkgconfig-replacement.patch \
-    file://0009-qt_module-Fix-paths-in-.prl-files.patch \
-    file://0010-wayland-scanner-disable-silent-rules.patch \
-    file://0011-configure-don-t-export-SYSTEM_VARIABLES-to-.qmake.va.patch \
-    file://0012-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
-    file://0013-Disable-mkv8snapshot.patch \
-    file://0014-enables-tslib-device-to-be-read-from-env-variable.patch \
-    file://0015-qtbase-allow-build-of-examples.patch \
+    file://0004-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
+    file://0005-qt_module-Fix-pkgconfig-replacement.patch \
+    file://0006-configure-don-t-export-SYSTEM_VARIABLES-to-.qmake.va.patch \
+    file://0007-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
+    file://0008-configure-make-pulseaudio-alsa-freetype-a-configurab.patch \
+    file://0009-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-determ.patch \
 "
 
 # specific for native version
-SRC_URI += "file://0001-Always-build-uic.patch"
+SRC_URI += " \
+    file://0010-Always-build-uic.patch \
+"
 
 QT_CONF_PATH = "${B}/qt.conf"
 

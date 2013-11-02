@@ -1,12 +1,9 @@
 require qt5-git.inc
 require ${PN}.inc
 
-# qtsystems wasn't released yet, last tag before this SRCREV is 5.0.0-beta1
-PV = "4.999+5.0.0-beta1+git${SRCPV}"
-
-# drop when bumping SRCREV
-PR = "r1"
+# qtwayland wasn't released yet, last tag before this SRCREV is 5.0.0-beta1
+# # qt5-git PV is only to indicate that this recipe is compatible with qt5 5.2.0
 
 QT_MODULE_BRANCH = "dev"
 
-SRCREV = "701442ad6358b9f27978aafae82074124468f88c"
+SRCREV = "d6104a92321c2e72b140156fddf0378c9795cdb4"
