@@ -1,7 +1,7 @@
-From f6156776d191b9d848d6892c473dfa2cd8963884 Mon Sep 17 00:00:00 2001
+From fc90f327d8a2677734f21d9578ca6afb7169006b Mon Sep 17 00:00:00 2001
 From: Paul Eggleton <paul.eggleton@linux.intel.com>
 Date: Tue, 28 Feb 2012 15:10:24 +0000
-Subject: [PATCH 21/23] configure: make pulseaudio a configurable option
+Subject: [PATCH 11/19] configure: make pulseaudio a configurable option
 
 Allows disabling pulseaudio support at configure time.
 
@@ -14,10 +14,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 7 insertions(+)
 
 diff --git a/configure b/configure
-index 69e30b5..290b9ac 100755
+index 96c56c8..935c0fa 100755
 --- a/configure
 +++ b/configure
-@@ -2039,6 +2039,13 @@ while [ "$#" -gt 0 ]; do
+@@ -1801,6 +1801,13 @@ while [ "$#" -gt 0 ]; do
              UNKNOWN_OPT=yes
          fi
          ;;
@@ -32,5 +32,5 @@ index 69e30b5..290b9ac 100755
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_QGTKSTYLE="$VAL"
 -- 
-1.8.3.2
+1.8.4.3
 

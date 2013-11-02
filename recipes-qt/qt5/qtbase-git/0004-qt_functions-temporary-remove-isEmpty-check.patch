@@ -1,7 +1,7 @@
-From 1e0f35bd94719f77f7be5e059e72a51576b6f94b Mon Sep 17 00:00:00 2001
+From c0d9a22822fce6486e976f234b0940a6753333ce Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 17 Apr 2013 18:06:25 +0200
-Subject: [PATCH 04/23] qt_functions: temporary remove isEmpty check
+Subject: [PATCH 04/19] qt_functions: temporary remove isEmpty check
 
 * now we assume that every build will provide QT_EXTERNAL_HOST_BINS value
 * isEmpty works correctly only with qmake variables (e.g. $$FOO -
@@ -16,10 +16,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  2 files changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 4e12d3d..e20ad9d 100644
+index 5e13066..7229845 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -195,7 +195,11 @@ defineTest(qtPrepareTool) {
+@@ -194,7 +194,11 @@ defineTest(qtPrepareTool) {
      $$1 = $$eval(QT_TOOL.$${2}.binary)
      isEmpty($$1) {
          $$1 = $$[QT_EXTERNAL_HOST_BINS]/$$2
@@ -33,7 +33,7 @@ index 4e12d3d..e20ad9d 100644
          }
          exists($$eval($$1).pl) {
 diff --git a/mkspecs/features/qt_tool.prf b/mkspecs/features/qt_tool.prf
-index 83ef3a0..21c9eb7 100644
+index baf46ce..50bfac8 100644
 --- a/mkspecs/features/qt_tool.prf
 +++ b/mkspecs/features/qt_tool.prf
 @@ -15,8 +15,7 @@ CONFIG += console
@@ -45,7 +45,7 @@ index 83ef3a0..21c9eb7 100644
 +!build_pass:if(!host_build|!force_bootstrap|force_independent):!exists($$[QT_EXTERNAL_HOST_BINS]) {
      isEmpty(MODULE):MODULE = $$TARGET
  
-     !host_build|!force_bootstrap: MODULE_DEPENDS = $$replace(QT, -private$, )
+     !host_build|!force_bootstrap: MODULE_DEPENDS = $$replace(QT, -private$, _private)
 -- 
-1.8.3.2
+1.8.4.3
 

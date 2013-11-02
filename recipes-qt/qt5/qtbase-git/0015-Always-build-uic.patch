@@ -1,0 +1,38 @@
+From 76d0e65eecb09f1c86d6b7ce5efdb82d11120226 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sat, 16 Nov 2013 00:32:30 +0100
+Subject: [PATCH 15/15] Always build uic
+
+Even if we are not building gui or widgets. This tool is needed later
+as a native tool when compiling the target.
+
+Change-Id: I257668ac28c22b192e7ec7736e6c23fa3be6bab6
+Signed-off-by: Mikko Levonmaa <mikko.levonmaa@palm.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/src.pro | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/src.pro b/src/src.pro
+index b7887a6..8801544 100644
+--- a/src/src.pro
++++ b/src/src.pro
+@@ -145,7 +145,7 @@ contains(QT_CONFIG, concurrent):SUBDIRS += src_concurrent
+         }
+     }
+ }
+-SUBDIRS += src_plugins src_tools_qdoc
++SUBDIRS += src_plugins src_tools_qdoc src_tools_uic
+ 
+ nacl: SUBDIRS -= src_network src_testlib
+ 
+@@ -156,4 +156,4 @@ TR_EXCLUDE = \
+     src_tools_bootstrap_dbus src_tools_qdbusxml2cpp src_tools_qdbuscpp2xml
+ 
+ sub-tools.depends = $$TOOLS
+-QMAKE_EXTRA_TARGETS = sub-tools
+\ No newline at end of file
++QMAKE_EXTRA_TARGETS = sub-tools
+-- 
+1.8.4.3
+

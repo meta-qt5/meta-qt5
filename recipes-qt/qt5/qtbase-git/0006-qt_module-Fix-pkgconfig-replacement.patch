@@ -1,7 +1,7 @@
-From 5168edad24f2c27061286707603bc2126365bcb2 Mon Sep 17 00:00:00 2001
+From a90497b7da87783b916fcff9be430b10664d5c4f Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
-Subject: [PATCH 08/23] qt_module: Fix pkgconfig replacement
+Subject: [PATCH 06/19] qt_module: Fix pkgconfig replacement
 
 * in situation like this:
   QT_SYSROOT:/OE/oe-core/tmp-eglibc/sysroots/qemuarm
@@ -23,48 +23,53 @@ Upstream-Status: Pending
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- mkspecs/features/qt_module.prf | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ mkspecs/features/qt_module.prf | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 7f7de85..7741b96 100644
+index 11509ee..caba8d3 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
-@@ -140,18 +140,30 @@ unix|win32-g++* {
-       rplbase = $$dirname(_QMAKE_SUPER_CACHE_)/[^/][^/]*
-    else: \
-       rplbase = $$MODULE_BASE_OUTDIR
-+   pkgconfig_include_replace.match = $$rplbase/include
-+   pkgconfig_include_replace.replace = "\$$\\{includedir}"
-+   pkgconfig_lib_replace.match = $$rplbase/lib
-+   pkgconfig_lib_replace.replace = "\$$\\{libdir}"
-    include_replace.match = $$rplbase/include
-    include_replace.replace = $$[QT_INSTALL_HEADERS/raw]
-    lib_replace.match = $$rplbase/lib
--   lib_replace.replace = $$QMAKE_PKGCONFIG_LIBDIR
+@@ -135,6 +135,10 @@ load(qt_installs)
+     rplbase = $$dirname(_QMAKE_SUPER_CACHE_)/[^/][^/]*
+ else: \
+     rplbase = $$MODULE_BASE_OUTDIR
++pkgconfig_include_replace.match = $$rplbase/include
++pkgconfig_include_replace.replace = "\$$\\{includedir}"
++pkgconfig_lib_replace.match = $$rplbase/lib
++pkgconfig_lib_replace.replace = "\$$\\{libdir}"
+ include_replace.match = $$rplbase/include
+ include_replace.replace = $$[QT_INSTALL_HEADERS/raw]
+ include_replace.CONFIG = path
+@@ -144,6 +148,12 @@ host_build: \
+ else: \
+     lib_replace.replace = $$[QT_INSTALL_LIBS/raw]
+ lib_replace.CONFIG = path
++lafile_replace.match = $$rplbase
++lafile_replace.replace = "=$$[QT_INSTALL_PREFIX/raw]"
++!isEmpty(SYSROOT): \
++    rplbase = $$[SYSROOT] \
++    lafile_replace.match = $$rplbase \
++    lafile_replace.replace = "=" \
+ QMAKE_PRL_INSTALL_REPLACE += include_replace lib_replace
+ 
+ unix|win32-g++* {
+@@ -152,13 +162,13 @@ unix|win32-g++* {
+    QMAKE_PKGCONFIG_INCDIR = $$include_replace.replace
+    QMAKE_PKGCONFIG_CFLAGS = -I${includedir}/$$MODULE_INCNAME
+    QMAKE_PKGCONFIG_DESTDIR = pkgconfig
 -   QMAKE_PKGCONFIG_INSTALL_REPLACE += include_replace lib_replace
-+   lib_replace.replace = $$[QT_INSTALL_LIBS/raw]
-+   lafile_replace.match = $$rplbase
-+   lafile_replace.replace = "=$$[QT_INSTALL_PREFIX/raw]"
-+
-+   !isEmpty(SYSROOT): \
-+      rplbase = $$[SYSROOT] \
-+      lafile_replace.match = $$rplbase \
-+      lafile_replace.replace = "=" \
-+
 +   QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_include_replace pkgconfig_lib_replace
-    QMAKE_PRL_INSTALL_REPLACE += include_replace lib_replace
  }
  
  unix {
     CONFIG += create_libtool explicitlib
--   QMAKE_LIBTOOL_LIBDIR = $$QMAKE_PKGCONFIG_LIBDIR
+    QMAKE_LIBTOOL_LIBDIR = $$lib_replace.replace
 -   QMAKE_LIBTOOL_INSTALL_REPLACE += include_replace lib_replace
-+   QMAKE_LIBTOOL_LIBDIR = $$[QT_INSTALL_LIBS/raw]
 +   QMAKE_LIBTOOL_INSTALL_REPLACE += include_replace lib_replace lafile_replace
  }
  
  unix|win32-g++* {
 -- 
-1.8.3.2
+1.8.4.3
 
