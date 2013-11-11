@@ -121,6 +121,8 @@ do_install() {
             TMP=`dirname ${TMP}`;
         done
     fi
+
+    cp ${STAGING_DIR}/${SDK_SYS}/usr/bin/${QT_DIR_NAME}/qt.conf ${D}/${OE_QMAKE_PATH_BINS}
 }
 
 PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples "

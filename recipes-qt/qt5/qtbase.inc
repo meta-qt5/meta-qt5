@@ -223,7 +223,8 @@ do_install_append() {
         cp -a ${S}/lib/fonts ${D}/${OE_QMAKE_PATH_LIBS}
     fi
 
-        cat > ${D}/${OE_QMAKE_PATH_BINS}/qt.conf <<EOF
+    mkdir -p ${STAGING_DIR}/${SDK_SYS}/usr/bin/${QT_DIR_NAME};
+    cat > ${STAGING_DIR}/${SDK_SYS}/usr/bin/${QT_DIR_NAME}/qt.conf <<EOF
 [Paths]
 Sysroot = ../../../../${TUNE_PKGARCH}${TARGET_VENDOR}-${TARGET_OS}/
 Prefix = ${OE_QMAKE_PATH_PREFIX}
