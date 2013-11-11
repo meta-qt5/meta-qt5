@@ -222,6 +222,50 @@ do_install_append() {
     if [ ! -d ${D}/${OE_QMAKE_PATH_LIBS}/fonts ]; then
         cp -a ${S}/lib/fonts ${D}/${OE_QMAKE_PATH_LIBS}
     fi
+
+        cat > ${D}/${OE_QMAKE_PATH_BINS}/qt.conf <<EOF
+[Paths]
+Sysroot = ../../../../${PACKAGE_ARCH}-${DISTRO}-${TARGET_OS}/
+Prefix = ${OE_QMAKE_PATH_PREFIX}
+Headers = ${OE_QMAKE_PATH_HEADERS}
+Libraries = ${OE_QMAKE_PATH_LIBS}
+ArchData = ${OE_QMAKE_PATH_ARCHDATA}
+Data = ${OE_QMAKE_PATH_DATA}
+Binaries = ${OE_QMAKE_PATH_BINS}
+LibraryExecutables = ${OE_QMAKE_PATH_LIBEXECS}
+Plugins = ${OE_QMAKE_PATH_PLUGINS}
+Imports = ${OE_QMAKE_PATH_IMPORTS}
+Qml2Imports = ${OE_QMAKE_PATH_QML}
+Translations = ${OE_QMAKE_PATH_TRANSLATIONS}
+Documentation = ${OE_QMAKE_PATH_DOCS}
+Settings = ${OE_QMAKE_PATH_SETTINGS}
+Examples = ${OE_QMAKE_PATH_EXAMPLES}
+Tests = ${OE_QMAKE_PATH_TESTS}
+HostPrefix = ../../..
+HostBinaries = ${@'${OE_QMAKE_PATH_BINS}'.strip("/")}
+HostData = ../${PACKAGE_ARCH}-${DISTRO}-${TARGET_OS}/${OE_QMAKE_PATH_ARCHDATA}
+HostLibraries = ${@'${OE_QMAKE_PATH_LIBS}'.strip("/")}
+EOF
+
+# TODO: Don't hardcode the relative paths, caluculate it somehow from OE_QMAKE_PATH_ARCHDATA
+sed -i "s,${STAGING_DIR_TARGET},\$\$PWD/../../../../,g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
+sed -i "s,${STAGING_DIR_NATIVE},\$\$PWD/../../../../../${SDK_SYS},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
+sed -i "s,QT_HOST_ARCH = ${TARGET_ARCH},QT_HOST_ARCH = ${SDK_ARCH},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
+
+sed -i "s,${STAGING_DIR_TARGET},\$\$PWD/../../../../,g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
+sed -i "s,${STAGING_DIR_NATIVE},\$\$PWD/../../../../../${SDK_SYS},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
+
+cat >> ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri << EOF
+QMAKE_CFLAGS += --sysroot=\$\$[QT_SYSROOT]
+QMAKE_CXXFLAGS += --sysroot=\$\$[QT_SYSROOT]
+QMAKE_LFLAGS += --sysroot=\$\$[QT_SYSROOT]
+EOF
+
+cat > ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qdevice.pri << EOF
+CROSS_COMPILE = \$\$PWD/../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${TARGET_SYS}-
+GCC_MACHINE_DUMP = ${TARGET_SYS}
+EOF
+
 }
 
 PACKAGES =. " \
