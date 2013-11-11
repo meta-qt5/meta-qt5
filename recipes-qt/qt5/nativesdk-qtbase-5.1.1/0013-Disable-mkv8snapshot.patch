@@ -1,0 +1,47 @@
+From 70669010c6f8a541db6f87f96aee3ff50ec8483f Mon Sep 17 00:00:00 2001
+From: Mikko Levonmaa <mikko.levonmaa@palm.com>
+Date: Tue, 8 Jan 2013 15:58:29 -0800
+Subject: [PATCH 13/22] Disable mkv8snapshot
+
+It seems to generate code that throws SIGILL, so disabling it
+
+Program received signal SIGILL, Illegal instruction.
+0x26312c60 in ?? ()
+(gdb) bt
+    function=..., receiver=..., argc=1978934572, args=0x7efff254,
+    has_pending_exception=0x7efff277, qml=...)
+    at ../3rdparty/v8/src/execution.cc:125
+    argc=1, argv=0x7efff254, pending_exception=0x7efff277,
+    convert_receiver=false, qml=...) at ../3rdparty/v8/src/execution.cc:194
+    receiver=<optimized out>, argc=<optimized out>, argv=<optimized out>,
+    pending_exception=0x7efff277, convert_receiver=false)
+    at ../3rdparty/v8/src/execution.cc:161
+    data=<optimized out>, exc=0x7efff277)
+    at ../3rdparty/v8/src/execution.cc:734
+    at ../3rdparty/v8/src/api.cc:4742
+    at qml/v8/qv8contextwrapper.cpp:155
+    ownership=<optimized out>) at qml/v8/qv8engine.cpp:155
+    parent=<optimized out>) at qml/v8/qjsengine.cpp:192
+
+Signed-off-by: Mikko Levonmaa <mikko.levonmaa@palm.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure b/configure
+index 11c11c4..521e374 100755
+--- a/configure
++++ b/configure
+@@ -910,7 +910,7 @@ CFG_SKIP_MODULES=""
+ CFG_COMPILE_EXAMPLES=yes
+ CFG_RELEASE_QMAKE=no
+ CFG_AUDIO_BACKEND=auto
+-CFG_V8SNAPSHOT=auto
++CFG_V8SNAPSHOT=no
+ CFG_QML_DEBUG=yes
+ CFG_JAVASCRIPTCORE_JIT=auto
+ CFG_PKGCONFIG=auto
+-- 
+1.8.3.1
+

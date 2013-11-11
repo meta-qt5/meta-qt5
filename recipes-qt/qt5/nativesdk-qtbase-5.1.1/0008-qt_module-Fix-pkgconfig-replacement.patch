@@ -1,0 +1,70 @@
+From 0089c1ecba912aed6a8cd6126297300e0f7ffcb9 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sat, 27 Apr 2013 23:15:37 +0200
+Subject: [PATCH 08/22] qt_module: Fix pkgconfig replacement
+
+* in situation like this:
+  QT_SYSROOT:/OE/oe-core/tmp-eglibc/sysroots/qemuarm
+  QT_INSTALL_LIBS:/OE/oe-core/tmp-eglibc/sysroots/qemuarm/usr/lib
+  QT_INSTALL_LIBS/raw:/usr/lib
+  QT_INSTALL_LIBS/get:/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.0-r0.0/build/lib
+
+  I don't want the replacement like this:
+  sed
+    -e "s,/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.0-r0.0/build/include,/usr/include/qt5,g"
+    -e "s,/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.0-r0.0/build/lib,/usr/lib,g"
+    "../../lib/pkgconfig/Qt5Core.pc"
+    >"/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.0-r0.0/image/OE/oe-core/tmp-eglibc/sysroots/qemuarm/usr/lib/pkgconfig/Qt5Core.pc"
+  because that way I'll end with -L/usr/lib in .pc file which is
+  cross-compile unfriendly, keeping ${libdir}/${includedir} works better
+  in my case
+
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ mkspecs/features/qt_module.prf | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
+index 390fb49..e85c2a8 100644
+--- a/mkspecs/features/qt_module.prf
++++ b/mkspecs/features/qt_module.prf
+@@ -140,18 +140,30 @@ unix|win32-g++* {
+       rplbase = $$dirname(_QMAKE_SUPER_CACHE_)/[^/][^/]*
+    else: \
+       rplbase = $$MODULE_BASE_OUTDIR
++   pkgconfig_include_replace.match = $$rplbase/include
++   pkgconfig_include_replace.replace = "\$$\\{includedir}"
++   pkgconfig_lib_replace.match = $$rplbase/lib
++   pkgconfig_lib_replace.replace = "\$$\\{libdir}"
+    include_replace.match = $$rplbase/include
+    include_replace.replace = $$[QT_INSTALL_HEADERS/raw]
+    lib_replace.match = $$rplbase/lib
+-   lib_replace.replace = $$QMAKE_PKGCONFIG_LIBDIR
+-   QMAKE_PKGCONFIG_INSTALL_REPLACE += include_replace lib_replace
++   lib_replace.replace = $$[QT_INSTALL_LIBS/raw]
++   lafile_replace.match = $$rplbase
++   lafile_replace.replace = "=$$[QT_INSTALL_PREFIX/raw]"
++
++   !isEmpty(SYSROOT): \
++      rplbase = $$[SYSROOT] \
++      lafile_replace.match = $$rplbase \
++      lafile_replace.replace = "=" \
++
++   QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_include_replace pkgconfig_lib_replace
+    QMAKE_PRL_INSTALL_REPLACE += include_replace lib_replace
+ }
+ 
+ unix {
+    CONFIG += create_libtool explicitlib
+-   QMAKE_LIBTOOL_LIBDIR = $$QMAKE_PKGCONFIG_LIBDIR
+-   QMAKE_LIBTOOL_INSTALL_REPLACE += include_replace lib_replace
++   QMAKE_LIBTOOL_LIBDIR = $$[QT_INSTALL_LIBS/raw]
++   QMAKE_LIBTOOL_INSTALL_REPLACE += include_replace lib_replace lafile_replace
+ }
+ 
+ unix|win32-g++* {
+-- 
+1.8.3.1
+

@@ -1,0 +1,35 @@
+From e6430c64e4dcc48ae59e48fa303bbea33b253011 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Fri, 19 Jul 2013 23:21:28 +0200
+Subject: [PATCH 19/22] configure: make alsa a configurable option
+
+Allows disabling alsa support at configure time.
+
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ configure | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/configure b/configure
+index 896e012..3470b32 100755
+--- a/configure
++++ b/configure
+@@ -2046,6 +2046,13 @@ while [ "$#" -gt 0 ]; do
+             UNKNOWN_OPT=yes
+         fi
+         ;;
++    alsa)
++        if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
++            CFG_ALSA="$VAL"
++        else
++            UNKNOWN_OPT=yes
++        fi
++        ;;
+     gtkstyle)
+         if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
+             CFG_QGTKSTYLE="$VAL"
+-- 
+1.8.3.1
+

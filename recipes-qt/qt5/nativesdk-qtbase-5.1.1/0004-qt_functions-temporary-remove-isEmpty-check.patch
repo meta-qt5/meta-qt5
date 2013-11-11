@@ -1,0 +1,51 @@
+From 21c573762a168f874f32c8bf49f75442e608e08a Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Wed, 17 Apr 2013 18:06:25 +0200
+Subject: [PATCH 04/22] qt_functions: temporary remove isEmpty check
+
+* now we assume that every build will provide QT_EXTERNAL_HOST_BINS value
+* isEmpty works correctly only with qmake variables (e.g. $$FOO -
+  isEmpty(FOO)), but doesn't work with system properties like $$[FOO].
+
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ mkspecs/features/qt_functions.prf | 6 +++++-
+ mkspecs/features/qt_tool.prf      | 3 +--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
+index 4e12d3d..e20ad9d 100644
+--- a/mkspecs/features/qt_functions.prf
++++ b/mkspecs/features/qt_functions.prf
+@@ -195,7 +195,11 @@ defineTest(qtPrepareTool) {
+     $$1 = $$eval(QT_TOOL.$${2}.binary)
+     isEmpty($$1) {
+         $$1 = $$[QT_EXTERNAL_HOST_BINS]/$$2
+-        isEmpty($$[QT_EXTERNAL_HOST_BINS]) {
++        # for some reason isEmpty does not work here, FIXME before submitting upstream
++        # DEBUG 1: mkspecs/features/qt_functions.prf:198: calling built-in isEmpty(/OE/oe-core/tmp-eglibc/sysroots/x86_64-linux/usr/bin/qt5)
++        # DEBUG 1: mkspecs/features/qt_functions.prf:198: test function returned true
++        # DEBUG 1: mkspecs/features/qt_functions.prf:198: taking 'then' branch
++        !exists($$[QT_EXTERNAL_HOST_BINS]/$$2) {
+             $$1 = $$[QT_HOST_BINS]/$$2
+         }
+         exists($$eval($$1).pl) {
+diff --git a/mkspecs/features/qt_tool.prf b/mkspecs/features/qt_tool.prf
+index 83ef3a0..21c9eb7 100644
+--- a/mkspecs/features/qt_tool.prf
++++ b/mkspecs/features/qt_tool.prf
+@@ -15,8 +15,7 @@ CONFIG += console
+ 
+ # If we are doing a prefix build, create a "module" pri which enables
+ # qtPrepareTool() to work with the non-installed build.
+-# Non-bootstrapped tools always need this because of the environment setup.
+-!build_pass:if(!host_build|!force_bootstrap|force_independent):isEmpty($$[QT_EXTERNAL_HOST_BINS]) {
++!build_pass:if(!host_build|!force_bootstrap|force_independent):!exists($$[QT_EXTERNAL_HOST_BINS]) {
+     isEmpty(MODULE):MODULE = $$TARGET
+ 
+     !host_build|!force_bootstrap: MODULE_DEPENDS = $$replace(QT, -private$, )
+-- 
+1.8.3.1
+
