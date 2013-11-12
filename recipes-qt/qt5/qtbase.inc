@@ -246,6 +246,7 @@ HostPrefix = ../../..
 HostBinaries = ${@'${OE_QMAKE_PATH_BINS}'.strip("/")}
 HostData = ../${TUNE_PKGARCH}${TARGET_VENDOR}-${TARGET_OS}/${OE_QMAKE_PATH_ARCHDATA}
 HostLibraries = ${@'${OE_QMAKE_PATH_LIBS}'.strip("/")}
+TargetSpec = linux-oe-sdk-g++
 EOF
 
 # TODO: Don't hardcode the relative paths, caluculate it somehow from OE_QMAKE_PATH_ARCHDATA
@@ -268,19 +269,21 @@ GCC_MACHINE_DUMP = ${TARGET_SYS}
 EOF
 
 
-# Fix the linux-oe-g++ mkspec to use the real values and not the environment variables
+cp -rf ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++ ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/
+
+# Fix the linux-oe-sdk-g++ mkspec to use the real values and not the environment variables
 # We don't want to have the --sysroot in the mkspec itself, it should be set in the qconfig.pri to be able to change it via qt.conf and also make it possible to use other mkspecs
-sed -i "s,\$(OE_QMAKE_AR),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${OE_QMAKE_AR},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++/qmake.conf
-sed -i "s,\$(OE_QMAKE_STRIP),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${STRIP},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++/qmake.conf
-sed -i "s,\$(OE_QMAKE_WAYLAND_SCANNER),\$\$PWD/../../../../../${@'${OE_QMAKE_WAYLAND_SCANNER}'.replace('${STAGING_DIR_NATIVE}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++/qmake.conf
-sed -i "s#\$(OE_QMAKE_CFLAGS)#${OE_QMAKE_CFLAGS}#g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++/qmake.conf
-sed -i "s#\$(OE_QMAKE_CXXFLAGS)#${OE_QMAKE_CXXFLAGS}#g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++/qmake.conf
-sed -i "s#\$(OE_QMAKE_LDFLAGS)#${OE_QMAKE_LDFLAGS}#g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++/qmake.conf
-sed -i "s,\$(OE_QMAKE_COMPILER),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_COMPILER}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++/qmake.conf
-sed -i "s,\$(OE_QMAKE_CC),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_CC}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++/qmake.conf
-sed -i "s,\$(OE_QMAKE_CXX),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_CXX}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++/qmake.conf
-sed -i "s,\$(OE_QMAKE_LINK),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_LINK}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++/qmake.conf
-sed -i "s,\$(OE_QMAKE_QT_CONFIG),${OE_QMAKE_QT_CONFIG},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_AR),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${OE_QMAKE_AR},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_STRIP),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${STRIP},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_WAYLAND_SCANNER),\$\$PWD/../../../../../${@'${OE_QMAKE_WAYLAND_SCANNER}'.replace('${STAGING_DIR_NATIVE}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s#\$(OE_QMAKE_CFLAGS)#${OE_QMAKE_CFLAGS}#g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s#\$(OE_QMAKE_CXXFLAGS)#${OE_QMAKE_CXXFLAGS}#g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s#\$(OE_QMAKE_LDFLAGS)#${OE_QMAKE_LDFLAGS}#g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_COMPILER),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_COMPILER}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_CC),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_CC}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_CXX),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_CXX}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_LINK),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_LINK}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_QT_CONFIG),${OE_QMAKE_QT_CONFIG},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
 
 }
 
