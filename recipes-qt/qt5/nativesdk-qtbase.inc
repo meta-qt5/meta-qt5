@@ -1,5 +1,5 @@
 DESCRIPTION = "Native version of Qt/[X11|Mac|Embedded]"
-DEPENDS = "zlib-native dbus-native"
+DEPENDS = "nativesdk-zlib nativesdk-dbus"
 SECTION = "libs"
 HOMEPAGE = "http://qt-project.org"
 
@@ -17,9 +17,6 @@ OE_QMAKE_PATH_DOCS = "${OE_QMAKE_PATH_QT_DOCS}"
 OE_QMAKE_PATH_SETTINGS = "${OE_QMAKE_PATH_QT_SETTINGS}"
 OE_QMAKE_PATH_EXAMPLES = "${OE_QMAKE_PATH_QT_EXAMPLES}"
 OE_QMAKE_PATH_TESTS = "${OE_QMAKE_PATH_QT_TESTS}"
-
-
-BBCLASSEXTEND = "nativesdk"
 
 # shared with target qtbase, all except 
 # 0005-qmake-is-already-built-in-qtbase-native.patch
@@ -110,13 +107,13 @@ do_install() {
 
     oe_runmake install INSTALL_ROOT=${D}
 
-    if [ -d ${D}${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE} ] ; then
+    if [ -d ${D}${STAGING_DIR_NATIVE} ] ; then
         echo "Some files are installed in wrong directory ${D}${STAGING_DIR_NATIVE}"
-        cp -ra ${D}${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE}/* ${D}${STAGING_DIR_NATIVE}
-        rm -rf ${D}${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE}
+        cp -ra ${D}${STAGING_DIR_NATIVE}/* ${D}
+        rm -rf ${D}${STAGING_DIR_NATIVE}
         # remove empty dirs
-        TMP=`dirname ${D}/${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE}`
-        while test ${TMP} != ${D}${STAGING_DIR_NATIVE}; do
+        TMP=`dirname ${D}/${STAGING_DIR_NATIVE}`
+        while test ${TMP} != ${D}; do
             rmdir ${TMP}
             TMP=`dirname ${TMP}`;
         done
