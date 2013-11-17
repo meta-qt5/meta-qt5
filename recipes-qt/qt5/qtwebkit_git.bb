@@ -9,3 +9,5 @@ LIC_FILES_CHKSUM = "file://Source/WebCore/rendering/RenderApplet.h;endline=22;md
                     file://Source/JavaScriptCore/parser/Parser.h;endline=21;md5=bd69f72183a7af673863f057576e21ee"
 
 SRCREV = "4c86230bfe563ef1e3ef493b870203761bc9f32d"
+
+SRC_URI += "file://0001-jsc-Add-licuuc-licui18n-LIBS.patch"
