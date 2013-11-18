@@ -1,0 +1,48 @@
+From 52172f09d646949c32f7b70188f1ffc779adbdef Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
+Date: Sat, 25 May 2013 17:34:32 +0200
+Subject: [PATCH 15/22] qtbase: allow build of examples
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+this revert the following commit :
+
+commit 2b397f985e4ef6ae5c0571a928bb1320fb048c61
+Author: Oswald Buddenhagen <oswald.buddenhagen@digia.com>
+Date:   Fri Dec 21 19:36:12 2012 +0100
+
+    do not actually build examples in production builds
+
+    -developer-build enables an actual build of examples, based on the
+    assumption that developers want to test it (it can be still disabled
+    with -nomake examples). regular users otoh want only the examples
+    sources installed.
+
+    Change-Id: Ifc6a108099929175a3960480802b271a758fdd38
+    Reviewed-by: Joerg Bornemann <joerg.bornemann@digia.com>
+
+Signed-off-by: Eric Bénard <eric@eukrea.com>
+---
+ mkspecs/features/qt_example_installs.prf | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/mkspecs/features/qt_example_installs.prf b/mkspecs/features/qt_example_installs.prf
+index 2db752c..ca1b0c7 100644
+--- a/mkspecs/features/qt_example_installs.prf
++++ b/mkspecs/features/qt_example_installs.prf
+@@ -92,11 +92,4 @@ probase = $$relative_path($$_PRO_FILE_PWD_, $$dirname(_QMAKE_CONF_)/examples)
+         allfiles -= doc
+         !isEmpty(allfiles): warning("remaining files in $$_PRO_FILE_PWD_: $$allfiles")
+     }
+-
+-    !equals(TEMPLATE, subdirs):!compile_examples {
+-        TEMPLATE = aux
+-        CONFIG -= have_target qt staticlib dll
+-        SOURCES =
+-        INSTALLS -= target
+-    }
+ }
+-- 
+1.8.3.1
+

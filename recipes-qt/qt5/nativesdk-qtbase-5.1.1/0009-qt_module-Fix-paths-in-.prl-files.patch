@@ -1,0 +1,62 @@
+From d4f6f5afa36d87d991051f0079f129d2682455d9 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sun, 28 Apr 2013 12:56:55 +0200
+Subject: [PATCH 09/22] qt_module: Fix paths in .prl files
+
+* qmake does not prefix them with QT_SYSROOT when using them
+  so e.g. when building qtdeclarative we get -L/usr/lib to LINKAGE
+  variable, which is unsafe for cross-compilation
+* writting QT_SYSROOT in .prl files is dangerous for sstate when
+  builds are in different directories, so we need
+  SSTATE_SCAN_FILES += "*.pri *.prl"
+  to make them relocateble
+
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ mkspecs/features/qt_module.prf | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
+
+diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
+index e85c2a8..7fcfcfe 100644
+--- a/mkspecs/features/qt_module.prf
++++ b/mkspecs/features/qt_module.prf
+@@ -144,17 +144,23 @@ unix|win32-g++* {
+    pkgconfig_include_replace.replace = "\$$\\{includedir}"
+    pkgconfig_lib_replace.match = $$rplbase/lib
+    pkgconfig_lib_replace.replace = "\$$\\{libdir}"
+-   include_replace.match = $$rplbase/include
+-   include_replace.replace = $$[QT_INSTALL_HEADERS/raw]
+-   lib_replace.match = $$rplbase/lib
+-   lib_replace.replace = $$[QT_INSTALL_LIBS/raw]
+-   lafile_replace.match = $$rplbase
+-   lafile_replace.replace = "=$$[QT_INSTALL_PREFIX/raw]"
+-
+-   !isEmpty(SYSROOT): \
+-      rplbase = $$[SYSROOT] \
+-      lafile_replace.match = $$rplbase \
+-      lafile_replace.replace = "=" \
++   !exists($$[QT_SYSROOT]) {
++      include_replace.match = $$rplbase/include
++      include_replace.replace = $$[QT_INSTALL_HEADERS/raw]
++      lib_replace.match = $$rplbase/lib
++      lib_replace.replace = $$[QT_INSTALL_LIBS/raw]
++      lafile_replace.match = $$rplbase
++      lafile_replace.replace = "$$[QT_INSTALL_PREFIX/raw]"
++   } else {
++      # include_replace and lib_replace are duplicate, but we don't want to
++      # make QMAKE_PKGCONFIG_INSTALL_REPLACE, QMAKE_PRL_INSTALL_REPLACE conditional
++      include_replace.match = $$rplbase
++      include_replace.replace = $$[QT_SYSROOT]$$[QT_INSTALL_PREFIX/raw]
++      lib_replace.match = $$rplbase
++      lib_replace.replace = $$[QT_SYSROOT]$$[QT_INSTALL_PREFIX/raw]
++      lafile_replace.match = $$rplbase
++      lafile_replace.replace = "=$$[QT_INSTALL_PREFIX/raw]"
++   }
+ 
+    QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_include_replace pkgconfig_lib_replace
+    QMAKE_PRL_INSTALL_REPLACE += include_replace lib_replace
+-- 
+1.8.3.1
+

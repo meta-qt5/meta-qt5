@@ -222,6 +222,69 @@ do_install_append() {
     if [ ! -d ${D}/${OE_QMAKE_PATH_LIBS}/fonts ]; then
         cp -a ${S}/lib/fonts ${D}/${OE_QMAKE_PATH_LIBS}
     fi
+
+    mkdir -p ${STAGING_DIR}/${SDK_SYS}/usr/bin/${QT_DIR_NAME};
+    cat > ${STAGING_DIR}/${SDK_SYS}/usr/bin/${QT_DIR_NAME}/qt.conf <<EOF
+[Paths]
+Sysroot = ../../../../${TUNE_PKGARCH}${TARGET_VENDOR}-${TARGET_OS}/
+Prefix = ${OE_QMAKE_PATH_PREFIX}
+Headers = ${OE_QMAKE_PATH_HEADERS}
+Libraries = ${OE_QMAKE_PATH_LIBS}
+ArchData = ${OE_QMAKE_PATH_ARCHDATA}
+Data = ${OE_QMAKE_PATH_DATA}
+Binaries = ${OE_QMAKE_PATH_BINS}
+LibraryExecutables = ${OE_QMAKE_PATH_LIBEXECS}
+Plugins = ${OE_QMAKE_PATH_PLUGINS}
+Imports = ${OE_QMAKE_PATH_IMPORTS}
+Qml2Imports = ${OE_QMAKE_PATH_QML}
+Translations = ${OE_QMAKE_PATH_TRANSLATIONS}
+Documentation = ${OE_QMAKE_PATH_DOCS}
+Settings = ${OE_QMAKE_PATH_SETTINGS}
+Examples = ${OE_QMAKE_PATH_EXAMPLES}
+Tests = ${OE_QMAKE_PATH_TESTS}
+HostPrefix = ../../..
+HostBinaries = ${@'${OE_QMAKE_PATH_BINS}'.strip("/")}
+HostData = ../${TUNE_PKGARCH}${TARGET_VENDOR}-${TARGET_OS}/${OE_QMAKE_PATH_ARCHDATA}
+HostLibraries = ${@'${OE_QMAKE_PATH_LIBS}'.strip("/")}
+TargetSpec = linux-oe-sdk-g++
+EOF
+
+# TODO: Don't hardcode the relative paths, caluculate it somehow from OE_QMAKE_PATH_ARCHDATA
+sed -i "s,${STAGING_DIR_TARGET},\$\$PWD/../../../../,g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
+sed -i "s,${STAGING_DIR_NATIVE},\$\$PWD/../../../../../${SDK_SYS},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
+sed -i "s,QT_HOST_ARCH = ${TARGET_ARCH},QT_HOST_ARCH = ${SDK_ARCH},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
+
+sed -i "s,${STAGING_DIR_TARGET},\$\$PWD/../../../../,g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
+sed -i "s,${STAGING_DIR_NATIVE},\$\$PWD/../../../../../${SDK_SYS},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
+
+cat >> ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri << EOF
+QMAKE_CFLAGS += --sysroot=\$\$[QT_SYSROOT]
+QMAKE_CXXFLAGS += --sysroot=\$\$[QT_SYSROOT]
+QMAKE_LFLAGS += --sysroot=\$\$[QT_SYSROOT]
+EOF
+
+cat > ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qdevice.pri << EOF
+CROSS_COMPILE = \$\$PWD/../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${TARGET_SYS}-
+GCC_MACHINE_DUMP = ${TARGET_SYS}
+EOF
+
+
+cp -rf ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-g++ ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/
+
+# Fix the linux-oe-sdk-g++ mkspec to use the real values and not the environment variables
+# We don't want to have the --sysroot in the mkspec itself, it should be set in the qconfig.pri to be able to change it via qt.conf and also make it possible to use other mkspecs
+sed -i "s,\$(OE_QMAKE_AR),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${OE_QMAKE_AR},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_STRIP),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${STRIP},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_WAYLAND_SCANNER),\$\$PWD/../../../../../${@'${OE_QMAKE_WAYLAND_SCANNER}'.replace('${STAGING_DIR_NATIVE}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s#\$(OE_QMAKE_CFLAGS)#${OE_QMAKE_CFLAGS}#g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s#\$(OE_QMAKE_CXXFLAGS)#${OE_QMAKE_CXXFLAGS}#g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s#\$(OE_QMAKE_LDFLAGS)#${OE_QMAKE_LDFLAGS}#g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_COMPILER),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_COMPILER}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_CC),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_CC}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_CXX),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_CXX}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_LINK),\$\$PWD/../../../../../../${SDK_SYS}/usr/bin/${TARGET_SYS}/${@'${OE_QMAKE_LINK}'.replace('--sysroot=${STAGING_DIR_TARGET}','')},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+sed -i "s,\$(OE_QMAKE_QT_CONFIG),${OE_QMAKE_QT_CONFIG},g" ${D}/${OE_QMAKE_PATH_ARCHDATA}/mkspecs/linux-oe-sdk-g++/qmake.conf
+
 }
 
 PACKAGES =. " \
