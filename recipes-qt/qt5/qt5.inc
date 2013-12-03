@@ -20,6 +20,18 @@ OE_QMAKE_PATH_SETTINGS = "${OE_QMAKE_PATH_QT_SETTINGS}"
 OE_QMAKE_PATH_EXAMPLES = "${OE_QMAKE_PATH_QT_EXAMPLES}"
 OE_QMAKE_PATH_TESTS = "${OE_QMAKE_PATH_QT_TESTS}"
 
+# If Qt5 (qtbase) is machine specific, then everything will be,
+# because the (initial) qtbase configuration becomes part of Qt5/qmake
+python __anonymous() {
+    barch = d.getVar("BUILD_ARCH", True) or ''
+    tarch = d.getVar("TARGET_ARCH", True) or ''
+    # do not do anything if we are building a native package
+    if barch != tarch:
+        tarch = d.getVar("QT_PACKAGES_ARCH", True) or ''
+        if tarch:
+            d.setVar("PACKAGE_ARCH", tarch)
+}
+
 PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples "
 
 # extra -dbg packages
