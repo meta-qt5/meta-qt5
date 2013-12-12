@@ -7,6 +7,6 @@ PV = "4.999+5.0.0-beta1+git${SRCPV}"
 # drop when bumping SRCREV
 PR = "r1"
 
-QT_MODULE_BRANCH = "master"
+QT_MODULE_BRANCH = "dev"
 
 SRCREV = "701442ad6358b9f27978aafae82074124468f88c"
