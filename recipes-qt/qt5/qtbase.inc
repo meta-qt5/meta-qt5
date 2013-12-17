@@ -107,7 +107,6 @@ PACKAGECONFIG[iconv] = "-iconv,-no-iconv,virtual/libiconv"
 PACKAGECONFIG[xkb] = "-xkb,-no-xkb,libxkbcommon"
 PACKAGECONFIG[evdev] = "-evdev,-no-evdev"
 # depends on glib
-PACKAGECONFIG[gstreamer] = "-gstreamer,-no-gstreamer,gstreamer"
 PACKAGECONFIG[fontconfig] = "-fontconfig,-no-fontconfig,fontconfig"
 PACKAGECONFIG[gtkstyle] = "-gtkstyle,-no-gtkstyle,gtk+"
 PACKAGECONFIG[directfb] = "-directfb,-no-directfb,directfb"
