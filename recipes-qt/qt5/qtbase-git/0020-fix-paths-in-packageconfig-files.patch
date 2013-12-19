@@ -1,0 +1,42 @@
+From c5768c394beac79f9e888f6afbd47c8dac37eb50 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Thu, 19 Dec 2013 18:04:57 +0100
+Subject: [PATCH] fix paths in packageconfig files
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This reverts parts of:
+
+enable path replacement in installed prl files on all platforms
+
+Task-number: QTBUG-33794
+Change-Id: Id0d38715673b8a1c0c034e9c15783eb255c4315b
+Reviewed-by: Joerg Bornemann <joerg.bornemann@digia.com>
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ mkspecs/features/qt_module.prf | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
+index f9dfb01..2f95684 100644
+--- a/mkspecs/features/qt_module.prf
++++ b/mkspecs/features/qt_module.prf
+@@ -164,8 +164,11 @@ QMAKE_PRL_INSTALL_REPLACE += include_replace lib_replace
+ 
+ unix|win32-g++* {
+    CONFIG += create_pc
+-   QMAKE_PKGCONFIG_LIBDIR = $$lib_replace.replace
+-   QMAKE_PKGCONFIG_INCDIR = $$include_replace.replace
++   host_build: \
++       QMAKE_PKGCONFIG_LIBDIR = $$[QT_HOST_LIBS]
++   else: \
++       QMAKE_PKGCONFIG_LIBDIR = $$[QT_INSTALL_LIBS/raw]
++   QMAKE_PKGCONFIG_INCDIR = $$[QT_INSTALL_HEADERS/raw]
+    QMAKE_PKGCONFIG_CFLAGS = -I${includedir}/$$MODULE_INCNAME
+    QMAKE_PKGCONFIG_DESTDIR = pkgconfig
+    QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_include_replace pkgconfig_lib_replace
+-- 
+1.8.3.1
+
