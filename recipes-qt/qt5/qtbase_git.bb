@@ -26,6 +26,7 @@ SRC_URI += "\
     file://0017-enables-tslib-device-to-be-read-from-env-variable.patch \
     file://0018-qtbase-allow-build-of-examples.patch \
     file://0019-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0020-fix-paths-in-packageconfig-files.patch \
 "
 
 SRCREV = "313a74cc4a9a5d200b2059d3d8767fe1a274c50d"
