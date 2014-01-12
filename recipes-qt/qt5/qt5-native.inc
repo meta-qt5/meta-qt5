@@ -10,3 +10,10 @@ OE_QMAKE_PATH_DOCS = "${OE_QMAKE_PATH_QT_DOCS}"
 OE_QMAKE_PATH_SETTINGS = "${OE_QMAKE_PATH_QT_SETTINGS}"
 OE_QMAKE_PATH_EXAMPLES = "${OE_QMAKE_PATH_QT_EXAMPLES}"
 OE_QMAKE_PATH_TESTS = "${OE_QMAKE_PATH_QT_TESTS}"
+
+# Regenerate header files when they are included in source tarball
+# Otherwise cmake files don't set PRIVATE_HEADERS correctly
+do_configure_prepend() {
+    rm -rf ${S}/include
+    mkdir -p ${S}/.git || true
+}

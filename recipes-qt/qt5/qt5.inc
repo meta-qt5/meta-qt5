@@ -32,6 +32,14 @@ python __anonymous() {
             d.setVar("PACKAGE_ARCH", tarch)
 }
 
+
+# Regenerate header files when they are included in source tarball
+# Otherwise cmake files don't set PRIVATE_HEADERS correctly
+do_configure_prepend() {
+    rm -rf ${S}/include
+    mkdir -p ${S}/.git || true
+}
+
 PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples "
 
 # extra -dbg packages
