@@ -1,4 +1,4 @@
-From 1f9449f851f7ec288948ec8e83f2fe4b0b37e789 Mon Sep 17 00:00:00 2001
+From 7999eeb3f2ab1150aa301ec26ae9bf0788d09c9e Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
 Subject: [PATCH 05/14] qt_module: Fix pkgconfig replacement
@@ -43,60 +43,42 @@ Content-Transfer-Encoding: 8bit
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
 ---
- mkspecs/features/qt_module.prf | 43 ++++++++++++++++++++++++++++++------------
- 1 file changed, 31 insertions(+), 12 deletions(-)
+ mkspecs/features/qt_module.prf | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 11509ee..2f95684 100644
+index 11509ee..be9b929 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
-@@ -135,30 +135,49 @@ load(qt_installs)
+@@ -135,30 +135,36 @@ load(qt_installs)
      rplbase = $$dirname(_QMAKE_SUPER_CACHE_)/[^/][^/]*
  else: \
      rplbase = $$MODULE_BASE_OUTDIR
 -include_replace.match = $$rplbase/include
 -include_replace.replace = $$[QT_INSTALL_HEADERS/raw]
 -include_replace.CONFIG = path
--lib_replace.match = $$rplbase/lib
--host_build: \
--    lib_replace.replace = $$[QT_HOST_LIBS]
--else: \
 +pkgconfig_include_replace.match = $$rplbase/include
 +pkgconfig_include_replace.replace = "\$$\\{includedir}"
++pkgconfig_include_replace.CONFIG = path
 +pkgconfig_lib_replace.match = $$rplbase/lib
 +pkgconfig_lib_replace.replace = "\$$\\{libdir}"
-+!exists($$[QT_SYSROOT]) {
-+    include_replace.match = $$rplbase/include
-+    include_replace.replace = $$[QT_INSTALL_HEADERS/raw]
-+    include_replace.CONFIG = path
-+    lib_replace.match = $$rplbase/lib
++pkgconfig_lib_replace.CONFIG = path
+ lib_replace.match = $$rplbase/lib
+ host_build: \
+     lib_replace.replace = $$[QT_HOST_LIBS]
+ else: \
      lib_replace.replace = $$[QT_INSTALL_LIBS/raw]
--lib_replace.CONFIG = path
-+    lib_replace.CONFIG = path
-+    lafile_replace.match = $$rplbase
-+    lafile_replace.replace = "$$[QT_INSTALL_PREFIX/raw]"
-+} else {
-+    # include_replace and lib_replace are duplicate, but we don't want to
-+    # make QMAKE_PKGCONFIG_INSTALL_REPLACE, QMAKE_PRL_INSTALL_REPLACE conditional
-+    include_replace.match = $$rplbase
-+    include_replace.replace = $$[QT_SYSROOT]$$[QT_INSTALL_PREFIX/raw]
-+    include_replace.CONFIG = path
-+    lib_replace.match = $$rplbase
-+    lib_replace.replace = $$[QT_SYSROOT]$$[QT_INSTALL_PREFIX/raw]
-+    lib_replace.CONFIG = path
-+    lafile_replace.match = $$rplbase
-+    lafile_replace.replace = "=$$[QT_INSTALL_PREFIX/raw]"
-+}
- QMAKE_PRL_INSTALL_REPLACE += include_replace lib_replace
+ lib_replace.CONFIG = path
+-QMAKE_PRL_INSTALL_REPLACE += include_replace lib_replace
++lafile_replace.match = "-L$$[QT_INSTALL_LIBS/raw]"
++lafile_replace.replace = ""
++lafile_replace.CONFIG = path
++QMAKE_PRL_INSTALL_REPLACE += lib_replace lafile_replace
  
  unix|win32-g++* {
     CONFIG += create_pc
--   QMAKE_PKGCONFIG_LIBDIR = $$lib_replace.replace
+    QMAKE_PKGCONFIG_LIBDIR = $$lib_replace.replace
 -   QMAKE_PKGCONFIG_INCDIR = $$include_replace.replace
-+   host_build: \
-+       QMAKE_PKGCONFIG_LIBDIR = $$[QT_HOST_LIBS]
-+   else: \
-+       QMAKE_PKGCONFIG_LIBDIR = $$[QT_INSTALL_LIBS/raw]
 +   QMAKE_PKGCONFIG_INCDIR = $$[QT_INSTALL_HEADERS/raw]
     QMAKE_PKGCONFIG_CFLAGS = -I${includedir}/$$MODULE_INCNAME
     QMAKE_PKGCONFIG_DESTDIR = pkgconfig
@@ -108,7 +90,7 @@ index 11509ee..2f95684 100644
     CONFIG += create_libtool explicitlib
     QMAKE_LIBTOOL_LIBDIR = $$lib_replace.replace
 -   QMAKE_LIBTOOL_INSTALL_REPLACE += include_replace lib_replace
-+   QMAKE_LIBTOOL_INSTALL_REPLACE += include_replace lib_replace lafile_replace
++   QMAKE_LIBTOOL_INSTALL_REPLACE += lib_replace lafile_replace
  }
  
  unix|win32-g++* {
