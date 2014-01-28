@@ -15,7 +15,6 @@ EXTRA_QMAKEVARS_PRE += "${QTWEBKIT_DEBUG}"
 PACKAGES = "${PN}-dbg ${PN}-staticdev ${PN}-dev ${PN}-doc ${PN}-locale ${PACKAGE_BEFORE_PN} ${PN} ${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs "
 
 SRC_URI += "file://fix-rpath.patch"
-SRC_URI += "file://0001-jsc-Add-licuuc-licui18n-LIBS.patch"
 
 # make sure rb files are used from sysroot, not from host
 # ruby-1.9.3-always-use-i386.patch is doing target_cpu=`echo $target_cpu | sed s/i.86/i386/`
