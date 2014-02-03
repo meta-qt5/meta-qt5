@@ -7,6 +7,9 @@ QT_MODULE = "qtbase"
 
 require nativesdk-qt5.inc
 
+# it's already included with newer oe-core, but include it here for dylan
+FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
+
 # common with -native and target version
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
