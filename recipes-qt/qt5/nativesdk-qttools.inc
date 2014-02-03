@@ -4,6 +4,9 @@ QT_MODULE = "qttools"
 
 require nativesdk-qt5.inc
 
+# it's already included with newer oe-core, but include it here for dylan
+FILESEXTRAPATHS =. "${FILE_DIRNAME}/qttools:"
+
 SRC_URI += "file://0001-Allow-to-build-only-lrelease-lupdate-lconvert.patch"
 
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
