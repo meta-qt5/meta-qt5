@@ -1,4 +1,4 @@
-From 96a18197ac6d9960fd00654acffd6a81bafa0320 Mon Sep 17 00:00:00 2001
+From 77a18a9fe2d0e4a1dcd95e2d78c85eb37452bc73 Mon Sep 17 00:00:00 2001
 From: Michael Krelin <hacker@klever.net>
 Date: Mon, 29 Oct 2012 20:07:49 -0700
 Subject: [PATCH 10/14] qmake is already built in qtbase-native
@@ -13,10 +13,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index b3854aa..15c89c7 100755
+index 66c2ae0..ac836aa 100755
 --- a/configure
 +++ b/configure
-@@ -3923,7 +3923,7 @@ setBootstrapEvalVariable()
+@@ -3941,7 +3941,7 @@ setBootstrapEvalVariable()
  
  
  # build qmake
@@ -26,5 +26,5 @@ index b3854aa..15c89c7 100755
  
      mkdir -p "$outpath/qmake" || exit
 -- 
-1.8.5.2
+1.8.5.3
 

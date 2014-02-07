@@ -1,4 +1,4 @@
-From 33bbb10c66df59abfad9f4576462f63dfb500149 Mon Sep 17 00:00:00 2001
+From 1f9449f851f7ec288948ec8e83f2fe4b0b37e789 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
 Subject: [PATCH 05/14] qt_module: Fix pkgconfig replacement
@@ -33,12 +33,12 @@ Content-Transfer-Encoding: 8bit
 
 * fix paths in packageconfig files
   This reverts parts of:
+
   enable path replacement in installed prl files on all platforms
+
   Task-number: QTBUG-33794
   Change-Id: Id0d38715673b8a1c0c034e9c15783eb255c4315b
   Reviewed-by: Joerg Bornemann <joerg.bornemann@digia.com>
-
-Upstream-Status: Pending
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
@@ -113,5 +113,5 @@ index 11509ee..2f95684 100644
  
  unix|win32-g++* {
 -- 
-1.8.5.2
+1.8.5.3
 

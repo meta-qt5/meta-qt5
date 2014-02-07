@@ -1,4 +1,4 @@
-From c6c1e780ed6a443a0c68c3200aeea9ced76f444c Mon Sep 17 00:00:00 2001
+From 841d1f06f3fd2f59f6b18067b02d5fcfc93aaa7a Mon Sep 17 00:00:00 2001
 From: Holger Freyther <zecke@selfish.org>
 Date: Wed, 26 Sep 2012 17:22:30 +0200
 Subject: [PATCH 02/14] qlibraryinfo: allow to set qt.conf from the outside
@@ -32,5 +32,5 @@ index 1c3b09f..c647a16 100644
      if(!QFile::exists(qtconfig))
          qtconfig = qt_libraryInfoFile();
 -- 
-1.8.5.2
+1.8.5.3
 

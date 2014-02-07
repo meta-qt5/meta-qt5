@@ -1,4 +1,4 @@
-From ce1afee66a6310f362644e71d17f8d1eb3f848da Mon Sep 17 00:00:00 2001
+From ebd38fc708cf7190e47a75754235f56fa5d86300 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 8 May 2013 23:54:35 +0200
 Subject: [PATCH 06/14] configure: don't export SYSTEM_VARIABLES to .qmake.vars
@@ -14,7 +14,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 14 deletions(-)
 
 diff --git a/configure b/configure
-index 46f7230..96c56c8 100755
+index 7f3f2f0..13dd619 100755
 --- a/configure
 +++ b/configure
 @@ -581,20 +581,6 @@ fi'`
@@ -39,5 +39,5 @@ index 46f7230..96c56c8 100755
  mkdir -p "$outpath/config.tests"
  rm -f "$outpath/config.tests/.qmake.cache"
 -- 
-1.8.5.2
+1.8.5.3
 
