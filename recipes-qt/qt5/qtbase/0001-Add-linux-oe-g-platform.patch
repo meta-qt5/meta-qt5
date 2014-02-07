@@ -1,4 +1,4 @@
-From f4fd2da9b29db23638ad07bd35f093f793241526 Mon Sep 17 00:00:00 2001
+From f883ec8652ee603d9bb9def7eb669ed82c493961 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH 01/14] Add linux-oe-g++ platform
@@ -41,7 +41,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index a330dd6..1b328ae 100755
+index aaa59bd..0e74f29 100755
 --- a/configure
 +++ b/configure
 @@ -324,6 +324,16 @@ getQMakeConf()
@@ -97,7 +97,7 @@ index a330dd6..1b328ae 100755
  SYSTEM_VARIABLES="RANLIB STRIP OBJDUMP LD CC CXX CFLAGS CXXFLAGS LDFLAGS"
  for varname in $SYSTEM_VARIABLES; do
      qmakevarname="${varname}"
-@@ -3344,7 +3376,7 @@ if [ "$XPLATFORM_MAC" = "yes" ] && [ "$CFG_QGTKSTYLE" = "auto" ]; then
+@@ -3362,7 +3394,7 @@ if [ "$XPLATFORM_MAC" = "yes" ] && [ "$CFG_QGTKSTYLE" = "auto" ]; then
      CFG_QGTKSTYLE=no
  fi
  
@@ -106,7 +106,7 @@ index a330dd6..1b328ae 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -3379,7 +3411,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
+@@ -3397,7 +3429,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
          exit 1
      fi
  fi
@@ -115,7 +115,7 @@ index a330dd6..1b328ae 100755
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3860,6 +3892,14 @@ setBootstrapVariable()
+@@ -3878,6 +3910,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -130,7 +130,7 @@ index a330dd6..1b328ae 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -3898,11 +3938,11 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -3916,11 +3956,11 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          fi
  
          [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=
@@ -300,5 +300,5 @@ index 0000000..dd12003
 +
 +#endif // QPLATFORMDEFS_H
 -- 
-1.8.5.2
+1.8.5.3
 

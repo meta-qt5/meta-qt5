@@ -1,4 +1,4 @@
-From 21c595fd0e386bea1a2e2b19323dc517bb2c7333 Mon Sep 17 00:00:00 2001
+From 3648eeddaed0cf31fba226ec713d2321f398974f Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH 03/14] Add -external-hostbindir option
@@ -28,10 +28,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  8 files changed, 45 insertions(+), 7 deletions(-)
 
 diff --git a/configure b/configure
-index 1b328ae..46f7230 100755
+index 0e74f29..7f3f2f0 100755
 --- a/configure
 +++ b/configure
-@@ -785,6 +785,7 @@ QT_HOST_BINS=
+@@ -788,6 +788,7 @@ QT_HOST_BINS=
  QT_HOST_LIBS=
  QT_HOST_DATA=
  QT_EXT_PREFIX=
@@ -39,7 +39,7 @@ index 1b328ae..46f7230 100755
  
  #flags for SQL drivers
  QT_CFLAGS_PSQL=
-@@ -905,6 +906,7 @@ while [ "$#" -gt 0 ]; do
+@@ -907,6 +908,7 @@ while [ "$#" -gt 0 ]; do
      -testsdir| \
      -hostdatadir| \
      -hostbindir| \
@@ -47,7 +47,7 @@ index 1b328ae..46f7230 100755
      -hostlibdir| \
      -extprefix| \
      -sysroot| \
-@@ -1118,6 +1120,9 @@ while [ "$#" -gt 0 ]; do
+@@ -1120,6 +1122,9 @@ while [ "$#" -gt 0 ]; do
      extprefix)
          QT_EXT_PREFIX="$VAL"
          ;;
@@ -57,7 +57,7 @@ index 1b328ae..46f7230 100755
      pkg-config)
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_PKGCONFIG="$VAL"
-@@ -2226,6 +2231,10 @@ Installation options:
+@@ -2236,6 +2241,10 @@ Installation options:
      -hostdatadir <dir> . Data used by qmake will be installed to <dir>
                           (default HOSTPREFIX)
  
@@ -68,7 +68,7 @@ index 1b328ae..46f7230 100755
  Configure options:
  
   The defaults (*) are usually acceptable. A plus (+) denotes a default value
-@@ -3133,6 +3142,11 @@ fi
+@@ -3151,6 +3160,11 @@ fi
  # command line and environment validation
  #-------------------------------------------------------------------------------
  
@@ -80,7 +80,7 @@ index 1b328ae..46f7230 100755
  # update QT_CONFIG to show our current predefined configuration
  CFG_QCONFIG_PATH=$relpath/src/corelib/global/qconfig-${CFG_QCONFIG}.h
  case "$CFG_QCONFIG" in
-@@ -3820,6 +3834,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
+@@ -3838,6 +3852,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
      "qt_hbinpath=$QT_HOST_BINS",
      "qt_hlibpath=$QT_HOST_LIBS",
      "qt_hdatpath=$QT_HOST_DATA",
@@ -135,7 +135,7 @@ index e50485c..71291ad 100644
      { "QMAKE_XSPEC", QLibraryInfo::TargetSpecPath, true },
  };
 diff --git a/qtbase.pro b/qtbase.pro
-index 7576db7..d51af0e 100644
+index 140a137..4e01d5b 100644
 --- a/qtbase.pro
 +++ b/qtbase.pro
 @@ -70,16 +70,22 @@ CONFIG -= qt
@@ -198,7 +198,7 @@ index 17864b5..a14bc0f 100644
          HostSpecPath,
          LastHostPath = HostSpecPath,
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index e2fef2c..ab475c3 100644
+index 5ab413a..50a192b 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
 @@ -1186,6 +1186,13 @@ void Configure::parseCmdLine()
@@ -224,5 +224,5 @@ index e2fef2c..ab475c3 100644
                    << "    \"qt_hostspec=" << hostSpec << "\"," << endl
                    << "#endif" << endl
 -- 
-1.8.5.2
+1.8.5.3
 

@@ -1,4 +1,4 @@
-From 1ea3afc37eba9ea4b1bee3916abd1bcf6abf97ba Mon Sep 17 00:00:00 2001
+From 8a10c6d053fe438aec007e4a73b60ac59716ccd4 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 16 Nov 2013 00:32:30 +0100
 Subject: [PATCH 10/12] Always build uic
@@ -34,5 +34,5 @@ index b7887a6..8801544 100644
 \ No newline at end of file
 +QMAKE_EXTRA_TARGETS = sub-tools
 -- 
-1.8.5.2
+1.8.5.3
 

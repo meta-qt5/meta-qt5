@@ -1,4 +1,4 @@
-From 4a169ec0dffdb2dc501533a4bca3648ba3a220bf Mon Sep 17 00:00:00 2001
+From 2fad0a6fa3c06577995ac44ed0a2a12eaef819c2 Mon Sep 17 00:00:00 2001
 From: Jani Hautakangas <jani.hautakangas@ixonos.com>
 Date: Thu, 16 May 2013 09:52:07 +0300
 Subject: [PATCH 13/14] QOpenGLPaintDevice sub-area support
@@ -150,5 +150,5 @@ index 3b62d1d..a5d1f7e 100644
      } else {
          m_blitProgram->disableAttributeArray(int(QT_VERTEX_COORDS_ATTR));
 -- 
-1.8.5.2
+1.8.5.3
 

@@ -1,4 +1,4 @@
-From 925a8c67fef4bfa56bdc3c1c7cd87e21defc3d94 Mon Sep 17 00:00:00 2001
+From 698f073fb8cc6dc1ced277b6ae2056cb9d02f2d5 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 22:33:33 +0200
 Subject: [PATCH 04/14] configureapp: Prefix default LIBDIRS and INCDIRS with
@@ -10,7 +10,7 @@ Upstream-Status: Pending
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index ab475c3..68cd43d 100644
+index 50a192b..46eabe4 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
 @@ -3213,8 +3213,8 @@ void Configure::generateQConfigPri()
@@ -25,5 +25,5 @@ index ab475c3..68cd43d 100644
          configStream << "}" << endl;
          if (dictionary["QT_EDITION"].contains("OPENSOURCE"))
 -- 
-1.8.5.2
+1.8.5.3
 

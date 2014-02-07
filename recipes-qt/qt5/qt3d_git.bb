@@ -4,7 +4,7 @@ require ${PN}.inc
 QT_MODULE_BRANCH = "master"
 
 # last tag before this SRCREV is 5.0.0-beta1, but version says 5.3.0 already
-SRCREV = "4820a197cebd5184ab39ef405eb78f6e69ffc5f9"
+SRCREV = "d3338a9f7fcac109d7bc7f600d5974ff333782ad"
 
 do_configure_prepend() {
     # Temporary hack to get qt3d build for Qt 5.1.0

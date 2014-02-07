@@ -1,5 +1,5 @@
 # Copyright (C) 2012 O.S. Systems Software LTDA.
-# Copyright (C) 2013 Martin Jansa <martin.jansa@gmail.com>
+# Copyright (C) 2013-2014 Martin Jansa <martin.jansa@gmail.com>
 
 QT_MODULE_BRANCH ?= "stable"
 
@@ -10,7 +10,7 @@ SRC_URI += " \
 
 S = "${WORKDIR}/git"
 
-PV = "5.2.0+git${SRCPV}"
+PV = "5.2.1+git${SRCPV}"
 
 FILESEXTRAPATHS =. "${FILE_DIRNAME}/${BPN}-git:"
 

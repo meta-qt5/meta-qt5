@@ -1,4 +1,4 @@
-From b70eabc4050a5e7621511403dcbf7a650b3ef9fc Mon Sep 17 00:00:00 2001
+From acbd622d1b91c1aa9ec8c48d10d91354d175345c Mon Sep 17 00:00:00 2001
 From: Simon Busch <morphis@gravedo.de>
 Date: Mon, 22 Jul 2013 21:09:41 +0000
 Subject: [PATCH 09/14] cmake: Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS to
@@ -15,7 +15,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  3 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/src/corelib/Qt5CoreConfigExtras.cmake.in b/src/corelib/Qt5CoreConfigExtras.cmake.in
-index 1e00c74..a99b5bf 100644
+index 9bda70e..6e3605a 100644
 --- a/src/corelib/Qt5CoreConfigExtras.cmake.in
 +++ b/src/corelib/Qt5CoreConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::qmake)
@@ -46,7 +46,7 @@ index 1e00c74..a99b5bf 100644
      _qt5_Core_check_file_exists(${imported_location})
  
 diff --git a/src/dbus/Qt5DBusConfigExtras.cmake.in b/src/dbus/Qt5DBusConfigExtras.cmake.in
-index 1d94715..301af8f 100644
+index 1d94715..617efa8 100644
 --- a/src/dbus/Qt5DBusConfigExtras.cmake.in
 +++ b/src/dbus/Qt5DBusConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::qdbuscpp2xml)
@@ -81,5 +81,5 @@ index e5650ff..16ff007 100644
      _qt5_Widgets_check_file_exists(${imported_location})
  
 -- 
-1.8.5.2
+1.8.5.3
 

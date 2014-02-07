@@ -1,4 +1,4 @@
-From 7846422a1d4ca37583fbbd10d768e34ddf84d233 Mon Sep 17 00:00:00 2001
+From 828eecd8f361cb965bd40f535435efa91665c8e5 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Thu, 9 May 2013 10:06:50 +0200
 Subject: [PATCH 07/14] configure.prf: Allow to add extra arguments to make
@@ -33,5 +33,5 @@ index 39144e7..de48b07 100644
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 -- 
-1.8.5.2
+1.8.5.3
 

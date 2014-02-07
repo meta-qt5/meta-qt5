@@ -1,7 +1,7 @@
 # Select which version you prefer by defining QT5_VERSION and including this file
-# possible values now "5.2.0", "5.2.0+git%"
+# possible values now "5.2.1", "5.2.1+git%"
 
-QT5_VERSION ?= "5.2.0"
+QT5_VERSION ?= "5.2.1"
 
 PREFERRED_VERSION_qtbase-native = "${QT5_VERSION}"
 PREFERRED_VERSION_qtbase = "${QT5_VERSION}"
