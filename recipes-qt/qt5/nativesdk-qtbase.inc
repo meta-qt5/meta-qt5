@@ -178,8 +178,10 @@ do_install() {
     find -name "Makefile*" | xargs sed -i "s,(INSTALL_ROOT)${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE},(INSTALL_ROOT)${STAGING_DIR_NATIVE},g"
 
     # switch back the proper qmake
-    rm ${B}/bin/qmake
-    mv ${B}/bin/qmake-real ${B}/bin/qmake
+    if [ -e ${B}/bin/qmake-real ]; then
+        rm ${B}/bin/qmake
+        mv ${B}/bin/qmake-real ${B}/bin/qmake
+    fi
 
     oe_runmake install INSTALL_ROOT=${D}
 
