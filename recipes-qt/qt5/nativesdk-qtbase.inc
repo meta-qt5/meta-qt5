@@ -188,4 +188,8 @@ do_install() {
     # for modules which are still using syncqt and call qtPrepareTool(QMAKE_SYNCQT, syncqt)
     # e.g. qt3d, qtwayland
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
+
+    # remove things unused in nativesdk; things are statically link
+    # and we just use the binaries so drop all unused files
+    rm -rf ${D}${includedir} ${D}${libdir} ${D}${datadir}/doc
 }
