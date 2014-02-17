@@ -21,5 +21,11 @@ do_configure() {
 }
 
 do_install() {
+    # Fix install paths for all
+    find -name "Makefile*" | xargs sed -i "s,(INSTALL_ROOT)${STAGING_DIR_HOST},(INSTALL_ROOT),g"
+
     oe_runmake install INSTALL_ROOT=${D}
+
+    # remove things unused in nativesdk
+    rm -rf ${D}${libdir}
 }
