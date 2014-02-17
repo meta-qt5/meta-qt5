@@ -31,15 +31,27 @@ SRC_URI += " \
     file://0012-configure-bump-path-length-from-256-to-512-character.patch \
 "
 
-PACKAGES = "${PN}-tools-dbg ${PN}-tools"
+PACKAGES = "${PN}-tools-dbg ${PN}-tools-dev ${PN}-tools-staticdev ${PN}-tools"
 
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
+FILES_${PN}-tools-dev = " \
+    ${includedir} \
+    ${FILES_SOLIBSDEV} ${libdir}/*.la \
+    ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
+"
+
+FILES_${PN}-tools-staticdev = " \
+    ${libdir}/libQt5Bootstrap.a \
+"
+
 FILES_${PN}-tools-dbg = " \
+    ${libdir}/.debug \
     ${OE_QMAKE_PATH_BINS}/.debug \
 "
 
 FILES_${PN}-tools = " \
+    ${libdir}/lib*${SOLIBS} \
     ${OE_QMAKE_PATH_BINS}/* \
 "
 
@@ -189,7 +201,14 @@ do_install() {
     # e.g. qt3d, qtwayland
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
 
-    # remove things unused in nativesdk; things are statically link
-    # and we just use the binaries so drop all unused files
-    rm -rf ${D}${includedir} ${D}${libdir} ${D}${datadir}/doc
+    # remove things unused in nativesdk, we need the headers, Qt5Core
+    # and Qt5Bootstrap.
+    rm -rf ${D}${datadir}/doc \
+           ${D}/${OE_QMAKE_PATH_PLUGINS} \
+           ${D}${libdir}/cmake \
+           ${D}${libdir}/pkgconfig
+    find ${D}${libdir} -maxdepth 1 -name 'lib*' -and \
+                                   -not -name 'libQt5Core.so*' -and \
+                                   -not -name 'libQt5Bootstrap.a' \
+                                   -exec rm '{}' ';'
 }
