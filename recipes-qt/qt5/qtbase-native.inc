@@ -51,6 +51,7 @@ EXTRA_OECONF = " \
     -no-opengl \
     -no-openssl \
     -no-xcb \
+    -no-icu \
     -verbose \
     -release \
     -prefix ${OE_QMAKE_PATH_PREFIX} \
