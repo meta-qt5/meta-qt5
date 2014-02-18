@@ -203,7 +203,7 @@ do_install() {
 
     # remove things unused in nativesdk, we need the headers, Qt5Core
     # and Qt5Bootstrap.
-    rm -rf ${D}${datadir}/doc \
+    rm -rf ${D}${datadir} \
            ${D}/${OE_QMAKE_PATH_PLUGINS} \
            ${D}${libdir}/cmake \
            ${D}${libdir}/pkgconfig
