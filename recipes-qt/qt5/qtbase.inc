@@ -101,6 +101,7 @@ PACKAGECONFIG[openvg] = "-openvg,-no-openvg"
 PACKAGECONFIG[iconv] = "-iconv,-no-iconv,virtual/libiconv"
 PACKAGECONFIG[xkb] = "-xkb,-no-xkb,libxkbcommon"
 PACKAGECONFIG[evdev] = "-evdev,-no-evdev"
+PACKAGECONFIG[mtdev] = "-mtdev,-no-mtdev,mtdev"
 # depends on glib
 PACKAGECONFIG[fontconfig] = "-fontconfig,-no-fontconfig,fontconfig"
 PACKAGECONFIG[gtkstyle] = "-gtkstyle,-no-gtkstyle,gtk+"
