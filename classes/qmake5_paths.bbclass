@@ -5,7 +5,7 @@
 QT_DIR_NAME ?= "qt5"
 
 OE_QMAKE_PATH_PREFIX = "${prefix}"
-OE_QMAKE_PATH_HEADERS = "${includedir}"
+OE_QMAKE_PATH_HEADERS = "${includedir}/${QT_DIR_NAME}"
 OE_QMAKE_PATH_LIBS = "${libdir}"
 OE_QMAKE_PATH_ARCHDATA = "${libdir}"
 OE_QMAKE_PATH_DATA = "${datadir}"
