@@ -52,3 +52,5 @@ toolchain_create_sdk_env_script_append () {
     echo 'HostPrefix = ${SDKPATHNATIVE}' >> $qtconf
     echo 'HostBinaries = ${SDKPATHNATIVE}${OE_QMAKE_PATH_HOST_BINS}' >> $qtconf
 }
+
+PACKAGE_GROUP_qtcreator-debug = "packagegroup-qt5-qtcreator-debug"
