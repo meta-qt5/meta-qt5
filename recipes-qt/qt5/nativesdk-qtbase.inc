@@ -10,6 +10,8 @@ require nativesdk-qt5.inc
 # it's already included with newer oe-core, but include it here for dylan
 FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
+PR = "r1"
+
 # common with -native and target version
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
@@ -192,13 +194,11 @@ do_install() {
     # Fix install paths for all
     find -name "Makefile*" | xargs sed -i "s,(INSTALL_ROOT)${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE},(INSTALL_ROOT)${STAGING_DIR_NATIVE},g"
 
-    # switch back the proper qmake
-    if [ -e ${B}/bin/qmake-real ]; then
-        rm ${B}/bin/qmake
-        mv ${B}/bin/qmake-real ${B}/bin/qmake
-    fi
-
     oe_runmake install INSTALL_ROOT=${D}
+
+    # replace the native qmake installed above with nativesdk version
+    rm -rf ${D}${OE_QMAKE_PATH_HOST_BINS}/qmake
+    install -m 755 ${B}/bin/qmake-real ${D}${OE_QMAKE_PATH_HOST_BINS}/qmake
 
     # for modules which are still using syncqt and call qtPrepareTool(QMAKE_SYNCQT, syncqt)
     # e.g. qt3d, qtwayland
