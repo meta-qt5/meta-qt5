@@ -40,9 +40,11 @@ PACKAGECONFIG_FONTS ?= ""
 PACKAGECONFIG_SYSTEM ?= "jpeg libpng zlib"
 PACKAGECONFIG_MULTIMEDIA ?= "${@base_contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)}"
 PACKAGECONFIG_DISTRO ?= ""
+# Either release or debug, can be overridden in bbappends
+PACKAGECONFIG_RELEASE ?= "release"
 
 PACKAGECONFIG ??= " \
-    release \
+    ${PACKAGECONFIG_RELEASE} \
     dbus \
     udev \
     evdev \
@@ -58,6 +60,7 @@ PACKAGECONFIG ??= " \
 "
 
 PACKAGECONFIG[release] = "-release,-debug"
+PACKAGECONFIG[developer] = "-developer-build"
 PACKAGECONFIG[sm] = "-sm,-no-sm"
 PACKAGECONFIG[tests] = ",-nomake tests"
 PACKAGECONFIG[examples] = ",-nomake examples"
