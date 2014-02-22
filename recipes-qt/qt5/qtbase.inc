@@ -44,7 +44,7 @@ PACKAGECONFIG_DISTRO ?= ""
 PACKAGECONFIG_RELEASE ?= "release"
 # This is in qt5.inc, because qtwebkit-examples are using it to enable ca-certificates dependency
 # PACKAGECONFIG_OPENSSL ?= "openssl"
-PACKAGECONFIG_DEFAULT ?= "dbus udev evdev widgets"
+PACKAGECONFIG_DEFAULT ?= "dbus udev evdev widgets tools libs"
 
 PACKAGECONFIG ?= " \
     ${PACKAGECONFIG_RELEASE} \
@@ -62,8 +62,11 @@ PACKAGECONFIG ?= " \
 PACKAGECONFIG[release] = "-release,-debug"
 PACKAGECONFIG[developer] = "-developer-build"
 PACKAGECONFIG[sm] = "-sm,-no-sm"
-PACKAGECONFIG[tests] = ",-nomake tests"
-PACKAGECONFIG[examples] = ",-nomake examples"
+PACKAGECONFIG[tests] = "-make tests,-nomake tests"
+PACKAGECONFIG[examples] = "-make examples,-nomake examples"
+PACKAGECONFIG[tools] = "-make tools,-nomake tools"
+# only for completeness, configure will add libs even if you try to explicitly remove it
+PACKAGECONFIG[libs] = "-make libs,-nomake libs"
 # accessibility is required to compile qtquickcontrols
 PACKAGECONFIG[accessibility] = "-accessibility,-no-accessibility"
 PACKAGECONFIG[glib] = "-glib,-no-glib,glib-2.0"
