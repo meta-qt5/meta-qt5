@@ -16,7 +16,6 @@ SRC_URI += "\
 SRC_URI += "\
     file://0010-qmake-is-already-built-in-qtbase-native.patch \
     file://0011-Allow-building-a-separate-qmake-for-the-target.patch \
-    file://0012-qtbase-allow-build-of-examples.patch \
     file://0013-QOpenGLPaintDevice-sub-area-support.patch \
     file://0014-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
     file://0015-Fix-linuxfb-argument-mmsize-parsing.patch \
@@ -65,7 +64,7 @@ PACKAGECONFIG[release] = "-release,-debug"
 PACKAGECONFIG[developer] = "-developer-build"
 PACKAGECONFIG[sm] = "-sm,-no-sm"
 PACKAGECONFIG[tests] = "-make tests,-nomake tests"
-PACKAGECONFIG[examples] = "-make examples,-nomake examples"
+PACKAGECONFIG[examples] = "-make examples -compile-examples,-nomake examples"
 PACKAGECONFIG[tools] = "-make tools,-nomake tools"
 # only for completeness, configure will add libs even if you try to explicitly remove it
 PACKAGECONFIG[libs] = "-make libs,-nomake libs"
