@@ -7,4 +7,6 @@ do_install_append() {
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
 }
 
-SRCREV = "000ee3d503906c2c20f789b6b9dd95b8647405d0"
+QT_MODULE_BRANCH = "release"
+# v5.2.1 + 168 commits
+SRCREV = "08cbbde61778276ccdda73d89fd64d02c623779f"
