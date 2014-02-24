@@ -27,7 +27,7 @@ toolchain_create_sdk_env_script_append () {
     echo 'export QT_CONF_PATH=${SDKPATHNATIVE}${OE_QMAKE_PATH_HOST_BINS}/qt.conf' >> $script
 
     # make a symbolic link to mkspecs for compatibility with QTCreator
-    (cd ${SDK_OUTPUT}/${SDKTARGETSYSROOT}; \
+    (cd ${SDK_OUTPUT}/${SDKPATHNATIVE}; \
          ln -sf ${SDKTARGETSYSROOT}${libdir}/${QT_DIR_NAME}/mkspecs mkspecs;)
 
     # Generate a qt.conf file to be deployed with the SDK
