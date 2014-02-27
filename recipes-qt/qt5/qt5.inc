@@ -7,6 +7,8 @@ inherit qmake5
 ICU = "icu "
 ICU_powerpc = "pango"
 
+PACKAGECONFIG_OPENSSL ?= "openssl"
+
 QT_MODULE ?= "${BPN}"
 
 # we don't want conflicts with qt4

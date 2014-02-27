@@ -43,6 +43,8 @@ PACKAGECONFIG_FONTS ?= ""
 PACKAGECONFIG_SYSTEM ?= "jpeg libpng zlib"
 PACKAGECONFIG_MULTIMEDIA ?= "${@base_contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)}"
 PACKAGECONFIG_DISTRO ?= ""
+# This is in qt5.inc, because qtwebkit-examples are using it to enable ca-certificates dependency
+# PACKAGECONFIG_OPENSSL ?= "openssl"
 
 PACKAGECONFIG ??= " \
     release \
@@ -50,7 +52,7 @@ PACKAGECONFIG ??= " \
     udev \
     evdev \
     widgets \
-    openssl \
+    ${PACKAGECONFIG_OPENSSL} \
     ${PACKAGECONFIG_GL} \
     ${PACKAGECONFIG_FB} \
     ${PACKAGECONFIG_X11} \
