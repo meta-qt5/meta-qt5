@@ -130,9 +130,6 @@ QT_CONFIG_FLAGS += " \
     ${EXTRA_OECONF} \
 "
 
-# Qt uses atomic instructions not supported in thumb mode
-ARM_INSTRUCTION_SET = "arm"
-
 do_generate_qt_config_file_append() {
     cat >> ${QT_CONF_PATH} <<EOF
 
