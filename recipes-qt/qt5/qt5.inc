@@ -3,10 +3,6 @@
 
 inherit qmake5
 
-# Qt5 is dependent on icu for localization
-ICU = "icu "
-ICU_powerpc = "pango"
-
 PACKAGECONFIG_OPENSSL ?= "openssl"
 
 QT_MODULE ?= "${BPN}"

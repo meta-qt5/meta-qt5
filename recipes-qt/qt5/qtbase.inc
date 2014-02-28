@@ -116,7 +116,7 @@ PACKAGECONFIG[linuxfb] = "-linuxfb,-no-linuxfb"
 PACKAGECONFIG[mitshm] = "-mitshm,-no-mitshm,mitshm"
 PACKAGECONFIG[kms] = "-kms,-no-kms,kms"
 # needed for qtdeclarative (qtdeclarative.do_configure fails to find quick module without)
-PACKAGECONFIG[icu] = "-icu,-no-icu,${ICU}"
+PACKAGECONFIG[icu] = "-icu,-no-icu,icu"
 PACKAGECONFIG[udev] = "-libudev,-no-libudev,udev"
 # use -openssl-linked here to ensure that RDEPENDS for libcrypto and libssl are detected
 PACKAGECONFIG[openssl] = "-openssl-linked,-no-openssl,openssl"
