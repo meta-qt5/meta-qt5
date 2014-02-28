@@ -60,6 +60,12 @@ FILES_${PN}-tools = " \
     ${OE_QMAKE_PATH_BINS}/* \
 "
 
+# qttools binaries are placed in a subdir of bin in order to avoid
+# collisions with qt4. This would trigger debian.bbclass to rename the
+# package, since it doesn't detect binaries in subdirs. Explicitly
+# disable package auto-renaming for the tools-package.
+DEBIAN_NOAUTONAME_${PN}-tools = "1"
+
 QT_CONFIG_FLAGS += " \
     -reduce-relocations \
     -shared \
