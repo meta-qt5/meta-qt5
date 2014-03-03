@@ -1,6 +1,6 @@
 require qt5.inc
 
-DEPENDS += "qtbase"
+DEPENDS += "qtbase qtdeclarative qtwebkit qtxmlpatterns"
 
 SRC_URI += " \
     file://0002-assistant-help-fix-linking-of-dependent-libraries.patch \
