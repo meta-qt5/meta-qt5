@@ -17,6 +17,7 @@ SRC_URI += " \
     file://0001-xcbcommon-should-not-be-a-mandatory-dependency.patch \
     file://0002-Temporarily-patching-this-out-as-Qt5.0.0-does-not-ha.patch \
     file://0003-eglCreateImageKHR-requires-the-context-to-be-NULL.patch \
+    file://fix.missing.v8.public.api.patch \
 "
 
 QT_WAYLAND_CONFIG ?= "wayland-compositor"

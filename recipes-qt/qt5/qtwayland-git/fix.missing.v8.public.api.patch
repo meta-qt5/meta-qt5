@@ -1,0 +1,30 @@
+From b455f5acaec811b70ae3eb896c08a634909cb9d1 Mon Sep 17 00:00:00 2001
+From: Carsten Munk <carsten.munk@jollamobile.com>
+Date: Wed, 17 Jul 2013 07:28:04 +0000
+Subject: [PATCH] Fix Project ERROR: Module v8 has no public API. make[1]: ***
+ [sub-qml-compositor-make_first] Error 3
+
+Cherry-picked from:
+https://github.com/kvahlman/qtwayland/commit/b455f5acaec811b70ae3eb896c08a634909cb9d1
+
+Signed-off-by: Carsten Munk <carsten.munk@jollamobile.com>
+---
+ qtwayland/examples/qml-compositor/qml-compositor.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/examples/qml-compositor/qml-compositor.pro b/examples/qml-compositor/qml-compositor.pro
+index 0bc0b02..e397002 100644
+--- a/examples/qml-compositor/qml-compositor.pro
++++ b/examples/qml-compositor/qml-compositor.pro
+@@ -2,7 +2,7 @@ DEFINES += QT_COMPOSITOR_QUICK
+ 
+ LIBS += -L ../../lib
+ 
+-QT += quick qml v8
++QT += quick qml
+ QT += quick-private
+ 
+ QT += compositor
+-- 
+1.8.4
+
