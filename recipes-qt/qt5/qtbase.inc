@@ -18,7 +18,6 @@ SRC_URI += "\
     file://0011-Allow-building-a-separate-qmake-for-the-target.patch \
     file://0013-QOpenGLPaintDevice-sub-area-support.patch \
     file://0014-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
-    file://0015-Fix-linuxfb-argument-mmsize-parsing.patch \
     file://0016-eglfs-Fix-quad-coordinates.patch \
 "
 
