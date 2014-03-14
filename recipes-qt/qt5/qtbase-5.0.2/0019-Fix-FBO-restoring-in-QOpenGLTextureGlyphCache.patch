@@ -27,8 +27,8 @@ index 8822faf..022356a 100644
          return;
      }
  
-+    GLuint saveFbo;
-+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &saveFbo);
++    GLint oldFbo;
++    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFbo);
 +
      int oldWidth = m_textureResource->m_width;
      int oldHeight = m_textureResource->m_height;
@@ -38,7 +38,7 @@ index 8822faf..022356a 100644
      glDeleteTextures(1, &oldTexture);
  
 -    funcs.glBindFramebuffer(GL_FRAMEBUFFER, ctx->d_func()->current_fbo);
-+    funcs.glBindFramebuffer(GL_FRAMEBUFFER, saveFbo);
++    funcs.glBindFramebuffer(GL_FRAMEBUFFER, (GLuint)oldFbo);
  
      if (pex != 0) {
          glViewport(pex->x, pex->y, pex->width, pex->height);
