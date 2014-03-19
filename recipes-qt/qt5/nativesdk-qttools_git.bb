@@ -1,7 +1,10 @@
 require qt5-git.inc
 require ${PN}.inc
 
-SRCREV = "ad81f5720c4f4a1dac099cbe2f9d47ed3a9025b0"
+# prepend this again, because ${PN}.inc prepneds ${PN}
+FILESEXTRAPATHS =. "${FILE_DIRNAME}/${BPN}-git:"
+
+SRCREV = "e7b791c8bb5e64a4c786bf370b10366815af704f"
 
 # older copyright year than what e.g. qtbase is using now
 LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=4193e7f1d47a858f6b7c0f1ee66161de \

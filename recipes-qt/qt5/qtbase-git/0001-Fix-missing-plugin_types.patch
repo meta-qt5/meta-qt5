@@ -1,0 +1,30 @@
+From f0e01b788e86f24352ba14ad17c3f337f934467d Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Mon, 21 Apr 2014 15:09:23 +0200
+Subject: [PATCH] Fix missing plugin_types
+
+* bearer/generic was failing with:
+  Project ERROR: No module claims plugin type 'bearer'
+
+Change-Id: I90848856a8b0a4df52e599983cf7dde0bc0e6623
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ mkspecs/features/qt_module_pris.prf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mkspecs/features/qt_module_pris.prf b/mkspecs/features/qt_module_pris.prf
+index f31bc38..415e780 100644
+--- a/mkspecs/features/qt_module_pris.prf
++++ b/mkspecs/features/qt_module_pris.prf
+@@ -177,7 +177,7 @@ MODULE_FWD_PRI = $$mod_work_pfx/qt_lib_$${MODULE_ID}.pri
+         include($$mod_work_pfx/qt_lib_$${pri}.pri)
+     for(mod, mods_to_load) {
+         for(var, $$list(VERSION MAJOR_VERSION MINOR_VERSION PATCH_VERSION \
+-                        name depends module_config CONFIG DEFINES sources \
++                        name depends module_config plugin_types CONFIG DEFINES sources \
+                         includes bins libs libexecs plugins imports qml \
+                         rpath_link \
+                 )):defined(QT.$${mod}.$$var, var):cache(QT.$${mod}.$$var, transient)
+-- 
+1.9.1
+

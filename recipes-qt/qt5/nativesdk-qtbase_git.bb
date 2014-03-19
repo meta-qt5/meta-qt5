@@ -1,6 +1,9 @@
 require qt5-git.inc
 require ${PN}.inc
 
+# prepend this again, because ${PN}.inc prepneds ${PN}
+FILESEXTRAPATHS =. "${FILE_DIRNAME}/${BPN}-git:"
+
 SRC_URI = "\
     git://qt.gitorious.org/qt/${QT_MODULE}.git;branch=${QT_MODULE_BRANCH} \
 "
@@ -15,11 +18,15 @@ SRC_URI += "\
     file://0001-Revert-eglfs-Print-the-chosen-config-in-debug-mode.patch \
 "
 
-# target specific
-SRC_URI += "\
-    file://0005-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
-    file://0006-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
-    file://0007-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
+# common with native version
+SRC_URI += " \
+    file://0008-Always-build-uic.patch \
+"    
+
+# specific for nativesdk version
+SRC_URI += " \
+    file://0009-configure-preserve-built-qmake-and-swap-with-native-.patch \
+    file://0010-configure-bump-path-length-from-256-to-512-character.patch \
 "
 
 SRCREV = "207598fd8e69be34e8ba2c9db7720cb6003ea114"

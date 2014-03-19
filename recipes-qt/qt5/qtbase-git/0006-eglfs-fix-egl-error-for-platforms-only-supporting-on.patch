@@ -1,0 +1,72 @@
+From 2cb0f75bb9ab1e6709fe867887f9e6014a140356 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Wed, 5 Feb 2014 18:35:08 +0100
+Subject: [PATCH 06/10] eglfs: fix egl error for platforms only supporting one
+ window/surface
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+running qmlscene -platform eglfs <filename>.qml
+
+caused
+
+EGL Error : Could not create the egl surface: error = 0x3003
+
+Rebased version of [1-2]
+
+Upstream-Status: unknown
+
+[1] http://repository.timesys.com/buildsources/q/qt-everywhere-opensource/qt-everywhere-opensource-5.1.1/qt-everywhere-opensource-5.1.1-qeglfswindow.cpp.patch
+[2] https://github.com/prabindh/qt-configs/blob/master/qt5_1.0_Feb13/qeglfswindow.cpp.patch
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/plugins/platforms/eglfs/qeglfswindow.cpp | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/src/plugins/platforms/eglfs/qeglfswindow.cpp b/src/plugins/platforms/eglfs/qeglfswindow.cpp
+index 2d36c0b..854531e 100644
+--- a/src/plugins/platforms/eglfs/qeglfswindow.cpp
++++ b/src/plugins/platforms/eglfs/qeglfswindow.cpp
+@@ -74,6 +74,15 @@ void QEglFSWindow::create()
+ 
+     m_flags = Created;
+ 
++    static EGLSurface __singleWindowSurface;
++    if(QEglFSHooks::hooks() && ! QEglFSHooks::hooks()->hasCapability(QPlatformIntegration::MultipleWindows) && (__singleWindowSurface)) {
++        m_surface = __singleWindowSurface;
++#ifdef QEGL_EXTRA_DEBUG
++        qWarning("Surface recreate request, re-using %x\n", m_surface);
++#endif
++        return;
++    }
++
+     if (window()->type() == Qt::Desktop)
+         return;
+ 
+@@ -85,7 +94,7 @@ void QEglFSWindow::create()
+         if (isRaster() && screen->compositingWindow())
+             return;
+ 
+-#if !defined(Q_OS_ANDROID) || defined(Q_OS_ANDROID_NO_SDK)
++#if !defined(Q_OS_ANDROID) || defined(Q_OS_ANDROID_NO_SDK) || defined(EGL_API_FB)
+         // We can have either a single OpenGL window or multiple raster windows.
+         // Other combinations cannot work.
+         qFatal("EGLFS: OpenGL windows cannot be mixed with others.");
+@@ -105,6 +114,11 @@ void QEglFSWindow::create()
+ 
+     resetSurface();
+ 
++    if(QEglFSHooks::hooks() && !QEglFSHooks::hooks()->hasCapability(QPlatformIntegration::MultipleWindows))
++    {
++        __singleWindowSurface = m_surface;
++    }
++
+     screen->setPrimarySurface(m_surface);
+ 
+     if (isRaster()) {
+-- 
+1.9.1
+
