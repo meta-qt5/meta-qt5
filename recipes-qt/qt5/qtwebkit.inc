@@ -7,10 +7,11 @@ LIC_FILES_CHKSUM = "file://Source/WebCore/rendering/RenderApplet.h;endline=22;md
 
 DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt"
 
-PACKAGECONFIG ??= "gstreamer qtlocation qtsensors"
+PACKAGECONFIG ??= "gstreamer qtlocation qtmultimedia qtsensors"
 PACKAGECONFIG[gstreamer] = ",,gstreamer1.0 gstreamer1.0-plugins-base"
 PACKAGECONFIG[gstreamer010] = ",,gstreamer gst-plugins-base"
 PACKAGECONFIG[qtlocation] = ",,qtlocation"
+PACKAGECONFIG[qtmultimedia] = ",,qtmultimedia"
 PACKAGECONFIG[qtsensors] = ",,qtsensors"
 
 do_configure_prepend() {
@@ -20,6 +21,8 @@ do_configure_prepend() {
     sed -e 's/\s\(packagesExist(".*\<gstreamer-0.10\>.*")\)/ OE_GSTREAMER010_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
     # disable qtlocation test if it isn't enabled by PACKAGECONFIG
     sed -e 's/\s\(qtHaveModule(positioning)\)/ OE_QTLOCATION_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
+    # disable qtmultimedia test if it isn't enabled by PACKAGECONFIG
+    sed -e 's/(video):\(qtHaveModule(multimediawidgets)\)/(video):OE_QTMULTIMEDIA_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
     # disable qtsensors test if it isn't enabled by PACKAGECONFIG
     sed -e 's/\s\(qtHaveModule(sensors)\)/ OE_QTSENSORS_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
 }
@@ -27,6 +30,7 @@ do_configure_prepend() {
 EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'gstreamer', 'CONFIG+=OE_GSTREAMER_ENABLED', '', d)}"
 EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'gstreamer010', 'CONFIG+=OE_GSTREAMER010_ENABLED', '', d)}"
 EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'qtlocation', 'CONFIG+=OE_QTLOCATION_ENABLED', '', d)}"
+EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'qtmultimedia', 'CONFIG+=OE_QTMULTIMEDIA_ENABLED', '', d)}"
 EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'qtsensors', 'CONFIG+=OE_QTSENSORS_ENABLED', '', d)}"
 
 # qtwebkit gets terribly big when linking with all debug info, disable by default
