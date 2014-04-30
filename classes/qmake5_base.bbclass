@@ -171,7 +171,7 @@ qmake5_base_do_install() {
     # but we cannot remove sysroot override, because that's useful for pkg-config etc
     # In some cases like QtQmlDevTools in qtdeclarative, the sed above does not work,
     # fix them manually
-    if [ -d ${D}${STAGING_DIR_TARGET} ] ; then
+    if [ -d ${D}${STAGING_DIR_TARGET} ] && [ -n "${STAGING_DIR_TARGET}" ] ; then
         echo "Some files are installed in wrong directory ${D}${STAGING_DIR_TARGET}"
         cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
         rm -rf ${D}${STAGING_DIR_TARGET}
