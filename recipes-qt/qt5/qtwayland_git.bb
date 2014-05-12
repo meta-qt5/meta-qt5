@@ -9,3 +9,8 @@ SRCREV = "f9ebbd6c618488f9b671f5504528ced3350754fb"
 SRC_URI += " \
     file://0001-examples.pro-include-server-buffer-only-when-buildin.patch \
 "
+
+do_install_append() {
+    # do install files created by qtwaylandscanner
+    install ${B}/include/QtCompositor/5.2.1/QtCompositor/private/{qwayland-server-*,*protocol*}.h ${D}${includedir}/${QT_DIR_NAME}/QtCompositor/5.2.1/QtCompositor/private
+}
