@@ -12,5 +12,5 @@ SRC_URI += " \
 
 do_install_append() {
     # do install files created by qtwaylandscanner
-    install ${B}/include/QtCompositor/5.2.1/QtCompositor/private/{qwayland-server-*,*protocol*}.h ${D}${includedir}/${QT_DIR_NAME}/QtCompositor/5.2.1/QtCompositor/private
+    install ${B}/include/QtCompositor/5.3.0/QtCompositor/private/{qwayland-server-*,*protocol*}.h ${D}${includedir}/${QT_DIR_NAME}/QtCompositor/5.3.0/QtCompositor/private
 }
