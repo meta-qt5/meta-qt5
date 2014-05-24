@@ -67,7 +67,6 @@ RDEPENDS_${PN} += " \
     qtmultimedia-mkspecs \
     qtmultimedia-plugins \
     qtmultimedia-qmlplugins \
-    qtquickcontrols-qmlplugins \
     qtscript-dev \
     qtscript-mkspecs \
     qtsensors-dev \
@@ -87,4 +86,8 @@ RDEPENDS_${PN} += " \
     ${@base_contains('DISTRO_FEATURES', 'x11', '${USE_X11}', '', d)} \
     qtxmlpatterns-dev \
     qtxmlpatterns-mkspecs \
+"
+
+RRECOMMENDS_${PN} += " \
+    qtquickcontrols-qmlplugins \
 "
