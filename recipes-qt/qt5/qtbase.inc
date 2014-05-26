@@ -221,6 +221,9 @@ do_install_append() {
     if [ ! -d ${D}/${OE_QMAKE_PATH_LIBS}/fonts ]; then
         cp -a ${S}/lib/fonts ${D}/${OE_QMAKE_PATH_LIBS}
     fi
+
+    # Remove example.pro file as it is useless
+    rm -f ${D}${OE_QMAKE_PATH_EXAMPLES}/examples.pro	
 }
 
 PACKAGES =. " \
