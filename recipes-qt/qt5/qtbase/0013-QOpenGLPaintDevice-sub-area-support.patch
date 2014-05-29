@@ -1,4 +1,4 @@
-From 2fad0a6fa3c06577995ac44ed0a2a12eaef819c2 Mon Sep 17 00:00:00 2001
+From 3c7bfc66e6c84fe06b16dfa0b76ee71701e8d5b5 Mon Sep 17 00:00:00 2001
 From: Jani Hautakangas <jani.hautakangas@ixonos.com>
 Date: Thu, 16 May 2013 09:52:07 +0300
 Subject: [PATCH 13/14] QOpenGLPaintDevice sub-area support
@@ -14,13 +14,13 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  src/gui/opengl/qopenglpaintdevice.cpp       | 12 ++++++++++++
  src/gui/opengl/qopenglpaintdevice.h         |  2 ++
- src/gui/opengl/qopenglpaintengine.cpp       | 10 +++++++---
+ src/gui/opengl/qopenglpaintengine.cpp       |  9 +++++++--
  src/gui/opengl/qopenglpaintengine_p.h       |  1 +
  src/gui/opengl/qopengltextureglyphcache.cpp |  2 +-
- 5 files changed, 23 insertions(+), 4 deletions(-)
+ 5 files changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/src/gui/opengl/qopenglpaintdevice.cpp b/src/gui/opengl/qopenglpaintdevice.cpp
-index fa392d1..5df1762 100644
+index 6750458..034630a 100644
 --- a/src/gui/opengl/qopenglpaintdevice.cpp
 +++ b/src/gui/opengl/qopenglpaintdevice.cpp
 @@ -111,6 +111,7 @@ class QOpenGLPaintDevicePrivate
@@ -76,7 +76,7 @@ index c05571c..01eb1bc 100644
      void setSize(const QSize &size);
      void setDevicePixelRatio(qreal devicePixelRatio);
 diff --git a/src/gui/opengl/qopenglpaintengine.cpp b/src/gui/opengl/qopenglpaintengine.cpp
-index 0513551..f6aeb15 100644
+index 81a0d82..ce57261 100644
 --- a/src/gui/opengl/qopenglpaintengine.cpp
 +++ b/src/gui/opengl/qopenglpaintengine.cpp
 @@ -1985,7 +1985,10 @@ bool QOpenGL2PaintEngineEx::begin(QPaintDevice *pdev)
@@ -90,24 +90,24 @@ index 0513551..f6aeb15 100644
      d->width = sz.width();
      d->height = sz.height();
      d->mode = BrushDrawingMode;
-@@ -2073,7 +2076,7 @@ void QOpenGL2PaintEngineEx::ensureActive()
+@@ -2070,7 +2073,7 @@ void QOpenGL2PaintEngineEx::ensureActive()
          d->device->ensureActiveTarget();
  
          d->transferMode(BrushDrawingMode);
--        glViewport(0, 0, d->width, d->height);
-+        glViewport(d->x, d->y, d->width, d->height);
+-        d->funcs.glViewport(0, 0, d->width, d->height);
++        d->funcs.glViewport(d->x, d->y, d->width, d->height);
          d->needsSync = false;
          d->lastMaskTextureUsed = 0;
          d->shaderManager->setDirty();
-@@ -2116,6 +2119,7 @@ void QOpenGL2PaintEngineExPrivate::updateClipScissorTest()
+@@ -2113,6 +2116,7 @@ void QOpenGL2PaintEngineExPrivate::updateClipScissorTest()
      if (bounds == QRect(0, 0, width, height)) {
-         glDisable(GL_SCISSOR_TEST);
+         funcs.glDisable(GL_SCISSOR_TEST);
      } else {
 +        bounds = QRect(bounds.x(), bounds.y(), bounds.width(), bounds.height());
-         glEnable(GL_SCISSOR_TEST);
+         funcs.glEnable(GL_SCISSOR_TEST);
          setScissor(bounds);
      }
-@@ -2124,14 +2128,14 @@ void QOpenGL2PaintEngineExPrivate::updateClipScissorTest()
+@@ -2121,12 +2125,13 @@ void QOpenGL2PaintEngineExPrivate::updateClipScissorTest()
  
  void QOpenGL2PaintEngineExPrivate::setScissor(const QRect &rect)
  {
@@ -120,12 +120,10 @@ index 0513551..f6aeb15 100644
      }
 +    bottom += y;
      const int height = rect.height();
--
-     glScissor(left, bottom, width, height);
- }
  
+     funcs.glScissor(left, bottom, width, height);
 diff --git a/src/gui/opengl/qopenglpaintengine_p.h b/src/gui/opengl/qopenglpaintengine_p.h
-index d51f0e5..0d4b38d 100644
+index 4f0e2e5..f211de1 100644
 --- a/src/gui/opengl/qopenglpaintengine_p.h
 +++ b/src/gui/opengl/qopenglpaintengine_p.h
 @@ -264,6 +264,7 @@ public:
@@ -137,18 +135,18 @@ index d51f0e5..0d4b38d 100644
      QOpenGLContext *ctx;
      EngineMode mode;
 diff --git a/src/gui/opengl/qopengltextureglyphcache.cpp b/src/gui/opengl/qopengltextureglyphcache.cpp
-index 3b62d1d..a5d1f7e 100644
+index ac88d9d..6c77f10 100644
 --- a/src/gui/opengl/qopengltextureglyphcache.cpp
 +++ b/src/gui/opengl/qopengltextureglyphcache.cpp
-@@ -273,7 +273,7 @@ void QOpenGLTextureGlyphCache::resizeTextureData(int width, int height)
-     funcs.glBindFramebuffer(GL_FRAMEBUFFER, (GLuint)oldFbo);
+@@ -315,7 +315,7 @@ void QOpenGLTextureGlyphCache::resizeTextureData(int width, int height)
+     funcs->glBindFramebuffer(GL_FRAMEBUFFER, (GLuint)oldFbo);
  
      if (pex != 0) {
--        glViewport(0, 0, pex->width, pex->height);
-+        glViewport(pex->x, pex->y, pex->width, pex->height);
+-        funcs->glViewport(0, 0, pex->width, pex->height);
++        funcs->glViewport(pex->x, pex->y, pex->width, pex->height);
          pex->updateClipScissorTest();
      } else {
-         m_blitProgram->disableAttributeArray(int(QT_VERTEX_COORDS_ATTR));
+         if (m_vao.isCreated()) {
 -- 
-1.8.5.3
+1.9.3
 

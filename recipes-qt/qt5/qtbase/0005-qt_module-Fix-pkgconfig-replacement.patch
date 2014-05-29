@@ -1,4 +1,4 @@
-From 7999eeb3f2ab1150aa301ec26ae9bf0788d09c9e Mon Sep 17 00:00:00 2001
+From 4d690dbc278063648434b0f02bdb1b6f4623b285 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
 Subject: [PATCH 05/14] qt_module: Fix pkgconfig replacement
@@ -47,10 +47,10 @@ Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
  1 file changed, 13 insertions(+), 7 deletions(-)
 
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 11509ee..be9b929 100644
+index 2134077..a88b8cc 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
-@@ -135,30 +135,36 @@ load(qt_installs)
+@@ -170,30 +170,36 @@ load(qt_installs)
      rplbase = $$dirname(_QMAKE_SUPER_CACHE_)/[^/][^/]*
  else: \
      rplbase = $$MODULE_BASE_OUTDIR
@@ -75,7 +75,7 @@ index 11509ee..be9b929 100644
 +lafile_replace.CONFIG = path
 +QMAKE_PRL_INSTALL_REPLACE += lib_replace lafile_replace
  
- unix|win32-g++* {
+ unix|mingw {
     CONFIG += create_pc
     QMAKE_PKGCONFIG_LIBDIR = $$lib_replace.replace
 -   QMAKE_PKGCONFIG_INCDIR = $$include_replace.replace
@@ -93,7 +93,7 @@ index 11509ee..be9b929 100644
 +   QMAKE_LIBTOOL_INSTALL_REPLACE += lib_replace lafile_replace
  }
  
- unix|win32-g++* {
+ unix|mingw {
 -- 
-1.8.5.3
+1.9.3
 

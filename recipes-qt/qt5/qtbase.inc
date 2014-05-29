@@ -11,6 +11,8 @@ SRC_URI += "\
     file://0007-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
     file://0008-configure-make-pulseaudio-alsa-freetype-a-configurab.patch \
     file://0009-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-determ.patch \
+    file://0015-Fix-missing-plugin_types.patch \
+    file://0016-Revert-eglfs-Print-the-chosen-config-in-debug-mode.patch \
 "
 
 SRC_URI += "\
@@ -18,7 +20,7 @@ SRC_URI += "\
     file://0011-Allow-building-a-separate-qmake-for-the-target.patch \
     file://0013-QOpenGLPaintDevice-sub-area-support.patch \
     file://0014-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
-    file://0016-eglfs-Fix-quad-coordinates.patch \
+    file://0008-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
 "
 
 DEPENDS += "qtbase-native"
@@ -126,7 +128,6 @@ PACKAGECONFIG[nis] = "-nis,-no-nis"
 PACKAGECONFIG[widgets] = "-widgets,-no-widgets"
 
 QT_CONFIG_FLAGS += " \
-    -reduce-relocations \
     -shared \
     -silent \
     -no-pch \

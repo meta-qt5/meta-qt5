@@ -1,4 +1,4 @@
-From a5150c9701d5b2e6c77e521544034ea732d2266b Mon Sep 17 00:00:00 2001
+From 5eb3dd427bca8bbc13b7554e8e21993b2fc708e7 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.jansa@gmail.com>
 Date: Wed, 11 Sep 2013 18:30:08 +0200
 Subject: [PATCH 1/2] Allow to build only lrelease + lupdate + lconvert
@@ -14,9 +14,9 @@ Signed-off-by: Martin Jansa <Martin.jansa@gmail.com>
  examples/examples.pro     |  4 ++--
  src/designer/src/src.pro  | 16 +++++++++-------
  src/linguist/linguist.pro |  2 +-
- src/src.pro               | 10 ++++++----
- tests/auto/auto.pro       | 22 ++++++++++++----------
- 5 files changed, 30 insertions(+), 24 deletions(-)
+ src/src.pro               | 14 ++++++++------
+ tests/auto/auto.pro       | 24 +++++++++++++-----------
+ 5 files changed, 33 insertions(+), 27 deletions(-)
 
 diff --git a/examples/examples.pro b/examples/examples.pro
 index 4955969..8e86419 100644
@@ -61,7 +61,7 @@ index e02ca8e..49527c5 100644
      components \
      designer \
 diff --git a/src/linguist/linguist.pro b/src/linguist/linguist.pro
-index 2979a23..663bdd5 100644
+index 3a70580..a977878 100644
 --- a/src/linguist/linguist.pro
 +++ b/src/linguist/linguist.pro
 @@ -3,7 +3,7 @@ SUBDIRS  = \
@@ -74,7 +74,7 @@ index 2979a23..663bdd5 100644
  qtNomakeTools( \
      linguist \
 diff --git a/src/src.pro b/src/src.pro
-index 866a199..ec08874 100644
+index a07a3bb..4c6b463 100644
 --- a/src/src.pro
 +++ b/src/src.pro
 @@ -4,10 +4,12 @@ qtHaveModule(widgets) {
@@ -82,7 +82,7 @@ index 866a199..ec08874 100644
          message("Some graphics-related tools are unavailable without PNG support")
      } else {
 -        SUBDIRS = assistant \
-+        !linguistonly { 
++        !linguistonly {
 +            SUBDIRS = assistant \
                    pixeltool \
 -                  qtestlib \
@@ -93,6 +93,15 @@ index 866a199..ec08874 100644
  #    unix:!mac:!embedded:!qpa:SUBDIRS += qtconfig
  
          linguist.depends = designer
+@@ -15,7 +17,7 @@ qtHaveModule(widgets) {
+ }
+ 
+ SUBDIRS += linguist
+-if(!android|android_app):!ios: SUBDIRS += qtpaths
++!linguistonly:if(!android|android_app):!ios: SUBDIRS += qtpaths
+ 
+ mac {
+     SUBDIRS += macdeployqt
 @@ -25,7 +27,7 @@ android {
      SUBDIRS += androiddeployqt
  }
@@ -101,12 +110,18 @@ index 866a199..ec08874 100644
 +!linguistonly:qtHaveModule(dbus): SUBDIRS += qdbus
  
  win32|winrt:SUBDIRS += windeployqt
+ winrt:SUBDIRS += winrtrunner qtd3dservice
+@@ -36,4 +38,4 @@ qtNomakeTools( \
+     macdeployqt \
+ )
  
+-!android:!ios:!qnx:!wince*:!winrt*:SUBDIRS += qtdiag
++!linguistonly:!android:!ios:!qnx:!wince*:!winrt*:SUBDIRS += qtdiag
 diff --git a/tests/auto/auto.pro b/tests/auto/auto.pro
-index eaf440b..1778ad1 100644
+index c3acfe3..f2f88f7 100644
 --- a/tests/auto/auto.pro
 +++ b/tests/auto/auto.pro
-@@ -1,14 +1,16 @@
+@@ -1,15 +1,17 @@
  TEMPLATE=subdirs
 -SUBDIRS=\
 -    linguist \
@@ -117,7 +132,8 @@ index eaf440b..1778ad1 100644
 -    qhelpindexmodel \
 -    qhelpprojectdata \
 -    cmake \
--    installed_cmake
+-    installed_cmake \
+-    qtdiag
 +!linguistonly {
 +    SUBDIRS=\
 +        linguist \
@@ -129,10 +145,11 @@ index eaf440b..1778ad1 100644
 +        qhelpprojectdata \
 +        cmake \
 +        installed_cmake
++        qtdiag
 +}
  
  installed_cmake.depends = cmake
  
 -- 
-1.8.5.3
+1.9.3
 
