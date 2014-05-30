@@ -56,6 +56,9 @@ RDEPENDS_${PN} += " \
     qtdeclarative-plugins \
     qtdeclarative-qmlplugins \
     qtdeclarative-staticdev \
+    qtenginio-dev \
+    qtenginio-mkspecs \
+    qtenginio-qmlplugins \
     qtgraphicaleffects-qmlplugins \
     qtimageformats-dev \
     qtimageformats-plugins \
@@ -84,6 +87,9 @@ RDEPENDS_${PN} += " \
     ${@base_contains('DISTRO_FEATURES', 'wayland', '${USE_WAYLAND}', '', d)} \
     ${@base_contains('BBFILE_COLLECTIONS', 'ruby-layer', '${USE_RUBY}', '', d)} \
     ${@base_contains('DISTRO_FEATURES', 'x11', '${USE_X11}', '', d)} \
+    qtwebsockets-dev \
+    qtwebsockets-mkspecs \
+    qtwebsockets-qmlplugins \
     qtxmlpatterns-dev \
     qtxmlpatterns-mkspecs \
 "
