@@ -4,7 +4,7 @@ require ${PN}.inc
 # qtwayland wasn't released yet, last tag before this SRCREV is 5.0.0-beta1
 # qt5-git PV is only to indicate that this recipe is compatible with qt5 5.2.1
 
-SRCREV = "a237778666666ab77c4e8e6b501cf0fbe7c9223e"
+SRCREV = "98dca3b54f52f08117c1e0d3a1b4826ed12ef23f"
 
 # wayland-scanner and qtwaylandscanner must be in same path to work properly
 do_install_append() {

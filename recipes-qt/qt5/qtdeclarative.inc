@@ -2,7 +2,6 @@ require qt5.inc
 
 SRC_URI += " \
     file://0001-qmltestexample-fix-link.patch \
-    file://0002-Fix-improper-antialiasing-property-behavior.patch \
 "
 
 # older copyright year than what e.g. qtbase is using now

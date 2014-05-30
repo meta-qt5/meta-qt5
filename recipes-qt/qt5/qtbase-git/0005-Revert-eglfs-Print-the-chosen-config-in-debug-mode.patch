@@ -1,7 +1,7 @@
-From 91b185d1f4843d22d42461c0aee4cd0f5393bbc8 Mon Sep 17 00:00:00 2001
+From 22775e5f0b1097964062fbcf1805a841f971de34 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 21 Apr 2014 19:22:04 +0200
-Subject: [PATCH] Revert "eglfs: Print the chosen config in debug mode"
+Subject: [PATCH 5/8] Revert "eglfs: Print the chosen config in debug mode"
 
 This reverts commit dc685cf6331f5fb46285cf10d6464c2ecf41f73e.
 ---
@@ -10,10 +10,10 @@ This reverts commit dc685cf6331f5fb46285cf10d6464c2ecf41f73e.
  2 files changed, 3 insertions(+), 8 deletions(-)
 
 diff --git a/src/platformsupport/eglconvenience/qeglconvenience.cpp b/src/platformsupport/eglconvenience/qeglconvenience.cpp
-index e6624fb..3870f6c 100644
+index 5eed470..39c7c1f 100644
 --- a/src/platformsupport/eglconvenience/qeglconvenience.cpp
 +++ b/src/platformsupport/eglconvenience/qeglconvenience.cpp
-@@ -437,9 +437,11 @@ void q_printEglConfig(EGLDisplay display, EGLConfig config)
+@@ -451,9 +451,11 @@ void q_printEglConfig(EGLDisplay display, EGLConfig config)
      for (index = 0; attrs[index].attr != -1; ++index) {
          EGLint value;
          if (eglGetConfigAttrib(display, config, attrs[index].attr, &value)) {
@@ -52,5 +52,5 @@ index eec6463..4a7c69b 100644
      // Make the context current to ensure the GL version query works. This needs a surface too.
      const EGLint pbufferAttributes[] = {
 -- 
-1.9.1
+2.0.0
 

@@ -11,13 +11,13 @@ SRC_URI += "\
     file://0002-Add-external-hostbindir-option.patch \
     file://0003-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0004-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
-    file://0001-Fix-missing-plugin_types.patch \
-    file://0001-Revert-eglfs-Print-the-chosen-config-in-debug-mode.patch \
+    file://0005-Revert-eglfs-Print-the-chosen-config-in-debug-mode.patch \
+    file://0001-Revert-Use-the-gcc-feature-in-simd.prf.patch \
 "
 
 # specific for native version
 SRC_URI += " \
-    file://0008-Always-build-uic.patch \
+    file://0006-Always-build-uic.patch \
 "
 
 do_install_append() {
@@ -26,4 +26,4 @@ do_install_append() {
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
 }
 
-SRCREV = "207598fd8e69be34e8ba2c9db7720cb6003ea114"
+SRCREV = "267ba8b63e0fbf02cde4d2709397ed0e12f34ee2"

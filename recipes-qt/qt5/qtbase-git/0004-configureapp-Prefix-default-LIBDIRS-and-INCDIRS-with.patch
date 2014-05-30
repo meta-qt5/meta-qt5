@@ -1,7 +1,7 @@
-From a39f5e64b7b5a31e7e5cd988b5f967ce6cf02990 Mon Sep 17 00:00:00 2001
+From 83205b1344e57e2cb0292cf1d276e40c7f45ca32 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 22:33:33 +0200
-Subject: [PATCH 04/10] configureapp: Prefix default LIBDIRS and INCDIRS with
+Subject: [PATCH 4/8] configureapp: Prefix default LIBDIRS and INCDIRS with
  SYSROOT
 
 Upstream-Status: Pending
@@ -11,7 +11,7 @@ Upstream-Status: Pending
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index 540708b..45f4a1e 100644
+index 7e61845..29c6358 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
 @@ -3370,8 +3370,8 @@ void Configure::generateQConfigPri()
@@ -26,5 +26,5 @@ index 540708b..45f4a1e 100644
          configStream << "}" << endl;
          configStream << "QT_CONFIG += " << qtConfig.join(' ') << endl;
 -- 
-1.9.1
+2.0.0
 

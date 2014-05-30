@@ -1,7 +1,7 @@
-From 2cb0f75bb9ab1e6709fe867887f9e6014a140356 Mon Sep 17 00:00:00 2001
+From cc8bd33740ee16b29e0801dbc2228314ef3cef2f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 5 Feb 2014 18:35:08 +0100
-Subject: [PATCH 06/10] eglfs: fix egl error for platforms only supporting one
+Subject: [PATCH 7/8] eglfs: fix egl error for platforms only supporting one
  window/surface
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -68,5 +68,5 @@ index 2d36c0b..854531e 100644
  
      if (isRaster()) {
 -- 
-1.9.1
+2.0.0
 

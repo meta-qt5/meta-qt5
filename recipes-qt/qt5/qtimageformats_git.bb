@@ -1,7 +1,7 @@
 require qt5-git.inc
 require ${PN}.inc
 
-SRCREV = "554d617762c86964dfa074074304993ccdfbe2c9"
+SRCREV = "bcc7909dfe9d89f793919bc96abdfd6b704c4c0e"
 
 # older copyright year than what e.g. qtbase is using now
 LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=4193e7f1d47a858f6b7c0f1ee66161de \

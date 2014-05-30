@@ -1,4 +1,4 @@
-From 90a2e92062fc67fa54be0f5596606ce2bc21f772 Mon Sep 17 00:00:00 2001
+From 50fdb63c074138f783a448bc2db97b6f0ccfefea Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.jansa@gmail.com>
 Date: Wed, 11 Sep 2013 18:30:08 +0200
 Subject: [PATCH 1/2] Allow to build only lrelease + lupdate + lconvert
@@ -74,7 +74,7 @@ index 3a70580..a977878 100644
  qtNomakeTools( \
      linguist \
 diff --git a/src/src.pro b/src/src.pro
-index 861d06d..3438f9a 100644
+index a486d65..393eac2 100644
 --- a/src/src.pro
 +++ b/src/src.pro
 @@ -4,10 +4,12 @@ qtHaveModule(widgets) {
@@ -97,12 +97,12 @@ index 861d06d..3438f9a 100644
  }
  
  SUBDIRS += linguist
--!android|android_app: SUBDIRS += qtpaths
-+!linguistonly:!android|android_app: SUBDIRS += qtpaths
+-if(!android|android_app):!ios: SUBDIRS += qtpaths
++if(!android|android_app):!linguistonly:!ios: SUBDIRS += qtpaths
  
  mac {
      SUBDIRS += macdeployqt
-@@ -25,7 +27,7 @@ android {
+@@ -25,11 +27,11 @@ android {
      SUBDIRS += androiddeployqt
  }
  
@@ -111,12 +111,11 @@ index 861d06d..3438f9a 100644
  
  win32|winrt:SUBDIRS += windeployqt
  winrt:SUBDIRS += winrtrunner qtd3dservice
-@@ -36,4 +38,4 @@ qtNomakeTools( \
-     macdeployqt \
- )
+-qtHaveModule(gui):!android:!ios:!qnx:!wince*:!winrt*:SUBDIRS += qtdiag
++!linguistonly:qtHaveModule(gui):!android:!ios:!qnx:!wince*:!winrt*:SUBDIRS += qtdiag
  
--!android:!ios:!qnx:!wince*:!winrt*:SUBDIRS += qtdiag
-+!linguistonly:!android:!ios:!qnx:!wince*:!winrt*:SUBDIRS += qtdiag
+ qtNomakeTools( \
+     pixeltool \
 diff --git a/tests/auto/auto.pro b/tests/auto/auto.pro
 index c3acfe3..b48e711 100644
 --- a/tests/auto/auto.pro
@@ -151,5 +150,5 @@ index c3acfe3..b48e711 100644
  installed_cmake.depends = cmake
  
 -- 
-1.9.1
+2.0.0
 
