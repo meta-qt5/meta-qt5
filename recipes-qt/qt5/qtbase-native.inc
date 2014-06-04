@@ -7,8 +7,7 @@ QT_MODULE = "qtbase"
 
 require qt5-native.inc
 
-# common with target version
-# common with -native and target version
+# common with nativesdk- and target version
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
@@ -19,13 +18,17 @@ SRC_URI += "\
     file://0007-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
     file://0008-configure-make-pulseaudio-alsa-freetype-a-configurab.patch \
     file://0009-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-determ.patch \
-    file://0015-Fix-missing-plugin_types.patch \
-    file://0016-Revert-eglfs-Print-the-chosen-config-in-debug-mode.patch \
+    file://0010-Fix-missing-plugin_types.patch \
+    file://0011-Revert-eglfs-Print-the-chosen-config-in-debug-mode.patch \
+    file://0012-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
+    file://0013-configure-bump-path-length-from-256-to-512-character.patch \
+    file://0014-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0015-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
 "
 
-# specific for native version
+# common with nativesdk- version
 SRC_URI += " \
-    file://0010-Always-build-uic.patch \
+    file://0016-Always-build-uic.patch \
 "
 
 QT_CONF_PATH = "${B}/qt.conf"

@@ -1,7 +1,7 @@
-From 3923edc900d1b3dd23e0a6af3a32255707cd497c Mon Sep 17 00:00:00 2001
+From 8cca7892a65992369bb50a965293ebd2198ce40a Mon Sep 17 00:00:00 2001
 From: Paul Eggleton <paul.eggleton@linux.intel.com>
 Date: Tue, 28 Feb 2012 15:10:24 +0000
-Subject: [PATCH 08/14] configure: make pulseaudio, alsa, freetype a
+Subject: [PATCH 08/17] configure: make pulseaudio, alsa, freetype a
  configurable option
 
 Allows disabling pulseaudio, alsa, freetype support at configure time
@@ -16,10 +16,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 21 insertions(+)
 
 diff --git a/configure b/configure
-index 13dd619..66c2ae0 100755
+index 341a01b..7d33403 100755
 --- a/configure
 +++ b/configure
-@@ -1810,6 +1810,27 @@ while [ "$#" -gt 0 ]; do
+@@ -1826,6 +1826,27 @@ while [ "$#" -gt 0 ]; do
              UNKNOWN_OPT=yes
          fi
          ;;
@@ -48,5 +48,5 @@ index 13dd619..66c2ae0 100755
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_QGTKSTYLE="$VAL"
 -- 
-1.8.5.3
+2.0.0
 

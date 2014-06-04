@@ -1,7 +1,7 @@
-From 63313ba681ad5bb0ef83c3b8908387939c2b41d5 Mon Sep 17 00:00:00 2001
+From 2fd1d381e0202296303f296965467f3252d72e25 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Mon, 11 Nov 2013 20:27:30 -0500
-Subject: [PATCH 12/12] configure: bump path length from 256 to 512 characters
+Subject: [PATCH 13/17] configure: bump path length from 256 to 512 characters
 
 Increase the path length that gets hardcoded into generated config.cpp file
 from 256 to 512 characters, as nativesdk path can be quite long.
@@ -12,10 +12,10 @@ Signed-off-by: Denys Dmytriyenko <denys@ti.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index d423cce..1ea4102 100755
+index 7d33403..53eb65d 100755
 --- a/configure
 +++ b/configure
-@@ -3823,7 +3823,7 @@ static const char qt_configure_licensed_products_str [256 + 12] = "qt_lcnsprod=$
+@@ -3578,7 +3578,7 @@ static const char qt_configure_licensed_products_str [256 + 12] = "qt_lcnsprod=$
  static const char qt_configure_installation          [12+11]    = "qt_instdate=`date +%Y-%m-%d`";
  
  /* Installation Info */
@@ -25,5 +25,5 @@ index d423cce..1ea4102 100755
      "qt_prfxpath=$QT_SYSROOT_PREFIX",
      "qt_docspath=$QT_SYSROOT_DOCS",
 -- 
-1.8.5.3
+2.0.0
 

@@ -1,7 +1,7 @@
-From 3c7bfc66e6c84fe06b16dfa0b76ee71701e8d5b5 Mon Sep 17 00:00:00 2001
+From d252513e388358e52865a29374840327369cb479 Mon Sep 17 00:00:00 2001
 From: Jani Hautakangas <jani.hautakangas@ixonos.com>
 Date: Thu, 16 May 2013 09:52:07 +0300
-Subject: [PATCH 13/14] QOpenGLPaintDevice sub-area support
+Subject: [PATCH 14/17] QOpenGLPaintDevice sub-area support
 
 Allows creating QOpenGLPaintDevice targetting sub-area
 of binded framebuffer.
@@ -148,5 +148,5 @@ index ac88d9d..6c77f10 100644
      } else {
          if (m_vao.isCreated()) {
 -- 
-1.9.3
+2.0.0
 

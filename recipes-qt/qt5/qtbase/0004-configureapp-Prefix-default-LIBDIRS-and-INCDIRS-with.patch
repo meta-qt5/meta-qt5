@@ -1,7 +1,7 @@
-From 698f073fb8cc6dc1ced277b6ae2056cb9d02f2d5 Mon Sep 17 00:00:00 2001
+From 15b871b694cead18fcb750c0bb393440ea929e06 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 22:33:33 +0200
-Subject: [PATCH 04/14] configureapp: Prefix default LIBDIRS and INCDIRS with
+Subject: [PATCH 04/17] configureapp: Prefix default LIBDIRS and INCDIRS with
  SYSROOT
 
 Upstream-Status: Pending
@@ -10,10 +10,10 @@ Upstream-Status: Pending
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index 50a192b..46eabe4 100644
+index eb472db..808c8dd 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
-@@ -3213,8 +3213,8 @@ void Configure::generateQConfigPri()
+@@ -3344,8 +3344,8 @@ void Configure::generateQConfigPri()
          configStream << "    QT_ARCH = " << dictionary["QT_ARCH"] << endl;
          if (dictionary.contains("XQMAKESPEC") && !dictionary["XQMAKESPEC"].startsWith("wince")) {
              // FIXME: add detection
@@ -23,7 +23,7 @@ index 50a192b..46eabe4 100644
 +            configStream << "    QMAKE_DEFAULT_INCDIRS = $$[QT_SYSROOT]/usr/include $$[QT_SYSROOT]/usr/local/include" << endl;
          }
          configStream << "}" << endl;
-         if (dictionary["QT_EDITION"].contains("OPENSOURCE"))
+         configStream << "QT_CONFIG += " << qtConfig.join(' ') << endl;
 -- 
-1.8.5.3
+2.0.0
 

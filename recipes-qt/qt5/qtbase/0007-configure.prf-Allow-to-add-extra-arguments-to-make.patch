@@ -1,7 +1,7 @@
-From 828eecd8f361cb965bd40f535435efa91665c8e5 Mon Sep 17 00:00:00 2001
+From 28fa609f9726993dd5b52de45c3458a1bdff6149 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Thu, 9 May 2013 10:06:50 +0200
-Subject: [PATCH 07/14] configure.prf: Allow to add extra arguments to make
+Subject: [PATCH 07/17] configure.prf: Allow to add extra arguments to make
 
 * sometimes we would like to add -e or define some variable and respect it from both
   Makefiles used in configure tests and also Makefiles to build the application
@@ -14,11 +14,11 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
-index 39144e7..de48b07 100644
+index fe41c54..e2db923 100644
 --- a/mkspecs/features/configure.prf
 +++ b/mkspecs/features/configure.prf
-@@ -54,12 +54,12 @@ defineTest(qtCompileTest) {
-     qmake_configs = "\"CONFIG -= qt debug_and_release app_bundle lib_bundle\""
+@@ -60,12 +60,12 @@ defineTest(qtCompileTest) {
+     }
  
      # Clean up after previous run
 -    exists($$test_out_dir/Makefile):qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE distclean")
@@ -33,5 +33,5 @@ index 39144e7..de48b07 100644
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 -- 
-1.8.5.3
+2.0.0
 

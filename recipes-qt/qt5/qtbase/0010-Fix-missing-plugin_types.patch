@@ -1,7 +1,7 @@
-From f0e01b788e86f24352ba14ad17c3f337f934467d Mon Sep 17 00:00:00 2001
+From 92cd73cb679dec203484cd76deff50cf329d8c44 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 21 Apr 2014 15:09:23 +0200
-Subject: [PATCH] Fix missing plugin_types
+Subject: [PATCH 10/17] Fix missing plugin_types
 
 * bearer/generic was failing with:
   Project ERROR: No module claims plugin type 'bearer'
@@ -26,5 +26,5 @@ index f31bc38..415e780 100644
                          rpath_link \
                  )):defined(QT.$${mod}.$$var, var):cache(QT.$${mod}.$$var, transient)
 -- 
-1.9.1
+2.0.0
 

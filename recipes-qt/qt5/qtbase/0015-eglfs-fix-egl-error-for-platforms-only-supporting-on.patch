@@ -1,7 +1,7 @@
-From c8995c6eb6cf4bfa8daf1e3e96bd4885a096f405 Mon Sep 17 00:00:00 2001
+From c209e7648bc0c59707fe18874789a826f8beb47b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 5 Feb 2014 18:35:08 +0100
-Subject: [PATCH 14/14] eglfs: fix egl error for platforms only supporting one
+Subject: [PATCH 15/17] eglfs: fix egl error for platforms only supporting one
  window/surface
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -26,12 +26,12 @@ Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
  1 file changed, 15 insertions(+)
 
 diff --git a/src/plugins/platforms/eglfs/qeglfswindow.cpp b/src/plugins/platforms/eglfs/qeglfswindow.cpp
-index bba00da..567820c 100644
+index 2d36c0b..f2b68d3 100644
 --- a/src/plugins/platforms/eglfs/qeglfswindow.cpp
 +++ b/src/plugins/platforms/eglfs/qeglfswindow.cpp
-@@ -87,6 +87,16 @@ void QEglFSWindow::create()
-     if (m_flags.testFlag(Created))
-         return;
+@@ -72,6 +72,16 @@ void QEglFSWindow::create()
+ 
+     QEGLPlatformWindow::create();
  
 +    static EGLSurface __singleWindowSurface;
 +    if(QEglFSHooks::hooks() && !QEglFSHooks::hooks()->hasCapability(QPlatformIntegration::MultipleWindows) && (__singleWindowSurface))
@@ -44,9 +44,9 @@ index bba00da..567820c 100644
 +    }
 +
      m_flags = Created;
-     m_wid = newWId();
  
-@@ -130,6 +140,11 @@ void QEglFSWindow::create()
+     if (window()->type() == Qt::Desktop)
+@@ -105,6 +115,11 @@ void QEglFSWindow::create()
  
      resetSurface();
  
@@ -57,7 +57,7 @@ index bba00da..567820c 100644
 +
      screen->setPrimarySurface(m_surface);
  
-     if (m_flags.testFlag(IsRaster)) {
+     if (isRaster()) {
 -- 
-1.8.5.3
+2.0.0
 
