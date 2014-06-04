@@ -1,10 +1,7 @@
-From 9d33599f12787f85a19e8147604f919ac40c02c1 Mon Sep 17 00:00:00 2001
+From 8d8db9db8518289f4c1856dd3062c2e324c5c9be Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 4 Jun 2014 15:26:11 +0200
-Subject: [PATCH] Revert "Use the "gcc" feature in simd.prf"
-
-It's causing linker issues, see my comment in:
-https://bugreports.qt-project.org/browse/QTBUG-38544
+Subject: [PATCH 10/12] Revert "Use the "gcc" feature in simd.prf"
 
 This reverts commit 3b00cc480400d47c59c29d3507c7fcdc9be2a489.
 ---

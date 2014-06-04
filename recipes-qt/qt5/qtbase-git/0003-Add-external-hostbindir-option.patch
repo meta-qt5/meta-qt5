@@ -1,7 +1,7 @@
-From eaa4a4c13e65e29e2214a01b69b77b9c6f2ada05 Mon Sep 17 00:00:00 2001
+From b45d963702c139ea4f5b5ce572d046511a878d81 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 2/8] Add -external-hostbindir option
+Subject: [PATCH 03/12] Add -external-hostbindir option
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -198,10 +198,10 @@ index 9bda70e..6e3605a 100644
      _qt5_Core_check_file_exists(${imported_location})
  
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index 6d25325..3686b17 100644
+index 80e0f30..89e13cf 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
-@@ -333,7 +333,7 @@ QLibraryInfo::isDebugBuild()
+@@ -336,7 +336,7 @@ QLibraryInfo::isDebugBuild()
   */
  
  static const struct {
@@ -210,7 +210,7 @@ index 6d25325..3686b17 100644
  } qtConfEntries[] = {
      { "Prefix", "." },
      { "Documentation", "doc" }, // should be ${Data}/doc
-@@ -359,6 +359,7 @@ static const struct {
+@@ -362,6 +362,7 @@ static const struct {
      { "HostBinaries", "bin" },
      { "HostLibraries", "lib" },
      { "HostData", "." },

@@ -1,7 +1,8 @@
-From 3db5991e607a82403272b0ea821fc84e3c8b6d2a Mon Sep 17 00:00:00 2001
+From 11bd34bfe629767ec32a36593386ef0655e86f24 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Mon, 11 Nov 2013 20:22:34 -0500
-Subject: [PATCH 7/8] configure: preserve built qmake and swap with native one
+Subject: [PATCH 12/12] configure: preserve built qmake and swap with native
+ one
 
 Let configure script build the real qmake, but right after it's built, swap
 it with a native qmake for further internal use, preserving the real one.
@@ -12,7 +13,7 @@ Signed-off-by: Denys Dmytriyenko <denys@ti.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/configure b/configure
-index 48d5119..b7aac15 100755
+index 3c0347a..c51f785 100755
 --- a/configure
 +++ b/configure
 @@ -3825,6 +3825,8 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];

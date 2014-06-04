@@ -1,7 +1,7 @@
-From 22775e5f0b1097964062fbcf1805a841f971de34 Mon Sep 17 00:00:00 2001
+From ca212fd10a95b2c694f3c89c3f22a2b0ae185198 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 21 Apr 2014 19:22:04 +0200
-Subject: [PATCH 5/8] Revert "eglfs: Print the chosen config in debug mode"
+Subject: [PATCH 06/12] Revert "eglfs: Print the chosen config in debug mode"
 
 This reverts commit dc685cf6331f5fb46285cf10d6464c2ecf41f73e.
 ---
