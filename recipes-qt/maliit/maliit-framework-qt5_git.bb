@@ -9,6 +9,7 @@ inherit qmake5
 SRC_URI = "git://github.com/maliit/framework.git;branch=master \
     file://0001-Fix-MALIIT_INSTALL_PRF-to-allow-the-build-with-opene.patch \
     file://maliit-server.desktop \
+    file://qt5.3-fix.patch \
 "
 
 SRCREV = "dbc0403f329d7f6ce2f5a09e6ff5adbd2548a8c9"

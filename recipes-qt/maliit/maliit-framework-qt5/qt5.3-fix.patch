@@ -1,0 +1,43 @@
+Fix compatibility with qt-5.3
+
+https://bugs.launchpad.net/ubuntu/+source/maliit-framework/+bug/1323962
+
+Upstream-Status: Pending
+
+diff --git a/src/maliit/plugins/updateevent.cpp b/src/maliit/plugins/updateevent.cpp
+index 06a5228..85b7166 100644
+--- a/src/maliit/plugins/updateevent.cpp
++++ b/src/maliit/plugins/updateevent.cpp
+@@ -38,7 +38,7 @@ bool MImUpdateEventPrivate::isFlagSet(Qt::InputMethodHint hint,
+     bool result = false;
+ 
+     if (update.contains(Maliit::Internal::inputMethodHints)) {
+-        const Qt::InputMethodHints hints(static_cast<Qt::InputMethodHints>(
++        const Qt::InputMethodHints hints(static_cast<int>(
+                                              update.value(Maliit::Internal::inputMethodHints).toLongLong()));
+ 
+         result = (hints & hint);
+@@ -89,8 +89,8 @@ QStringList MImUpdateEvent::propertiesChanged() const
+ Qt::InputMethodHints MImUpdateEvent::hints(bool *changed) const
+ {
+     Q_D(const MImUpdateEvent);
+-    return static_cast<Qt::InputMethodHints>(
+-        d->extractProperty(Maliit::Internal::inputMethodHints, changed).toLongLong());
++    return Qt::InputMethodHints(static_cast<int>(
++        d->extractProperty(Maliit::Internal::inputMethodHints, changed).toLongLong()));
+ }
+ 
+ bool MImUpdateEvent::westernNumericInputEnforced(bool *changed) const
+diff --git a/src/mimpluginmanager.cpp b/src/mimpluginmanager.cpp
+index 02788a4..3c5c99a 100644
+--- a/src/mimpluginmanager.cpp
++++ b/src/mimpluginmanager.cpp
+@@ -1493,7 +1493,7 @@ void MIMPluginManager::handleWidgetStateChanged(unsigned int clientId,
+         }
+     }
+ 
+-    const Qt::InputMethodHints lastHints = static_cast<Qt::InputMethodHints>(newState.value(Maliit::Internal::inputMethodHints).toLongLong());
++    const Qt::InputMethodHints lastHints(static_cast<int>(newState.value(Maliit::Internal::inputMethodHints).toLongLong()));
+     MImUpdateEvent ev(newState, changedProperties, lastHints);
+ 
+     // general notification last
