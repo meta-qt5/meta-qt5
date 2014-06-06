@@ -1,4 +1,4 @@
-# Copyright (C) 2012 O.S. Systems Software LTDA.
+# Copyright (C) 2012, 2014 O.S. Systems Software LTDA.
 # Copyright (C) 2013 Martin Jansa <martin.jansa@gmail.com>
 
 inherit qmake5
@@ -54,6 +54,8 @@ FILES_${PN}-tools-dbg = " \
 "
 FILES_${PN}-plugins-dbg = " \
     ${OE_QMAKE_PATH_PLUGINS}/*/.debug/* \
+    ${OE_QMAKE_PATH_PLUGINS}/*/*/.debug/* \
+    ${OE_QMAKE_PATH_PLUGINS}/*/*/*/.debug/* \
 "
 
 # extra packages
@@ -98,6 +100,8 @@ FILES_${PN}-tools = " \
 "
 FILES_${PN}-plugins = " \
     ${OE_QMAKE_PATH_PLUGINS}/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_PLUGINS}/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_PLUGINS}/*/*/*/*${SOLIBSDEV} \
 "
 FILES_${PN}-mkspecs = "\
     ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
