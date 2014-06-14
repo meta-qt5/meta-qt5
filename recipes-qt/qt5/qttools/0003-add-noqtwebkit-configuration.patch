@@ -1,0 +1,40 @@
+From e6b77a5732610816948a8a860a9cb9e92b02c33e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Wed, 4 Jun 2014 11:28:16 +0200
+Subject: [PATCH] add noqtwebkit configuration
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropiate [configuration]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ src/assistant/assistant/assistant.pro | 2 +-
+ src/designer/src/plugins/plugins.pro  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/assistant/assistant/assistant.pro b/src/assistant/assistant/assistant.pro
+index 5f96377..e461d4b 100644
+--- a/src/assistant/assistant/assistant.pro
++++ b/src/assistant/assistant/assistant.pro
+@@ -1,4 +1,4 @@
+-qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static) {
++qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static):!contains(QT_CONFIG, noqtwebkit) {
+     QT += webkitwidgets
+ } else {
+     DEFINES += QT_NO_WEBKIT
+diff --git a/src/designer/src/plugins/plugins.pro b/src/designer/src/plugins/plugins.pro
+index b7ee661..0c6e50a 100644
+--- a/src/designer/src/plugins/plugins.pro
++++ b/src/designer/src/plugins/plugins.pro
+@@ -1,5 +1,5 @@
+ TEMPLATE = subdirs
+ 
+ # qtHaveModule(opengl): SUBDIRS += tools/view3d
+-qtHaveModule(webkitwidgets): SUBDIRS += qwebview
++qtHaveModule(webkitwidgets):!contains(QT_CONFIG, noqtwebkit): SUBDIRS += qwebview
+ win32: qtHaveModule(axcontainer): SUBDIRS += activeqt
+-- 
+1.8.3.1
+
