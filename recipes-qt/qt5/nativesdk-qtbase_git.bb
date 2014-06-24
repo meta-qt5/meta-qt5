@@ -32,4 +32,4 @@ SRC_URI += " \
     file://0012-configure-preserve-built-qmake-and-swap-with-native-.patch \
 "
 
-SRCREV = "80b6fbc2d9dfc753d6570e971aa4cf4f3420585c"
+SRCREV = "7a4dcbaabf037a6913a5662ebb74cc47e04673b9"
