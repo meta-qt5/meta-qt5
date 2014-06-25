@@ -1,12 +1,13 @@
 # Select which version you prefer by defining QT5_VERSION and including this file
-# possible values now "5.3.0", "5.3.0+git%"
+# possible values now "5.3.1", "5.3.0+git%"
 
-QT5_VERSION ?= "5.3.0"
+QT5_VERSION ?= "5.3.1"
 
 PREFERRED_VERSION_qtbase-native = "${QT5_VERSION}"
 PREFERRED_VERSION_qtbase = "${QT5_VERSION}"
 PREFERRED_VERSION_nativesdk-qtbase = "${QT5_VERSION}"
 PREFERRED_VERSION_qtdeclarative = "${QT5_VERSION}"
+PREFERRED_VERSION_qtenginio = "${QT5_VERSION}"
 PREFERRED_VERSION_qtjsbackend = "${QT5_VERSION}"
 PREFERRED_VERSION_qtjsbackend-native = "${QT5_VERSION}"
 PREFERRED_VERSION_qtgraphicaleffects = "${QT5_VERSION}"
@@ -26,7 +27,3 @@ PREFERRED_VERSION_qtwebkit = "${QT5_VERSION}"
 PREFERRED_VERSION_qtwebkit-examples = "${QT5_VERSION}"
 PREFERRED_VERSION_qtwebsockets = "${QT5_VERSION}"
 PREFERRED_VERSION_qtxmlpatterns = "${QT5_VERSION}"
-
-# qtenginio doesn't follow qt5 versioning, see https://bugreports.qt-project.org/browse/QTBUG-37791
-QT5_VERSION_QTENGINIO = "${@base_contains('QT5_VERSION', '5.3.0+git%', '${QT5_VERSION}', '1.0.4%', d)}"
-PREFERRED_VERSION_qtenginio = "${QT5_VERSION_QTENGINIO}"

@@ -1,0 +1,56 @@
+From a3e87ebdf7dff6b9d4b1d8191f044cfb56b9da3d Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Mon, 21 Apr 2014 19:22:04 +0200
+Subject: [PATCH 06/12] Revert "eglfs: Print the chosen config in debug mode"
+
+This reverts commit dc685cf6331f5fb46285cf10d6464c2ecf41f73e.
+---
+ src/platformsupport/eglconvenience/qeglconvenience.cpp     | 4 +++-
+ src/platformsupport/eglconvenience/qeglplatformcontext.cpp | 7 -------
+ 2 files changed, 3 insertions(+), 8 deletions(-)
+
+diff --git a/src/platformsupport/eglconvenience/qeglconvenience.cpp b/src/platformsupport/eglconvenience/qeglconvenience.cpp
+index 5eed470..39c7c1f 100644
+--- a/src/platformsupport/eglconvenience/qeglconvenience.cpp
++++ b/src/platformsupport/eglconvenience/qeglconvenience.cpp
+@@ -451,9 +451,11 @@ void q_printEglConfig(EGLDisplay display, EGLConfig config)
+     for (index = 0; attrs[index].attr != -1; ++index) {
+         EGLint value;
+         if (eglGetConfigAttrib(display, config, attrs[index].attr, &value)) {
+-            qDebug("\t%s: %d", attrs[index].name, (int)value);
++            qWarning("\t%s: %d\n", attrs[index].name, (int)value);
+         }
+     }
++
++    qWarning("\n");
+ }
+ 
+ #ifdef Q_OS_LINUX
+diff --git a/src/platformsupport/eglconvenience/qeglplatformcontext.cpp b/src/platformsupport/eglconvenience/qeglplatformcontext.cpp
+index eec6463..4a7c69b 100644
+--- a/src/platformsupport/eglconvenience/qeglplatformcontext.cpp
++++ b/src/platformsupport/eglconvenience/qeglplatformcontext.cpp
+@@ -44,7 +44,6 @@
+ #include "qeglpbuffer_p.h"
+ #include <qpa/qplatformwindow.h>
+ #include <QOpenGLContext>
+-#include <QDebug>
+ 
+ QT_BEGIN_NAMESPACE
+ 
+@@ -192,12 +191,6 @@ void QEGLPlatformContext::init(const QSurfaceFormat &format, QPlatformOpenGLCont
+         return;
+     }
+ 
+-    static const bool printConfig = qgetenv("QT_QPA_EGLFS_DEBUG").toInt();
+-    if (printConfig) {
+-        qDebug() << "Created context for format" << format << "with config:";
+-        q_printEglConfig(m_eglDisplay, m_eglConfig);
+-    }
+-
+ #ifndef QT_NO_OPENGL
+     // Make the context current to ensure the GL version query works. This needs a surface too.
+     const EGLint pbufferAttributes[] = {
+-- 
+2.0.0
+

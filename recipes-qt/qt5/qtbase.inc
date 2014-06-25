@@ -1,27 +1,22 @@
 require qt5.inc
 
-# common with qtbase-native and nativesdk-qtbase
+# common for qtbase-native, qtbase-nativesdk and qtbase
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0003-Add-external-hostbindir-option.patch \
     file://0004-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
-    file://0005-qt_module-Fix-pkgconfig-replacement.patch \
-    file://0006-configure-don-t-export-SYSTEM_VARIABLES-to-.qmake.va.patch \
-    file://0007-configure.prf-Allow-to-add-extra-arguments-to-make.patch \
-    file://0008-configure-make-pulseaudio-alsa-freetype-a-configurab.patch \
-    file://0009-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-determ.patch \
-    file://0010-Fix-missing-plugin_types.patch \
-    file://0011-Revert-eglfs-Print-the-chosen-config-in-debug-mode.patch \
-    file://0012-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
-    file://0013-configure-bump-path-length-from-256-to-512-character.patch \
-    file://0014-QOpenGLPaintDevice-sub-area-support.patch \
-    file://0015-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
+    file://0005-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
+    file://0006-Revert-eglfs-Print-the-chosen-config-in-debug-mode.patch \
+    file://0007-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
+    file://0008-configure-bump-path-length-from-256-to-512-character.patch \
+    file://0009-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
+    file://0010-Revert-Use-the-gcc-feature-in-simd.prf.patch \
 "
 
+# specific for qtbase
 SRC_URI += "\
-    file://0016-qmake-is-already-built-in-qtbase-native.patch \
-    file://0017-Allow-building-a-separate-qmake-for-the-target.patch \
+    file://0011-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
 "
 
 DEPENDS += "qtbase-native"

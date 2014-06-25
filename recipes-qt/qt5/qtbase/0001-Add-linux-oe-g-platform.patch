@@ -1,7 +1,7 @@
-From 2c2e479049c49539049db7e53d500e673285025f Mon Sep 17 00:00:00 2001
+From c5b50848ead7de12ec18cd30940d74d92b974280 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
-Subject: [PATCH 01/17] Add linux-oe-g++ platform
+Subject: [PATCH 01/12] Add linux-oe-g++ platform
 
 * This qmake.conf unlike other platforms reads most variables from
   shell environment, because it's easier for qt recipes to export
@@ -10,6 +10,14 @@ Subject: [PATCH 01/17] Add linux-oe-g++ platform
 * configure: add getQEvalMakeConf and getXQEvalMakeConf
   Allow expansion of $(...) references from qmake.conf to generate
   qmake environment from shell environment as exported by qmake5_base
+
+* configure: don't export SYSTEM_VARIABLES to .qmake.vars
+  linux-oe-g++ should handle this correctly and exporting LD as QMAKE_LINK is
+  causing issues as we need g++ to be used as linker
+
+* configure.prf: Allow to add extra arguments to make
+  sometimes we would like to add -e or define some variable and respect it from both
+  Makefiles used in configure tests and also Makefiles to build the application
 
 * OE_QMAKE_CXX in order to allow compiler version check to succeed
   which allows WebKit to be enabled.
@@ -29,19 +37,21 @@ Subject: [PATCH 01/17] Add linux-oe-g++ platform
     /bin/sh: line 0: test: -gt: unary operator expected
     which are not fatal, but still misleading in do_configure output
 
-Upstream-Status: Pending
+Upstream-Status: Inappropriate [embedded specific]
+                 too OE specific, probably cannot be upstreamed
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- configure                            |  54 ++++++++++++++++---
+ configure                            |  66 ++++++++++++++++-------
+ mkspecs/features/configure.prf       |   4 +-
  mkspecs/linux-oe-g++/qmake.conf      |  40 ++++++++++++++
  mkspecs/linux-oe-g++/qplatformdefs.h | 100 +++++++++++++++++++++++++++++++++++
- 3 files changed, 187 insertions(+), 7 deletions(-)
+ 4 files changed, 188 insertions(+), 22 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index 601d84a..eaa4092 100755
+index d5c2b08..4eae0d3 100755
 --- a/configure
 +++ b/configure
 @@ -324,6 +324,16 @@ getQMakeConf()
@@ -78,26 +88,37 @@ index 601d84a..eaa4092 100755
  compilerSupportsFlag()
  {
      cat >conftest.cpp <<EOF
-@@ -548,6 +568,18 @@ fi
+@@ -548,21 +568,19 @@ fi
  # initalize variables
  #-------------------------------------------------------------------------------
  
+-SYSTEM_VARIABLES="RANLIB STRIP OBJDUMP LD CC CXX CFLAGS CXXFLAGS LDFLAGS"
+-for varname in $SYSTEM_VARIABLES; do
 +# Export all OE variables for qmake.conf from shell env to QMakeVars
 +OE_VARIABLES="AR CC CFLAGS COMPILER CXX CXXFLAGS LDFLAGS LINK QT_CONFIG STRIP"
 +for varname in $OE_VARIABLES; do
-+    qmakevarname="${varname}"
-+    cmd=`echo \
+     qmakevarname="${varname}"
+-    # use LDFLAGS for autoconf compat, but qmake uses QMAKE_LFLAGS
+-    if [ "${varname}" = "LDFLAGS" ]; then
+-        qmakevarname="LFLAGS"
+-    elif [ "${varname}" = "LD" ]; then
+-        qmakevarname="LINK"
+-    fi
+     cmd=`echo \
+-'if [ -n "\$'${varname}'" ]; then
+-    QMakeVar set QMAKE_'${qmakevarname}' "\$'${varname}'"
 +'if [ -n "\$OE_QMAKE_'${varname}'" ]; then
 +    QMakeVar set OE_QMAKE_'${qmakevarname}' "\$OE_QMAKE_'${varname}'"
 +#    echo "Exporting OE_QMAKE_'${qmakevarname}' value=\"\$OE_QMAKE_'${varname}'\"" >&2
-+fi'`
-+    eval "$cmd"
-+done
+ fi'`
+     eval "$cmd"
+ done
 +
- SYSTEM_VARIABLES="RANLIB STRIP OBJDUMP LD CC CXX CFLAGS CXXFLAGS LDFLAGS"
- for varname in $SYSTEM_VARIABLES; do
-     qmakevarname="${varname}"
-@@ -3117,7 +3149,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
++SYSTEM_VARIABLES="RANLIB STRIP OBJDUMP LD CC CXX CFLAGS CXXFLAGS LDFLAGS"
+ # Use CC/CXX to run config.tests
+ mkdir -p "$outpath/config.tests"
+ rm -f "$outpath/config.tests/.qmake.cache"
+@@ -3140,7 +3158,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
      [ "$CFG_QGTKSTYLE" = "auto" ] && CFG_QGTKSTYLE=no
  fi
  
@@ -106,7 +127,7 @@ index 601d84a..eaa4092 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -3152,7 +3184,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
+@@ -3175,7 +3193,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
          exit 1
      fi
  fi
@@ -115,7 +136,7 @@ index 601d84a..eaa4092 100755
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3617,6 +3649,14 @@ setBootstrapVariable()
+@@ -3633,6 +3651,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -130,23 +151,48 @@ index 601d84a..eaa4092 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -3655,11 +3695,11 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -3671,14 +3697,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          fi
  
          [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=
 -        setBootstrapVariable QMAKE_CC CC "$CC_TRANSFORM"
 -        setBootstrapVariable QMAKE_CXX CXX "$CC_TRANSFORM"
 -        setBootstrapVariable QMAKE_CFLAGS
+-        setBootstrapVariable QMAKE_CFLAGS_SPLIT_SECTIONS
 -        setBootstrapVariable QMAKE_CXXFLAGS
+-        setBootstrapVariable QMAKE_CXXFLAGS_SPLIT_SECTIONS
 -        setBootstrapVariable QMAKE_LFLAGS
+-        setBootstrapVariable QMAKE_LFLAGS_GCSECTIONS
 +        setBootstrapEvalVariable QMAKE_CC CC "$CC_TRANSFORM"
 +        setBootstrapEvalVariable QMAKE_CXX CXX "$CC_TRANSFORM"
 +        setBootstrapEvalVariable QMAKE_CFLAGS
++        setBootstrapEvalVariable QMAKE_CFLAGS_SPLIT_SECTIONS
 +        setBootstrapEvalVariable QMAKE_CXXFLAGS
++        setBootstrapEvalVariable QMAKE_CXXFLAGS_SPLIT_SECTIONS
 +        setBootstrapEvalVariable QMAKE_LFLAGS
++        setBootstrapEvalVariable QMAKE_LFLAGS_GCSECTIONS
  
          if [ "$CFG_RELEASE_QMAKE" = "yes" ]; then
              setBootstrapVariable QMAKE_CFLAGS_RELEASE
+diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
+index fe41c54..e2db923 100644
+--- a/mkspecs/features/configure.prf
++++ b/mkspecs/features/configure.prf
+@@ -60,12 +60,12 @@ defineTest(qtCompileTest) {
+     }
+ 
+     # Clean up after previous run
+-    exists($$test_out_dir/Makefile):qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE distclean")
++    exists($$test_out_dir/Makefile):qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE $$(QMAKE_MAKE_ARGS) distclean")
+ 
+     mkpath($$test_out_dir)|error("Aborting.")
+ 
+     qtRunLoggedCommand("$$test_cmd_base $$system_quote($$system_path($$QMAKE_QMAKE)) $$qmake_configs $$shell_quote($$test_dir)") {
+-        qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE") {
++        qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE $$(QMAKE_MAKE_ARGS)") {
+             log("yes$$escape_expand(\\n)")
+             msg = "test $$1 succeeded"
+             write_file($$QMAKE_CONFIG_LOG, msg, append)
 diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
 new file mode 100644
 index 0000000..ca26b10

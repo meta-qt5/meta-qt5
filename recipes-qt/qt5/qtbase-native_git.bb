@@ -5,7 +5,7 @@ SRC_URI = "\
     git://qt.gitorious.org/qt/${QT_MODULE}.git;branch=${QT_MODULE_BRANCH} \
 "
 
-# common with -native and -nativesdk
+# common for qtbase-native, qtbase-nativesdk and qtbase
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
@@ -19,7 +19,7 @@ SRC_URI += "\
     file://0010-Revert-Use-the-gcc-feature-in-simd.prf.patch \
 "
 
-# common with -nativesdk version
+# common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
     file://0011-Always-build-uic.patch \
 "

@@ -1,14 +1,17 @@
-From c45a30d1301f85e49eef66c06cccf2a16741a932 Mon Sep 17 00:00:00 2001
+From 5d83d8ce8b601a983b055f32dc67a418a0ce06ab Mon Sep 17 00:00:00 2001
 From: Holger Freyther <zecke@selfish.org>
 Date: Wed, 26 Sep 2012 17:22:30 +0200
-Subject: [PATCH 02/17] qlibraryinfo: allow to set qt.conf from the outside
+Subject: [PATCH 02/12] qlibraryinfo: allow to set qt.conf from the outside
  using the environment
 
 Allow to set a qt.conf from the outside using the environment. This allows
 to inject new prefixes and other paths into qmake. This is needed when using
 the same qmake binary to build qt/x11 and qt/embedded
 
-Upstream-Status: Pending
+Upstream-Status: Inappropriate [embedded specific]
+  again very OE specific to read everything from environment (reusing the same
+  qmake from sstate and replacing all configured paths in it with qt.conf from
+  environment).
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
@@ -16,7 +19,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index 6d25325..80e0f30 100644
+index 174c1d0..69e614f 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
 @@ -153,7 +153,10 @@ QLibrarySettings::QLibrarySettings()
