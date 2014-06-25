@@ -1,0 +1,38 @@
+From 7a3179fee9c88ce3dd018b2f159e1b5df74fc7cc Mon Sep 17 00:00:00 2001
+From: Simon Busch <morphis@gravedo.de>
+Date: Fri, 20 Jun 2014 19:04:14 +0200
+Subject: [PATCH] Strip unwanted "@echo compiling &&" prefix from ${CC}
+
+Causes problems when called from a perl script:
+
+@echo compiling  && arm-webos-linux-gnueabi-gcc -march=armv7-a -mthumb-interwork -mfloat-abi=softfp -mfpu=neon --sysroot=/home/morphis/work/wop/webos-ports/tmp-eglibc/sysroots/tenderloinCan't exec "@echo": No such file or directory at /home/morphis/work/wop/webos-ports/tmp-eglibc/sysroots/x86_64-linux/usr/lib/perl-native/perl/5.14.3/IPC/Open3.pm line 288.
+open2: exec of @echo compiling && arm-webos-linux-gnueabi-gcc -march=armv7-a -mthumb-interwork -mfloat-abi=softfp -mfpu=neon --sysroot=/home/morphis/work/wop/webos-ports/tmp-eglibc/sysroots/tenderloin -E -P -x c++ -DENABLE_CUSTOM_SCHEME_HANDLER=0 -DENABLE_SVG_FONTS=1 -DENABLE_GDI_FONTS_ON_WINDOWS=0 -DENABLE_HARFBUZZ_ON_WINDOWS=1 -DWTF_USE_CONCATENATED_IMPULSE_RESPONSES=1 -DENABLE_INPUT_SPEECH=1 -DENABLE_INPUT_MULTIPLE_FIELDS_UI=1 -DENABLE_LEGACY_NOTIFICATIONS=1 -DENABLE_MEDIA_CAPTURE=0 -DENABLE_NAVIGATOR_CONTENT_UTILS=1 -DENABLE_ORIENTATION_EVENTS=0 -DENABLE_WEB_AUDIO=1 -DWTF_USE_WEBAUDIO_FFMPEG=1 -DENABLE_OPENTYPE_VERTICAL=1 -DWTF_USE_DEFAULT_RENDER_THEME=1 css/html.css failed at ../build/scripts/preprocessor.pm line 81
+Traceback (most recent call last):
+  File "../build/scripts/action_useragentstylesheets.py", line 124, in <module>
+    sys.exit(main(sys.argv))
+  File "../build/scripts/action_useragentstylesheets.py", line 118, in main
+    assert returnCode == 0
+AssertionError
+
+Signed-off-by: Simon Busch <morphis@gravedo.de>
+---
+ .../WebKit/Source/build/scripts/action_useragentstylesheets.py         | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/3rdparty/chromium/third_party/WebKit/Source/build/scripts/action_useragentstylesheets.py b/src/3rdparty/chromium/third_party/WebKit/Source/build/scripts/action_useragentstylesheets.py
+index c0712b3..8460637 100644
+--- a/src/3rdparty/chromium/third_party/WebKit/Source/build/scripts/action_useragentstylesheets.py
++++ b/src/3rdparty/chromium/third_party/WebKit/Source/build/scripts/action_useragentstylesheets.py
+@@ -112,6 +112,9 @@ def main(args):
+     command.extend([outputH, outputCpp])
+     command.extend(styleSheets)
+ 
++    if os.environ["CC"].startswith("@echo"):
++        os.environ["CC"] = os.environ["CC"].replace("@echo compiling  &&", "")
++
+     # Do it. check_call is new in 2.5, so simulate its behavior with call and
+     # assert.
+     returnCode = subprocess.call(command)
+-- 
+1.9.1
+

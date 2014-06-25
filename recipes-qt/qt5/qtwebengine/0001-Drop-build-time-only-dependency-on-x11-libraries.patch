@@ -1,0 +1,137 @@
+From f5c8e973f0a246691b71c256361bfa82619ee2ef Mon Sep 17 00:00:00 2001
+From: Simon Busch <morphis@gravedo.de>
+Date: Fri, 20 Jun 2014 09:05:12 +0200
+Subject: [PATCH 1/2] Drop build time only dependency on x11 libraries
+
+Signed-off-by: Simon Busch <morphis@gravedo.de>
+---
+ src/3rdparty/chromium/build/linux/system.gyp | 114 ---------------------------
+ 1 file changed, 114 deletions(-)
+
+diff --git a/src/3rdparty/chromium/build/linux/system.gyp b/src/3rdparty/chromium/build/linux/system.gyp
+index 9911317..85016b8 100644
+--- a/src/3rdparty/chromium/build/linux/system.gyp
++++ b/src/3rdparty/chromium/build/linux/system.gyp
+@@ -786,119 +786,5 @@
+         }],
+       ],
+     },
+-    {
+-      'target_name': 'x11',
+-      'type': 'none',
+-      'toolsets': ['host', 'target'],
+-      'conditions': [
+-        ['_toolset=="target"', {
+-          'direct_dependent_settings': {
+-            'cflags': [
+-              '<!@(<(pkg-config) --cflags x11)',
+-            ],
+-          },
+-          'link_settings': {
+-            'ldflags': [
+-              '<!@(<(pkg-config) --libs-only-L --libs-only-other x11 xi)',
+-            ],
+-            'libraries': [
+-              '<!@(<(pkg-config) --libs-only-l x11 xi)',
+-            ],
+-          },
+-        }, {
+-          'direct_dependent_settings': {
+-            'cflags': [
+-              '<!@(pkg-config --cflags x11)',
+-            ],
+-          },
+-          'link_settings': {
+-            'ldflags': [
+-              '<!@(pkg-config --libs-only-L --libs-only-other x11 xi)',
+-            ],
+-            'libraries': [
+-              '<!@(pkg-config --libs-only-l x11 xi)',
+-            ],
+-          },
+-        }],
+-      ],
+-    },
+-    {
+-      'target_name': 'xext',
+-      'type': 'none',
+-      'conditions': [
+-        ['_toolset=="target"', {
+-          'direct_dependent_settings': {
+-            'cflags': [
+-              '<!@(<(pkg-config) --cflags xext)',
+-            ],
+-          },
+-          'link_settings': {
+-            'ldflags': [
+-              '<!@(<(pkg-config) --libs-only-L --libs-only-other xext)',
+-            ],
+-            'libraries': [
+-              '<!@(<(pkg-config) --libs-only-l xext)',
+-            ],
+-          },
+-        }],
+-      ],
+-    },
+-    {
+-      'target_name': 'xfixes',
+-      'type': 'none',
+-      'conditions': [
+-        ['_toolset=="target"', {
+-          'direct_dependent_settings': {
+-            'cflags': [
+-              '<!@(<(pkg-config) --cflags xfixes)',
+-            ],
+-          },
+-          'link_settings': {
+-            'ldflags': [
+-              '<!@(<(pkg-config) --libs-only-L --libs-only-other xfixes)',
+-            ],
+-            'libraries': [
+-              '<!@(<(pkg-config) --libs-only-l xfixes)',
+-            ],
+-          },
+-        }],
+-      ],
+-    },
+-    {
+-      'target_name': 'xrandr',
+-      'type': 'none',
+-      'toolsets': ['host', 'target'],
+-      'conditions': [
+-        ['_toolset=="target"', {
+-          'direct_dependent_settings': {
+-            'cflags': [
+-              '<!@(<(pkg-config) --cflags xrandr)',
+-            ],
+-          },
+-          'link_settings': {
+-            'ldflags': [
+-              '<!@(<(pkg-config) --libs-only-L --libs-only-other xrandr)',
+-            ],
+-            'libraries': [
+-              '<!@(<(pkg-config) --libs-only-l xrandr)',
+-            ],
+-          },
+-        }, {
+-          'direct_dependent_settings': {
+-            'cflags': [
+-              '<!@(pkg-config --cflags xrandr)',
+-            ],
+-          },
+-          'link_settings': {
+-            'ldflags': [
+-              '<!@(pkg-config --libs-only-L --libs-only-other xrandr)',
+-            ],
+-            'libraries': [
+-              '<!@(pkg-config --libs-only-l xrandr)',
+-            ],
+-          },
+-        }],
+-      ],
+-    },
+   ],
+ }
+-- 
+1.9.1
+
