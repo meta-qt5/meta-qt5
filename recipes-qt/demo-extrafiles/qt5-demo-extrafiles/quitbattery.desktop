@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Qt5 QUItBattery
+Exec=/bin/sh -c "cd /usr/share/quitbattery-1.0.0/; ./QUItBattery"
+Icon=quitbattery
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=Qt5 QUItBattery
+StartupNotify=false

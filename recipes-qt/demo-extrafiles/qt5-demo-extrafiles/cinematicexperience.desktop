@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=QT5 Cinematic Experience
+Exec=/usr/share/cinematicexperience-1.0/Qt5_CinematicExperience
+Icon=cinematicexperience
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=QT5 Cinematic Experience
+StartupNotify=false

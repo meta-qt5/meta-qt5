@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=QT3D Nesting
+Exec=/usr/share/qt5/examples/qt3d/nesting
+Icon=qt5nesting
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=QT3D Nesting
+StartupNotify=false

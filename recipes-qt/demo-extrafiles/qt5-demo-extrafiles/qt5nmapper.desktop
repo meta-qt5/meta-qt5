@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Qt5 NMapper
+Exec=/usr/share/qt5nmapper-1.0/Qt5_NMapper
+Icon=qt5nmapper
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=Qt5 NMapper
+StartupNotify=false

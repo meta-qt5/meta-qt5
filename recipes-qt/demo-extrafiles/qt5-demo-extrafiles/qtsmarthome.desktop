@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Qt5 Smart Home
+Exec=/bin/sh -c "cd /usr/share/qtsmarthome-1.0/; ./smarthome"
+Icon=qtsmarthome
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=Qt5 Smart Home
+StartupNotify=false

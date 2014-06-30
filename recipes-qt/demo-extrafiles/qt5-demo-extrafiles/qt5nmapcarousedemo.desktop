@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Qt5 NMap Carousel Demo
+Exec=/usr/share/qt5nmapcarousedemo-1.0/Qt5_NMap_CarouselDemo
+Icon=qt5nmapcarousedemo
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=Qt5 NMap Carousel Demo
+StartupNotify=false

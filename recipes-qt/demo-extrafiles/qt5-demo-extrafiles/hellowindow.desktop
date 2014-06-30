@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=QT5 Hello Window
+Exec=/usr/share/qt5/examples/opengl/hellowindow/hellowindow
+Icon=hellowindow
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=QT5 Hello Window
+StartupNotify=false

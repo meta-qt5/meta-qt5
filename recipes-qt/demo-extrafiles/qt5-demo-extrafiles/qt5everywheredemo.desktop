@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=QT5 Everywhere Demo
+Exec=/bin/sh -c "cd /usr/share/qt5everywheredemo-1.0/; ./QtDemo"
+Icon=qt5everywheredemo
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=QT5 Everywhere Demo
+StartupNotify=false

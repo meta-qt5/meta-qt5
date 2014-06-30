@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Qt5 QUItBattery
+Exec=/bin/sh -c "cd /usr/share/quitindicators-1.0.1/; ./QUItIndicators"
+Icon=quitindicators
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=Qt5 QUItBattery
+StartupNotify=false

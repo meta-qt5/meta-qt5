@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=QT5 Launch Demo
+Exec=/usr/bin/qt5/qmlscene /usr/share/qt5launchdemo-1.0/main_lofi.qml
+Icon=qt5launchdemo
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=QT5 Launch Demo
+StartupNotify=false

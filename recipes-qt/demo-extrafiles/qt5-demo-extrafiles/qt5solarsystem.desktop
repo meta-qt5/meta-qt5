@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=QT3D Solarsystem
+Exec=/usr/share/qt5/examples/qt3d/solarsystem
+Icon=qt5solarsystem
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=QT3D Solarsystem
+StartupNotify=false

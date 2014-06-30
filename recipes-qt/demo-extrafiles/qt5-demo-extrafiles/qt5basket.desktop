@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=QT3D Basket
+Exec=/usr/share/qt5/examples/qt3d/basket
+Icon=qt5basket
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=QT3D Basket
+StartupNotify=false

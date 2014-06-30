@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=QT5 Ledscreen Billboard
+Exec=/bin/sh -c "cd /usr/share/qt5ledscreen-1.0/; /usr/bin/qt5/qmlscene example_billboard.qml"
+Icon=qtledbillboard
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=QT5 Ledscreen Billboard
+StartupNotify=false

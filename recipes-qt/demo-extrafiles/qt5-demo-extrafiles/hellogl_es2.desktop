@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=QT5 HelloGL ES2
+Exec=/usr/share/qt5/examples/opengl/hellogl_es2/hellogl_es2
+Icon=hellogl_es2
+Terminal=false
+Type=Application
+X-MB-SingleInstance=true
+Comment=QT5 HelloGL ES2
+StartupNotify=false
