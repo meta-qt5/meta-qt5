@@ -1,0 +1,29 @@
+From fd954d63f62c551c5aeaab662b7ab42a3f2ab527 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Mon, 30 Jun 2014 20:08:17 +0200
+Subject: [PATCH 2/3] functions.prf: Don't match QMAKE_EXT_CPP or QMAKE_EXT_H
+ anywhere in patch, but at the end
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ tools/qmake/mkspecs/features/functions.prf | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tools/qmake/mkspecs/features/functions.prf b/tools/qmake/mkspecs/features/functions.prf
+index 8725fd2..15c2941 100644
+--- a/tools/qmake/mkspecs/features/functions.prf
++++ b/tools/qmake/mkspecs/features/functions.prf
+@@ -40,8 +40,8 @@ defineReplace(findIncludedMocFiles) {
+ defineReplace(mocOutput) {
+   out = $$1
+   # The order is important, since the output of the second replace would end up accidentaly transformed by the first one
+-  out = $$replace(out, ^(.*)($$join(QMAKE_EXT_CPP,|)), $${QMAKE_CPP_MOD_MOC}\\1$${QMAKE_EXT_CPP_MOC})
+-  out = $$replace(out, ^(.*)($$join(QMAKE_EXT_H,|)), $${QMAKE_H_MOD_MOC}\\1$${first(QMAKE_EXT_CPP)})
++  out = $$replace(out, ^(.*)($$join(QMAKE_EXT_CPP,|))$, $${QMAKE_CPP_MOD_MOC}\\1$${QMAKE_EXT_CPP_MOC})
++  out = $$replace(out, ^(.*)($$join(QMAKE_EXT_H,|))$, $${QMAKE_H_MOD_MOC}\\1$${first(QMAKE_EXT_CPP)})
+   return($$out)
+ }
+ 
+-- 
+2.0.0
+

@@ -41,4 +41,7 @@ do_configure() {
         QMAKE_AR="${OE_QMAKE_AR}"
 }
 
+do_install_append() {
+    rmdir ${D}${OE_QMAKE_PATH_PLUGINS}/${BPN} ${D}${OE_QMAKE_PATH_PLUGINS} || true
+}
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
