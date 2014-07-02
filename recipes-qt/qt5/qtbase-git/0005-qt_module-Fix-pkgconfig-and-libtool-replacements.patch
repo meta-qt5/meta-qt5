@@ -40,18 +40,50 @@ Content-Transfer-Encoding: 8bit
   Change-Id: Id0d38715673b8a1c0c034e9c15783eb255c4315b
   Reviewed-by: Joerg Bornemann <joerg.bornemann@digia.com>
 
+* to debug this, rebuild qtbase and read build/src/corelib/Makefile
+* this is example of broken install_target rule (added line feeds):
+  -$(SED) -e s,/OE/5.3.1-r0/build/lib,/usr/lib,g
+          -e 's,/OE/5.3.1-r0/build/include,$$\{includedir},g'
+          -e 's,/OE/5.3.1-r0/build/lib,$$\{libdir},g'
+     "../../lib/pkgconfig/Qt5Core.pc"
+     >"$(INSTALL_ROOT)/usr/lib/pkgconfig/Qt5Core.pc"
+  change .prf files, create copy of WORKDIR, re-excecute only
+  do_configure task and compare generated Makefile, repeat until
+  replace in generated Makefile works ok, then refresh patch and
+  try complete rebuild for qtbase
+* if everything is ok, then try:
+  image $ grep -R "\-L/usr" .
+  image $ grep -R "\-I/usr" .
+  and it should return only few cases of
+  qmake.conf:QMAKE_LFLAGS_THREAD     = -L/usr/lib/threads
+  for aix* platformas
+
 Change-Id: Ie1c94b15f2a4e736b65b4d0924d99eb2a7d92a6c
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
 ---
- mkspecs/features/qt_module.prf | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ mkspecs/features/qt_common.prf |  2 +-
+ mkspecs/features/qt_module.prf | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
+diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
+index 4dcabe9..d04bc3e 100644
+--- a/mkspecs/features/qt_common.prf
++++ b/mkspecs/features/qt_common.prf
+@@ -33,7 +33,7 @@ contains(TEMPLATE, .*lib) {
+         lib_replace.replace =
+     } else {
+         lib_replace.match = $$rplbase/lib
+-        lib_replace.replace = $$qt_libdir
++        lib_replace.replace = "\$$\\{libdir}"
+     }
+     lib_replace.CONFIG = path
+     QMAKE_PRL_INSTALL_REPLACE += lib_replace
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 8bf4c92..9737f8c 100644
+index 8bf4c92..ee2e989 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
-@@ -188,10 +188,24 @@ unix|mingw {
+@@ -188,10 +188,25 @@ unix|mingw {
          QMAKE_PKGCONFIG_DESCRIPTION = $$replace(TARGET, ^Qt, "Qt ") module
      QMAKE_PKGCONFIG_INSTALL_REPLACE += lib_replace
  
@@ -60,19 +92,20 @@ index 8bf4c92..9737f8c 100644
 +    pkgconfig_include_replace.CONFIG = path
 +    QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_include_replace
 +
-+    pkgconfig_lib_replace.match = $$rplbase/lib
-+    pkgconfig_lib_replace.replace = "\$$\\{libdir}"
-+    pkgconfig_lib_replace.CONFIG = path
-+    QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_lib_replace
-+
      unix {
          CONFIG += create_libtool explicitlib
          QMAKE_LIBTOOL_LIBDIR = $$qt_libdir
          QMAKE_LIBTOOL_INSTALL_REPLACE += lib_replace
-+        lafile_replace.match = "-L$$[QT_INSTALL_LIBS/raw]"
-+        lafile_replace.replace = ""
++        # add '=' as sysroot in .la files
++        lafile_replace.match = "-L\$${libdir}"
++        lafile_replace.replace = "-L=\$$\\{libdir}"
 +        lafile_replace.CONFIG = path
 +        QMAKE_LIBTOOL_INSTALL_REPLACE += lafile_replace
++        # drop -L/usr/lib in .prl files
++        prl_replace.match = "-L\$${libdir}"
++        prl_replace.replace = ""
++        prl_replace.CONFIG = path
++        QMAKE_PRL_INSTALL_REPLACE += prl_replace
      }
  }
  
