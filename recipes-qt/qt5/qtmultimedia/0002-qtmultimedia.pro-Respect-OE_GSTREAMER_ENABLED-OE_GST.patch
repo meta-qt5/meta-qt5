@@ -1,0 +1,51 @@
+From 8d0358d4d586daece0e683ba002fbab16fd53cd1 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sat, 5 Jul 2014 09:10:02 +0200
+Subject: [PATCH 2/2] qtmultimedia.pro: Respect
+ OE_GSTREAMER_ENABLED,OE_GSTREAMER010_ENABLED and OE_OPENAL_ENABLED
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ qtmultimedia.pro | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
+
+diff --git a/qtmultimedia.pro b/qtmultimedia.pro
+index 37f42a0..5a2a533 100644
+--- a/qtmultimedia.pro
++++ b/qtmultimedia.pro
+@@ -1,7 +1,7 @@
+ requires(qtHaveModule(gui))
+ 
+ load(configure)
+-qtCompileTest(openal)
++OE_OPENAL_ENABLED:qtCompileTest(openal)
+ win32 {
+     qtCompileTest(directshow) {
+         qtCompileTest(wshellitem)
+@@ -22,13 +22,16 @@ win32 {
+     qtCompileTest(alsa)
+     qtCompileTest(pulseaudio)
+     !done_config_gstreamer {
+-        gstver=1.0
+-        cache(GST_VERSION, set, gstver);
+-        qtCompileTest(gstreamer) {
+-            qtCompileTest(gstreamer_photography)
+-            qtCompileTest(gstreamer_encodingprofiles)
+-            qtCompileTest(gstreamer_appsrc)
+-        } else {
++        OE_GSTREAMER_ENABLED {
++            gstver=1.0
++            cache(GST_VERSION, set, gstver);
++            qtCompileTest(gstreamer) {
++                qtCompileTest(gstreamer_photography)
++                qtCompileTest(gstreamer_encodingprofiles)
++                qtCompileTest(gstreamer_appsrc)
++            }
++        }
++        !OE_GSTREAMER_ENABLED:OE_GSTREAMER010_ENABLED {
+             gstver=0.10
+             cache(GST_VERSION, set, gstver);
+             # Force a re-run of the test
+-- 
+2.0.0
+
