@@ -1,0 +1,42 @@
+From 878c5a2a47d620f36dd281d4b0eb6677a8a1fbd4 Mon Sep 17 00:00:00 2001
+From: Otavio Salvador <otavio@ossystems.com.br>
+Date: Sat, 7 Jun 2014 18:13:14 -0300
+Subject: [PATCH] build: Fix mkspecs and CMake module install directories
+Organization: O.S. Systems Software LTDA.
+
+Upstream-Status: Inapropriate [configuration]
+
+Signed-off-by: Otavio Salvador <otavio@ossystems.com.br>
+---
+ CMakeLists.txt     | 2 +-
+ pkg/CMakeLists.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d78fedf..1f4db6b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -27,7 +27,7 @@ endfunction(QUERY_QMAKE)
+ query_qmake(QT_INSTALL_PLUGINS QT_PLUGINS_DIR)
+ query_qmake(QT_HOST_DATA QT_DATA_DIR)
+ 
+-set(QT_MKSPECS_DIR ${QT_DATA_DIR}/mkspecs)
++set(QT_MKSPECS_DIR ${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs)
+ 
+ # Configure options
+ option(GENERATE_DOC
+diff --git a/pkg/CMakeLists.txt b/pkg/CMakeLists.txt
+index 25891a5..a87fedd 100644
+--- a/pkg/CMakeLists.txt
++++ b/pkg/CMakeLists.txt
+@@ -19,6 +19,6 @@ if(PKG_CONFIG_FOUND)
+     )
+ endif(PKG_CONFIG_FOUND)
+ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/FindTufao${TUFAO_VERSION_MAJOR}.cmake"
+-    DESTINATION "${CMAKE_ROOT}/Modules"
++    DESTINATION "${libdir}/cmake"
+     COMPONENT development
+ )
+-- 
+2.0.0.rc4
+
