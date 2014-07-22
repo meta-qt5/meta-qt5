@@ -1,0 +1,48 @@
+Index: Qt5_CinematicExperience_rpi_1.0/content/SettingsView.qml
+===================================================================
+--- Qt5_CinematicExperience_rpi_1.0.orig/content/SettingsView.qml
++++ Qt5_CinematicExperience_rpi_1.0/content/SettingsView.qml
+@@ -127,8 +127,8 @@ Item {
+             Switch {
+                 text: "Do you l-o-v-e colors?"
+                 checked: settings.showColors
+-                onText: "Yes"
+-                offText: "No!"
++                textON: "Yes"
++                textOFF: "No!"
+                 onCheckedChanged: {
+                     settings.showColors = checked;
+                 }
+Index: Qt5_CinematicExperience_rpi_1.0/content/Switch.qml
+===================================================================
+--- Qt5_CinematicExperience_rpi_1.0.orig/content/Switch.qml
++++ Qt5_CinematicExperience_rpi_1.0/content/Switch.qml
+@@ -6,8 +6,8 @@ Item {
+ 
+     property alias text: textItem.text
+     property bool checked: false
+-    property string onText: "On"
+-    property string offText: "Off"
++    property string textON: "On"
++    property string textOFF: "Off"
+ 
+     QtObject {
+         id: priv
+@@ -120,7 +120,7 @@ Item {
+             color: "#000000"
+             font.pixelSize: 18
+             font.bold: true
+-            text: onText
++            text: textON
+         }
+         Text {
+             anchors.verticalCenter: parent.verticalCenter
+@@ -129,7 +129,7 @@ Item {
+             color: "#ffffff"
+             font.pixelSize: 18
+             font.bold: true
+-            text: offText
++            text: textOFF
+         }
+ 
+         Image {
