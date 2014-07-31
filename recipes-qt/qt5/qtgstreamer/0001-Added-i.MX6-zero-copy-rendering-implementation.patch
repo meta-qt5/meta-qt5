@@ -1,0 +1,249 @@
+From c36ea48f3f4f0ad1b07a18c3717bd049ac24e32c Mon Sep 17 00:00:00 2001
+From: Benjamin Federau <benjamin.federau@basyskom.com>
+Date: Mon, 12 May 2014 17:31:12 +0200
+Subject: [PATCH] Added i.MX6 zero-copy rendering implementation
+
+---
+ CMakeLists.txt                                     |   11 +++
+ elements/gstqtvideosink/CMakeLists.txt             |    4 +
+ elements/gstqtvideosink/painters/videomaterial.cpp |   84 ++++++++++++++++++++
+ elements/gstqtvideosink/painters/videomaterial.h   |    8 ++
+ 4 files changed, 107 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9304fc3..86dbd46 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -19,6 +19,8 @@ option(USE_QT_PLUGIN_DIR "Install qt plugins at the system location" ON)
+ include(GNUInstallDirs)
+ include(MacroLogFeature)
+ 
++set(HW_PLATFORM "none" CACHE STRING "Specific hardware platform used for the build")
++
+ set(Qt4_MIN_VERSION 4.7)
+ set(Qt5_MIN_VERSION 5.0.0)
+ find_package(Qt4or5 COMPONENTS Core Gui Widgets OPTIONAL_COMPONENTS OpenGL Quick1 Quick2 Qml Test)
+@@ -173,6 +175,15 @@ else()
+     endif()
+ endif()
+ 
++# Enable hardware specific functionality
++if (${HW_PLATFORM} STREQUAL "imx6")
++    message(STATUS "Enabled hardware platform: Freescale i.MX6")
++    set(USE_HW_PLATFORM TRUE)
++    set(QTGSTREAMER_HW_PLATFORM "-DHW_PLATFORM_IMX6")
++else()
++    set(USE_HW_PLATFORM FALSE)
++endif()
++
+ 
+ if (QTGSTREAMER_CODEGEN AND FLEX_FOUND AND BISON_FOUND)
+     add_subdirectory(codegen)
+diff --git a/elements/gstqtvideosink/CMakeLists.txt b/elements/gstqtvideosink/CMakeLists.txt
+index ddb3da9..307c434 100644
+--- a/elements/gstqtvideosink/CMakeLists.txt
++++ b/elements/gstqtvideosink/CMakeLists.txt
+@@ -57,6 +57,10 @@ add_definitions(
+     -DQWIDGETVIDEOSINK_NAME="${QWIDGETVIDEOSINK_NAME}"
+ )
+ 
++if (USE_HW_PLATFORM)
++    add_definitions(${QTGSTREAMER_HW_PLATFORM})
++endif()
++
+ if (GstQtVideoSink_LINK_OPENGL)
+     if (OPENGLES2_FOUND)
+         set(GstQtVideoSink_GL_LIBS ${OPENGLES2_LIBRARY})
+diff --git a/elements/gstqtvideosink/painters/videomaterial.cpp b/elements/gstqtvideosink/painters/videomaterial.cpp
+index 7711415..b9a83f7 100644
+--- a/elements/gstqtvideosink/painters/videomaterial.cpp
++++ b/elements/gstqtvideosink/painters/videomaterial.cpp
+@@ -95,6 +95,18 @@ inline const char * const qtvideosink_glsl_yuvPlanarFragmentShader()
+     "}\n";
+ }
+ 
++inline const char * const qtvideosink_glsl_vivanteFragmentShader()
++{
++    return
++    "uniform sampler2D texture;\n"
++    "uniform lowp float opacity;\n"
++    "varying highp vec2 qt_TexCoord;\n"
++    "void main(void)\n"
++    "{\n"
++    "    gl_FragColor = texture2D( texture, qt_TexCoord ) * opacity;\n"
++    "}\n";
++}
++
+ class VideoMaterialShader : public QSGMaterialShader
+ {
+ public:
+@@ -104,6 +116,10 @@ public:
+         Q_UNUSED(oldMaterial);
+ 
+         VideoMaterial *material = static_cast<VideoMaterial *>(newMaterial);
++
++#ifdef HW_PLATFORM_IMX6
++        program()->setUniformValue(m_id_texture, 0);
++#else
+         if (m_id_rgbTexture > 0) {
+             program()->setUniformValue(m_id_rgbTexture, 0);
+         } else {
+@@ -111,6 +127,7 @@ public:
+             program()->setUniformValue(m_id_uTexture, 1);
+             program()->setUniformValue(m_id_vTexture, 2);
+         }
++#endif
+ 
+         if (state.isOpacityDirty()) {
+             material->setFlag(QSGMaterial::Blending,
+@@ -144,6 +161,9 @@ protected:
+         m_id_vTexture = program()->uniformLocation("vTexture");
+         m_id_colorMatrix = program()->uniformLocation("colorMatrix");
+         m_id_opacity = program()->uniformLocation("opacity");
++#ifdef HW_PLATFORM_IMX6
++        m_id_texture = program()->uniformLocation("texture");
++#endif
+     }
+ 
+     virtual const char *vertexShader() const {
+@@ -157,6 +177,9 @@ protected:
+     int m_id_vTexture;
+     int m_id_colorMatrix;
+     int m_id_opacity;
++#ifdef HW_PLATFORM_IMX6
++    int m_id_texture;
++#endif
+ };
+ 
+ template <const char * const (*FragmentShader)()>
+@@ -220,10 +243,19 @@ VideoMaterial *VideoMaterial::create(const BufferFormat & format)
+     // YUV 420 planar
+     case GST_VIDEO_FORMAT_I420:
+     case GST_VIDEO_FORMAT_YV12:
++#ifdef HW_PLATFORM_IMX6
++        // Note: The following was just implemented for YUV video format. The above formats are not tested
++        // with the Vivante mapping method. They will still use the glTexImage2D method!
++        material = new VideoMaterialImpl<qtvideosink_glsl_vivanteFragmentShader>;
++        material->initVivanteTextureInfo(
++                    (format.videoFormat() == GST_VIDEO_FORMAT_YV12) ? GL_VIV_YV12 : GL_VIV_I420,
++                    format.frameSize());
++#else
+         material = new VideoMaterialImpl<qtvideosink_glsl_yuvPlanarFragmentShader>;
+         material->initYuv420PTextureInfo(
+             (format.videoFormat() == GST_VIDEO_FORMAT_YV12) /* uvSwapped */,
+             format.frameSize());
++#endif
+         break;
+ 
+     default:
+@@ -315,6 +347,18 @@ void VideoMaterial::initYuv420PTextureInfo(bool uvSwapped, const QSize &size)
+       qSwap (m_textureOffsets[1], m_textureOffsets[2]);
+ }
+ 
++#ifdef HW_PLATFORM_IMX6
++void VideoMaterial::initVivanteTextureInfo(
++        GLuint format, const QSize &size)
++{
++    m_textureFormat = format;
++    m_textureCount = 1;
++    m_textureWidths[0] = size.width();
++    m_textureHeights[0] = size.height();
++    m_textureOffsets[0] = 0;
++}
++#endif
++
+ void VideoMaterial::init(GstVideoColorMatrix colorMatrixType)
+ {
+     glGenTextures(m_textureCount, m_textureIds);
+@@ -426,12 +470,46 @@ void VideoMaterial::bind()
+         glBindTexture(GL_TEXTURE_2D, m_textureIds[2]);
+         functions->glActiveTexture(GL_TEXTURE0); // Finish with 0 as default texture unit
+         glBindTexture(GL_TEXTURE_2D, m_textureIds[0]);
++
++#ifdef HW_PLATFORM_IMX6
++        QOpenGLContext *glcontext = QOpenGLContext::currentContext();
++        static PFNGLTEXDIRECTINVALIDATEVIVPROC glTexDirectInvalidateVIV_LOCAL = 0;
++        glTexDirectInvalidateVIV_LOCAL = reinterpret_cast<PFNGLTEXDIRECTINVALIDATEVIVPROC>(glcontext->getProcAddress("glTexDirectInvalidateVIV"));
++
++        glTexDirectInvalidateVIV_LOCAL(GL_TEXTURE_2D);
++#endif
+     }
+ }
+ 
+ void VideoMaterial::bindTexture(int i, const quint8 *data)
+ {
+     glBindTexture(GL_TEXTURE_2D, m_textureIds[i]);
++
++#ifdef HW_PLATFORM_IMX6
++    QOpenGLContext *glcontext = QOpenGLContext::currentContext();
++    static PFNGLTEXDIRECTVIVMAPPROC glTexDirectVIVMap_LOCAL = 0;
++    static PFNGLTEXDIRECTINVALIDATEVIVPROC glTexDirectInvalidateVIV_LOCAL = 0;
++
++    if (glTexDirectVIVMap_LOCAL == 0 || glTexDirectInvalidateVIV_LOCAL == 0) {
++        glTexDirectVIVMap_LOCAL = reinterpret_cast<PFNGLTEXDIRECTVIVMAPPROC>(glcontext->getProcAddress("glTexDirectVIVMap"));
++        glTexDirectInvalidateVIV_LOCAL = reinterpret_cast<PFNGLTEXDIRECTINVALIDATEVIVPROC>(glcontext->getProcAddress("glTexDirectInvalidateVIV"));
++    }
++    if (glTexDirectVIVMap_LOCAL == 0 || glTexDirectInvalidateVIV_LOCAL == 0) {
++        qWarning() << Q_FUNC_INFO << "couldn't find \"glTexDirectVIVMap\" and/or \"glTexDirectInvalidateVIV\" => do nothing and return";
++        return;
++    }
++
++    void *bits = (void*)data;
++    GLuint physical = ~0U;
++
++    glTexDirectVIVMap_LOCAL(
++                GL_TEXTURE_2D,
++                m_textureWidths[i],
++                m_textureHeights[i],
++                m_textureFormat,
++                &bits,
++                &physical);
++#else
+     glTexImage2D(
+         GL_TEXTURE_2D,
+         0,
+@@ -442,9 +520,15 @@ void VideoMaterial::bindTexture(int i, const quint8 *data)
+         m_textureFormat,
+         m_textureType,
+         data + m_textureOffsets[i]);
++#endif
++
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
++
++#ifdef HW_PLATFORM_IMX6
++    glTexDirectInvalidateVIV_LOCAL(GL_TEXTURE_2D);
++#endif
+ }
+ 
+diff --git a/elements/gstqtvideosink/painters/videomaterial.h b/elements/gstqtvideosink/painters/videomaterial.h
+index 90a6379..6a918e9 100644
+--- a/elements/gstqtvideosink/painters/videomaterial.h
++++ b/elements/gstqtvideosink/painters/videomaterial.h
+@@ -19,6 +19,11 @@
+ #ifndef VIDEOMATERIAL_H
+ #define VIDEOMATERIAL_H
+ 
++#ifdef HW_PLATFORM_IMX6
++#include <GLES2/gl2.h>
++#include <GLES2/gl2ext.h>
++#endif
++
+ #include "../utils/bufferformat.h"
+ #include <QSize>
+ #include <QMutex>
+@@ -47,6 +52,9 @@ protected:
+     void initRgbTextureInfo(GLenum internalFormat, GLuint format,
+                             GLenum type, const QSize &size);
+     void initYuv420PTextureInfo(bool uvSwapped, const QSize &size);
++#ifdef HW_PLATFORM_IMX6
++    void initVivanteTextureInfo(GLuint format, const QSize &size);
++#endif
+     void init(GstVideoColorMatrix colorMatrixType);
+ 
+ private:
+-- 
+1.7.9.5
+
