@@ -1,0 +1,31 @@
+From f309b1e149764a193cbfc694973083e70b5f4a7e Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Mon, 4 Aug 2014 19:19:05 +0200
+Subject: [PATCH] qtimageformats.pro: Make the dependencies deterministic
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ qtimageformats.pro | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/qtimageformats.pro b/qtimageformats.pro
+index 8382e5c..63d13ce 100644
+--- a/qtimageformats.pro
++++ b/qtimageformats.pro
+@@ -1,9 +1,9 @@
+ requires(qtHaveModule(gui))
+ 
+ load(configure)
+-qtCompileTest(jasper)
+-qtCompileTest(libmng)
+-qtCompileTest(libtiff)
+-qtCompileTest(libwebp)
++OE_JASPER_ENABLED:qtCompileTest(jasper)
++OE_LIBMNG_ENABLED:qtCompileTest(libmng)
++OE_LIBTIFF_ENABLED:qtCompileTest(libtiff)
++OE_LIBWEBP_ENABLED:qtCompileTest(libwebp)
+ 
+ load(qt_parts)
+-- 
+2.0.4
+
