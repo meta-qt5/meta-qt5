@@ -13,6 +13,7 @@ PACKAGECONFIG[gstreamer010] = "OE_GSTREAMER010_ENABLED,,gstreamer gst-plugins-ba
 PACKAGECONFIG[qtlocation] = "OE_QTLOCATION_ENABLED,,qtlocation"
 PACKAGECONFIG[qtmultimedia] = "OE_QTMULTIMEDIA_ENABLED,,qtmultimedia"
 PACKAGECONFIG[qtsensors] = "OE_QTSENSORS_ENABLED,,qtsensors"
+PACKAGECONFIG[libwebp] = "OE_LIBWEBP_ENABLED,,libwebp"
 
 do_configure_prepend() {
     export QMAKE_CACHE_EVAL="CONFIG+=${EXTRA_OECONF}"
@@ -26,6 +27,8 @@ do_configure_prepend() {
     sed -e 's/(video):\(qtHaveModule(multimediawidgets)\)/(video):OE_QTMULTIMEDIA_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
     # disable qtsensors test if it isn't enabled by PACKAGECONFIG
     sed -e 's/\s\(qtHaveModule(sensors)\)/ OE_QTSENSORS_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
+    # disable libwebp test if it isn't enabled by PACKAGECONFIG
+    sed -e 's/\s\(config_libwebp: \)/ OE_LIBWEBP_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
 }
 
 # qtwebkit gets terribly big when linking with all debug info, disable by default
