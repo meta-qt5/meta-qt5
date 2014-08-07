@@ -1,7 +1,7 @@
-From e6b77a5732610816948a8a860a9cb9e92b02c33e Mon Sep 17 00:00:00 2001
+From 434d38b073556deaca2412cd9e71645b73732e90 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 4 Jun 2014 11:28:16 +0200
-Subject: [PATCH] add noqtwebkit configuration
+Subject: [PATCH 3/3] add noqtwebkit configuration
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -9,23 +9,33 @@ Content-Transfer-Encoding: 8bit
 Upstream-Status: Inappropiate [configuration]
 
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- src/assistant/assistant/assistant.pro | 2 +-
+ src/assistant/assistant/assistant.pro | 4 ++--
  src/designer/src/plugins/plugins.pro  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/assistant/assistant/assistant.pro b/src/assistant/assistant/assistant.pro
-index 5f96377..e461d4b 100644
+index 5f96377..71acdfc 100644
 --- a/src/assistant/assistant/assistant.pro
 +++ b/src/assistant/assistant/assistant.pro
 @@ -1,4 +1,4 @@
 -qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static) {
-+qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static):!contains(QT_CONFIG, noqtwebkit) {
++qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static):!contains(CONFIG, noqtwebkit) {
      QT += webkitwidgets
  } else {
      DEFINES += QT_NO_WEBKIT
+@@ -72,7 +72,7 @@ SOURCES += aboutdialog.cpp \
+     openpageswidget.cpp \
+     openpagesmanager.cpp \
+     openpagesswitcher.cpp
+-qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static) {
++qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static):!contains(CONFIG, noqtwebkit) {
+     SOURCES += helpviewer_qwv.cpp
+ } else {
+     SOURCES += helpviewer_qtb.cpp
 diff --git a/src/designer/src/plugins/plugins.pro b/src/designer/src/plugins/plugins.pro
-index b7ee661..0c6e50a 100644
+index b7ee661..921ec11 100644
 --- a/src/designer/src/plugins/plugins.pro
 +++ b/src/designer/src/plugins/plugins.pro
 @@ -1,5 +1,5 @@
@@ -33,8 +43,8 @@ index b7ee661..0c6e50a 100644
  
  # qtHaveModule(opengl): SUBDIRS += tools/view3d
 -qtHaveModule(webkitwidgets): SUBDIRS += qwebview
-+qtHaveModule(webkitwidgets):!contains(QT_CONFIG, noqtwebkit): SUBDIRS += qwebview
++qtHaveModule(webkitwidgets):!contains(CONFIG, noqtwebkit): SUBDIRS += qwebview
  win32: qtHaveModule(axcontainer): SUBDIRS += activeqt
 -- 
-1.8.3.1
+2.0.4
 
