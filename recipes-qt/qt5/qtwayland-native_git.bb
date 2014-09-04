@@ -5,6 +5,7 @@ require ${PN}.inc
 # qt5-git PV is only to indicate that this recipe is compatible with qt5 5.2.1
 
 SRCREV = "98dca3b54f52f08117c1e0d3a1b4826ed12ef23f"
+QT_MODULE_BRANCH = "5.4"
 
 # wayland-scanner and qtwaylandscanner must be in same path to work properly
 do_install_append() {
