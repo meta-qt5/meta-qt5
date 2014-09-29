@@ -6,14 +6,15 @@ require ${PN}.inc
 # the master branch which will lead to 1.0 when Qt 5.4 is released here.
 PV = "0.9.99+git${SRCPV}"
 
-QT_MODULE_BRANCH = "master"
+QT_MODULE_BRANCH = "1.0"
+QT_MODULE_BRANCH_CHROMIUM = "33.0.1750.170-based"
 
 # For now we have to define SRC_URI here again as qt5-git.inc points to
 # qt.gitorious.org/qt/ but qtwebengine is still on qt.gitorious.org/qt-labs/ which will
 # switch soon.
 SRC_URI = " \
-    git://gitorious.org/qt-labs/qtwebengine.git;name=qtwebengine;protocol=git;branch=${QT_MODULE_BRANCH} \
-    git://gitorious.org/qt-labs/chromium.git;name=chromium;protocol=git;branch=${QT_MODULE_BRANCH};destsuffix=git/src/3rdparty \
+    git://gitorious.org/qt/qtwebengine.git;name=qtwebengine;protocol=git;branch=${QT_MODULE_BRANCH} \
+    git://gitorious.org/qt/qtwebengine-chromium.git;name=chromium;protocol=git;branch=${QT_MODULE_BRANCH_CHROMIUM};destsuffix=git/src/3rdparty \
     file://0001-Use-ninja-supplied-by-environment-variable-NINJA_PAT.patch \
     file://0002-functions.prf-Don-t-match-QMAKE_EXT_CPP-or-QMAKE_EXT.patch \
     file://0003-functions.prf-Try-to-add-_moc-suffix.patch \
