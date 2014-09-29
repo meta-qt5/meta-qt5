@@ -1,7 +1,7 @@
-From 9c7d71880c6ec5b07e3030b7c7a23e004d5c60a2 Mon Sep 17 00:00:00 2001
+From 7a573e702d37f3e83b92f6b07345aaab05261e7b Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
-Subject: [PATCH 01/12] Add linux-oe-g++ platform
+Subject: [PATCH 01/11] Add linux-oe-g++ platform
 
 * This qmake.conf unlike other platforms reads most variables from
   shell environment, because it's easier for qt recipes to export
@@ -51,10 +51,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index d5c2b08..4eae0d3 100755
+index 1efb645..b1dfca9 100755
 --- a/configure
 +++ b/configure
-@@ -324,6 +324,16 @@ getQMakeConf()
+@@ -316,6 +316,16 @@ getQMakeConf()
      getSingleQMakeVariable "$1" "$specvals"
  }
  
@@ -71,7 +71,7 @@ index d5c2b08..4eae0d3 100755
  getXQMakeConf()
  {
      if [ -z "$xspecvals" ]; then
-@@ -333,6 +343,16 @@ getXQMakeConf()
+@@ -325,6 +335,16 @@ getXQMakeConf()
      getSingleQMakeVariable "$1" "$xspecvals"
  }
  
@@ -88,7 +88,7 @@ index d5c2b08..4eae0d3 100755
  compilerSupportsFlag()
  {
      cat >conftest.cpp <<EOF
-@@ -548,21 +568,19 @@ fi
+@@ -541,21 +561,19 @@ fi
  # initalize variables
  #-------------------------------------------------------------------------------
  
@@ -118,7 +118,7 @@ index d5c2b08..4eae0d3 100755
  # Use CC/CXX to run config.tests
  mkdir -p "$outpath/config.tests"
  rm -f "$outpath/config.tests/.qmake.cache"
-@@ -3140,7 +3158,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
+@@ -3141,7 +3159,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
      [ "$CFG_QGTKSTYLE" = "auto" ] && CFG_QGTKSTYLE=no
  fi
  
@@ -127,7 +127,7 @@ index d5c2b08..4eae0d3 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -3175,7 +3193,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
+@@ -3176,7 +3194,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
          exit 1
      fi
  fi
@@ -136,7 +136,7 @@ index d5c2b08..4eae0d3 100755
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3633,6 +3651,14 @@ setBootstrapVariable()
+@@ -3647,6 +3665,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -151,7 +151,7 @@ index d5c2b08..4eae0d3 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -3671,14 +3697,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -3685,14 +3711,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          fi
  
          [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=
@@ -175,7 +175,7 @@ index d5c2b08..4eae0d3 100755
          if [ "$CFG_RELEASE_QMAKE" = "yes" ]; then
              setBootstrapVariable QMAKE_CFLAGS_RELEASE
 diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
-index fe41c54..e2db923 100644
+index 05e10c9..213eeb8 100644
 --- a/mkspecs/features/configure.prf
 +++ b/mkspecs/features/configure.prf
 @@ -60,12 +60,12 @@ defineTest(qtCompileTest) {
@@ -187,7 +187,7 @@ index fe41c54..e2db923 100644
  
      mkpath($$test_out_dir)|error("Aborting.")
  
-     qtRunLoggedCommand("$$test_cmd_base $$system_quote($$system_path($$QMAKE_QMAKE)) $$qmake_configs $$shell_quote($$test_dir)") {
+     qtRunLoggedCommand("$$test_cmd_base $$system_quote($$system_path($$QMAKE_QMAKE)) -spec $$QMAKESPEC $$qmake_configs $$shell_quote($$test_dir)") {
 -        qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE") {
 +        qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE $$(QMAKE_MAKE_ARGS)") {
              log("yes$$escape_expand(\\n)")
@@ -346,5 +346,5 @@ index 0000000..dd12003
 +
 +#endif // QPLATFORMDEFS_H
 -- 
-2.0.0
+2.1.1
 

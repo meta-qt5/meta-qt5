@@ -1,7 +1,7 @@
-From 1e87c127c5d268870c51894c955bf24cde83ff69 Mon Sep 17 00:00:00 2001
+From fcbe3eefa24348cbf98ca9fc9e137ac6ccaf1f87 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
-Subject: [PATCH 05/12] qt_module: Fix pkgconfig and libtool replacements
+Subject: [PATCH 05/11] qt_module: Fix pkgconfig and libtool replacements
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,7 +67,7 @@ Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
  2 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
-index 4dcabe9..d04bc3e 100644
+index ebc5f00..46319d8 100644
 --- a/mkspecs/features/qt_common.prf
 +++ b/mkspecs/features/qt_common.prf
 @@ -33,7 +33,7 @@ contains(TEMPLATE, .*lib) {
@@ -80,7 +80,7 @@ index 4dcabe9..d04bc3e 100644
      lib_replace.CONFIG = path
      QMAKE_PRL_INSTALL_REPLACE += lib_replace
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 8bf4c92..ee2e989 100644
+index 6ab8267..2b4943c 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
 @@ -188,10 +188,25 @@ unix|mingw {
@@ -110,5 +110,5 @@ index 8bf4c92..ee2e989 100644
  }
  
 -- 
-2.0.0
+2.1.1
 

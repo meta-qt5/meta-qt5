@@ -1,4 +1,4 @@
-From fd954d63f62c551c5aeaab662b7ab42a3f2ab527 Mon Sep 17 00:00:00 2001
+From 32f3b53d0b5861ac3e277552b04a579d8bd16558 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 30 Jun 2014 20:08:17 +0200
 Subject: [PATCH 2/3] functions.prf: Don't match QMAKE_EXT_CPP or QMAKE_EXT_H
@@ -25,5 +25,5 @@ index 8725fd2..15c2941 100644
  }
  
 -- 
-2.0.0
+2.1.1
 

@@ -1,4 +1,6 @@
 require qt5-git.inc
 require ${PN}.inc
 
-SRCREV = "db1ec4efadf930cd8088286605128ae1d01d23e8"
+DEPENDS += "leveldb"
+
+SRCREV = "3a51e3ee766490fe6f9ab9511d19e16f75e07db8"

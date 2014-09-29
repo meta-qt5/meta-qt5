@@ -1,13 +1,18 @@
 require qt5-git.inc
 require ${PN}.inc
 
-SRCREV = "5f718c7d04d44c3878018e8070b18cf0e7486eb0"
+SRCREV = "98dca3b54f52f08117c1e0d3a1b4826ed12ef23f"
 
 SRC_URI += " \
     file://0001-examples.pro-include-server-buffer-only-when-buildin.patch \
 "
 
-QT_VERSION ?= "5.4.0"
+# this wasn't released, the PV is set just to signify that this SRCREV was tested together
+# with 5.3.2 version of other modules
+PV = "5.3.2"
+DEFAULT_PREFERENCE = "1"
+
+QT_VERSION ?= "5.3.0"
 
 do_install_append() {
     # do install files created by qtwaylandscanner

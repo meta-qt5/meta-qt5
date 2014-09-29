@@ -23,6 +23,9 @@ S = "${WORKDIR}/git"
 SEPB = "${S}"
 B = "${SEPB}"
 
+# Project ERROR: Missing CMake tests. Either create tests in tests/auto/cmake, or disable cmake config file creation with CONFIG-=create_cmake.
+EXTRA_QMAKEVARS_POST += "CONFIG-=create_cmake"
+
 do_configure() {
     # replace LD with CXX, to workaround a possible gyp inheritssue?
     LD="${CXX}" export LD
@@ -33,12 +36,13 @@ do_configure() {
 
     # qmake can't find the OE_QMAKE_* variables on it's own so directly passing them as
     # arguments here
-    ${OE_QMAKE_QMAKE} -r QTWEBENGINE_ROOT="${S}" NINJA_PATH="${STAGING_BINDIR_NATIVE}/ninja" \
+    ${OE_QMAKE_QMAKE} -r ${EXTRA_QMAKEVARS_PRE} QTWEBENGINE_ROOT="${S}" NINJA_PATH="${STAGING_BINDIR_NATIVE}/ninja" \
         QMAKE_CXX="${OE_QMAKE_CXX}" QMAKE_CC="${OE_QMAKE_CC}" \
         QMAKE_LINK="${OE_QMAKE_LINK}" \
         QMAKE_CFLAGS="${OE_QMAKE_CFLAGS}" \
         QMAKE_CXXFLAGS="${OE_QMAKE_CXXFLAGS}" \
-        QMAKE_AR="${OE_QMAKE_AR}"
+        QMAKE_AR="${OE_QMAKE_AR}" \
+        -after ${EXTRA_QMAKEVARS_POST}
 }
 
 do_install_append() {
