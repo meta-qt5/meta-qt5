@@ -1,4 +1,4 @@
-From 8d396ebedaa9ed6d9152fb8a4f90a3ea347fdec0 Mon Sep 17 00:00:00 2001
+From f8e3c6be700907a597ae706afeec14e26103b31e Mon Sep 17 00:00:00 2001
 From: Yoann Lopes <yoann.lopes@digia.com>
 Date: Thu, 31 Oct 2013 15:06:30 +0100
 Subject: [PATCH 1/2] Initial porting effort to GStreamer 1.0.
@@ -26,7 +26,7 @@ Conflicts:
  config.tests/gstreamer_appsrc/gstreamer_appsrc.pro |  13 +-
  .../gstreamer_encodingprofiles.pro                 |  13 +-
  .../gstreamer_photography.pro                      |  15 +-
- qtmultimedia.pro                                   |  22 ++-
+ qtmultimedia.pro                                   |  25 ++-
  src/gsttools/gsttools.pro                          |  22 +--
  src/gsttools/gstvideoconnector.c                   | 199 +++++++++++++++++++--
  src/gsttools/qgstappsrc.cpp                        |  29 ++-
@@ -58,7 +58,7 @@ Conflicts:
  .../mediaplayer/qgstreamerplayerserviceplugin.cpp  |  27 ++-
  .../mediaplayer/qgstreamerplayersession.cpp        | 154 ++++++++++++++--
  .../mediaplayer/qgstreamerplayersession.h          |   9 +
- 36 files changed, 873 insertions(+), 131 deletions(-)
+ 36 files changed, 875 insertions(+), 132 deletions(-)
 
 diff --git a/config.tests/gstreamer/gstreamer.pro b/config.tests/gstreamer/gstreamer.pro
 index 02a7e34..6b9843a 100644
@@ -149,10 +149,10 @@ index 6b530cb..975991f 100644
 +LIBS += -lgstphotography-$$GST_VERSION
  
 diff --git a/qtmultimedia.pro b/qtmultimedia.pro
-index c7f093c..37f42a0 100644
+index 3cec526..109dd81 100644
 --- a/qtmultimedia.pro
 +++ b/qtmultimedia.pro
-@@ -21,10 +21,24 @@ win32 {
+@@ -17,11 +17,26 @@ win32 {
  } else {
      qtCompileTest(alsa)
      qtCompileTest(pulseaudio)
@@ -160,6 +160,7 @@ index c7f093c..37f42a0 100644
 -        qtCompileTest(gstreamer_photography)
 -        qtCompileTest(gstreamer_encodingprofiles)
 -        qtCompileTest(gstreamer_appsrc)
+-        qtCompileTest(linux_v4l)
 +    !done_config_gstreamer {
 +        gstver=1.0
 +        cache(GST_VERSION, set, gstver);
@@ -167,6 +168,7 @@ index c7f093c..37f42a0 100644
 +            qtCompileTest(gstreamer_photography)
 +            qtCompileTest(gstreamer_encodingprofiles)
 +            qtCompileTest(gstreamer_appsrc)
++            qtCompileTest(linux_v4l)
 +        } else {
 +            gstver=0.10
 +            cache(GST_VERSION, set, gstver);
@@ -176,13 +178,14 @@ index c7f093c..37f42a0 100644
 +                qtCompileTest(gstreamer_photography)
 +                qtCompileTest(gstreamer_encodingprofiles)
 +                qtCompileTest(gstreamer_appsrc)
++                qtCompileTest(linux_v4l)
 +            }
 +        }
      }
      qtCompileTest(resourcepolicy)
      qtCompileTest(gpu_vivante)
 diff --git a/src/gsttools/gsttools.pro b/src/gsttools/gsttools.pro
-index 15edd04..d252344 100644
+index 7c809a7..6b9bf5d 100644
 --- a/src/gsttools/gsttools.pro
 +++ b/src/gsttools/gsttools.pro
 @@ -2,7 +2,7 @@ TEMPLATE = lib
@@ -239,7 +242,7 @@ index 15edd04..d252344 100644
 +    LIBS_PRIVATE += -lgstapp-$$GST_VERSION
  }
  
- HEADERS += $$PRIVATE_HEADERS
+ config_linux_v4l: DEFINES += USE_V4L
 diff --git a/src/gsttools/gstvideoconnector.c b/src/gsttools/gstvideoconnector.c
 index 3e08fe5..ff3f9a3 100644
 --- a/src/gsttools/gstvideoconnector.c
@@ -1698,10 +1701,10 @@ index 9f1a765..dd6bd02 100644
      if (m_duration != duration) {
          m_duration = duration;
 diff --git a/src/plugins/gstreamer/camerabin/camerabinsession.cpp b/src/plugins/gstreamer/camerabin/camerabinsession.cpp
-index 6e3448f..0dbf848 100644
+index a835b1c..6bd3682 100644
 --- a/src/plugins/gstreamer/camerabin/camerabinsession.cpp
 +++ b/src/plugins/gstreamer/camerabin/camerabinsession.cpp
-@@ -726,7 +726,11 @@ qint64 CameraBinSession::duration() const
+@@ -731,7 +731,11 @@ qint64 CameraBinSession::duration() const
      GstFormat   format = GST_FORMAT_TIME;
      gint64      duration = 0;
  
@@ -1713,7 +1716,7 @@ index 6e3448f..0dbf848 100644
          return duration / 1000000;
      else
          return 0;
-@@ -759,8 +763,13 @@ void CameraBinSession::setMetaData(const QMap<QByteArray, QVariant> &data)
+@@ -764,8 +768,13 @@ void CameraBinSession::setMetaData(const QMap<QByteArray, QVariant> &data)
  
      if (m_camerabin) {
          GstIterator *elements = gst_bin_iterate_all_by_interface(GST_BIN(m_camerabin), GST_TYPE_TAG_SETTER);
@@ -1727,7 +1730,7 @@ index 6e3448f..0dbf848 100644
              gst_tag_setter_reset_tags(GST_TAG_SETTER(element));
  
              QMapIterator<QByteArray, QVariant> it(data);
-@@ -821,7 +830,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
+@@ -826,7 +835,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
  
      if (gm && GST_MESSAGE_TYPE(gm) == GST_MESSAGE_ELEMENT) {
          if (m_captureMode == QCamera::CaptureStillImage &&
@@ -1739,7 +1742,7 @@ index 6e3448f..0dbf848 100644
              st = gst_message_get_structure(gm);
  
              if (gst_structure_has_field_typed(st, "buffer", GST_TYPE_BUFFER)) {
-@@ -831,7 +844,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
+@@ -836,7 +849,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
  
                      QImage img;
  
@@ -1751,7 +1754,7 @@ index 6e3448f..0dbf848 100644
                      if (caps) {
                          GstStructure *structure = gst_caps_get_structure(caps, 0);
                          gint width = 0;
-@@ -1103,7 +1120,11 @@ QList< QPair<int,int> > CameraBinSession::supportedFrameRates(const QSize &frame
+@@ -1109,7 +1126,11 @@ QList< QPair<int,int> > CameraBinSession::supportedFrameRates(const QSize &frame
          gst_structure_remove_all_fields(structure);
          gst_structure_set_value(structure, "framerate", &rate);
      }
@@ -1763,7 +1766,7 @@ index 6e3448f..0dbf848 100644
  
  
      for (uint i=0; i<gst_caps_get_size(caps); i++) {
-@@ -1223,7 +1244,11 @@ QList<QSize> CameraBinSession::supportedResolutions(QPair<int,int> rate,
+@@ -1229,7 +1250,11 @@ QList<QSize> CameraBinSession::supportedResolutions(QPair<int,int> rate,
          gst_structure_set_value(structure, "width", &w);
          gst_structure_set_value(structure, "height", &h);
      }
@@ -1833,10 +1836,10 @@ index 7649010..fce55ac 100644
  
  OTHER_FILES += \
 diff --git a/src/plugins/gstreamer/mediacapture/qgstreamercapturesession.cpp b/src/plugins/gstreamer/mediacapture/qgstreamercapturesession.cpp
-index 518a66b..0c99502 100644
+index b9114c6..97d9203 100644
 --- a/src/plugins/gstreamer/mediacapture/qgstreamercapturesession.cpp
 +++ b/src/plugins/gstreamer/mediacapture/qgstreamercapturesession.cpp
-@@ -504,6 +504,11 @@ GstElement *QGstreamerCaptureSession::buildImageCapture()
+@@ -506,6 +506,11 @@ GstElement *QGstreamerCaptureSession::buildImageCapture()
      gst_pad_add_buffer_probe(pad, G_CALLBACK(passImageFilter), this);
      gst_object_unref(GST_OBJECT(pad));
  
@@ -1858,7 +1861,7 @@ index 2ca9377..b986fc7 100644
      mediaplayer.json
 -
 diff --git a/src/plugins/gstreamer/mediaplayer/qgstreamerplayercontrol.cpp b/src/plugins/gstreamer/mediaplayer/qgstreamerplayercontrol.cpp
-index ff99aa3..f9de6a7 100644
+index 99c471b..deec236 100644
 --- a/src/plugins/gstreamer/mediaplayer/qgstreamerplayercontrol.cpp
 +++ b/src/plugins/gstreamer/mediaplayer/qgstreamerplayercontrol.cpp
 @@ -527,6 +527,8 @@ void QGstreamerPlayerControl::processEOS()
@@ -2374,5 +2377,5 @@ index 23e7031..707779b 100644
  
  QT_END_NAMESPACE
 -- 
-2.0.0
+2.1.1
 

@@ -1,7 +1,7 @@
-From 2a6891f2cbf221b51b214a527adb4602e20b100b Mon Sep 17 00:00:00 2001
+From 4a6476822784ca6a10f59cfb3e941854ccea8408 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 4 Jun 2014 15:26:11 +0200
-Subject: [PATCH 10/12] Revert "Use the "gcc" feature in simd.prf"
+Subject: [PATCH 10/13] Revert "Use the "gcc" feature in simd.prf"
 
 This reverts commit 3b00cc480400d47c59c29d3507c7fcdc9be2a489.
 ---
@@ -22,5 +22,5 @@ index 62a63f9..4f86f60 100644
          HEADERS += $$SSE2_HEADERS
  
 -- 
-2.0.0
+2.1.1
 

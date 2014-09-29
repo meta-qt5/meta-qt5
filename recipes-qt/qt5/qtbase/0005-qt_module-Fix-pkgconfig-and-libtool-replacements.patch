@@ -1,7 +1,7 @@
-From 71e5a4c62ca38b30a14c9957db21a7cbf5fcf54d Mon Sep 17 00:00:00 2001
+From 9e7667c9124ab287dc0f7ad40c2b61c435ffc186 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
-Subject: [PATCH 05/12] qt_module: Fix pkgconfig and libtool replacements
+Subject: [PATCH 05/13] qt_module: Fix pkgconfig and libtool replacements
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,7 +80,7 @@ index 4dcabe9..d04bc3e 100644
      lib_replace.CONFIG = path
      QMAKE_PRL_INSTALL_REPLACE += lib_replace
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 8bf4c92..ee2e989 100644
+index 8bf4c92..2e229fc 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
 @@ -188,10 +188,25 @@ unix|mingw {
@@ -110,5 +110,5 @@ index 8bf4c92..ee2e989 100644
  }
  
 -- 
-2.0.0
+2.1.1
 

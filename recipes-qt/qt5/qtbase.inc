@@ -17,7 +17,7 @@ SRC_URI += "\
 
 # specific for qtbase
 SRC_URI += "\
-    file://0011-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
+    file://0012-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
 "
 
 DEPENDS += "qtbase-native"

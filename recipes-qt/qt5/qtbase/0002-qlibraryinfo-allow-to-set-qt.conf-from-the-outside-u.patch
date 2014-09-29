@@ -1,7 +1,7 @@
-From 5d83d8ce8b601a983b055f32dc67a418a0ce06ab Mon Sep 17 00:00:00 2001
+From 2749053c1a0670fea50f2f716fea0839fbbbb007 Mon Sep 17 00:00:00 2001
 From: Holger Freyther <zecke@selfish.org>
 Date: Wed, 26 Sep 2012 17:22:30 +0200
-Subject: [PATCH 02/12] qlibraryinfo: allow to set qt.conf from the outside
+Subject: [PATCH 02/13] qlibraryinfo: allow to set qt.conf from the outside
  using the environment
 
 Allow to set a qt.conf from the outside using the environment. This allows
@@ -35,5 +35,5 @@ index 174c1d0..69e614f 100644
      if(!QFile::exists(qtconfig))
          qtconfig = qt_libraryInfoFile();
 -- 
-2.0.0
+2.1.1
 

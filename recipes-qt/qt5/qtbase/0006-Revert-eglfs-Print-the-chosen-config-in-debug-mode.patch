@@ -1,7 +1,7 @@
-From a3e87ebdf7dff6b9d4b1d8191f044cfb56b9da3d Mon Sep 17 00:00:00 2001
+From ce38ab8b2167b74fa90eb3e17507dc9e799a3274 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 21 Apr 2014 19:22:04 +0200
-Subject: [PATCH 06/12] Revert "eglfs: Print the chosen config in debug mode"
+Subject: [PATCH 06/13] Revert "eglfs: Print the chosen config in debug mode"
 
 This reverts commit dc685cf6331f5fb46285cf10d6464c2ecf41f73e.
 ---
@@ -52,5 +52,5 @@ index eec6463..4a7c69b 100644
      // Make the context current to ensure the GL version query works. This needs a surface too.
      const EGLint pbufferAttributes[] = {
 -- 
-2.0.0
+2.1.1
 

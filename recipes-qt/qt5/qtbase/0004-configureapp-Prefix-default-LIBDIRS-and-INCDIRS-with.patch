@@ -1,7 +1,7 @@
-From 4a86d338f04c2bfa4d3f63a2fa9d1252503757fd Mon Sep 17 00:00:00 2001
+From 34a32208034a03c0d591dc79386f97ae020652e7 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 22:33:33 +0200
-Subject: [PATCH 04/12] configureapp: Prefix default LIBDIRS and INCDIRS with
+Subject: [PATCH 04/13] configureapp: Prefix default LIBDIRS and INCDIRS with
  SYSROOT
 
 Upstream-Status: Pending
@@ -11,10 +11,10 @@ Upstream-Status: Pending
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index 7e61845..29c6358 100644
+index 7d73882..c572fbb 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
-@@ -3370,8 +3370,8 @@ void Configure::generateQConfigPri()
+@@ -3393,8 +3393,8 @@ void Configure::generateQConfigPri()
          configStream << "    QT_ARCH = " << dictionary["QT_ARCH"] << endl;
          if (dictionary.contains("XQMAKESPEC") && !dictionary["XQMAKESPEC"].startsWith("wince")) {
              // FIXME: add detection
@@ -26,5 +26,5 @@ index 7e61845..29c6358 100644
          configStream << "}" << endl;
          configStream << "QT_CONFIG += " << qtConfig.join(' ') << endl;
 -- 
-2.0.0
+2.1.1
 

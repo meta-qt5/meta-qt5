@@ -1,4 +1,4 @@
-From 761367755efa529c41ba414521eaed0b10873d99 Mon Sep 17 00:00:00 2001
+From fd79724a05ee7fb52d8ac1b02057e7a1ba4efb14 Mon Sep 17 00:00:00 2001
 From: Simon Busch <morphis@gravedo.de>
 Date: Fri, 19 Jul 2013 13:35:14 +0000
 Subject: [PATCH] Install the qtwaylandscanner tool to the native side
@@ -11,7 +11,7 @@ Signed-off-by: Simon Busch <morphis@gravedo.de>
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/qtwaylandscanner/qtwaylandscanner.pro b/src/qtwaylandscanner/qtwaylandscanner.pro
-index ac2d07b..53b93f9 100644
+index ac2d07b..7a46a24 100644
 --- a/src/qtwaylandscanner/qtwaylandscanner.pro
 +++ b/src/qtwaylandscanner/qtwaylandscanner.pro
 @@ -1,6 +1,10 @@
@@ -28,5 +28,5 @@ index ac2d07b..53b93f9 100644
 +target.path = $$[QT_HOST_BINS]
 +INSTALLS += target
 -- 
-1.8.1.2
+2.1.1
 

@@ -1,4 +1,4 @@
-From 201b36614907584a0d446975bddbb11a495540ed Mon Sep 17 00:00:00 2001
+From 6e554b116bfe57744a3de02370fd96b9ea13ecb2 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 22 Feb 2014 17:47:44 +0100
 Subject: [PATCH] examples.pro: include server-buffer only when building with
@@ -14,10 +14,10 @@ Change-Id: I8412dfd4ebb95c147328ac6e4dfff14a0cff4e78
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/examples/examples.pro b/examples/examples.pro
-index 2d4cd1b..fb2497e 100644
+index d633fb9..643c7cd 100644
 --- a/examples/examples.pro
 +++ b/examples/examples.pro
-@@ -13,5 +13,7 @@ contains(CONFIG, wayland-compositor) {
+@@ -9,5 +9,7 @@ contains(CONFIG, wayland-compositor) {
          SUBDIRS += qml-compositor
      }
  
@@ -27,5 +27,5 @@ index 2d4cd1b..fb2497e 100644
 +    }
  }
 -- 
-1.8.5.3
+2.1.1
 

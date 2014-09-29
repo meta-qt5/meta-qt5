@@ -1,4 +1,4 @@
-From 89c132829d1a93d662f617c2a7be75c5e6eaa33a Mon Sep 17 00:00:00 2001
+From fe714df9641286e3f005e0021e1c6462fb0b061e Mon Sep 17 00:00:00 2001
 From: Trevor Woerner <trevor.woerner@linaro.org>
 Date: Fri, 7 Feb 2014 04:07:17 +0100
 Subject: [PATCH] qtwebkit: fix QA issue (bad RPATH)
@@ -14,11 +14,11 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 2 deletions(-)
 
 diff --git a/Tools/qmake/mkspecs/features/unix/default_post.prf b/Tools/qmake/mkspecs/features/unix/default_post.prf
-index 79b7208..6dff72b 100644
+index 75df1c5..5d9a4d2 100644
 --- a/Tools/qmake/mkspecs/features/unix/default_post.prf
 +++ b/Tools/qmake/mkspecs/features/unix/default_post.prf
-@@ -58,8 +58,6 @@ linux-*g++* {
-     QMAKE_OBJECTIVE_CFLAGS += -Wno-c++11-extensions -Wno-c++0x-extensions
+@@ -56,8 +56,6 @@ linux-*g++* {
+     }
  }
  
 -contains(TEMPLATE, app): CONFIG += rpath
@@ -27,5 +27,5 @@ index 79b7208..6dff72b 100644
      # Make ld not cache the symbol tables of input files in memory to avoid memory exhaustion during the linking phase.
      !force_static_libs_as_shared:config_gnuld: QMAKE_LFLAGS += -Wl,--no-keep-memory
 -- 
-1.8.5.3
+2.1.1
 

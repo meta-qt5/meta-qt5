@@ -27,12 +27,12 @@ SRC_URI += "\
 
 # common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
-    file://0011-Always-build-uic.patch \
+    file://0012-Always-build-uic.patch \
 "
 
 # specific for nativesdk-qtbase
 SRC_URI += " \
-    file://0012-configure-preserve-built-qmake-and-swap-with-native-.patch \
+    file://0013-configure-preserve-built-qmake-and-swap-with-native-.patch \
 "
 
 PACKAGES = "${PN}-tools-dbg ${PN}-tools-dev ${PN}-tools-staticdev ${PN}-tools"

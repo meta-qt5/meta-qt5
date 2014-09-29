@@ -1,7 +1,7 @@
-From 6317e81c96cec598da266d0c863afa4320d1e38a Mon Sep 17 00:00:00 2001
+From bb0958af49c1ad4d35b6b6b9033cd46eda4a3ac8 Mon Sep 17 00:00:00 2001
 From: Michael Krelin <hacker@klever.net>
 Date: Mon, 29 Oct 2012 20:07:49 -0700
-Subject: [PATCH 11/11] qmake: don't build it in configure, but allow to build
+Subject: [PATCH 12/12] qmake: don't build it in configure, but allow to build
  it separately
 
 * it is already built in qtbase-native, so we don't need it in configure
@@ -20,7 +20,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index 3c0347a..a75ca11 100755
+index ca0824f..5a09ae3 100755
 --- a/configure
 +++ b/configure
 @@ -3675,7 +3675,7 @@ setBootstrapEvalVariable()
@@ -46,5 +46,5 @@ index 89d6ea5..7c605b9 100644
  VPATH += \
      ../src/corelib/global \
 -- 
-2.0.0
+2.1.1
 
