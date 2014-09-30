@@ -34,7 +34,6 @@ do_generate_qt_config_file() {
 }
 
 EXTRA_OECONF = " \
-    -dont-process \
     -prefix ${prefix} \
     -sysroot ${STAGING_DIR_NATIVE} \
     -no-gcc-sysroot \

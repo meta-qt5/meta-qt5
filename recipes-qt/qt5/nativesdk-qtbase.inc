@@ -142,7 +142,6 @@ do_configure() {
     fi
 
     ${S}/configure -v \
-        -dont-process \
         -opensource -confirm-license \
         -sysroot ${STAGING_DIR_NATIVE} \
         -no-gcc-sysroot \
