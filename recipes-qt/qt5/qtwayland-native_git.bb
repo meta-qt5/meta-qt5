@@ -6,8 +6,3 @@ require ${PN}.inc
 
 SRCREV = "98dca3b54f52f08117c1e0d3a1b4826ed12ef23f"
 QT_MODULE_BRANCH = "5.4"
-
-# wayland-scanner and qtwaylandscanner must be in same path to work properly
-do_install_append() {
-    ln -sf ${D}${OE_QMAKE_PATH_QT_BINS}/qtwaylandscanner ${D}${bindir}/qtwaylandscanner
-}
