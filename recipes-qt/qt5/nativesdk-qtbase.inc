@@ -57,6 +57,7 @@ FILES_${PN}-tools-dbg = " \
 FILES_${PN}-tools = " \
     ${libdir}/lib*${SOLIBS} \
     ${OE_QMAKE_PATH_BINS}/* \
+    ${SDKPATHNATIVE}/environment-setup.d \
 "
 
 # qttools binaries are placed in a subdir of bin in order to avoid
@@ -218,3 +219,32 @@ do_install() {
                                    -not -name 'libQt5Bootstrap.a' \
                                    -exec rm '{}' ';'
 }
+
+do_generate_qt_environment_file() {
+    mkdir -p ${D}${SDKPATHNATIVE}/environment-setup.d/
+    script=${D}${SDKPATHNATIVE}/environment-setup.d/qt5.sh
+
+    echo 'export PATH=${OE_QMAKE_PATH_HOST_BINS}:$PATH' > $script
+    echo 'export OE_QMAKE_CFLAGS="$CFLAGS"' >> $script
+    echo 'export OE_QMAKE_CXXFLAGS="$CXXFLAGS"' >> $script
+    echo 'export OE_QMAKE_LDFLAGS="$LDFLAGS"' >> $script
+    echo 'export OE_QMAKE_CC=$CC' >> $script
+    echo 'export OE_QMAKE_CXX=$CXX' >> $script
+    echo 'export OE_QMAKE_LINK=$CXX' >> $script
+    echo 'export OE_QMAKE_AR=$AR' >> $script
+    echo 'export QT_CONF_PATH=${OE_QMAKE_PATH_HOST_BINS}/qt.conf' >> $script
+    echo 'export OE_QMAKE_LIBDIR_QT=`qmake -query QT_INSTALL_LIBS`' >> $script
+    echo 'export OE_QMAKE_INCDIR_QT=`qmake -query QT_INSTALL_HEADERS`' >> $script
+    echo 'export OE_QMAKE_MOC=${OE_QMAKE_PATH_HOST_BINS}/moc' >> $script
+    echo 'export OE_QMAKE_UIC=${OE_QMAKE_PATH_HOST_BINS}/uic' >> $script
+    echo 'export OE_QMAKE_RCC=${OE_QMAKE_PATH_HOST_BINS}/rcc' >> $script
+    echo 'export OE_QMAKE_QDBUSCPP2XML=${OE_QMAKE_PATH_HOST_BINS}/qdbuscpp2xml' >> $script
+    echo 'export OE_QMAKE_QDBUSXML2CPP=${OE_QMAKE_PATH_HOST_BINS}/qdbusxml2cpp' >> $script
+    echo 'export OE_QMAKE_QT_CONFIG=${OE_QMAKE_PATH_TARGET_LIBS}/${QT_DIR_NAME}/mkspecs/qconfig.pri' >> $script
+    echo 'export QMAKESPEC=`qmake -query QT_INSTALL_LIBS`/mkspecs/linux-oe-g++' >> $script
+
+    # Use relocable sysroot
+    sed -i -e 's:${SDKPATHNATIVE}:$OECORE_NATIVE_SYSROOT:g' $script
+}
+
+addtask generate_qt_environment_file after do_install before do_package
