@@ -149,7 +149,7 @@ diff --git a/qtbase.pro b/qtbase.pro
 index d6861cf..7fb58a3 100644
 --- a/qtbase.pro
 +++ b/qtbase.pro
-@@ -69,18 +69,26 @@ CONFIG -= qt
+@@ -69,18 +69,25 @@ CONFIG -= qt
  
  ### installations ####
  
@@ -159,7 +159,7 @@ index d6861cf..7fb58a3 100644
  qmake.path = $$[QT_HOST_BINS]
 +qmake.files = $$OUT_PWD/bin/qmake
 +!isEmpty(QT_EXTERNAL_HOST_BINS) {
-+   qmake.files = $$[QT_EXTERNAL_HOST_BINS]/bin/qmake
++   qmake.files = $$[QT_EXTERNAL_HOST_BINS]/qmake
 +}
  equals(QMAKE_HOST.os, Windows) {
 -   qmake.files = $$OUT_PWD/bin/qmake.exe
@@ -172,9 +172,8 @@ index d6861cf..7fb58a3 100644
  #syncqt
  syncqt.path = $$[QT_HOST_BINS]
  syncqt.files = $$PWD/bin/syncqt.pl
-+syncqt.files = $$PWD/bin/syncqt.pl
 +!isEmpty(QT_EXTERNAL_HOST_BINS) {
-+   syncqt.files = $$[QT_EXTERNAL_HOST_BINS]/bin/syncqt.pl
++   syncqt.files = $$[QT_EXTERNAL_HOST_BINS]/syncqt.pl
 +}
  INSTALLS += syncqt
  
