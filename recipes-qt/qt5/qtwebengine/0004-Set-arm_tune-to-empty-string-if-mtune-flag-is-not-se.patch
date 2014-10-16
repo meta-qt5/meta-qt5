@@ -1,0 +1,34 @@
+From c99aed6ef28c4ac9c00024a40222331c0e682d28 Mon Sep 17 00:00:00 2001
+From: Andras Becsi <andras.becsi@digia.com>
+Date: Thu, 18 Sep 2014 18:22:37 +0200
+Subject: [PATCH 4/6] Set arm_tune to empty string if mtune flag is not set by
+ toolchain
+
+Since the default arm_tune option applied by chromium is not
+recognized by our gcc toolchain set arm_tune to empty string
+to prevent chromium from setting a default. Our toolchains
+set the arm version which already implies the corresponding
+mtune option anyway.
+
+Change-Id: I0291bd4f0e5706597d37f914e4eeefbd75397bbf
+Reviewed-by: Jocelyn Turcotte <jocelyn.turcotte@digia.com>
+---
+ src/core/gyp_run.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/core/gyp_run.pro b/src/core/gyp_run.pro
+index ed592e1..4845af2 100644
+--- a/src/core/gyp_run.pro
++++ b/src/core/gyp_run.pro
+@@ -47,7 +47,7 @@ cross_compile {
+         !isEmpty(MARCH): GYP_ARGS += "-D arm_arch=\"$$MARCH\""
+ 
+         MTUNE = $$extractCFlag("-mtune=.*")
+-        !isEmpty(MTUNE): GYP_ARGS += "-D arm_tune=\"$$MTUNE\""
++        GYP_ARGS += "-D arm_tune=\"$$MTUNE\""
+ 
+         MFLOAT = $$extractCFlag("-mfloat-abi=.*")
+         !isEmpty(MFLOAT): GYP_ARGS += "-D arm_float_abi=\"$$MFLOAT\""
+-- 
+2.1.1
+

@@ -1,7 +1,7 @@
-From b0e844967728edf814d611bb1c69d320a8a6c64d Mon Sep 17 00:00:00 2001
+From 8e540a678a796d78ff9a98986d747afbca7f63be Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Tue, 1 Jul 2014 15:58:16 +0200
-Subject: [PATCH 3/3] functions.prf: Try to add _moc suffix
+Subject: [PATCH 3/6] functions.prf: Try to add _moc suffix
 
 * otherwise moc generated files have the same basename and do_configure fails with:
   core_generated.gyp:QtWebEngineCore#target has several files with the same basename:
