@@ -1,4 +1,4 @@
-From 285b31f709a81b7e51b5c3d96061fa731cdfdf7d Mon Sep 17 00:00:00 2001
+From 4b6778e44b35d97bd08baded4e5d1f570693ae05 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 21 Apr 2014 19:22:04 +0200
 Subject: [PATCH 06/11] Revert "eglfs: Print the chosen config in debug mode"
@@ -40,15 +40,18 @@ With this change the build is failing with:
 
 This reverts commit dc685cf6331f5fb46285cf10d6464c2ecf41f73e.
 
+Will be partially resolved in newer revision with:
+https://codereview.qt-project.org/96220
+
 Change-Id: I7a6a926b7525d4f137824c71f2ec8cd089c21f13
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- src/platformsupport/eglconvenience/qeglconvenience.cpp         | 4 +++-
- src/platformsupport/eglconvenience/qeglplatformcontext.cpp     | 7 -------
- src/platformsupport/eglconvenience/qeglplatformintegration.cpp | 4 ++--
- 3 files changed, 5 insertions(+), 10 deletions(-)
+ src/platformsupport/eglconvenience/qeglconvenience.cpp     | 4 +++-
+ src/platformsupport/eglconvenience/qeglplatformcontext.cpp | 7 -------
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
 diff --git a/src/platformsupport/eglconvenience/qeglconvenience.cpp b/src/platformsupport/eglconvenience/qeglconvenience.cpp
-index b7ce6df..e8c1925 100644
+index 1fdeec3..0fa3d88 100644
 --- a/src/platformsupport/eglconvenience/qeglconvenience.cpp
 +++ b/src/platformsupport/eglconvenience/qeglconvenience.cpp
 @@ -443,9 +443,11 @@ void q_printEglConfig(EGLDisplay display, EGLConfig config)
@@ -89,28 +92,6 @@ index 7cc3300..ccbd974 100644
      updateFormatFromGL();
  }
  
-diff --git a/src/platformsupport/eglconvenience/qeglplatformintegration.cpp b/src/platformsupport/eglconvenience/qeglplatformintegration.cpp
-index b8205dc..6005684 100644
---- a/src/platformsupport/eglconvenience/qeglplatformintegration.cpp
-+++ b/src/platformsupport/eglconvenience/qeglplatformintegration.cpp
-@@ -193,7 +193,7 @@ enum ResourceType {
-     EglContext,
-     EglConfig,
-     NativeDisplay,
--    Display
-+    XDisplay
- };
- 
- static int resourceType(const QByteArray &key)
-@@ -236,7 +236,7 @@ void *QEGLPlatformIntegration::nativeResourceForScreen(const QByteArray &resourc
-     void *result = 0;
- 
-     switch (resourceType(resource)) {
--    case Display:
-+    case XDisplay:
-         // Play nice when using the x11 hooks: Be compatible with xcb that allows querying
-         // the X Display pointer, which is nothing but our native display.
-         result = reinterpret_cast<void*>(nativeDisplay());
 -- 
 2.1.1
 

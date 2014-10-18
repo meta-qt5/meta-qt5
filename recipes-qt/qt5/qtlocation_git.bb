@@ -1,7 +1,7 @@
 require qt5-git.inc
 require ${PN}.inc
 
-SRCREV = "b90e043af09955d94a7a9555f11b5d6f3add4c3a"
+SRCREV = "eebf55a6919dff9eec4dd8529223aae6f6d0f569"
 
 LIC_FILES_CHKSUM = "file://LICENSE.LGPLv21;md5=cff17b12416c896e10ae2c17a64252e7 \
                     file://LICENSE.GPLv2;md5=e782f55badfa137e5e59c330f12cc8ed \

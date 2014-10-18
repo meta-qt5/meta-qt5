@@ -1,7 +1,7 @@
 require qt5-git.inc
 require ${PN}.inc
 
-SRCREV = "ef8ed357881b212e2debe2ccf975996bca2331c2"
+SRCREV = "3bb682ea29ffaf72ff73e6eb57abdc5c59524e8a"
 
 # text of LGPL_EXCEPTION.txt and LICENSE.FDL is slightly different than what
 # other qt* components use :/

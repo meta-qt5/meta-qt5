@@ -1,4 +1,4 @@
-From 7a573e702d37f3e83b92f6b07345aaab05261e7b Mon Sep 17 00:00:00 2001
+From 71a2437e2ee5a1214ab88c8a3d1d0ddcc012698d Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH 01/11] Add linux-oe-g++ platform
@@ -51,7 +51,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index 1efb645..b1dfca9 100755
+index 7d6ba9f..1de01a9 100755
 --- a/configure
 +++ b/configure
 @@ -316,6 +316,16 @@ getQMakeConf()
@@ -118,7 +118,7 @@ index 1efb645..b1dfca9 100755
  # Use CC/CXX to run config.tests
  mkdir -p "$outpath/config.tests"
  rm -f "$outpath/config.tests/.qmake.cache"
-@@ -3141,7 +3159,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
+@@ -3167,7 +3185,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
      [ "$CFG_QGTKSTYLE" = "auto" ] && CFG_QGTKSTYLE=no
  fi
  
@@ -127,7 +127,7 @@ index 1efb645..b1dfca9 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -3176,7 +3194,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
+@@ -3205,7 +3223,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
          exit 1
      fi
  fi
@@ -136,7 +136,7 @@ index 1efb645..b1dfca9 100755
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3647,6 +3665,14 @@ setBootstrapVariable()
+@@ -3676,6 +3694,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -151,7 +151,7 @@ index 1efb645..b1dfca9 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -3685,14 +3711,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -3714,14 +3740,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          fi
  
          [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=

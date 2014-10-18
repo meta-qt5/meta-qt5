@@ -4,4 +4,4 @@ require ${PN}.inc
 QT_MODULE_BRANCH = "master"
 
 # last tag before this SRCREV is 5.0.0-beta1, but version says 5.3.0 already
-SRCREV = "bdb98baf8253c69949a8c259369203da9ffb269c"
+SRCREV = "8a9723d7420829a2ba0141a9f7d8dc8cd11d8331"

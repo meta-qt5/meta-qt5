@@ -1,4 +1,4 @@
-From ee12423779327f2cbb46ada326fa0a997c93a93d Mon Sep 17 00:00:00 2001
+From 392d324d86e3b889acfce4f3469158dd942cc969 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 5 Jul 2014 09:10:02 +0200
 Subject: [PATCH 2/2] qtmultimedia.pro: Respect

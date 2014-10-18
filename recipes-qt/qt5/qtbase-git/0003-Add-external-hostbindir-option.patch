@@ -1,4 +1,4 @@
-From 735d4f58381452854ed7b0c2f762030d747098e1 Mon Sep 17 00:00:00 2001
+From 8f5a3f5b5d8f50661a2c69d5741a9df237600094 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH 03/11] Add -external-hostbindir option
@@ -38,10 +38,10 @@ Signed-off-by: Jonathan Liu <net147@gmail.com>
  11 files changed, 51 insertions(+), 13 deletions(-)
 
 diff --git a/configure b/configure
-index b1dfca9..dcd1790 100755
+index 1de01a9..7d7a98a 100755
 --- a/configure
 +++ b/configure
-@@ -768,6 +768,7 @@ QT_HOST_BINS=
+@@ -769,6 +769,7 @@ QT_HOST_BINS=
  QT_HOST_LIBS=
  QT_HOST_DATA=
  QT_EXT_PREFIX=
@@ -49,7 +49,7 @@ index b1dfca9..dcd1790 100755
  
  #flags for SQL drivers
  QT_CFLAGS_PSQL=
-@@ -887,6 +888,7 @@ while [ "$#" -gt 0 ]; do
+@@ -888,6 +889,7 @@ while [ "$#" -gt 0 ]; do
      -testsdir| \
      -hostdatadir| \
      -hostbindir| \
@@ -57,7 +57,7 @@ index b1dfca9..dcd1790 100755
      -hostlibdir| \
      -extprefix| \
      -sysroot| \
-@@ -1101,6 +1103,9 @@ while [ "$#" -gt 0 ]; do
+@@ -1102,6 +1104,9 @@ while [ "$#" -gt 0 ]; do
      extprefix)
          QT_EXT_PREFIX="$VAL"
          ;;
@@ -67,7 +67,7 @@ index b1dfca9..dcd1790 100755
      pkg-config)
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_PKGCONFIG="$VAL"
-@@ -2252,6 +2257,10 @@ Installation options:
+@@ -2260,6 +2265,10 @@ Installation options:
      -hostdatadir <dir> . Data used by qmake will be installed to <dir>
                           (default HOSTPREFIX)
  
@@ -78,7 +78,7 @@ index b1dfca9..dcd1790 100755
  Configure options:
  
   The defaults (*) are usually acceptable. A plus (+) denotes a default value
-@@ -2916,6 +2925,11 @@ fi
+@@ -2939,6 +2948,11 @@ fi
  # command line and environment validation
  #-------------------------------------------------------------------------------
  
@@ -90,7 +90,7 @@ index b1dfca9..dcd1790 100755
  # update QT_CONFIG to show our current predefined configuration
  CFG_QCONFIG_PATH=$relpath/src/corelib/global/qconfig-${CFG_QCONFIG}.h
  case "$CFG_QCONFIG" in
-@@ -3609,6 +3623,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
+@@ -3638,6 +3652,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
      "qt_hbinpath=$QT_HOST_BINS",
      "qt_hlibpath=$QT_HOST_LIBS",
      "qt_hdatpath=$QT_HOST_DATA",
@@ -99,7 +99,7 @@ index b1dfca9..dcd1790 100755
      "qt_hostspec=$shortspec",
  #endif
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 709248a..ea2fed0 100644
+index a9a622d..b6f1db0 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
 @@ -191,7 +191,11 @@ defineTest(qtAddRpathLink) {
@@ -279,7 +279,7 @@ index 99d87e2..5621dc0 100644
      _qt5_Widgets_check_file_exists(${imported_location})
  
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index ef71097..7969132 100644
+index 99ecc7b..6e0f4da 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
 @@ -1191,6 +1191,13 @@ void Configure::parseCmdLine()
@@ -296,7 +296,7 @@ index ef71097..7969132 100644
          else if (configCmdLine.at(i) == "-make-tool") {
              ++i;
              if (i == argCount)
-@@ -3984,6 +3991,7 @@ void Configure::generateQConfigCpp()
+@@ -3994,6 +4001,7 @@ void Configure::generateQConfigCpp()
                    << "    \"qt_hbinpath=" << formatPath(dictionary["QT_HOST_BINS"]) << "\"," << endl
                    << "    \"qt_hlibpath=" << formatPath(dictionary["QT_HOST_LIBS"]) << "\"," << endl
                    << "    \"qt_hdatpath=" << formatPath(dictionary["QT_HOST_DATA"]) << "\"," << endl

@@ -1,0 +1,31 @@
+From 9c98c0c411ecaf4cb95b76d0c07e72af75a8d7f0 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sat, 22 Feb 2014 17:47:44 +0100
+Subject: [PATCH] examples/wayland: include server-buffer only when building
+ with opengles2
+
+* it's using glBindBuffer in
+  server-buffer/client/serverbufferrenderer.cpp
+
+Change-Id: I8412dfd4ebb95c147328ac6e4dfff14a0cff4e78
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ examples/wayland/wayland.pro | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/examples/wayland/wayland.pro b/examples/wayland/wayland.pro
+index d633fb9..643c7cd 100644
+--- a/examples/wayland/wayland.pro
++++ b/examples/wayland/wayland.pro
+@@ -9,5 +9,7 @@ contains(CONFIG, wayland-compositor) {
+         SUBDIRS += qml-compositor
+     }
+ 
+-    SUBDIRS += server-buffer
++    contains(QT_CONFIG, opengles2) {
++        SUBDIRS += server-buffer
++    }
+ }
+-- 
+2.1.1
+
