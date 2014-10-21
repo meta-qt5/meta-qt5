@@ -35,6 +35,11 @@ SRC_URI += " \
     file://0013-configure-preserve-built-qmake-and-swap-with-native-.patch \
 "
 
+# CMake's toolchain configuration of nativesdk-qtbase
+SRC_URI += " \
+    file://OEQt5Toolchain.cmake \
+"
+
 PACKAGES = "${PN}-tools-dbg ${PN}-tools-dev ${PN}-tools-staticdev ${PN}-tools"
 
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
@@ -58,6 +63,7 @@ FILES_${PN}-tools = " \
     ${libdir}/lib*${SOLIBS} \
     ${OE_QMAKE_PATH_BINS}/* \
     ${SDKPATHNATIVE}/environment-setup.d \
+    ${datadir}/cmake \
 "
 
 # qttools binaries are placed in a subdir of bin in order to avoid
@@ -229,6 +235,10 @@ do_install() {
                                    ${QTLIBSPRESERVE} \
                                    -not -name 'libQt5Bootstrap.a' \
                                    -exec rm '{}' ';'
+
+    # Install CMake's toolchain configuration
+    mkdir -p ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
+    install -m 644 ${WORKDIR}/OEQt5Toolchain.cmake ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
 }
 
 do_generate_qt_environment_file() {
@@ -252,6 +262,7 @@ do_generate_qt_environment_file() {
     echo 'export OE_QMAKE_QDBUSCPP2XML=${OE_QMAKE_PATH_HOST_BINS}/qdbuscpp2xml' >> $script
     echo 'export OE_QMAKE_QDBUSXML2CPP=${OE_QMAKE_PATH_HOST_BINS}/qdbusxml2cpp' >> $script
     echo 'export OE_QMAKE_QT_CONFIG=`qmake -query QT_INSTALL_LIBS`/${QT_DIR_NAME}/mkspecs/qconfig.pri' >> $script
+    echo 'export OE_QMAKE_PATH_HOST_BINS=${OE_QMAKE_PATH_HOST_BINS}' >> $script
     echo 'export QMAKESPEC=`qmake -query QT_INSTALL_LIBS`/mkspecs/linux-oe-g++' >> $script
 
     # Use relocable sysroot
