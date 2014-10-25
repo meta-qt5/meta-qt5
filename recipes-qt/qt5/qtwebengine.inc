@@ -10,6 +10,12 @@ DEPENDS += " \
     libdrm fontconfig pixman openssl pango cairo icu pciutils \
 "
 
+COMPATIBLE_MACHINE = "(-)"
+COMPATIBLE_MACHINE_i586 = "(.*)"
+COMPATIBLE_MACHINE_x86-64 = "(.*)"
+COMPATIBLE_MACHINE_armv6 = "(.*)"
+COMPATIBLE_MACHINE_armv7a = "(.*)"
+
 inherit qmake5
 inherit gettext
 inherit pythonnative
