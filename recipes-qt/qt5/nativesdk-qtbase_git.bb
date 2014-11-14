@@ -25,11 +25,16 @@ SRC_URI += "\
 # common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
     file://0011-Always-build-uic.patch \
-"    
+"
 
 # specific for nativesdk-qtbase
 SRC_URI += " \
     file://0012-configure-preserve-built-qmake-and-swap-with-native-.patch \
+"
+
+# CMake's toolchain configuration of nativesdk-qtbase
+SRC_URI += " \
+    file://OEQt5Toolchain.cmake \
 "
 
 SRCREV = "cc23ebace8b7f343aca6e10f9ebd31b87c17c782"
