@@ -1,4 +1,4 @@
-From e7b9af7232c4f7eb50933dde208e58438bedd964 Mon Sep 17 00:00:00 2001
+From 46074ffb4525e8217acd78c9cbe29f3d62f85c78 Mon Sep 17 00:00:00 2001
 From: Jani Hautakangas <jani.hautakangas@ixonos.com>
 Date: Thu, 16 May 2013 09:52:07 +0300
 Subject: [PATCH 10/11] QOpenGLPaintDevice sub-area support
@@ -21,7 +21,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  6 files changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/src/gui/opengl/qopenglpaintdevice.cpp b/src/gui/opengl/qopenglpaintdevice.cpp
-index e908fd8..8f0ef56 100644
+index a08d26f..cff3155 100644
 --- a/src/gui/opengl/qopenglpaintdevice.cpp
 +++ b/src/gui/opengl/qopenglpaintdevice.cpp
 @@ -135,6 +135,12 @@ QOpenGLPaintDevice::QOpenGLPaintDevice(int width, int height)
@@ -50,18 +50,17 @@ index e908fd8..8f0ef56 100644
      Returns the pixel size of the paint device.
  
 diff --git a/src/gui/opengl/qopenglpaintdevice.h b/src/gui/opengl/qopenglpaintdevice.h
-index dda3bfe..9965553 100644
+index 10cee84..a6683c5 100644
 --- a/src/gui/opengl/qopenglpaintdevice.h
 +++ b/src/gui/opengl/qopenglpaintdevice.h
-@@ -53,6 +53,7 @@ public:
+@@ -53,12 +53,14 @@ public:
      QOpenGLPaintDevice();
      explicit QOpenGLPaintDevice(const QSize &size);
      QOpenGLPaintDevice(int width, int height);
 +    QOpenGLPaintDevice(int x, int y, int width, int height);
-     QOpenGLPaintDevice(QOpenGLPaintDevicePrivate *dd);
      virtual ~QOpenGLPaintDevice();
  
-@@ -60,6 +61,7 @@ public:
+     int devType() const { return QInternal::OpenGL; }
      QPaintEngine *paintEngine() const;
  
      QOpenGLContext *context() const;
@@ -141,10 +140,10 @@ index 5ef0366..c5b517d 100644
      QOpenGLContext *ctx;
      EngineMode mode;
 diff --git a/src/gui/opengl/qopengltextureglyphcache.cpp b/src/gui/opengl/qopengltextureglyphcache.cpp
-index 6e16b2d..ddec9bb 100644
+index cd268cd..997bc35 100644
 --- a/src/gui/opengl/qopengltextureglyphcache.cpp
 +++ b/src/gui/opengl/qopengltextureglyphcache.cpp
-@@ -308,7 +308,7 @@ void QOpenGLTextureGlyphCache::resizeTextureData(int width, int height)
+@@ -310,7 +310,7 @@ void QOpenGLTextureGlyphCache::resizeTextureData(int width, int height)
      funcs->glBindFramebuffer(GL_FRAMEBUFFER, (GLuint)oldFbo);
  
      if (pex != 0) {
@@ -154,5 +153,5 @@ index 6e16b2d..ddec9bb 100644
      } else {
          if (m_vao.isCreated()) {
 -- 
-2.1.1
+2.1.3
 

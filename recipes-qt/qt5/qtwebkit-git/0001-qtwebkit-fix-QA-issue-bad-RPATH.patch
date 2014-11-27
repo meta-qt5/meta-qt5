@@ -1,4 +1,4 @@
-From a7d860fbc194c46591016ba41e138eadc1e50d84 Mon Sep 17 00:00:00 2001
+From 83a7ef8c92b4363bd0aa372c804858c5882db0af Mon Sep 17 00:00:00 2001
 From: Trevor Woerner <trevor.woerner@linaro.org>
 Date: Fri, 7 Feb 2014 04:07:17 +0100
 Subject: [PATCH] qtwebkit: fix QA issue (bad RPATH)
@@ -26,5 +26,5 @@ index 9c52406..a68a101 100644
  CONFIG(debug, debug|release)|force_debug_info {
      # Make ld not cache the symbol tables of input files in memory to avoid memory exhaustion during the linking phase.
 -- 
-2.1.1
+2.1.3
 

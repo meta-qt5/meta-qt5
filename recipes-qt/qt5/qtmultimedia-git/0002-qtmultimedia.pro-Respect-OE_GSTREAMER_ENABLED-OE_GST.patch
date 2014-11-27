@@ -1,4 +1,4 @@
-From 392d324d86e3b889acfce4f3469158dd942cc969 Mon Sep 17 00:00:00 2001
+From b5c058f62a79efa213e4492ac7209b3a92f45e3b Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 5 Jul 2014 09:10:02 +0200
 Subject: [PATCH 2/2] qtmultimedia.pro: Respect
@@ -49,5 +49,5 @@ index 109dd81..54b67a8 100644
              cache(GST_VERSION, set, gstver);
              # Force a re-run of the test
 -- 
-2.1.1
+2.1.3
 

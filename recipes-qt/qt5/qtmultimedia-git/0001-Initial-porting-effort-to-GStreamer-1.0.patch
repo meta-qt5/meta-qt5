@@ -1,4 +1,4 @@
-From b16e42196969a6277e7b8902488fad1950a52d0d Mon Sep 17 00:00:00 2001
+From 4af76880d63e8d392eb8add8b8999e3f5031675a Mon Sep 17 00:00:00 2001
 From: Yoann Lopes <yoann.lopes@digia.com>
 Date: Thu, 31 Oct 2013 15:06:30 +0100
 Subject: [PATCH 1/2] Initial porting effort to GStreamer 1.0.
@@ -612,7 +612,7 @@ index 3ed539e..ed0ed3c 100644
 +
 +#endif
 diff --git a/src/gsttools/qgstappsrc.cpp b/src/gsttools/qgstappsrc.cpp
-index 148366b..cf9be45 100644
+index 561a96f..d5e106f 100644
 --- a/src/gsttools/qgstappsrc.cpp
 +++ b/src/gsttools/qgstappsrc.cpp
 @@ -147,23 +147,44 @@ void QGstAppSrc::pushDataToAppSrc()
@@ -1032,7 +1032,7 @@ index a373dcc..587b010 100644
  
          if (caps) {
 diff --git a/src/gsttools/qgstutils.cpp b/src/gsttools/qgstutils.cpp
-index 8d484aa..b0e377b 100644
+index 556fc03..5ea2c59 100644
 --- a/src/gsttools/qgstutils.cpp
 +++ b/src/gsttools/qgstutils.cpp
 @@ -89,8 +89,13 @@ static void addTagToMap(const GstTagList *list,
@@ -1083,7 +1083,7 @@ index 8d484aa..b0e377b 100644
  
  /*!
    Builds GstCaps for an audio format.
-@@ -564,7 +587,7 @@ int QGstUtils::cameraOrientation(const QString &device, GstElementFactory * fact
+@@ -579,7 +602,7 @@ QByteArray QGstUtils::cameraDriver(const QString &device, GstElementFactory *fac
  
  void qt_gst_object_ref_sink(gpointer object)
  {
@@ -1514,10 +1514,10 @@ index 81e5764..c9fdb5c 100644
      GstElement *m_videoSink;
      WId m_windowId;
 diff --git a/src/multimedia/gsttools_headers/qgstutils_p.h b/src/multimedia/gsttools_headers/qgstutils_p.h
-index 48434b2..96c23cb 100644
+index 65ff759..6015980 100644
 --- a/src/multimedia/gsttools_headers/qgstutils_p.h
 +++ b/src/multimedia/gsttools_headers/qgstutils_p.h
-@@ -72,7 +72,11 @@ namespace QGstUtils {
+@@ -73,7 +73,11 @@ namespace QGstUtils {
      QSize capsResolution(const GstCaps *caps);
      QSize capsCorrectedResolution(const GstCaps *caps);
      QAudioFormat audioFormatForCaps(const GstCaps *caps);
@@ -1689,10 +1689,10 @@ index f944a60..72d1cf1 100644
      if (m_duration != duration) {
          m_duration = duration;
 diff --git a/src/plugins/gstreamer/camerabin/camerabinsession.cpp b/src/plugins/gstreamer/camerabin/camerabinsession.cpp
-index 0197839..128ab58 100644
+index a4038c5..9d1fdfa 100644
 --- a/src/plugins/gstreamer/camerabin/camerabinsession.cpp
 +++ b/src/plugins/gstreamer/camerabin/camerabinsession.cpp
-@@ -728,7 +728,11 @@ qint64 CameraBinSession::duration() const
+@@ -760,7 +760,11 @@ qint64 CameraBinSession::duration() const
          if (fileSink) {
              GstFormat format = GST_FORMAT_TIME;
              gint64 duration = 0;
@@ -1704,7 +1704,7 @@ index 0197839..128ab58 100644
              gst_object_unref(GST_OBJECT(fileSink));
              if (ret)
                  return duration / 1000000;
-@@ -765,8 +769,13 @@ void CameraBinSession::setMetaData(const QMap<QByteArray, QVariant> &data)
+@@ -797,8 +801,13 @@ void CameraBinSession::setMetaData(const QMap<QByteArray, QVariant> &data)
  
      if (m_camerabin) {
          GstIterator *elements = gst_bin_iterate_all_by_interface(GST_BIN(m_camerabin), GST_TYPE_TAG_SETTER);
@@ -1718,7 +1718,7 @@ index 0197839..128ab58 100644
              gst_tag_setter_reset_tags(GST_TAG_SETTER(element));
  
              QMapIterator<QByteArray, QVariant> it(data);
-@@ -827,7 +836,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
+@@ -859,7 +868,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
  
      if (gm && GST_MESSAGE_TYPE(gm) == GST_MESSAGE_ELEMENT) {
          if (m_captureMode == QCamera::CaptureStillImage &&
@@ -1730,7 +1730,7 @@ index 0197839..128ab58 100644
              st = gst_message_get_structure(gm);
  
              if (gst_structure_has_field_typed(st, "buffer", GST_TYPE_BUFFER)) {
-@@ -837,7 +850,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
+@@ -869,7 +882,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
  
                      QImage img;
  
@@ -1742,7 +1742,7 @@ index 0197839..128ab58 100644
                      if (caps) {
                          GstStructure *structure = gst_caps_get_structure(caps, 0);
                          gint width = 0;
-@@ -1110,7 +1127,11 @@ QList< QPair<int,int> > CameraBinSession::supportedFrameRates(const QSize &frame
+@@ -1142,7 +1159,11 @@ QList< QPair<int,int> > CameraBinSession::supportedFrameRates(const QSize &frame
          gst_structure_remove_all_fields(structure);
          gst_structure_set_value(structure, "framerate", &rate);
      }
@@ -1754,7 +1754,7 @@ index 0197839..128ab58 100644
  
  
      for (uint i=0; i<gst_caps_get_size(caps); i++) {
-@@ -1230,7 +1251,11 @@ QList<QSize> CameraBinSession::supportedResolutions(QPair<int,int> rate,
+@@ -1262,7 +1283,11 @@ QList<QSize> CameraBinSession::supportedResolutions(QPair<int,int> rate,
          gst_structure_set_value(structure, "width", &w);
          gst_structure_set_value(structure, "height", &h);
      }
@@ -2365,5 +2365,5 @@ index f2e760a..50bda3d 100644
  
  QT_END_NAMESPACE
 -- 
-2.1.1
+2.1.3
 

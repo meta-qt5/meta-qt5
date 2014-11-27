@@ -1,4 +1,4 @@
-From 36b89f6e50e2b28d8646a5e77cdac36ecbd6ba4f Mon Sep 17 00:00:00 2001
+From 9089bf90632ffc983625816c5b0f2f2509ffc176 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Mon, 11 Nov 2013 20:22:34 -0500
 Subject: [PATCH 12/12] configure: preserve built qmake and swap with native
@@ -13,10 +13,10 @@ Signed-off-by: Denys Dmytriyenko <denys@ti.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/configure b/configure
-index 3f05383..d6ff774 100755
+index bd43281..d331711 100755
 --- a/configure
 +++ b/configure
-@@ -3868,6 +3868,8 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -3874,6 +3874,8 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
  
      (cd "$outpath/qmake"; "$MAKE") || exit 2
  fi # Build qmake
@@ -26,5 +26,5 @@ index 3f05383..d6ff774 100755
  echo "Running configuration tests..."
  
 -- 
-2.1.1
+2.1.3
 

@@ -1,4 +1,4 @@
-From d750936020f354b8c59bbfcbf3930115c390d36d Mon Sep 17 00:00:00 2001
+From ee542556da221be99fa3344630b78529555be2bc Mon Sep 17 00:00:00 2001
 From: Michael Krelin <hacker@klever.net>
 Date: Mon, 29 Oct 2012 20:07:49 -0700
 Subject: [PATCH 11/11] qmake: don't build it in configure, but allow to build
@@ -20,10 +20,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index 3f05383..05ae996 100755
+index bd43281..5d1b3aa 100755
 --- a/configure
 +++ b/configure
-@@ -3718,7 +3718,7 @@ setBootstrapEvalVariable()
+@@ -3724,7 +3724,7 @@ setBootstrapEvalVariable()
  
  
  # build qmake
@@ -46,5 +46,5 @@ index 89d6ea5..7c605b9 100644
  VPATH += \
      ../src/corelib/global \
 -- 
-2.1.1
+2.1.3
 

@@ -1,4 +1,4 @@
-From 8f5a3f5b5d8f50661a2c69d5741a9df237600094 Mon Sep 17 00:00:00 2001
+From f2d51e50a7fbdf485696d1b8b2d29e64c729c76b Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH 03/11] Add -external-hostbindir option
@@ -28,17 +28,17 @@ Signed-off-by: Jonathan Liu <net147@gmail.com>
  mkspecs/features/qt_functions.prf           |  6 +++++-
  mkspecs/features/qt_tool.prf                |  4 ++--
  qmake/property.cpp                          |  1 +
- qtbase.pro                                  | 14 +++++++++++---
+ qtbase.pro                                  | 13 ++++++++++---
  src/corelib/Qt5CoreConfigExtras.cmake.in    |  6 +++---
  src/corelib/global/qlibraryinfo.cpp         |  3 ++-
  src/corelib/global/qlibraryinfo.h           |  1 +
  src/dbus/Qt5DBusConfigExtras.cmake.in       |  4 ++--
  src/widgets/Qt5WidgetsConfigExtras.cmake.in |  2 +-
  tools/configure/configureapp.cpp            |  8 ++++++++
- 11 files changed, 51 insertions(+), 13 deletions(-)
+ 11 files changed, 50 insertions(+), 13 deletions(-)
 
 diff --git a/configure b/configure
-index 1de01a9..7d7a98a 100755
+index b7a6fe3..d715f6c 100755
 --- a/configure
 +++ b/configure
 @@ -769,6 +769,7 @@ QT_HOST_BINS=
@@ -67,7 +67,7 @@ index 1de01a9..7d7a98a 100755
      pkg-config)
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_PKGCONFIG="$VAL"
-@@ -2260,6 +2265,10 @@ Installation options:
+@@ -2265,6 +2270,10 @@ Installation options:
      -hostdatadir <dir> . Data used by qmake will be installed to <dir>
                           (default HOSTPREFIX)
  
@@ -78,7 +78,7 @@ index 1de01a9..7d7a98a 100755
  Configure options:
  
   The defaults (*) are usually acceptable. A plus (+) denotes a default value
-@@ -2939,6 +2948,11 @@ fi
+@@ -2944,6 +2953,11 @@ fi
  # command line and environment validation
  #-------------------------------------------------------------------------------
  
@@ -90,7 +90,7 @@ index 1de01a9..7d7a98a 100755
  # update QT_CONFIG to show our current predefined configuration
  CFG_QCONFIG_PATH=$relpath/src/corelib/global/qconfig-${CFG_QCONFIG}.h
  case "$CFG_QCONFIG" in
-@@ -3638,6 +3652,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
+@@ -3644,6 +3658,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
      "qt_hbinpath=$QT_HOST_BINS",
      "qt_hlibpath=$QT_HOST_LIBS",
      "qt_hdatpath=$QT_HOST_DATA",
@@ -146,7 +146,7 @@ index 051e056..50da6ed 100644
      { "QMAKE_XSPEC", QLibraryInfo::TargetSpecPath, true },
  };
 diff --git a/qtbase.pro b/qtbase.pro
-index d6861cf..7fb58a3 100644
+index 6d0de44..ddf7478 100644
 --- a/qtbase.pro
 +++ b/qtbase.pro
 @@ -69,18 +69,25 @@ CONFIG -= qt
@@ -210,10 +210,10 @@ index 9bda70e..6e3605a 100644
      _qt5_Core_check_file_exists(${imported_location})
  
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index 1be2659..6c3718a 100644
+index d68c51b..7191159 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
-@@ -357,7 +357,7 @@ QLibraryInfo::isDebugBuild()
+@@ -349,7 +349,7 @@ QLibraryInfo::isDebugBuild()
   */
  
  static const struct {
@@ -222,7 +222,7 @@ index 1be2659..6c3718a 100644
  } qtConfEntries[] = {
      { "Prefix", "." },
      { "Documentation", "doc" }, // should be ${Data}/doc
-@@ -383,6 +383,7 @@ static const struct {
+@@ -375,6 +375,7 @@ static const struct {
      { "HostBinaries", "bin" },
      { "HostLibraries", "lib" },
      { "HostData", "." },
@@ -278,7 +278,7 @@ index 99d87e2..5621dc0 100644
      _qt5_Widgets_check_file_exists(${imported_location})
  
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index 99ecc7b..6e0f4da 100644
+index 92422c2..d0a62c8 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
 @@ -1191,6 +1191,13 @@ void Configure::parseCmdLine()
@@ -295,7 +295,7 @@ index 99ecc7b..6e0f4da 100644
          else if (configCmdLine.at(i) == "-make-tool") {
              ++i;
              if (i == argCount)
-@@ -3994,6 +4001,7 @@ void Configure::generateQConfigCpp()
+@@ -3995,6 +4002,7 @@ void Configure::generateQConfigCpp()
                    << "    \"qt_hbinpath=" << formatPath(dictionary["QT_HOST_BINS"]) << "\"," << endl
                    << "    \"qt_hlibpath=" << formatPath(dictionary["QT_HOST_LIBS"]) << "\"," << endl
                    << "    \"qt_hdatpath=" << formatPath(dictionary["QT_HOST_DATA"]) << "\"," << endl
@@ -304,5 +304,5 @@ index 99ecc7b..6e0f4da 100644
                    << "    \"qt_hostspec=" << hostSpec << "\"," << endl
                    << "#endif" << endl
 -- 
-2.1.1
+2.1.3
 

@@ -1,4 +1,4 @@
-From 71a2437e2ee5a1214ab88c8a3d1d0ddcc012698d Mon Sep 17 00:00:00 2001
+From 81cd2947e9b1290498bdc2505a76fb053ff33be8 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH 01/11] Add linux-oe-g++ platform
@@ -51,7 +51,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index 7d6ba9f..1de01a9 100755
+index 229fb4e..b7a6fe3 100755
 --- a/configure
 +++ b/configure
 @@ -316,6 +316,16 @@ getQMakeConf()
@@ -118,7 +118,7 @@ index 7d6ba9f..1de01a9 100755
  # Use CC/CXX to run config.tests
  mkdir -p "$outpath/config.tests"
  rm -f "$outpath/config.tests/.qmake.cache"
-@@ -3167,7 +3185,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
+@@ -3173,7 +3191,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
      [ "$CFG_QGTKSTYLE" = "auto" ] && CFG_QGTKSTYLE=no
  fi
  
@@ -127,7 +127,7 @@ index 7d6ba9f..1de01a9 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -3205,7 +3223,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
+@@ -3211,7 +3229,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
          exit 1
      fi
  fi
@@ -136,7 +136,7 @@ index 7d6ba9f..1de01a9 100755
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3676,6 +3694,14 @@ setBootstrapVariable()
+@@ -3682,6 +3700,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -151,7 +151,7 @@ index 7d6ba9f..1de01a9 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -3714,14 +3740,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -3720,14 +3746,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          fi
  
          [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=
@@ -175,10 +175,10 @@ index 7d6ba9f..1de01a9 100755
          if [ "$CFG_RELEASE_QMAKE" = "yes" ]; then
              setBootstrapVariable QMAKE_CFLAGS_RELEASE
 diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
-index 05e10c9..213eeb8 100644
+index 6b37a04..dcf6025 100644
 --- a/mkspecs/features/configure.prf
 +++ b/mkspecs/features/configure.prf
-@@ -60,12 +60,12 @@ defineTest(qtCompileTest) {
+@@ -63,12 +63,12 @@ defineTest(qtCompileTest) {
      }
  
      # Clean up after previous run
@@ -346,5 +346,5 @@ index 0000000..dd12003
 +
 +#endif // QPLATFORMDEFS_H
 -- 
-2.1.1
+2.1.3
 

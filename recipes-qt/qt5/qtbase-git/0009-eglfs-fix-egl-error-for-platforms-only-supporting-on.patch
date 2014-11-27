@@ -1,4 +1,4 @@
-From 46cf3a50908de0ccec31de6705674a4c69fb8d6c Mon Sep 17 00:00:00 2001
+From 621d867223a135a9babd452d4918200bc6d0463b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 5 Feb 2014 18:35:08 +0100
 Subject: [PATCH 09/11] eglfs: fix egl error for platforms only supporting one
@@ -27,7 +27,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/src/plugins/platforms/eglfs/qeglfswindow.cpp b/src/plugins/platforms/eglfs/qeglfswindow.cpp
-index c83b894..b937881 100644
+index f5839e0..5ebde6d 100644
 --- a/src/plugins/platforms/eglfs/qeglfswindow.cpp
 +++ b/src/plugins/platforms/eglfs/qeglfswindow.cpp
 @@ -66,6 +66,15 @@ void QEglFSWindow::create()
@@ -68,5 +68,5 @@ index c83b894..b937881 100644
  
      if (isRaster()) {
 -- 
-2.1.1
+2.1.3
 

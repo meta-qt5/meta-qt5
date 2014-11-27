@@ -1,5 +1,5 @@
 # Select which version you prefer by defining QT5_VERSION and including this file
-# possible values now "5.3.2", "5.3.0+5.4.0-alpha1+git"
+# possible values now "5.3.2", "5.3.99+5.4.0-rc1+git%"
 
 QT5_VERSION ?= "5.3.2"
 
@@ -21,6 +21,7 @@ PREFERRED_VERSION_qtsensors = "${QT5_VERSION}"
 PREFERRED_VERSION_qtserialport = "${QT5_VERSION}"
 PREFERRED_VERSION_qtscript = "${QT5_VERSION}"
 PREFERRED_VERSION_qtsvg = "${QT5_VERSION}"
+PREFERRED_VERSION_qtsystems = "${QT5_VERSION}"
 PREFERRED_VERSION_qttools = "${QT5_VERSION}"
 PREFERRED_VERSION_qttools-native = "${QT5_VERSION}"
 PREFERRED_VERSION_nativesdk-qttools = "${QT5_VERSION}"

@@ -30,7 +30,7 @@ do_install_append() {
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
 }
 
-SRCREV = "06e706bdbb826b521389409b53079483fda5584a"
+SRCREV = "cc23ebace8b7f343aca6e10f9ebd31b87c17c782"
 
 LICENSE = "GFDL-1.3 & LGPL-2.1 | LGPL-3.0"
 LIC_FILES_CHKSUM = "file://LICENSE.LGPLv21;md5=cff17b12416c896e10ae2c17a64252e7 \

@@ -1,4 +1,4 @@
-From 9f7dd27bb14cf0c3425c2c8fdec2f6d0df3852f9 Mon Sep 17 00:00:00 2001
+From 5778f98f990781710e72be8275dae32a7999330d Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
 Subject: [PATCH 05/11] qt_module: Fix pkgconfig and libtool replacements
@@ -67,7 +67,7 @@ Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
  2 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
-index ebc5f00..46319d8 100644
+index af9d6ca..a4781d6 100644
 --- a/mkspecs/features/qt_common.prf
 +++ b/mkspecs/features/qt_common.prf
 @@ -33,7 +33,7 @@ contains(TEMPLATE, .*lib) {
@@ -80,10 +80,10 @@ index ebc5f00..46319d8 100644
      lib_replace.CONFIG = path
      QMAKE_PRL_INSTALL_REPLACE += lib_replace
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 8599a47..7da73a6 100644
+index d213f9e..915c596 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
-@@ -190,10 +190,25 @@ unix|mingw {
+@@ -192,10 +192,25 @@ unix|mingw {
          QMAKE_PKGCONFIG_DESCRIPTION = $$replace(TARGET, ^Qt, "Qt ") module
      QMAKE_PKGCONFIG_INSTALL_REPLACE += lib_replace
  
@@ -110,5 +110,5 @@ index 8599a47..7da73a6 100644
  }
  
 -- 
-2.1.1
+2.1.3
 

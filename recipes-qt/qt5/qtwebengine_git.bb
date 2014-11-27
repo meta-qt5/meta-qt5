@@ -1,19 +1,22 @@
 require qt5-git.inc
 require ${PN}.inc
 
-QT_MODULE_BRANCH = "1.0"
-QT_MODULE_BRANCH_CHROMIUM = "33.0.1750.170-based"
+LIC_FILES_CHKSUM = " \
+  file://src/core/browser_context_qt.cpp;md5=91895ac1852e1b07202d9716194e8dd8;beginline=1;endline=35 \
+  file://src/3rdparty/chromium/LICENSE;md5=537e0b52077bf0a616d0a0c8a79bc9d5 \
+"
+
+QT_MODULE_BRANCH = "5.4"
+QT_MODULE_BRANCH_CHROMIUM = "37.0.2062-based"
 
 SRC_URI += " \
     git://gitorious.org/qt/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};destsuffix=git/src/3rdparty \
     file://0001-functions.prf-Don-t-match-QMAKE_EXT_CPP-or-QMAKE_EXT.patch \
-    file://0002-functions.prf-Try-to-add-_moc-suffix.patch \
-    file://0001-chromium-Drop-build-time-only-dependency-on-x11-libr.patch \
-    file://0002-chromium-Strip-unwanted-echo-compiling-prefix-from-C.patch \
-    file://0003-chromium-base.gypi-include-atomicops_internals_x86_gcc.cc-whe.patch \
+    file://0002-functions.prf-Make-sure-we-only-use-the-file-name-to.patch \
+    file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
 "
-SRCREV_qtwebengine = "14fcf0d3193e2ee2bf904a305c9f34ff8d0e5ce7"
-SRCREV_chromium = "1f3cc8c2618979b557d60ef1ad984a49dca83bff"
+SRCREV_qtwebengine = "ff47f09a94a0a31edd40500985ff670e8f35cc2c"
+SRCREV_chromium = "66388297cf2ca42049fb099237134ec33465e2f5"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine"
