@@ -1,19 +1,60 @@
-From ce38ab8b2167b74fa90eb3e17507dc9e799a3274 Mon Sep 17 00:00:00 2001
+From 4a067c162d08596e3ec89dcfb3ecdf197b1bf22a Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 21 Apr 2014 19:22:04 +0200
-Subject: [PATCH 06/13] Revert "eglfs: Print the chosen config in debug mode"
+Subject: [PATCH 06/11] Revert "eglfs: Print the chosen config in debug mode"
+
+With this change the build is failing with:
+| In file included from /OE/build/oe-core/tmp-glibc/sysroots/qemux86-64/usr/include/EGL/eglplatform.h:118:0,
+|                  from /OE/build/oe-core/tmp-glibc/sysroots/qemux86-64/usr/include/EGL/egl.h:36,
+|                  from /OE/build/oe-core/tmp-glibc/work/core2-64-oe-linux/qtbase/5.3.0+5.4.0-alpha1+gitAUTOINC+8456adf0ee-r0/git/src/platformsupport/eglconvenience/qeglplatformcontext_p.h:51,
+|                  from /OE/build/oe-core/tmp-glibc/work/core2-64-oe-linux/qtbase/5.3.0+5.4.0-alpha1+gitAUTOINC+8456adf0ee-r0/git/src/platformsupport/eglconvenience/qeglplatformcontext.cpp:34:
+| ../../include/QtCore/../../../git/src/corelib/io/qtextstream.h:72:10: error: expected identifier before 'int'
+|      enum Status {
+|           ^
+| In file included from ../../include/QtCore/qtextstream.h:1:0,
+|                  from ../../include/QtCore/../../../git/src/corelib/io/qdebug.h:42,
+|                  from ../../include/QtCore/qdebug.h:1,
+|                  from ../../include/QtCore/QDebug:1,
+|                  from /OE/build/oe-core/tmp-glibc/work/core2-64-oe-linux/qtbase/5.3.0+5.4.0-alpha1+gitAUTOINC+8456adf0ee-r0/git/src/platformsupport/eglconvenience/qeglplatformcontext.cpp:40:
+| ../../include/QtCore/../../../git/src/corelib/io/qtextstream.h:72:17: error: expected unqualified-id before '{' token
+|      enum Status {
+|                  ^
+| Makefile:3896: recipe for target '.obj/qeglplatformcontext.o' failed
+| make[2]: *** [.obj/qeglplatformcontext.o] Error 1
+| make[2]: *** Waiting for unfinished jobs....
+| /OE/build/oe-core/tmp-glibc/work/core2-64-oe-linux/qtbase/5.3.0+5.4.0-alpha1+gitAUTOINC+8456adf0ee-r0/git/src/platformsupport/eglconvenience/qeglplatformintegration.cpp:196:5: error: 'Display' redeclared as different kind of symbol
+|      Display
+|      ^
+| In file included from /OE/build/oe-core/tmp-glibc/sysroots/qemux86-64/usr/include/EGL/eglplatform.h:118:0,
+|                  from /OE/build/oe-core/tmp-glibc/sysroots/qemux86-64/usr/include/EGL/egl.h:36,
+|                  from /OE/build/oe-core/tmp-glibc/work/core2-64-oe-linux/qtbase/5.3.0+5.4.0-alpha1+gitAUTOINC+8456adf0ee-r0/git/src/platformsupport/eglconvenience/qeglplatformintegration_p.h:51,
+|                  from /OE/build/oe-core/tmp-glibc/work/core2-64-oe-linux/qtbase/5.3.0+5.4.0-alpha1+gitAUTOINC+8456adf0ee-r0/git/src/platformsupport/eglconvenience/qeglplatformintegration.cpp:55:
+| /OE/build/oe-core/tmp-glibc/sysroots/qemux86-64/usr/include/X11/Xlib.h:499:26: note: previous declaration 'typedef struct _XDisplay Display'
+|  typedef struct _XDisplay Display;
+|                           ^
+| /OE/build/oe-core/tmp-glibc/work/core2-64-oe-linux/qtbase/5.3.0+5.4.0-alpha1+gitAUTOINC+8456adf0ee-r0/git/src/platformsupport/eglconvenience/qeglplatformintegration.cpp: In member function 'virtual void* QEGLPlatformIntegration::nativeResourceForScreen(const QByteArray&, QScreen*)':
+| /OE/build/oe-core/tmp-glibc/work/core2-64-oe-linux/qtbase/5.3.0+5.4.0-alpha1+gitAUTOINC+8456adf0ee-r0/git/src/platformsupport/eglconvenience/qeglplatformintegration.cpp:239:17: error: expected primary-expression before ':' token
+|      case Display:
+|                  ^
+| Makefile:5486: recipe for target '.obj/qeglplatformintegration.o' failed
 
 This reverts commit dc685cf6331f5fb46285cf10d6464c2ecf41f73e.
+
+Will be partially resolved in newer revision with:
+https://codereview.qt-project.org/96220
+
+Change-Id: I7a6a926b7525d4f137824c71f2ec8cd089c21f13
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  src/platformsupport/eglconvenience/qeglconvenience.cpp     | 4 +++-
  src/platformsupport/eglconvenience/qeglplatformcontext.cpp | 7 -------
  2 files changed, 3 insertions(+), 8 deletions(-)
 
 diff --git a/src/platformsupport/eglconvenience/qeglconvenience.cpp b/src/platformsupport/eglconvenience/qeglconvenience.cpp
-index 5eed470..39c7c1f 100644
+index c1a491c..7a0fc87 100644
 --- a/src/platformsupport/eglconvenience/qeglconvenience.cpp
 +++ b/src/platformsupport/eglconvenience/qeglconvenience.cpp
-@@ -451,9 +451,11 @@ void q_printEglConfig(EGLDisplay display, EGLConfig config)
+@@ -443,9 +443,11 @@ void q_printEglConfig(EGLDisplay display, EGLConfig config)
      for (index = 0; attrs[index].attr != -1; ++index) {
          EGLint value;
          if (eglGetConfigAttrib(display, config, attrs[index].attr, &value)) {
@@ -25,20 +66,20 @@ index 5eed470..39c7c1f 100644
 +    qWarning("\n");
  }
  
- #ifdef Q_OS_LINUX
+ #ifdef Q_OS_UNIX
 diff --git a/src/platformsupport/eglconvenience/qeglplatformcontext.cpp b/src/platformsupport/eglconvenience/qeglplatformcontext.cpp
-index eec6463..4a7c69b 100644
+index 7cc3300..ccbd974 100644
 --- a/src/platformsupport/eglconvenience/qeglplatformcontext.cpp
 +++ b/src/platformsupport/eglconvenience/qeglplatformcontext.cpp
-@@ -44,7 +44,6 @@
- #include "qeglpbuffer_p.h"
+@@ -37,7 +37,6 @@
  #include <qpa/qplatformwindow.h>
  #include <QOpenGLContext>
+ #include <QtPlatformHeaders/QEGLNativeContext>
 -#include <QDebug>
  
  QT_BEGIN_NAMESPACE
  
-@@ -192,12 +191,6 @@ void QEGLPlatformContext::init(const QSurfaceFormat &format, QPlatformOpenGLCont
+@@ -181,12 +180,6 @@ void QEGLPlatformContext::init(const QSurfaceFormat &format, QPlatformOpenGLCont
          return;
      }
  
@@ -48,9 +89,9 @@ index eec6463..4a7c69b 100644
 -        q_printEglConfig(m_eglDisplay, m_eglConfig);
 -    }
 -
- #ifndef QT_NO_OPENGL
-     // Make the context current to ensure the GL version query works. This needs a surface too.
-     const EGLint pbufferAttributes[] = {
+     updateFormatFromGL();
+ }
+ 
 -- 
-2.1.1
+2.1.3
 

@@ -1,4 +1,4 @@
-From f8e3c6be700907a597ae706afeec14e26103b31e Mon Sep 17 00:00:00 2001
+From 4af76880d63e8d392eb8add8b8999e3f5031675a Mon Sep 17 00:00:00 2001
 From: Yoann Lopes <yoann.lopes@digia.com>
 Date: Thu, 31 Oct 2013 15:06:30 +0100
 Subject: [PATCH 1/2] Initial porting effort to GStreamer 1.0.
@@ -38,7 +38,7 @@ Conflicts:
  src/gsttools/qgstreamervideowindow.cpp             |  79 +++++++-
  src/gsttools/qgstutils.cpp                         |  27 ++-
  src/gsttools/qgstvideobuffer.cpp                   |  18 +-
- src/gsttools/qvideosurfacegstsink.cpp              | 143 +++++++++++++--
+ src/gsttools/qvideosurfacegstsink.cpp              | 138 +++++++++++++-
  src/multimedia/gsttools_headers/qgstappsrc_p.h     |   3 +
  .../qgstreameraudioprobecontrol_p.h                |   5 +-
  .../qgstreamervideoprobecontrol_p.h                |   4 +
@@ -58,7 +58,7 @@ Conflicts:
  .../mediaplayer/qgstreamerplayerserviceplugin.cpp  |  27 ++-
  .../mediaplayer/qgstreamerplayersession.cpp        | 154 ++++++++++++++--
  .../mediaplayer/qgstreamerplayersession.h          |   9 +
- 36 files changed, 875 insertions(+), 132 deletions(-)
+ 36 files changed, 872 insertions(+), 130 deletions(-)
 
 diff --git a/config.tests/gstreamer/gstreamer.pro b/config.tests/gstreamer/gstreamer.pro
 index 02a7e34..6b9843a 100644
@@ -244,10 +244,10 @@ index 7c809a7..6b9bf5d 100644
  
  config_linux_v4l: DEFINES += USE_V4L
 diff --git a/src/gsttools/gstvideoconnector.c b/src/gsttools/gstvideoconnector.c
-index 3e08fe5..ff3f9a3 100644
+index 3ed539e..ed0ed3c 100644
 --- a/src/gsttools/gstvideoconnector.c
 +++ b/src/gsttools/gstvideoconnector.c
-@@ -67,26 +67,93 @@ GST_STATIC_PAD_TEMPLATE ("src",
+@@ -59,26 +59,93 @@ GST_STATIC_PAD_TEMPLATE ("src",
                           GST_PAD_ALWAYS,
                           GST_STATIC_CAPS_ANY);
  
@@ -342,7 +342,7 @@ index 3e08fe5..ff3f9a3 100644
  
  static void
  gst_video_connector_base_init (gpointer g_class)
-@@ -128,18 +195,33 @@ gst_video_connector_class_init (GstVideoConnectorClass * klass)
+@@ -120,18 +187,33 @@ gst_video_connector_class_init (GstVideoConnectorClass * klass)
                            g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
  }
  
@@ -378,7 +378,7 @@ index 3e08fe5..ff3f9a3 100644
      gst_pad_set_bufferalloc_function(element->sinkpad,
                                       GST_DEBUG_FUNCPTR (gst_video_connector_buffer_alloc));
      gst_pad_set_setcaps_function(element->sinkpad,
-@@ -148,14 +230,23 @@ gst_video_connector_init (GstVideoConnector *element,
+@@ -140,14 +222,23 @@ gst_video_connector_init (GstVideoConnector *element,
                                 GST_DEBUG_FUNCPTR(gst_video_connector_getcaps));
      gst_pad_set_acceptcaps_function(element->sinkpad,
                                 GST_DEBUG_FUNCPTR(gst_video_connector_acceptcaps));
@@ -403,7 +403,7 @@ index 3e08fe5..ff3f9a3 100644
      gst_element_add_pad (GST_ELEMENT (element), element->srcpad);
  
      element->relinked = FALSE;
-@@ -183,9 +274,16 @@ gst_video_connector_dispose (GObject * object)
+@@ -175,9 +266,16 @@ gst_video_connector_dispose (GObject * object)
  
      gst_video_connector_reset (element);
  
@@ -420,7 +420,7 @@ index 3e08fe5..ff3f9a3 100644
  // "When this function returns anything else than GST_FLOW_OK,
  // the buffer allocation failed and buf does not contain valid data."
  static GstFlowReturn
-@@ -229,6 +327,7 @@ gst_video_connector_buffer_alloc (GstPad * pad, guint64 offset, guint size,
+@@ -221,6 +319,7 @@ gst_video_connector_buffer_alloc (GstPad * pad, guint64 offset, guint size,
                  if (state == GST_STATE_NULL) {
                      GST_DEBUG_OBJECT (element, "Downstream element is in NULL state");
                      // Downstream filter seems to be in the wrong state
@@ -428,7 +428,7 @@ index 3e08fe5..ff3f9a3 100644
                      return GST_FLOW_UNEXPECTED;
                  }
              }
-@@ -301,6 +400,7 @@ static GstCaps *gst_video_connector_getcaps (GstPad * pad)
+@@ -293,6 +392,7 @@ static GstCaps *gst_video_connector_getcaps (GstPad * pad)
      return caps;
  }
  
@@ -436,7 +436,7 @@ index 3e08fe5..ff3f9a3 100644
  static gboolean gst_video_connector_acceptcaps (GstPad * pad, GstCaps * caps)
  {
      GstVideoConnector *element;
-@@ -308,6 +408,7 @@ static gboolean gst_video_connector_acceptcaps (GstPad * pad, GstCaps * caps)
+@@ -300,6 +400,7 @@ static gboolean gst_video_connector_acceptcaps (GstPad * pad, GstCaps * caps)
  
      return gst_pad_peer_accept_caps(element->srcpad, caps);
  }
@@ -444,7 +444,7 @@ index 3e08fe5..ff3f9a3 100644
  
  static void
  gst_video_connector_resend_new_segment(GstElement * element, gboolean emitFailedSignal)
-@@ -319,11 +420,39 @@ gst_video_connector_resend_new_segment(GstElement * element, gboolean emitFailed
+@@ -311,11 +412,39 @@ gst_video_connector_resend_new_segment(GstElement * element, gboolean emitFailed
          connector->failedSignalEmited = FALSE;
  }
  
@@ -485,7 +485,7 @@ index 3e08fe5..ff3f9a3 100644
  
      GstVideoConnector *element = GST_VIDEO_CONNECTOR (object);
  
-@@ -335,16 +464,23 @@ static gboolean gst_video_connector_new_buffer_probe(GstObject *pad, GstBuffer *
+@@ -327,16 +456,23 @@ static gboolean gst_video_connector_new_buffer_probe(GstObject *pad, GstBuffer *
      if (element->relinked)
          GST_LOG_OBJECT(element, "rejected buffer because of new segment request");
  
@@ -511,7 +511,7 @@ index 3e08fe5..ff3f9a3 100644
      element = GST_VIDEO_CONNECTOR (gst_pad_get_parent (pad));
  
      do {
-@@ -356,20 +492,29 @@ gst_video_connector_chain (GstPad * pad, GstBuffer * buf)
+@@ -348,20 +484,29 @@ gst_video_connector_chain (GstPad * pad, GstBuffer * buf)
          */
          while (element->relinked) {
              element->relinked = FALSE;
@@ -543,7 +543,7 @@ index 3e08fe5..ff3f9a3 100644
  
              GST_DEBUG_OBJECT (element, "Pushing new segment event");
              if (!gst_pad_push_event (element->srcpad, ev)) {
-@@ -432,8 +577,11 @@ gst_video_connector_change_state (GstElement * element,
+@@ -424,8 +569,11 @@ gst_video_connector_change_state (GstElement * element,
      GstStateChangeReturn result;
  
      connector = GST_VIDEO_CONNECTOR(element);
@@ -556,7 +556,7 @@ index 3e08fe5..ff3f9a3 100644
      switch (transition) {
      case GST_STATE_CHANGE_PAUSED_TO_READY:
          gst_video_connector_reset (connector);
-@@ -448,9 +596,32 @@ gst_video_connector_change_state (GstElement * element,
+@@ -440,9 +588,32 @@ gst_video_connector_change_state (GstElement * element,
      return result;
  }
  
@@ -591,7 +591,7 @@ index 3e08fe5..ff3f9a3 100644
      if (GST_EVENT_TYPE (event) == GST_EVENT_NEWSEGMENT) {
          GstVideoConnector *element = GST_VIDEO_CONNECTOR (gst_pad_get_parent (pad));
  
-@@ -461,7 +632,6 @@ gst_video_connector_handle_sink_event (GstPad * pad, GstEvent * event)
+@@ -453,7 +624,6 @@ gst_video_connector_handle_sink_event (GstPad * pad, GstEvent * event)
  
          gst_event_parse_new_segment_full (event, &update, &rate, &arate, &format,
                                            &start, &stop, &time);
@@ -599,7 +599,7 @@ index 3e08fe5..ff3f9a3 100644
          GST_LOG_OBJECT (element,
                            "NEWSEGMENT update %d, rate %lf, applied rate %lf, "
                            "format %d, " "%" G_GINT64_FORMAT " -- %" G_GINT64_FORMAT ", time %"
-@@ -469,9 +639,10 @@ gst_video_connector_handle_sink_event (GstPad * pad, GstEvent * event)
+@@ -461,9 +631,10 @@ gst_video_connector_handle_sink_event (GstPad * pad, GstEvent * event)
  
          gst_segment_set_newsegment_full (&element->segment, update,
                                           rate, arate, format, start, stop, time);
@@ -612,10 +612,10 @@ index 3e08fe5..ff3f9a3 100644
 +
 +#endif
 diff --git a/src/gsttools/qgstappsrc.cpp b/src/gsttools/qgstappsrc.cpp
-index 2c9f64c..7916d89 100644
+index 561a96f..d5e106f 100644
 --- a/src/gsttools/qgstappsrc.cpp
 +++ b/src/gsttools/qgstappsrc.cpp
-@@ -155,23 +155,44 @@ void QGstAppSrc::pushDataToAppSrc()
+@@ -147,23 +147,44 @@ void QGstAppSrc::pushDataToAppSrc()
              size = qMin(m_stream->bytesAvailable(), (qint64)m_dataRequestSize);
  
          if (size) {
@@ -665,10 +665,10 @@ index 2c9f64c..7916d89 100644
          } else {
              sendEOS();
 diff --git a/src/gsttools/qgstreameraudioprobecontrol.cpp b/src/gsttools/qgstreameraudioprobecontrol.cpp
-index 94d07c9..8c85973 100644
+index 3baca53..be3de3f 100644
 --- a/src/gsttools/qgstreameraudioprobecontrol.cpp
 +++ b/src/gsttools/qgstreameraudioprobecontrol.cpp
-@@ -53,9 +53,14 @@ QGstreamerAudioProbeControl::~QGstreamerAudioProbeControl()
+@@ -45,9 +45,14 @@ QGstreamerAudioProbeControl::~QGstreamerAudioProbeControl()
  
  }
  
@@ -684,7 +684,7 @@ index 94d07c9..8c85973 100644
      if (!caps)
          return;
  
-@@ -64,8 +69,20 @@ void QGstreamerAudioProbeControl::bufferProbed(GstBuffer* buffer)
+@@ -56,8 +61,20 @@ void QGstreamerAudioProbeControl::bufferProbed(GstBuffer* buffer)
      if (!format.isValid())
          return;
  
@@ -706,10 +706,10 @@ index 94d07c9..8c85973 100644
          QMutexLocker locker(&m_bufferMutex);
          m_pendingBuffer = audioBuffer;
 diff --git a/src/gsttools/qgstreamerbushelper.cpp b/src/gsttools/qgstreamerbushelper.cpp
-index da7506e..6b4cdd2 100644
+index 84eda46..eb1fc36 100644
 --- a/src/gsttools/qgstreamerbushelper.cpp
 +++ b/src/gsttools/qgstreamerbushelper.cpp
-@@ -162,13 +162,21 @@ QGstreamerBusHelper::QGstreamerBusHelper(GstBus* bus, QObject* parent):
+@@ -154,13 +154,21 @@ QGstreamerBusHelper::QGstreamerBusHelper(GstBus* bus, QObject* parent):
      QObject(parent)
  {
      d = new QGstreamerBusHelperPrivate(this, bus);
@@ -732,10 +732,10 @@ index da7506e..6b4cdd2 100644
  }
  
 diff --git a/src/gsttools/qgstreamervideoprobecontrol.cpp b/src/gsttools/qgstreamervideoprobecontrol.cpp
-index f2e6c3f..55632ff 100644
+index a78a9da..9c31140 100644
 --- a/src/gsttools/qgstreamervideoprobecontrol.cpp
 +++ b/src/gsttools/qgstreamervideoprobecontrol.cpp
-@@ -75,12 +75,21 @@ void QGstreamerVideoProbeControl::stopFlushing()
+@@ -67,12 +67,21 @@ void QGstreamerVideoProbeControl::stopFlushing()
      m_flushing = false;
  }
  
@@ -758,10 +758,10 @@ index f2e6c3f..55632ff 100644
          return;
  
 diff --git a/src/gsttools/qgstreamervideorenderer.cpp b/src/gsttools/qgstreamervideorenderer.cpp
-index 36c9f78..da85dea 100644
+index 2b66f76..804dce9 100644
 --- a/src/gsttools/qgstreamervideorenderer.cpp
 +++ b/src/gsttools/qgstreamervideorenderer.cpp
-@@ -43,8 +43,7 @@
+@@ -35,8 +35,7 @@
  #include <private/qvideosurfacegstsink_p.h>
  #include <private/qgstutils_p.h>
  #include <qabstractvideosurface.h>
@@ -772,10 +772,10 @@ index 36c9f78..da85dea 100644
  #include <gst/gst.h>
  
 diff --git a/src/gsttools/qgstreamervideowidget.cpp b/src/gsttools/qgstreamervideowidget.cpp
-index 7e11bfb..7848f2f 100644
+index aa2e2a3..14c1f04 100644
 --- a/src/gsttools/qgstreamervideowidget.cpp
 +++ b/src/gsttools/qgstreamervideowidget.cpp
-@@ -48,8 +48,13 @@
+@@ -40,8 +40,13 @@
  #include <QtGui/qpainter.h>
  
  #include <gst/gst.h>
@@ -789,7 +789,7 @@ index 7e11bfb..7848f2f 100644
  
  QT_BEGIN_NAMESPACE
  
-@@ -177,9 +182,13 @@ bool QGstreamerVideoWidgetControl::processSyncMessage(const QGstreamerMessage &m
+@@ -169,9 +174,13 @@ bool QGstreamerVideoWidgetControl::processSyncMessage(const QGstreamerMessage &m
  {
      GstMessage* gm = message.rawMessage();
  
@@ -804,7 +804,7 @@ index 7e11bfb..7848f2f 100644
          setOverlay();
          QMetaObject::invokeMethod(this, "updateNativeVideoSize", Qt::QueuedConnection);
          return true;
-@@ -207,18 +216,29 @@ bool QGstreamerVideoWidgetControl::processBusMessage(const QGstreamerMessage &me
+@@ -199,18 +208,29 @@ bool QGstreamerVideoWidgetControl::processBusMessage(const QGstreamerMessage &me
  
  void QGstreamerVideoWidgetControl::setOverlay()
  {
@@ -835,7 +835,7 @@ index 7e11bfb..7848f2f 100644
  
          if (caps) {
              m_widget->setNativeSize(QGstUtils::capsCorrectedResolution(caps));
-@@ -233,8 +253,13 @@ void QGstreamerVideoWidgetControl::updateNativeVideoSize()
+@@ -225,8 +245,13 @@ void QGstreamerVideoWidgetControl::updateNativeVideoSize()
  
  void QGstreamerVideoWidgetControl::windowExposed()
  {
@@ -850,10 +850,10 @@ index 7e11bfb..7848f2f 100644
  
  QWidget *QGstreamerVideoWidgetControl::videoWidget()
 diff --git a/src/gsttools/qgstreamervideowindow.cpp b/src/gsttools/qgstreamervideowindow.cpp
-index 2dc3510..45e9374 100644
+index a373dcc..587b010 100644
 --- a/src/gsttools/qgstreamervideowindow.cpp
 +++ b/src/gsttools/qgstreamervideowindow.cpp
-@@ -45,8 +45,12 @@
+@@ -37,8 +37,12 @@
  #include <QtCore/qdebug.h>
  
  #include <gst/gst.h>
@@ -866,7 +866,7 @@ index 2dc3510..45e9374 100644
  
  
  QGstreamerVideoWindow::QGstreamerVideoWindow(QObject *parent, const char *elementName)
-@@ -57,18 +61,25 @@ QGstreamerVideoWindow::QGstreamerVideoWindow(QObject *parent, const char *elemen
+@@ -49,18 +53,25 @@ QGstreamerVideoWindow::QGstreamerVideoWindow(QObject *parent, const char *elemen
      , m_fullScreen(false)
      , m_colorKey(QColor::Invalid)
  {
@@ -894,7 +894,7 @@ index 2dc3510..45e9374 100644
  }
  
  QGstreamerVideoWindow::~QGstreamerVideoWindow()
-@@ -90,11 +101,15 @@ void QGstreamerVideoWindow::setWinId(WId id)
+@@ -82,11 +93,15 @@ void QGstreamerVideoWindow::setWinId(WId id)
      WId oldId = m_windowId;
  
      m_windowId = id;
@@ -912,7 +912,7 @@ index 2dc3510..45e9374 100644
      if (!oldId)
          emit readyChanged(true);
  
-@@ -105,7 +120,20 @@ void QGstreamerVideoWindow::setWinId(WId id)
+@@ -97,7 +112,20 @@ void QGstreamerVideoWindow::setWinId(WId id)
  bool QGstreamerVideoWindow::processSyncMessage(const QGstreamerMessage &message)
  {
      GstMessage* gm = message.rawMessage();
@@ -933,7 +933,7 @@ index 2dc3510..45e9374 100644
      if ((GST_MESSAGE_TYPE(gm) == GST_MESSAGE_ELEMENT) &&
              gst_structure_has_name(gm->structure, "prepare-xwindow-id") &&
              m_videoSink && GST_IS_X_OVERLAY(m_videoSink)) {
-@@ -118,7 +146,7 @@ bool QGstreamerVideoWindow::processSyncMessage(const QGstreamerMessage &message)
+@@ -110,7 +138,7 @@ bool QGstreamerVideoWindow::processSyncMessage(const QGstreamerMessage &message)
  
          return true;
      }
@@ -942,7 +942,7 @@ index 2dc3510..45e9374 100644
      return false;
  }
  
-@@ -130,7 +158,19 @@ QRect QGstreamerVideoWindow::displayRect() const
+@@ -122,7 +150,19 @@ QRect QGstreamerVideoWindow::displayRect() const
  void QGstreamerVideoWindow::setDisplayRect(const QRect &rect)
  {
      m_displayRect = rect;
@@ -963,7 +963,7 @@ index 2dc3510..45e9374 100644
      if (m_videoSink && GST_IS_X_OVERLAY(m_videoSink)) {
  #if GST_VERSION_MICRO >= 29
          if (m_displayRect.isEmpty())
-@@ -144,6 +184,7 @@ void QGstreamerVideoWindow::setDisplayRect(const QRect &rect)
+@@ -136,6 +176,7 @@ void QGstreamerVideoWindow::setDisplayRect(const QRect &rect)
          repaint();
  #endif
      }
@@ -971,7 +971,7 @@ index 2dc3510..45e9374 100644
  }
  
  Qt::AspectRatioMode QGstreamerVideoWindow::aspectRatioMode() const
-@@ -165,6 +206,16 @@ void QGstreamerVideoWindow::setAspectRatioMode(Qt::AspectRatioMode mode)
+@@ -157,6 +198,16 @@ void QGstreamerVideoWindow::setAspectRatioMode(Qt::AspectRatioMode mode)
  
  void QGstreamerVideoWindow::repaint()
  {
@@ -988,7 +988,7 @@ index 2dc3510..45e9374 100644
      if (m_videoSink && GST_IS_X_OVERLAY(m_videoSink)) {
          //don't call gst_x_overlay_expose if the sink is in null state
          GstState state = GST_STATE_NULL;
-@@ -173,6 +224,7 @@ void QGstreamerVideoWindow::repaint()
+@@ -165,6 +216,7 @@ void QGstreamerVideoWindow::repaint()
              gst_x_overlay_expose(GST_X_OVERLAY(m_videoSink));
          }
      }
@@ -996,7 +996,7 @@ index 2dc3510..45e9374 100644
  }
  
  QColor QGstreamerVideoWindow::colorKey() const
-@@ -304,11 +356,22 @@ QSize QGstreamerVideoWindow::nativeSize() const
+@@ -296,11 +348,22 @@ QSize QGstreamerVideoWindow::nativeSize() const
      return m_nativeSize;
  }
  
@@ -1019,7 +1019,7 @@ index 2dc3510..45e9374 100644
  }
  
  void QGstreamerVideoWindow::updateNativeVideoSize()
-@@ -319,7 +382,11 @@ void QGstreamerVideoWindow::updateNativeVideoSize()
+@@ -311,7 +374,11 @@ void QGstreamerVideoWindow::updateNativeVideoSize()
      if (m_videoSink) {
          //find video native size to update video widget size hint
          GstPad *pad = gst_element_get_static_pad(m_videoSink,"sink");
@@ -1032,7 +1032,7 @@ index 2dc3510..45e9374 100644
  
          if (caps) {
 diff --git a/src/gsttools/qgstutils.cpp b/src/gsttools/qgstutils.cpp
-index 41bd005..3ca1921 100644
+index 556fc03..5ea2c59 100644
 --- a/src/gsttools/qgstutils.cpp
 +++ b/src/gsttools/qgstutils.cpp
 @@ -89,8 +89,13 @@ static void addTagToMap(const GstTagList *list,
@@ -1083,7 +1083,7 @@ index 41bd005..3ca1921 100644
  
  /*!
    Builds GstCaps for an audio format.
-@@ -403,7 +426,7 @@ QMultimedia::SupportEstimate QGstUtils::hasSupport(const QString &mimeType,
+@@ -579,7 +602,7 @@ QByteArray QGstUtils::cameraDriver(const QString &device, GstElementFactory *fac
  
  void qt_gst_object_ref_sink(gpointer object)
  {
@@ -1093,10 +1093,10 @@ index 41bd005..3ca1921 100644
  #else
      g_return_if_fail (GST_IS_OBJECT(object));
 diff --git a/src/gsttools/qgstvideobuffer.cpp b/src/gsttools/qgstvideobuffer.cpp
-index 45556d1..750a07f 100644
+index 18702ec..93f22f5 100644
 --- a/src/gsttools/qgstvideobuffer.cpp
 +++ b/src/gsttools/qgstvideobuffer.cpp
-@@ -78,21 +78,33 @@ QAbstractVideoBuffer::MapMode QGstVideoBuffer::mapMode() const
+@@ -70,21 +70,33 @@ QAbstractVideoBuffer::MapMode QGstVideoBuffer::mapMode() const
  uchar *QGstVideoBuffer::map(MapMode mode, int *numBytes, int *bytesPerLine)
  {
      if (mode != NotMapped && m_mode == NotMapped) {
@@ -1134,10 +1134,10 @@ index 45556d1..750a07f 100644
  }
  
 diff --git a/src/gsttools/qvideosurfacegstsink.cpp b/src/gsttools/qvideosurfacegstsink.cpp
-index 81d5f60..51c4107 100644
+index f3e2d88..a964e82 100644
 --- a/src/gsttools/qvideosurfacegstsink.cpp
 +++ b/src/gsttools/qvideosurfacegstsink.cpp
-@@ -51,7 +51,11 @@
+@@ -43,7 +43,11 @@
  
  #include "qvideosurfacegstsink_p.h"
  
@@ -1150,7 +1150,7 @@ index 81d5f60..51c4107 100644
  
  QT_BEGIN_NAMESPACE
  
-@@ -71,10 +75,12 @@ QVideoSurfaceGstDelegate::QVideoSurfaceGstDelegate(
+@@ -62,10 +66,12 @@ QVideoSurfaceGstDelegate::QVideoSurfaceGstDelegate(
      if (m_surface) {
          foreach (QObject *instance, bufferPoolLoader()->instances(QGstBufferPoolPluginKey)) {
              QGstBufferPoolInterface* plugin = qobject_cast<QGstBufferPoolInterface*>(instance);
@@ -1163,7 +1163,7 @@ index 81d5f60..51c4107 100644
          updateSupportedFormats();
          connect(m_surface, SIGNAL(supportedFormatsChanged()), this, SLOT(updateSupportedFormats()));
      }
-@@ -208,6 +214,8 @@ GstFlowReturn QVideoSurfaceGstDelegate::render(GstBuffer *buffer)
+@@ -198,6 +204,8 @@ GstFlowReturn QVideoSurfaceGstDelegate::render(GstBuffer *buffer)
      if (QThread::currentThread() == thread()) {
          if (!m_surface.isNull())
              m_surface->present(m_frame);
@@ -1172,7 +1172,7 @@ index 81d5f60..51c4107 100644
      } else {
          QMetaObject::invokeMethod(this, "queuedRender", Qt::QueuedConnection);
          m_renderCondition.wait(&m_mutex, 300);
-@@ -310,6 +318,27 @@ void QVideoSurfaceGstDelegate::updateSupportedFormats()
+@@ -283,6 +291,27 @@ void QVideoSurfaceGstDelegate::updateSupportedFormats()
      }
  }
  
@@ -1200,7 +1200,7 @@ index 81d5f60..51c4107 100644
  struct YuvFormat
  {
      QVideoFrame::PixelFormat pixelFormat;
-@@ -327,6 +356,7 @@ static const YuvFormat qt_yuvColorLookup[] =
+@@ -300,6 +329,7 @@ static const YuvFormat qt_yuvColorLookup[] =
      { QVideoFrame::Format_NV21,    GST_MAKE_FOURCC('N','V','2','1'), 8 },
      { QVideoFrame::Format_AYUV444, GST_MAKE_FOURCC('A','Y','U','V'), 32 }
  };
@@ -1208,7 +1208,7 @@ index 81d5f60..51c4107 100644
  
  static int indexOfYuvColor(QVideoFrame::PixelFormat format)
  {
-@@ -339,12 +369,20 @@ static int indexOfYuvColor(QVideoFrame::PixelFormat format)
+@@ -312,12 +342,20 @@ static int indexOfYuvColor(QVideoFrame::PixelFormat format)
      return -1;
  }
  
@@ -1229,7 +1229,7 @@ index 81d5f60..51c4107 100644
              return i;
  
      return -1;
-@@ -417,13 +455,13 @@ GType QVideoSurfaceGstSink::get_type()
+@@ -388,13 +426,13 @@ GType QVideoSurfaceGstSink::get_type()
      if (type == 0) {
          static const GTypeInfo info =
          {
@@ -1245,7 +1245,7 @@ index 81d5f60..51c4107 100644
              0,                                                 // n_preallocs
              instance_init,                                     // instance_init
              0                                                  // value_table
-@@ -445,7 +483,11 @@ void QVideoSurfaceGstSink::class_init(gpointer g_class, gpointer class_data)
+@@ -419,7 +457,11 @@ void QVideoSurfaceGstSink::class_init(gpointer g_class, gpointer class_data)
      GstBaseSinkClass *base_sink_class = reinterpret_cast<GstBaseSinkClass *>(g_class);
      base_sink_class->get_caps = QVideoSurfaceGstSink::get_caps;
      base_sink_class->set_caps = QVideoSurfaceGstSink::set_caps;
@@ -1256,8 +1256,8 @@ index 81d5f60..51c4107 100644
 +#endif
      base_sink_class->start = QVideoSurfaceGstSink::start;
      base_sink_class->stop = QVideoSurfaceGstSink::stop;
-     // base_sink_class->unlock = QVideoSurfaceGstSink::unlock; // Not implemented.
-@@ -464,6 +506,18 @@ void QVideoSurfaceGstSink::base_init(gpointer g_class)
+ 
+@@ -434,6 +476,18 @@ void QVideoSurfaceGstSink::base_init(gpointer g_class)
  {
      static GstStaticPadTemplate sink_pad_template = GST_STATIC_PAD_TEMPLATE(
              "sink", GST_PAD_SINK, GST_PAD_ALWAYS, GST_STATIC_CAPS(
@@ -1276,7 +1276,7 @@ index 81d5f60..51c4107 100644
                      "video/x-raw-rgb, "
                      "framerate = (fraction) [ 0, MAX ], "
                      "width = (int) [ 1, MAX ], "
-@@ -472,6 +526,7 @@ void QVideoSurfaceGstSink::base_init(gpointer g_class)
+@@ -442,6 +496,7 @@ void QVideoSurfaceGstSink::base_init(gpointer g_class)
                      "framerate = (fraction) [ 0, MAX ], "
                      "width = (int) [ 1, MAX ], "
                      "height = (int) [ 1, MAX ]"));
@@ -1284,7 +1284,7 @@ index 81d5f60..51c4107 100644
  
      gst_element_class_add_pad_template(
              GST_ELEMENT_CLASS(g_class), gst_static_pad_template_get(&sink_pad_template));
-@@ -520,7 +575,11 @@ GstStateChangeReturn QVideoSurfaceGstSink::change_state(
+@@ -490,7 +545,11 @@ GstStateChangeReturn QVideoSurfaceGstSink::change_state(
              element, transition);
  }
  
@@ -1297,7 +1297,7 @@ index 81d5f60..51c4107 100644
  {
      VO_SINK(base);
  
-@@ -533,6 +592,7 @@ GstCaps *QVideoSurfaceGstSink::get_caps(GstBaseSink *base)
+@@ -503,6 +562,7 @@ GstCaps *QVideoSurfaceGstSink::get_caps(GstBaseSink *base)
      QList<QVideoFrame::PixelFormat> poolHandleFormats;
      sink->delegate->poolMutex()->lock();
      QGstBufferPoolInterface *pool = sink->delegate->pool();
@@ -1305,7 +1305,7 @@ index 81d5f60..51c4107 100644
      if (pool)
          poolHandleFormats = sink->delegate->supportedPixelFormats(pool->handleType());
      sink->delegate->poolMutex()->unlock();
-@@ -548,11 +608,19 @@ GstCaps *QVideoSurfaceGstSink::get_caps(GstBaseSink *base)
+@@ -518,11 +578,19 @@ GstCaps *QVideoSurfaceGstSink::get_caps(GstBaseSink *base)
  
          if (index != -1) {
              gst_caps_append_structure(caps, gst_structure_new(
@@ -1326,7 +1326,7 @@ index 81d5f60..51c4107 100644
                      NULL));
              continue;
          }
-@@ -562,7 +630,18 @@ GstCaps *QVideoSurfaceGstSink::get_caps(GstBaseSink *base)
+@@ -532,7 +600,18 @@ GstCaps *QVideoSurfaceGstSink::get_caps(GstBaseSink *base)
          for (int i = 0; i < count; ++i) {
              if (qt_rgbColorLookup[i].pixelFormat == format) {
                  GstStructure *structure = gst_structure_new(
@@ -1345,7 +1345,7 @@ index 81d5f60..51c4107 100644
                          "framerate" , GST_TYPE_FRACTION_RANGE, 0, 1, INT_MAX, 1,
                          "width"     , GST_TYPE_INT_RANGE, 1, INT_MAX,
                          "height"    , GST_TYPE_INT_RANGE, 1, INT_MAX,
-@@ -583,6 +662,7 @@ GstCaps *QVideoSurfaceGstSink::get_caps(GstBaseSink *base)
+@@ -553,6 +632,7 @@ GstCaps *QVideoSurfaceGstSink::get_caps(GstBaseSink *base)
          }
      }
  
@@ -1353,7 +1353,7 @@ index 81d5f60..51c4107 100644
      return caps;
  }
  
-@@ -622,7 +702,7 @@ gboolean QVideoSurfaceGstSink::set_caps(GstBaseSink *base, GstCaps *caps)
+@@ -592,7 +672,7 @@ gboolean QVideoSurfaceGstSink::set_caps(GstBaseSink *base, GstCaps *caps)
          sink->lastRequestedCaps = 0;
  
  #ifdef DEBUG_VIDEO_SURFACE_SINK
@@ -1362,7 +1362,7 @@ index 81d5f60..51c4107 100644
          qDebug() << format;
          qDebug() << "bytesPerLine:" << bytesPerLine;
  #endif
-@@ -647,11 +727,49 @@ QVideoSurfaceFormat QVideoSurfaceGstSink::formatForCaps(GstCaps *caps, int *byte
+@@ -617,11 +697,49 @@ QVideoSurfaceFormat QVideoSurfaceGstSink::formatForCaps(GstCaps *caps, int *byte
      gst_structure_get_int(structure, "width", &size.rwidth());
      gst_structure_get_int(structure, "height", &size.rheight());
  
@@ -1412,7 +1412,7 @@ index 81d5f60..51c4107 100644
          if (index != -1) {
              pixelFormat = qt_yuvColorLookup[index].pixelFormat;
              bitsPerPixel = qt_yuvColorLookup[index].bitsPerPixel;
-@@ -677,6 +795,7 @@ QVideoSurfaceFormat QVideoSurfaceGstSink::formatForCaps(GstCaps *caps, int *byte
+@@ -647,6 +765,7 @@ QVideoSurfaceFormat QVideoSurfaceGstSink::formatForCaps(GstCaps *caps, int *byte
          if (index != -1)
              pixelFormat = qt_rgbColorLookup[index].pixelFormat;
      }
@@ -1420,7 +1420,7 @@ index 81d5f60..51c4107 100644
  
      if (pixelFormat != QVideoFrame::Format_Invalid) {
          QVideoSurfaceFormat format(size, pixelFormat, handleType);
-@@ -773,7 +892,11 @@ GstFlowReturn QVideoSurfaceGstSink::buffer_alloc(
+@@ -722,7 +841,11 @@ GstFlowReturn QVideoSurfaceGstSink::buffer_alloc(
  
      poolLock.unlock();
  
@@ -1432,7 +1432,7 @@ index 81d5f60..51c4107 100644
  
      if (gst_caps_is_empty (intersection)) {
          gst_caps_unref(intersection);
-@@ -814,7 +937,7 @@ GstFlowReturn QVideoSurfaceGstSink::buffer_alloc(
+@@ -763,7 +886,7 @@ GstFlowReturn QVideoSurfaceGstSink::buffer_alloc(
      QVideoSurfaceFormat surfaceFormat = sink->delegate->surfaceFormat();
  
      if (!pool->isFormatSupported(surfaceFormat)) {
@@ -1441,7 +1441,7 @@ index 81d5f60..51c4107 100644
          return GST_FLOW_OK;
      }
  
-@@ -838,7 +961,6 @@ GstFlowReturn QVideoSurfaceGstSink::buffer_alloc(
+@@ -787,7 +910,6 @@ GstFlowReturn QVideoSurfaceGstSink::buffer_alloc(
  gboolean QVideoSurfaceGstSink::start(GstBaseSink *base)
  {
      Q_UNUSED(base);
@@ -1449,23 +1449,11 @@ index 81d5f60..51c4107 100644
      return TRUE;
  }
  
-@@ -864,8 +986,9 @@ gboolean QVideoSurfaceGstSink::event(GstBaseSink *base, GstEvent *event)
-         VO_SINK(base);
-         sink->delegate->setLastPrerolledBuffer(0);
-     }
--
--    return TRUE;
-+#if GST_CHECK_VERSION(1, 0, 0)
-+    return GST_BASE_SINK_CLASS (sink_parent_class)->event (base, event);
-+#endif
- }
- 
- GstFlowReturn QVideoSurfaceGstSink::preroll(GstBaseSink *base, GstBuffer *buffer)
 diff --git a/src/multimedia/gsttools_headers/qgstappsrc_p.h b/src/multimedia/gsttools_headers/qgstappsrc_p.h
-index bfb038e..a188e18 100644
+index 4af9252..0e0fc0a 100644
 --- a/src/multimedia/gsttools_headers/qgstappsrc_p.h
 +++ b/src/multimedia/gsttools_headers/qgstappsrc_p.h
-@@ -47,7 +47,10 @@
+@@ -39,7 +39,10 @@
  
  #include <gst/gst.h>
  #include <gst/app/gstappsrc.h>
@@ -1477,10 +1465,10 @@ index bfb038e..a188e18 100644
  QT_BEGIN_NAMESPACE
  
 diff --git a/src/multimedia/gsttools_headers/qgstreameraudioprobecontrol_p.h b/src/multimedia/gsttools_headers/qgstreameraudioprobecontrol_p.h
-index 71ea2ff..879f071 100644
+index 34669b8..0f3b165 100644
 --- a/src/multimedia/gsttools_headers/qgstreameraudioprobecontrol_p.h
 +++ b/src/multimedia/gsttools_headers/qgstreameraudioprobecontrol_p.h
-@@ -55,8 +55,11 @@ class QGstreamerAudioProbeControl : public QMediaAudioProbeControl
+@@ -47,8 +47,11 @@ class QGstreamerAudioProbeControl : public QMediaAudioProbeControl
  public:
      explicit QGstreamerAudioProbeControl(QObject *parent);
      virtual ~QGstreamerAudioProbeControl();
@@ -1494,10 +1482,10 @@ index 71ea2ff..879f071 100644
  private slots:
      void bufferProbed();
 diff --git a/src/multimedia/gsttools_headers/qgstreamervideoprobecontrol_p.h b/src/multimedia/gsttools_headers/qgstreamervideoprobecontrol_p.h
-index c512b48..0a8a654 100644
+index 49064f9..fce6309 100644
 --- a/src/multimedia/gsttools_headers/qgstreamervideoprobecontrol_p.h
 +++ b/src/multimedia/gsttools_headers/qgstreamervideoprobecontrol_p.h
-@@ -56,7 +56,11 @@ public:
+@@ -48,7 +48,11 @@ public:
      explicit QGstreamerVideoProbeControl(QObject *parent);
      virtual ~QGstreamerVideoProbeControl();
  
@@ -1510,10 +1498,10 @@ index c512b48..0a8a654 100644
      void stopFlushing();
  
 diff --git a/src/multimedia/gsttools_headers/qgstreamervideowindow_p.h b/src/multimedia/gsttools_headers/qgstreamervideowindow_p.h
-index 45582d6..4440337 100644
+index 81e5764..c9fdb5c 100644
 --- a/src/multimedia/gsttools_headers/qgstreamervideowindow_p.h
 +++ b/src/multimedia/gsttools_headers/qgstreamervideowindow_p.h
-@@ -112,7 +112,11 @@ private slots:
+@@ -104,7 +104,11 @@ private slots:
      void updateNativeVideoSize();
  
  private:
@@ -1526,10 +1514,10 @@ index 45582d6..4440337 100644
      GstElement *m_videoSink;
      WId m_windowId;
 diff --git a/src/multimedia/gsttools_headers/qgstutils_p.h b/src/multimedia/gsttools_headers/qgstutils_p.h
-index eea1e15..6369df7 100644
+index 65ff759..6015980 100644
 --- a/src/multimedia/gsttools_headers/qgstutils_p.h
 +++ b/src/multimedia/gsttools_headers/qgstutils_p.h
-@@ -70,7 +70,11 @@ namespace QGstUtils {
+@@ -73,7 +73,11 @@ namespace QGstUtils {
      QSize capsResolution(const GstCaps *caps);
      QSize capsCorrectedResolution(const GstCaps *caps);
      QAudioFormat audioFormatForCaps(const GstCaps *caps);
@@ -1542,10 +1530,10 @@ index eea1e15..6369df7 100644
      void initializeGst();
      QMultimedia::SupportEstimate hasSupport(const QString &mimeType,
 diff --git a/src/multimedia/gsttools_headers/qgstvideobuffer_p.h b/src/multimedia/gsttools_headers/qgstvideobuffer_p.h
-index 505a6c6..9bde1e0 100644
+index 1e0fda8..be48820 100644
 --- a/src/multimedia/gsttools_headers/qgstvideobuffer_p.h
 +++ b/src/multimedia/gsttools_headers/qgstvideobuffer_p.h
-@@ -79,6 +79,9 @@ private:
+@@ -71,6 +71,9 @@ private:
      int m_bytesPerLine;
      MapMode m_mode;
      QVariant m_handle;
@@ -1556,10 +1544,10 @@ index 505a6c6..9bde1e0 100644
  
  QT_END_NAMESPACE
 diff --git a/src/multimedia/gsttools_headers/qvideosurfacegstsink_p.h b/src/multimedia/gsttools_headers/qvideosurfacegstsink_p.h
-index 7563f06..505ff39 100644
+index 11b305d..01935f7 100644
 --- a/src/multimedia/gsttools_headers/qvideosurfacegstsink_p.h
 +++ b/src/multimedia/gsttools_headers/qvideosurfacegstsink_p.h
-@@ -146,7 +146,11 @@ private:
+@@ -131,7 +131,11 @@ private:
  
      static GstStateChangeReturn change_state(GstElement *element, GstStateChange transition);
  
@@ -1573,10 +1561,10 @@ index 7563f06..505ff39 100644
  
      static GstFlowReturn buffer_alloc(
 diff --git a/src/plugins/gstreamer/audiodecoder/qgstreameraudiodecoderserviceplugin.cpp b/src/plugins/gstreamer/audiodecoder/qgstreameraudiodecoderserviceplugin.cpp
-index e6d2421..00291ab 100644
+index 3098aab..9c54663 100644
 --- a/src/plugins/gstreamer/audiodecoder/qgstreameraudiodecoderserviceplugin.cpp
 +++ b/src/plugins/gstreamer/audiodecoder/qgstreameraudiodecoderserviceplugin.cpp
-@@ -82,29 +82,42 @@ void QGstreamerAudioDecoderServicePlugin::updateSupportedMimeTypes() const
+@@ -74,29 +74,42 @@ void QGstreamerAudioDecoderServicePlugin::updateSupportedMimeTypes() const
      gst_init(NULL, NULL);
  
      GList *plugins, *orig_plugins;
@@ -1627,10 +1615,10 @@ index e6d2421..00291ab 100644
                              GstStaticPadTemplate *padtemplate = (GstStaticPadTemplate*)(pads->data);
                              pads = g_list_next (pads);
 diff --git a/src/plugins/gstreamer/audiodecoder/qgstreameraudiodecodersession.cpp b/src/plugins/gstreamer/audiodecoder/qgstreameraudiodecodersession.cpp
-index 9f1a765..dd6bd02 100644
+index f944a60..72d1cf1 100644
 --- a/src/plugins/gstreamer/audiodecoder/qgstreameraudiodecodersession.cpp
 +++ b/src/plugins/gstreamer/audiodecoder/qgstreameraudiodecodersession.cpp
-@@ -454,21 +454,40 @@ QAudioBuffer QGstreamerAudioDecoderSession::read()
+@@ -446,21 +446,40 @@ QAudioBuffer QGstreamerAudioDecoderSession::read()
          if (buffersAvailable == 1)
              emit bufferAvailableChanged(false);
  
@@ -1673,7 +1661,7 @@ index 9f1a765..dd6bd02 100644
      }
  
      return audioBuffer;
-@@ -539,7 +558,12 @@ void QGstreamerAudioDecoderSession::addAppSink()
+@@ -531,7 +550,12 @@ void QGstreamerAudioDecoderSession::addAppSink()
  
      GstAppSinkCallbacks callbacks;
      memset(&callbacks, 0, sizeof(callbacks));
@@ -1686,7 +1674,7 @@ index 9f1a765..dd6bd02 100644
      gst_app_sink_set_callbacks(m_appSink, &callbacks, this, NULL);
      gst_app_sink_set_max_buffers(m_appSink, MAX_BUFFERS_IN_QUEUE);
      gst_base_sink_set_sync(GST_BASE_SINK(m_appSink), FALSE);
-@@ -565,8 +589,13 @@ void QGstreamerAudioDecoderSession::updateDuration()
+@@ -557,8 +581,13 @@ void QGstreamerAudioDecoderSession::updateDuration()
      gint64 gstDuration = 0;
      int duration = -1;
  
@@ -1701,22 +1689,22 @@ index 9f1a765..dd6bd02 100644
      if (m_duration != duration) {
          m_duration = duration;
 diff --git a/src/plugins/gstreamer/camerabin/camerabinsession.cpp b/src/plugins/gstreamer/camerabin/camerabinsession.cpp
-index a835b1c..6bd3682 100644
+index a4038c5..9d1fdfa 100644
 --- a/src/plugins/gstreamer/camerabin/camerabinsession.cpp
 +++ b/src/plugins/gstreamer/camerabin/camerabinsession.cpp
-@@ -731,7 +731,11 @@ qint64 CameraBinSession::duration() const
-     GstFormat   format = GST_FORMAT_TIME;
-     gint64      duration = 0;
- 
+@@ -760,7 +760,11 @@ qint64 CameraBinSession::duration() const
+         if (fileSink) {
+             GstFormat format = GST_FORMAT_TIME;
+             gint64 duration = 0;
 +#if GST_CHECK_VERSION(1,0,0)
-+    if ( m_camerabin && gst_element_query_duration(m_camerabin, format, &duration))
++            bool ret = gst_element_query_duration(fileSink, format, &duration);
 +#else
-     if ( m_camerabin && gst_element_query_position(m_camerabin, &format, &duration))
+             bool ret = gst_element_query_position(fileSink, &format, &duration);
 +#endif
-         return duration / 1000000;
-     else
-         return 0;
-@@ -764,8 +768,13 @@ void CameraBinSession::setMetaData(const QMap<QByteArray, QVariant> &data)
+             gst_object_unref(GST_OBJECT(fileSink));
+             if (ret)
+                 return duration / 1000000;
+@@ -797,8 +801,13 @@ void CameraBinSession::setMetaData(const QMap<QByteArray, QVariant> &data)
  
      if (m_camerabin) {
          GstIterator *elements = gst_bin_iterate_all_by_interface(GST_BIN(m_camerabin), GST_TYPE_TAG_SETTER);
@@ -1730,7 +1718,7 @@ index a835b1c..6bd3682 100644
              gst_tag_setter_reset_tags(GST_TAG_SETTER(element));
  
              QMapIterator<QByteArray, QVariant> it(data);
-@@ -826,7 +835,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
+@@ -859,7 +868,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
  
      if (gm && GST_MESSAGE_TYPE(gm) == GST_MESSAGE_ELEMENT) {
          if (m_captureMode == QCamera::CaptureStillImage &&
@@ -1742,7 +1730,7 @@ index a835b1c..6bd3682 100644
              st = gst_message_get_structure(gm);
  
              if (gst_structure_has_field_typed(st, "buffer", GST_TYPE_BUFFER)) {
-@@ -836,7 +849,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
+@@ -869,7 +882,11 @@ bool CameraBinSession::processSyncMessage(const QGstreamerMessage &message)
  
                      QImage img;
  
@@ -1754,7 +1742,7 @@ index a835b1c..6bd3682 100644
                      if (caps) {
                          GstStructure *structure = gst_caps_get_structure(caps, 0);
                          gint width = 0;
-@@ -1109,7 +1126,11 @@ QList< QPair<int,int> > CameraBinSession::supportedFrameRates(const QSize &frame
+@@ -1142,7 +1159,11 @@ QList< QPair<int,int> > CameraBinSession::supportedFrameRates(const QSize &frame
          gst_structure_remove_all_fields(structure);
          gst_structure_set_value(structure, "framerate", &rate);
      }
@@ -1766,7 +1754,7 @@ index a835b1c..6bd3682 100644
  
  
      for (uint i=0; i<gst_caps_get_size(caps); i++) {
-@@ -1229,7 +1250,11 @@ QList<QSize> CameraBinSession::supportedResolutions(QPair<int,int> rate,
+@@ -1262,7 +1283,11 @@ QList<QSize> CameraBinSession::supportedResolutions(QPair<int,int> rate,
          gst_structure_set_value(structure, "width", &w);
          gst_structure_set_value(structure, "height", &h);
      }
@@ -1836,10 +1824,10 @@ index 7649010..fce55ac 100644
  
  OTHER_FILES += \
 diff --git a/src/plugins/gstreamer/mediacapture/qgstreamercapturesession.cpp b/src/plugins/gstreamer/mediacapture/qgstreamercapturesession.cpp
-index b9114c6..97d9203 100644
+index a2bd80d..d12e9a5 100644
 --- a/src/plugins/gstreamer/mediacapture/qgstreamercapturesession.cpp
 +++ b/src/plugins/gstreamer/mediacapture/qgstreamercapturesession.cpp
-@@ -506,6 +506,11 @@ GstElement *QGstreamerCaptureSession::buildImageCapture()
+@@ -498,6 +498,11 @@ GstElement *QGstreamerCaptureSession::buildImageCapture()
      gst_pad_add_buffer_probe(pad, G_CALLBACK(passImageFilter), this);
      gst_object_unref(GST_OBJECT(pad));
  
@@ -1861,10 +1849,10 @@ index 2ca9377..b986fc7 100644
      mediaplayer.json
 -
 diff --git a/src/plugins/gstreamer/mediaplayer/qgstreamerplayercontrol.cpp b/src/plugins/gstreamer/mediaplayer/qgstreamerplayercontrol.cpp
-index 99c471b..deec236 100644
+index fed756a..8239710 100644
 --- a/src/plugins/gstreamer/mediaplayer/qgstreamerplayercontrol.cpp
 +++ b/src/plugins/gstreamer/mediaplayer/qgstreamerplayercontrol.cpp
-@@ -527,6 +527,8 @@ void QGstreamerPlayerControl::processEOS()
+@@ -537,6 +537,8 @@ void QGstreamerPlayerControl::processEOS()
          m_session->showPrerollFrames(false); // stop showing prerolled frames in stop state
      }
  
@@ -1874,10 +1862,10 @@ index 99c471b..deec236 100644
  }
  
 diff --git a/src/plugins/gstreamer/mediaplayer/qgstreamerplayerservice.cpp b/src/plugins/gstreamer/mediaplayer/qgstreamerplayerservice.cpp
-index 854da46..2fd4345 100644
+index ce267d7..062de07 100644
 --- a/src/plugins/gstreamer/mediaplayer/qgstreamerplayerservice.cpp
 +++ b/src/plugins/gstreamer/mediaplayer/qgstreamerplayerservice.cpp
-@@ -59,7 +59,11 @@
+@@ -51,7 +51,11 @@
  #include <private/qgstreamervideorenderer_p.h>
  
  #if defined(Q_WS_MAEMO_6) && defined(__arm__)
@@ -1890,7 +1878,7 @@ index 854da46..2fd4345 100644
  #endif
  
  #include "qgstreamerstreamscontrol.h"
-@@ -90,6 +94,9 @@ QGstreamerPlayerService::QGstreamerPlayerService(QObject *parent):
+@@ -82,6 +86,9 @@ QGstreamerPlayerService::QGstreamerPlayerService(QObject *parent):
  
  #if defined(Q_WS_MAEMO_6) && defined(__arm__)
      m_videoRenderer = new QGstreamerGLTextureRenderer(this);
@@ -1901,10 +1889,10 @@ index 854da46..2fd4345 100644
      m_videoRenderer = new QGstreamerVideoRenderer(this);
  #endif
 diff --git a/src/plugins/gstreamer/mediaplayer/qgstreamerplayerserviceplugin.cpp b/src/plugins/gstreamer/mediaplayer/qgstreamerplayerserviceplugin.cpp
-index a9052ca..7968799 100644
+index 7d20b6d..bf2f9f8 100644
 --- a/src/plugins/gstreamer/mediaplayer/qgstreamerplayerserviceplugin.cpp
 +++ b/src/plugins/gstreamer/mediaplayer/qgstreamerplayerserviceplugin.cpp
-@@ -95,7 +95,11 @@ void QGstreamerPlayerServicePlugin::updateSupportedMimeTypes() const
+@@ -87,7 +87,11 @@ void QGstreamerPlayerServicePlugin::updateSupportedMimeTypes() const
      gst_init(NULL, NULL);
  
      GList *plugins, *orig_plugins;
@@ -1916,7 +1904,7 @@ index a9052ca..7968799 100644
  
      while (plugins) {
          GList *features, *orig_features;
-@@ -103,22 +107,33 @@ void QGstreamerPlayerServicePlugin::updateSupportedMimeTypes() const
+@@ -95,22 +99,33 @@ void QGstreamerPlayerServicePlugin::updateSupportedMimeTypes() const
          GstPlugin *plugin = (GstPlugin *) (plugins->data);
          plugins = g_list_next (plugins);
  
@@ -1957,10 +1945,10 @@ index a9052ca..7968799 100644
                              GstStaticPadTemplate *padtemplate = (GstStaticPadTemplate*)(pads->data);
                              pads = g_list_next (pads);
 diff --git a/src/plugins/gstreamer/mediaplayer/qgstreamerplayersession.cpp b/src/plugins/gstreamer/mediaplayer/qgstreamerplayersession.cpp
-index 87b71d7..03185a2 100644
+index 15924a6..8013d0d 100644
 --- a/src/plugins/gstreamer/mediaplayer/qgstreamerplayersession.cpp
 +++ b/src/plugins/gstreamer/mediaplayer/qgstreamerplayersession.cpp
-@@ -93,6 +93,16 @@ typedef enum {
+@@ -85,6 +85,16 @@ typedef enum {
      GST_PLAY_FLAG_BUFFERING     = 0x000000100
  } GstPlayFlags;
  
@@ -1977,7 +1965,7 @@ index 87b71d7..03185a2 100644
  #define DEFAULT_RAW_CAPS \
      "video/x-raw-yuv; " \
      "video/x-raw-rgb; " \
-@@ -105,6 +115,8 @@ typedef enum {
+@@ -97,6 +107,8 @@ typedef enum {
      "text/x-pango-markup; " \
      "video/x-dvd-subpicture; " \
      "subpicture/x-pgs"
@@ -1986,7 +1974,7 @@ index 87b71d7..03185a2 100644
  static GstStaticCaps static_RawCaps = GST_STATIC_CAPS(DEFAULT_RAW_CAPS);
  
  QGstreamerPlayerSession::QGstreamerPlayerSession(QObject *parent)
-@@ -145,8 +157,11 @@ QGstreamerPlayerSession::QGstreamerPlayerSession(QObject *parent)
+@@ -137,8 +149,11 @@ QGstreamerPlayerSession::QGstreamerPlayerSession(QObject *parent)
      gboolean result = gst_type_find_register(0, "playlist", GST_RANK_MARGINAL, playlistTypeFindFunction, 0, 0, this, 0);
      Q_ASSERT(result == TRUE);
      Q_UNUSED(result);
@@ -1999,7 +1987,7 @@ index 87b71d7..03185a2 100644
  
      if (m_playbin) {
          //GST_PLAY_FLAG_NATIVE_VIDEO omits configuration of ffmpegcolorspace and videoscale,
-@@ -196,7 +211,11 @@ QGstreamerPlayerSession::QGstreamerPlayerSession(QObject *parent)
+@@ -188,7 +203,11 @@ QGstreamerPlayerSession::QGstreamerPlayerSession(QObject *parent)
      m_videoIdentity = GST_ELEMENT(g_object_new(gst_video_connector_get_type(), 0)); // floating ref
      g_signal_connect(G_OBJECT(m_videoIdentity), "connection-failed", G_CALLBACK(insertColorSpaceElement), (gpointer)this);
  
@@ -2011,7 +1999,7 @@ index 87b71d7..03185a2 100644
      // might not get a parent, take ownership to avoid leak
      qt_gst_object_ref_sink(GST_OBJECT(m_colorSpace));
  
-@@ -214,7 +233,7 @@ QGstreamerPlayerSession::QGstreamerPlayerSession(QObject *parent)
+@@ -206,7 +225,7 @@ QGstreamerPlayerSession::QGstreamerPlayerSession(QObject *parent)
  
      // add ghostpads
      GstPad *pad = gst_element_get_static_pad(m_videoIdentity,"sink");
@@ -2020,7 +2008,7 @@ index 87b71d7..03185a2 100644
      gst_object_unref(GST_OBJECT(pad));
  
      if (m_playbin != 0) {
-@@ -226,7 +245,7 @@ QGstreamerPlayerSession::QGstreamerPlayerSession(QObject *parent)
+@@ -218,7 +237,7 @@ QGstreamerPlayerSession::QGstreamerPlayerSession(QObject *parent)
          g_object_set(G_OBJECT(m_playbin), "video-sink", m_videoOutputBin, NULL);
  
          g_signal_connect(G_OBJECT(m_playbin), "notify::source", G_CALLBACK(playbinNotifySource), this);
@@ -2029,7 +2017,7 @@ index 87b71d7..03185a2 100644
  
          if (usePlaybinVolume()) {
              updateVolume();
-@@ -350,9 +369,13 @@ qint64 QGstreamerPlayerSession::position() const
+@@ -342,9 +361,13 @@ qint64 QGstreamerPlayerSession::position() const
      GstFormat   format = GST_FORMAT_TIME;
      gint64      position = 0;
  
@@ -2044,7 +2032,7 @@ index 87b71d7..03185a2 100644
      return m_lastPosition;
  }
  
-@@ -482,9 +505,18 @@ bool QGstreamerPlayerSession::isAudioAvailable() const
+@@ -474,9 +497,18 @@ bool QGstreamerPlayerSession::isAudioAvailable() const
      return m_audioAvailable;
  }
  
@@ -2063,7 +2051,7 @@ index 87b71d7..03185a2 100644
  #ifdef DEBUG_PLAYBIN
      qDebug() << "block_pad_cb, blocked:" << blocked;
  #endif
-@@ -493,6 +525,7 @@ static void block_pad_cb(GstPad *pad, gboolean blocked, gpointer user_data)
+@@ -485,6 +517,7 @@ static void block_pad_cb(GstPad *pad, gboolean blocked, gpointer user_data)
          QGstreamerPlayerSession *session = reinterpret_cast<QGstreamerPlayerSession*>(user_data);
          QMetaObject::invokeMethod(session, "finishVideoOutputChange", Qt::QueuedConnection);
      }
@@ -2071,7 +2059,7 @@ index 87b71d7..03185a2 100644
  }
  
  void QGstreamerPlayerSession::updateVideoRenderer()
-@@ -537,7 +570,7 @@ void QGstreamerPlayerSession::setVideoRenderer(QObject *videoOutput)
+@@ -529,7 +562,7 @@ void QGstreamerPlayerSession::setVideoRenderer(QObject *videoOutput)
      m_renderer = renderer;
  
  #ifdef DEBUG_VO_BIN_DUMP
@@ -2080,7 +2068,7 @@ index 87b71d7..03185a2 100644
                                    GstDebugGraphDetails(GST_DEBUG_GRAPH_SHOW_ALL /* GST_DEBUG_GRAPH_SHOW_MEDIA_TYPE | GST_DEBUG_GRAPH_SHOW_NON_DEFAULT_PARAMS | GST_DEBUG_GRAPH_SHOW_STATES*/),
                                    "playbin_set");
  #endif
-@@ -641,7 +674,11 @@ void QGstreamerPlayerSession::setVideoRenderer(QObject *videoOutput)
+@@ -633,7 +666,11 @@ void QGstreamerPlayerSession::setVideoRenderer(QObject *videoOutput)
  
          //block pads, async to avoid locking in paused state
          GstPad *srcPad = gst_element_get_static_pad(m_videoIdentity, "src");
@@ -2092,7 +2080,7 @@ index 87b71d7..03185a2 100644
          gst_object_unref(GST_OBJECT(srcPad));
  
          //Unpause the sink to avoid waiting until the buffer is processed
-@@ -682,7 +719,11 @@ void QGstreamerPlayerSession::finishVideoOutputChange()
+@@ -674,7 +711,11 @@ void QGstreamerPlayerSession::finishVideoOutputChange()
          //video output was change back to the current one,
          //no need to torment the pipeline, just unblock the pad
          if (gst_pad_is_blocked(srcPad))
@@ -2104,7 +2092,7 @@ index 87b71d7..03185a2 100644
  
          m_pendingVideoSink = 0;
          gst_object_unref(GST_OBJECT(srcPad));
-@@ -768,12 +809,17 @@ void QGstreamerPlayerSession::finishVideoOutputChange()
+@@ -760,12 +801,17 @@ void QGstreamerPlayerSession::finishVideoOutputChange()
  
      //don't have to wait here, it will unblock eventually
      if (gst_pad_is_blocked(srcPad))
@@ -2125,7 +2113,7 @@ index 87b71d7..03185a2 100644
                                    "playbin_finish");
  #endif
  }
-@@ -838,6 +884,7 @@ bool QGstreamerPlayerSession::play()
+@@ -830,6 +876,7 @@ bool QGstreamerPlayerSession::play()
  #ifdef DEBUG_PLAYBIN
      qDebug() << Q_FUNC_INFO;
  #endif
@@ -2133,7 +2121,7 @@ index 87b71d7..03185a2 100644
      m_everPlayed = false;
      if (m_playbin) {
          m_pendingState = QMediaPlayer::PlayingState;
-@@ -1335,8 +1382,11 @@ void QGstreamerPlayerSession::getStreamsInfo()
+@@ -1327,8 +1374,11 @@ void QGstreamerPlayerSession::getStreamsInfo()
          default:
              break;
          }
@@ -2146,7 +2134,7 @@ index 87b71d7..03185a2 100644
              gchar *languageCode = 0;
              if (gst_tag_list_get_string(tags, GST_TAG_LANGUAGE_CODE, &languageCode))
                  streamProperties[QMediaMetaData::Language] = QString::fromUtf8(languageCode);
-@@ -1375,7 +1425,11 @@ void QGstreamerPlayerSession::updateVideoResolutionTag()
+@@ -1367,7 +1417,11 @@ void QGstreamerPlayerSession::updateVideoResolutionTag()
      QSize aspectRatio;
  
      GstPad *pad = gst_element_get_static_pad(m_videoIdentity, "src");
@@ -2158,7 +2146,7 @@ index 87b71d7..03185a2 100644
  
      if (caps) {
          const GstStructure *structure = gst_caps_get_structure(caps, 0);
-@@ -1419,7 +1473,11 @@ void QGstreamerPlayerSession::updateDuration()
+@@ -1411,7 +1465,11 @@ void QGstreamerPlayerSession::updateDuration()
      gint64 gstDuration = 0;
      int duration = -1;
  
@@ -2170,7 +2158,7 @@ index 87b71d7..03185a2 100644
          duration = gstDuration / 1000000;
  
      if (m_duration != duration) {
-@@ -1475,7 +1533,11 @@ void QGstreamerPlayerSession::playbinNotifySource(GObject *o, GParamSpec *p, gpo
+@@ -1467,7 +1525,11 @@ void QGstreamerPlayerSession::playbinNotifySource(GObject *o, GParamSpec *p, gpo
  
      // The rest
      if (g_object_class_find_property(G_OBJECT_GET_CLASS(source), "extra-headers") != 0) {
@@ -2182,7 +2170,7 @@ index 87b71d7..03185a2 100644
  
          foreach (const QByteArray &rawHeader, self->m_request.rawHeaderList()) {
              if (rawHeader == userAgentString) // Filter User-Agent
-@@ -1630,7 +1692,11 @@ GstAutoplugSelectResult QGstreamerPlayerSession::handleAutoplugSelect(GstBin *bi
+@@ -1623,7 +1685,11 @@ GstAutoplugSelectResult QGstreamerPlayerSession::handleAutoplugSelect(GstBin *bi
      const gchar *factoryName = gst_plugin_feature_get_name(GST_PLUGIN_FEATURE(factory));
      if (g_str_has_prefix(factoryName, "vaapi")) {
          GstPad *sinkPad = gst_element_get_static_pad(session->m_videoSink, "sink");
@@ -2194,7 +2182,7 @@ index 87b71d7..03185a2 100644
  
  #if (GST_VERSION_MAJOR == 0) && ((GST_VERSION_MINOR < 10) || (GST_VERSION_MICRO < 33))
          if (!factory_can_src_any_caps(factory, sinkCaps))
-@@ -1659,14 +1725,19 @@ void QGstreamerPlayerSession::handleElementAdded(GstBin *bin, GstElement *elemen
+@@ -1652,14 +1718,19 @@ void QGstreamerPlayerSession::handleElementAdded(GstBin *bin, GstElement *elemen
          // Disable on-disk buffering.
          g_object_set(G_OBJECT(element), "temp-template", NULL, NULL);
      } else if (g_str_has_prefix(elementName, "uridecodebin") ||
@@ -2216,7 +2204,7 @@ index 87b71d7..03185a2 100644
          }
  
          //listen for queue2 element added to uridecodebin/decodebin2 as well.
-@@ -1734,7 +1805,27 @@ void QGstreamerPlayerSession::removeProbe(QGstreamerVideoProbeControl* probe)
+@@ -1727,7 +1798,27 @@ void QGstreamerPlayerSession::removeProbe(QGstreamerVideoProbeControl* probe)
      // Assume user releases any outstanding references to video frames.
  }
  
@@ -2245,7 +2233,7 @@ index 87b71d7..03185a2 100644
  {
      Q_UNUSED(pad);
  
-@@ -1749,6 +1840,7 @@ gboolean QGstreamerPlayerSession::padVideoBufferProbe(GstPad *pad, GstBuffer *bu
+@@ -1742,6 +1833,7 @@ gboolean QGstreamerPlayerSession::padVideoBufferProbe(GstPad *pad, GstBuffer *bu
  
      return TRUE;
  }
@@ -2253,7 +2241,7 @@ index 87b71d7..03185a2 100644
  
  void QGstreamerPlayerSession::addProbe(QGstreamerAudioProbeControl* probe)
  {
-@@ -1766,6 +1858,24 @@ void QGstreamerPlayerSession::removeProbe(QGstreamerAudioProbeControl* probe)
+@@ -1759,6 +1851,24 @@ void QGstreamerPlayerSession::removeProbe(QGstreamerAudioProbeControl* probe)
      m_audioProbes.removeOne(probe);
  }
  
@@ -2278,7 +2266,7 @@ index 87b71d7..03185a2 100644
  gboolean QGstreamerPlayerSession::padAudioBufferProbe(GstPad *pad, GstBuffer *buffer, gpointer user_data)
  {
      Q_UNUSED(pad);
-@@ -1781,7 +1891,7 @@ gboolean QGstreamerPlayerSession::padAudioBufferProbe(GstPad *pad, GstBuffer *bu
+@@ -1774,7 +1884,7 @@ gboolean QGstreamerPlayerSession::padAudioBufferProbe(GstPad *pad, GstBuffer *bu
  
      return TRUE;
  }
@@ -2287,7 +2275,7 @@ index 87b71d7..03185a2 100644
  // This function is similar to stop(),
  // but does not set m_everPlayed, m_lastPosition,
  // and setSeekable() values.
-@@ -1814,7 +1924,11 @@ void QGstreamerPlayerSession::removeVideoBufferProbe()
+@@ -1807,7 +1917,11 @@ void QGstreamerPlayerSession::removeVideoBufferProbe()
  
      GstPad *pad = gst_element_get_static_pad(m_videoSink, "sink");
      if (pad) {
@@ -2299,7 +2287,7 @@ index 87b71d7..03185a2 100644
          gst_object_unref(GST_OBJECT(pad));
      }
  
-@@ -1829,7 +1943,11 @@ void QGstreamerPlayerSession::addVideoBufferProbe()
+@@ -1822,7 +1936,11 @@ void QGstreamerPlayerSession::addVideoBufferProbe()
  
      GstPad *pad = gst_element_get_static_pad(m_videoSink, "sink");
      if (pad) {
@@ -2311,7 +2299,7 @@ index 87b71d7..03185a2 100644
          gst_object_unref(GST_OBJECT(pad));
      }
  }
-@@ -1846,7 +1964,11 @@ void QGstreamerPlayerSession::removeAudioBufferProbe()
+@@ -1839,7 +1957,11 @@ void QGstreamerPlayerSession::removeAudioBufferProbe()
  
      GstPad *pad = gst_element_get_static_pad(m_audioSink, "sink");
      if (pad) {
@@ -2323,7 +2311,7 @@ index 87b71d7..03185a2 100644
          gst_object_unref(GST_OBJECT(pad));
      }
  
-@@ -1861,7 +1983,11 @@ void QGstreamerPlayerSession::addAudioBufferProbe()
+@@ -1854,7 +1976,11 @@ void QGstreamerPlayerSession::addAudioBufferProbe()
  
      GstPad *pad = gst_element_get_static_pad(m_audioSink, "sink");
      if (pad) {
@@ -2335,7 +2323,7 @@ index 87b71d7..03185a2 100644
          gst_object_unref(GST_OBJECT(pad));
      }
  }
-@@ -1894,7 +2020,7 @@ void QGstreamerPlayerSession::playlistTypeFindFunction(GstTypeFind *find, gpoint
+@@ -1887,7 +2013,7 @@ void QGstreamerPlayerSession::playlistTypeFindFunction(GstTypeFind *find, gpoint
          length = qMin(length, guint64(1024));
  
      while (length > 0) {
@@ -2345,10 +2333,10 @@ index 87b71d7..03185a2 100644
              session->m_isPlaylist = (QPlaylistFileParser::findPlaylistType(QString::fromUtf8(uri), 0, data, length) != QPlaylistFileParser::UNKNOWN);
              return;
 diff --git a/src/plugins/gstreamer/mediaplayer/qgstreamerplayersession.h b/src/plugins/gstreamer/mediaplayer/qgstreamerplayersession.h
-index 23e7031..707779b 100644
+index f2e760a..50bda3d 100644
 --- a/src/plugins/gstreamer/mediaplayer/qgstreamerplayersession.h
 +++ b/src/plugins/gstreamer/mediaplayer/qgstreamerplayersession.h
-@@ -127,11 +127,19 @@ public:
+@@ -119,11 +119,19 @@ public:
  
      void addProbe(QGstreamerVideoProbeControl* probe);
      void removeProbe(QGstreamerVideoProbeControl* probe);
@@ -2368,7 +2356,7 @@ index 23e7031..707779b 100644
  
      void endOfMediaReset();
  
-@@ -260,6 +268,7 @@ private:
+@@ -252,6 +260,7 @@ private:
      bool m_isLiveSource;
  
      bool m_isPlaylist;
@@ -2377,5 +2365,5 @@ index 23e7031..707779b 100644
  
  QT_END_NAMESPACE
 -- 
-2.1.1
+2.1.3
 

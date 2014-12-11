@@ -1,7 +1,7 @@
-From 7c16b57ecdddffb4bb52d32bb763791fd8aa8414 Mon Sep 17 00:00:00 2001
+From 8e152449beb18454347cfdb300c50d113fa48383 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 19 Mar 2014 18:32:28 +0100
-Subject: [PATCH 07/13] qeglplatformintegration: Undefine CursorShape from X.h
+Subject: [PATCH 07/11] qeglplatformintegration: Undefine CursorShape from X.h
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
@@ -9,11 +9,11 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/src/platformsupport/eglconvenience/qeglplatformintegration_p.h b/src/platformsupport/eglconvenience/qeglplatformintegration_p.h
-index f665455..9eb783c 100644
+index 4d7adce..c9b6873 100644
 --- a/src/platformsupport/eglconvenience/qeglplatformintegration_p.h
 +++ b/src/platformsupport/eglconvenience/qeglplatformintegration_p.h
-@@ -46,6 +46,12 @@
- #include <qpa/qplatformnativeinterface.h>
+@@ -50,6 +50,12 @@
+ #include <QtCore/QVariant>
  #include <EGL/egl.h>
  
 +// Undefine CursorShape from X.h, which is causing breakage in Qt::CursorShape in platformsupport/eglconvenience/
@@ -26,5 +26,5 @@ index f665455..9eb783c 100644
  
  class QEGLPlatformScreen;
 -- 
-2.1.1
+2.1.3
 

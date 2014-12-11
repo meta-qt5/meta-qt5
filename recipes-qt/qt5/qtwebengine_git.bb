@@ -1,11 +1,6 @@
 require qt5-git.inc
 require ${PN}.inc
 
-LIC_FILES_CHKSUM = " \
-  file://src/core/browser_context_qt.cpp;md5=91895ac1852e1b07202d9716194e8dd8;beginline=1;endline=35 \
-  file://src/3rdparty/chromium/LICENSE;md5=537e0b52077bf0a616d0a0c8a79bc9d5 \
-"
-
 QT_MODULE_BRANCH = "5.4"
 QT_MODULE_BRANCH_CHROMIUM = "37.0.2062-based"
 
@@ -20,3 +15,5 @@ SRCREV_chromium = "66388297cf2ca42049fb099237134ec33465e2f5"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine"
+
+S = "${WORKDIR}/git"

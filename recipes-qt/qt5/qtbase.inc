@@ -11,13 +11,12 @@ SRC_URI += "\
     file://0007-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
     file://0008-configure-bump-path-length-from-256-to-512-character.patch \
     file://0009-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
-    file://0010-Revert-Use-the-gcc-feature-in-simd.prf.patch \
-    file://0011-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0010-QOpenGLPaintDevice-sub-area-support.patch \
 "
 
 # specific for qtbase
 SRC_URI += "\
-    file://0012-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
+    file://0011-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
 "
 
 DEPENDS += "qtbase-native"
