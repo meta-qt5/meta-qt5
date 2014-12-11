@@ -9,6 +9,7 @@ SRC_URI += " \
     file://0001-functions.prf-Don-t-match-QMAKE_EXT_CPP-or-QMAKE_EXT.patch \
     file://0002-functions.prf-Make-sure-we-only-use-the-file-name-to.patch \
     file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
+    file://0001-chromium-base.gypi-include-atomicops_internals_x86_gcc.cc-whe.patch \
 "
 SRCREV_qtwebengine = "8eefc3a0658d1b10de12f43534cfd63af825ebc8"
 SRCREV_chromium = "be4ec3fa64a4c6c2b641830a9811ab7847c7dd39"
