@@ -1,5 +1,5 @@
 # Select which version you prefer by defining QT5_VERSION and including this file
-# possible values now "5.4.0", "5.3.99+5.4.0-rc1+git%"
+# possible values now "5.4.0", "5.4.0+git%"
 
 QT5_VERSION ?= "5.4.0"
 

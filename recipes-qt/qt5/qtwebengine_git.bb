@@ -10,8 +10,8 @@ SRC_URI += " \
     file://0002-functions.prf-Make-sure-we-only-use-the-file-name-to.patch \
     file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
 "
-SRCREV_qtwebengine = "ff47f09a94a0a31edd40500985ff670e8f35cc2c"
-SRCREV_chromium = "66388297cf2ca42049fb099237134ec33465e2f5"
+SRCREV_qtwebengine = "8eefc3a0658d1b10de12f43534cfd63af825ebc8"
+SRCREV_chromium = "be4ec3fa64a4c6c2b641830a9811ab7847c7dd39"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine"

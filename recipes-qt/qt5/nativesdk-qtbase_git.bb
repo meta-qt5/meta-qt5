@@ -37,4 +37,4 @@ SRC_URI += " \
     file://OEQt5Toolchain.cmake \
 "
 
-SRCREV = "cc23ebace8b7f343aca6e10f9ebd31b87c17c782"
+SRCREV = "47326b9c5c38fea39f8539f50f32667d2c391b70"
