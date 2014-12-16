@@ -7,8 +7,6 @@ require qt5.inc
 XKB_DEPENDS = "libxkbcommon xproto"
 DEPENDS += "qtbase qtdeclarative wayland wayland-native qtwayland-native ${XKB_DEPENDS}"
 
-EXTRA_QMAKEVARS_POST += "CONFIG-=create_cmake"
-
 QT_WAYLAND_CONFIG ?= "wayland-compositor"
 QT_WAYLAND_DEFINES ?= ""
 QT_WAYLAND_BUILD_PARTS ?= "examples"
