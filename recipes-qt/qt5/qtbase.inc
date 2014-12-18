@@ -12,6 +12,7 @@ SRC_URI += "\
     file://0008-configure-bump-path-length-from-256-to-512-character.patch \
     file://0009-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
     file://0010-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0013-Make-Qt5GuiConfigExtras.cmake-find-gl-es-include-dir.patch \
 "
 
 # specific for qtbase
