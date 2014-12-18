@@ -1321,7 +1321,7 @@ index 81d5f60..51c4107 100644
 +#if GST_CHECK_VERSION(1,0,0)
 +                    "format"   , G_TYPE_STRING, gst_video_format_to_string(qt_yuvColorLookup[index].vfmt),
 +#else
-+                    "format"   , G_TYPE_STRING, qt_yuvColorLookup[index].fourcc,
++                    "format"   , GST_TYPE_FOURCC, qt_yuvColorLookup[index].fourcc,
 +#endif
                      NULL));
              continue;
