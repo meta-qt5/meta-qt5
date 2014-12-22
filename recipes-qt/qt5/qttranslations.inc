@@ -7,21 +7,21 @@ LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=4193e7f1d47a858f6b7c0f1ee66161de \
                     file://LICENSE.GPL;md5=d32239bcb673463ab874e80d47fae504 \
                     file://LGPL_EXCEPTION.txt;md5=0145c4d1b6f96a661c2c139dfb268fb6"
 
-PACKAGES =. "${PN}-translations-assistant \
-             ${PN}-translations-designer \
-             ${PN}-translations-linguist \
-             ${PN}-translations-qmlviewer \
-             ${PN}-translations-qtconnectivity \
-             ${PN}-translations-qtmultimedia \
-             ${PN}-translations-qtlocation \
-             ${PN}-translations-qtdeclarative \
-             ${PN}-translations-qtxmlpatterns \
-             ${PN}-translations-qtconfig \
-             ${PN}-translations-qtquick1 \
-             ${PN}-translations-qtscript \
-             ${PN}-translations-qtbase \
-             ${PN}-translations-qthelp \
-             ${PN}-translations-qt \
+PACKAGES =. "${PN}-assistant \
+             ${PN}-designer \
+             ${PN}-linguist \
+             ${PN}-qmlviewer \
+             ${PN}-qtconnectivity \
+             ${PN}-qtmultimedia \
+             ${PN}-qtlocation \
+             ${PN}-qtdeclarative \
+             ${PN}-qtxmlpatterns \
+             ${PN}-qtconfig \
+             ${PN}-qtquick1 \
+             ${PN}-qtscript \
+             ${PN}-qtbase \
+             ${PN}-qthelp \
+             ${PN}-qt \
              "
 
 FILES_${PN}-translations-assistant = " \
