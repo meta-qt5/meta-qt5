@@ -1,0 +1,29 @@
+From b36aeace50dc429cccbb9b84a6e538ebcd12ade9 Mon Sep 17 00:00:00 2001
+From: Simon Busch <morphis@gravedo.de>
+Date: Tue, 18 Nov 2014 10:38:18 +0100
+Subject: [PATCH 2/3] functions.prf: Make sure we only use the file name to
+ generate it's moc'ed abbreviation
+
+Signed-off-by: Simon Busch <morphis@gravedo.de>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ tools/qmake/mkspecs/features/functions.prf | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tools/qmake/mkspecs/features/functions.prf b/tools/qmake/mkspecs/features/functions.prf
+index 08b2642..0123336 100644
+--- a/tools/qmake/mkspecs/features/functions.prf
++++ b/tools/qmake/mkspecs/features/functions.prf
+@@ -82,7 +82,8 @@ defineReplace(findIncludedMocFiles) {
+ }
+ 
+ defineReplace(mocOutput) {
+-  out = $$1
++  in = $$1
++  out = $$basename(in)
+   # The order is important, since the output of the second replace would end up accidentaly transformed by the first one
+   out = $$replace(out, ^(.*)($$join(QMAKE_EXT_CPP,|))$, $${QMAKE_CPP_MOD_MOC}\\1$${QMAKE_EXT_CPP_MOC})
+   out = $$replace(out, ^(.*)($$join(QMAKE_EXT_H,|))$, $${QMAKE_H_MOD_MOC}\\1$${first(QMAKE_EXT_CPP)})
+-- 
+2.1.3
+

@@ -1,4 +1,4 @@
-From 271db04ebfbaf67e2e8c30ff050510c5a42acfa4 Mon Sep 17 00:00:00 2001
+From d48323aae1bee4b2398d61e1777815ffac15ccce Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 16 Nov 2013 00:32:30 +0100
 Subject: [PATCH 11/12] Always build uic
@@ -14,10 +14,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/src.pro b/src/src.pro
-index 6a805a6..90623a6 100644
+index 81f4fa5..74ec23d 100644
 --- a/src/src.pro
 +++ b/src/src.pro
-@@ -158,7 +158,7 @@ contains(QT_CONFIG, concurrent):SUBDIRS += src_concurrent
+@@ -162,7 +162,7 @@ contains(QT_CONFIG, concurrent):SUBDIRS += src_concurrent
          }
      }
  }
@@ -27,5 +27,5 @@ index 6a805a6..90623a6 100644
  nacl: SUBDIRS -= src_network src_testlib
  
 -- 
-2.0.0
+2.1.3
 

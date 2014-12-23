@@ -1,7 +1,7 @@
-From 6d1123116233e55c4ade13378eec41fb7441cec6 Mon Sep 17 00:00:00 2001
+From 621d867223a135a9babd452d4918200bc6d0463b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 5 Feb 2014 18:35:08 +0100
-Subject: [PATCH 09/12] eglfs: fix egl error for platforms only supporting one
+Subject: [PATCH 09/11] eglfs: fix egl error for platforms only supporting one
  window/surface
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -27,10 +27,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/src/plugins/platforms/eglfs/qeglfswindow.cpp b/src/plugins/platforms/eglfs/qeglfswindow.cpp
-index 2d36c0b..854531e 100644
+index f5839e0..5ebde6d 100644
 --- a/src/plugins/platforms/eglfs/qeglfswindow.cpp
 +++ b/src/plugins/platforms/eglfs/qeglfswindow.cpp
-@@ -74,6 +74,15 @@ void QEglFSWindow::create()
+@@ -66,6 +66,15 @@ void QEglFSWindow::create()
  
      m_flags = Created;
  
@@ -46,16 +46,16 @@ index 2d36c0b..854531e 100644
      if (window()->type() == Qt::Desktop)
          return;
  
-@@ -85,7 +94,7 @@ void QEglFSWindow::create()
-         if (isRaster() && screen->compositingWindow())
+@@ -79,7 +88,7 @@ void QEglFSWindow::create()
              return;
+         }
  
 -#if !defined(Q_OS_ANDROID) || defined(Q_OS_ANDROID_NO_SDK)
 +#if !defined(Q_OS_ANDROID) || defined(Q_OS_ANDROID_NO_SDK) || defined(EGL_API_FB)
          // We can have either a single OpenGL window or multiple raster windows.
          // Other combinations cannot work.
          qFatal("EGLFS: OpenGL windows cannot be mixed with others.");
-@@ -105,6 +114,11 @@ void QEglFSWindow::create()
+@@ -99,6 +108,11 @@ void QEglFSWindow::create()
  
      resetSurface();
  
@@ -68,5 +68,5 @@ index 2d36c0b..854531e 100644
  
      if (isRaster()) {
 -- 
-2.0.0
+2.1.3
 

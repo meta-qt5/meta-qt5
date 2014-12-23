@@ -19,18 +19,22 @@ SRC_URI += "\
     file://0007-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
     file://0008-configure-bump-path-length-from-256-to-512-character.patch \
     file://0009-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
-    file://0010-Revert-Use-the-gcc-feature-in-simd.prf.patch \
-    file://0011-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0010-QOpenGLPaintDevice-sub-area-support.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
     file://0011-Always-build-uic.patch \
-"    
+"
 
 # specific for nativesdk-qtbase
 SRC_URI += " \
     file://0012-configure-preserve-built-qmake-and-swap-with-native-.patch \
 "
 
-SRCREV = "7a4dcbaabf037a6913a5662ebb74cc47e04673b9"
+# CMake's toolchain configuration of nativesdk-qtbase
+SRC_URI += " \
+    file://OEQt5Toolchain.cmake \
+"
+
+SRCREV = "47326b9c5c38fea39f8539f50f32667d2c391b70"

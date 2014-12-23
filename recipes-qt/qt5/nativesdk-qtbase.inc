@@ -21,8 +21,7 @@ SRC_URI += "\
     file://0007-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
     file://0008-configure-bump-path-length-from-256-to-512-character.patch \
     file://0009-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
-    file://0010-Revert-Use-the-gcc-feature-in-simd.prf.patch \
-    file://0011-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0010-QOpenGLPaintDevice-sub-area-support.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
@@ -33,6 +32,11 @@ SRC_URI += " \
 # specific for nativesdk-qtbase
 SRC_URI += " \
     file://0012-configure-preserve-built-qmake-and-swap-with-native-.patch \
+"
+
+# CMake's toolchain configuration of nativesdk-qtbase
+SRC_URI += " \
+    file://OEQt5Toolchain.cmake \
 "
 
 PACKAGES = "${PN}-tools-dbg ${PN}-tools-dev ${PN}-tools-staticdev ${PN}-tools"
@@ -57,6 +61,8 @@ FILES_${PN}-tools-dbg = " \
 FILES_${PN}-tools = " \
     ${libdir}/lib*${SOLIBS} \
     ${OE_QMAKE_PATH_BINS}/* \
+    ${SDKPATHNATIVE}/environment-setup.d \
+    ${datadir}/cmake \
 "
 
 # qttools binaries are placed in a subdir of bin in order to avoid
@@ -142,7 +148,6 @@ do_configure() {
     fi
 
     ${S}/configure -v \
-        -dont-process \
         -opensource -confirm-license \
         -sysroot ${STAGING_DIR_NATIVE} \
         -no-gcc-sysroot \
@@ -194,6 +199,16 @@ do_configure() {
     bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} ${S} -o Makefile || die "Configuring qt with qmake failed. EXTRA_OECONF was ${EXTRA_OECONF}"
 }
 
+# Set the EXTRA_QTLIB variable to e.g. Xml, in order to not remove libQt5Xml.so.*
+EXTRA_QTLIB ?= ""
+
+python __anonymous () {
+    templibs = ""
+    for e in d.getVar("EXTRA_QTLIB", True).split():
+        templibs = "%s -not -name 'libQt5%s.so*' -and" % (templibs, e)
+    d.setVar("QTLIBSPRESERVE", templibs)
+}
+
 do_install() {
     # Fix install paths for all
     find -name "Makefile*" | xargs sed -i "s,(INSTALL_ROOT)${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE},(INSTALL_ROOT)${STAGING_DIR_NATIVE},g"
@@ -216,6 +231,41 @@ do_install() {
            ${D}${libdir}/pkgconfig
     find ${D}${libdir} -maxdepth 1 -name 'lib*' -and \
                                    -not -name 'libQt5Core.so*' -and \
+                                   ${QTLIBSPRESERVE} \
                                    -not -name 'libQt5Bootstrap.a' \
                                    -exec rm '{}' ';'
+
+    # Install CMake's toolchain configuration
+    mkdir -p ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
+    install -m 644 ${WORKDIR}/OEQt5Toolchain.cmake ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
 }
+
+do_generate_qt_environment_file() {
+    mkdir -p ${D}${SDKPATHNATIVE}/environment-setup.d/
+    script=${D}${SDKPATHNATIVE}/environment-setup.d/qt5.sh
+
+    echo 'export PATH=${OE_QMAKE_PATH_HOST_BINS}:$PATH' > $script
+    echo 'export OE_QMAKE_CFLAGS="$CFLAGS"' >> $script
+    echo 'export OE_QMAKE_CXXFLAGS="$CXXFLAGS"' >> $script
+    echo 'export OE_QMAKE_LDFLAGS="$LDFLAGS"' >> $script
+    echo 'export OE_QMAKE_CC=$CC' >> $script
+    echo 'export OE_QMAKE_CXX=$CXX' >> $script
+    echo 'export OE_QMAKE_LINK=$CXX' >> $script
+    echo 'export OE_QMAKE_AR=$AR' >> $script
+    echo 'export QT_CONF_PATH=${OE_QMAKE_PATH_HOST_BINS}/qt.conf' >> $script
+    echo 'export OE_QMAKE_LIBDIR_QT=`qmake -query QT_INSTALL_LIBS`' >> $script
+    echo 'export OE_QMAKE_INCDIR_QT=`qmake -query QT_INSTALL_HEADERS`' >> $script
+    echo 'export OE_QMAKE_MOC=${OE_QMAKE_PATH_HOST_BINS}/moc' >> $script
+    echo 'export OE_QMAKE_UIC=${OE_QMAKE_PATH_HOST_BINS}/uic' >> $script
+    echo 'export OE_QMAKE_RCC=${OE_QMAKE_PATH_HOST_BINS}/rcc' >> $script
+    echo 'export OE_QMAKE_QDBUSCPP2XML=${OE_QMAKE_PATH_HOST_BINS}/qdbuscpp2xml' >> $script
+    echo 'export OE_QMAKE_QDBUSXML2CPP=${OE_QMAKE_PATH_HOST_BINS}/qdbusxml2cpp' >> $script
+    echo 'export OE_QMAKE_QT_CONFIG=`qmake -query QT_INSTALL_LIBS`/${QT_DIR_NAME}/mkspecs/qconfig.pri' >> $script
+    echo 'export OE_QMAKE_PATH_HOST_BINS=${OE_QMAKE_PATH_HOST_BINS}' >> $script
+    echo 'export QMAKESPEC=`qmake -query QT_INSTALL_LIBS`/${QT_DIR_NAME}/mkspecs/linux-oe-g++' >> $script
+
+    # Use relocable sysroot
+    sed -i -e 's:${SDKPATHNATIVE}:$OECORE_NATIVE_SYSROOT:g' $script
+}
+
+addtask generate_qt_environment_file after do_install before do_package

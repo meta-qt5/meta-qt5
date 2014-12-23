@@ -1,0 +1,88 @@
+From a5a0646f185a8062f6d257afba37f589a223b058 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
+Date: Sun, 26 May 2013 14:26:19 +0200
+Subject: [PATCH] qmltestexample: fix link
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+else we get :
+ld: warning: libQt5Quick.so.5, needed by libQt5QuickTest.so, not found
+
+Upstream-Status: Inappropriate
+
+Change-Id: I63088ff73bec6a8559dfae132f8bd40b62487450
+Signed-off-by: Eric Bénard <eric@eukrea.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ examples/qmltest/qmltest/qmltest.pro         | 2 +-
+ tests/auto/qml/qjsengine/qjsengine.pro       | 2 +-
+ tests/auto/qml/qtqmlmodules/qtqmlmodules.pro | 2 +-
+ tests/auto/qmltest/qmltest.pro               | 1 +
+ tools/qmltestrunner/qmltestrunner.pro        | 2 +-
+ 5 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/examples/qmltest/qmltest/qmltest.pro b/examples/qmltest/qmltest/qmltest.pro
+index b5893c5..1b00e6c 100644
+--- a/examples/qmltest/qmltest/qmltest.pro
++++ b/examples/qmltest/qmltest/qmltest.pro
+@@ -14,7 +14,7 @@ TESTDATA += tst_basic.qml tst_item.qml
+ # This code exists solely for the purpose of building this example
+ # inside the examples/ hierarchy.
+ 
+-QT += qml qmltest
++QT += qml qmltest quick
+ 
+ macx: CONFIG -= app_bundle
+ 
+diff --git a/tests/auto/qml/qjsengine/qjsengine.pro b/tests/auto/qml/qjsengine/qjsengine.pro
+index fc2452c..919710f 100644
+--- a/tests/auto/qml/qjsengine/qjsengine.pro
++++ b/tests/auto/qml/qjsengine/qjsengine.pro
+@@ -1,7 +1,7 @@
+ CONFIG += testcase
+ CONFIG += parallel_test
+ TARGET = tst_qjsengine
+-QT +=  qml qml-private widgets testlib gui-private
++QT +=  qml qml-private widgets testlib gui-private quick
+ macx:CONFIG -= app_bundle
+ SOURCES += tst_qjsengine.cpp
+ RESOURCES += qjsengine.qrc
+diff --git a/tests/auto/qml/qtqmlmodules/qtqmlmodules.pro b/tests/auto/qml/qtqmlmodules/qtqmlmodules.pro
+index c6d442e..3181dcd 100644
+--- a/tests/auto/qml/qtqmlmodules/qtqmlmodules.pro
++++ b/tests/auto/qml/qtqmlmodules/qtqmlmodules.pro
+@@ -8,5 +8,5 @@ macx:CONFIG -= app_bundle
+ 
+ TESTDATA = data/*
+ 
+-QT += core-private  qml-private testlib gui gui-private
++QT += core-private  qml-private testlib gui gui-private quick
+ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
+diff --git a/tests/auto/qmltest/qmltest.pro b/tests/auto/qmltest/qmltest.pro
+index 7662cb1..a8f8ae2 100644
+--- a/tests/auto/qmltest/qmltest.pro
++++ b/tests/auto/qmltest/qmltest.pro
+@@ -4,6 +4,7 @@ CONFIG += qmltestcase
+ CONFIG += console
+ SOURCES += tst_qmltest.cpp
+ 
++QT += quick
+ 
+ importFiles.files = borderimage  buttonclick  createbenchmark  events  qqmlbinding selftests
+ 
+diff --git a/tools/qmltestrunner/qmltestrunner.pro b/tools/qmltestrunner/qmltestrunner.pro
+index 1bb913e..56f2dd5 100644
+--- a/tools/qmltestrunner/qmltestrunner.pro
++++ b/tools/qmltestrunner/qmltestrunner.pro
+@@ -1,6 +1,6 @@
+ SOURCES += main.cpp
+ 
+-QT += qml qmltest
++QT += qml qmltest quick
+ CONFIG += no_import_scan
+ 
+ load(qt_tool)
+-- 
+2.1.3
+

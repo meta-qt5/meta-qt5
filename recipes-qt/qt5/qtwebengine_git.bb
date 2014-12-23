@@ -1,26 +1,20 @@
 require qt5-git.inc
 require ${PN}.inc
 
-# QtWebEngine has it's own version format currently and doesn't follow the major Qt
-# versions (but it's release are at the same time as of major Qt releases). We're tracking
-# the master branch which will lead to 1.0 when Qt 5.4 is released here.
-PV = "0.9.99+git${SRCPV}"
+QT_MODULE_BRANCH = "5.4"
+QT_MODULE_BRANCH_CHROMIUM = "37.0.2062-based"
 
-QT_MODULE_BRANCH = "master"
-
-# For now we have to define SRC_URI here again as qt5-git.inc points to
-# qt.gitorious.org/qt/ but qtwebengine is still on qt.gitorious.org/qt-labs/ which will
-# switch soon.
-SRC_URI = " \
-    git://gitorious.org/qt-labs/qtwebengine.git;name=qtwebengine;protocol=git;branch=${QT_MODULE_BRANCH} \
-    git://gitorious.org/qt-labs/chromium.git;name=chromium;protocol=git;branch=${QT_MODULE_BRANCH};destsuffix=git/src/3rdparty \
-    file://0001-Use-ninja-supplied-by-environment-variable-NINJA_PAT.patch \
-    file://0002-functions.prf-Don-t-match-QMAKE_EXT_CPP-or-QMAKE_EXT.patch \
-    file://0003-functions.prf-Try-to-add-_moc-suffix.patch \
-    file://0001-chromium-Drop-build-time-only-dependency-on-x11-libr.patch \
-    file://0002-chromium-Strip-unwanted-echo-compiling-prefix-from-C.patch \
+SRC_URI += " \
+    git://gitorious.org/qt/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};destsuffix=git/src/3rdparty \
+    file://0001-functions.prf-Don-t-match-QMAKE_EXT_CPP-or-QMAKE_EXT.patch \
+    file://0002-functions.prf-Make-sure-we-only-use-the-file-name-to.patch \
+    file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
+    file://0001-chromium-base.gypi-include-atomicops_internals_x86_gcc.cc-whe.patch \
 "
-SRCREV_qtwebengine = "21f6ce84ecca9a4ff2aa980b21d2e5174c78d14b"
-SRCREV_chromium = "1f3cc8c2618979b557d60ef1ad984a49dca83bff"
+SRCREV_qtwebengine = "8eefc3a0658d1b10de12f43534cfd63af825ebc8"
+SRCREV_chromium = "be4ec3fa64a4c6c2b641830a9811ab7847c7dd39"
+SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine"
+
+S = "${WORKDIR}/git"

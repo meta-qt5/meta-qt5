@@ -1,7 +1,7 @@
-From b544f5f3462e2981ada045a32038b7f116f8590c Mon Sep 17 00:00:00 2001
+From f2d51e50a7fbdf485696d1b8b2d29e64c729c76b Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 03/12] Add -external-hostbindir option
+Subject: [PATCH 03/11] Add -external-hostbindir option
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -28,20 +28,20 @@ Signed-off-by: Jonathan Liu <net147@gmail.com>
  mkspecs/features/qt_functions.prf           |  6 +++++-
  mkspecs/features/qt_tool.prf                |  4 ++--
  qmake/property.cpp                          |  1 +
- qtbase.pro                                  | 14 +++++++++++---
+ qtbase.pro                                  | 13 ++++++++++---
  src/corelib/Qt5CoreConfigExtras.cmake.in    |  6 +++---
  src/corelib/global/qlibraryinfo.cpp         |  3 ++-
  src/corelib/global/qlibraryinfo.h           |  1 +
  src/dbus/Qt5DBusConfigExtras.cmake.in       |  4 ++--
  src/widgets/Qt5WidgetsConfigExtras.cmake.in |  2 +-
  tools/configure/configureapp.cpp            |  8 ++++++++
- 11 files changed, 51 insertions(+), 13 deletions(-)
+ 11 files changed, 50 insertions(+), 13 deletions(-)
 
 diff --git a/configure b/configure
-index d5c2b08..dcd066c 100755
+index b7a6fe3..d715f6c 100755
 --- a/configure
 +++ b/configure
-@@ -759,6 +759,7 @@ QT_HOST_BINS=
+@@ -769,6 +769,7 @@ QT_HOST_BINS=
  QT_HOST_LIBS=
  QT_HOST_DATA=
  QT_EXT_PREFIX=
@@ -49,7 +49,7 @@ index d5c2b08..dcd066c 100755
  
  #flags for SQL drivers
  QT_CFLAGS_PSQL=
-@@ -878,6 +879,7 @@ while [ "$#" -gt 0 ]; do
+@@ -888,6 +889,7 @@ while [ "$#" -gt 0 ]; do
      -testsdir| \
      -hostdatadir| \
      -hostbindir| \
@@ -57,7 +57,7 @@ index d5c2b08..dcd066c 100755
      -hostlibdir| \
      -extprefix| \
      -sysroot| \
-@@ -1092,6 +1094,9 @@ while [ "$#" -gt 0 ]; do
+@@ -1102,6 +1104,9 @@ while [ "$#" -gt 0 ]; do
      extprefix)
          QT_EXT_PREFIX="$VAL"
          ;;
@@ -67,7 +67,7 @@ index d5c2b08..dcd066c 100755
      pkg-config)
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_PKGCONFIG="$VAL"
-@@ -2230,6 +2235,10 @@ Installation options:
+@@ -2265,6 +2270,10 @@ Installation options:
      -hostdatadir <dir> . Data used by qmake will be installed to <dir>
                           (default HOSTPREFIX)
  
@@ -78,7 +78,7 @@ index d5c2b08..dcd066c 100755
  Configure options:
  
   The defaults (*) are usually acceptable. A plus (+) denotes a default value
-@@ -2897,6 +2906,11 @@ fi
+@@ -2944,6 +2953,11 @@ fi
  # command line and environment validation
  #-------------------------------------------------------------------------------
  
@@ -90,7 +90,7 @@ index d5c2b08..dcd066c 100755
  # update QT_CONFIG to show our current predefined configuration
  CFG_QCONFIG_PATH=$relpath/src/corelib/global/qconfig-${CFG_QCONFIG}.h
  case "$CFG_QCONFIG" in
-@@ -3577,6 +3591,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
+@@ -3644,6 +3658,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
      "qt_hbinpath=$QT_HOST_BINS",
      "qt_hlibpath=$QT_HOST_LIBS",
      "qt_hdatpath=$QT_HOST_DATA",
@@ -99,10 +99,10 @@ index d5c2b08..dcd066c 100755
      "qt_hostspec=$shortspec",
  #endif
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 9a4d80e..dfc1cff 100644
+index a9a622d..b6f1db0 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -193,7 +193,11 @@ defineTest(qtAddRpathLink) {
+@@ -191,7 +191,11 @@ defineTest(qtAddRpathLink) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
      isEmpty(cmd) {
@@ -134,10 +134,10 @@ index 1d3e88c..9b26adf 100644
  
      !host_build|!force_bootstrap: MODULE_DEPENDS = $$replace(QT, -private$, _private)
 diff --git a/qmake/property.cpp b/qmake/property.cpp
-index e50485c..71291ad 100644
+index 051e056..50da6ed 100644
 --- a/qmake/property.cpp
 +++ b/qmake/property.cpp
-@@ -75,6 +75,7 @@ static const struct {
+@@ -67,6 +67,7 @@ static const struct {
      { "QT_HOST_DATA", QLibraryInfo::HostDataPath, true },
      { "QT_HOST_BINS", QLibraryInfo::HostBinariesPath, true },
      { "QT_HOST_LIBS", QLibraryInfo::HostLibrariesPath, true },
@@ -146,10 +146,10 @@ index e50485c..71291ad 100644
      { "QMAKE_XSPEC", QLibraryInfo::TargetSpecPath, true },
  };
 diff --git a/qtbase.pro b/qtbase.pro
-index d6861cf..7fb58a3 100644
+index 6d0de44..ddf7478 100644
 --- a/qtbase.pro
 +++ b/qtbase.pro
-@@ -69,18 +69,26 @@ CONFIG -= qt
+@@ -69,18 +69,25 @@ CONFIG -= qt
  
  ### installations ####
  
@@ -159,7 +159,7 @@ index d6861cf..7fb58a3 100644
  qmake.path = $$[QT_HOST_BINS]
 +qmake.files = $$OUT_PWD/bin/qmake
 +!isEmpty(QT_EXTERNAL_HOST_BINS) {
-+   qmake.files = $$[QT_EXTERNAL_HOST_BINS]/bin/qmake
++   qmake.files = $$[QT_EXTERNAL_HOST_BINS]/qmake
 +}
  equals(QMAKE_HOST.os, Windows) {
 -   qmake.files = $$OUT_PWD/bin/qmake.exe
@@ -172,9 +172,8 @@ index d6861cf..7fb58a3 100644
  #syncqt
  syncqt.path = $$[QT_HOST_BINS]
  syncqt.files = $$PWD/bin/syncqt.pl
-+syncqt.files = $$PWD/bin/syncqt.pl
 +!isEmpty(QT_EXTERNAL_HOST_BINS) {
-+   syncqt.files = $$[QT_EXTERNAL_HOST_BINS]/bin/syncqt.pl
++   syncqt.files = $$[QT_EXTERNAL_HOST_BINS]/syncqt.pl
 +}
  INSTALLS += syncqt
  
@@ -211,10 +210,10 @@ index 9bda70e..6e3605a 100644
      _qt5_Core_check_file_exists(${imported_location})
  
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index 174c1d0..1fe03cb 100644
+index d68c51b..7191159 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
-@@ -333,7 +333,7 @@ QLibraryInfo::isDebugBuild()
+@@ -349,7 +349,7 @@ QLibraryInfo::isDebugBuild()
   */
  
  static const struct {
@@ -223,7 +222,7 @@ index 174c1d0..1fe03cb 100644
  } qtConfEntries[] = {
      { "Prefix", "." },
      { "Documentation", "doc" }, // should be ${Data}/doc
-@@ -359,6 +359,7 @@ static const struct {
+@@ -375,6 +375,7 @@ static const struct {
      { "HostBinaries", "bin" },
      { "HostLibraries", "lib" },
      { "HostData", "." },
@@ -232,10 +231,10 @@ index 174c1d0..1fe03cb 100644
      { "HostSpec", "" },
  #endif
 diff --git a/src/corelib/global/qlibraryinfo.h b/src/corelib/global/qlibraryinfo.h
-index 0b573c2..b5535ee 100644
+index 543c4b3..a02e03a 100644
 --- a/src/corelib/global/qlibraryinfo.h
 +++ b/src/corelib/global/qlibraryinfo.h
-@@ -88,6 +88,7 @@ public:
+@@ -80,6 +80,7 @@ public:
          HostBinariesPath,
          HostLibrariesPath,
          HostDataPath,
@@ -279,10 +278,10 @@ index 99d87e2..5621dc0 100644
      _qt5_Widgets_check_file_exists(${imported_location})
  
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index b756509..7e61845 100644
+index 92422c2..d0a62c8 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
-@@ -1213,6 +1213,13 @@ void Configure::parseCmdLine()
+@@ -1191,6 +1191,13 @@ void Configure::parseCmdLine()
              dictionary[ "QT_EXT_PREFIX" ] = configCmdLine.at(i);
          }
  
@@ -296,7 +295,7 @@ index b756509..7e61845 100644
          else if (configCmdLine.at(i) == "-make-tool") {
              ++i;
              if (i == argCount)
-@@ -3983,6 +3990,7 @@ void Configure::generateQConfigCpp()
+@@ -3995,6 +4002,7 @@ void Configure::generateQConfigCpp()
                    << "    \"qt_hbinpath=" << formatPath(dictionary["QT_HOST_BINS"]) << "\"," << endl
                    << "    \"qt_hlibpath=" << formatPath(dictionary["QT_HOST_LIBS"]) << "\"," << endl
                    << "    \"qt_hdatpath=" << formatPath(dictionary["QT_HOST_DATA"]) << "\"," << endl
@@ -305,5 +304,5 @@ index b756509..7e61845 100644
                    << "    \"qt_hostspec=" << hostSpec << "\"," << endl
                    << "#endif" << endl
 -- 
-2.0.1
+2.1.3
 

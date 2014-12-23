@@ -13,11 +13,6 @@ USE_RUBY = " \
     qtquick1-mkspecs \
     qtquick1-plugins \
     qtquick1-qmlplugins \
-    qttools-dev \
-    qttools-mkspecs \
-    qttools-plugins \
-    qttools-staticdev \
-    qttools-tools \
     qtwebkit-dev \
     qtwebkit-mkspecs \
     qtwebkit-qmlplugins \
@@ -84,6 +79,11 @@ RDEPENDS_${PN} += " \
     qtsystems-dev \
     qtsystems-mkspecs \
     qtsystems-qmlplugins \
+    qttools-dev \
+    qttools-mkspecs \
+    qttools-plugins \
+    qttools-staticdev \
+    qttools-tools \
     ${@base_contains('DISTRO_FEATURES', 'wayland', '${USE_WAYLAND}', '', d)} \
     ${@base_contains('BBFILE_COLLECTIONS', 'ruby-layer', '${USE_RUBY}', '', d)} \
     ${@base_contains('DISTRO_FEATURES', 'x11', '${USE_X11}', '', d)} \
