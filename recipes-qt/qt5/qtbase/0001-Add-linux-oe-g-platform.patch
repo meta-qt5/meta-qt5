@@ -224,7 +224,7 @@ index 0000000..ca26b10
 +include(../common/g++-unix.conf)
 +
 +# tc settings from g++-base.conf
-+QMAKE_COMPILER = $(OE_QMAKE_COMPILER)
++QMAKE_COMPILER = $(OE_QMAKE_COMPILER) gcc
 +QMAKE_CC       = $(OE_QMAKE_CC)
 +QMAKE_CXX      = $(OE_QMAKE_CXX)
 +
