@@ -14,7 +14,7 @@ OE_QMAKE_PLATFORM = "linux-oe-g++"
 OE_QMAKE_DEBUG_OUTPUT ?= ""
 
 # Paths in .prl files contain SYSROOT value
-SSTATE_SCAN_FILES += "*.pri *.prl"
+SSTATE_SCAN_FILES += "*.pri *.prl *.prf"
 
 # drop default -e and add needed OE_QMAKE vars explicitly
 # the problem is that when generated Makefile has:
