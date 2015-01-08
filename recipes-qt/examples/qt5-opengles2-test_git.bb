@@ -9,6 +9,9 @@ PV = "1.0.2+gitr${SRCPV}"
 
 DEPENDS = "qtbase"
 
+# Depends on gles2 enabled and that's not default configuration
+EXCLUDE_FROM_WORLD = "1"
+
 SRC_URI = "git://github.com/thp/qt5-opengles2-test.git"
 SRCREV = "9500c00a7094a881e53afd71146d76d40834df45"
 S = "${WORKDIR}/git"
