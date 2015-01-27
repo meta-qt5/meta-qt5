@@ -16,6 +16,7 @@ SRC_URI += "\
 # specific for qtbase
 SRC_URI += "\
     file://0011-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
+    file://0015-Set-paths-for-target-properly.patch \
 "
 
 DEPENDS += "qtbase-native"
@@ -196,23 +197,23 @@ do_configure() {
 }
 
 do_compile_append() {
-    # Build qmake for the target arch
-    # Disable for now, because doesn't work well with separate ${B}
-    # cp -ra ${S}/qmake ${B}
-    # cd ${B}/qmake
-    # ${OE_QMAKE_QMAKE}
-    # Fix to use headers in ${B}
-    # sed '/INCPATH/s#${S}#${B}#g' -i Makefile
-    # oe_runmake CC="${CC}" CXX="${CXX}"
-    # cd ${B}
+    # copy corelib/3rdparty/qmake sources required by qmake -> ${B}
+    cp -ra ${S}/src/corelib ${B}/src
+    cp -ra ${S}/src/3rdparty ${B}/src
+    cp -ra ${S}/qmake ${B}
+    cp ${S}/.qmake.conf ${B}/qmake
+    cd ${B}/qmake
+    # align qt5 tools source path to ${S}
+    sed -i 's:\.\./tools:${S}/tools:g' qmake.pro
+    ../${OE_QMAKE_QMAKE}
+    oe_runmake CC="${CC}" CXX="${CXX}"
 }
 
 do_install_append() {
+    install -m 0755 ${B}/qmake/bin/qmake ${D}/${bindir}/${QT_DIR_NAME}
+
     ### Fix up the binaries to the right location
     ### TODO: FIX
-    # qemu built on host breaks do_package, remove it here (will be replaces with right qemu when do_compile is fixed
-    # ERROR: objcopy failed with exit code 1 (cmd was 'arm-oe-linux-gnueabi-objcopy' --only-keep-debug '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/qmake' '/OE/oe-core/tmp-eglibc/work/armv5te-oe-linux-gnueabi/qtbase/5.0.1-r0.0/package/usr/bin/.debug/qmake')
-    rm -f ${D}/${bindir}/${QT_DIR_NAME}/qmake
     # install fonts manually if they are missing
     if [ ! -d ${D}/${OE_QMAKE_PATH_LIBS}/fonts ]; then
         cp -a ${S}/lib/fonts ${D}/${OE_QMAKE_PATH_LIBS}

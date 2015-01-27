@@ -14,17 +14,17 @@ Signed-off-by: Yu Ke <ke.yu@intel.com>
 Signed-off-by: Paul Eggleton <paul.eggleton@linux.intel.com>
 Signed-off-by: Mikko Levonmaa <mikko.levonmaa@gmail.com>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
----
  configure       | 2 +-
+ qmake/qmake.pri | 3 ++-
  qmake/qmake.pro | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ 3 files changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/configure b/configure
-index bd43281..5d1b3aa 100755
+index 43be722..39516d2 100755
 --- a/configure
 +++ b/configure
-@@ -3724,7 +3724,7 @@ setBootstrapEvalVariable()
- 
+@@ -3759,7 +3759,7 @@ setBootstrapVariable()
+ }
  
  # build qmake
 -if true; then ###[ '!' -f "$outpath/bin/qmake" ];
@@ -32,15 +32,28 @@ index bd43281..5d1b3aa 100755
      echo "Creating qmake..."
  
      mkdir -p "$outpath/qmake" || exit
+diff --git a/qmake/qmake.pri b/qmake/qmake.pri
+index 57dcbb0..e2c5845 100644
+--- a/qmake/qmake.pri
++++ b/qmake/qmake.pri
+@@ -82,7 +82,8 @@ bootstrap { #Qt code
+         qjsonparser.cpp \
+         qjsonarray.cpp \
+         qjsonobject.cpp \
+-        qjsonvalue.cpp
++        qjsonvalue.cpp \
++        qdebug.cpp
+ 
+    HEADERS+= \
+         qbitarray.h \
 diff --git a/qmake/qmake.pro b/qmake/qmake.pro
 index 89d6ea5..7c605b9 100644
 --- a/qmake/qmake.pro
 +++ b/qmake/qmake.pro
-@@ -8,6 +8,8 @@ CONFIG -= qt
+@@ -8,6 +8,7 @@ CONFIG -= qt
  DEFINES += \
      QT_BUILD_QMAKE \
      PROEVALUATOR_FULL
-+DESTDIR = ../bin/
 +TARGET = qmake
  
  VPATH += \

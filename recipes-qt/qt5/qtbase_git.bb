@@ -20,6 +20,7 @@ SRC_URI += "\
 # specific for qtbase
 SRC_URI += "\
     file://0011-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
+    file://0015-Set-paths-for-target-properly.patch \
 "
 
 SRCREV = "47326b9c5c38fea39f8539f50f32667d2c391b70"
