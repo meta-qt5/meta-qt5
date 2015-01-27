@@ -24,6 +24,7 @@ SRC_URI += "\
 # common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
     file://0011-Always-build-uic.patch \
+    file://0014-Add-external-hostbindir-option-native.patch \
 "
 
 QT_CONF_PATH = "${B}/qt.conf"
