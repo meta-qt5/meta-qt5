@@ -8,6 +8,7 @@ DEPENDS += " \
     ninja-native \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols \
     libdrm fontconfig pixman openssl pango cairo icu pciutils \
+    libcap \
 "
 
 COMPATIBLE_MACHINE = "(-)"
