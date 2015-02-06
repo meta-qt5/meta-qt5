@@ -90,6 +90,9 @@ RDEPENDS_${PN} += " \
     qtwebsockets-dev \
     qtwebsockets-mkspecs \
     qtwebsockets-qmlplugins \
+    qtwebchannel-dev \
+    qtwebchannel-mkspecs \
+    qtwebchannel-qmlplugins \
     qtxmlpatterns-dev \
     qtxmlpatterns-mkspecs \
 "
