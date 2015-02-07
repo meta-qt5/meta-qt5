@@ -59,4 +59,9 @@ PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
 # for /usr/share/qt5/qtwebengine_resources.pak
 FILES_${PN} += "${OE_QMAKE_PATH_QT_TRANSLATIONS} ${OE_QMAKE_PATH_QT_DATA}"
-RDEPENDS_${PN}-examples += "${PN}-qmlplugins"
+
+RDEPENDS_${PN}-examples += " \
+    ${PN}-qmlplugins \
+    qtquickcontrols-qmlplugins \
+    qtdeclarative-qmlplugins \
+"
