@@ -16,6 +16,7 @@ PACKAGES =. " \
     ${PN}-qtmultimedia \
     ${PN}-qtlocation \
     ${PN}-qtdeclarative \
+    ${PN}-qtquickcontrols \
     ${PN}-qtxmlpatterns \
     ${PN}-qtconfig \
     ${PN}-qtquick1 \
@@ -55,6 +56,10 @@ FILES_${PN}-qtlocation = " \
 
 FILES_${PN}-qtdeclarative = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qtdeclarative_*.qm \
+"
+
+FILES_${PN}-qtquickcontrols = " \
+    ${OE_QMAKE_PATH_TRANSLATIONS}/qtquickcontrols_*.qm \
 "
 
 FILES_${PN}-qtxmlpatterns = " \

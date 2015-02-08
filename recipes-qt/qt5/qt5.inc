@@ -118,7 +118,6 @@ FILES_${PN}-dev += " \
     ${OE_QMAKE_PATH_LIBS}/cmake/* \
     ${OE_QMAKE_PATH_LIBS}/*.prl \
     ${OE_QMAKE_PATH_LIBS}/*.la \
-    ${OE_QMAKE_PATH_DATA}/* \
     ${OE_QMAKE_PATH_HEADERS}/* \
 "
 FILES_${PN}-dbg += " \
@@ -129,6 +128,7 @@ FILES_${PN}-staticdev += " \
     ${OE_QMAKE_PATH_LIBS}/*.a \
 "
 FILES_${PN}-examples = " \
+    ${OE_QMAKE_PATH_EXAMPLES}/README \
     ${OE_QMAKE_PATH_EXAMPLES}/*/* \
 "
 FILES_${PN}-examples-dev = " \
