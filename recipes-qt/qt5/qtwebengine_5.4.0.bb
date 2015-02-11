@@ -9,4 +9,5 @@ SRC_URI += " \
     file://0002-functions.prf-Make-sure-we-only-use-the-file-name-to.patch \
     file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
     file://0001-chromium-base.gypi-include-atomicops_internals_x86_gcc.cc-whe.patch \
+    file://0001-eLinux-build-ffmpegsumo-as-well.patch \
 "
