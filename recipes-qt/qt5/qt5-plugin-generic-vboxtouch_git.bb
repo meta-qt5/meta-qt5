@@ -19,5 +19,6 @@ S = "${WORKDIR}/git/vboxtouch"
 
 inherit qmake5
 
-FILES_${PN} += "${libdir}/qt5/plugins/generic/libvboxtouchplugin.so"
-FILES_${PN}-dbg += "${libdir}/qt5/plugins/generic/.debug/"
+FILES_${PN} += "${OE_QMAKE_PATH_PLUGINS}/generic/libvboxtouchplugin.so"
+FILES_${PN}-dbg += "${OE_QMAKE_PATH_PLUGINS}/generic/.debug/"
+FILES_${PN}-dev += "${OE_QMAKE_PATH_LIBS}/cmake/*"
