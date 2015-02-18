@@ -1,7 +1,7 @@
-From f2d51e50a7fbdf485696d1b8b2d29e64c729c76b Mon Sep 17 00:00:00 2001
+From 4efa6ef7025ebd03379d76a419c118189e8e9d4e Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 03/11] Add -external-hostbindir option
+Subject: [PATCH 03/12] Add -external-hostbindir option
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -27,18 +27,14 @@ Signed-off-by: Jonathan Liu <net147@gmail.com>
  configure                                   | 15 +++++++++++++++
  mkspecs/features/qt_functions.prf           |  6 +++++-
  mkspecs/features/qt_tool.prf                |  4 ++--
- qmake/property.cpp                          |  1 +
  qtbase.pro                                  | 13 ++++++++++---
  src/corelib/Qt5CoreConfigExtras.cmake.in    |  6 +++---
- src/corelib/global/qlibraryinfo.cpp         |  3 ++-
- src/corelib/global/qlibraryinfo.h           |  1 +
  src/dbus/Qt5DBusConfigExtras.cmake.in       |  4 ++--
  src/widgets/Qt5WidgetsConfigExtras.cmake.in |  2 +-
- tools/configure/configureapp.cpp            |  8 ++++++++
- 11 files changed, 50 insertions(+), 13 deletions(-)
+ 7 files changed, 38 insertions(+), 12 deletions(-)
 
 diff --git a/configure b/configure
-index b7a6fe3..d715f6c 100755
+index 12fe2f0..7ac81d8 100755
 --- a/configure
 +++ b/configure
 @@ -769,6 +769,7 @@ QT_HOST_BINS=
@@ -99,10 +95,10 @@ index b7a6fe3..d715f6c 100755
      "qt_hostspec=$shortspec",
  #endif
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index a9a622d..b6f1db0 100644
+index 7961f65..e11b23d 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -191,7 +191,11 @@ defineTest(qtAddRpathLink) {
+@@ -192,7 +192,11 @@ defineTest(qtAddRpathLink) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
      isEmpty(cmd) {
@@ -133,18 +129,6 @@ index 1d3e88c..9b26adf 100644
      isEmpty(MODULE):MODULE = $$TARGET
  
      !host_build|!force_bootstrap: MODULE_DEPENDS = $$replace(QT, -private$, _private)
-diff --git a/qmake/property.cpp b/qmake/property.cpp
-index 051e056..50da6ed 100644
---- a/qmake/property.cpp
-+++ b/qmake/property.cpp
-@@ -67,6 +67,7 @@ static const struct {
-     { "QT_HOST_DATA", QLibraryInfo::HostDataPath, true },
-     { "QT_HOST_BINS", QLibraryInfo::HostBinariesPath, true },
-     { "QT_HOST_LIBS", QLibraryInfo::HostLibrariesPath, true },
-+    { "QT_EXTERNAL_HOST_BINS", QLibraryInfo::ExternalHostBinariesPath, true },
-     { "QMAKE_SPEC", QLibraryInfo::HostSpecPath, true },
-     { "QMAKE_XSPEC", QLibraryInfo::TargetSpecPath, true },
- };
 diff --git a/qtbase.pro b/qtbase.pro
 index 6d0de44..ddf7478 100644
 --- a/qtbase.pro
@@ -179,7 +163,7 @@ index 6d0de44..ddf7478 100644
  
  # If we are doing a prefix build, create a "module" pri which enables
 diff --git a/src/corelib/Qt5CoreConfigExtras.cmake.in b/src/corelib/Qt5CoreConfigExtras.cmake.in
-index 9bda70e..6e3605a 100644
+index 4387bed..6e1aa7a 100644
 --- a/src/corelib/Qt5CoreConfigExtras.cmake.in
 +++ b/src/corelib/Qt5CoreConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::qmake)
@@ -209,39 +193,6 @@ index 9bda70e..6e3605a 100644
  !!ENDIF
      _qt5_Core_check_file_exists(${imported_location})
  
-diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index d68c51b..7191159 100644
---- a/src/corelib/global/qlibraryinfo.cpp
-+++ b/src/corelib/global/qlibraryinfo.cpp
-@@ -349,7 +349,7 @@ QLibraryInfo::isDebugBuild()
-  */
- 
- static const struct {
--    char key[19], value[13];
-+    char key[21], value[13];
- } qtConfEntries[] = {
-     { "Prefix", "." },
-     { "Documentation", "doc" }, // should be ${Data}/doc
-@@ -375,6 +375,7 @@ static const struct {
-     { "HostBinaries", "bin" },
-     { "HostLibraries", "lib" },
-     { "HostData", "." },
-+    { "ExternalHostBinaries", "" },
-     { "TargetSpec", "" },
-     { "HostSpec", "" },
- #endif
-diff --git a/src/corelib/global/qlibraryinfo.h b/src/corelib/global/qlibraryinfo.h
-index 543c4b3..a02e03a 100644
---- a/src/corelib/global/qlibraryinfo.h
-+++ b/src/corelib/global/qlibraryinfo.h
-@@ -80,6 +80,7 @@ public:
-         HostBinariesPath,
-         HostLibrariesPath,
-         HostDataPath,
-+        ExternalHostBinariesPath,
-         TargetSpecPath,
-         HostSpecPath,
-         LastHostPath = HostSpecPath,
 diff --git a/src/dbus/Qt5DBusConfigExtras.cmake.in b/src/dbus/Qt5DBusConfigExtras.cmake.in
 index 1d94715..301af8f 100644
 --- a/src/dbus/Qt5DBusConfigExtras.cmake.in
@@ -277,32 +228,6 @@ index 99d87e2..5621dc0 100644
  !!ENDIF
      _qt5_Widgets_check_file_exists(${imported_location})
  
-diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index 92422c2..d0a62c8 100644
---- a/tools/configure/configureapp.cpp
-+++ b/tools/configure/configureapp.cpp
-@@ -1191,6 +1191,13 @@ void Configure::parseCmdLine()
-             dictionary[ "QT_EXT_PREFIX" ] = configCmdLine.at(i);
-         }
- 
-+        else if (configCmdLine.at(i) == "-external-hostbindir") {
-+            ++i;
-+            if (i == argCount)
-+                break;
-+            dictionary[ "QT_EXTERNAL_HOST_BINS" ] = configCmdLine.at(i);
-+        }
-+
-         else if (configCmdLine.at(i) == "-make-tool") {
-             ++i;
-             if (i == argCount)
-@@ -3995,6 +4002,7 @@ void Configure::generateQConfigCpp()
-                   << "    \"qt_hbinpath=" << formatPath(dictionary["QT_HOST_BINS"]) << "\"," << endl
-                   << "    \"qt_hlibpath=" << formatPath(dictionary["QT_HOST_LIBS"]) << "\"," << endl
-                   << "    \"qt_hdatpath=" << formatPath(dictionary["QT_HOST_DATA"]) << "\"," << endl
-+                  << "    \"qt_ebinpath=" << formatPath(dictionary["QT_EXTERNAL_HOST_BINS"]) << "\"," << endl
-                   << "    \"qt_targspec=" << targSpec << "\"," << endl
-                   << "    \"qt_hostspec=" << hostSpec << "\"," << endl
-                   << "#endif" << endl
 -- 
-2.1.3
+2.3.0
 

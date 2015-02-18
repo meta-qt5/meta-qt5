@@ -1,7 +1,7 @@
-From 4a067c162d08596e3ec89dcfb3ecdf197b1bf22a Mon Sep 17 00:00:00 2001
+From 4d32129ba11c6b7d4cfd4d037e3e3b73fd32b6b5 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 21 Apr 2014 19:22:04 +0200
-Subject: [PATCH 06/11] Revert "eglfs: Print the chosen config in debug mode"
+Subject: [PATCH 05/12] Revert "eglfs: Print the chosen config in debug mode"
 
 With this change the build is failing with:
 | In file included from /OE/build/oe-core/tmp-glibc/sysroots/qemux86-64/usr/include/EGL/eglplatform.h:118:0,
@@ -68,7 +68,7 @@ index c1a491c..7a0fc87 100644
  
  #ifdef Q_OS_UNIX
 diff --git a/src/platformsupport/eglconvenience/qeglplatformcontext.cpp b/src/platformsupport/eglconvenience/qeglplatformcontext.cpp
-index 7cc3300..ccbd974 100644
+index 7cc3300..ccbd974a 100644
 --- a/src/platformsupport/eglconvenience/qeglplatformcontext.cpp
 +++ b/src/platformsupport/eglconvenience/qeglplatformcontext.cpp
 @@ -37,7 +37,6 @@
@@ -93,5 +93,5 @@ index 7cc3300..ccbd974 100644
  }
  
 -- 
-2.1.3
+2.3.0
 
