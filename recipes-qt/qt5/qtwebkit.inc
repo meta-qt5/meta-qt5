@@ -8,6 +8,11 @@ LIC_FILES_CHKSUM = "file://LICENSE.GPLv2;md5=e782f55badfa137e5e59c330f12cc8ed \
 
 DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt leveldb"
 
+SRC_URI += "\
+    file://0001-qtwebkit-fix-QA-issue-bad-RPATH.patch \
+    file://0002-qtwebkit-fix-textrel-x86.patch \
+"
+
 PACKAGECONFIG ??= "gstreamer qtlocation qtmultimedia qtsensors"
 PACKAGECONFIG[gstreamer] = "OE_GSTREAMER_ENABLED,,gstreamer1.0 gstreamer1.0-plugins-base"
 PACKAGECONFIG[gstreamer010] = "OE_GSTREAMER010_ENABLED,,gstreamer gst-plugins-base"
@@ -38,8 +43,6 @@ EXTRA_QMAKEVARS_PRE += "${QTWEBKIT_DEBUG}"
 
 # remove default ${PN}-examples-dbg ${PN}-examples set in qt5.inc, because it conflicts with ${PN} from separate webkit-examples recipe
 PACKAGES = "${PN}-dbg ${PN}-staticdev ${PN}-dev ${PN}-doc ${PN}-locale ${PACKAGE_BEFORE_PN} ${PN} ${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs "
-
-SRC_URI += "file://0001-qtwebkit-fix-QA-issue-bad-RPATH.patch"
 
 # make sure rb files are used from sysroot, not from host
 # ruby-1.9.3-always-use-i386.patch is doing target_cpu=`echo $target_cpu | sed s/i.86/i386/`
