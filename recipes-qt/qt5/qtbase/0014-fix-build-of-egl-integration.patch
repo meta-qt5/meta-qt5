@@ -1,0 +1,181 @@
+commit f8c8c79029867a087c9a753269d82b808c16f047
+Author: Stephan Binner <stephan.binner@basyskom.com>
+Date:   Mon Feb 2 13:10:50 2015 +0100
+
+    Fix build of egl integration
+    
+    Add missing includes and reorder includes to avoid X defines breakage
+    
+    Change-Id: Iaf95ae2488df3d3301436262ed79f7091b4be0a9
+    Reviewed-by: Laszlo Agocs <laszlo.agocs@theqtcompany.com>
+
+diff --git a/src/platformsupport/eglconvenience/qeglplatformcontext_p.h b/src/platformsupport/eglconvenience/qeglplatformcontext_p.h
+index 7825c7b..0c10710 100644
+--- a/src/platformsupport/eglconvenience/qeglplatformcontext_p.h
++++ b/src/platformsupport/eglconvenience/qeglplatformcontext_p.h
+@@ -45,6 +45,7 @@
+ // We mean it.
+ //
+ 
++#include <QtCore/qtextstream.h>
+ #include <qpa/qplatformwindow.h>
+ #include <qpa/qplatformopenglcontext.h>
+ #include <QtCore/QVariant>
+diff --git a/src/platformsupport/eglconvenience/qeglplatformintegration_p.h b/src/platformsupport/eglconvenience/qeglplatformintegration_p.h
+index 4d7adce..2b5d5f5 100644
+--- a/src/platformsupport/eglconvenience/qeglplatformintegration_p.h
++++ b/src/platformsupport/eglconvenience/qeglplatformintegration_p.h
+@@ -45,9 +45,9 @@
+ // We mean it.
+ //
+ 
++#include <QtCore/QVariant>
+ #include <qpa/qplatformintegration.h>
+ #include <qpa/qplatformnativeinterface.h>
+-#include <QtCore/QVariant>
+ #include <EGL/egl.h>
+ 
+ QT_BEGIN_NAMESPACE
+diff --git a/src/plugins/platforms/eglfs/qeglfscontext.cpp b/src/plugins/platforms/eglfs/qeglfscontext.cpp
+index 6216fa8..6470280 100644
+--- a/src/plugins/platforms/eglfs/qeglfscontext.cpp
++++ b/src/plugins/platforms/eglfs/qeglfscontext.cpp
+@@ -31,15 +31,16 @@
+ **
+ ****************************************************************************/
+ 
+-#include "qeglfscontext.h"
+-#include "qeglfswindow.h"
+-#include "qeglfshooks.h"
++#include <QtGui/QSurface>
++#include <QtDebug>
+ 
++#include <QtPlatformSupport/private/qeglplatformcursor_p.h>
+ #include <QtPlatformSupport/private/qeglconvenience_p.h>
+ #include <QtPlatformSupport/private/qeglpbuffer_p.h>
+-#include <QtPlatformSupport/private/qeglplatformcursor_p.h>
+-#include <QtGui/QSurface>
+-#include <QtDebug>
++
++#include "qeglfswindow.h"
++#include "qeglfshooks.h"
++#include "qeglfscontext.h"
+ 
+ QT_BEGIN_NAMESPACE
+ 
+diff --git a/src/plugins/platforms/eglfs/qeglfshooks_stub.cpp b/src/plugins/platforms/eglfs/qeglfshooks_stub.cpp
+index 26d77a2..120c603 100644
+--- a/src/plugins/platforms/eglfs/qeglfshooks_stub.cpp
++++ b/src/plugins/platforms/eglfs/qeglfshooks_stub.cpp
+@@ -31,10 +31,10 @@
+ **
+ ****************************************************************************/
+ 
+-#include "qeglfshooks.h"
+ #include <QtPlatformSupport/private/qeglplatformcursor_p.h>
+ #include <QtPlatformSupport/private/qeglconvenience_p.h>
+ #include <QtCore/QRegularExpression>
++#include "qeglfshooks.h"
+ 
+ #if defined(Q_OS_LINUX)
+ #include <fcntl.h>
+diff --git a/src/plugins/platforms/eglfs/qeglfsintegration.cpp b/src/plugins/platforms/eglfs/qeglfsintegration.cpp
+index 2a4eae3..fbdd1d4 100644
+--- a/src/plugins/platforms/eglfs/qeglfsintegration.cpp
++++ b/src/plugins/platforms/eglfs/qeglfsintegration.cpp
+@@ -31,26 +31,26 @@
+ **
+ ****************************************************************************/
+ 
+-#include "qeglfsintegration.h"
++#include <QtCore/qtextstream.h>
++#include <QtGui/private/qguiapplication_p.h>
++
++#include <qpa/qplatformwindow.h>
++#include <QtGui/QSurfaceFormat>
++#include <QtGui/QOpenGLContext>
++#include <QtGui/QScreen>
++#include <QtGui/QOffscreenSurface>
++#include <qpa/qplatformcursor.h>
+ 
++#include "qeglfsintegration.h"
+ #include "qeglfswindow.h"
+ #include "qeglfshooks.h"
+ #include "qeglfscontext.h"
+ 
+-#include <QtGui/private/qguiapplication_p.h>
+-
+ #include <QtPlatformSupport/private/qeglconvenience_p.h>
+ #include <QtPlatformSupport/private/qeglplatformcontext_p.h>
+ #include <QtPlatformSupport/private/qeglpbuffer_p.h>
+ #include <QtPlatformHeaders/QEGLNativeContext>
+ 
+-#include <qpa/qplatformwindow.h>
+-#include <QtGui/QSurfaceFormat>
+-#include <QtGui/QOpenGLContext>
+-#include <QtGui/QScreen>
+-#include <QtGui/QOffscreenSurface>
+-#include <qpa/qplatformcursor.h>
+-
+ #include <EGL/egl.h>
+ 
+ static void initResources()
+diff --git a/src/plugins/platforms/eglfs/qeglfsscreen.cpp b/src/plugins/platforms/eglfs/qeglfsscreen.cpp
+index cd68540..bc93fe2 100644
+--- a/src/plugins/platforms/eglfs/qeglfsscreen.cpp
++++ b/src/plugins/platforms/eglfs/qeglfsscreen.cpp
+@@ -31,10 +31,12 @@
+ **
+ ****************************************************************************/
+ 
++#include <QtCore/qtextstream.h>
++#include <QtPlatformSupport/private/qeglplatformcursor_p.h>
++
+ #include "qeglfsscreen.h"
+ #include "qeglfswindow.h"
+ #include "qeglfshooks.h"
+-#include <QtPlatformSupport/private/qeglplatformcursor_p.h>
+ 
+ QT_BEGIN_NAMESPACE
+ 
+diff --git a/src/plugins/platforms/eglfs/qeglfswindow.cpp b/src/plugins/platforms/eglfs/qeglfswindow.cpp
+index f5839e0..39a3ef9 100644
+--- a/src/plugins/platforms/eglfs/qeglfswindow.cpp
++++ b/src/plugins/platforms/eglfs/qeglfswindow.cpp
+@@ -31,8 +31,7 @@
+ **
+ ****************************************************************************/
+ 
+-#include "qeglfswindow.h"
+-#include "qeglfshooks.h"
++#include <QtCore/qtextstream.h>
+ #include <qpa/qwindowsysteminterface.h>
+ #include <qpa/qplatformintegration.h>
+ #include <private/qguiapplication_p.h>
+@@ -40,6 +39,9 @@
+ #include <QtPlatformSupport/private/qeglplatformcursor_p.h>
+ #include <QtPlatformSupport/private/qeglconvenience_p.h>
+ 
++#include "qeglfswindow.h"
++#include "qeglfshooks.h"
++
+ #include <QtDebug>
+ 
+ QT_BEGIN_NAMESPACE
+diff --git a/src/plugins/platforms/minimalegl/qminimaleglwindow.cpp b/src/plugins/platforms/minimalegl/qminimaleglwindow.cpp
+index 906a130..d4bee2c 100644
+--- a/src/plugins/platforms/minimalegl/qminimaleglwindow.cpp
++++ b/src/plugins/platforms/minimalegl/qminimaleglwindow.cpp
+@@ -31,10 +31,10 @@
+ **
+ ****************************************************************************/
+ 
+-#include "qminimaleglwindow.h"
+-
+ #include <qpa/qwindowsysteminterface.h>
+ 
++#include "qminimaleglwindow.h"
++
+ QT_BEGIN_NAMESPACE
+ 
+ QMinimalEglWindow::QMinimalEglWindow(QWindow *w)
