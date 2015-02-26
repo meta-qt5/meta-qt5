@@ -4,9 +4,6 @@ QT_MODULE = "${BPN}"
 
 DEPENDS = "qtbase-native wayland-native"
 
-SRC_URI[md5sum] = "736fddb5f2018d57c8439455df9ec4dc"
-SRC_URI[sha256sum] = "601ef7f2e9145a084da34ff06dfa77577c4a792a639581d3bbb7417e8cd36f29"
-
 SRC_URI += " \
     file://0001-Install-the-qtwaylandscanner-tool-to-the-native-side.patch \
 "
