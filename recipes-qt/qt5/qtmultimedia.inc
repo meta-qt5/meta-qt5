@@ -23,6 +23,3 @@ EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains_any('PACKAGECONFIG', 'gstreamer gst
 SRC_URI += "\
     file://0001-Initial-porting-effort-to-GStreamer-1.0.patch \
 "
-
-LICENSE += "| GPL-2.0"
-LIC_FILES_CHKSUM += "file://LICENSE.GPLv2;md5=e782f55badfa137e5e59c330f12cc8ed"
