@@ -65,7 +65,7 @@ PACKAGECONFIG[examples] = "-make examples -compile-examples,-nomake examples"
 PACKAGECONFIG[tools] = "-make tools,-nomake tools"
 # only for completeness, configure will add libs even if you try to explicitly remove it
 PACKAGECONFIG[libs] = "-make libs,-nomake libs"
-# accessibility is required to compile qtquickcontrols
+# accessibility is required to compile qtquickcontrols and qtwebengine
 PACKAGECONFIG[accessibility] = "-accessibility,-no-accessibility"
 PACKAGECONFIG[glib] = "-glib,-no-glib,glib-2.0"
 # use either system freetype or bundled freetype, if you disable freetype completely
