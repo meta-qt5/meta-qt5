@@ -35,11 +35,12 @@ export NINJA_PATH="${STAGING_BINDIR_NATIVE}/ninja"
 
 do_configure() {
     # replace LD with CXX, to workaround a possible gyp inheritssue?
-    LD="${CXX}" export LD
-    CC="${CC}" export CC
-    CXX="${CXX}" export CXX
-    CC_host="gcc" export CC_host
-    CXX_host="g++" export CXX_host
+    export LD="${CXX}"
+    export CC="${CC}"
+    export CXX="${CXX}"
+    export CC_host="gcc"
+    export CXX_host="g++"
+    export QMAKE_MAKE_ARGS="${EXTRA_OEMAKE}"
 
     # qmake can't find the OE_QMAKE_* variables on it's own so directly passing them as
     # arguments here
