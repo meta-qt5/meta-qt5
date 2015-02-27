@@ -1,7 +1,7 @@
-From f2d51e50a7fbdf485696d1b8b2d29e64c729c76b Mon Sep 17 00:00:00 2001
+From 932cb18540fc4634e02d048cf9ab9e519ce0811d Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 03/11] Add -external-hostbindir option
+Subject: [PATCH 12/13] Add -external-hostbindir option for native(sdk)
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -20,42 +20,18 @@ Upstream-Status: Pending
   Oswald) but in 5.2.0 I've noticed that he added something similar for
   android builds
 
+Change-Id: I4f6e634bf0b2cb96065ee5c38b9cd8a224c3bd37
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 Signed-off-by: Simon Busch <morphis@gravedo.de>
 Signed-off-by: Jonathan Liu <net147@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- qmake/property.cpp                          |  1 +
- tools/configure/configureapp.cpp            |  8 ++++++++
- src/corelib/global/qlibraryinfo.cpp         |  3 ++-
- src/corelib/global/qlibraryinfo.h           |  1 +
- 1 files changed, 50 insertions(+), 13 deletions(-)
+ qmake/property.cpp                  | 1 +
+ src/corelib/global/qlibraryinfo.cpp | 3 ++-
+ src/corelib/global/qlibraryinfo.h   | 1 +
+ tools/configure/configureapp.cpp    | 8 ++++++++
+ 4 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index 92422c2..d0a62c8 100644
---- a/tools/configure/configureapp.cpp
-+++ b/tools/configure/configureapp.cpp
-@@ -1191,6 +1191,13 @@ void Configure::parseCmdLine()
-             dictionary[ "QT_EXT_PREFIX" ] = configCmdLine.at(i);
-         }
- 
-+        else if (configCmdLine.at(i) == "-external-hostbindir") {
-+            ++i;
-+            if (i == argCount)
-+                break;
-+            dictionary[ "QT_EXTERNAL_HOST_BINS" ] = configCmdLine.at(i);
-+        }
-+
-         else if (configCmdLine.at(i) == "-make-tool") {
-             ++i;
-             if (i == argCount)
-@@ -3995,6 +4002,7 @@ void Configure::generateQConfigCpp()
-                   << "    \"qt_hbinpath=" << formatPath(dictionary["QT_HOST_BINS"]) << "\"," << endl
-                   << "    \"qt_hlibpath=" << formatPath(dictionary["QT_HOST_LIBS"]) << "\"," << endl
-                   << "    \"qt_hdatpath=" << formatPath(dictionary["QT_HOST_DATA"]) << "\"," << endl
-+                  << "    \"qt_ebinpath=" << formatPath(dictionary["QT_EXTERNAL_HOST_BINS"]) << "\"," << endl
-                   << "    \"qt_targspec=" << targSpec << "\"," << endl
-                   << "    \"qt_hostspec=" << hostSpec << "\"," << endl
-                   << "#endif" << endl
 diff --git a/qmake/property.cpp b/qmake/property.cpp
 index 051e056..50da6ed 100644
 --- a/qmake/property.cpp
@@ -69,10 +45,10 @@ index 051e056..50da6ed 100644
      { "QMAKE_XSPEC", QLibraryInfo::TargetSpecPath, true },
  };
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index d68c51b..7191159 100644
+index c418c5e..c8c4188 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
-@@ -349,7 +349,7 @@ QLibraryInfo::isDebugBuild()
+@@ -348,7 +348,7 @@ QLibraryInfo::isDebugBuild()
   */
  
  static const struct {
@@ -81,7 +57,7 @@ index d68c51b..7191159 100644
  } qtConfEntries[] = {
      { "Prefix", "." },
      { "Documentation", "doc" }, // should be ${Data}/doc
-@@ -375,6 +375,7 @@ static const struct {
+@@ -374,6 +374,7 @@ static const struct {
      { "HostBinaries", "bin" },
      { "HostLibraries", "lib" },
      { "HostData", "." },
@@ -101,6 +77,32 @@ index 543c4b3..a02e03a 100644
          TargetSpecPath,
          HostSpecPath,
          LastHostPath = HostSpecPath,
+diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
+index 6e9d4aa..0ca4daf 100644
+--- a/tools/configure/configureapp.cpp
++++ b/tools/configure/configureapp.cpp
+@@ -1191,6 +1191,13 @@ void Configure::parseCmdLine()
+             dictionary[ "QT_EXT_PREFIX" ] = configCmdLine.at(i);
+         }
+ 
++        else if (configCmdLine.at(i) == "-external-hostbindir") {
++            ++i;
++            if (i == argCount)
++                break;
++            dictionary[ "QT_EXTERNAL_HOST_BINS" ] = configCmdLine.at(i);
++        }
++
+         else if (configCmdLine.at(i) == "-make-tool") {
+             ++i;
+             if (i == argCount)
+@@ -4004,6 +4011,7 @@ void Configure::generateQConfigCpp()
+                   << "    \"qt_hbinpath=" << formatPath(dictionary["QT_HOST_BINS"]) << "\"," << endl
+                   << "    \"qt_hlibpath=" << formatPath(dictionary["QT_HOST_LIBS"]) << "\"," << endl
+                   << "    \"qt_hdatpath=" << formatPath(dictionary["QT_HOST_DATA"]) << "\"," << endl
++                  << "    \"qt_ebinpath=" << formatPath(dictionary["QT_EXTERNAL_HOST_BINS"]) << "\"," << endl
+                   << "    \"qt_targspec=" << targSpec << "\"," << endl
+                   << "    \"qt_hostspec=" << hostSpec << "\"," << endl
+                   << "#endif" << endl
 -- 
-2.1.3
+2.3.1
 

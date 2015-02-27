@@ -1,7 +1,7 @@
-From d84b7386902e024a0cfe5a6689930e5548a60480 Mon Sep 17 00:00:00 2001
+From 62ec5bc2946911b2cd2f577d58f07f566d84c88d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Thu, 22 Jan 2015 16:09:35 +0100
-Subject: [PATCH] Set paths for target properly
+Subject: [PATCH 12/13] Set paths for target properly
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -10,14 +10,14 @@ Upstream-Status: Inappropriate [OE specific]
 
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
 ---
- configure | 42 +++++++++++++++++++++---------------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+ configure | 43 +++++++++++++++++++++----------------------
+ 1 file changed, 21 insertions(+), 22 deletions(-)
 
 diff --git a/configure b/configure
-index 43be722..0e1a64a 100755
+index 8d15f59..bf2bac0 100755
 --- a/configure
 +++ b/configure
-@@ -3634,28 +3634,27 @@ static const char qt_configure_prefix_path_strs[][512 + 12] = {
+@@ -3639,28 +3639,27 @@ static const char qt_configure_prefix_path_strs[][512 + 12] = {
      "qt_xmplpath=$QT_SYSROOT_EXAMPLES",
      "qt_tstspath=$QT_SYSROOT_TESTS",
  #else
@@ -68,5 +68,5 @@ index 43be722..0e1a64a 100755
  };
  static const char qt_configure_settings_path_str[256 + 12] = "qt_stngpath=$QT_INSTALL_SETTINGS";
 -- 
-1.8.3.1
+2.3.1
 

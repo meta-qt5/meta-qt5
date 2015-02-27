@@ -1,3 +1,8 @@
+From ecb13fa1c9fa45b7e307232b24331c040c88330b Mon Sep 17 00:00:00 2001
+From: Magnus Granberg <zorry@gentoo.org>
+Date: Fri, 27 Feb 2015 11:55:09 +0100
+Subject: [PATCH 2/2] Remove TEXTREL tag in x86
+
 Fix textrel QA warnings when building qtwebkit for x86:
 
   WARNING: QA Issue: ELF binary '/home/andre/rdk/rdk-master/build-vbox32/tmp/work/core2-32-rdk-linux/qtwebkit/5.4.0-r0/packages-split/qtwebkit/usr/lib/libQt5WebKit.so.5.4.0' has relocations in .text [textrel]
@@ -14,27 +19,17 @@ part of qtwebkit yet ( https://bugs.webkit.org/show_bug.cgi?id=99683 ).
 Upstream status [webkit] : backport
 Upstream status [qtwebkit] : unclear
 
-
-From: Magnus Granberg <zorry@gentoo.org>
-Subject: Remove TEXTREL tag in x86
 Bug: https://bugs.webkit.org/show_bug.cgi?id=70610
-Index: webkitgtk/Source/WTF/wtf/InlineASM.h
-===================================================================
---- webkitgtk.orig/Source/WTF/wtf/InlineASM.h
-+++ webkitgtk/Source/WTF/wtf/InlineASM.h
-@@ -46,6 +46,8 @@
- #define GLOBAL_REFERENCE(name) #name "@plt"
- #elif CPU(X86) && COMPILER(MINGW)
- #define GLOBAL_REFERENCE(name) "@" #name "@4"
-+#elif OS(LINUX) && CPU(X86) && defined(__PIC__)
-+#define GLOBAL_REFERENCE(name) SYMBOL_STRING(name) "@plt"
- #else
- #define GLOBAL_REFERENCE(name) SYMBOL_STRING(name)
- #endif
-Index: webkitgtk/Source/JavaScriptCore/jit/ThunkGenerators.cpp
-===================================================================
---- webkitgtk.orig/Source/JavaScriptCore/jit/ThunkGenerators.cpp
-+++ webkitgtk/Source/JavaScriptCore/jit/ThunkGenerators.cpp
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ Source/JavaScriptCore/jit/ThunkGenerators.cpp | 24 ++++++++++++++++++++++++
+ Source/WTF/wtf/InlineASM.h                    |  2 ++
+ 2 files changed, 26 insertions(+)
+
+diff --git a/Source/JavaScriptCore/jit/ThunkGenerators.cpp b/Source/JavaScriptCore/jit/ThunkGenerators.cpp
+index 9684df2..8af82d8 100644
+--- a/Source/JavaScriptCore/jit/ThunkGenerators.cpp
++++ b/Source/JavaScriptCore/jit/ThunkGenerators.cpp
 @@ -524,6 +524,30 @@ double jsRound(double d)
      } \
      static MathThunk UnaryDoubleOpWrapper(function) = &function##Thunk;
@@ -66,3 +61,19 @@ Index: webkitgtk/Source/JavaScriptCore/jit/ThunkGenerators.cpp
  #elif CPU(X86) && COMPILER(GCC) && (PLATFORM(MAC) || OS(LINUX))
  #define defineUnaryDoubleOpWrapper(function) \
      asm( \
+diff --git a/Source/WTF/wtf/InlineASM.h b/Source/WTF/wtf/InlineASM.h
+index 0a2fe78..2dc40ef 100644
+--- a/Source/WTF/wtf/InlineASM.h
++++ b/Source/WTF/wtf/InlineASM.h
+@@ -46,6 +46,8 @@
+ #define GLOBAL_REFERENCE(name) #name "@plt"
+ #elif CPU(X86) && COMPILER(MINGW)
+ #define GLOBAL_REFERENCE(name) "@" #name "@4"
++#elif OS(LINUX) && CPU(X86) && defined(__PIC__)
++#define GLOBAL_REFERENCE(name) SYMBOL_STRING(name) "@plt"
+ #else
+ #define GLOBAL_REFERENCE(name) SYMBOL_STRING(name)
+ #endif
+-- 
+2.3.1
+

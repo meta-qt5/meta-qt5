@@ -1,7 +1,7 @@
-From f2d51e50a7fbdf485696d1b8b2d29e64c729c76b Mon Sep 17 00:00:00 2001
+From 6c015d77a95910deec0a8c4a265587578531b476 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 03/11] Add -external-hostbindir option
+Subject: [PATCH 03/13] Add -external-hostbindir option
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -31,10 +31,10 @@ Signed-off-by: Jonathan Liu <net147@gmail.com>
  src/corelib/Qt5CoreConfigExtras.cmake.in    |  6 +++---
  src/dbus/Qt5DBusConfigExtras.cmake.in       |  4 ++--
  src/widgets/Qt5WidgetsConfigExtras.cmake.in |  2 +-
- 11 files changed, 50 insertions(+), 13 deletions(-)
+ 7 files changed, 38 insertions(+), 12 deletions(-)
 
 diff --git a/configure b/configure
-index b7a6fe3..d715f6c 100755
+index 0bcc175..996ce50 100755
 --- a/configure
 +++ b/configure
 @@ -769,6 +769,7 @@ QT_HOST_BINS=
@@ -95,10 +95,10 @@ index b7a6fe3..d715f6c 100755
      "qt_hostspec=$shortspec",
  #endif
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index a9a622d..b6f1db0 100644
+index 7961f65..e11b23d 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -191,7 +191,11 @@ defineTest(qtAddRpathLink) {
+@@ -192,7 +192,11 @@ defineTest(qtAddRpathLink) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
      isEmpty(cmd) {
@@ -229,5 +229,5 @@ index 99d87e2..5621dc0 100644
      _qt5_Widgets_check_file_exists(${imported_location})
  
 -- 
-2.1.3
+2.3.1
 

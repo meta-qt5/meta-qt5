@@ -3,7 +3,7 @@ require ${PN}.inc
 
 # This patch is in 5.4 branch but didn't make it into 5.4.1 release
 SRC_URI += "\
-    file://0014-fix-build-of-egl-integration.patch \
+    file://0013-Fix-build-of-egl-integration.patch \
 "
 
 SRC_URI[md5sum] = "9507825e558c980fed602de1f16ec7ae"

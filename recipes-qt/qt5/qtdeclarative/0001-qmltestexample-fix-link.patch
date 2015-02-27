@@ -1,4 +1,4 @@
-From fd077fa40e7750f5836a07dde4f9c65864f87c3f Mon Sep 17 00:00:00 2001
+From ccfd4907a2683fb0840fa4fd6a9d979395f4331c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
 Date: Sun, 26 May 2013 14:26:19 +0200
 Subject: [PATCH] qmltestexample: fix link
@@ -36,7 +36,7 @@ index b5893c5..1b00e6c 100644
  macx: CONFIG -= app_bundle
  
 diff --git a/tests/auto/qml/qjsengine/qjsengine.pro b/tests/auto/qml/qjsengine/qjsengine.pro
-index a62eb75..73b6917 100644
+index fc2452c..919710f 100644
 --- a/tests/auto/qml/qjsengine/qjsengine.pro
 +++ b/tests/auto/qml/qjsengine/qjsengine.pro
 @@ -1,7 +1,7 @@
@@ -47,7 +47,7 @@ index a62eb75..73b6917 100644
 +QT +=  qml qml-private widgets testlib gui-private quick
  macx:CONFIG -= app_bundle
  SOURCES += tst_qjsengine.cpp
- 
+ RESOURCES += qjsengine.qrc
 diff --git a/tests/auto/qml/qtqmlmodules/qtqmlmodules.pro b/tests/auto/qml/qtqmlmodules/qtqmlmodules.pro
 index c6d442e..3181dcd 100644
 --- a/tests/auto/qml/qtqmlmodules/qtqmlmodules.pro
@@ -84,5 +84,5 @@ index 1bb913e..56f2dd5 100644
  
  load(qt_tool)
 -- 
-2.1.1
+2.3.1
 
