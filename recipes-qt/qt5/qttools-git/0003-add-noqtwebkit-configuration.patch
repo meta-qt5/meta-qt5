@@ -1,4 +1,4 @@
-From 1d8bf41acc2235528f1d08505cf2dc8afd793aef Mon Sep 17 00:00:00 2001
+From 9868ff8a11f36712f9bc2fe45ad129214994947a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 4 Jun 2014 11:28:16 +0200
 Subject: [PATCH 3/3] add noqtwebkit configuration
@@ -16,7 +16,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/assistant/assistant/assistant.pro b/src/assistant/assistant/assistant.pro
-index 5f96377..71acdfc 100644
+index 6e82b07..56df78c 100644
 --- a/src/assistant/assistant/assistant.pro
 +++ b/src/assistant/assistant/assistant.pro
 @@ -1,4 +1,4 @@
@@ -25,7 +25,7 @@ index 5f96377..71acdfc 100644
      QT += webkitwidgets
  } else {
      DEFINES += QT_NO_WEBKIT
-@@ -72,7 +72,7 @@ SOURCES += aboutdialog.cpp \
+@@ -71,7 +71,7 @@ SOURCES += aboutdialog.cpp \
      openpageswidget.cpp \
      openpagesmanager.cpp \
      openpagesswitcher.cpp
@@ -47,5 +47,5 @@ index 500a153..b60fa2d 100644
  win32: qtHaveModule(axcontainer): SUBDIRS += activeqt
  qtHaveModule(quickwidgets): SUBDIRS += qquickwidget
 -- 
-2.1.3
+2.3.1
 

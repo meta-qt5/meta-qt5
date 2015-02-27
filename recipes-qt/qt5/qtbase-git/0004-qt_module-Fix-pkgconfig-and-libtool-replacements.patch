@@ -1,4 +1,4 @@
-From efd941d9d21a7f9a41dcabf7ea88481c3563ae93 Mon Sep 17 00:00:00 2001
+From 8c5554c1ee9a18548c166f6c3a7b487b9d3cdc3e Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
 Subject: [PATCH 04/12] qt_module: Fix pkgconfig and libtool replacements
@@ -110,5 +110,5 @@ index d213f9e..915c596 100644
  }
  
 -- 
-2.3.0
+2.3.1
 

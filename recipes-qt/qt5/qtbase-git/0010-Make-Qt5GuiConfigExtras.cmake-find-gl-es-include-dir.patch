@@ -1,4 +1,4 @@
-From e163574a35ad782a3d43ee8d5e3f212870962e10 Mon Sep 17 00:00:00 2001
+From 276b5046788007bcbc5607046becdd44151960c0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Thu, 18 Dec 2014 13:41:09 +0100
 Subject: [PATCH 10/12] Make Qt5GuiConfigExtras.cmake find gl(es) include dir
@@ -38,5 +38,5 @@ index 9a846d4..07869ef 100644
  if (NOT _qt5gui_OPENGL_INCLUDE_DIR)
      message(FATAL_ERROR \"Failed to find \\\"$$CMAKE_GL_HEADER_NAME\\\" in \\\"${_GL_INCDIRS}\\\".\")
 -- 
-2.3.0
+2.3.1
 

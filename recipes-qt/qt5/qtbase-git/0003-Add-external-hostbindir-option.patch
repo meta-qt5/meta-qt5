@@ -1,4 +1,4 @@
-From 4efa6ef7025ebd03379d76a419c118189e8e9d4e Mon Sep 17 00:00:00 2001
+From 457efc32bb79060a0a58a82ff8a35d67655ef6d6 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH 03/12] Add -external-hostbindir option
@@ -34,10 +34,10 @@ Signed-off-by: Jonathan Liu <net147@gmail.com>
  7 files changed, 38 insertions(+), 12 deletions(-)
 
 diff --git a/configure b/configure
-index 12fe2f0..7ac81d8 100755
+index 0a00d6d..ad5f4cd 100755
 --- a/configure
 +++ b/configure
-@@ -769,6 +769,7 @@ QT_HOST_BINS=
+@@ -770,6 +770,7 @@ QT_HOST_BINS=
  QT_HOST_LIBS=
  QT_HOST_DATA=
  QT_EXT_PREFIX=
@@ -45,7 +45,7 @@ index 12fe2f0..7ac81d8 100755
  
  #flags for SQL drivers
  QT_CFLAGS_PSQL=
-@@ -888,6 +889,7 @@ while [ "$#" -gt 0 ]; do
+@@ -889,6 +890,7 @@ while [ "$#" -gt 0 ]; do
      -testsdir| \
      -hostdatadir| \
      -hostbindir| \
@@ -53,7 +53,7 @@ index 12fe2f0..7ac81d8 100755
      -hostlibdir| \
      -extprefix| \
      -sysroot| \
-@@ -1102,6 +1104,9 @@ while [ "$#" -gt 0 ]; do
+@@ -1107,6 +1109,9 @@ while [ "$#" -gt 0 ]; do
      extprefix)
          QT_EXT_PREFIX="$VAL"
          ;;
@@ -63,7 +63,7 @@ index 12fe2f0..7ac81d8 100755
      pkg-config)
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_PKGCONFIG="$VAL"
-@@ -2265,6 +2270,10 @@ Installation options:
+@@ -2270,6 +2275,10 @@ Installation options:
      -hostdatadir <dir> . Data used by qmake will be installed to <dir>
                           (default HOSTPREFIX)
  
@@ -74,7 +74,7 @@ index 12fe2f0..7ac81d8 100755
  Configure options:
  
   The defaults (*) are usually acceptable. A plus (+) denotes a default value
-@@ -2944,6 +2953,11 @@ fi
+@@ -2949,6 +2958,11 @@ fi
  # command line and environment validation
  #-------------------------------------------------------------------------------
  
@@ -86,7 +86,7 @@ index 12fe2f0..7ac81d8 100755
  # update QT_CONFIG to show our current predefined configuration
  CFG_QCONFIG_PATH=$relpath/src/corelib/global/qconfig-${CFG_QCONFIG}.h
  case "$CFG_QCONFIG" in
-@@ -3644,6 +3658,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
+@@ -3649,6 +3663,7 @@ static const char qt_configure_prefix_path_strs[][256 + 12] = {
      "qt_hbinpath=$QT_HOST_BINS",
      "qt_hlibpath=$QT_HOST_LIBS",
      "qt_hdatpath=$QT_HOST_DATA",
@@ -163,7 +163,7 @@ index 6d0de44..ddf7478 100644
  
  # If we are doing a prefix build, create a "module" pri which enables
 diff --git a/src/corelib/Qt5CoreConfigExtras.cmake.in b/src/corelib/Qt5CoreConfigExtras.cmake.in
-index 4387bed..6e1aa7a 100644
+index 7213a84..a977417 100644
 --- a/src/corelib/Qt5CoreConfigExtras.cmake.in
 +++ b/src/corelib/Qt5CoreConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::qmake)
@@ -229,5 +229,5 @@ index 99d87e2..5621dc0 100644
      _qt5_Widgets_check_file_exists(${imported_location})
  
 -- 
-2.3.0
+2.3.1
 
