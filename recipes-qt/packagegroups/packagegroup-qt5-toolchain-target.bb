@@ -13,6 +13,7 @@ USE_RUBY = " \
     qtquick1-mkspecs \
     qtquick1-plugins \
     qtquick1-qmlplugins \
+    qttranslations-qtquick1 \
     qtwebkit-dev \
     qtwebkit-mkspecs \
     qtwebkit-qmlplugins \
@@ -43,14 +44,21 @@ RDEPENDS_${PN} += " \
     qtbase-mkspecs \
     qtbase-plugins \
     qtbase-staticdev \
+    qttranslations-qt \
+    qttranslations-qtbase \
+    qttranslations-qtconfig \
+    qttranslations-qthelp \
     qtconnectivity-dev \
     qtconnectivity-mkspecs \
     qtconnectivity-qmlplugins \
+    qttranslations-qtconnectivity \
     qtdeclarative-dev \
     qtdeclarative-mkspecs \
     qtdeclarative-plugins \
     qtdeclarative-qmlplugins \
     qtdeclarative-staticdev \
+    qttranslations-qmlviewer \
+    qttranslations-qtdeclarative \
     qtenginio-dev \
     qtenginio-mkspecs \
     qtenginio-qmlplugins \
@@ -61,12 +69,15 @@ RDEPENDS_${PN} += " \
     qtlocation-mkspecs \
     qtlocation-plugins \
     qtlocation-qmlplugins \
+    qttranslations-qtlocation \
     qtmultimedia-dev \
     qtmultimedia-mkspecs \
     qtmultimedia-plugins \
     qtmultimedia-qmlplugins \
+    qttranslations-qtmultimedia \
     qtscript-dev \
     qtscript-mkspecs \
+    qttranslations-qtscript \
     qtsensors-dev \
     qtsensors-mkspecs \
     qtsensors-plugins \
@@ -95,6 +106,7 @@ RDEPENDS_${PN} += " \
     qtwebchannel-qmlplugins \
     qtxmlpatterns-dev \
     qtxmlpatterns-mkspecs \
+    qttranslations-qtxmlpatterns \
 "
 
 RRECOMMENDS_${PN} += " \
