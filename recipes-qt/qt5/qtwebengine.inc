@@ -1,8 +1,9 @@
 SUMMARY = "QtWebEngine combines the power of Chromium and Qt"
-LICENSE = "LGPL-2.1 & BSD"
+LICENSE = "LGPL-3.0 & BSD"
 LIC_FILES_CHKSUM = " \
-  file://src/core/browser_context_qt.cpp;md5=91895ac1852e1b07202d9716194e8dd8;beginline=1;endline=35 \
-  file://src/3rdparty/chromium/LICENSE;md5=537e0b52077bf0a616d0a0c8a79bc9d5 \
+    file://src/core/browser_context_qt.cpp;md5=91895ac1852e1b07202d9716194e8dd8;beginline=1;endline=35 \
+    file://src/3rdparty/chromium/LICENSE;md5=537e0b52077bf0a616d0a0c8a79bc9d5 \
+    file://LICENSE.LGPLv3;md5=e6a600fd5e1d9cbde2d983680233ad02 \
 "
 DEPENDS += " \
     ninja-native \
