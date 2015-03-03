@@ -1,4 +1,4 @@
-From 6c8d9e121920519a831ca09f747ed77dfc2bd135 Mon Sep 17 00:00:00 2001
+From c2b2432649b15b4d7fcec24dd68501c4613e010a Mon Sep 17 00:00:00 2001
 From: Frieder Schrempf <frieder.schrempf@online.de>
 Date: Mon, 1 Dec 2014 14:34:40 +0000
 Subject: [PATCH 3/3] functions.prf: allow build for linux-oe-g++ platform
