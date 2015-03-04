@@ -9,9 +9,9 @@ SUMMARY = "Qt Creator is a new cross-platform Qt IDE"
 HOMEPAGE = "https://qt-project.org/"
 LICENSE = "LGPLv2.1 | GPLv3"
 LIC_FILES_CHKSUM = " \
-    file://LGPL_EXCEPTION.TXT;md5=eb6c371255e1262c55ae9b652a90b528 \
-    file://LICENSE.LGPLv21;md5=243b725d71bb5df4a1e5920b344b86ad \
-    file://LICENSE.LGPLv3;md5=c1939be5579666be947371bc8120425f \
+    file://LGPL_EXCEPTION.TXT;md5=f4748b0d1a72c5c8fb5dab2dd1f7fa46 \
+    file://LICENSE.LGPLv21;md5=825920de5f6db2eeb1bebe625476346d \
+    file://LICENSE.LGPLv3;md5=0786418af032b9e608909874f334a2d1 \
 "
 
 inherit qmake5
@@ -23,8 +23,8 @@ SRC_URI = " \
     file://0001-Fix-Allow-qt-creator-to-build-on-arm-aarch32-and-aar.patch \
     file://qtcreator.desktop.in \
 "
-SRC_URI[md5sum] = "5e33988908282c779f2e6e4dca2bba3e"
-SRC_URI[sha256sum] = "27a5c8815fab95f959134047f8315686de4de6f99b0bedfd46b5dedae390525a"
+SRC_URI[md5sum] = "54cb5918c6852731612672a22627dd08"
+SRC_URI[sha256sum] = "afefb73a05cdc36cdfb8a760c2b39eb6c366a22ef47c7d365d446092dd1d5331"
 
 S = "${WORKDIR}/qt-creator-opensource-src-${PV}"
 
