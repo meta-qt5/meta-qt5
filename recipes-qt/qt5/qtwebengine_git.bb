@@ -11,7 +11,7 @@ SRC_URI += " \
     file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
     file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch \
 "
-SRCREV_qtwebengine = "9d1a77b5be56a6a1dade613573eaeea63070969f"
+SRCREV_qtwebengine = "8b2cb3b6b4546d333ff7d265d3875d2ed46c2c0a"
 SRCREV_chromium = "f9c03801de86b5e9da2b915a9e490c2f2254fecf"
 SRCREV = "${SRCREV_qtwebengine}"
 

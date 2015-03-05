@@ -1,4 +1,4 @@
-From dca162bbe2e0356596bdc4469fb0754be27e0b7d Mon Sep 17 00:00:00 2001
+From 6ba64ed2e7136c5a9067d7e1793c0db15e762403 Mon Sep 17 00:00:00 2001
 From: Stephan Binner <stephan.binner@basyskom.com>
 Date: Wed, 4 Mar 2015 12:39:29 +0100
 Subject: [PATCH 4/4] Enable building Qt WebEngine without accessiblity
@@ -24,7 +24,7 @@ Reviewed-by: Andras Becsi <andras.becsi@theqtcompany.com>
  src/core/browser_accessibility_manager_qt.h              |  2 ++
  src/core/browser_accessibility_qt.cpp                    |  4 ++++
  src/core/browser_accessibility_qt.h                      |  3 +++
- src/core/render_widget_host_view_qt.cpp                  | 13 ++++++++++++-
+ src/core/render_widget_host_view_qt.cpp                  | 11 ++++++++++-
  src/core/render_widget_host_view_qt.h                    |  6 +++++-
  src/core/web_contents_adapter.cpp                        |  2 ++
  src/core/web_contents_adapter_client.h                   |  2 ++
@@ -37,7 +37,7 @@ Reviewed-by: Andras Becsi <andras.becsi@theqtcompany.com>
  src/webenginewidgets/api/qwebengineview.cpp              |  7 ++++++-
  src/webenginewidgets/api/qwebengineview_p.h              |  3 ++-
  tests/quicktestbrowser/quicktestbrowser.pro              |  2 ++
- 18 files changed, 73 insertions(+), 5 deletions(-)
+ 18 files changed, 71 insertions(+), 5 deletions(-)
 
 diff --git a/examples/webengine/quicknanobrowser/quicknanobrowser.pro b/examples/webengine/quicknanobrowser/quicknanobrowser.pro
 index 3628b81..a8e57b0 100644
@@ -132,7 +132,7 @@ index db190ff..e87b5d8 100644
 +#endif // QT_NO_ACCESSIBILITY
  #endif
 diff --git a/src/core/render_widget_host_view_qt.cpp b/src/core/render_widget_host_view_qt.cpp
-index c221e94..18d64e8 100644
+index c221e94..4c8a2c1 100644
 --- a/src/core/render_widget_host_view_qt.cpp
 +++ b/src/core/render_widget_host_view_qt.cpp
 @@ -198,15 +198,18 @@ RenderWidgetHostViewQt::RenderWidgetHostViewQt(content::RenderWidgetHost* widget
@@ -163,17 +163,15 @@ index c221e94..18d64e8 100644
      if (GetBrowserAccessibilityManager())
          return;
  
-@@ -303,6 +307,9 @@ void RenderWidgetHostViewQt::CreateBrowserAccessibilityManagerIfNeeded()
+@@ -303,6 +307,7 @@ void RenderWidgetHostViewQt::CreateBrowserAccessibilityManagerIfNeeded()
          m_adapterClient->accessibilityParentObject(),
          content::BrowserAccessibilityManagerQt::GetEmptyDocument(),
          this));
-+#else
-+    return 0;
 +#endif // QT_NO_ACCESSIBILITY
  }
  
  // Set focus to the associated View component.
-@@ -953,6 +960,7 @@ void RenderWidgetHostViewQt::AccessibilityFatalError()
+@@ -953,6 +958,7 @@ void RenderWidgetHostViewQt::AccessibilityFatalError()
      SetBrowserAccessibilityManager(NULL);
  }
  
@@ -181,7 +179,7 @@ index c221e94..18d64e8 100644
  void RenderWidgetHostViewQt::accessibilityActiveChanged(bool active)
  {
      if (active)
-@@ -960,6 +968,7 @@ void RenderWidgetHostViewQt::accessibilityActiveChanged(bool active)
+@@ -960,6 +966,7 @@ void RenderWidgetHostViewQt::accessibilityActiveChanged(bool active)
      else
          content::BrowserAccessibilityStateImpl::GetInstance()->DisableAccessibility();
  }
@@ -189,7 +187,7 @@ index c221e94..18d64e8 100644
  
  void RenderWidgetHostViewQt::handleWheelEvent(QWheelEvent *ev)
  {
-@@ -1042,6 +1051,7 @@ void RenderWidgetHostViewQt::handleFocusEvent(QFocusEvent *ev)
+@@ -1042,6 +1049,7 @@ void RenderWidgetHostViewQt::handleFocusEvent(QFocusEvent *ev)
      }
  }
  
@@ -197,7 +195,7 @@ index c221e94..18d64e8 100644
  QAccessibleInterface *RenderWidgetHostViewQt::GetQtAccessible()
  {
      // Assume we have a screen reader doing stuff
-@@ -1051,6 +1061,7 @@ QAccessibleInterface *RenderWidgetHostViewQt::GetQtAccessible()
+@@ -1051,6 +1059,7 @@ QAccessibleInterface *RenderWidgetHostViewQt::GetQtAccessible()
      content::BrowserAccessibilityQt *accQt = static_cast<content::BrowserAccessibilityQt*>(acc);
      return accQt;
  }
