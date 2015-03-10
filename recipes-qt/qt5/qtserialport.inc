@@ -1,5 +1,9 @@
 require qt5.inc
 
+SRC_URI += " \
+    file://0001-Unix-Clear-serial_struct-instances.patch \
+"
+
 DEPENDS += "qtbase"
 
 # text of LGPL_EXCEPTION.txt and LICENSE.FDL is slightly different than what
