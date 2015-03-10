@@ -215,6 +215,7 @@ do_install_append() {
     # install fonts manually if they are missing
     if [ ! -d ${D}/${OE_QMAKE_PATH_LIBS}/fonts ]; then
         cp -a ${S}/lib/fonts ${D}/${OE_QMAKE_PATH_LIBS}
+        chown -R root:root ${D}/${OE_QMAKE_PATH_LIBS}/fonts
     fi
 
     # Remove example.pro file as it is useless
