@@ -2,7 +2,7 @@ require qt5-git.inc
 require ${PN}.inc
 
 SRC_URI = "\
-    git://code.qt.io/qt/${QT_MODULE}.git;branch=${QT_MODULE_BRANCH} \
+    ${QT_GIT}/qt/${QT_MODULE}.git;branch=${QT_MODULE_BRANCH} \
 "
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
