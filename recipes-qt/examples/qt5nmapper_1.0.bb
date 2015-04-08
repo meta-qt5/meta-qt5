@@ -6,7 +6,8 @@ LIC_FILES_CHKSUM = "file://README;beginline=47;endline=58;md5=9fb5bf76d564bc5381
 
 DEPENDS = "qtdeclarative qtgraphicaleffects"
 
-SRC_URI = "http://quitcoding.com/download/Qt5_NMapper_1.0.tgz"
+SRC_URI = "http://quitcoding.com/download/Qt5_NMapper_1.0.tgz \
+           file://change-property-string.patch"
 SRC_URI[md5sum] = "dafc425280144d8e286788e75a0dba0f"
 SRC_URI[sha256sum] = "607fbf4c448f00d3c563f9ef8a582bcb6e8fe550e80b56bf8d9127a417faa53b"
 
