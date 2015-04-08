@@ -40,6 +40,12 @@ do_configure_prepend() {
     mkdir -p ${S}/.git || true
 }
 
+# Many examples come with libraries installed outside of standard libdir,
+# suppress QA check complaining
+INSANE_SKIP_${PN}-examples += "libdir"
+INSANE_SKIP_${PN}-examples-dbg += "libdir"
+INSANE_SKIP_${PN}-examples-dev += "libdir"
+
 PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples "
 
 # extra -dbg packages
