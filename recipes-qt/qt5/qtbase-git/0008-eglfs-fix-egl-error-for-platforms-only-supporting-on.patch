@@ -1,4 +1,4 @@
-From 715b5d739b36588cd2e34962b33a59da1f5427fe Mon Sep 17 00:00:00 2001
+From d1712999887b9809cce57b1e6c008c454330cd2e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 5 Feb 2014 18:35:08 +0100
 Subject: [PATCH 08/12] eglfs: fix egl error for platforms only supporting one
@@ -68,5 +68,5 @@ index 39a3ef9..2c05979 100644
  
      if (isRaster()) {
 -- 
-2.3.1
+2.3.5
 

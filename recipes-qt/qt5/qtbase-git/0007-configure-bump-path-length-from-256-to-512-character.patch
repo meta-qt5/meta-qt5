@@ -1,4 +1,4 @@
-From e4235e3a0ebe4494ad1f4f550ddb070100e530e1 Mon Sep 17 00:00:00 2001
+From a6b01490248be28c1db3abd5f710c5d7d9afee55 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Mon, 11 Nov 2013 20:27:30 -0500
 Subject: [PATCH 07/12] configure: bump path length from 256 to 512 characters
@@ -25,5 +25,5 @@ index ad5f4cd..c19ff6a 100755
      "qt_prfxpath=$QT_SYSROOT_PREFIX",
      "qt_docspath=$QT_SYSROOT_DOCS",
 -- 
-2.3.1
+2.3.5
 

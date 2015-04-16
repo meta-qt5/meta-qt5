@@ -4,7 +4,7 @@ require ${PN}.inc
 # prepend this again, because ${PN}.inc prepends ${PN}
 FILESEXTRAPATHS =. "${FILE_DIRNAME}/${BPN}-git:"
 
-SRCREV = "638c278b76c56a51f83ef8c5cc9c03f18a887f74"
+SRCREV = "7f5b11a4a6357d2969e5b24bfb25c47aeb3d99f5"
 
 LIC_FILES_CHKSUM = "file://LICENSE.LGPLv21;md5=d87ae0d200af76dca730d911474cbe5b \
                     file://LICENSE.LGPLv3;md5=ffcfac38a32c9ebdb8ff768fa1702478 \

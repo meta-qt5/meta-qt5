@@ -1,4 +1,4 @@
-From a42d29588f9c65d8c480fd9fbcbbd0606f01170f Mon Sep 17 00:00:00 2001
+From 8b306a5a70d431b8e142b3a7efb32d897cb79ab5 Mon Sep 17 00:00:00 2001
 From: Yoann Lopes <yoann.lopes@digia.com>
 Date: Thu, 31 Oct 2013 15:06:30 +0100
 Subject: [PATCH] Initial porting effort to GStreamer 1.0.
@@ -13,6 +13,7 @@ Sergio Schvezov <sergio.schvezov@canonical.com>
 Change-Id: I10fa5e5078efa4564ce833befd417008e26a90a9
 Reviewed-by: Yoann Lopes <yoann.lopes@digia.com>
 (cherry picked from commit d91dac090d92fdbc3a3425e8d969c62e5c79eff9)
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 
 Conflicts:
 	src/gsttools/qgstreamervideorenderer.cpp
@@ -38,7 +39,7 @@ Conflicts:
  src/gsttools/qgstreamervideowindow.cpp             |  79 +++++++-
  src/gsttools/qgstutils.cpp                         |  27 ++-
  src/gsttools/qgstvideobuffer.cpp                   |  18 +-
- src/gsttools/qvideosurfacegstsink.cpp              | 138 +++++++++++++-
+ src/gsttools/qvideosurfacegstsink.cpp              | 136 +++++++++++++-
  src/multimedia/gsttools_headers/qgstappsrc_p.h     |   3 +
  .../qgstreameraudioprobecontrol_p.h                |   5 +-
  .../qgstreamervideoprobecontrol_p.h                |   4 +
@@ -58,7 +59,7 @@ Conflicts:
  .../mediaplayer/qgstreamerplayerserviceplugin.cpp  |  27 ++-
  .../mediaplayer/qgstreamerplayersession.cpp        | 154 ++++++++++++++--
  .../mediaplayer/qgstreamerplayersession.h          |   9 +
- 36 files changed, 872 insertions(+), 130 deletions(-)
+ 36 files changed, 871 insertions(+), 129 deletions(-)
 
 diff --git a/config.tests/gstreamer/gstreamer.pro b/config.tests/gstreamer/gstreamer.pro
 index 02a7e34..6b9843a 100644
@@ -772,7 +773,7 @@ index 2b66f76..804dce9 100644
  #include <gst/gst.h>
  
 diff --git a/src/gsttools/qgstreamervideowidget.cpp b/src/gsttools/qgstreamervideowidget.cpp
-index 4960187..230fbf4 100644
+index b26369a..23674bb 100644
 --- a/src/gsttools/qgstreamervideowidget.cpp
 +++ b/src/gsttools/qgstreamervideowidget.cpp
 @@ -40,8 +40,13 @@
@@ -789,7 +790,7 @@ index 4960187..230fbf4 100644
  
  QT_BEGIN_NAMESPACE
  
-@@ -164,9 +169,13 @@ bool QGstreamerVideoWidgetControl::processSyncMessage(const QGstreamerMessage &m
+@@ -161,9 +166,13 @@ bool QGstreamerVideoWidgetControl::processSyncMessage(const QGstreamerMessage &m
  {
      GstMessage* gm = message.rawMessage();
  
@@ -804,7 +805,7 @@ index 4960187..230fbf4 100644
          setOverlay();
          QMetaObject::invokeMethod(this, "updateNativeVideoSize", Qt::QueuedConnection);
          return true;
-@@ -194,18 +203,29 @@ bool QGstreamerVideoWidgetControl::processBusMessage(const QGstreamerMessage &me
+@@ -191,18 +200,29 @@ bool QGstreamerVideoWidgetControl::processBusMessage(const QGstreamerMessage &me
  
  void QGstreamerVideoWidgetControl::setOverlay()
  {
@@ -835,7 +836,7 @@ index 4960187..230fbf4 100644
  
          if (caps) {
              m_widget->setNativeSize(QGstUtils::capsCorrectedResolution(caps));
-@@ -220,8 +240,13 @@ void QGstreamerVideoWidgetControl::updateNativeVideoSize()
+@@ -217,8 +237,13 @@ void QGstreamerVideoWidgetControl::updateNativeVideoSize()
  
  void QGstreamerVideoWidgetControl::windowExposed()
  {
@@ -1134,7 +1135,7 @@ index 18702ec..93f22f5 100644
  }
  
 diff --git a/src/gsttools/qvideosurfacegstsink.cpp b/src/gsttools/qvideosurfacegstsink.cpp
-index f3e2d88..a964e82 100644
+index f3e2d88..94aaee7 100644
 --- a/src/gsttools/qvideosurfacegstsink.cpp
 +++ b/src/gsttools/qvideosurfacegstsink.cpp
 @@ -43,7 +43,11 @@
@@ -1317,11 +1318,10 @@ index f3e2d88..a964e82 100644
                      "framerate", GST_TYPE_FRACTION_RANGE, 0, 1, INT_MAX, 1,
                      "width"    , GST_TYPE_INT_RANGE, 1, INT_MAX,
                      "height"   , GST_TYPE_INT_RANGE, 1, INT_MAX,
--                    "format"   , GST_TYPE_FOURCC, qt_yuvColorLookup[index].fourcc,
 +#if GST_CHECK_VERSION(1,0,0)
 +                    "format"   , G_TYPE_STRING, gst_video_format_to_string(qt_yuvColorLookup[index].vfmt),
 +#else
-+                    "format"   , G_TYPE_STRING, qt_yuvColorLookup[index].fourcc,
+                     "format"   , GST_TYPE_FOURCC, qt_yuvColorLookup[index].fourcc,
 +#endif
                      NULL));
              continue;
@@ -2365,5 +2365,5 @@ index f2e760a..50bda3d 100644
  
  QT_END_NAMESPACE
 -- 
-2.3.1
+2.3.5
 

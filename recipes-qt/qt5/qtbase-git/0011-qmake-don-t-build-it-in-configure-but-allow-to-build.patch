@@ -1,4 +1,4 @@
-From f298d49fd1b88ae9bf8f35339a52cd333f42434b Mon Sep 17 00:00:00 2001
+From 6c0cc990522454e0c9e52ba969c3a8c5937157b8 Mon Sep 17 00:00:00 2001
 From: Michael Krelin <hacker@klever.net>
 Date: Mon, 29 Oct 2012 20:07:49 -0700
 Subject: [PATCH 11/12] qmake: don't build it in configure, but allow to build
@@ -64,5 +64,5 @@ index 89d6ea5..0ff4a96 100644
  VPATH += \
      ../src/corelib/global \
 -- 
-2.3.1
+2.3.5
 
