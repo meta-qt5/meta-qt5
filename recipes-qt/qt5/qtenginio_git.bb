@@ -2,4 +2,4 @@ require qt5-git.inc
 require ${PN}.inc
 
 QT_MODULE_BRANCH = "1.1"
-SRCREV = "5581890d3c5919c3bd4b6aafdba650c14a97c312"
+SRCREV = "30ee95cd19f9a435ce337b4f651175ed2e8ba2e5"

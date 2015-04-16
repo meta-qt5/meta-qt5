@@ -1,4 +1,4 @@
-From 457efc32bb79060a0a58a82ff8a35d67655ef6d6 Mon Sep 17 00:00:00 2001
+From cf4e996876e0b467b7aae124c7cb285f677bf6b0 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH 03/12] Add -external-hostbindir option
@@ -95,10 +95,10 @@ index 0a00d6d..ad5f4cd 100755
      "qt_hostspec=$shortspec",
  #endif
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 7961f65..e11b23d 100644
+index 79b4eab..8c6913e 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -192,7 +192,11 @@ defineTest(qtAddRpathLink) {
+@@ -198,7 +198,11 @@ defineTest(qtAddRpathLink) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
      isEmpty(cmd) {
@@ -229,5 +229,5 @@ index 99d87e2..5621dc0 100644
      _qt5_Widgets_check_file_exists(${imported_location})
  
 -- 
-2.3.1
+2.3.5
 

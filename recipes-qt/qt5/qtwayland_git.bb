@@ -1,7 +1,7 @@
 require qt5-git.inc
 require ${PN}.inc
 
-SRCREV = "1e32e71403a6a9cb117343464fbc34564598e831"
+SRCREV = "d5e7965a87d81e2d7157c785403b0aba681de62a"
 
 SRC_URI += " \
     file://0001-examples-wayland-include-server-buffer-only-when-bui.patch \

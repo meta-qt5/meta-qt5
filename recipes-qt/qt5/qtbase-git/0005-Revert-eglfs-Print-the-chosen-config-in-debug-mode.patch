@@ -1,4 +1,4 @@
-From 825043f0a657cd4b8c3af0e00c79684388460d5c Mon Sep 17 00:00:00 2001
+From f8a4e063b45b5b941738dd90ea7c74063bc1e49f Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 21 Apr 2014 19:22:04 +0200
 Subject: [PATCH 05/12] Revert "eglfs: Print the chosen config in debug mode"
@@ -93,5 +93,5 @@ index 7cc3300..ccbd974a 100644
  }
  
 -- 
-2.3.1
+2.3.5
 

@@ -1,4 +1,4 @@
-From c87f9a5ec9a08c415ede4d5118deeb4177778338 Mon Sep 17 00:00:00 2001
+From 5a6ad20dd4fde6a0581be895d763aae43f1fc2b6 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 16 Nov 2013 00:32:30 +0100
 Subject: [PATCH 11/13] Always build uic
@@ -27,5 +27,5 @@ index 83f7587..9dbcf70 100644
  nacl: SUBDIRS -= src_network src_testlib
  
 -- 
-2.3.1
+2.3.5
 

@@ -1,4 +1,4 @@
-From b4d4c91bb504c9e90b69a2d78453bf3523ec6822 Mon Sep 17 00:00:00 2001
+From 6061c8457ea1f76745bd9918e61bda01ef96ce56 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Wed, 19 Mar 2014 18:32:28 +0100
 Subject: [PATCH 06/12] qeglplatformintegration: Undefine CursorShape from X.h
@@ -26,5 +26,5 @@ index 2b5d5f5..a0aab03 100644
  
  class QEGLPlatformScreen;
 -- 
-2.3.1
+2.3.5
 

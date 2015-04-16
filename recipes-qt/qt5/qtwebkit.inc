@@ -17,7 +17,6 @@ ARM_INSTRUCTION_SET = "arm"
 SRC_URI += "\
     file://0001-qtwebkit-fix-QA-issue-bad-RPATH.patch \
     file://0002-Remove-TEXTREL-tag-in-x86.patch \
-    file://0003-Fix-building-with-glib-2.43.patch \
 "
 
 PACKAGECONFIG ??= "gstreamer qtlocation qtmultimedia qtsensors qtwebchannel"

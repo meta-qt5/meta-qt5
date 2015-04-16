@@ -1,4 +1,4 @@
-From 53afe73154c7c00b54cd280fa3d6c9127a2bc84b Mon Sep 17 00:00:00 2001
+From cdaa89e30e12d247a8086763d341e5f020151b67 Mon Sep 17 00:00:00 2001
 From: Jonathan Liu <net147@gmail.com>
 Date: Mon, 9 Mar 2015 22:35:56 +1100
 Subject: [PATCH] Unix: Clear serial_struct instances
@@ -16,10 +16,10 @@ Signed-off-by: Jonathan Liu <net147@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/src/serialport/qserialport_unix.cpp b/src/serialport/qserialport_unix.cpp
-index 34ef41d..7cf356b 100644
+index cda73b2..62c454c 100644
 --- a/src/serialport/qserialport_unix.cpp
 +++ b/src/serialport/qserialport_unix.cpp
-@@ -439,6 +439,8 @@ QSerialPortPrivate::setStandardBaudRate(qint32 baudRate, QSerialPort::Directions
+@@ -451,6 +451,8 @@ QSerialPortPrivate::setStandardBaudRate(qint32 baudRate, QSerialPort::Directions
  {
      struct serial_struct currentSerialInfo;
  
@@ -28,7 +28,7 @@ index 34ef41d..7cf356b 100644
      if ((::ioctl(descriptor, TIOCGSERIAL, &currentSerialInfo) != -1)
              && (currentSerialInfo.flags & ASYNC_SPD_CUST)) {
          currentSerialInfo.flags &= ~ASYNC_SPD_CUST;
-@@ -469,6 +471,8 @@ QSerialPortPrivate::setCustomBaudRate(qint32 baudRate, QSerialPort::Directions d
+@@ -481,6 +483,8 @@ QSerialPortPrivate::setCustomBaudRate(qint32 baudRate, QSerialPort::Directions d
  
      struct serial_struct currentSerialInfo;
  
@@ -38,5 +38,5 @@ index 34ef41d..7cf356b 100644
          return decodeSystemError();
  
 -- 
-2.3.2
+2.3.5
 
