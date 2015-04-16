@@ -5,17 +5,13 @@ require qt5-git.inc
 # other qt* components use :/
 LICENSE = "GFDL-1.3 & BSD & (LGPL-2.1 & Digia-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
 LIC_FILES_CHKSUM = " \
-    file://LICENSE.LGPLv21;md5=cff17b12416c896e10ae2c17a64252e7 \
-    file://LICENSE.GPLv2;md5=e782f55badfa137e5e59c330f12cc8ed \
-    file://LICENSE.LGPLv3;md5=c1939be5579666be947371bc8120425f \
-    file://LGPL_EXCEPTION.txt;md5=eb6c371255e1262c55ae9b652a90b528 \
+    file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
+    file://LICENSE.LGPLv3;md5=c4fe8c6de4eef597feec6e90ed62e962 \
+    file://LGPL_EXCEPTION.txt;md5=bb426f3367c4805d1e12fad05bd0b750 \
     file://LICENSE.FDL;md5=3801d7932fdc07fd9efe89f9854a6caa \
-"
-
-SRC_URI += " \
-    file://0001-Unix-Clear-serial_struct-instances.patch \
+    file://LICENSE.GPLv2;md5=05832301944453ec79e40ba3c3cfceec \
 "
 
 DEPENDS += "qtbase"
 
-SRCREV = "e257bdc9aae5583b187bafb5e69e4a6143e3bf4e"
+SRCREV = "d9ab9258ca81650a914357d53e7f92f293d4ef81"

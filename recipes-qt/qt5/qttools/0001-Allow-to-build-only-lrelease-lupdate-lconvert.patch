@@ -1,4 +1,4 @@
-From b19c4a2f723525b995ef5b47db0e725a2bb9ab20 Mon Sep 17 00:00:00 2001
+From 5d1c8cdf5d448d5b3f719447dae3a59340348d2e Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.jansa@gmail.com>
 Date: Wed, 11 Sep 2013 18:30:08 +0200
 Subject: [PATCH 1/3] Allow to build only lrelease + lupdate + lconvert
@@ -12,10 +12,10 @@ Upstream-Status: Pending
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  examples/examples.pro     |  3 ++-
- src/designer/src/src.pro  | 16 +++++++++-------
+ src/designer/src/src.pro  | 18 ++++++++++--------
  src/linguist/linguist.pro |  2 +-
  src/src.pro               | 14 ++++++++------
- tests/auto/auto.pro       | 24 +++++++++++++-----------
+ tests/auto/auto.pro       | 22 ++++++++++++----------
  5 files changed, 33 insertions(+), 26 deletions(-)
 
 diff --git a/examples/examples.pro b/examples/examples.pro
@@ -30,19 +30,21 @@ index 69365d1..da7b38b 100644
  
  winrt: SUBDIRS -= assistant designer
 diff --git a/src/designer/src/src.pro b/src/designer/src/src.pro
-index e02ca8e..49527c5 100644
+index 6915e34..3ff2eca 100644
 --- a/src/designer/src/src.pro
 +++ b/src/designer/src/src.pro
-@@ -1,18 +1,20 @@
+@@ -1,13 +1,15 @@
  TEMPLATE = subdirs
  
 -SUBDIRS = \
+-    uiplugin \
 -    uitools \
 -    lib \
 -    components \
 -    designer
 +!linguistonly {
 +    SUBDIRS = \
++        uiplugin \
 +        lib \
 +        components \
 +        designer
@@ -52,7 +54,9 @@ index e02ca8e..49527c5 100644
 -contains(QT_CONFIG, shared): SUBDIRS += plugins
 +!linguistonly:contains(QT_CONFIG, shared): SUBDIRS += plugins
  
- components.depends = lib
+ uitools.depends = uiplugin
+ lib.depends = uiplugin
+@@ -15,7 +17,7 @@ components.depends = lib
  designer.depends = components
  plugins.depends = lib
  
@@ -75,7 +79,7 @@ index 3a70580..a977878 100644
  qtNomakeTools( \
      linguist \
 diff --git a/src/src.pro b/src/src.pro
-index 722b32e..9453152 100644
+index 494898f..c02848d 100644
 --- a/src/src.pro
 +++ b/src/src.pro
 @@ -4,10 +4,12 @@ qtHaveModule(widgets) {
@@ -91,15 +95,15 @@ index 722b32e..9453152 100644
 +                  qtestlib
 +        }
 +        SUBDIRS += designer
- #    unix:!mac:!embedded:!qpa:SUBDIRS += qtconfig
  
          linguist.depends = designer
+     }
 @@ -15,7 +17,7 @@ qtHaveModule(widgets) {
- }
  
- SUBDIRS += linguist
+ SUBDIRS += linguist \
+     qtplugininfo
 -if(!android|android_app):!ios: SUBDIRS += qtpaths
-+if(!android|android_app):!linguistonly:!ios: SUBDIRS += qtpaths
++if(!android|android_app):!ios:!linguistonly: SUBDIRS += qtpaths
  
  mac {
      SUBDIRS += macdeployqt
@@ -118,14 +122,13 @@ index 722b32e..9453152 100644
  qtNomakeTools( \
      pixeltool \
 diff --git a/tests/auto/auto.pro b/tests/auto/auto.pro
-index df240e3..27ee687 100644
+index a703a06..44bae18 100644
 --- a/tests/auto/auto.pro
 +++ b/tests/auto/auto.pro
-@@ -1,15 +1,17 @@
+@@ -1,14 +1,16 @@
  TEMPLATE=subdirs
 -SUBDIRS=\
 -    linguist \
--    host.pro \
 -    qhelpcontentmodel \
 -    qhelpenginecore \
 -    qhelpgenerator \
@@ -137,7 +140,6 @@ index df240e3..27ee687 100644
 +!linguistonly {
 +    SUBDIRS=\
 +        linguist \
-+        host.pro \
 +        qhelpcontentmodel \
 +        qhelpenginecore \
 +        qhelpgenerator \

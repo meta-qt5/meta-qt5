@@ -1,7 +1,7 @@
-From 3f0f3ded0b4a85a04a0c492e33d8517e598ae08e Mon Sep 17 00:00:00 2001
+From 3b289cf76a5ce78d94ee022af7d92152f5875372 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
-Subject: [PATCH 04/12] qt_module: Fix pkgconfig and libtool replacements
+Subject: [PATCH 3/7] qt_module: Fix pkgconfig and libtool replacements
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,29 +63,29 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
 ---
  mkspecs/features/qt_common.prf |  2 +-
- mkspecs/features/qt_module.prf | 15 +++++++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ mkspecs/features/qt_module.prf | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
-index eb65e73..4db40d0 100644
+index 5861941..474827c 100644
 --- a/mkspecs/features/qt_common.prf
 +++ b/mkspecs/features/qt_common.prf
-@@ -33,7 +33,7 @@ contains(TEMPLATE, .*lib) {
+@@ -36,7 +36,7 @@ contains(TEMPLATE, .*lib) {
          lib_replace.replace =
      } else {
          lib_replace.match = $$rplbase/lib
--        lib_replace.replace = $$qt_libdir
+-        lib_replace.replace = $$qqt_libdir
 +        lib_replace.replace = "\$$\\{libdir}"
      }
      lib_replace.CONFIG = path
      QMAKE_PRL_INSTALL_REPLACE += lib_replace
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 2437efe..2e1f014 100644
+index 5412f37..5ab348a 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
-@@ -192,10 +192,25 @@ unix|mingw {
-         QMAKE_PKGCONFIG_DESCRIPTION = $$replace(TARGET, ^Qt, "Qt ") module
-     QMAKE_PKGCONFIG_INSTALL_REPLACE += lib_replace
+@@ -214,6 +214,11 @@ unix|mingw {
+     pclib_replace.CONFIG = path
+     QMAKE_PKGCONFIG_INSTALL_REPLACE += pclib_replace
  
 +    pkgconfig_include_replace.match = $$rplbase/include
 +    pkgconfig_include_replace.replace = "\$$\\{includedir}"
@@ -94,13 +94,11 @@ index 2437efe..2e1f014 100644
 +
      unix {
          CONFIG += create_libtool explicitlib
-         QMAKE_LIBTOOL_LIBDIR = $$qt_libdir
-         QMAKE_LIBTOOL_INSTALL_REPLACE += lib_replace
-+        # add '=' as sysroot in .la files
-+        lafile_replace.match = "-L\$${libdir}"
-+        lafile_replace.replace = "-L=\$$\\{libdir}"
-+        lafile_replace.CONFIG = path
-+        QMAKE_LIBTOOL_INSTALL_REPLACE += lafile_replace
+         host_build: \
+@@ -225,6 +230,11 @@ unix|mingw {
+             ltlib_replace.replace = $$QMAKE_LIBTOOL_LIBDIR
+         ltlib_replace.CONFIG = path
+         QMAKE_LIBTOOL_INSTALL_REPLACE += ltlib_replace
 +        # drop -L/usr/lib in .prl files
 +        prl_replace.match = "-L\$${libdir}"
 +        prl_replace.replace = ""

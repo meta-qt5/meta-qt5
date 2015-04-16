@@ -3,9 +3,9 @@ require qt5-git.inc
 
 LICENSE = "(LGPL-2.1 & Digia-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
 LIC_FILES_CHKSUM = " \
-    file://LICENSE.LGPLv21;md5=cff17b12416c896e10ae2c17a64252e7 \
-    file://LICENSE.LGPLv3;md5=c1939be5579666be947371bc8120425f \
-    file://LGPL_EXCEPTION.txt;md5=0145c4d1b6f96a661c2c139dfb268fb6 \
+    file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
+    file://LICENSE.LGPLv3;md5=c4fe8c6de4eef597feec6e90ed62e962 \
+    file://LGPL_EXCEPTION.txt;md5=9625233da42f9e0ce9d63651a9d97654 \
 "
 
 DEPENDS += "qtbase qttools-native"
@@ -93,4 +93,4 @@ FILES_${PN}-qt = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qt_*.qm \
 "
 
-SRCREV = "f76e5c98b0c426ffed95443e45041c3c0deab0c6"
+SRCREV = "5e65c6fcdbbc75040426c8239c686f7b1ea689fd"

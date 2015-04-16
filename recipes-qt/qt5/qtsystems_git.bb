@@ -28,6 +28,6 @@ do_install_append() {
 QT_MODULE_BRANCH = "dev"
 
 # qtsystems wasn't released yet, last tag before this SRCREV is 5.0.0-beta1
-# qt5-git PV is only to indicate that this recipe is compatible with qt5 5.4
+# qt5-git PV is only to indicate that this recipe is compatible with qt5 5.5
 
-SRCREV = "37b614abbfb35d06a57e5b0824249c3abd5640e3"
+SRCREV = "4e3a7ed3ef5226256ae6aee1a73e264768aac8f4"

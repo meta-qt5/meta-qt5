@@ -1,7 +1,7 @@
-From ec414ca0df1ec459b5abd753cf0d730572715e17 Mon Sep 17 00:00:00 2001
+From b8b9732948ede2b27304eed7f1d78aed16a4eeb7 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
-Subject: [PATCH 01/12] Add linux-oe-g++ platform
+Subject: [PATCH 1/7] Add linux-oe-g++ platform
 
 * This qmake.conf unlike other platforms reads most variables from
   shell environment, because it's easier for qt recipes to export
@@ -43,19 +43,19 @@ Upstream-Status: Inappropriate [embedded specific]
 Change-Id: I0591ed5da0d61d7cf1509d420e6b293582f1863c
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- configure                            |  66 ++++++++++++++++-------
+ configure                            |  70 +++++++++++++++---------
  mkspecs/features/configure.prf       |   4 +-
  mkspecs/linux-oe-g++/qmake.conf      |  40 ++++++++++++++
  mkspecs/linux-oe-g++/qplatformdefs.h | 100 +++++++++++++++++++++++++++++++++++
- 4 files changed, 188 insertions(+), 22 deletions(-)
+ 4 files changed, 186 insertions(+), 28 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index 6ce6753..0a00d6d 100755
+index 7251e8e..8093782 100755
 --- a/configure
 +++ b/configure
-@@ -316,6 +316,16 @@ getQMakeConf()
+@@ -342,6 +342,16 @@ getQMakeConf()
      getSingleQMakeVariable "$1" "$specvals"
  }
  
@@ -72,7 +72,7 @@ index 6ce6753..0a00d6d 100755
  getXQMakeConf()
  {
      if [ -z "$xspecvals" ]; then
-@@ -325,6 +335,16 @@ getXQMakeConf()
+@@ -351,6 +361,16 @@ getXQMakeConf()
      getSingleQMakeVariable "$1" "$xspecvals"
  }
  
@@ -89,37 +89,38 @@ index 6ce6753..0a00d6d 100755
  compilerSupportsFlag()
  {
      cat >conftest.cpp <<EOF
-@@ -541,21 +561,19 @@ fi
+@@ -564,24 +584,14 @@ fi
  # initalize variables
  #-------------------------------------------------------------------------------
  
--SYSTEM_VARIABLES="RANLIB STRIP OBJDUMP LD CC CXX CFLAGS CXXFLAGS LDFLAGS"
+-SYSTEM_VARIABLES="AR RANLIB STRIP OBJDUMP LD CC CXX CFLAGS CXXFLAGS LDFLAGS"
 -for varname in $SYSTEM_VARIABLES; do
 +# Export all OE variables for qmake.conf from shell env to QMakeVars
 +OE_VARIABLES="AR CC CFLAGS COMPILER CXX CXXFLAGS LDFLAGS LINK QT_CONFIG STRIP"
 +for varname in $OE_VARIABLES; do
      qmakevarname="${varname}"
+-    qmakecmdargs=""
 -    # use LDFLAGS for autoconf compat, but qmake uses QMAKE_LFLAGS
 -    if [ "${varname}" = "LDFLAGS" ]; then
 -        qmakevarname="LFLAGS"
 -    elif [ "${varname}" = "LD" ]; then
 -        qmakevarname="LINK"
+-    elif [ "${varname}" = "AR" ]; then
+-        # QMAKE_AR needs to be set to "/path/to/ar cqs" but the
+-        # environment variable will be set to the command only so we
+-        # need to append " cqs" for autoconf compatibility
+-        qmakecmdargs=" cqs"
 -    fi
      cmd=`echo \
 -'if [ -n "\$'${varname}'" ]; then
--    QMakeVar set QMAKE_'${qmakevarname}' "\$'${varname}'"
+-    QMakeVar set QMAKE_'${qmakevarname}' "\$'${varname}${qmakecmdargs}'"
 +'if [ -n "\$OE_QMAKE_'${varname}'" ]; then
 +    QMakeVar set OE_QMAKE_'${qmakevarname}' "\$OE_QMAKE_'${varname}'"
 +#    echo "Exporting OE_QMAKE_'${qmakevarname}' value=\"\$OE_QMAKE_'${varname}'\"" >&2
  fi'`
      eval "$cmd"
  done
-+
-+SYSTEM_VARIABLES="RANLIB STRIP OBJDUMP LD CC CXX CFLAGS CXXFLAGS LDFLAGS"
- # Use CC/CXX to run config.tests
- mkdir -p "$outpath/config.tests"
- rm -f "$outpath/config.tests/.qmake.cache"
-@@ -3178,7 +3196,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
+@@ -3335,7 +3345,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
      [ "$CFG_QGTKSTYLE" = "auto" ] && CFG_QGTKSTYLE=no
  fi
  
@@ -128,7 +129,7 @@ index 6ce6753..0a00d6d 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -3216,7 +3234,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
+@@ -3392,7 +3402,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
          exit 1
      fi
  fi
@@ -137,7 +138,7 @@ index 6ce6753..0a00d6d 100755
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3687,6 +3705,14 @@ setBootstrapVariable()
+@@ -3894,6 +3904,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -152,7 +153,7 @@ index 6ce6753..0a00d6d 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -3725,14 +3751,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -3932,14 +3950,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          fi
  
          [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=

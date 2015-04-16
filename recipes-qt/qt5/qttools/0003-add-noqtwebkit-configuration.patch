@@ -1,4 +1,4 @@
-From 594d23ecc0f62e6a0ebfcb7b9cb879435211420a Mon Sep 17 00:00:00 2001
+From a4438a8c93e9846f1057dd7a21cbb41183440ec1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 4 Jun 2014 11:28:16 +0200
 Subject: [PATCH 3/3] add noqtwebkit configuration
@@ -16,24 +16,24 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/assistant/assistant/assistant.pro b/src/assistant/assistant/assistant.pro
-index 6e82b07..56df78c 100644
+index ef5c595..9c2dc1c 100644
 --- a/src/assistant/assistant/assistant.pro
 +++ b/src/assistant/assistant/assistant.pro
 @@ -1,4 +1,4 @@
 -qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static) {
 +qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static):!contains(CONFIG, noqtwebkit) {
-     QT += webkitwidgets
+     BROWSER = qtwebkit
  } else {
-     DEFINES += QT_NO_WEBKIT
-@@ -71,7 +71,7 @@ SOURCES += aboutdialog.cpp \
-     openpageswidget.cpp \
+     BROWSER = qtextbrowser
+@@ -75,7 +75,7 @@ SOURCES += aboutdialog.cpp \
      openpagesmanager.cpp \
      openpagesswitcher.cpp
--qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static) {
-+qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static):!contains(CONFIG, noqtwebkit) {
+ 
+-equals(BROWSER, "qtwebkit") {
++equals(BROWSER, "qtwebkit"):!contains(CONFIG, noqtwebkit) {
+     DEFINES += BROWSER_QTWEBKIT
+     QT += webkitwidgets
      SOURCES += helpviewer_qwv.cpp
- } else {
-     SOURCES += helpviewer_qtb.cpp
 diff --git a/src/designer/src/plugins/plugins.pro b/src/designer/src/plugins/plugins.pro
 index 500a153..b60fa2d 100644
 --- a/src/designer/src/plugins/plugins.pro

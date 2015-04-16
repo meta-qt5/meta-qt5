@@ -1,7 +1,7 @@
-From 87f1a22e6a1a6b40712eb131ba128d4f1e2da9b8 Mon Sep 17 00:00:00 2001
+From 399990aa9b68437be7f3d6fa16556bf091645c34 Mon Sep 17 00:00:00 2001
 From: Frieder Schrempf <frieder.schrempf@online.de>
 Date: Mon, 1 Dec 2014 14:34:40 +0000
-Subject: [PATCH 3/4] functions.prf: allow build for linux-oe-g++ platform
+Subject: [PATCH 3/3] functions.prf: allow build for linux-oe-g++ platform
 
 Upstream-Status: Inappropriate [OE specific]
 
@@ -12,10 +12,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/qmake/mkspecs/features/functions.prf b/tools/qmake/mkspecs/features/functions.prf
-index b46478b..6205bf4 100644
+index aec54ea..6a4b01f 100644
 --- a/tools/qmake/mkspecs/features/functions.prf
 +++ b/tools/qmake/mkspecs/features/functions.prf
-@@ -10,7 +10,7 @@ defineTest(isPlatformSupported) {
+@@ -14,7 +14,7 @@ defineTest(isPlatformSupported) {
  
    linux-g++*:!isGCCVersionSupported(): return(false)
    !isPythonVersionSupported(): return(false)

@@ -3,7 +3,7 @@ require qt5-git.inc
 
 LICENSE = "BSD & LGPLv2+ | GPL-2.0"
 LIC_FILES_CHKSUM = " \
-    file://LICENSE.GPLv2;md5=e782f55badfa137e5e59c330f12cc8ed \
+    file://LICENSE.GPLv2;md5=05832301944453ec79e40ba3c3cfceec \
     file://Source/WebCore/rendering/RenderApplet.h;endline=22;md5=fb9694013ad71b78f8913af7a5959680 \
     file://Source/WebKit/gtk/webkit/webkit.h;endline=21;md5=b4fbe9f4a944f1d071dba1d2c76b3351 \
     file://Source/JavaScriptCore/parser/Parser.h;endline=21;md5=bd69f72183a7af673863f057576e21ee \
@@ -64,4 +64,4 @@ PACKAGES = "${PN}-dbg ${PN}-staticdev ${PN}-dev ${PN}-doc ${PN}-locale ${PACKAGE
 RUBY_SYS = "${@ '${BUILD_SYS}'.replace('i486', 'i386').replace('i586', 'i386').replace('i686', 'i386') }"
 export RUBYLIB="${STAGING_DATADIR_NATIVE}/rubygems:${STAGING_LIBDIR_NATIVE}/ruby:${STAGING_LIBDIR_NATIVE}/ruby/${RUBY_SYS}"
 
-SRCREV = "ea590d74eae21dd70b189e0b8ba4bfb6a9bddb94"
+SRCREV = "3f0fbb46e2e4e3d0d9ac9f0731b3f8435a504b4b"

@@ -1,7 +1,7 @@
-From 5c0a8f073e7412d01e7f2ef05bbe06954fd39eaa Mon Sep 17 00:00:00 2001
+From 30d26b494bd5b77be6c4e4b41d8df7af5487ee4b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 5 Feb 2014 18:35:08 +0100
-Subject: [PATCH 08/12] eglfs: fix egl error for platforms only supporting one
+Subject: [PATCH 6/7] eglfs: fix egl error for platforms only supporting one
  window/surface
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -27,10 +27,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/src/plugins/platforms/eglfs/qeglfswindow.cpp b/src/plugins/platforms/eglfs/qeglfswindow.cpp
-index 39a3ef9..2c05979 100644
+index c0d51c9..bb4dc00 100644
 --- a/src/plugins/platforms/eglfs/qeglfswindow.cpp
 +++ b/src/plugins/platforms/eglfs/qeglfswindow.cpp
-@@ -68,6 +68,15 @@ void QEglFSWindow::create()
+@@ -69,6 +69,15 @@ void QEglFSWindow::create()
  
      m_flags = Created;
  
@@ -46,7 +46,7 @@ index 39a3ef9..2c05979 100644
      if (window()->type() == Qt::Desktop)
          return;
  
-@@ -81,7 +90,7 @@ void QEglFSWindow::create()
+@@ -83,7 +92,7 @@ void QEglFSWindow::create()
              return;
          }
  
@@ -55,7 +55,7 @@ index 39a3ef9..2c05979 100644
          // We can have either a single OpenGL window or multiple raster windows.
          // Other combinations cannot work.
          qFatal("EGLFS: OpenGL windows cannot be mixed with others.");
-@@ -101,6 +110,11 @@ void QEglFSWindow::create()
+@@ -103,6 +112,11 @@ void QEglFSWindow::create()
  
      resetSurface();
  

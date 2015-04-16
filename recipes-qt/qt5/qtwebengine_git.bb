@@ -2,13 +2,14 @@ SUMMARY = "QtWebEngine combines the power of Chromium and Qt"
 
 LICENSE = "LGPL-3.0 & BSD"
 LIC_FILES_CHKSUM = " \
-    file://src/core/browser_context_qt.cpp;md5=91895ac1852e1b07202d9716194e8dd8;beginline=1;endline=35 \
+    file://src/core/browser_context_qt.cpp;md5=5fe719c44250955a5d5f8fb15fc8b1da;beginline=1;endline=35 \
     file://src/3rdparty/chromium/LICENSE;md5=537e0b52077bf0a616d0a0c8a79bc9d5 \
     file://LICENSE.LGPLv3;md5=e6a600fd5e1d9cbde2d983680233ad02 \
 "
 
 DEPENDS += " \
     ninja-native \
+    qtwebchannel \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols \
     libdrm fontconfig pixman openssl pango cairo icu pciutils \
     libcap \
@@ -71,8 +72,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH = "5.4"
-QT_MODULE_BRANCH_CHROMIUM = "37.0.2062-based"
+QT_MODULE_BRANCH_CHROMIUM = "40.0.2214-based"
 
 SRC_URI += " \
     ${QT_GIT}/qt/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};destsuffix=git/src/3rdparty \
@@ -81,8 +81,8 @@ SRC_URI += " \
     file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
     file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch \
 "
-SRCREV_qtwebengine = "55a7fc7651136510032166ff24eb5e7e49635145"
-SRCREV_chromium = "140893bef70011645c686f5fabe45018dd2e392a"
+SRCREV_qtwebengine = "c6573119006014ff7bc0efb2da16ea35d302a1ec"
+SRCREV_chromium = "41a1a031cd69e187a9608359ffe56652dcaaa6c5"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine"

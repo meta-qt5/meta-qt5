@@ -5,9 +5,9 @@ require qt5-git.inc
 # Note that some files are LGPL-2.1 only without Digia-Qt-LGPL-Exception-1.1.
 LICENSE = "GFDL-1.3 & BSD & (LGPL-2.1 & Digia-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
 LIC_FILES_CHKSUM = " \
-    file://LICENSE.LGPLv21;md5=cff17b12416c896e10ae2c17a64252e7 \
-    file://LICENSE.LGPLv3;md5=c1939be5579666be947371bc8120425f \
-    file://LGPL_EXCEPTION.txt;md5=0145c4d1b6f96a661c2c139dfb268fb6 \
+    file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
+    file://LICENSE.LGPLv3;md5=c4fe8c6de4eef597feec6e90ed62e962 \
+    file://LGPL_EXCEPTION.txt;md5=9625233da42f9e0ce9d63651a9d97654 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
@@ -25,4 +25,4 @@ ARM_INSTRUCTION_SET = "arm"
 
 DEPENDS += "qtbase"
 
-SRCREV = "eb08742e8f874b8dab209c1cfe840c534c68ca3b"
+SRCREV = "2724355d3a1029168e19162e1d1b10dd3f98dc89"
