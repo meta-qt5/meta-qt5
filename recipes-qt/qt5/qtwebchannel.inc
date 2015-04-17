@@ -2,5 +2,6 @@ require qt5.inc
 
 DEPENDS += "qtdeclarative qtwebsockets"
 
-LIC_FILES_CHKSUM = "file://LICENSE.LGPLv21;md5=cff17b12416c896e10ae2c17a64252e7"
-LICENSE = "LGPL-2.1"
+# There are no LGPLv3-only licensed files in this component.
+# There are no GPLv2 licensed files in this component.
+LIC_FILES_CHKSUM += "file://LICENSE.GPLv2;md5=e782f55badfa137e5e59c330f12cc8ed"

@@ -12,7 +12,7 @@ SRC_URI += " \
 
 S = "${WORKDIR}/${QT_MODULE}-opensource-src-${QT_VERSION}"
 
-LICENSE = "GFDL-1.3 & LGPL-2.1 | LGPL-3.0"
+LICENSE = "GFDL-1.3 & BSD & (LGPL-2.1 & Digia-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
 LIC_FILES_CHKSUM = "file://LICENSE.LGPLv21;md5=d87ae0d200af76dca730d911474cbe5b \
                     file://LICENSE.LGPLv3;md5=ffcfac38a32c9ebdb8ff768fa1702478 \
                     file://LGPL_EXCEPTION.txt;md5=0145c4d1b6f96a661c2c139dfb268fb6 \
