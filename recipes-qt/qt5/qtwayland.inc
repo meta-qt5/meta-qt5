@@ -23,7 +23,8 @@ FILES_${PN}-plugins-dbg += " \
     ${OE_QMAKE_PATH_PLUGINS}/*/*/.debug/* \
 "
 
-LICENSE = "GFDL-1.3 & LGPL-2.1 | GPL-3.0"
+# There are no LGPLv3-only licensed files in this component.
+LICENSE = "BSD & (LGPL-2.1 & Digia-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
 LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=4193e7f1d47a858f6b7c0f1ee66161de \
                     file://LICENSE.GPL;md5=d32239bcb673463ab874e80d47fae504 \
                     file://LGPL_EXCEPTION.txt;md5=0145c4d1b6f96a661c2c139dfb268fb6 \

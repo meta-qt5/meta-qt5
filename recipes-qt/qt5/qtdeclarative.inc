@@ -4,6 +4,8 @@ SRC_URI += " \
     file://0001-qmltestexample-fix-link.patch \
 "
 
+# There are no LGPLv3-only licensed files in this component.
+
 DEPENDS += "qtbase"
 
 PACKAGECONFIG ??= "qtxmlpatterns"
