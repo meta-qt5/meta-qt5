@@ -8,6 +8,12 @@ LIC_FILES_CHKSUM = "file://LICENSE.GPLv2;md5=e782f55badfa137e5e59c330f12cc8ed \
 
 DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt leveldb"
 
+# qemuarm build fails with:
+# | {standard input}: Assembler messages:
+# | {standard input}:106: Error: invalid immediate: 983040 is out of range
+# | {standard input}:106: Error: value of 983040 too large for field of 2 bytes at 146
+ARM_INSTRUCTION_SET = "arm"
+
 SRC_URI += "\
     file://0001-qtwebkit-fix-QA-issue-bad-RPATH.patch \
     file://0002-Remove-TEXTREL-tag-in-x86.patch \
