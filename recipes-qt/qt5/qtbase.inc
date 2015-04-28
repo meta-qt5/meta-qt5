@@ -22,9 +22,7 @@ SRC_URI += "\
 
 DEPENDS += "qtbase-native"
 
-# Used for examples and tests
 # LGPL-3.0 is used only in src/plugins/platforms/android/extract.cpp
-LICENSE += "& BSD"
 
 # for syncqt
 RDEPENDS_${PN}-tools += "perl"
