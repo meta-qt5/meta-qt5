@@ -5,15 +5,15 @@ window focus handling and some other game-related features."
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/git/main.cpp;beginline=1;endline=26;md5=93b83ece006c9e76b9fca80c3aecb169"
 
-PV = "1.0.2+gitr${SRCPV}"
+PV = "1.0.4+gitr${SRCPV}"
 
-DEPENDS = "qtbase"
+DEPENDS = "qtbase qtsensors"
 
 # Depends on gles2 enabled and that's not default configuration
 EXCLUDE_FROM_WORLD = "1"
 
 SRC_URI = "git://github.com/thp/qt5-opengles2-test.git"
-SRCREV = "9500c00a7094a881e53afd71146d76d40834df45"
+SRCREV = "3fa3789c28658b6f0bbddc3105f575f1074e87f2"
 S = "${WORKDIR}/git"
 
 inherit qmake5
