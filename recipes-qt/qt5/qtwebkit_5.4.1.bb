@@ -3,6 +3,7 @@ require ${PN}.inc
 
 SRC_URI += "\
     file://0003-Fix-building-with-glib-2.43.patch \
+    file://0004-gcc5-qtbug-44829.patch \
 "
 
 SRC_URI[md5sum] = "186627b1ea5b614811fbd0cfa9b4d073"
