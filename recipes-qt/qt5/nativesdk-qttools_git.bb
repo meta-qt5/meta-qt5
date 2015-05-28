@@ -1,9 +1,6 @@
 require qt5-git.inc
 require ${PN}.inc
 
-# prepend this again, because ${PN}.inc prepends ${PN}
-FILESEXTRAPATHS =. "${FILE_DIRNAME}/${BPN}-git:"
-
 SRCREV = "7f5b11a4a6357d2969e5b24bfb25c47aeb3d99f5"
 
 LIC_FILES_CHKSUM = "file://LICENSE.LGPLv21;md5=d87ae0d200af76dca730d911474cbe5b \

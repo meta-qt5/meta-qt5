@@ -1,9 +1,6 @@
 require qt5-git.inc
 require ${PN}.inc
 
-# prepend this again, because ${PN}.inc prepneds ${PN}
-FILESEXTRAPATHS =. "${FILE_DIRNAME}/${BPN}-git:"
-
 SRC_URI = "\
     ${QT_GIT}/qt/${QT_MODULE}.git;branch=${QT_MODULE_BRANCH} \
 "
