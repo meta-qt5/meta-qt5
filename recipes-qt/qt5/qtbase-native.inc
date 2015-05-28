@@ -27,6 +27,8 @@ SRC_URI += " \
     file://0012-Add-external-hostbindir-option-for-native-sdk.patch \
 "
 
+CLEANBROKEN = "1"
+
 QT_CONF_PATH = "${B}/qt.conf"
 
 do_generate_qt_config_file() {
