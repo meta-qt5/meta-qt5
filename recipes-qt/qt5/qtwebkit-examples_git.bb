@@ -16,7 +16,7 @@ SRC_URI += " \
     file://0001-qtwebkit-examples-enable-building-examples-by-defaul.patch \
 "
 
-DEPENDS += "qtwebkit"
+DEPENDS += "qtwebkit qtxmlpatterns"
 RDEPENDS_${PN}-examples += "qtwebkit-qmlplugins"
 RDEPENDS_${PN}-examples += "${@base_contains('PACKAGECONFIG_OPENSSL', 'openssl', 'ca-certificates', '', d)}"
 
