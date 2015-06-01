@@ -1,4 +1,4 @@
-From 6b980c8132800001b2f0c5c0e76f7cc7c60d14ee Mon Sep 17 00:00:00 2001
+From d34774dc7447ff0d566b3281407c0998173a85e0 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Mon, 11 Nov 2013 20:22:34 -0500
 Subject: [PATCH 13/13] configure: preserve built qmake and swap with native
@@ -26,5 +26,5 @@ index c19ff6a..2d920e3 100755
  echo "Running configuration tests..."
  
 -- 
-2.3.5
+2.4.2
 

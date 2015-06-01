@@ -1,4 +1,4 @@
-From cdaa89e30e12d247a8086763d341e5f020151b67 Mon Sep 17 00:00:00 2001
+From 6444a156db8b7d0ec367b8edc87c82acd0898698 Mon Sep 17 00:00:00 2001
 From: Jonathan Liu <net147@gmail.com>
 Date: Mon, 9 Mar 2015 22:35:56 +1100
 Subject: [PATCH] Unix: Clear serial_struct instances
@@ -38,5 +38,5 @@ index cda73b2..62c454c 100644
          return decodeSystemError();
  
 -- 
-2.3.5
+2.4.2
 

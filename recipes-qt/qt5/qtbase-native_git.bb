@@ -121,4 +121,4 @@ do_install() {
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
 }
 
-SRCREV = "f58e882b7594c59b6050d3c87562fcf836d10f60"
+SRCREV = "2cb17c1fb903434274e58692c9f0df619affdab0"

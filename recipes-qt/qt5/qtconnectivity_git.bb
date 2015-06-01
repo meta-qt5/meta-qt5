@@ -21,4 +21,4 @@ do_configure_prepend() {
     sed -i 's/^qtCompileTest(bluez)/OE_BLUEZ_ENABLED:qtCompileTest(bluez)/g' ${S}/qtconnectivity.pro
 }
 
-SRCREV = "b4bf23453e65995bdd8827b6e146edd5cafeddc3"
+SRCREV = "aa00047183008edd739df472cf0490e9fffbe655"

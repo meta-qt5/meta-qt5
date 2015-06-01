@@ -1,7 +1,7 @@
-From 1abe7b1d4de10ba3739db8a685661e99fb274a00 Mon Sep 17 00:00:00 2001
+From 0aa4fc1dd4369c50c310e20bbe86cef5a1efb21f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
 Date: Sun, 26 May 2013 14:26:19 +0200
-Subject: [PATCH] qmltestexample: fix link
+Subject: [PATCH 1/2] qmltestexample: fix link
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,5 +84,5 @@ index 1bb913e..56f2dd5 100644
  
  load(qt_tool)
 -- 
-2.3.5
+2.4.2
 

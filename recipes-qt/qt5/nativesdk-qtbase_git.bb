@@ -280,4 +280,4 @@ do_generate_qt_environment_file() {
 
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "f58e882b7594c59b6050d3c87562fcf836d10f60"
+SRCREV = "2cb17c1fb903434274e58692c9f0df619affdab0"

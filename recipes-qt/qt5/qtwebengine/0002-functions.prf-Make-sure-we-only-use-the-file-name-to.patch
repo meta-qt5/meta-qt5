@@ -1,7 +1,7 @@
-From cfe706846298d41defbf0386f85b17e70108b7af Mon Sep 17 00:00:00 2001
+From 7a4a82af04fb228526dfd72a1d42b53b402952d1 Mon Sep 17 00:00:00 2001
 From: Simon Busch <morphis@gravedo.de>
 Date: Tue, 18 Nov 2014 10:38:18 +0100
-Subject: [PATCH 2/3] functions.prf: Make sure we only use the file name to
+Subject: [PATCH 2/4] functions.prf: Make sure we only use the file name to
  generate it's moc'ed abbreviation
 
 Signed-off-by: Simon Busch <morphis@gravedo.de>
@@ -25,5 +25,5 @@ index 64c08ad..b46478b 100644
    out = $$replace(out, ^(.*)($$join(QMAKE_EXT_CPP,|))$, $${QMAKE_CPP_MOD_MOC}\\1$${QMAKE_EXT_CPP_MOC})
    out = $$replace(out, ^(.*)($$join(QMAKE_EXT_H,|))$, $${QMAKE_H_MOD_MOC}\\1$${first(QMAKE_EXT_CPP)})
 -- 
-2.3.5
+2.4.2
 
