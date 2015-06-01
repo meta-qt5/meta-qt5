@@ -1,4 +1,4 @@
-From 08f6be97c3f088fd8a2d752441c638093eedd990 Mon Sep 17 00:00:00 2001
+From ec414ca0df1ec459b5abd753cf0d730572715e17 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH 01/12] Add linux-oe-g++ platform
@@ -347,5 +347,5 @@ index 0000000..dd12003
 +
 +#endif // QPLATFORMDEFS_H
 -- 
-2.3.5
+2.4.2
 

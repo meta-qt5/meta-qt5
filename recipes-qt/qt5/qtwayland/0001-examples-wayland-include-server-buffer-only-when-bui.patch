@@ -1,8 +1,8 @@
-From 90fc9f3f059c19e84ffd29718482a2f06ec3f0bf Mon Sep 17 00:00:00 2001
+From b7520d76235cea2e546e217052baf1c9324a261d Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 22 Feb 2014 17:47:44 +0100
-Subject: [PATCH] examples/wayland: include server-buffer only when building
- with opengles2
+Subject: [PATCH 1/2] examples/wayland: include server-buffer only when
+ building with opengles2
 
 * it's using glBindBuffer in
   server-buffer/client/serverbufferrenderer.cpp
@@ -27,5 +27,5 @@ index d633fb9..643c7cd 100644
 +    }
  }
 -- 
-2.3.5
+2.4.2
 

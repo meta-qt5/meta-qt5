@@ -27,4 +27,4 @@ do_configure_prepend() {
 
 EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'qtxmlpatterns', 'CONFIG+=OE_QTXMLPATTERNS_ENABLED', '', d)}"
 
-SRCREV = "2b3c2339616680537145a9cc2e7567575add1abb"
+SRCREV = "2fdb6eba0a58b629db32f9eefec2f26df08d3d2e"

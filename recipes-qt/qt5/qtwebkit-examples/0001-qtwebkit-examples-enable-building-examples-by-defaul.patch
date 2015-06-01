@@ -1,4 +1,4 @@
-From 52f75c43702ab04f3426025eea80155aa27b3422 Mon Sep 17 00:00:00 2001
+From f1367fc72dad78fb5625c6cd4b08914b34583d0f Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Tue, 8 Oct 2013 00:18:10 -0400
 Subject: [PATCH] qtwebkit-examples: enable building examples by default
@@ -25,5 +25,5 @@ index 3fcecf1..2da8a36 100644
 -SUBDIRS += doc
 +SUBDIRS += doc examples
 -- 
-2.3.5
+2.4.2
 

@@ -18,4 +18,4 @@ SRC_URI += " \
 
 DEPENDS += "qtbase"
 
-SRCREV = "b84fe7eb3d6d977a347bfbb82da724409b2eda69"
+SRCREV = "e257bdc9aae5583b187bafb5e69e4a6143e3bf4e"

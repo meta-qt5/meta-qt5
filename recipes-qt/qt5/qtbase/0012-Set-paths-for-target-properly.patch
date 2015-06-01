@@ -1,4 +1,4 @@
-From 84c23fc01b28087de35604ef971227b57fb77876 Mon Sep 17 00:00:00 2001
+From 4dd60bf7b9db89fad8154168e71581ed648cf356 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Thu, 22 Jan 2015 16:09:35 +0100
 Subject: [PATCH 12/12] Set paths for target properly
@@ -68,5 +68,5 @@ index 7a34b11..7bb4476 100755
  };
  static const char qt_configure_settings_path_str[256 + 12] = "qt_stngpath=$QT_INSTALL_SETTINGS";
 -- 
-2.3.5
+2.4.2
 
