@@ -37,7 +37,7 @@ SRC_URI += " \
     file://0001-examples-wayland-include-server-buffer-only-when-bui.patch \
 "
 
-QT_VERSION ?= "5.4.2"
+QT_VERSION ?= "5.4.3"
 
 do_install_append() {
     # do install files created by qtwaylandscanner
