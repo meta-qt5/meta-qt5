@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL;md5=d32239bcb673463ab874e80d47fae504 \
 "
 
-DEPENDS = "nativesdk-qtbase qtbase-native qtdeclarative"
+DEPENDS = "qtdeclarative"
 
 FILES_${PN}-qmlplugins += " \
     ${OE_QMAKE_PATH_QML}/*/*/*.bez \
