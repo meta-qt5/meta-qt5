@@ -21,6 +21,7 @@ SRC_URI += "\
     file://0008-eglfs-fix-egl-error-for-platforms-only-supporting-on.patch \
     file://0009-QOpenGLPaintDevice-sub-area-support.patch \
     file://0010-Make-Qt5GuiConfigExtras.cmake-find-gl-es-include-dir.patch \
+    file://0014-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
 "
  
 # specific for qtbase
