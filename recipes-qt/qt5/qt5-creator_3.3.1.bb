@@ -82,6 +82,7 @@ RRECOMMENDS_${PN} += " \
     packagegroup-qt5-toolchain-target \
     binutils \
     ccache \
-    gcc-symlinks \
+    make \
+    gcc-symlinks g++-symlinks cpp-symlinks \
     gdb \
 "
