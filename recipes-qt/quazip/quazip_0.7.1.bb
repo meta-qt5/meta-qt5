@@ -1,0 +1,13 @@
+SUMMARY = "Qt/C++ wrapper for ZIP/UNZIP package"
+LICENSE = "LGPLv2.1"
+LIC_FILES_CHKSUM = "file://COPYING;md5=27818cd7fd83877a8e3ef82b82798ef4"
+DEPENDS = "qtbase"
+
+SRC_URI = "${SOURCEFORGE_MIRROR}/${BPN}/${BP}.tar.gz"
+SRC_URI[md5sum] = "3b99effb2a9417707d463e6f19cf2629"
+SRC_URI[sha256sum] = "78c984103555c51e6f7ef52e3a2128e2beb9896871b2cc4d4dbd4d64bff132de"
+
+inherit qmake5
+
+EXTRA_QMAKEVARS_PRE += "PREFIX=${prefix}"
+EXTRA_QMAKEVARS_POST += "SUBDIRS=${BPN}"
