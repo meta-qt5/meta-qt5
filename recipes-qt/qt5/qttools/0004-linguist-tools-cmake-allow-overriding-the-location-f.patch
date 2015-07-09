@@ -1,0 +1,63 @@
+From b105af5084ec1ee51c1428769b881c260f01d4d5 Mon Sep 17 00:00:00 2001
+From: Cody P Schafer <dev@codyps.com>
+Date: Thu, 9 Jul 2015 11:28:19 -0400
+Subject: [PATCH] linguist-tools cmake: allow overriding the location for
+ lupdate and lrelease
+
+---
+ src/linguist/Qt5LinguistToolsConfig.cmake.in | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
+
+diff --git a/src/linguist/Qt5LinguistToolsConfig.cmake.in b/src/linguist/Qt5LinguistToolsConfig.cmake.in
+index 4318b16..2e3b70f 100644
+--- a/src/linguist/Qt5LinguistToolsConfig.cmake.in
++++ b/src/linguist/Qt5LinguistToolsConfig.cmake.in
+@@ -26,6 +26,9 @@ get_filename_component(_qt5_linguisttools_install_prefix \"${CMAKE_CURRENT_LIST_
+ !!ELSE
+ set(_qt5_linguisttools_install_prefix \"$$[QT_INSTALL_PREFIX]\")
+ !!ENDIF
++if (OE_QMAKE_PATH_HOST_PREFIX)
++   set(_qt5_linguisttools_install_prefix \"${OE_QMAKE_PATH_HOST_PREFIX}\")
++endif()
+ 
+ macro(_qt5_LinguistTools_check_file_exists file)
+     if(NOT EXISTS \"${file}\" )
+@@ -44,11 +47,7 @@ endmacro()
+ if (NOT TARGET Qt5::lrelease)
+     add_executable(Qt5::lrelease IMPORTED)
+ 
+-!!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
+     set(imported_location \"${_qt5_linguisttools_install_prefix}/$${CMAKE_BIN_DIR}lrelease$$CMAKE_BIN_SUFFIX\")
+-!!ELSE
+-    set(imported_location \"$${CMAKE_BIN_DIR}lrelease$$CMAKE_BIN_SUFFIX\")
+-!!ENDIF
+     _qt5_LinguistTools_check_file_exists(${imported_location})
+ 
+     set_target_properties(Qt5::lrelease PROPERTIES
+@@ -59,11 +58,7 @@ endif()
+ if (NOT TARGET Qt5::lupdate)
+     add_executable(Qt5::lupdate IMPORTED)
+ 
+-!!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
+     set(imported_location \"${_qt5_linguisttools_install_prefix}/$${CMAKE_BIN_DIR}lupdate$$CMAKE_BIN_SUFFIX\")
+-!!ELSE
+-    set(imported_location \"$${CMAKE_BIN_DIR}lupdate$$CMAKE_BIN_SUFFIX\")
+-!!ENDIF
+     _qt5_LinguistTools_check_file_exists(${imported_location})
+ 
+     set_target_properties(Qt5::lupdate PROPERTIES
+@@ -74,11 +69,7 @@ endif()
+ if (NOT TARGET Qt5::lconvert)
+     add_executable(Qt5::lconvert IMPORTED)
+ 
+-!!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
+     set(imported_location \"${_qt5_linguisttools_install_prefix}/$${CMAKE_BIN_DIR}lconvert$$CMAKE_BIN_SUFFIX\")
+-!!ELSE
+-    set(imported_location \"$${CMAKE_BIN_DIR}lconvert$$CMAKE_BIN_SUFFIX\")
+-!!ENDIF
+     _qt5_LinguistTools_check_file_exists(${imported_location})
+ 
+     set_target_properties(Qt5::lconvert PROPERTIES
+-- 
+2.4.5
+

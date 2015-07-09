@@ -17,6 +17,7 @@ SRC_URI += " \
     file://0001-Allow-to-build-only-lrelease-lupdate-lconvert.patch \
     file://0002-assistant-help-fix-linking-of-dependent-libraries.patch \
     file://0003-add-noqtwebkit-configuration.patch \
+    file://0004-linguist-tools-cmake-allow-overriding-the-location-f.patch \
 "
 
 FILES_${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
