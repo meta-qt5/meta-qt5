@@ -261,6 +261,8 @@ FILES_${PN}-fonts-qpf            = "${OE_QMAKE_PATH_LIBS}/fonts/*.qpf*"
 FILES_${PN}-fonts                = "${OE_QMAKE_PATH_LIBS}/fonts/README \
                                     ${OE_QMAKE_PATH_LIBS}/fonts/fontdir"
 
+RRECOMMENDS_${PN}-plugins += "${@base_contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
+
 sysroot_stage_dirs_append() {
     # $to is 2nd parameter passed to sysroot_stage_dir, e.g. ${SYSROOT_DESTDIR} passed from sysroot_stage_all
     rm -rf $to${OE_QMAKE_PATH_LIBS}/fonts
