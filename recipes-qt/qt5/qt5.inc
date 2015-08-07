@@ -52,6 +52,7 @@ FILES_${PN}-qmlplugins-dbg = " \
     ${OE_QMAKE_PATH_QML}/*/.debug \
     ${OE_QMAKE_PATH_QML}/*/*/.debug \
     ${OE_QMAKE_PATH_QML}/*/*/*/.debug \
+    ${OE_QMAKE_PATH_QML}/*/*/*/*/.debug \
     ${OE_QMAKE_PATH_IMPORTS}/*/.debug \
     ${OE_QMAKE_PATH_IMPORTS}/*/*/.debug \
     ${OE_QMAKE_PATH_IMPORTS}/*/*/*/.debug \
@@ -80,10 +81,12 @@ FILES_${PN}-qmlplugins = " \
     ${OE_QMAKE_PATH_QML}/*/*/*.js \
     ${OE_QMAKE_PATH_QML}/*/*/*/*${SOLIBSDEV} \
     ${OE_QMAKE_PATH_QML}/*/*/*/qmldir \
+    ${OE_QMAKE_PATH_QML}/*/*/*/images \
     ${OE_QMAKE_PATH_QML}/*/*/*/*.qmltypes \
     ${OE_QMAKE_PATH_QML}/*/*/*/*.qml \
     ${OE_QMAKE_PATH_QML}/*/*/*/*.js \
     ${OE_QMAKE_PATH_QML}/*/*/*/*.png \
+    ${OE_QMAKE_PATH_QML}/*/*/*/*.metainfo \
     ${OE_QMAKE_PATH_QML}/*/*/*/*/*${SOLIBSDEV} \
     ${OE_QMAKE_PATH_QML}/*/*/*/*/qmldir \
     ${OE_QMAKE_PATH_QML}/*/*/*/*/*.qmltypes \
