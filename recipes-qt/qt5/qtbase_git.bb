@@ -222,7 +222,8 @@ do_install_append() {
     ### TODO: FIX
     # install fonts manually if they are missing
     if [ ! -d ${D}/${OE_QMAKE_PATH_LIBS}/fonts ]; then
-        cp -a ${S}/lib/fonts ${D}/${OE_QMAKE_PATH_LIBS}
+        mkdir -p ${D}/${OE_QMAKE_PATH_LIBS}/fonts
+        cp -a ${S}/lib/fonts/* ${D}/${OE_QMAKE_PATH_LIBS}/fonts
         chown -R root:root ${D}/${OE_QMAKE_PATH_LIBS}/fonts
     fi
 
