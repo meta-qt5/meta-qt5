@@ -13,7 +13,14 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPLv2;md5=05832301944453ec79e40ba3c3cfceec \
 "
 
-DEPENDS += "qtscript qtsvg qtxmlpatterns qtwebkit"
+DEPENDS += "qtscript qtsvg qtxmlpatterns"
 # qttools
+
+PACKAGECONFIG ??= "webkit"
+PACKAGECONFIG[webkit] = "CONFIG+=enable-webkit,CONFIG-=enable-webkit,qtwebkit"
+
+do_configure_prepend() {
+    sed -i 's#^qtHaveModule(webkitwidgets):#enable-webkit:qtHaveModule(webkitwidgets):#g' ${S}/src/imports/imports.pro
+}
 
 SRCREV = "eb3c45a5a6a84bd02cac2f5254ef56c3fe2536e8"
