@@ -1,7 +1,7 @@
-From 45bdf5ff770fe17634f216c3f533645bfd450f04 Mon Sep 17 00:00:00 2001
+From a48e2ad5bef673e9d345d5d6de94e5bbda53fa2b Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 9/9] Add -external-hostbindir option for native(sdk)
+Subject: [PATCH 09/10] Add -external-hostbindir option for native(sdk)
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -29,17 +29,18 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 Conflicts:
         tools/configure/configureapp.cpp
 ---
+ configure                           |  1 +
  qmake/property.cpp                  |  1 +
  src/corelib/global/qlibraryinfo.cpp |  3 ++-
  src/corelib/global/qlibraryinfo.h   |  1 +
  tools/configure/configureapp.cpp    | 11 +++++++++++
- 4 files changed, 15 insertions(+), 1 deletion(-)
+ 5 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index ffb69df..aa46774 100755
+index b8f1fb9..1d2157f 100755
 --- a/configure
 +++ b/configure
-@@ -3831,6 +3831,7 @@ addConfStr "$CFG_SYSROOT"
+@@ -3833,6 +3833,7 @@ addConfStr "$CFG_SYSROOT"
  addConfStr "$QT_REL_HOST_BINS"
  addConfStr "$QT_REL_HOST_LIBS"
  addConfStr "$QT_REL_HOST_DATA"
@@ -128,3 +129,6 @@ index 3bf0546..53bf146 100644
      addConfStr(1, targSpec);
      addConfStr(1, hostSpec);
  
+-- 
+2.5.0
+

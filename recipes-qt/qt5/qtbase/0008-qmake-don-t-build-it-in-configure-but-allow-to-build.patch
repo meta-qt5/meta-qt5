@@ -1,8 +1,8 @@
-From 51e7ea78d15a590f42154f19486f10d2019401e3 Mon Sep 17 00:00:00 2001
+From 890df28110c254022682b38f78bbbea1d62b8081 Mon Sep 17 00:00:00 2001
 From: Michael Krelin <hacker@klever.net>
 Date: Mon, 29 Oct 2012 20:07:49 -0700
-Subject: [PATCH 11/12] qmake: don't build it in configure, but allow to build
- it separately
+Subject: [PATCH 8/9] qmake: don't build it in configure, but allow to build it
+ separately
 
 * it is already built in qtbase-native, so we don't need it in configure
 * allow building a separate qmake for the target
@@ -25,10 +25,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  3 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/configure b/configure
-index c19ff6a..7a34b11 100755
+index b8f1fb9..c72b8ee 100755
 --- a/configure
 +++ b/configure
-@@ -3729,7 +3729,7 @@ setBootstrapEvalVariable()
+@@ -3929,7 +3929,7 @@ setBootstrapEvalVariable()
  
  
  # build qmake
@@ -38,10 +38,10 @@ index c19ff6a..7a34b11 100755
  
      mkdir -p "$outpath/qmake" || exit
 diff --git a/qmake/qmake.pri b/qmake/qmake.pri
-index 4de41d6..69982b7 100644
+index 782151d..4b314a8 100644
 --- a/qmake/qmake.pri
 +++ b/qmake/qmake.pri
-@@ -82,7 +82,8 @@ bootstrap { #Qt code
+@@ -80,7 +80,8 @@ bootstrap { #Qt code
          qjsonparser.cpp \
          qjsonarray.cpp \
          qjsonobject.cpp \
@@ -64,5 +64,5 @@ index 89d6ea5..0ff4a96 100644
  VPATH += \
      ../src/corelib/global \
 -- 
-2.4.2
+2.5.0
 

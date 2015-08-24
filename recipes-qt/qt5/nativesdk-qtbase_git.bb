@@ -27,18 +27,18 @@ SRC_URI += "\
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
     file://0005-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
     file://0006-configure-bump-path-length-from-256-to-512-character.patch \
-    file://0008-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0007-QOpenGLPaintDevice-sub-area-support.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
-    file://0009-Always-build-uic.patch \
-    file://0010-Add-external-hostbindir-option-for-native-sdk.patch \
+    file://0008-Always-build-uic.patch \
+    file://0009-Add-external-hostbindir-option-for-native-sdk.patch \
 "
 
 # specific for nativesdk-qtbase
 SRC_URI += " \
-    file://0009-configure-preserve-built-qmake-and-swap-with-native-.patch \
+    file://0010-configure-preserve-built-qmake-and-swap-with-native-.patch \
 "
 
 # CMake's toolchain configuration of nativesdk-qtbase

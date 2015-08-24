@@ -1,7 +1,7 @@
-From d2212dd3c5acf7d3541f19470e688095a20d956c Mon Sep 17 00:00:00 2001
+From 0ac23b38794bd4580428e11b2cf1c88eb7f410f3 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: Add -external-hostbindir option
+Subject: [PATCH 03/10] Add -external-hostbindir option
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -37,7 +37,7 @@ Conflicts:
  7 files changed, 37 insertions(+), 12 deletions(-)
 
 diff --git a/configure b/configure
-index 43c4dab..ffb69df 100755
+index dfbb111..548dd0d 100755
 --- a/configure
 +++ b/configure
 @@ -806,6 +806,7 @@ QT_HOST_BINS=
@@ -77,7 +77,7 @@ index 43c4dab..ffb69df 100755
  Configure options:
  
   The defaults (*) are usually acceptable. A plus (+) denotes a default value
-@@ -3095,6 +3104,11 @@ fi
+@@ -3097,6 +3106,11 @@ fi
  # command line and environment validation
  #-------------------------------------------------------------------------------
  
@@ -125,7 +125,7 @@ index 1d3e88c..9b26adf 100644
  
      !host_build|!force_bootstrap: MODULE_DEPENDS = $$replace(QT, -private$, _private)
 diff --git a/qtbase.pro b/qtbase.pro
-index 51e8fb8..9806769 100644
+index 24d0f52..d3d79b3 100644
 --- a/qtbase.pro
 +++ b/qtbase.pro
 @@ -37,12 +37,16 @@ CONFIG -= qt
@@ -148,7 +148,7 @@ index 51e8fb8..9806769 100644
  }
  INSTALLS += qmake
  
-@@ -54,6 +58,9 @@ exists($$licheck.files): INSTALLS += licheck
+@@ -54,6 +58,9 @@ licheck.files = $$PWD/bin/$$QT_LICHECK
  #syncqt
  syncqt.path = $$[QT_HOST_BINS]
  syncqt.files = $$PWD/bin/syncqt.pl
@@ -159,7 +159,7 @@ index 51e8fb8..9806769 100644
  
  # If we are doing a prefix build, create a "module" pri which enables
 diff --git a/src/corelib/Qt5CoreConfigExtras.cmake.in b/src/corelib/Qt5CoreConfigExtras.cmake.in
-index 48d5f21..6482022 100644
+index 65fd1f9..457518b 100644
 --- a/src/corelib/Qt5CoreConfigExtras.cmake.in
 +++ b/src/corelib/Qt5CoreConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::qmake)
@@ -225,5 +225,5 @@ index 99d87e2..5621dc0 100644
      _qt5_Widgets_check_file_exists(${imported_location})
  
 -- 
-2.2.2
+2.5.0
 

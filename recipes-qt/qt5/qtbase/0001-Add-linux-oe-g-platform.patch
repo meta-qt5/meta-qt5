@@ -1,7 +1,7 @@
-From b8b9732948ede2b27304eed7f1d78aed16a4eeb7 Mon Sep 17 00:00:00 2001
+From de9a457dacd9388e8ef145fce9cf4e1e1da6468b Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
-Subject: [PATCH 1/7] Add linux-oe-g++ platform
+Subject: [PATCH 01/10] Add linux-oe-g++ platform
 
 * This qmake.conf unlike other platforms reads most variables from
   shell environment, because it's easier for qt recipes to export
@@ -52,7 +52,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index 7251e8e..8093782 100755
+index 8a4c89e..dfbb111 100755
 --- a/configure
 +++ b/configure
 @@ -342,6 +342,16 @@ getQMakeConf()
@@ -120,7 +120,7 @@ index 7251e8e..8093782 100755
  fi'`
      eval "$cmd"
  done
-@@ -3335,7 +3345,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
+@@ -3337,7 +3347,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
      [ "$CFG_QGTKSTYLE" = "auto" ] && CFG_QGTKSTYLE=no
  fi
  
@@ -129,7 +129,7 @@ index 7251e8e..8093782 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -3392,7 +3402,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
+@@ -3394,7 +3404,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
          exit 1
      fi
  fi
@@ -138,7 +138,7 @@ index 7251e8e..8093782 100755
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3894,6 +3904,14 @@ setBootstrapVariable()
+@@ -3896,6 +3906,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -153,7 +153,7 @@ index 7251e8e..8093782 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -3932,14 +3950,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -3934,14 +3952,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          fi
  
          [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=
@@ -348,5 +348,5 @@ index 0000000..dd12003
 +
 +#endif // QPLATFORMDEFS_H
 -- 
-2.4.2
+2.5.0
 
