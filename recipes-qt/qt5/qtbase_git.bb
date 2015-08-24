@@ -229,9 +229,9 @@ do_install_append() {
         cp -a ${S}/lib/fonts/* ${D}/${OE_QMAKE_PATH_LIBS}/fonts
         chown -R root:root ${D}/${OE_QMAKE_PATH_LIBS}/fonts
     fi
-
+    cp -a ${B}/lib/libqt* ${D}${libdir}
     # Remove example.pro file as it is useless
-    rm -f ${D}${OE_QMAKE_PATH_EXAMPLES}/examples.pro	
+    rm -f ${D}${OE_QMAKE_PATH_EXAMPLES}/examples.pro
 
     # Remove macx-ios-clang directory because /usr/lib/qt5/mkspecs/macx-ios-clang/rename_main.sh:#!/bin/bash
     # triggers QA Issue: qtbase-mkspecs requires /bin/bash, but no providers in its RDEPENDS [file-rdeps]
