@@ -16,7 +16,10 @@ for detail.
 Send pull requests to openembedded-devel@lists.openembedded.org with '[meta-qt5]' in the subject'
 
 When sending single patches, please using something like:
-'git send-email -M -1 --to openembedded-devel@lists.openembedded.org --subject-prefix=meta-qt5][PATCH'
+
+git send-email -M -1 --to openembedded-devel@lists.openembedded.org --subject-prefix='meta-qt5][PATCH'
+
+Change option '-1' to '-n' for n number of patches in series
 
 You are encouraged to fork the mirror on github[1] to share your
 patches. This is preferred for patch sets consisting of more than one
