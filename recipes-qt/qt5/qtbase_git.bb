@@ -18,12 +18,13 @@ SRC_URI += "\
     file://0005-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
     file://0006-configure-bump-path-length-from-256-to-512-character.patch \
     file://0007-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0008-Fix-build-with-clang-3.7.patch \
 "
 
 # specific for target qtbase
 SRC_URI += "\
-    file://0008-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
-    file://0009-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
+    file://0009-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
+    file://0010-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
 "
 
 DEPENDS += "qtbase-native"

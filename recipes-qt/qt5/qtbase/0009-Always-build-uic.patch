@@ -1,7 +1,7 @@
-From 7159760b75cc338faee3e95d26d3aea377473681 Mon Sep 17 00:00:00 2001
+From c6a58549ef110a31960fca80f6d3dcdcf4d9176a Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 16 Nov 2013 00:32:30 +0100
-Subject: [PATCH 08/10] Always build uic
+Subject: [PATCH 09/11] Always build uic
 
 Even if we are not building gui or widgets. This tool is needed later
 as a native tool when compiling the target.

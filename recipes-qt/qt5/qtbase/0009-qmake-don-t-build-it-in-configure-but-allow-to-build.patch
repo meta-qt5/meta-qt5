@@ -1,8 +1,8 @@
-From 890df28110c254022682b38f78bbbea1d62b8081 Mon Sep 17 00:00:00 2001
+From 744fc89cd56387cac613534adc538900ed133b25 Mon Sep 17 00:00:00 2001
 From: Michael Krelin <hacker@klever.net>
 Date: Mon, 29 Oct 2012 20:07:49 -0700
-Subject: [PATCH 8/9] qmake: don't build it in configure, but allow to build it
- separately
+Subject: [PATCH 09/10] qmake: don't build it in configure, but allow to build
+ it separately
 
 * it is already built in qtbase-native, so we don't need it in configure
 * allow building a separate qmake for the target

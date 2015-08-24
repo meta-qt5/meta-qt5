@@ -1,7 +1,7 @@
-From a48e2ad5bef673e9d345d5d6de94e5bbda53fa2b Mon Sep 17 00:00:00 2001
+From b0ab57e1f0781b73830514ddc498f38da0886d15 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 09/10] Add -external-hostbindir option for native(sdk)
+Subject: [PATCH 10/11] Add -external-hostbindir option for native(sdk)
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target

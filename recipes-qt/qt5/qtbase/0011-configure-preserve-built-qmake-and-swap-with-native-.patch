@@ -1,7 +1,7 @@
-From ee09941be5f00409029497b65358f8b8d3db91de Mon Sep 17 00:00:00 2001
+From cef1ac9fa399ad5c57480de26a1ef441414f125c Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Mon, 11 Nov 2013 20:22:34 -0500
-Subject: [PATCH 10/10] configure: preserve built qmake and swap with native
+Subject: [PATCH 11/11] configure: preserve built qmake and swap with native
  one
 
 Let configure script build the real qmake, but right after it's built, swap
