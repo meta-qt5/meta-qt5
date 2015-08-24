@@ -130,6 +130,7 @@ PACKAGECONFIG[pulseaudio] = "-pulseaudio,-no-pulseaudio,pulseaudio"
 PACKAGECONFIG[nis] = "-nis,-no-nis"
 PACKAGECONFIG[widgets] = "-widgets,-no-widgets"
 PACKAGECONFIG[libproxy] = "-libproxy,-no-libproxy,libproxy"
+PACKAGECONFIG[libinput] = "-libinput,-no-libinput,libinput"
 
 QT_CONFIG_FLAGS += " \
     -shared \
