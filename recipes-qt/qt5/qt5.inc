@@ -50,7 +50,7 @@ PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmlplu
 ALLOW_EMPTY_${PN} = "1"
 ALLOW_EMPTY_${PN}-dbg = "1"
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS_${PN}_class-target = " \
     ${PN}-plugins \
     ${PN}-qmlplugins \
     "

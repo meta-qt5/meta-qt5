@@ -33,3 +33,5 @@ do_configure_prepend() {
 EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'qtxmlpatterns', 'CONFIG+=OE_QTXMLPATTERNS_ENABLED', '', d)}"
 
 SRCREV = "cc0df64bb0e1dea2fe37950816095802f527a241"
+
+BBCLASSEXTEND =+ "native nativesdk"
