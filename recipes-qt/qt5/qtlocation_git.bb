@@ -10,8 +10,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPLv2;md5=05832301944453ec79e40ba3c3cfceec \
 "
 
-DEPENDS += "qtbase qt3d"
-# qtsystems qtmultimedia
+DEPENDS += "qtbase qtxmlpatterns qtdeclarative qtquickcontrols"
 
 PACKAGECONFIG ??= ""
 # older geoclue 0.x is needed
