@@ -23,7 +23,7 @@ Change option '-1' to '-n' for n number of patches in series
 
 You are encouraged to fork the mirror on github[1] to share your
 patches. This is preferred for patch sets consisting of more than one
-patch. Other services like gitorious, repo.or.cz or self hosted setups
+patch. Other services like gitlab, repo.or.cz or self hosted setups
 are of course accepted as well, 'git fetch <remote>' works the same on
 all of them. We recommend github because it is free, easy to use, has
 been proven to be reliable and has a really good web GUI.
