@@ -2,8 +2,8 @@ require qt5.inc
 require qt5-git.inc
 
 # There are no LGPLv3-only licensed files in this component.
-# Note that some files are LGPL-2.1 only without Digia-Qt-LGPL-Exception-1.1.
-LICENSE = "GFDL-1.3 & BSD & (LGPL-2.1 & Digia-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
+# Note that some files are LGPL-2.1 only without The-Qt-Company-Qt-LGPL-Exception-1.1.
+LICENSE = "GFDL-1.3 & BSD & (LGPL-2.1 & The-Qt-Company-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
     file://LICENSE.LGPLv3;md5=c4fe8c6de4eef597feec6e90ed62e962 \
