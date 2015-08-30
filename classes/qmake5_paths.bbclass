@@ -4,6 +4,14 @@
 
 QT_DIR_NAME ?= "qt5"
 
+# This is useful for target recipes to reference native mkspecs
+QMAKE_MKSPEC_PATH_NATIVE = "${STAGING_LIBDIR_NATIVE}/${QT_DIR_NAME}"
+QMAKE_MKSPEC_PATH_TARGET = "${STAGING_LIBDIR}/${QT_DIR_NAME}"
+
+QMAKE_MKSPEC_PATH = "${QMAKE_MKSPEC_PATH_TARGET}"
+QMAKE_MKSPEC_PATH_class-native = "${QMAKE_MKSPEC_PATH_NATIVE}"
+QMAKE_MKSPEC_PATH_class-nativesdk = "${QMAKE_MKSPEC_PATH_NATIVE}"
+
 OE_QMAKE_PATH_PREFIX = "${prefix}"
 OE_QMAKE_PATH_HEADERS = "${includedir}/${QT_DIR_NAME}"
 OE_QMAKE_PATH_LIBS = "${libdir}"
