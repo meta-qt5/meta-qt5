@@ -20,6 +20,7 @@ PACKAGES =. " \
     ${PN}-qtlocation \
     ${PN}-qtdeclarative \
     ${PN}-qtquickcontrols \
+    ${PN}-qtwebsockets \
     ${PN}-qtxmlpatterns \
     ${PN}-qtconfig \
     ${PN}-qtquick1 \
@@ -63,6 +64,10 @@ FILES_${PN}-qtdeclarative = " \
 
 FILES_${PN}-qtquickcontrols = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qtquickcontrols_*.qm \
+"
+
+FILES_${PN}-qtwebsockets = " \
+    ${OE_QMAKE_PATH_TRANSLATIONS}/qtwebsockets_*.qm \
 "
 
 FILES_${PN}-qtxmlpatterns = " \
