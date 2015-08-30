@@ -101,6 +101,7 @@ RDEPENDS_${PN} += " \
     qtwebsockets-dev \
     qtwebsockets-mkspecs \
     qtwebsockets-qmlplugins \
+    qttranslations-qtwebsockets \
     qtwebchannel-dev \
     qtwebchannel-mkspecs \
     qtwebchannel-qmlplugins \
