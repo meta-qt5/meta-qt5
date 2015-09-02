@@ -2,10 +2,6 @@
 inherit qmake5_paths
 
 create_sdk_files_prepend () {
-    # make a symbolic link to mkspecs for compatibility with QTCreator
-    (cd ${SDK_OUTPUT}/${SDKPATHNATIVE}; \
-         ln -sf ${SDKTARGETSYSROOT}${libdir}/${QT_DIR_NAME}/mkspecs mkspecs;)
-
     # Generate a qt.conf file to be deployed with the SDK
     qtconf=${SDK_OUTPUT}/${SDKPATHNATIVE}${OE_QMAKE_PATH_HOST_BINS}/qt.conf
     touch $qtconf
@@ -26,6 +22,8 @@ create_sdk_files_prepend () {
     echo 'Examples = ${OE_QMAKE_PATH_QT_EXAMPLES}' >> $qtconf
     echo 'Tests = ${OE_QMAKE_PATH_QT_TESTS}' >> $qtconf
     echo 'HostPrefix = ${SDKPATHNATIVE}' >> $qtconf
+    echo 'HostData = ${SDKTARGETSYSROOT}${OE_QMAKE_PATH_QT_ARCHDATA}' >> $qtconf
     echo 'HostBinaries = ${SDKPATHNATIVE}${OE_QMAKE_PATH_HOST_BINS}' >> $qtconf
+    echo 'HostLibraries = ${SDKPATHNATIVE}${OE_QMAKE_PATH_LIBS}' >> $qtconf
     echo 'Sysroot = ${SDKTARGETSYSROOT}' >> $qtconf
 }
