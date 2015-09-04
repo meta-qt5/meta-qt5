@@ -81,6 +81,7 @@ SRC_URI += " \
     file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
     file://0004-Generate-usable-qmake_extras.gypi.patch \
     file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch \
+    file://0002-chromium-third_party-boringssl-Demand-for-newer-POSI.patch \
 "
 SRCREV_qtwebengine = "c6573119006014ff7bc0efb2da16ea35d302a1ec"
 SRCREV_chromium = "41a1a031cd69e187a9608359ffe56652dcaaa6c5"
