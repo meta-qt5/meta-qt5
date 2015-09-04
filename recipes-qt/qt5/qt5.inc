@@ -5,8 +5,6 @@ inherit qmake5
 
 PACKAGECONFIG_OPENSSL ?= "openssl"
 
-QT_MODULE ?= "${BPN}"
-
 # we don't want conflicts with qt4
 OE_QMAKE_PATH_HEADERS = "${OE_QMAKE_PATH_QT_HEADERS}"
 OE_QMAKE_PATH_ARCHDATA = "${OE_QMAKE_PATH_QT_ARCHDATA}"
