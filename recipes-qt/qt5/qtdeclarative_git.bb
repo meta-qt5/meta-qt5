@@ -16,7 +16,7 @@ SRC_URI += " \
     file://0001-qmltestexample-fix-link.patch \
 "
 
-EXTRA_OEMAKE += "QMAKE_SYNCQT=${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}/syncqt"
+EXTRA_OEMAKE += "QMAKE_SYNCQT=${STAGING_BINDIR_NATIVE}${QT_DIR_NAME}/syncqt"
 
 PACKAGECONFIG ??= "qtxmlpatterns"
 PACKAGECONFIG[qtxmlpatterns] = ",,qtxmlpatterns"
@@ -27,7 +27,7 @@ do_configure_prepend() {
     sed -e 's/^\(!qtHaveModule(xmlpatterns)\)/!OE_QTXMLPATTERNS_ENABLED|\1/' -i ${S}/tests/auto/quick/quick.pro
 
     #set the path for syncqt properly
-    echo "QT_TOOL.syncqt.binary = \"${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}/syncqt\"" > ${B}/.qmake.cache
+    echo "QT_TOOL.syncqt.binary = \"${STAGING_BINDIR_NATIVE}${QT_DIR_NAME}/syncqt\"" > ${B}/.qmake.cache
 }
 
 EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'qtxmlpatterns', 'CONFIG+=OE_QTXMLPATTERNS_ENABLED', '', d)}"

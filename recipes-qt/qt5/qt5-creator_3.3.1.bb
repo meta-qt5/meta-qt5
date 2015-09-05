@@ -28,7 +28,7 @@ SRC_URI[sha256sum] = "afefb73a05cdc36cdfb8a760c2b39eb6c366a22ef47c7d365d446092dd
 
 S = "${WORKDIR}/qt-creator-opensource-src-${PV}"
 
-EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}/${QT_DIR_NAME}"
+EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 
 do_configure_prepend() {
     # causes gcc infinite loop with 4.9.x for arm targets similar to
@@ -38,11 +38,11 @@ do_configure_prepend() {
 
 do_configure_append() {
     # Find native tools
-    sed -i 's:${STAGING_BINDIR}.*/lrelease:${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}/lrelease:g' ${B}/share/qtcreator/translations/Makefile
-    sed -i 's:${STAGING_BINDIR}.*/qdoc:${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}/qdoc:g' ${B}/Makefile
+    sed -i 's:${STAGING_BINDIR}.*/lrelease:${STAGING_BINDIR_NATIVE}${QT_DIR_NAME}/lrelease:g' ${B}/share/qtcreator/translations/Makefile
+    sed -i 's:${STAGING_BINDIR}.*/qdoc:${STAGING_BINDIR_NATIVE}${QT_DIR_NAME}/qdoc:g' ${B}/Makefile
 
     # see qtbase-native.inc
-    # sed -i 's:QT_INSTALL_DOCS=${docdir}:QT_INSTALL_DOCS=${STAGING_DATADIR_NATIVE}/${QT_DIR_NAME}/doc:g' ${B}/Makefile
+    # sed -i 's:QT_INSTALL_DOCS=${docdir}:QT_INSTALL_DOCS=${STAGING_DATADIR_NATIVE}${QT_DIR_NAME}/doc:g' ${B}/Makefile
 }
 
 do_compile_append() {
@@ -56,22 +56,22 @@ do_install() {
     # install desktop and ensure that qt-creator finds qmake
     install -d ${D}${datadir}/applications
     install -m 0644 ${WORKDIR}/qtcreator.desktop.in ${D}${datadir}/applications/qtcreator.desktop
-    sed -i 's:@QT5_QMAKE@:${bindir}/${QT_DIR_NAME}:g' ${D}${datadir}/applications/qtcreator.desktop
+    sed -i 's:@QT5_QMAKE@:${bindir}${QT_DIR_NAME}:g' ${D}${datadir}/applications/qtcreator.desktop
 }
 
 FILES_${PN} += " \
     ${datadir}/qtcreator \
     ${datadir}/icons \
-    ${libdir}/${QT_DIR_NAME}/qtcreator \
+    ${libdir}${QT_DIR_NAME}/qtcreator \
 "
 FILES_${PN}-dbg += " \
-    ${libdir}/${QT_DIR_NAME}/qtcreator/.debug \
-    ${libdir}/${QT_DIR_NAME}/qtcreator/plugins/.debug \
-    ${libdir}/${QT_DIR_NAME}/qtcreator/plugins/qbs/plugins/.debug \
+    ${libdir}${QT_DIR_NAME}/qtcreator/.debug \
+    ${libdir}${QT_DIR_NAME}/qtcreator/plugins/.debug \
+    ${libdir}${QT_DIR_NAME}/qtcreator/plugins/qbs/plugins/.debug \
 "
 
 FILES_${PN}-dev += " \
-    ${libdir}/${QT_DIR_NAME}/qtcreator/*${SOLIBSDEV} \
+    ${libdir}${QT_DIR_NAME}/qtcreator/*${SOLIBSDEV} \
 "
 
 RDEPENDS_${PN} += "perl"

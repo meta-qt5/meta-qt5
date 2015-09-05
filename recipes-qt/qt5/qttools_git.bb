@@ -18,8 +18,8 @@ SRC_URI += " \
     file://0003-add-noqtwebkit-configuration.patch \
 "
 
-FILES_${PN}-tools += "${datadir}/${QT_DIR_NAME}/phrasebooks"
-FILES_${PN}-examples = "${datadir}/${QT_DIR_NAME}/examples"
+FILES_${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
+FILES_${PN}-examples = "${datadir}${QT_DIR_NAME}/examples"
 
 PACKAGECONFIG ??= ""
 PACKAGECONFIG_class-native ??= "linguistonly"
