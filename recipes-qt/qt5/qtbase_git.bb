@@ -172,7 +172,7 @@ do_configure() {
     # we need symlink in path relative to source, because
     # EffectivePaths:Prefix is relative to qmake location
     if [ ! -e ${B}/bin/qmake ]; then
-        mkdir ${B}/bin
+        mkdir -p ${B}/bin
         ln -sf ${OE_QMAKE_QMAKE_ORIG} ${B}/bin/qmake
     fi
 
