@@ -25,6 +25,7 @@ SRC_URI += "\
 SRC_URI += "\
     file://0009-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
     file://0010-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
+    file://0012-qeglplatformscreen.cpp-reorder-headers-to-fix-build-.patch \
 "
 
 DEPENDS += "qtbase-native"
