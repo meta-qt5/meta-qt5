@@ -43,7 +43,7 @@ INSANE_SKIP_${PN}-examples += "libdir"
 INSANE_SKIP_${PN}-examples-dbg += "libdir"
 INSANE_SKIP_${PN}-examples-dev += "libdir"
 
-PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples "
+PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmldesigner ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples "
 
 ALLOW_EMPTY_${PN} = "1"
 ALLOW_EMPTY_${PN}-dbg = "1"
@@ -56,6 +56,7 @@ RRECOMMENDS_${PN}_class-target = " \
 RRECOMMENDS_${PN}-dev = " \
     ${PN} \
     ${PN}-mkspecs \
+    ${PN}-qmldesigner \
     "
 
 RRECOMMENDS_${PN}-dbg = " \
@@ -83,6 +84,11 @@ FILES_${PN}-plugins-dbg = " \
 "
 
 # extra packages
+FILES_${PN}-qmldesigner += " \
+    ${OE_QMAKE_PATH_QML}/*/designer \
+    ${OE_QMAKE_PATH_QML}/*/*/designer \
+"
+
 # qmlplugins 1-4 levels of subdirs qmldir + *{.so,*.qmltypes,*.qml,*js}
 FILES_${PN}-qmlplugins = " \
     ${OE_QMAKE_PATH_QML}/*/*${SOLIBSDEV} \
