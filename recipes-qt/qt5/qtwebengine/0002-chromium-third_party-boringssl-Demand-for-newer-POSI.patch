@@ -1,7 +1,8 @@
-From 75e9a963561a73ef2a449d7915cd8b41285ac862 Mon Sep 17 00:00:00 2001
+From 1efcdf981e6f4cc4e2b5e5dfe407030dc1e43e65 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 27 Jun 2015 13:29:52 -0700
-Subject: [PATCH] chromium/third_party/boringssl: Demand for newer POSIX macro
+Subject: [PATCH 2/2] chromium/third_party/boringssl: Demand for newer POSIX
+ macro
 
 Reason for change: Define _POSIX_C_SOURCE such that it demands correct
 posix interfaces, netdb.h declares interfaces such as
@@ -33,5 +34,5 @@ index ba65a1a..66c3976 100644
  #include <openssl/bio.h>
  #include <openssl/err.h>
 -- 
-2.5.0
+2.5.3
 

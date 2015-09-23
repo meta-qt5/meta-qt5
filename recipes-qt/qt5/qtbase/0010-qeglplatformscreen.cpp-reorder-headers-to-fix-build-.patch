@@ -1,8 +1,8 @@
-From f8873b5ba0fa42cc0d2aadfd6c5a449b37799609 Mon Sep 17 00:00:00 2001
+From c09e6ef0bf6a879455ffee496c716a0bc1787cdf Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Sat, 12 Sep 2015 12:58:46 +0200
-Subject: [PATCH] qeglplatformscreen.cpp: reorder headers to fix build with egl
- enabled
+Subject: [PATCH 10/10] qeglplatformscreen.cpp: reorder headers to fix build
+ with egl enabled
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -45,5 +45,5 @@ index 61f8cdd..ceec797 100644
  
  QT_BEGIN_NAMESPACE
 -- 
-2.1.0
+2.5.3
 

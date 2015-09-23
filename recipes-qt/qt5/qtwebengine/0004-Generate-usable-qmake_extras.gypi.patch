@@ -1,7 +1,7 @@
-From 9d2fafdd9a15adf51d8383bdd545d73e76ad0428 Mon Sep 17 00:00:00 2001
+From 55c5a15f0a11c76a930020ac725e57303da2ef48 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@theqtcompany.com>
 Date: Mon, 11 May 2015 13:47:06 +0300
-Subject: [PATCH] Generate usable qmake_extras.gypi
+Subject: [PATCH 4/4] Generate usable qmake_extras.gypi
 
 Running qmake recursively does not take .depends into account, so
 the SUBDIRS need to be in correct order so that qmake_extras.gypi
@@ -39,7 +39,7 @@ index cf00f39..747b711 100644
 +SUBDIRS += gyp_run \
 +           core_module
 diff --git a/src/core/gyp_configure_host.pro b/src/core/gyp_configure_host.pro
-index 3eb6738..d6820c4 100644
+index eb94cb8..859bcbf 100644
 --- a/src/core/gyp_configure_host.pro
 +++ b/src/core/gyp_configure_host.pro
 @@ -6,9 +6,6 @@ option(host_build)
@@ -50,10 +50,10 @@ index 3eb6738..d6820c4 100644
 -                "    ['CXX.host', '$$which($$QMAKE_CXX)']," \
 -                "    ['LD.host', '$$which($$QMAKE_LINK)'],"
  
- GYPI_FILE = $$absolute_path('qmake_extras.gypi')
+ GYPI_FILE = $$OUT_PWD/qmake_extras.gypi
  !build_pass {
 diff --git a/src/core/gyp_configure_target.pro b/src/core/gyp_configure_target.pro
-index 4d52044..f02bfa0 100644
+index 2a59966..317d24a 100644
 --- a/src/core/gyp_configure_target.pro
 +++ b/src/core/gyp_configure_target.pro
 @@ -3,9 +3,6 @@ TEMPLATE = aux
@@ -67,5 +67,5 @@ index 4d52044..f02bfa0 100644
                   "  'target_defaults': {" \
                   "    'target_conditions': [" \
 -- 
-1.9.1
+2.5.3
 

@@ -1,7 +1,7 @@
-From 399990aa9b68437be7f3d6fa16556bf091645c34 Mon Sep 17 00:00:00 2001
+From b7b5fa151e1ff1749ab5b04763f0f64a156e6e48 Mon Sep 17 00:00:00 2001
 From: Frieder Schrempf <frieder.schrempf@online.de>
 Date: Mon, 1 Dec 2014 14:34:40 +0000
-Subject: [PATCH 3/3] functions.prf: allow build for linux-oe-g++ platform
+Subject: [PATCH 3/4] functions.prf: allow build for linux-oe-g++ platform
 
 Upstream-Status: Inappropriate [OE specific]
 
@@ -12,18 +12,18 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/qmake/mkspecs/features/functions.prf b/tools/qmake/mkspecs/features/functions.prf
-index aec54ea..6a4b01f 100644
+index e71e6e4..2161505 100644
 --- a/tools/qmake/mkspecs/features/functions.prf
 +++ b/tools/qmake/mkspecs/features/functions.prf
 @@ -14,7 +14,7 @@ defineTest(isPlatformSupported) {
  
    linux-g++*:!isGCCVersionSupported(): return(false)
    !isPythonVersionSupported(): return(false)
--  linux-g++*|win32-msvc2013|macx-clang: return(true)
-+  linux-g++*|linux-oe-g++*|win32-msvc2013|macx-clang: return(true)
+-  linux-g++*|win32-msvc2013|macx-clang*: return(true)
++  linux-g++*|linux-oe-g++*|win32-msvc2013|macx-clang*: return(true)
    boot2qt: return(true)
  
    skipBuild("Qt WebEngine can currently only be built for Linux (GCC), Windows (MSVC 2013), OS X (XCode 5.1+) or Qt for Device Creation.")
 -- 
-2.4.2
+2.5.3
 

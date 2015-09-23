@@ -1,7 +1,7 @@
-From bae2c6afb951d1352845ca257fdc2389f3fe851e Mon Sep 17 00:00:00 2001
+From b0648c997d24855b2a6f56fc61e3159af815fb4d Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Mon, 8 Jun 2015 13:59:25 -0700
-Subject: [PATCH 10/10] linux-oe-g++: Invert conditional for defining
+Subject: [PATCH 09/10] linux-oe-g++: Invert conditional for defining
  QT_SOCKLEN_T
 
 This helps to make sure that QT_SOCKLEN_T is defined to be 'int'
@@ -32,5 +32,5 @@ index dd12003..8623651 100644
  
  #if defined(_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
 -- 
-2.5.0
+2.5.3
 

@@ -1,7 +1,7 @@
-From 8239c912d045d04d4944650dde397473a8eb4462 Mon Sep 17 00:00:00 2001
+From 05e0ba998775d92bd3c0701cd5e290815700e3f4 Mon Sep 17 00:00:00 2001
 From: Magnus Granberg <zorry@gentoo.org>
 Date: Fri, 27 Feb 2015 11:55:09 +0100
-Subject: [PATCH 2/2] Remove TEXTREL tag in x86
+Subject: [PATCH 2/3] Remove TEXTREL tag in x86
 
 Fix textrel QA warnings when building qtwebkit for x86:
 
@@ -75,5 +75,5 @@ index 0a2fe78..2dc40ef 100644
  #define GLOBAL_REFERENCE(name) SYMBOL_STRING(name)
  #endif
 -- 
-2.4.2
+2.5.3
 

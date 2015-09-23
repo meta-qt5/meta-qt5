@@ -4,7 +4,9 @@ LICENSE = "LGPL-3.0 & BSD"
 LIC_FILES_CHKSUM = " \
     file://src/core/browser_context_qt.cpp;md5=5fe719c44250955a5d5f8fb15fc8b1da;beginline=1;endline=35 \
     file://src/3rdparty/chromium/LICENSE;md5=537e0b52077bf0a616d0a0c8a79bc9d5 \
-    file://LICENSE.LGPLv3;md5=e6a600fd5e1d9cbde2d983680233ad02 \
+    file://LICENSE.LGPLv3;md5=3dcffeed712d3c916f9a2d9135703aff \
+    file://LICENSE.GPLv3;md5=40f9bf30e783ddc201497165dfb32afb \
+    file://LICENSE.GPLv2;md5=05832301944453ec79e40ba3c3cfceec \
 "
 
 DEPENDS += " \
@@ -83,8 +85,8 @@ SRC_URI += " \
     file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch \
     file://0002-chromium-third_party-boringssl-Demand-for-newer-POSI.patch \
 "
-SRCREV_qtwebengine = "c6573119006014ff7bc0efb2da16ea35d302a1ec"
-SRCREV_chromium = "41a1a031cd69e187a9608359ffe56652dcaaa6c5"
+SRCREV_qtwebengine = "ccb373c4937777ce4af10918f7412c606cbd56ce"
+SRCREV_chromium = "305284960db83fe9b9ae47674db9914d82180c23"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine"

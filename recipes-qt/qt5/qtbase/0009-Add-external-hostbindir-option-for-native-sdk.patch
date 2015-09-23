@@ -1,7 +1,7 @@
-From b0ab57e1f0781b73830514ddc498f38da0886d15 Mon Sep 17 00:00:00 2001
+From 22c6746515470bab482b8cbb9a256033470d3647 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 10/11] Add -external-hostbindir option for native(sdk)
+Subject: [PATCH 09/10] Add -external-hostbindir option for native(sdk)
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -37,10 +37,10 @@ Conflicts:
  5 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index b8f1fb9..1d2157f 100755
+index f0f42ab..04fd1ba 100755
 --- a/configure
 +++ b/configure
-@@ -3833,6 +3833,7 @@ addConfStr "$CFG_SYSROOT"
+@@ -3846,6 +3846,7 @@ addConfStr "$CFG_SYSROOT"
  addConfStr "$QT_REL_HOST_BINS"
  addConfStr "$QT_REL_HOST_LIBS"
  addConfStr "$QT_REL_HOST_DATA"
@@ -61,7 +61,7 @@ index 817ae95..c69539f 100644
      { "QMAKE_XSPEC", QLibraryInfo::TargetSpecPath, true },
  };
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index f663c88..675bd4c 100644
+index c3b5c2d..1381658 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
 @@ -373,7 +373,7 @@ QLibraryInfo::isDebugBuild()
@@ -130,5 +130,5 @@ index 3bf0546..53bf146 100644
      addConfStr(1, hostSpec);
  
 -- 
-2.5.0
+2.5.3
 

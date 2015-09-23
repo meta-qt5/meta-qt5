@@ -1,4 +1,4 @@
-From 5d3dbd14e72724f4cbffe79b82d5055d19094437 Mon Sep 17 00:00:00 2001
+From 09ba9e7eaebd72be5703d29848f5a65e5ca2e21c Mon Sep 17 00:00:00 2001
 From: Simon Busch <morphis@gravedo.de>
 Date: Fri, 19 Jul 2013 13:35:14 +0000
 Subject: [PATCH] Install the qtwaylandscanner tool to the native side
@@ -28,5 +28,5 @@ index ac2d07b..7a46a24 100644
 +target.path = $$[QT_HOST_BINS]
 +INSTALLS += target
 -- 
-2.4.2
+2.5.3
 
