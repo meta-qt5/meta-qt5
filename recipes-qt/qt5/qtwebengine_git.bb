@@ -35,9 +35,6 @@ require qt5-git.inc
 SEPB = "${S}"
 B = "${SEPB}"
 
-# Project ERROR: Missing CMake tests. Either create tests in tests/auto/cmake, or disable cmake config file creation with CONFIG-=create_cmake.
-EXTRA_QMAKEVARS_POST += "CONFIG-=create_cmake"
-
 export NINJA_PATH="${STAGING_BINDIR_NATIVE}/ninja"
 
 do_configure() {
