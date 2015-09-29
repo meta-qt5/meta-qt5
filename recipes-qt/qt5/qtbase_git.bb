@@ -226,10 +226,10 @@ do_install_append() {
     ### Fix up the binaries to the right location
     ### TODO: FIX
     # install fonts manually if they are missing
-    if [ ! -d ${D}/${OE_QMAKE_PATH_LIBS}/fonts ]; then
-        mkdir -p ${D}/${OE_QMAKE_PATH_LIBS}/fonts
-        cp -a ${S}/lib/fonts/* ${D}/${OE_QMAKE_PATH_LIBS}/fonts
-        chown -R root:root ${D}/${OE_QMAKE_PATH_LIBS}/fonts
+    if [ ! -d ${D}/${OE_QMAKE_PATH_QT_FONTS} ]; then
+        mkdir -p ${D}/${OE_QMAKE_PATH_QT_FONTS}
+        cp -a ${S}/lib/fonts/* ${D}/${OE_QMAKE_PATH_QT_FONTS}
+        chown -R root:root ${D}/${OE_QMAKE_PATH_QT_FONTS}
     fi
     cp -a ${B}/lib/libqt* ${D}${libdir}
     # Remove example.pro file as it is useless
@@ -264,19 +264,19 @@ RRECOMMENDS_${PN}-fonts = " \
 
 ALLOW_EMPTY_${PN}-fonts = "1"
 
-FILES_${PN}-fonts-ttf-vera       = "${OE_QMAKE_PATH_LIBS}/fonts/Vera*.ttf"
-FILES_${PN}-fonts-ttf-dejavu     = "${OE_QMAKE_PATH_LIBS}/fonts/DejaVu*.ttf"
-FILES_${PN}-fonts-pfa            = "${OE_QMAKE_PATH_LIBS}/fonts/*.pfa"
-FILES_${PN}-fonts-pfb            = "${OE_QMAKE_PATH_LIBS}/fonts/*.pfb"
-FILES_${PN}-fonts-qpf            = "${OE_QMAKE_PATH_LIBS}/fonts/*.qpf*"
-FILES_${PN}-fonts                = "${OE_QMAKE_PATH_LIBS}/fonts/README \
-                                    ${OE_QMAKE_PATH_LIBS}/fonts/fontdir"
+FILES_${PN}-fonts-ttf-vera       = "${OE_QMAKE_PATH_QT_FONTS}/Vera*.ttf"
+FILES_${PN}-fonts-ttf-dejavu     = "${OE_QMAKE_PATH_QT_FONTS}/DejaVu*.ttf"
+FILES_${PN}-fonts-pfa            = "${OE_QMAKE_PATH_QT_FONTS}/*.pfa"
+FILES_${PN}-fonts-pfb            = "${OE_QMAKE_PATH_QT_FONTS}/*.pfb"
+FILES_${PN}-fonts-qpf            = "${OE_QMAKE_PATH_QT_FONTS}/*.qpf*"
+FILES_${PN}-fonts                = "${OE_QMAKE_PATH_QT_FONTS}/README \
+                                    ${OE_QMAKE_PATH_QT_FONTS}/fontdir"
 
 RRECOMMENDS_${PN}-plugins += "${@base_contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
 sysroot_stage_dirs_append() {
     # $to is 2nd parameter passed to sysroot_stage_dir, e.g. ${SYSROOT_DESTDIR} passed from sysroot_stage_all
-    rm -rf $to${OE_QMAKE_PATH_LIBS}/fonts
+    rm -rf $to${OE_QMAKE_PATH_QT_FONTS}
 }
 
 SRCREV = "c619d2daac9b1f61e8ad2320b59c648b6af6af90"

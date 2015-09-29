@@ -47,3 +47,5 @@ OE_QMAKE_PATH_QT_DOCS = "${docdir}${QT_DIR_NAME}"
 OE_QMAKE_PATH_QT_SETTINGS = "${sysconfdir}${QT_DIR_NAME}"
 OE_QMAKE_PATH_QT_EXAMPLES = "${datadir}${QT_DIR_NAME}/examples"
 OE_QMAKE_PATH_QT_TESTS = "${datadir}${QT_DIR_NAME}/tests"
+
+OE_QMAKE_PATH_QT_FONTS = "${OE_QMAKE_PATH_LIBS}/fonts"
