@@ -1,7 +1,7 @@
-From 76283f2bca936a7565e8bf38a4630ec98f47ef50 Mon Sep 17 00:00:00 2001
+From 729b7873256b11778832c5786dc50fd9ea860a7d Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
-Subject: [PATCH 01/10] Add linux-oe-g++ platform
+Subject: [PATCH 1/9] Add linux-oe-g++ platform
 
 * This qmake.conf unlike other platforms reads most variables from
   shell environment, because it's easier for qt recipes to export
@@ -37,22 +37,26 @@ Subject: [PATCH 01/10] Add linux-oe-g++ platform
     /bin/sh: line 0: test: -gt: unary operator expected
     which are not fatal, but still misleading in do_configure output
 
+* add -target suffix to qmake built in qtbase configure, this way we can
+  use qmake from qtbase-native, but then include qmake built for target
+  in qtbase-tools package (smilarly for nativesdk-qtbase).
+
 Upstream-Status: Inappropriate [embedded specific]
                  too OE specific, probably cannot be upstreamed
 
 Change-Id: I0591ed5da0d61d7cf1509d420e6b293582f1863c
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- configure                            |  70 +++++++++++++++---------
+ configure                            |  71 ++++++++++++++++---------
  mkspecs/features/configure.prf       |   4 +-
  mkspecs/linux-oe-g++/qmake.conf      |  42 +++++++++++++++
  mkspecs/linux-oe-g++/qplatformdefs.h | 100 +++++++++++++++++++++++++++++++++++
- 4 files changed, 188 insertions(+), 28 deletions(-)
+ 4 files changed, 189 insertions(+), 28 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index cea62fb..e1929e7 100755
+index 16e8fb4..9897fe6 100755
 --- a/configure
 +++ b/configure
 @@ -342,6 +342,16 @@ getQMakeConf()
@@ -89,7 +93,7 @@ index cea62fb..e1929e7 100755
  compilerSupportsFlag()
  {
      cat >conftest.cpp <<EOF
-@@ -564,24 +584,14 @@ fi
+@@ -557,24 +577,14 @@ fi
  # initalize variables
  #-------------------------------------------------------------------------------
  
@@ -120,7 +124,7 @@ index cea62fb..e1929e7 100755
  fi'`
      eval "$cmd"
  done
-@@ -3350,7 +3360,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
+@@ -3400,7 +3410,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
      [ "$CFG_QGTKSTYLE" = "auto" ] && CFG_QGTKSTYLE=no
  fi
  
@@ -129,7 +133,7 @@ index cea62fb..e1929e7 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -3407,7 +3417,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
+@@ -3457,7 +3467,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
          exit 1
      fi
  fi
@@ -138,7 +142,7 @@ index cea62fb..e1929e7 100755
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3909,6 +3919,14 @@ setBootstrapVariable()
+@@ -3958,6 +3968,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -153,7 +157,7 @@ index cea62fb..e1929e7 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -3947,14 +3965,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -3996,14 +4014,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          fi
  
          [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=
@@ -176,6 +180,14 @@ index cea62fb..e1929e7 100755
  
          if [ "$CFG_RELEASE_QMAKE" = "yes" ]; then
              setBootstrapVariable QMAKE_CFLAGS_RELEASE
+@@ -4052,6 +4070,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+                         \"\$(SOURCE_PATH)/src/corelib/io/qfsfileengine_unix.cpp\" \
+                         \"\$(SOURCE_PATH)/src/corelib/tools/qlocale_unix.cpp\""
+             EXEEXT=
++            [ "$QT_CROSS_COMPILE" = "yes" ] && EXEEXT=-target
+         fi
+         if [ "$BUILD_ON_MAC" = "yes" ]; then
+             echo "COCOA_LFLAGS =-framework Foundation -framework CoreServices" >>"$mkfile"
 diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
 index 6b37a04..dcf6025 100644
 --- a/mkspecs/features/configure.prf
@@ -350,5 +362,5 @@ index 0000000..dd12003
 +
 +#endif // QPLATFORMDEFS_H
 -- 
-2.6.1
+2.6.2
 

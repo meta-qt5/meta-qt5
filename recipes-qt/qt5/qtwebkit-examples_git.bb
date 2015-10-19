@@ -21,4 +21,4 @@ DEPENDS += "qtwebkit qtxmlpatterns"
 RDEPENDS_${PN}-examples += "qtwebkit-qmlplugins"
 RDEPENDS_${PN}-examples += "${@base_contains('PACKAGECONFIG_OPENSSL', 'openssl', 'ca-certificates', '', d)}"
 
-SRCREV = "df729f9f284df2d30db432de351e7e80360097c8"
+SRCREV = "7988aecdbcb07f3a214c2c804a39db3fc5617844"

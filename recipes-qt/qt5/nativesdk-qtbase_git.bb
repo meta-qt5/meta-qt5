@@ -26,20 +26,15 @@ SRC_URI += "\
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0003-Add-external-hostbindir-option.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
-    file://0005-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
-    file://0006-configure-bump-path-length-from-256-to-512-character.patch \
-    file://0007-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0005-configure-bump-path-length-from-256-to-512-character.patch \
+    file://0006-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0007-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
     file://0008-Always-build-uic.patch \
     file://0009-Add-external-hostbindir-option-for-native-sdk.patch \
-"
-
-# specific for nativesdk-qtbase
-SRC_URI += " \
-    file://0010-configure-preserve-built-qmake-and-swap-with-native-.patch \
 "
 
 # CMake's toolchain configuration of nativesdk-qtbase
@@ -149,10 +144,9 @@ OE_QMAKE_QMAKE = "bin/qmake"
 do_configure() {
     # we need symlink in path relative to source, because
     # EffectivePaths:Prefix is relative to qmake location
-    # Also, configure expects qmake-native to swap with real one
-    if [ ! -e ${B}/bin/qmake-native ]; then
-        mkdir ${B}/bin
-        ln -sf ${OE_QMAKE_QMAKE_ORIG} ${B}/bin/qmake-native
+    if [ ! -e ${B}/bin/qmake ]; then
+        mkdir -p ${B}/bin
+        ln -sf ${OE_QMAKE_QMAKE_ORIG} ${B}/bin/qmake
     fi
 
     ${S}/configure -v \
@@ -223,9 +217,7 @@ do_install() {
 
     oe_runmake install INSTALL_ROOT=${D}
 
-    # replace the native qmake installed above with nativesdk version
-    rm -rf ${D}${OE_QMAKE_PATH_HOST_BINS}/qmake
-    install -m 755 ${B}/bin/qmake-real ${D}${OE_QMAKE_PATH_HOST_BINS}/qmake
+    install -m 755 ${B}/bin/qmake-target ${D}${OE_QMAKE_PATH_HOST_BINS}/qmake
 
     # for modules which are still using syncqt and call qtPrepareTool(QMAKE_SYNCQT, syncqt)
     # e.g. qt3d, qtwayland
@@ -278,4 +270,4 @@ fakeroot do_generate_qt_environment_file() {
 
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "5afc431323454225363dae30e67a1cb909086bf9"
+SRCREV = "f7f4dde80e13ff1c05a9399297ffb746ab505e62"

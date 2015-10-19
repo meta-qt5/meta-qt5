@@ -1,7 +1,7 @@
-From d68aa317015ca452b7097b267e5a1fa576aaa5e8 Mon Sep 17 00:00:00 2001
+From 4772fd9332b7c71543d058c1e1cfa24399a9f269 Mon Sep 17 00:00:00 2001
 From: Jani Hautakangas <jani.hautakangas@ixonos.com>
 Date: Thu, 16 May 2013 09:52:07 +0300
-Subject: [PATCH 07/10] QOpenGLPaintDevice sub-area support
+Subject: [PATCH 6/9] QOpenGLPaintDevice sub-area support
 
 Allows creating QOpenGLPaintDevice targetting sub-area
 of binded framebuffer.
@@ -21,7 +21,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  6 files changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/src/gui/opengl/qopenglpaintdevice.cpp b/src/gui/opengl/qopenglpaintdevice.cpp
-index c0657fe..395ec14 100644
+index 17a3277..85425da 100644
 --- a/src/gui/opengl/qopenglpaintdevice.cpp
 +++ b/src/gui/opengl/qopenglpaintdevice.cpp
 @@ -135,6 +135,12 @@ QOpenGLPaintDevice::QOpenGLPaintDevice(int width, int height)
@@ -37,7 +37,7 @@ index c0657fe..395ec14 100644
  /*!
      \internal
   */
-@@ -212,6 +218,11 @@ QOpenGLContext *QOpenGLPaintDevice::context() const
+@@ -216,6 +222,11 @@ QOpenGLContext *QOpenGLPaintDevice::context() const
      return d_ptr->ctx;
  }
  
@@ -69,7 +69,7 @@ index 804e485..88b481a 100644
      void setSize(const QSize &size);
      void setDevicePixelRatio(qreal devicePixelRatio);
 diff --git a/src/gui/opengl/qopenglpaintdevice_p.h b/src/gui/opengl/qopenglpaintdevice_p.h
-index 57d93ee..5b5c0d9 100644
+index 54ea092..f660143 100644
 --- a/src/gui/opengl/qopenglpaintdevice_p.h
 +++ b/src/gui/opengl/qopenglpaintdevice_p.h
 @@ -65,6 +65,7 @@ public:
@@ -81,7 +81,7 @@ index 57d93ee..5b5c0d9 100644
  
      qreal dpmx;
 diff --git a/src/gui/opengl/qopenglpaintengine.cpp b/src/gui/opengl/qopenglpaintengine.cpp
-index a9a4ada..de3c518 100644
+index 4836dde..3f99b16 100644
 --- a/src/gui/opengl/qopenglpaintengine.cpp
 +++ b/src/gui/opengl/qopenglpaintengine.cpp
 @@ -2091,7 +2091,10 @@ bool QOpenGL2PaintEngineEx::begin(QPaintDevice *pdev)
@@ -153,5 +153,5 @@ index c179143..fad68d5 100644
      } else {
          if (m_vao.isCreated()) {
 -- 
-2.6.1
+2.6.2
 

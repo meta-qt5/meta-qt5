@@ -1,7 +1,7 @@
-From b6d708efc205f2ffc0280e2da94596384bd98049 Mon Sep 17 00:00:00 2001
+From a76a6c33be512a2909904b6136a6044e4b747ffd Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
-Subject: [PATCH 04/10] qt_module: Fix pkgconfig and libtool replacements
+Subject: [PATCH 4/9] qt_module: Fix pkgconfig and libtool replacements
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,10 +67,10 @@ Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
  2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
-index 55f65b5..2412fdd 100644
+index 38602f6..f9c401f 100644
 --- a/mkspecs/features/qt_common.prf
 +++ b/mkspecs/features/qt_common.prf
-@@ -36,7 +36,7 @@ contains(TEMPLATE, .*lib) {
+@@ -38,7 +38,7 @@ contains(TEMPLATE, .*lib) {
          lib_replace.replace =
      } else {
          lib_replace.match = $$rplbase/lib
@@ -80,10 +80,10 @@ index 55f65b5..2412fdd 100644
      lib_replace.CONFIG = path
      QMAKE_PRL_INSTALL_REPLACE += lib_replace
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index c89b6d2..23d4366 100644
+index 193629b..38ff9a8 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
-@@ -214,6 +214,11 @@ unix|mingw {
+@@ -255,6 +255,11 @@ unix|mingw {
      pclib_replace.CONFIG = path
      QMAKE_PKGCONFIG_INSTALL_REPLACE += pclib_replace
  
@@ -95,7 +95,7 @@ index c89b6d2..23d4366 100644
      unix {
          CONFIG += create_libtool explicitlib
          host_build: \
-@@ -225,6 +230,11 @@ unix|mingw {
+@@ -266,6 +271,11 @@ unix|mingw {
              ltlib_replace.replace = $$QMAKE_LIBTOOL_LIBDIR
          ltlib_replace.CONFIG = path
          QMAKE_LIBTOOL_INSTALL_REPLACE += ltlib_replace
@@ -108,5 +108,5 @@ index c89b6d2..23d4366 100644
  }
  
 -- 
-2.6.1
+2.6.2
 

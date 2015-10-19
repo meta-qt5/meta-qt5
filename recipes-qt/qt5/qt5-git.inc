@@ -2,7 +2,7 @@
 # Copyright (C) 2013-2014 Martin Jansa <martin.jansa@gmail.com>
 
 QT_MODULE ?= "${BPN}"
-QT_MODULE_BRANCH ?= "5.5"
+QT_MODULE_BRANCH ?= "5.6"
 
 # each module needs to define valid SRCREV
 SRC_URI = " \
@@ -11,7 +11,7 @@ SRC_URI = " \
 
 S = "${WORKDIR}/git"
 
-PV = "5.5.1+git${SRCPV}"
+PV = "5.5.99+5.6.0-alpha1+git${SRCPV}"
 
 #LICENSE = "GFDL-1.3 & BSD & (LGPL-2.1 & The-Qt-Company-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
 #LIC_FILES_CHKSUM = "file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \

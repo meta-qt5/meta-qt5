@@ -1,4 +1,4 @@
-From 54fca19532b5224e8f79d7a010f2654ee196d326 Mon Sep 17 00:00:00 2001
+From d5e0c3af853c7bdb202f15a12117db76f744cc55 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
 Date: Sun, 26 May 2013 14:26:19 +0200
 Subject: [PATCH] qmltestexample: fix link

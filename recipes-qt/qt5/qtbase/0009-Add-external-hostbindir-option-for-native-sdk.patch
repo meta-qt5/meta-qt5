@@ -1,7 +1,7 @@
-From 12d06b2c5857a1c9cac4c964f32a582d029e9dfa Mon Sep 17 00:00:00 2001
+From 38ecbe7300925d440fa3d7c58e40ed5a53b2d73a Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 09/10] Add -external-hostbindir option for native(sdk)
+Subject: [PATCH 9/9] Add -external-hostbindir option for native(sdk)
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -37,10 +37,10 @@ Conflicts:
  5 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index f0f42ab..04fd1ba 100755
+index 6edfffd..313d921 100755
 --- a/configure
 +++ b/configure
-@@ -3846,6 +3846,7 @@ addConfStr "$CFG_SYSROOT"
+@@ -3895,6 +3895,7 @@ addConfStr "$CFG_SYSROOT"
  addConfStr "$QT_REL_HOST_BINS"
  addConfStr "$QT_REL_HOST_LIBS"
  addConfStr "$QT_REL_HOST_DATA"
@@ -94,10 +94,10 @@ index 1ad7637..5a8b127 100644
          HostSpecPath,
          HostPrefixPath,
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index 3bf0546..53bf146 100644
+index 6c3217b..980c578 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
-@@ -1217,6 +1217,13 @@ void Configure::parseCmdLine()
+@@ -1243,6 +1243,13 @@ void Configure::parseCmdLine()
              dictionary[ "QT_EXT_PREFIX" ] = configCmdLine.at(i);
          }
  
@@ -111,7 +111,7 @@ index 3bf0546..53bf146 100644
          else if (configCmdLine.at(i) == "-make-tool") {
              ++i;
              if (i == argCount)
-@@ -4101,6 +4108,9 @@ void Configure::generateQConfigCpp()
+@@ -4198,6 +4205,9 @@ void Configure::generateQConfigCpp()
  
      if (dictionary["QT_REL_HOST_DATA"].isEmpty())
          dictionary["QT_REL_HOST_DATA"] = haveHpx ? "." : dictionary["QT_REL_INSTALL_ARCHDATA"];
@@ -121,7 +121,7 @@ index 3bf0546..53bf146 100644
  
      confStringOff = 0;
      addConfStr(0, dictionary["QT_REL_INSTALL_DOCS"]);
-@@ -4120,6 +4130,7 @@ void Configure::generateQConfigCpp()
+@@ -4217,6 +4227,7 @@ void Configure::generateQConfigCpp()
      addConfStr(1, dictionary["QT_REL_HOST_BINS"]);
      addConfStr(1, dictionary["QT_REL_HOST_LIBS"]);
      addConfStr(1, dictionary["QT_REL_HOST_DATA"]);
@@ -130,5 +130,5 @@ index 3bf0546..53bf146 100644
      addConfStr(1, hostSpec);
  
 -- 
-2.6.1
+2.6.2
 

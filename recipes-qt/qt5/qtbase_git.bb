@@ -16,16 +16,9 @@ SRC_URI += "\
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0003-Add-external-hostbindir-option.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
-    file://0005-qeglplatformintegration-Undefine-CursorShape-from-X..patch \
-    file://0006-configure-bump-path-length-from-256-to-512-character.patch \
-    file://0007-QOpenGLPaintDevice-sub-area-support.patch \
-"
-
-# specific for target qtbase
-SRC_URI += "\
-    file://0008-qmake-don-t-build-it-in-configure-but-allow-to-build.patch \
-    file://0009-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
-    file://0010-qeglplatformscreen.cpp-reorder-headers-to-fix-build-.patch \
+    file://0005-configure-bump-path-length-from-256-to-512-character.patch \
+    file://0006-QOpenGLPaintDevice-sub-area-support.patch \
+    file://0007-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
 "
 
 DEPENDS += "qtbase-native"
@@ -207,21 +200,8 @@ do_configure() {
     qmake5_base_do_configure
 }
 
-do_compile_append() {
-    # copy corelib/3rdparty/qmake sources required by qmake -> ${B}
-    cp -ra ${S}/src/corelib ${B}/src
-    cp -ra ${S}/src/3rdparty ${B}/src
-    cp -ra ${S}/qmake ${B}
-    cp ${S}/.qmake.conf ${B}/qmake
-    cd ${B}/qmake
-    # align qt5 tools source path to ${S}
-    sed -i 's:\.\./tools:${S}/tools:g' qmake.pro
-    ../${OE_QMAKE_QMAKE}
-    oe_runmake CC="${CC}" CXX="${CXX}"
-}
-
 do_install_append() {
-    install -m 0755 ${B}/qmake/bin/qmake ${D}/${bindir}${QT_DIR_NAME}
+    install -m 0755 ${B}/bin/qmake-target ${D}/${bindir}${QT_DIR_NAME}/qmake
 
     ### Fix up the binaries to the right location
     ### TODO: FIX
@@ -240,9 +220,9 @@ do_install_append() {
     rm -rf ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/macx-ios-clang
 
     # Replace host paths with qmake built-in properties
-    sed -i -e 's| ${STAGING_DIR_NATIVE}${prefix_native}| $$[QT_HOST_PREFIX]|g' \
-        -e 's| ${STAGING_DIR_HOST}| $$[QT_SYSROOT]|g' \
-        ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/qconfig.pri
+#    sed -i -e 's| ${STAGING_DIR_NATIVE}${prefix_native}| $$[QT_HOST_PREFIX]|g' \
+#        -e 's| ${STAGING_DIR_HOST}| $$[QT_SYSROOT]|g' \
+#        ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/qconfig.pri
 }
 
 PACKAGES =. " \
@@ -279,4 +259,4 @@ sysroot_stage_dirs_append() {
     rm -rf $to${OE_QMAKE_PATH_QT_FONTS}
 }
 
-SRCREV = "5afc431323454225363dae30e67a1cb909086bf9"
+SRCREV = "f7f4dde80e13ff1c05a9399297ffb746ab505e62"
