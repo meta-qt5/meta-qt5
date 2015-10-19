@@ -1,7 +1,7 @@
-From b105af5084ec1ee51c1428769b881c260f01d4d5 Mon Sep 17 00:00:00 2001
+From e9e9a79d1a58981dd33d18c0f43b1fb982100a61 Mon Sep 17 00:00:00 2001
 From: Cody P Schafer <dev@codyps.com>
 Date: Thu, 9 Jul 2015 11:28:19 -0400
-Subject: [PATCH] linguist-tools cmake: allow overriding the location for
+Subject: [PATCH 4/4] linguist-tools cmake: allow overriding the location for
  lupdate and lrelease
 
 ---
@@ -59,5 +59,5 @@ index 4318b16..2e3b70f 100644
  
      set_target_properties(Qt5::lconvert PROPERTIES
 -- 
-2.4.5
+2.6.1
 

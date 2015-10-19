@@ -11,7 +11,7 @@ SRC_URI = " \
 
 S = "${WORKDIR}/git"
 
-PV = "5.5.0+git${SRCPV}"
+PV = "5.5.1+git${SRCPV}"
 
 #LICENSE = "GFDL-1.3 & BSD & (LGPL-2.1 & The-Qt-Company-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
 #LIC_FILES_CHKSUM = "file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \

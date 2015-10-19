@@ -1,4 +1,4 @@
-From b0648c997d24855b2a6f56fc61e3159af815fb4d Mon Sep 17 00:00:00 2001
+From 8ed228de093947c176cd1d8984a61e3b338bbe66 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Mon, 8 Jun 2015 13:59:25 -0700
 Subject: [PATCH 09/10] linux-oe-g++: Invert conditional for defining
@@ -32,5 +32,5 @@ index dd12003..8623651 100644
  
  #if defined(_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
 -- 
-2.5.3
+2.6.1
 

@@ -1,4 +1,4 @@
-From ca3b8fabcc38a9545e935a7c530565689fb85ff7 Mon Sep 17 00:00:00 2001
+From d68aa317015ca452b7097b267e5a1fa576aaa5e8 Mon Sep 17 00:00:00 2001
 From: Jani Hautakangas <jani.hautakangas@ixonos.com>
 Date: Thu, 16 May 2013 09:52:07 +0300
 Subject: [PATCH 07/10] QOpenGLPaintDevice sub-area support
@@ -153,5 +153,5 @@ index c179143..fad68d5 100644
      } else {
          if (m_vao.isCreated()) {
 -- 
-2.5.3
+2.6.1
 

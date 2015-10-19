@@ -1,4 +1,4 @@
-From c75cdeeb0ea705b9415c3cf777c611aee01f62c2 Mon Sep 17 00:00:00 2001
+From 64ad5e10c41e234151d18e71bfa315c7906eba16 Mon Sep 17 00:00:00 2001
 From: Yoann Lopes <yoann.lopes@digia.com>
 Date: Thu, 31 Oct 2013 15:06:30 +0100
 Subject: [PATCH] Initial porting effort to GStreamer 1.0.
@@ -55,5 +55,5 @@ index 1225ffb..4f675fe 100644
  
      qtCompileTest(resourcepolicy)
 -- 
-2.5.3
+2.6.1
 

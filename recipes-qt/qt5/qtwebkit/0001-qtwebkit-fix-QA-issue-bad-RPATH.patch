@@ -26,5 +26,5 @@ index fd66af6..ef754c3 100644
  CONFIG(debug, debug|release)|force_debug_info {
      # Make ld not cache the symbol tables of input files in memory to avoid memory exhaustion during the linking phase.
 -- 
-2.5.3
+2.6.1
 

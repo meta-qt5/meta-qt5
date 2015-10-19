@@ -1,4 +1,4 @@
-From 9e987abf08c5841fcce3331aceec51e00a26dcc8 Mon Sep 17 00:00:00 2001
+From f15c77264cc3ee82cba4127e58be4f6401b791f6 Mon Sep 17 00:00:00 2001
 From: Holger Freyther <zecke@selfish.org>
 Date: Wed, 26 Sep 2012 17:22:30 +0200
 Subject: [PATCH 02/10] qlibraryinfo: allow to set qt.conf from the outside
@@ -35,5 +35,5 @@ index 0cfcc4e..c3b5c2d 100644
          return new QSettings(qtconfig, QSettings::IniFormat);
  #ifdef QT_BUILD_QMAKE
 -- 
-2.5.3
+2.6.1
 

@@ -1,4 +1,4 @@
-From 37aec78ac44bad8754c3bd5b56836025e4eed50a Mon Sep 17 00:00:00 2001
+From 3c6cdb9c315e8457b8d191c0f1192499e8edc009 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Tue, 25 Aug 2015 10:05:15 -0400
 Subject: [PATCH 06/10] configure: bump path length from 256 to 512 characters
@@ -32,5 +32,5 @@ index a757ce5..f0f42ab 100755
  
  static const short qt_configure_str_offsets[] = {
 -- 
-2.5.3
+2.6.1
 

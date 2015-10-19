@@ -1,4 +1,4 @@
-From f66dceb807d27e4c0a3d1dd4d5b4f448b08317c9 Mon Sep 17 00:00:00 2001
+From cf7f63dfcf71b7baee30112ef73fed67504033f7 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 30 Jun 2014 20:08:17 +0200
 Subject: [PATCH 1/4] functions.prf: Don't match QMAKE_EXT_CPP or QMAKE_EXT_H
@@ -10,10 +10,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/qmake/mkspecs/features/functions.prf b/tools/qmake/mkspecs/features/functions.prf
-index 69d3fd3..5689ce0 100644
+index 64064bd..8287c8f 100644
 --- a/tools/qmake/mkspecs/features/functions.prf
 +++ b/tools/qmake/mkspecs/features/functions.prf
-@@ -98,9 +98,9 @@ defineReplace(mocOutput) {
+@@ -105,9 +105,9 @@ defineReplace(mocOutput) {
    out = $$1
    # The order is important, since the output of the second replace would end up accidentaly transformed by the first one
    for(ext, $$list($${QMAKE_EXT_CPP})): \
@@ -26,5 +26,5 @@ index 69d3fd3..5689ce0 100644
  }
  
 -- 
-2.5.3
+2.6.1
 

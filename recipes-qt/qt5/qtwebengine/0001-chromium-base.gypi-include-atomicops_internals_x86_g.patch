@@ -1,4 +1,4 @@
-From 8752cdaf7961ad0be8482cd6ebf76c91972f5088 Mon Sep 17 00:00:00 2001
+From 2a264c2ea7080b026ea1ec85f6317de13c5a6f4f Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Fri, 3 Oct 2014 03:52:11 +0200
 Subject: [PATCH 1/2] <chromium> base.gypi: include
@@ -23,5 +23,5 @@ index a5a285a..f1cad86 100644
                  ['include', 'atomicops_internals_x86_gcc.cc'],
                ],
 -- 
-2.5.3
+2.6.1
 
