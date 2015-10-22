@@ -92,7 +92,6 @@ RDEPENDS_${PN} += " \
     ${@base_contains('DISTRO_FEATURES', 'opengl', 'qtsystems-qmlplugins', '', d)} \
     qttools-dev \
     qttools-mkspecs \
-    qttools-plugins \
     qttools-staticdev \
     qttools-tools \
     ${@base_contains('DISTRO_FEATURES', 'wayland', '${USE_WAYLAND}', '', d)} \
@@ -112,4 +111,5 @@ RDEPENDS_${PN} += " \
 
 RRECOMMENDS_${PN} += " \
     qtquickcontrols-qmlplugins \
+    qttools-plugins \
 "
