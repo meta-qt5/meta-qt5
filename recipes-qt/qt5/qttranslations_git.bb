@@ -26,6 +26,7 @@ PACKAGES =. " \
     ${PN}-qtconfig \
     ${PN}-qtquick1 \
     ${PN}-qtscript \
+    ${PN}-qtserialport \
     ${PN}-qtbase \
     ${PN}-qthelp \
     ${PN}-qt \
@@ -85,6 +86,10 @@ FILES_${PN}-qtquick1 = " \
 
 FILES_${PN}-qtscript = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qtscript_*.qm \
+"
+
+FILES_${PN}-qtserialport = " \
+    ${OE_QMAKE_PATH_TRANSLATIONS}/qtserialport_*.qm \
 "
 
 FILES_${PN}-qtbase = " \
