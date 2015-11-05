@@ -1,7 +1,7 @@
 From ebfec8ca32379bffd18cbab1f4335a458fcc7e41 Mon Sep 17 00:00:00 2001
 From: Simon Busch <morphis@gravedo.de>
 Date: Tue, 18 Nov 2014 10:38:18 +0100
-Subject: [PATCH 2/2] functions.prf: Make sure we only use the file name to
+Subject: [PATCH 2/3] functions.prf: Make sure we only use the file name to
  generate it's moc'ed abbreviation
 
 Signed-off-by: Simon Busch <morphis@gravedo.de>
