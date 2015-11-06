@@ -59,7 +59,7 @@ do_configure() {
         QMAKE_LINK="${OE_QMAKE_LINK}" \
         QMAKE_CFLAGS="${OE_QMAKE_CFLAGS}" \
         QMAKE_CXXFLAGS="${OE_QMAKE_CXXFLAGS}" \
-        QMAKE_AR="${OE_QMAKE_AR}" \
+        QMAKE_AR="${OE_QMAKE_AR} cqs" \
         -after ${EXTRA_QMAKEVARS_POST}
 }
 
