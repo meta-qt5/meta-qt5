@@ -23,6 +23,9 @@ DEPENDS += " \
 # xscreensaver isn't covered in qtbase DEPENDS
 DEPENDS += "${@base_contains('DISTRO_FEATURES', 'x11', 'libxscrnsaver', '', d)}"
 
+DEPENDS += "yasm-native"
+EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm"
+
 COMPATIBLE_MACHINE = "(-)"
 COMPATIBLE_MACHINE_x86 = "(.*)"
 COMPATIBLE_MACHINE_x86-64 = "(.*)"
