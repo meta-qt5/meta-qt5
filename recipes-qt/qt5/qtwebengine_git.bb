@@ -17,6 +17,12 @@ DEPENDS += " \
     libcap \
 "
 
+# when qtbase is built with xcb enabled (default with x11 in DISTRO_FEATURES),
+# qtwebengine will have additional dependencies:
+# contains(QT_CONFIG, xcb): REQUIRED_PACKAGES += libdrm xcomposite xcursor xi xrandr xscrnsaver xtst
+# xscreensaver isn't covered in qtbase DEPENDS
+DEPENDS += "${@base_contains('DISTRO_FEATURES', 'x11', 'libxscrnsaver', '', d)}"
+
 COMPATIBLE_MACHINE = "(-)"
 COMPATIBLE_MACHINE_x86 = "(.*)"
 COMPATIBLE_MACHINE_x86-64 = "(.*)"
