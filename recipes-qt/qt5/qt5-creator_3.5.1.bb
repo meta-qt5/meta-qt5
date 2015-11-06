@@ -19,12 +19,12 @@ inherit qmake5
 DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg qtquick1"
 
 SRC_URI = " \
-    http://download.qt.io/official_releases/qtcreator/3.3/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
+    http://download.qt.io/official_releases/qtcreator/3.5/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
     file://0001-Fix-Allow-qt-creator-to-build-on-arm-aarch32-and-aar.patch \
     file://qtcreator.desktop.in \
 "
-SRC_URI[md5sum] = "54cb5918c6852731612672a22627dd08"
-SRC_URI[sha256sum] = "afefb73a05cdc36cdfb8a760c2b39eb6c366a22ef47c7d365d446092dd1d5331"
+SRC_URI[md5sum] = "77aef7df837eba07c7ce6037ee504c05"
+SRC_URI[sha256sum] = "5925ac818a08be919094e0f28fb4c5d8896765e0975d54d353e4c50f13d63e65"
 
 S = "${WORKDIR}/qt-creator-opensource-src-${PV}"
 
