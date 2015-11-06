@@ -30,6 +30,9 @@ been proven to be reliable and has a really good web GUI.
 
 1. https://github.com/meta-qt5/meta-qt5/
 
+meta-qt5 has Yocto Project Compatible status since 2013:
+https://www.yoctoproject.org/product/meta-qt5
+
 Main layer maintainers:
   Martin 'JaMa' Jansa <martin.jansa@gmail.com>
   Otavio Salvador <otavio@ossystems.com.br>
