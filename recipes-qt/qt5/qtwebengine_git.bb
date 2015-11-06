@@ -86,6 +86,6 @@ SRCREV_qtwebengine = "ce095e94b686196629244073990530441b9b5f4f"
 SRCREV_chromium = "146ebe26dce3289eb440bed7d5d0a7988ff5f5c9"
 SRCREV = "${SRCREV_qtwebengine}"
 
-SRCREV_FORMAT = "qtwebengine"
+SRCREV_FORMAT = "qtwebengine_chromium"
 
 S = "${WORKDIR}/git"
