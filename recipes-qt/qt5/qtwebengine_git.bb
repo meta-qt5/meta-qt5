@@ -13,6 +13,7 @@ DEPENDS += " \
     ninja-native \
     qtwebchannel \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols \
+    qtlocation \
     libdrm fontconfig pixman openssl pango cairo icu pciutils \
     libcap \
 "
@@ -26,6 +27,21 @@ DEPENDS += "${@base_contains('DISTRO_FEATURES', 'x11', 'libxscrnsaver', '', d)}"
 DEPENDS += "yasm-native"
 EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm"
 
+# To use system ffmpeg you need to enable also libwebp, opus, vpx											    
+# Only depenedencies available in oe-core are enabled by default
+PACKAGECONFIG ??= "libwebp flac libevent libxslt speex"
+PACKAGECONFIG[opus] = "WEBENGINE_CONFIG+=use_system_opus,,libopus"
+PACKAGECONFIG[icu] = "WEBENGINE_CONFIG+=use_system_icu,,icu"
+PACKAGECONFIG[ffmpeg] = "WEBENGINE_CONFIG+=use_system_ffmpeg,,libav"
+PACKAGECONFIG[libwebp] = "WEBENGINE_CONFIG+=use_system_libwebp,,libwebp"
+PACKAGECONFIG[flac] = "WEBENGINE_CONFIG+=use_system_flac,,flac"
+PACKAGECONFIG[libevent] = "WEBENGINE_CONFIG+=use_system_libevent,,libevent"
+PACKAGECONFIG[libxslt] = "WEBENGINE_CONFIG+=use_system_libxslt,,libxslt"
+PACKAGECONFIG[speex] = "WEBENGINE_CONFIG+=use_system_speex,,speex"
+PACKAGECONFIG[vpx] = "WEBENGINE_CONFIG+=use_system_vpx,,libvpx"
+
+EXTRA_QMAKEVARS_PRE += "${EXTRA_OECONF}"
+
 COMPATIBLE_MACHINE = "(-)"
 COMPATIBLE_MACHINE_x86 = "(.*)"
 COMPATIBLE_MACHINE_x86-64 = "(.*)"
@@ -36,6 +52,10 @@ inherit qmake5
 inherit gettext
 inherit pythonnative
 inherit perlnative
+
+# we don't want gettext.bbclass to append --enable-nls
+def gettext_oeconf(d):
+    return ""
 
 require qt5.inc
 require qt5-git.inc
@@ -54,6 +74,10 @@ do_configure() {
     export CC_host="gcc"
     export CXX_host="g++"
     export QMAKE_MAKE_ARGS="${EXTRA_OEMAKE}"
+    export QMAKE_CACHE_EVAL="${EXTRA_OECONF}"
+
+    # Disable autodetection from sysroot:
+    sed -i 's/packagesExist([^)]*vpx[^)]*):/false:/g; s/config_srtp:/false:/g; s/config_snappy:/false:/g; s/packagesExist(nss):/false:/g; s/packagesExist(minizip, zlib):/false:/g; s/packagesExist(libwebp,libwebpdemux):/false:/g; s/packagesExist(libxml-2.0,libxslt):/false:/g; s/^ *packagesExist($$package):/false:/g' ${S}/tools/qmake/mkspecs/features/configure.prf
 
     # qmake can't find the OE_QMAKE_* variables on it's own so directly passing them as
     # arguments here
