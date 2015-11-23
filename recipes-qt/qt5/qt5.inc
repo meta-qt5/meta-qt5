@@ -48,10 +48,11 @@ PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmldes
 ALLOW_EMPTY_${PN} = "1"
 ALLOW_EMPTY_${PN}-dbg = "1"
 
-RRECOMMENDS_${PN}_class-target = " \
+RRECOMMENDS_${PN} = " \
     ${PN}-plugins \
     ${PN}-qmlplugins \
     "
+RRECOMMENDS_${PN}_class-native = ""
 
 RRECOMMENDS_${PN}-dev = " \
     ${PN} \
