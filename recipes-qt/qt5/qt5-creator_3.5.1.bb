@@ -30,12 +30,6 @@ S = "${WORKDIR}/qt-creator-opensource-src-${PV}"
 
 EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 
-do_configure_prepend() {
-    # causes gcc infinite loop with 4.9.x for arm targets similar to
-    # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61033
-    export DO_NOT_BUILD_QMLDESIGNER=1
-}
-
 do_configure_append() {
     # Find native tools
     sed -i 's:${STAGING_BINDIR}.*/lrelease:${STAGING_BINDIR_NATIVE}${QT_DIR_NAME}/lrelease:g' ${B}/share/qtcreator/translations/Makefile
@@ -67,6 +61,7 @@ FILES_${PN} += " \
 FILES_${PN}-dbg += " \
     ${libdir}${QT_DIR_NAME}/qtcreator/.debug \
     ${libdir}${QT_DIR_NAME}/qtcreator/plugins/.debug \
+    ${libdir}${QT_DIR_NAME}/qtcreator/plugins/qmldesigner/.debug \
     ${libdir}${QT_DIR_NAME}/qtcreator/plugins/qbs/plugins/.debug \
 "
 
