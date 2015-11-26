@@ -33,8 +33,8 @@ SRC_URI += "\
 
 # common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
-    file://0008-Always-build-uic.patch \
-    file://0009-Add-external-hostbindir-option-for-native-sdk.patch \
+    file://0009-Always-build-uic.patch \
+    file://0010-Add-external-hostbindir-option-for-native-sdk.patch \
 "
 
 # CMake's toolchain configuration of nativesdk-qtbase
