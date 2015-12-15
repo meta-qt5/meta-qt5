@@ -7,7 +7,7 @@ inherit packagegroup
 
 PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
 
-# Requires meta-ruby to work
+# Requires Ruby to work
 USE_RUBY = " \
     qtquick1-dev \
     qtquick1-mkspecs \
@@ -95,7 +95,7 @@ RDEPENDS_${PN} += " \
     qttools-staticdev \
     qttools-tools \
     ${@base_contains('DISTRO_FEATURES', 'wayland', '${USE_WAYLAND}', '', d)} \
-    ${@base_contains('BBFILE_COLLECTIONS', 'ruby-layer', '${USE_RUBY}', '', d)} \
+    ${USE_RUBY} \
     ${@base_contains('DISTRO_FEATURES', 'x11', '${USE_X11}', '', d)} \
     qtwebsockets-dev \
     qtwebsockets-mkspecs \
