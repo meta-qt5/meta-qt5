@@ -92,6 +92,7 @@ FILES_${PN}-qmldesigner += " \
 
 # qmlplugins 1-4 levels of subdirs qmldir + *{.so,*.qmltypes,*.qml,*js}
 FILES_${PN}-qmlplugins = " \
+    ${OE_QMAKE_PATH_QML}/*.qmltypes \
     ${OE_QMAKE_PATH_QML}/*/*${SOLIBSDEV} \
     ${OE_QMAKE_PATH_QML}/*/qmldir \
     ${OE_QMAKE_PATH_QML}/*/*.qmltypes \
