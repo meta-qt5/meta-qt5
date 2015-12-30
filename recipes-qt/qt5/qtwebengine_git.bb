@@ -112,7 +112,11 @@ SRC_URI += " \
     file://0002-functions.prf-Make-sure-we-only-use-the-file-name-to.patch \
     file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
     file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch \
+    file://0002-media_capture_devices_dispatcher.h-Include-QCoreApplication-translate.patch \
+    file://0003-WebEngine-qquickwebengineview_p_p.h-add-inc-QColor.patch \
+    file://0001-chromium-jpeg_codec.cc_Change-false-to-FALSE-and-1-to-TRUE.patch \
 "
+
 SRCREV_qtwebengine = "40ef43e0d69c4a86c9430b7f264d2cde6340ee0f"
 SRCREV_chromium = "ec5b3304fc266dfdec7666b8b73d57a3971ea35f"
 SRCREV = "${SRCREV_qtwebengine}"
