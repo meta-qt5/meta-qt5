@@ -22,7 +22,8 @@ LIC_FILES_CHKSUM = " \
 #{standard input}:23: Error: selected processor does not support Thumb mode `stmdb sp!,{r4-r8,lr}'
 #{standard input}:30: Error: lo register required -- `ldmia sp!,{r4-r8,lr}'
 #{standard input}:43: Error: lo register required -- `ldmia sp!,{r4-r8,lr}'
-ARM_INSTRUCTION_SET = "arm"
+ARM_INSTRUCTION_SET_armv4 = "arm"
+ARM_INSTRUCTION_SET_armv5 = "arm"
 
 DEPENDS += "qtbase"
 
