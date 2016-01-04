@@ -11,11 +11,14 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative udev gconf"
 
-PACKAGECONFIG ??= ""
-PACKAGECONFIG[bluez4] = "OE_BLUEZ_ENABLED,,bluez4"
+inherit bluetooth
+
+PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez', '', d)}"
+PACKAGECONFIG[bluez] = "CONFIG+=OE_BLUEZ_ENABLED,,${BLUEZ}"
+
+EXTRA_QMAKEVARS_PRE += "${EXTRA_OECONF}"
 
 do_configure_prepend() {
-    export QMAKE_CACHE_EVAL="CONFIG+=${EXTRA_OECONF}"
     # disable bluez test if it isn't enabled by PACKAGECONFIG
     sed -i 's/^    qtCompileTest(bluez)/    OE_BLUEZ_ENABLED:qtCompileTest(bluez)/g' ${S}/qtsystems.pro
 }
