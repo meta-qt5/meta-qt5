@@ -121,8 +121,7 @@ PACKAGECONFIG[kms] = "-kms,-no-kms,virtual/mesa virtual/egl"
 # needed for qtwebkit
 PACKAGECONFIG[icu] = "-icu,-no-icu,icu"
 PACKAGECONFIG[udev] = "-libudev,-no-libudev,udev"
-# use -openssl-linked here to ensure that RDEPENDS for libcrypto and libssl are detected
-PACKAGECONFIG[openssl] = "-openssl-linked,-no-openssl,openssl"
+PACKAGECONFIG[openssl] = "-openssl,-no-openssl,openssl,libssl"
 PACKAGECONFIG[alsa] = "-alsa,-no-alsa,alsa-lib"
 PACKAGECONFIG[pulseaudio] = "-pulseaudio,-no-pulseaudio,pulseaudio"
 PACKAGECONFIG[nis] = "-nis,-no-nis"
