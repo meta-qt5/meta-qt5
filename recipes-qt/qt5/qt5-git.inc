@@ -6,7 +6,7 @@ QT_MODULE_BRANCH ?= "5.6"
 
 # each module needs to define valid SRCREV
 SRC_URI = " \
-    ${QT_GIT}/${QT_MODULE}.git;branch=${QT_MODULE_BRANCH} \
+    ${QT_GIT}/${QT_MODULE}.git;branch=${QT_MODULE_BRANCH};protocol=${QT_GIT_PROTOCOL} \
 "
 
 S = "${WORKDIR}/git"
