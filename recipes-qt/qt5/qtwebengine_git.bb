@@ -115,6 +115,7 @@ SRC_URI += " \
     file://0002-media_capture_devices_dispatcher.h-Include-QCoreApplication-translate.patch \
     file://0003-WebEngine-qquickwebengineview_p_p.h-add-inc-QColor.patch \
     file://0001-chromium-jpeg_codec.cc_Change-false-to-FALSE-and-1-to-TRUE.patch \
+    file://0001-examples-enable-building-examples-by-def.patch \
 "
 
 SRCREV_qtwebengine = "40ef43e0d69c4a86c9430b7f264d2cde6340ee0f"

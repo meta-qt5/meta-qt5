@@ -1,0 +1,7 @@
+--- a/qtwebengine.pro	2016-01-04 02:08:57.152198023 +0000
++++ b/qtwebengine.pro	2016-01-04 02:09:11.667422022 +0000
+@@ -1,2 +1,4 @@
+ load(qt_build_config)
+ load(qt_parts)
++
++SUBDIRS += examples
