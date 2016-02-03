@@ -13,9 +13,7 @@ LIC_FILES_CHKSUM = " \
     file://examples/webkitwidgets/imageanalyzer/imageanalyzer.cpp;endline=39;md5=b0739af76072fbe303dc04b6941e054f \
 "
 
-SRC_URI += " \
-    file://0001-qtwebkit-examples-enable-building-examples-by-defaul.patch \
-"
+PACKAGECONFIG ?= "examples"
 
 DEPENDS += "qtwebkit qtxmlpatterns"
 RDEPENDS_${PN}-examples += "qtwebkit-qmlplugins"
