@@ -9,6 +9,6 @@ PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
 
 RDEPENDS_${PN} += " \
     nativesdk-packagegroup-sdk-host \
-    nativesdk-qttools \
+    nativesdk-qttools-tools \
     nativesdk-qtbase-tools \
 "

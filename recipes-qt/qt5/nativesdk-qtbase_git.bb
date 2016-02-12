@@ -49,6 +49,7 @@ PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 FILES_${PN}-tools-dev = " \
     ${includedir} \
     ${FILES_SOLIBSDEV} ${libdir}/*.la \
+    ${libdir}/*.prl \
     ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
 "
 
@@ -201,16 +202,6 @@ do_configure() {
     bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} ${S} -o Makefile || die "Configuring qt with qmake failed. EXTRA_OECONF was ${EXTRA_OECONF}"
 }
 
-# Set the EXTRA_QTLIB variable to e.g. Xml, in order to not remove libQt5Xml.so.*
-EXTRA_QTLIB ?= ""
-
-python __anonymous () {
-    templibs = ""
-    for e in d.getVar("EXTRA_QTLIB", True).split():
-        templibs = "%s -not -name 'libQt5%s.so*' -and" % (templibs, e)
-    d.setVar("QTLIBSPRESERVE", templibs)
-}
-
 do_install() {
     # Fix install paths for all
     find -name "Makefile*" | xargs sed -i "s,(INSTALL_ROOT)${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE},(INSTALL_ROOT)${STAGING_DIR_NATIVE},g"
@@ -223,17 +214,11 @@ do_install() {
     # e.g. qt3d, qtwayland
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
 
-    # remove things unused in nativesdk, we need the headers, Qt5Core
-    # and Qt5Bootstrap.
+    # remove things unused in nativesdk, we need the headers and libs
     rm -rf ${D}${datadir} \
            ${D}/${OE_QMAKE_PATH_PLUGINS} \
            ${D}${libdir}/cmake \
            ${D}${libdir}/pkgconfig
-    find ${D}${libdir} -maxdepth 1 -name 'lib*' -and -not -type d -and \
-                                   -not -name 'libQt5Core.so*' -and \
-                                   ${QTLIBSPRESERVE} \
-                                   -not -name 'libQt5Bootstrap.a' \
-                                   -exec rm '{}' ';'
 
     # Install CMake's toolchain configuration
     mkdir -p ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
