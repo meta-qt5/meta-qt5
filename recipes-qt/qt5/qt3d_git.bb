@@ -8,7 +8,19 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL;md5=05832301944453ec79e40ba3c3cfceec \
 "
 
-DEPENDS = "qtdeclarative"
+DEPENDS += "qtbase"
+DEPENDS_class-target += "qtdeclarative qt3d-native"
+
+SRC_URI += " \
+    file://0001-Allow-a-tools-only-build.patch \
+    "
+
+PACKAGECONFIG ??= ""
+PACKAGECONFIG_class-native ??= "tools-only"
+PACKAGECONFIG_class-nativesdk ??= "tools-only"
+PACKAGECONFIG[tools-only] = "CONFIG+=tools-only"
+
+EXTRA_QMAKEVARS_PRE += "${EXTRA_OECONF}"
 
 FILES_${PN}-qmlplugins += " \
     ${OE_QMAKE_PATH_QML}/*/*/*.bez \
@@ -16,3 +28,5 @@ FILES_${PN}-qmlplugins += " \
 "
 
 SRCREV = "9b9f34701f47824e8201453d148152fb0855f98a"
+
+BBCLASSEXTEND += "native nativesdk"
