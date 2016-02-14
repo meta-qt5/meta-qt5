@@ -1,4 +1,4 @@
-From d26a676827ef2d64b4627090690d3240e62f6565 Mon Sep 17 00:00:00 2001
+From c978b2ed0e1ce48b2d4a4a6eb660927bc88aed57 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
 Date: Sun, 26 May 2013 14:26:19 +0200
 Subject: [PATCH] qmltestexample: fix link
@@ -15,12 +15,11 @@ Change-Id: I63088ff73bec6a8559dfae132f8bd40b62487450
 Signed-off-by: Eric Bénard <eric@eukrea.com>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- examples/qmltest/qmltest/qmltest.pro         | 2 +-
- tests/auto/qml/qjsengine/qjsengine.pro       | 2 +-
- tests/auto/qml/qtqmlmodules/qtqmlmodules.pro | 2 +-
- tests/auto/qmltest/qmltest.pro               | 1 +
- tools/qmltestrunner/qmltestrunner.pro        | 2 +-
- 5 files changed, 5 insertions(+), 4 deletions(-)
+ examples/qmltest/qmltest/qmltest.pro   | 2 +-
+ tests/auto/qml/qjsengine/qjsengine.pro | 2 +-
+ tests/auto/qmltest/qmltest.pro         | 1 +
+ tools/qmltestrunner/qmltestrunner.pro  | 2 +-
+ 4 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/examples/qmltest/qmltest/qmltest.pro b/examples/qmltest/qmltest/qmltest.pro
 index b5893c5..1b00e6c 100644
@@ -36,31 +35,19 @@ index b5893c5..1b00e6c 100644
  macx: CONFIG -= app_bundle
  
 diff --git a/tests/auto/qml/qjsengine/qjsengine.pro b/tests/auto/qml/qjsengine/qjsengine.pro
-index fc2452c..919710f 100644
+index c9d78e2..5861613 100644
 --- a/tests/auto/qml/qjsengine/qjsengine.pro
 +++ b/tests/auto/qml/qjsengine/qjsengine.pro
-@@ -1,7 +1,7 @@
+@@ -1,6 +1,6 @@
  CONFIG += testcase
- CONFIG += parallel_test
  TARGET = tst_qjsengine
 -QT +=  qml qml-private widgets testlib gui-private
 +QT +=  qml qml-private widgets testlib gui-private quick
  macx:CONFIG -= app_bundle
  SOURCES += tst_qjsengine.cpp
  RESOURCES += qjsengine.qrc
-diff --git a/tests/auto/qml/qtqmlmodules/qtqmlmodules.pro b/tests/auto/qml/qtqmlmodules/qtqmlmodules.pro
-index c6d442e..3181dcd 100644
---- a/tests/auto/qml/qtqmlmodules/qtqmlmodules.pro
-+++ b/tests/auto/qml/qtqmlmodules/qtqmlmodules.pro
-@@ -8,5 +8,5 @@ macx:CONFIG -= app_bundle
- 
- TESTDATA = data/*
- 
--QT += core-private  qml-private testlib gui gui-private
-+QT += core-private  qml-private testlib gui gui-private quick
- DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 diff --git a/tests/auto/qmltest/qmltest.pro b/tests/auto/qmltest/qmltest.pro
-index 7662cb1..a8f8ae2 100644
+index 54db7a7..8c6986c 100644
 --- a/tests/auto/qmltest/qmltest.pro
 +++ b/tests/auto/qmltest/qmltest.pro
 @@ -4,6 +4,7 @@ CONFIG += qmltestcase

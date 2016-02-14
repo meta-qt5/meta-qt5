@@ -1,4 +1,4 @@
-From 5b4ae15a19a9135d3dc8a35aa2d109ba8d29868a Mon Sep 17 00:00:00 2001
+From 6df8d620081bd78319fc97846e52b1a83042401a Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH] Add -external-hostbindir option for native(sdk)
@@ -37,10 +37,10 @@ Conflicts:
  5 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index 2e99d39..a0641d2 100755
+index 6abdd6b..7c5a066 100755
 --- a/configure
 +++ b/configure
-@@ -3922,6 +3922,7 @@ fi
+@@ -3824,6 +3824,7 @@ fi
  addConfStr "$QT_REL_HOST_BINS"
  addConfStr "$QT_REL_HOST_LIBS"
  addConfStr "$QT_REL_HOST_DATA"
@@ -49,10 +49,10 @@ index 2e99d39..a0641d2 100755
  addConfStr "$shortspec"
  
 diff --git a/qmake/property.cpp b/qmake/property.cpp
-index 817ae95..c69539f 100644
+index 9ee08f4..e6ecf92 100644
 --- a/qmake/property.cpp
 +++ b/qmake/property.cpp
-@@ -68,6 +68,7 @@ static const struct {
+@@ -63,6 +63,7 @@ static const struct {
      { "QT_HOST_DATA", QLibraryInfo::HostDataPath, true },
      { "QT_HOST_BINS", QLibraryInfo::HostBinariesPath, true },
      { "QT_HOST_LIBS", QLibraryInfo::HostLibrariesPath, true },
@@ -61,10 +61,10 @@ index 817ae95..c69539f 100644
      { "QMAKE_XSPEC", QLibraryInfo::TargetSpecPath, true },
  };
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index e1c87b5..d6e03ba 100644
+index ff65ef9..3726831 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
-@@ -373,7 +373,7 @@ QLibraryInfo::isDebugBuild()
+@@ -381,7 +381,7 @@ QLibraryInfo::isDebugBuild()
   */
  
  static const struct {
@@ -73,7 +73,7 @@ index e1c87b5..d6e03ba 100644
  } qtConfEntries[] = {
      { "Prefix", "." },
      { "Documentation", "doc" }, // should be ${Data}/doc
-@@ -398,6 +398,7 @@ static const struct {
+@@ -406,6 +406,7 @@ static const struct {
      { "HostBinaries", "bin" },
      { "HostLibraries", "lib" },
      { "HostData", "." },
@@ -82,10 +82,10 @@ index e1c87b5..d6e03ba 100644
      { "HostSpec", "" },
      { "HostPrefix", "" },
 diff --git a/src/corelib/global/qlibraryinfo.h b/src/corelib/global/qlibraryinfo.h
-index 1ad7637..5a8b127 100644
+index 362d47d..a2326e2 100644
 --- a/src/corelib/global/qlibraryinfo.h
 +++ b/src/corelib/global/qlibraryinfo.h
-@@ -81,6 +81,7 @@ public:
+@@ -87,6 +87,7 @@ public:
          HostBinariesPath,
          HostLibrariesPath,
          HostDataPath,
@@ -94,10 +94,10 @@ index 1ad7637..5a8b127 100644
          HostSpecPath,
          HostPrefixPath,
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index 6f1e2b7..ae03143 100644
+index 7fd0b98..47fa6c3 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
-@@ -1256,6 +1256,13 @@ void Configure::parseCmdLine()
+@@ -1202,6 +1202,13 @@ void Configure::parseCmdLine()
              dictionary[ "QT_EXT_PREFIX" ] = configCmdLine.at(i);
          }
  
@@ -111,7 +111,7 @@ index 6f1e2b7..ae03143 100644
          else if (configCmdLine.at(i) == "-make-tool") {
              ++i;
              if (i == argCount)
-@@ -4232,6 +4239,9 @@ void Configure::generateQConfigCpp()
+@@ -4121,6 +4128,9 @@ void Configure::generateQConfigCpp()
  
      if (dictionary["QT_REL_HOST_DATA"].isEmpty())
          dictionary["QT_REL_HOST_DATA"] = haveHpx ? "." : dictionary["QT_REL_INSTALL_ARCHDATA"];
@@ -121,7 +121,7 @@ index 6f1e2b7..ae03143 100644
  
      confStringOff = 0;
      addConfStr(0, dictionary["QT_REL_INSTALL_DOCS"]);
-@@ -4251,6 +4261,7 @@ void Configure::generateQConfigCpp()
+@@ -4140,6 +4150,7 @@ void Configure::generateQConfigCpp()
      addConfStr(1, dictionary["QT_REL_HOST_BINS"]);
      addConfStr(1, dictionary["QT_REL_HOST_LIBS"]);
      addConfStr(1, dictionary["QT_REL_HOST_DATA"]);

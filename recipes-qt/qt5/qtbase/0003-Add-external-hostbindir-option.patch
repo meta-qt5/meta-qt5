@@ -1,4 +1,4 @@
-From 3ecdcb6a10d125f1440c42ad9c79f04d43c257e0 Mon Sep 17 00:00:00 2001
+From 502b95b840a5f79e5a68e9bd5b10dbdc92485f1f Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH] Add -external-hostbindir option
@@ -26,21 +26,23 @@ Signed-off-by: Jonathan Liu <net147@gmail.com>
 
 Conflicts:
         configure
+
+Change-Id: Iacaa1c5531cd6dcc094891610c351673db55d7b2
 ---
  configure                                   | 14 ++++++++++++++
  mkspecs/features/qt_functions.prf           |  6 +++++-
- mkspecs/features/qt_tool.prf                |  5 +++--
- qtbase.pro                                  | 13 ++++++++++---
+ mkspecs/features/qt_tool.prf                |  4 +++-
+ qtbase.pro                                  | 16 ++++++++++++++++
  src/corelib/Qt5CoreConfigExtras.cmake.in    |  6 +++---
  src/dbus/Qt5DBusConfigExtras.cmake.in       |  4 ++--
  src/widgets/Qt5WidgetsConfigExtras.cmake.in |  2 +-
- 7 files changed, 38 insertions(+), 12 deletions(-)
+ 7 files changed, 44 insertions(+), 8 deletions(-)
 
 diff --git a/configure b/configure
-index 88a308d..f2611ed 100755
+index ffe6931..5aa87b4 100755
 --- a/configure
 +++ b/configure
-@@ -810,6 +810,7 @@ QT_HOST_BINS=
+@@ -825,6 +825,7 @@ QT_HOST_BINS=
  QT_HOST_LIBS=
  QT_HOST_DATA=
  QT_EXT_PREFIX=
@@ -48,7 +50,7 @@ index 88a308d..f2611ed 100755
  
  #flags for SQL drivers
  QT_CFLAGS_PSQL=
-@@ -929,6 +930,7 @@ while [ "$#" -gt 0 ]; do
+@@ -944,6 +945,7 @@ while [ "$#" -gt 0 ]; do
      -testsdir| \
      -hostdatadir| \
      -hostbindir| \
@@ -56,7 +58,7 @@ index 88a308d..f2611ed 100755
      -hostlibdir| \
      -extprefix| \
      -sysroot| \
-@@ -1159,6 +1161,9 @@ while [ "$#" -gt 0 ]; do
+@@ -1176,6 +1178,9 @@ while [ "$#" -gt 0 ]; do
      extprefix)
          QT_EXT_PREFIX="$VAL"
          ;;
@@ -66,7 +68,7 @@ index 88a308d..f2611ed 100755
      pkg-config)
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_PKGCONFIG="$VAL"
-@@ -2428,6 +2433,10 @@ Installation options:
+@@ -2438,6 +2443,10 @@ Installation options:
      -hostdatadir <dir> . Data used by qmake will be installed to <dir>
                           (default HOSTPREFIX)
  
@@ -77,7 +79,7 @@ index 88a308d..f2611ed 100755
  Configure options:
  
   The defaults (*) are usually acceptable. A plus (+) denotes a default value
-@@ -3172,6 +3181,11 @@ fi
+@@ -3196,6 +3205,11 @@ fi
  # command line and environment validation
  #-------------------------------------------------------------------------------
  
@@ -90,10 +92,10 @@ index 88a308d..f2611ed 100755
  CFG_QCONFIG_PATH=$relpath/src/corelib/global/qconfig-${CFG_QCONFIG}.h
  case "$CFG_QCONFIG" in
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 8639695..d89d948 100644
+index cfac583..41ca7f1 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -70,7 +70,11 @@ defineTest(qtHaveModule) {
+@@ -71,7 +71,11 @@ defineTest(qtHaveModule) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
      isEmpty(cmd) {
@@ -104,13 +106,13 @@ index 8639695..d89d948 100644
 +        else: \
 +            cmd = $$[QT_EXTERNAL_HOST_BINS]/$$2
          exists($${cmd}.pl) {
+             $${1}_EXE = $${cmd}.pl
              cmd = perl -w $$system_path($${cmd}.pl)
-         } else: contains(QMAKE_HOST.os, Windows) {
 diff --git a/mkspecs/features/qt_tool.prf b/mkspecs/features/qt_tool.prf
-index 839c3d6..45934a0 100644
+index bdeb59c..b8c539f 100644
 --- a/mkspecs/features/qt_tool.prf
 +++ b/mkspecs/features/qt_tool.prf
-@@ -14,10 +14,11 @@ load(qt_app)
+@@ -14,10 +14,12 @@ load(qt_app)
  CONFIG += console
  DEFINES *= QT_USE_QSTRINGBUILDER
  
@@ -118,37 +120,37 @@ index 839c3d6..45934a0 100644
 +
  # If we are doing a prefix build, create a "module" pri which enables
  # qtPrepareTool() to work with the non-installed build.
--# Non-bootstrapped tools always need this because of the environment setup.
--!build_pass:if(!host_build|!force_bootstrap|force_independent) {
-+!build_pass:if(!host_build|!force_bootstrap|force_independent):isEmpty(QT_EXTERNAL_HOST_BINS) {
+ # Non-bootstrapped tools always need this because of the environment setup.
+-!build_pass:if(!host_build|!force_bootstrap|force_independent|!isEmpty(HOST_QT_TOOLS)) {
++!build_pass:if(!host_build|!force_bootstrap|force_independent|!isEmpty(HOST_QT_TOOLS)):isEmpty(QT_EXTERNAL_HOST_BINS) {
      isEmpty(MODULE):MODULE = $$TARGET
  
-     !host_build|!force_bootstrap: MODULE_DEPENDS = $$replace(QT, -private$, _private)
+     load(qt_build_paths)
 diff --git a/qtbase.pro b/qtbase.pro
-index 98ca86a..0eed475 100644
+index 11cff9e..ec03669 100644
 --- a/qtbase.pro
 +++ b/qtbase.pro
-@@ -37,12 +37,16 @@ CONFIG -= qt
+@@ -38,6 +38,19 @@ CONFIG -= qt
  
  ### installations ####
  
 +QT_EXTERNAL_HOST_BINS = $$[QT_EXTERNAL_HOST_BINS]
 +
- #qmake
- qmake.path = $$[QT_HOST_BINS]
++#qmake
++qmake.path = $$[QT_HOST_BINS]
 +qmake.files = $$OUT_PWD/bin/qmake
 +!isEmpty(QT_EXTERNAL_HOST_BINS) {
 +   qmake.files = $$[QT_EXTERNAL_HOST_BINS]/qmake
 +}
- equals(QMAKE_HOST.os, Windows) {
--   qmake.files = $$OUT_PWD/bin/qmake.exe
--} else {
--   qmake.files = $$OUT_PWD/bin/qmake
++equals(QMAKE_HOST.os, Windows) {
 +   qmake.files = $${qmake.files}.exe
- }
- INSTALLS += qmake
- 
-@@ -59,6 +63,9 @@ INSTALLS += fixqt4headers
++}
++INSTALLS += qmake
++
+ #licheck
+ licheck.path = $$[QT_HOST_BINS]
+ licheck.files = $$PWD/bin/$$QT_LICHECK
+@@ -51,6 +64,9 @@ INSTALLS += fixqt4headers
  #syncqt
  syncqt.path = $$[QT_HOST_BINS]
  syncqt.files = $$PWD/bin/syncqt.pl
@@ -159,7 +161,7 @@ index 98ca86a..0eed475 100644
  
  # If we are doing a prefix build, create a "module" pri which enables
 diff --git a/src/corelib/Qt5CoreConfigExtras.cmake.in b/src/corelib/Qt5CoreConfigExtras.cmake.in
-index 91a4eb6..25df27c 100644
+index a5ed8b2..0e11a1e 100644
 --- a/src/corelib/Qt5CoreConfigExtras.cmake.in
 +++ b/src/corelib/Qt5CoreConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::qmake)

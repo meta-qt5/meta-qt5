@@ -36,4 +36,4 @@ SRC_URI += " \
     file://0001-examples-wayland-include-server-buffer-only-when-bui.patch \
 "
 
-SRCREV = "26e27845a43319d0ecad0c6392f05d1ed50da2a2"
+SRCREV = "bfa66ccb29f747e2cb07a4f2e561b165be9f211d"

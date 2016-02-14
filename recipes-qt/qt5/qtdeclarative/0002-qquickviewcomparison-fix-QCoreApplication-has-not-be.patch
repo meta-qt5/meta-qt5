@@ -1,4 +1,4 @@
-From 9d39293e354120a9ec5e92c87b4cd695acdeb3f5 Mon Sep 17 00:00:00 2001
+From 493e91c9c3527d577f7051de9a582a178ca43fcf Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Thu, 31 Mar 2016 19:38:58 -0400
 Subject: [PATCH] qquickviewcomparison: fix QCoreApplication has not been
