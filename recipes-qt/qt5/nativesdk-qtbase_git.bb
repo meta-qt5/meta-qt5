@@ -1,5 +1,5 @@
 DESCRIPTION = "SDK version of Qt/[X11|Mac|Embedded]"
-DEPENDS = "nativesdk-zlib nativesdk-dbus qtbase-native"
+DEPENDS = "nativesdk-zlib qtbase-native"
 SECTION = "libs"
 HOMEPAGE = "http://qt-project.org"
 
@@ -156,6 +156,7 @@ do_configure() {
         -sysroot ${STAGING_DIR_NATIVE} \
         -no-gcc-sysroot \
         -system-zlib \
+        -dbus-runtime \
         -no-libjpeg \
         -no-libpng \
         -no-gif \
