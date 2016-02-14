@@ -1,8 +1,8 @@
-From f902b73eda6d459a3669fd78a3c8908ae13e705b Mon Sep 17 00:00:00 2001
+From 2fbde67aa4184e31ccbfae95e884b89567883904 Mon Sep 17 00:00:00 2001
 From: Holger Freyther <zecke@selfish.org>
 Date: Wed, 26 Sep 2012 17:22:30 +0200
-Subject: [PATCH 2/9] qlibraryinfo: allow to set qt.conf from the outside using
- the environment
+Subject: [PATCH 02/10] qlibraryinfo: allow to set qt.conf from the outside
+ using the environment
 
 Allow to set a qt.conf from the outside using the environment. This allows
 to inject new prefixes and other paths into qmake. This is needed when using
@@ -19,7 +19,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index 0cfcc4e..c3b5c2d 100644
+index 8bcacca..e1c87b5 100644
 --- a/src/corelib/global/qlibraryinfo.cpp
 +++ b/src/corelib/global/qlibraryinfo.cpp
 @@ -157,7 +157,10 @@ void QLibrarySettings::load()
@@ -35,5 +35,5 @@ index 0cfcc4e..c3b5c2d 100644
          return new QSettings(qtconfig, QSettings::IniFormat);
  #ifdef QT_BUILD_QMAKE
 -- 
-2.6.2
+2.7.1
 

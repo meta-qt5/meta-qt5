@@ -1,4 +1,4 @@
-From 0fb675dfdff64a270b92d768bedc0d6b355675b4 Mon Sep 17 00:00:00 2001
+From a6f3bde30cb78e109a26fec6b336f8a504d4fa3c Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.jansa@gmail.com>
 Date: Wed, 11 Sep 2013 18:30:08 +0200
 Subject: [PATCH 1/4] Allow to build only lrelease + lupdate + lconvert
@@ -157,5 +157,5 @@ index 20b5fec..8a42d1f 100644
  installed_cmake.depends = cmake
  
 -- 
-2.6.2
+2.7.0
 

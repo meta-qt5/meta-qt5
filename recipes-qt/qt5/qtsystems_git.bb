@@ -33,4 +33,4 @@ QT_MODULE_BRANCH = "dev"
 # qtsystems wasn't released yet, last tag before this SRCREV is 5.0.0-beta1
 # qt5-git PV is only to indicate that this recipe is compatible with qt5 5.6
 
-SRCREV = "0577ffca58b7fed78c1820fc1c2b7ab3533d5698"
+SRCREV = "cc2077700bd5503d1fcf53aef83cbb76975e745a"

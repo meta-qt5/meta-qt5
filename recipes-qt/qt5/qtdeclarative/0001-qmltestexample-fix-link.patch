@@ -1,4 +1,4 @@
-From d5e0c3af853c7bdb202f15a12117db76f744cc55 Mon Sep 17 00:00:00 2001
+From 1755b8c7ab87f9e6bf072bd0bef50086c14dd9ff Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
 Date: Sun, 26 May 2013 14:26:19 +0200
 Subject: [PATCH] qmltestexample: fix link
@@ -84,5 +84,5 @@ index 1bb913e..56f2dd5 100644
  
  load(qt_tool)
 -- 
-2.6.1
+2.7.0
 

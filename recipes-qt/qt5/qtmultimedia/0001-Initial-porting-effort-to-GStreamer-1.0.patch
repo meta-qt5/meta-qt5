@@ -1,4 +1,4 @@
-From 066a997479b2431d7bc479655ce37ae083e7a224 Mon Sep 17 00:00:00 2001
+From e8e2e289288acd3124536a41351e7bcd639bef07 Mon Sep 17 00:00:00 2001
 From: Yoann Lopes <yoann.lopes@digia.com>
 Date: Thu, 31 Oct 2013 15:06:30 +0100
 Subject: [PATCH] Initial porting effort to GStreamer 1.0.
@@ -17,10 +17,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 14 insertions(+), 12 deletions(-)
 
 diff --git a/qtmultimedia.pro b/qtmultimedia.pro
-index 1225ffb..4f675fe 100644
+index 98bb315..287887f 100644
 --- a/qtmultimedia.pro
 +++ b/qtmultimedia.pro
-@@ -18,19 +18,21 @@ win32 {
+@@ -17,19 +17,21 @@ win32 {
      contains(QT_CONFIG, alsa):qtCompileTest(alsa)
      contains(QT_CONFIG, pulseaudio):qtCompileTest(pulseaudio)
  
@@ -55,5 +55,5 @@ index 1225ffb..4f675fe 100644
  
      qtCompileTest(resourcepolicy)
 -- 
-2.6.1
+2.7.0
 

@@ -111,14 +111,14 @@ SRC_URI += " \
     file://0001-functions.prf-Don-t-match-QMAKE_EXT_CPP-or-QMAKE_EXT.patch \
     file://0002-functions.prf-Make-sure-we-only-use-the-file-name-to.patch \
     file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
+    file://0004-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
+    file://0005-Include-dependency-to-QCoreApplication-translate.patch \
     file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch \
-    file://0002-media_capture_devices_dispatcher.h-Include-QCoreApplication-translate.patch \
-    file://0003-WebEngine-qquickwebengineview_p_p.h-add-inc-QColor.patch \
-    file://0001-chromium-jpeg_codec.cc_Change-false-to-FALSE-and-1-to-TRUE.patch \
+    file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
 "
 
-SRCREV_qtwebengine = "40ef43e0d69c4a86c9430b7f264d2cde6340ee0f"
-SRCREV_chromium = "ec5b3304fc266dfdec7666b8b73d57a3971ea35f"
+SRCREV_qtwebengine = "3f02c25de46f5ff296b8189af3435ce5800b39a7"
+SRCREV_chromium = "779a2388fc123a7f3a178ce2ced921ee4a307e2c"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
