@@ -1,4 +1,4 @@
-From a015bddaf2005cac376be7dda4603637afc5844c Mon Sep 17 00:00:00 2001
+From c3805244c812f4dbfb8949dc2f146aa5c7af62df Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Thu, 24 Dec 2015 12:46:58 -0200
 Subject: [PATCH 2/2] chromium: Change false to FALSE and 1 to TRUE, FIX

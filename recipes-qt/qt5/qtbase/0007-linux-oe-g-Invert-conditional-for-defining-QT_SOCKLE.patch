@@ -1,4 +1,4 @@
-From 0cac609e192c303e26d139b4a7d5b35897a020a8 Mon Sep 17 00:00:00 2001
+From f07797b0127494a4121d51e5b66d3e6a4a260316 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Mon, 8 Jun 2015 13:59:25 -0700
 Subject: [PATCH 07/10] linux-oe-g++: Invert conditional for defining

@@ -1,4 +1,4 @@
-From bf8e0e2292c8a9233d55714aab5eb780c62a132d Mon Sep 17 00:00:00 2001
+From e9fbf13815bad3373b7124290c2d61cb34a21903 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH 01/10] Add linux-oe-g++ platform
@@ -47,19 +47,19 @@ Upstream-Status: Inappropriate [embedded specific]
 Change-Id: I0591ed5da0d61d7cf1509d420e6b293582f1863c
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- configure                            |  71 ++++++++++++++++---------
+ configure                            |  55 ++++++++++++-------
  mkspecs/features/configure.prf       |   4 +-
  mkspecs/linux-oe-g++/qmake.conf      |  42 +++++++++++++++
  mkspecs/linux-oe-g++/qplatformdefs.h | 100 +++++++++++++++++++++++++++++++++++
- 4 files changed, 189 insertions(+), 28 deletions(-)
+ 4 files changed, 181 insertions(+), 20 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index f247401..011cd70 100755
+index 69d0a08..a53638a 100755
 --- a/configure
 +++ b/configure
-@@ -342,6 +342,16 @@ getQMakeConf()
+@@ -339,6 +339,16 @@ getQMakeConf()
      getSingleQMakeVariable "$1" "$specvals"
  }
  
@@ -76,7 +76,7 @@ index f247401..011cd70 100755
  getXQMakeConf()
  {
      if [ -z "$xspecvals" ]; then
-@@ -351,6 +361,16 @@ getXQMakeConf()
+@@ -348,6 +358,16 @@ getXQMakeConf()
      getSingleQMakeVariable "$1" "$xspecvals"
  }
  
@@ -93,7 +93,7 @@ index f247401..011cd70 100755
  compilerSupportsFlag()
  {
      cat >conftest.cpp <<EOF
-@@ -557,24 +577,14 @@ fi
+@@ -569,24 +589,14 @@ fi
  # initalize variables
  #-------------------------------------------------------------------------------
  
@@ -124,8 +124,8 @@ index f247401..011cd70 100755
  fi'`
      eval "$cmd"
  done
-@@ -3418,7 +3428,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
-     [ "$CFG_QGTKSTYLE" = "auto" ] && CFG_QGTKSTYLE=no
+@@ -3430,7 +3440,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
+     [ "$CFG_GTK" = "auto" ] && CFG_GTK=no
  fi
  
 -QMAKE_CONF_COMPILER=`getXQMakeConf QMAKE_CXX`
@@ -133,16 +133,16 @@ index f247401..011cd70 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -3475,7 +3485,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
-         exit 1
+@@ -3481,7 +3491,7 @@ if [ "$XPLATFORM_ANDROID" = "yes" ] ; then
      fi
  fi
+ 
 -TEST_COMPILER_CXXFLAGS=`getXQMakeConf QMAKE_CXXFLAGS`
 +TEST_COMPILER_CXXFLAGS=`getXQEvalMakeConf QMAKE_CXXFLAGS`
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3976,6 +3986,14 @@ setBootstrapVariable()
+@@ -3880,6 +3890,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -157,42 +157,19 @@ index f247401..011cd70 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -4014,14 +4032,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
-         fi
- 
-         [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=
--        setBootstrapVariable QMAKE_CC CC "$CC_TRANSFORM"
--        setBootstrapVariable QMAKE_CXX CXX "$CC_TRANSFORM"
--        setBootstrapVariable QMAKE_CFLAGS
--        setBootstrapVariable QMAKE_CFLAGS_SPLIT_SECTIONS
--        setBootstrapVariable QMAKE_CXXFLAGS
--        setBootstrapVariable QMAKE_CXXFLAGS_SPLIT_SECTIONS
--        setBootstrapVariable QMAKE_LFLAGS
--        setBootstrapVariable QMAKE_LFLAGS_GCSECTIONS
-+        setBootstrapEvalVariable QMAKE_CC CC "$CC_TRANSFORM"
-+        setBootstrapEvalVariable QMAKE_CXX CXX "$CC_TRANSFORM"
-+        setBootstrapEvalVariable QMAKE_CFLAGS
-+        setBootstrapEvalVariable QMAKE_CFLAGS_SPLIT_SECTIONS
-+        setBootstrapEvalVariable QMAKE_CXXFLAGS
-+        setBootstrapEvalVariable QMAKE_CXXFLAGS_SPLIT_SECTIONS
-+        setBootstrapEvalVariable QMAKE_LFLAGS
-+        setBootstrapEvalVariable QMAKE_LFLAGS_GCSECTIONS
- 
-         if [ "$CFG_RELEASE_TOOLS" = "yes" ]; then
-             setBootstrapVariable QMAKE_CFLAGS_RELEASE
-@@ -4070,6 +4088,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
-                         \"\$(SOURCE_PATH)/src/corelib/io/qfsfileengine_unix.cpp\" \
-                         \"\$(SOURCE_PATH)/src/corelib/tools/qlocale_unix.cpp\""
+@@ -3979,6 +3997,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
              EXEEXT=
-+            [ "$QT_CROSS_COMPILE" = "yes" ] && EXEEXT=-target
-         fi
+             ;;
+         esac
++        [ "$QT_CROSS_COMPILE" = "yes" ] && EXEEXT=-target
          if [ "$BUILD_ON_MAC" = "yes" ]; then
              echo "COCOA_LFLAGS =-framework Foundation -framework CoreServices" >>"$mkfile"
+             echo "CARBON_LFLAGS =-framework ApplicationServices" >>"$mkfile"
 diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
-index 6b37a04..dcf6025 100644
+index 92c288c..f3019e0 100644
 --- a/mkspecs/features/configure.prf
 +++ b/mkspecs/features/configure.prf
-@@ -63,12 +63,12 @@ defineTest(qtCompileTest) {
+@@ -63,14 +63,14 @@ defineTest(qtCompileTest) {
      }
  
      # Clean up after previous run
@@ -201,7 +178,9 @@ index 6b37a04..dcf6025 100644
  
      mkpath($$test_out_dir)|error("Aborting.")
  
-     qtRunLoggedCommand("$$test_cmd_base $$system_quote($$system_path($$QMAKE_QMAKE)) -spec $$QMAKESPEC $$qmake_configs $$shell_quote($$test_dir)") {
+     !isEmpty (QMAKE_QTCONF): qtconfarg = -qtconf $$QMAKE_QTCONF
+ 
+     qtRunLoggedCommand("$$test_cmd_base $$system_quote($$system_path($$QMAKE_QMAKE)) $$qtconfarg -spec $$QMAKESPEC $$qmake_configs $$shell_quote($$test_dir)") {
 -        qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE") {
 +        qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE $$(QMAKE_MAKE_ARGS)") {
              log("yes$$escape_expand(\\n)")

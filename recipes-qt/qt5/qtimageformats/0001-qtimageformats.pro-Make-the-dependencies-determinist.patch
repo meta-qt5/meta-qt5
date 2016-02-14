@@ -1,4 +1,4 @@
-From 14a68abb4c492fb7ba55dbccaf61057e861bbf3c Mon Sep 17 00:00:00 2001
+From f8a7d0e55e4c59de974e6459c05ce026577826ab Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 4 Aug 2014 19:19:05 +0200
 Subject: [PATCH] qtimageformats.pro: Make the dependencies deterministic

@@ -1,4 +1,4 @@
-From 1140fd4bb5768d49cad9e834a9ce5eb05b711d0e Mon Sep 17 00:00:00 2001
+From 59f4367fc7cd378727a5569bd7babfb8b83bc8d2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Fri, 17 Jan 2014 14:33:19 +0100
 Subject: [PATCH 2/4] assistant/help: fix linking of dependent libraries

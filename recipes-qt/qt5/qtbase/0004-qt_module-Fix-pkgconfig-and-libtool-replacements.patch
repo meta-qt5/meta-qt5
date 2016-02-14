@@ -1,4 +1,4 @@
-From db746d1ca0c41fe3da103d09fc240a0df9db5404 Mon Sep 17 00:00:00 2001
+From 0f713d11908d282d6a0e2719b0238f07a430a7ac Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
 Subject: [PATCH 04/10] qt_module: Fix pkgconfig and libtool replacements
@@ -68,7 +68,7 @@ Signed-off-by: Jonathan Liu <net147@gmail.com>
  2 files changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
-index f62b6bb..91be8b3 100644
+index 4b40451..d486881 100644
 --- a/mkspecs/features/qt.prf
 +++ b/mkspecs/features/qt.prf
 @@ -321,6 +321,19 @@ contains(TEMPLATE, .*app) {
@@ -92,7 +92,7 @@ index f62b6bb..91be8b3 100644
  contains(QT_CONFIG, static) {
      QT_PLUGIN_VERIFY += QTPLUGIN
 diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
-index 38602f6..f9c401f 100644
+index 0730084..333bb97 100644
 --- a/mkspecs/features/qt_common.prf
 +++ b/mkspecs/features/qt_common.prf
 @@ -38,7 +38,7 @@ contains(TEMPLATE, .*lib) {

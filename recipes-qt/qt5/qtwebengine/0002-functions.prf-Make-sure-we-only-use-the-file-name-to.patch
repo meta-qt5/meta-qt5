@@ -1,4 +1,4 @@
-From 5f6389fe3493420c2afeec8f2786165f1d08901a Mon Sep 17 00:00:00 2001
+From 75b06098b5780ba3eaa24d48dd90d91590a379d1 Mon Sep 17 00:00:00 2001
 From: Simon Busch <morphis@gravedo.de>
 Date: Tue, 18 Nov 2014 10:38:18 +0100
 Subject: [PATCH 2/5] functions.prf: Make sure we only use the file name to

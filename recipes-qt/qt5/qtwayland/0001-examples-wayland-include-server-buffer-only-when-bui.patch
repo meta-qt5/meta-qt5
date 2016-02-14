@@ -1,4 +1,4 @@
-From efec881d1bff247e6452a10a60821612c2585c67 Mon Sep 17 00:00:00 2001
+From 125478ea618c1329b210621bee6f6cdec5e81032 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 22 Feb 2014 17:47:44 +0100
 Subject: [PATCH] examples/wayland: include server-buffer only when building
@@ -14,18 +14,17 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/examples/wayland/wayland.pro b/examples/wayland/wayland.pro
-index d633fb9..643c7cd 100644
+index 91c68b8..9cfcefe 100644
 --- a/examples/wayland/wayland.pro
 +++ b/examples/wayland/wayland.pro
-@@ -9,5 +9,7 @@ contains(CONFIG, wayland-compositor) {
-         SUBDIRS += qml-compositor
-     }
- 
--    SUBDIRS += server-buffer
-+    contains(QT_CONFIG, opengles2) {
-+        SUBDIRS += server-buffer
-+    }
+@@ -8,4 +8,6 @@ qtHaveModule(quick) {
+     SUBDIRS += custom-extension
  }
+ 
+-SUBDIRS += server-buffer
++contains(QT_CONFIG, opengles2) {
++    SUBDIRS += server-buffer
++}
 -- 
 2.7.0
 
