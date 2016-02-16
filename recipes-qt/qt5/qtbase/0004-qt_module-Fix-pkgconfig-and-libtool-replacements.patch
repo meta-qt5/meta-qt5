@@ -1,4 +1,4 @@
-From 43305bc5cfe1db5021abb1bf2806dcc63b31f176 Mon Sep 17 00:00:00 2001
+From f1f05d7b671b973903d9c0d411207bcc82a9a9d8 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
 Subject: [PATCH 04/10] qt_module: Fix pkgconfig and libtool replacements
@@ -63,8 +63,8 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
 ---
  mkspecs/features/qt_common.prf |  2 +-
- mkspecs/features/qt_module.prf | 11 +++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ mkspecs/features/qt_module.prf | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
 index 38602f6..f9c401f 100644
@@ -80,10 +80,10 @@ index 38602f6..f9c401f 100644
      lib_replace.CONFIG = path
      QMAKE_PRL_INSTALL_REPLACE += lib_replace
 diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index e543ea6..0624ce2 100644
+index e543ea6..4a76851 100644
 --- a/mkspecs/features/qt_module.prf
 +++ b/mkspecs/features/qt_module.prf
-@@ -273,6 +273,17 @@ load(qt_targets)
+@@ -273,6 +273,22 @@ load(qt_targets)
          ltlib_replace.replace = $$QMAKE_LIBTOOL_LIBDIR
      ltlib_replace.CONFIG = path
      QMAKE_LIBTOOL_INSTALL_REPLACE += ltlib_replace
@@ -92,6 +92,11 @@ index e543ea6..0624ce2 100644
 +    pkgconfig_include_replace.replace = "\$$\\{includedir}"
 +    pkgconfig_include_replace.CONFIG = path
 +    QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_include_replace
++
++    pkgconfig_prefix_replace.match = "prefix=$$[QT_SYSROOT]"
++    pkgconfig_prefix_replace.replace = "prefix="
++    pkgconfig_prefix_replace.CONFIG = path
++    QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_prefix_replace
 +
 +    # drop -L/usr/lib in .prl files
 +    prl_replace.match = "-L\$${libdir}"
@@ -102,5 +107,5 @@ index e543ea6..0624ce2 100644
  
  contains(QT_PRODUCT, OpenSource.*):DEFINES *= QT_OPENSOURCE
 -- 
-2.7.0
+2.7.1
 
