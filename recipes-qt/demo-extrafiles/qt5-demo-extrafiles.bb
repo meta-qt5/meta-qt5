@@ -61,9 +61,9 @@ do_install () {
     install -m 0644 ${WORKDIR}/quitindicators.png ${D}/${datadir}/pixmaps
     install -m 0644 ${WORKDIR}/quitindicators.desktop ${D}/${datadir}/applications
     install -m 0644 ${WORKDIR}/qt5basket.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qt5basket.desktop ${D}/${datadir}/applications 
+    install -m 0644 ${WORKDIR}/qt5basket.desktop ${D}/${datadir}/applications
     install -m 0644 ${WORKDIR}/qt5nesting.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qt5nesting.desktop ${D}/${datadir}/applications 
+    install -m 0644 ${WORKDIR}/qt5nesting.desktop ${D}/${datadir}/applications
     install -m 0644 ${WORKDIR}/qt5solarsystem.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qt5solarsystem.desktop ${D}/${datadir}/applications    
+    install -m 0644 ${WORKDIR}/qt5solarsystem.desktop ${D}/${datadir}/applications
 }

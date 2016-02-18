@@ -17,9 +17,9 @@ require recipes-qt/qt5/qt5.inc
 
 do_install() {
     install -d ${D}${datadir}/${P}
-    install -m 0755 ${B}/smarthome ${D}${datadir}/${P}   
-    cp -a ${S}/qml ${D}${datadir}/${P}  
-    cp -a ${S}/components ${D}${datadir}/${P}  
+    install -m 0755 ${B}/smarthome ${D}${datadir}/${P}
+    cp -R --no-dereference --preserve=mode,links ${S}/qml ${D}${datadir}/${P}
+    cp -R --no-dereference --preserve=mode,links ${S}/components ${D}${datadir}/${P}
 }
 
 FILES_${PN}-dbg += "${datadir}/${P}/.debug"
