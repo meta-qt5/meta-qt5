@@ -40,7 +40,6 @@ RDEPENDS_${PN} += " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qt3d-mkspecs', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qt3d-qmlplugins', '', d)} \
     qtbase-dev \
-    qtbase-fonts \
     qtbase-mkspecs \
     qtbase-plugins \
     qtbase-staticdev \
