@@ -201,14 +201,6 @@ do_configure() {
 do_install_append() {
     install -m 0755 ${B}/bin/qmake-target ${D}/${bindir}${QT_DIR_NAME}/qmake
 
-    ### Fix up the binaries to the right location
-    ### TODO: FIX
-    # install fonts manually if they are missing
-    if [ ! -d ${D}/${OE_QMAKE_PATH_QT_FONTS} ]; then
-        mkdir -p ${D}/${OE_QMAKE_PATH_QT_FONTS}
-        cp -d ${S}/lib/fonts/* ${D}/${OE_QMAKE_PATH_QT_FONTS}
-        chown -R root:root ${D}/${OE_QMAKE_PATH_QT_FONTS}
-    fi
     # Remove example.pro file as it is useless
     rm -f ${D}${OE_QMAKE_PATH_EXAMPLES}/examples.pro
 
@@ -224,38 +216,6 @@ do_install_append() {
         ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/*.pri
 }
 
-PACKAGES =. " \
-    ${PN}-fonts \
-    ${PN}-fonts-ttf-vera \
-    ${PN}-fonts-ttf-dejavu \
-    ${PN}-fonts-pfa \
-    ${PN}-fonts-pfb \
-    ${PN}-fonts-qpf \
-"
-
-RRECOMMENDS_${PN}-fonts = " \
-    ${PN}-fonts-ttf-vera \
-    ${PN}-fonts-ttf-dejavu \
-    ${PN}-fonts-pfa \
-    ${PN}-fonts-pfb \
-    ${PN}-fonts-qpf \
-"
-
-ALLOW_EMPTY_${PN}-fonts = "1"
-
-FILES_${PN}-fonts-ttf-vera       = "${OE_QMAKE_PATH_QT_FONTS}/Vera*.ttf"
-FILES_${PN}-fonts-ttf-dejavu     = "${OE_QMAKE_PATH_QT_FONTS}/DejaVu*.ttf"
-FILES_${PN}-fonts-pfa            = "${OE_QMAKE_PATH_QT_FONTS}/*.pfa"
-FILES_${PN}-fonts-pfb            = "${OE_QMAKE_PATH_QT_FONTS}/*.pfb"
-FILES_${PN}-fonts-qpf            = "${OE_QMAKE_PATH_QT_FONTS}/*.qpf*"
-FILES_${PN}-fonts                = "${OE_QMAKE_PATH_QT_FONTS}/README \
-                                    ${OE_QMAKE_PATH_QT_FONTS}/fontdir"
-
 RRECOMMENDS_${PN}-plugins += "${@base_contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
-
-sysroot_stage_dirs_append() {
-    # $to is 2nd parameter passed to sysroot_stage_dir, e.g. ${SYSROOT_DESTDIR} passed from sysroot_stage_all
-    rm -rf $to${OE_QMAKE_PATH_QT_FONTS}
-}
 
 SRCREV = "611942f2d737cc75c7492dffc183174e432aa155"
