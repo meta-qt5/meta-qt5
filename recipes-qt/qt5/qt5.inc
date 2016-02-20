@@ -42,9 +42,10 @@ do_configure_prepend() {
 
 # Many examples come with libraries installed outside of standard libdir,
 # suppress QA check complaining
+INSANE_SKIP_${PN}-dbg += "libdir"
 INSANE_SKIP_${PN}-examples += "libdir"
 INSANE_SKIP_${PN}-examples-dbg += "libdir"
-INSANE_SKIP_${PN}-examples-dev += "libdir"
+INSANE_SKIP_${PN}-examples-dev += "libdir dev-elf"
 
 PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmldesigner ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples "
 
