@@ -1,4 +1,4 @@
-From 7c548d3833e29fade57855ef82ed2abd815b7fc4 Mon Sep 17 00:00:00 2001
+From 2b55cf1075167ce6b7e4cff1ea89dc2c27265f23 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH 10/10] Add -external-hostbindir option for native(sdk)
@@ -37,7 +37,7 @@ Conflicts:
  5 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index f9869dd..c81d02a 100755
+index c696e7e..310eb1d 100755
 --- a/configure
 +++ b/configure
 @@ -3922,6 +3922,7 @@ fi

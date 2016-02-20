@@ -1,4 +1,4 @@
-From b28148fd6ee59d584e59a07736da63ee9ea5c1ad Mon Sep 17 00:00:00 2001
+From 8bc74542bab1f29dfb4a0e5a2af2f8d91f049579 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH 03/10] Add -external-hostbindir option
@@ -37,7 +37,7 @@ Conflicts:
  7 files changed, 38 insertions(+), 12 deletions(-)
 
 diff --git a/configure b/configure
-index 15207bf..8fafeca 100755
+index 011cd70..d30b6e5 100755
 --- a/configure
 +++ b/configure
 @@ -810,6 +810,7 @@ QT_HOST_BINS=
