@@ -15,3 +15,5 @@ S = "${WORKDIR}/git"
 inherit pkgconfig
 
 RDEPENDS_${PN} += "connman"
+
+PNBLACKLIST[libconnman-qt5] ?= "BROKEN: QA Issue: connman-qt5.pc failed sanity test (tmpdir)"
