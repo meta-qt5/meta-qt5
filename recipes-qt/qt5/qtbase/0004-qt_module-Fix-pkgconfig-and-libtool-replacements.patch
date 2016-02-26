@@ -61,11 +61,36 @@ Content-Transfer-Encoding: 8bit
 Change-Id: Ie1c94b15f2a4e736b65b4d0924d99eb2a7d92a6c
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+Signed-off-by: Jonathan Liu <net147@gmail.com>
 ---
+ mkspecs/features/qt.prf        | 13 +++++++++++++
  mkspecs/features/qt_common.prf |  2 +-
- mkspecs/features/qt_module.prf | 16 ++++++++++++++++
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
+diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
+index f62b6bb..91be8b3 100644
+--- a/mkspecs/features/qt.prf
++++ b/mkspecs/features/qt.prf
+@@ -321,6 +321,19 @@ contains(TEMPLATE, .*app) {
+     QTPLUGIN = $$manualplugs $$autoplugs
+ }
+ 
++contains(TEMPLATE, .*lib) {
++    pkgconfig_prefix_replace.match = "prefix=$$[QT_SYSROOT]"
++    pkgconfig_prefix_replace.replace = "prefix="
++    pkgconfig_prefix_replace.CONFIG = path
++    QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_prefix_replace
++
++    # drop -L/usr/lib in .prl files
++    prl_replace.match = "-L\$${libdir}"
++    prl_replace.replace = ""
++    prl_replace.CONFIG = path
++    QMAKE_PRL_INSTALL_REPLACE += prl_replace
++}
++
+ QT_PLUGIN_VERIFY = DEPLOYMENT_PLUGIN
+ contains(QT_CONFIG, static) {
+     QT_PLUGIN_VERIFY += QTPLUGIN
 diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
 index 38602f6..f9c401f 100644
 --- a/mkspecs/features/qt_common.prf
@@ -79,33 +104,6 @@ index 38602f6..f9c401f 100644
      }
      lib_replace.CONFIG = path
      QMAKE_PRL_INSTALL_REPLACE += lib_replace
-diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index aefd3ae..775cda2 100644
---- a/mkspecs/features/qt_module.prf
-+++ b/mkspecs/features/qt_module.prf
-@@ -276,6 +276,22 @@ load(qt_targets)
-         ltlib_replace.replace = $$QMAKE_LIBTOOL_LIBDIR
-     ltlib_replace.CONFIG = path
-     QMAKE_LIBTOOL_INSTALL_REPLACE += ltlib_replace
-+
-+    pkgconfig_include_replace.match = $$rplbase/include
-+    pkgconfig_include_replace.replace = "\$$\\{includedir}"
-+    pkgconfig_include_replace.CONFIG = path
-+    QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_include_replace
-+
-+    pkgconfig_prefix_replace.match = "prefix=$$[QT_SYSROOT]"
-+    pkgconfig_prefix_replace.replace = "prefix="
-+    pkgconfig_prefix_replace.CONFIG = path
-+    QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_prefix_replace
-+
-+    # drop -L/usr/lib in .prl files
-+    prl_replace.match = "-L\$${libdir}"
-+    prl_replace.replace = ""
-+    prl_replace.CONFIG = path
-+    QMAKE_PRL_INSTALL_REPLACE += prl_replace
- }
- 
- contains(QT_PRODUCT, OpenSource.*):DEFINES *= QT_OPENSOURCE
 -- 
 2.7.1
 
