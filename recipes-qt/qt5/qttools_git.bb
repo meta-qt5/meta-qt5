@@ -31,6 +31,6 @@ PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
 EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)}"
 EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'linguistonly', 'CONFIG+=linguistonly', '', d)}"
 
-SRCREV = "36aa99b22465e10d44c1461021b93d60bc6aeead"
+SRCREV = "852f4e4cf87d7db0eaa87384b1589e151f76e6cd"
 
 BBCLASSEXTEND = "native nativesdk"

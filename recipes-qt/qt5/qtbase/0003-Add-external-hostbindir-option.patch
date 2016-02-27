@@ -1,4 +1,4 @@
-From bbf13d9ca3e0178b948d51c7c5aba4dc047d8c99 Mon Sep 17 00:00:00 2001
+From 8497c1671d7dfb531ff4db43b3ce4128066e3496 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH 03/10] Add -external-hostbindir option

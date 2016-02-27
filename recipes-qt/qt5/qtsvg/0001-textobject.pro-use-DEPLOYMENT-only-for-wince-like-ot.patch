@@ -1,4 +1,4 @@
-From d474ee7585372fdb77a928b401b5895b05b41e20 Mon Sep 17 00:00:00 2001
+From e196a8767dc8886f4d8f411feb21baaf2b8d741a Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Thu, 5 Nov 2015 12:25:05 +0100
 Subject: [PATCH] textobject.pro: use DEPLOYMENT only for wince like other
@@ -26,5 +26,5 @@ index 794ad32..0ecd2c7 100644
 +    DEPLOYMENT += filesToDeploy
 +}
 -- 
-2.7.0
+2.7.1
 

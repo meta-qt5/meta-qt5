@@ -1,4 +1,4 @@
-From f8a7d0e55e4c59de974e6459c05ce026577826ab Mon Sep 17 00:00:00 2001
+From 7f5d3be2217e13fab5785b60c5ae97680f63b6d9 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 4 Aug 2014 19:19:05 +0200
 Subject: [PATCH] qtimageformats.pro: Make the dependencies deterministic
@@ -27,5 +27,5 @@ index 8382e5c..63d13ce 100644
  
  load(qt_parts)
 -- 
-2.7.0
+2.7.1
 

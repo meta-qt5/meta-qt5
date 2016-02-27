@@ -1,4 +1,4 @@
-From b3c28efd16c9e9a0cd2a29441dae02382b8deaea Mon Sep 17 00:00:00 2001
+From 35afd225b448d2641594f2fd7e31c423cc64ecae Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Fri, 25 Dec 2015 18:16:05 -0200
 Subject: [PATCH 4/5] WebEngine qquickwebengineview_p_p.h add include QColor
@@ -22,5 +22,5 @@ index e4313a4..5a8137e 100644
  namespace QtWebEngineCore {
  class WebContentsAdapter;
 -- 
-2.7.0
+2.7.1
 

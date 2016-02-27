@@ -1,4 +1,4 @@
-From 52575f04d108183482cef6b4b871f736ef66aa1b Mon Sep 17 00:00:00 2001
+From 4c5dd531c728384326c0875661b77d2f9d0faf19 Mon Sep 17 00:00:00 2001
 From: Frieder Schrempf <frieder.schrempf@online.de>
 Date: Mon, 1 Dec 2014 14:34:40 +0000
 Subject: [PATCH 3/5] functions.prf: allow build for linux-oe-g++ platform
@@ -12,7 +12,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/tools/qmake/mkspecs/features/functions.prf b/tools/qmake/mkspecs/features/functions.prf
-index 055e960..379c9b5 100644
+index deaab83..68cdb71 100644
 --- a/tools/qmake/mkspecs/features/functions.prf
 +++ b/tools/qmake/mkspecs/features/functions.prf
 @@ -5,6 +5,12 @@ defineTest(isPlatformSupported) {
@@ -29,5 +29,5 @@ index 055e960..379c9b5 100644
      winrt {
        skipBuild("WinRT is not supported.")
 -- 
-2.7.0
+2.7.1
 

@@ -1,4 +1,4 @@
-From 7a4999eb3738ef50eba4f18964bf0075186aeaaa Mon Sep 17 00:00:00 2001
+From 85beb0cf48cdbe99ec153bceeb964431560182e6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Fri, 13 Nov 2015 12:36:11 +0100
 Subject: [PATCH 08/10] configure paths for target qmake properly

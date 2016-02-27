@@ -1,4 +1,4 @@
-From 59f4367fc7cd378727a5569bd7babfb8b83bc8d2 Mon Sep 17 00:00:00 2001
+From 431db9926107563b44e2443cb8da8e0b1278a18c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Fri, 17 Jan 2014 14:33:19 +0100
 Subject: [PATCH 2/4] assistant/help: fix linking of dependent libraries
@@ -28,5 +28,5 @@ index 168d23d..a9c3b59 100644
 +
 +LIBS += -lQt5CLucene
 -- 
-2.7.0
+2.7.1
 
