@@ -82,7 +82,7 @@ QT_CONFIG_FLAGS += " \
     -no-pch \
     -no-rpath \
     -pkg-config \
-    ${EXTRA_OECONF} \
+    ${EXTRA_CONF_PACKAGECONFIG} \
 "
 
 # qtbase is exception, as these are used as install path for sysroots
@@ -201,7 +201,7 @@ do_configure() {
         -xplatform linux-oe-g++ \
         ${QT_CONFIG_FLAGS}
 
-    bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} ${S} -o Makefile || die "Configuring qt with qmake failed. EXTRA_OECONF was ${EXTRA_OECONF}"
+    bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} ${S} -o Makefile || die "Configuring qt with qmake failed. EXTRA_CONF_PACKAGECONFIG was ${EXTRA_CONF_PACKAGECONFIG}"
 }
 
 do_install() {

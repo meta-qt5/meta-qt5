@@ -40,7 +40,7 @@ do_generate_qt_config_file() {
     :
 }
 
-EXTRA_OECONF = " \
+EXTRA_CONF_PACKAGECONFIG = " \
     -prefix ${prefix} \
     -sysroot ${STAGING_DIR_NATIVE} \
     -no-gcc-sysroot \
@@ -90,8 +90,8 @@ export OE_QMAKE_AR
 export OE_QMAKE_STRIP
 
 do_configure_prepend() {
-    MAKEFLAGS="${PARALLEL_MAKE}" ${S}/configure -opensource -confirm-license ${EXTRA_OECONF} || die "Configuring qt failed. EXTRA_OECONF was ${EXTRA_OECONF}"
-    bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} ${S} -o Makefile || die "Configuring qt with qmake failed. EXTRA_OECONF was ${EXTRA_OECONF}"
+    MAKEFLAGS="${PARALLEL_MAKE}" ${S}/configure -opensource -confirm-license ${EXTRA_CONF_PACKAGECONFIG} || die "Configuring qt failed. EXTRA_CONF_PACKAGECONFIG was ${EXTRA_CONF_PACKAGECONFIG}"
+    bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} ${S} -o Makefile || die "Configuring qt with qmake failed. EXTRA_CONF_PACKAGECONFIG was ${EXTRA_CONF_PACKAGECONFIG}"
 }
 
 do_install() {
