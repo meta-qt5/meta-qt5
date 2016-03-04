@@ -212,7 +212,7 @@ new file mode 100644
 index 0000000..311ba04
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qmake.conf
-@@ -0,0 +1,42 @@
+@@ -0,0 +1,43 @@
 +#
 +# qmake configuration for linux-g++ with modifications for building with OpenEmbedded
 +#
@@ -225,6 +225,7 @@ index 0000000..311ba04
 +
 +# QMAKE_<TOOL> (moc, uic, rcc) are gone, overwrite only ar and strip
 +QMAKE_AR              = $(OE_QMAKE_AR) cqs
++QMAKE_OBJCOPY         = $(OE_QMAKE_OBJCOPY)
 +QMAKE_STRIP           = $(OE_QMAKE_STRIP)
 +QMAKE_WAYLAND_SCANNER = $(OE_QMAKE_WAYLAND_SCANNER)
 +
