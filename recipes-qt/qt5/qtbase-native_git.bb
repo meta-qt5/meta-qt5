@@ -17,8 +17,7 @@ require qt5-git.inc
 # common for qtbase-native, qtbase-nativesdk and qtbase
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
-    file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
-    file://0003-Add-external-hostbindir-option.patch \
+    file://0002-configure-Separate-host-and-build-platform.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
     file://0006-QOpenGLPaintDevice-sub-area-support.patch \
@@ -29,19 +28,15 @@ SRC_URI += "\
 # common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
     file://0009-Always-build-uic.patch \
-    file://0010-Add-external-hostbindir-option-for-native-sdk.patch \
 "
 
 CLEANBROKEN = "1"
-
-QT_CONF_PATH = "${B}/qt.conf"
 
 do_generate_qt_config_file() {
     :
 }
 
 EXTRA_CONF_PACKAGECONFIG = " \
-    -prefix ${prefix} \
     -sysroot ${STAGING_DIR_NATIVE} \
     -no-gcc-sysroot \
     -system-zlib \
@@ -63,10 +58,13 @@ EXTRA_CONF_PACKAGECONFIG = " \
     -release \
     -prefix ${OE_QMAKE_PATH_PREFIX} \
     -bindir ${OE_QMAKE_PATH_BINS} \
+    -hostbindir ${OE_QMAKE_PATH_BINS} \
     -libdir ${OE_QMAKE_PATH_LIBS} \
+    -hostlibdir ${OE_QMAKE_PATH_LIBS} \
     -headerdir ${OE_QMAKE_PATH_HEADERS} \
     -archdatadir ${OE_QMAKE_PATH_ARCHDATA} \
     -datadir ${OE_QMAKE_PATH_DATA} \
+    -hostdatadir ${QMAKE_MKSPEC_PATH_NATIVE} \
     -docdir ${OE_QMAKE_PATH_DOCS} \
     -sysconfdir ${OE_QMAKE_PATH_SETTINGS} \
     -no-glib \

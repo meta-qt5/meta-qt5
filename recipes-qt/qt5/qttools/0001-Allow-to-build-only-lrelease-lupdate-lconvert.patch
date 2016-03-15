@@ -116,9 +116,11 @@ index 387d54f..56b7d0c 100644
 -qtHaveModule(dbus): SUBDIRS += qdbus
 +!linguistonly:qtHaveModule(dbus): SUBDIRS += qdbus
  
- win32|winrt:SUBDIRS += windeployqt
- winrt:SUBDIRS += winrtrunner
+-win32|winrt:SUBDIRS += windeployqt
+-winrt:SUBDIRS += winrtrunner
 -qtHaveModule(gui):!android:!ios:!qnx:!wince*:!winrt*:SUBDIRS += qtdiag
++!linguistonly:win32|winrt:SUBDIRS += windeployqt
++!linguistonly:winrt:SUBDIRS += winrtrunner
 +!linguistonly:qtHaveModule(gui):!android:!ios:!qnx:!wince*:!winrt*:SUBDIRS += qtdiag
  
  qtNomakeTools( \

@@ -31,6 +31,11 @@ do_configure_prepend() {
     echo "QT_TOOL.syncqt.binary = \"${STAGING_BINDIR_NATIVE}${QT_DIR_NAME}/syncqt\"" > ${B}/.qmake.cache
 }
 
+do_install_append_class-nativesdk() {
+    # qml files not needed in nativesdk
+    rm -rf ${D}${OE_QMAKE_PATH_QML}
+}
+
 EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'qtxmlpatterns', 'CONFIG+=OE_QTXMLPATTERNS_ENABLED', '', d)}"
 
 SRCREV = "ab2c5be35dd8f339ec39f52364625a53fa6d0ded"

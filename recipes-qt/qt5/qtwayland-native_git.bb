@@ -18,7 +18,7 @@ SRC_URI += " \
 "
 
 do_configure() {
-    ${OE_QMAKE_QMAKE} ${OE_QMAKE_DEBUG_OUTPUT} -r ${S}/src/qtwaylandscanner
+    ${OE_QMAKE_QMAKE} ${OE_QMAKE_DEBUG_OUTPUT} ${OE_QMAKE_QTCONF} -r ${S}/src/qtwaylandscanner
 }
 
 do_install() {
