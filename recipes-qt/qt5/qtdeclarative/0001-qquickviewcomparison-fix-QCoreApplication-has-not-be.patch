@@ -1,0 +1,28 @@
+From 1cdd3278a0b1508640d983720782d39eb919caaf Mon Sep 17 00:00:00 2001
+From: Denys Dmytriyenko <denys@ti.com>
+Date: Thu, 31 Mar 2016 19:38:58 -0400
+Subject: [PATCH] qquickviewcomparison: fix QCoreApplication has not been
+ declared error
+
+Upstream-Status: Pending
+
+Signed-off-by: Denys Dmytriyenko <denys@ti.com>
+---
+ examples/quick/quickwidgets/qquickviewcomparison/mainwindow.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/examples/quick/quickwidgets/qquickviewcomparison/mainwindow.h b/examples/quick/quickwidgets/qquickviewcomparison/mainwindow.h
+index 5b86c93..e77514e 100644
+--- a/examples/quick/quickwidgets/qquickviewcomparison/mainwindow.h
++++ b/examples/quick/quickwidgets/qquickviewcomparison/mainwindow.h
+@@ -44,6 +44,7 @@
+ #include <QWidget>
+ #include <QQuickWidget>
+ #include <QQuickView>
++#include <QCoreApplication>
+ 
+ QT_FORWARD_DECLARE_CLASS(QRadioButton)
+ QT_FORWARD_DECLARE_CLASS(QCheckBox)
+-- 
+2.2.0
+
