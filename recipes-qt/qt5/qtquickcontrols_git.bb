@@ -13,4 +13,8 @@ DEPENDS += "qtdeclarative"
 
 RDEPENDS_${PN}-dev = ""
 
+SRC_URI += " \
+    file://0001-texteditor-fix-invalid-use-of-incomplete-type-class-.patch \
+"
+
 SRCREV = "93d06fb27d7eae9290db33b6684916a225939f0b"

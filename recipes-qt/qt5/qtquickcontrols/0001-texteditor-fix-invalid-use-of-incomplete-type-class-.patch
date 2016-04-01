@@ -1,0 +1,27 @@
+From c39a563984693efac577adb137115693634c038f Mon Sep 17 00:00:00 2001
+From: Denys Dmytriyenko <denys@ti.com>
+Date: Thu, 31 Mar 2016 19:57:01 -0400
+Subject: [PATCH] texteditor: fix invalid use of incomplete type 'class QDebug'
+
+Upstream-Status: Pending
+
+Signed-off-by: Denys Dmytriyenko <denys@ti.com>
+---
+ examples/quick/controls/texteditor/src/documenthandler.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/examples/quick/controls/texteditor/src/documenthandler.cpp b/examples/quick/controls/texteditor/src/documenthandler.cpp
+index 2e9987a..c8bf419 100644
+--- a/examples/quick/controls/texteditor/src/documenthandler.cpp
++++ b/examples/quick/controls/texteditor/src/documenthandler.cpp
+@@ -44,6 +44,7 @@
+ #include <QtGui/QTextCursor>
+ #include <QtGui/QFontDatabase>
+ #include <QtCore/QFileInfo>
++#include <QtCore/QDebug>
+ 
+ DocumentHandler::DocumentHandler()
+     : m_target(0)
+-- 
+2.2.0
+
