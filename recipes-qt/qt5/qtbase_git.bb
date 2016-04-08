@@ -207,4 +207,4 @@ do_install_append() {
 
 RRECOMMENDS_${PN}-plugins += "${@base_contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "1d8030cc64df2cdfdc0faf3d06ea7d9ed0306948"
+SRCREV = "36bc2477753d19a14c587b97d4ec4f263e9e16c0"

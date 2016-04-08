@@ -1,7 +1,7 @@
-From 431db9926107563b44e2443cb8da8e0b1278a18c Mon Sep 17 00:00:00 2001
+From 0f11ccdb0683554595fe7f223071621902c0b315 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Fri, 17 Jan 2014 14:33:19 +0100
-Subject: [PATCH 2/4] assistant/help: fix linking of dependent libraries
+Subject: [PATCH] assistant/help: fix linking of dependent libraries
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -18,15 +18,16 @@ Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/src/assistant/help/help.pro b/src/assistant/help/help.pro
-index 168d23d..a9c3b59 100644
+index 37d5ba4..ca90a68 100644
 --- a/src/assistant/help/help.pro
 +++ b/src/assistant/help/help.pro
-@@ -59,3 +59,5 @@ HEADERS += qhelpenginecore.h \
- # access to clucene
+@@ -59,4 +59,6 @@ HEADERS += qhelpenginecore.h \
  HEADERS += qhelpsearchindexwriter_clucene_p.h \
      qhelpsearchindexreader_clucene_p.h
-+
+ 
 +LIBS += -lQt5CLucene
++
+ load(qt_module)
 -- 
-2.7.1
+1.9.1
 
