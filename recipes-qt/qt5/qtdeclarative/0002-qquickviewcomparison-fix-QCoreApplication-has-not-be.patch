@@ -1,4 +1,4 @@
-From 1cdd3278a0b1508640d983720782d39eb919caaf Mon Sep 17 00:00:00 2001
+From 9d39293e354120a9ec5e92c87b4cd695acdeb3f5 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Thu, 31 Mar 2016 19:38:58 -0400
 Subject: [PATCH] qquickviewcomparison: fix QCoreApplication has not been
@@ -23,6 +23,3 @@ index 5b86c93..e77514e 100644
  
  QT_FORWARD_DECLARE_CLASS(QRadioButton)
  QT_FORWARD_DECLARE_CLASS(QCheckBox)
--- 
-2.2.0
-

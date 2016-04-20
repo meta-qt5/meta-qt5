@@ -1,7 +1,7 @@
-From caa2e16f3efaede09abcc4cf263e82b4c1cfa6a0 Mon Sep 17 00:00:00 2001
+From b5c826a39760519010884547d6981c3af031d9c8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Fri, 13 Nov 2015 12:36:11 +0100
-Subject: [PATCH 08/10] configure paths for target qmake properly
+Subject: [PATCH] configure paths for target qmake properly
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -19,7 +19,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/configure b/configure
-index aeb4ef2..c696e7e 100755
+index 24a61db..2e99d39 100755
 --- a/configure
 +++ b/configure
 @@ -3875,8 +3875,13 @@ if [ "$CFG_COMPILE_EXAMPLES" = "yes" ]; then
@@ -73,6 +73,3 @@ index aeb4ef2..c696e7e 100755
  #endif
  
  static const short qt_configure_str_offsets[] = {
--- 
-2.7.1
-

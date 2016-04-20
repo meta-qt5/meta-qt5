@@ -1,4 +1,4 @@
-From efec881d1bff247e6452a10a60821612c2585c67 Mon Sep 17 00:00:00 2001
+From 52971db84e3b2c429e8777953c0532dcb88b8e6b Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 22 Feb 2014 17:47:44 +0100
 Subject: [PATCH] examples/wayland: include server-buffer only when building
@@ -26,6 +26,3 @@ index d633fb9..643c7cd 100644
 +        SUBDIRS += server-buffer
 +    }
  }
--- 
-2.7.0
-

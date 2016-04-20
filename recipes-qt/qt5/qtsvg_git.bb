@@ -13,6 +13,4 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-SRCREV = "38777ea7451d55e9c3d32d88d46063016013f60c"
-
-SRC_URI += "file://0001-textobject.pro-use-DEPLOYMENT-only-for-wince-like-ot.patch"
+SRCREV = "e02df9c098b4d304b34c0ff65806a0576e45ed1a"

@@ -1,7 +1,7 @@
-From 80f5e26073ef58c1a2ff510c6ccdb7423bcb2fc3 Mon Sep 17 00:00:00 2001
+From a2670f5ad67822b399e9dd7b3b87589be1da9749 Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Fri, 25 Dec 2015 18:16:05 -0200
-Subject: [PATCH 4/5] WebEngine qquickwebengineview_p_p.h add include QColor
+Subject: [PATCH] WebEngine qquickwebengineview_p_p.h add include QColor
 
 Signed-off-by: Cleiton Bueno <cleitonrbueno@gmail.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Cleiton Bueno <cleitonrbueno@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/src/webengine/api/qquickwebengineview_p_p.h b/src/webengine/api/qquickwebengineview_p_p.h
-index dbbbf91..94268b6 100644
+index 65bf25e..0447d07 100644
 --- a/src/webengine/api/qquickwebengineview_p_p.h
 +++ b/src/webengine/api/qquickwebengineview_p_p.h
 @@ -56,6 +56,8 @@
@@ -21,6 +21,3 @@ index dbbbf91..94268b6 100644
  
  namespace QtWebEngineCore {
  class WebContentsAdapter;
--- 
-2.7.0
-

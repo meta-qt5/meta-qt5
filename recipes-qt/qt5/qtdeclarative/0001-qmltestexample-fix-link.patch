@@ -1,4 +1,4 @@
-From 1755b8c7ab87f9e6bf072bd0bef50086c14dd9ff Mon Sep 17 00:00:00 2001
+From d26a676827ef2d64b4627090690d3240e62f6565 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
 Date: Sun, 26 May 2013 14:26:19 +0200
 Subject: [PATCH] qmltestexample: fix link
@@ -83,6 +83,3 @@ index 1bb913e..56f2dd5 100644
  CONFIG += no_import_scan
  
  load(qt_tool)
--- 
-2.7.0
-

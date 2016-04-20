@@ -1,7 +1,7 @@
-From 8bc74542bab1f29dfb4a0e5a2af2f8d91f049579 Mon Sep 17 00:00:00 2001
+From 3ecdcb6a10d125f1440c42ad9c79f04d43c257e0 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 03/10] Add -external-hostbindir option
+Subject: [PATCH] Add -external-hostbindir option
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -37,7 +37,7 @@ Conflicts:
  7 files changed, 38 insertions(+), 12 deletions(-)
 
 diff --git a/configure b/configure
-index 011cd70..d30b6e5 100755
+index 88a308d..f2611ed 100755
 --- a/configure
 +++ b/configure
 @@ -810,6 +810,7 @@ QT_HOST_BINS=
@@ -90,10 +90,10 @@ index 011cd70..d30b6e5 100755
  CFG_QCONFIG_PATH=$relpath/src/corelib/global/qconfig-${CFG_QCONFIG}.h
  case "$CFG_QCONFIG" in
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index b2c2507..fba4a58 100644
+index 8639695..d89d948 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -57,7 +57,11 @@ defineTest(qtHaveModule) {
+@@ -70,7 +70,11 @@ defineTest(qtHaveModule) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
      isEmpty(cmd) {
@@ -224,6 +224,3 @@ index 99d87e2..5621dc0 100644
  !!ENDIF
      _qt5_Widgets_check_file_exists(${imported_location})
  
--- 
-2.7.1
-

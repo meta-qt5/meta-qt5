@@ -1,7 +1,7 @@
-From 2b55cf1075167ce6b7e4cff1ea89dc2c27265f23 Mon Sep 17 00:00:00 2001
+From 5b4ae15a19a9135d3dc8a35aa2d109ba8d29868a Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
-Subject: [PATCH 10/10] Add -external-hostbindir option for native(sdk)
+Subject: [PATCH] Add -external-hostbindir option for native(sdk)
 
 * when cross-compiling it's sometimes useful to use existing tools from machine
   (or in OpenEmbedded built with separate native recipe) when building for target
@@ -37,7 +37,7 @@ Conflicts:
  5 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index c696e7e..310eb1d 100755
+index 2e99d39..a0641d2 100755
 --- a/configure
 +++ b/configure
 @@ -3922,6 +3922,7 @@ fi
@@ -94,10 +94,10 @@ index 1ad7637..5a8b127 100644
          HostSpecPath,
          HostPrefixPath,
 diff --git a/tools/configure/configureapp.cpp b/tools/configure/configureapp.cpp
-index 555ccbf..d9a5b08 100644
+index 6f1e2b7..ae03143 100644
 --- a/tools/configure/configureapp.cpp
 +++ b/tools/configure/configureapp.cpp
-@@ -1248,6 +1248,13 @@ void Configure::parseCmdLine()
+@@ -1256,6 +1256,13 @@ void Configure::parseCmdLine()
              dictionary[ "QT_EXT_PREFIX" ] = configCmdLine.at(i);
          }
  
@@ -111,7 +111,7 @@ index 555ccbf..d9a5b08 100644
          else if (configCmdLine.at(i) == "-make-tool") {
              ++i;
              if (i == argCount)
-@@ -4214,6 +4221,9 @@ void Configure::generateQConfigCpp()
+@@ -4232,6 +4239,9 @@ void Configure::generateQConfigCpp()
  
      if (dictionary["QT_REL_HOST_DATA"].isEmpty())
          dictionary["QT_REL_HOST_DATA"] = haveHpx ? "." : dictionary["QT_REL_INSTALL_ARCHDATA"];
@@ -121,7 +121,7 @@ index 555ccbf..d9a5b08 100644
  
      confStringOff = 0;
      addConfStr(0, dictionary["QT_REL_INSTALL_DOCS"]);
-@@ -4233,6 +4243,7 @@ void Configure::generateQConfigCpp()
+@@ -4251,6 +4261,7 @@ void Configure::generateQConfigCpp()
      addConfStr(1, dictionary["QT_REL_HOST_BINS"]);
      addConfStr(1, dictionary["QT_REL_HOST_LIBS"]);
      addConfStr(1, dictionary["QT_REL_HOST_DATA"]);
@@ -129,6 +129,3 @@ index 555ccbf..d9a5b08 100644
      addConfStr(1, targSpec);
      addConfStr(1, hostSpec);
  
--- 
-2.7.1
-

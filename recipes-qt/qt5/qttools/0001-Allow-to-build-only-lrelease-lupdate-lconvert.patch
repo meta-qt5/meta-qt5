@@ -1,7 +1,7 @@
-From a6f3bde30cb78e109a26fec6b336f8a504d4fa3c Mon Sep 17 00:00:00 2001
+From c6d62fcf2e02b5a86c36b4afd78dfb7a3f29ad91 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.jansa@gmail.com>
 Date: Wed, 11 Sep 2013 18:30:08 +0200
-Subject: [PATCH 1/4] Allow to build only lrelease + lupdate + lconvert
+Subject: [PATCH] Allow to build only lrelease + lupdate + lconvert
 
 This is useful e.g. when cross compiling with OpenEmbedded where qtbase-native
 is built without GUI support (no-png is set) and we still want to build
@@ -156,6 +156,3 @@ index 20b5fec..8a42d1f 100644
  
  installed_cmake.depends = cmake
  
--- 
-2.7.0
-

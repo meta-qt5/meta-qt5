@@ -25,4 +25,4 @@ do_install() {
     oe_runmake install INSTALL_ROOT=${D}
 }
 
-SRCREV = "29b8bd8b1117589341110502fe516bf22c920747"
+SRCREV = "26e27845a43319d0ecad0c6392f05d1ed50da2a2"
