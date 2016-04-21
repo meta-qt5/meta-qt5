@@ -10,6 +10,4 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtdeclarative"
 
-FILES_${PN}-qmlplugins += "${libdir}/qt5/qml/Qt"
-
 SRCREV = "e93c73c0aa15cd973e008a04a70a7c69719ad244"
