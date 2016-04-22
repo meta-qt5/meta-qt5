@@ -3,8 +3,8 @@ require qt5-git.inc
 
 LICENSE = "GFDL-1.3 & BSD & (LGPL-2.1 & The-Qt-Company-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
 LIC_FILES_CHKSUM = " \
-    file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
-    file://LICENSE.LGPLv3;md5=b8c75190712063cde04e1f41b6fdad98 \
+    file://LICENSE.LGPLv21;md5=d3bb688e8d381a9fa5ee9063114b366d \
+    file://LICENSE.LGPLv3;md5=3fd06ee442011942b532cc6dedb0b39c \
     file://LICENSE.GPLv3;md5=40f9bf30e783ddc201497165dfb32afb \
     file://LGPL_EXCEPTION.txt;md5=9625233da42f9e0ce9d63651a9d97654 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
@@ -108,7 +108,7 @@ PACKAGECONFIG[xvideo] = "-xvideo,-no-xvideo"
 PACKAGECONFIG[openvg] = "-openvg,-no-openvg"
 PACKAGECONFIG[iconv] = "-iconv,-no-iconv,virtual/libiconv"
 PACKAGECONFIG[xkb] = "-xkb,-no-xkb -no-xkbcommon,libxkbcommon"
-PACKAGECONFIG[xkbcommon-evdev] = "-xkbcommon-evdev,-no-xkbcommon-evdev,libxkbcommon"
+PACKAGECONFIG[xkbcommon-evdev] = "-xkbcommon-evdev,-no-xkbcommon-evdev,libxkbcommon,xkeyboard-config"
 PACKAGECONFIG[evdev] = "-evdev,-no-evdev"
 PACKAGECONFIG[mtdev] = "-mtdev,-no-mtdev,mtdev"
 # depends on glib
@@ -121,8 +121,7 @@ PACKAGECONFIG[kms] = "-kms,-no-kms,virtual/mesa virtual/egl"
 # needed for qtwebkit
 PACKAGECONFIG[icu] = "-icu,-no-icu,icu"
 PACKAGECONFIG[udev] = "-libudev,-no-libudev,udev"
-# use -openssl-linked here to ensure that RDEPENDS for libcrypto and libssl are detected
-PACKAGECONFIG[openssl] = "-openssl-linked,-no-openssl,openssl"
+PACKAGECONFIG[openssl] = "-openssl,-no-openssl,openssl,libssl"
 PACKAGECONFIG[alsa] = "-alsa,-no-alsa,alsa-lib"
 PACKAGECONFIG[pulseaudio] = "-pulseaudio,-no-pulseaudio,pulseaudio"
 PACKAGECONFIG[nis] = "-nis,-no-nis"
@@ -136,7 +135,7 @@ QT_CONFIG_FLAGS += " \
     -no-pch \
     -no-rpath \
     -pkg-config \
-    ${EXTRA_OECONF} \
+    ${PACKAGECONFIG_CONFARGS} \
 "
 
 do_generate_qt_config_file_append() {
@@ -210,21 +209,22 @@ do_install_append() {
     # install fonts manually if they are missing
     if [ ! -d ${D}/${OE_QMAKE_PATH_QT_FONTS} ]; then
         mkdir -p ${D}/${OE_QMAKE_PATH_QT_FONTS}
-        cp -a ${S}/lib/fonts/* ${D}/${OE_QMAKE_PATH_QT_FONTS}
+        cp -d ${S}/lib/fonts/* ${D}/${OE_QMAKE_PATH_QT_FONTS}
         chown -R root:root ${D}/${OE_QMAKE_PATH_QT_FONTS}
     fi
-    install -m 0644 ${B}/lib/libqt* ${D}${libdir}
     # Remove example.pro file as it is useless
     rm -f ${D}${OE_QMAKE_PATH_EXAMPLES}/examples.pro
 
     # Remove macx-ios-clang directory because /usr/lib/qt5/mkspecs/macx-ios-clang/rename_main.sh:#!/bin/bash
     # triggers QA Issue: qtbase-mkspecs requires /bin/bash, but no providers in its RDEPENDS [file-rdeps]
     rm -rf ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/macx-ios-clang
+    # and this one has /bin/bash shebang, but checkbashisms doesn't show any reason for it
+    sed -i 's@^#!/bin/bash$@#!/bin/sh@g' ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/data/mac/objc_namespace.sh
 
     # Replace host paths with qmake built-in properties
-#    sed -i -e 's| ${STAGING_DIR_NATIVE}${prefix_native}| $$[QT_HOST_PREFIX]|g' \
-#        -e 's| ${STAGING_DIR_HOST}| $$[QT_SYSROOT]|g' \
-#        ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/qconfig.pri
+    sed -i -e 's|${STAGING_DIR_NATIVE}${prefix_native}|$$[QT_HOST_PREFIX]|g' \
+        -e 's|${STAGING_DIR_HOST}|$$[QT_SYSROOT]|g' \
+        ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/*.pri
 }
 
 PACKAGES =. " \
@@ -261,4 +261,4 @@ sysroot_stage_dirs_append() {
     rm -rf $to${OE_QMAKE_PATH_QT_FONTS}
 }
 
-SRCREV = "f7f4dde80e13ff1c05a9399297ffb746ab505e62"
+SRCREV = "41706400f605524a5a9953714aa0cfbf811dba7e"

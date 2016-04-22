@@ -1,7 +1,7 @@
-From 729b7873256b11778832c5786dc50fd9ea860a7d Mon Sep 17 00:00:00 2001
+From bf8e0e2292c8a9233d55714aab5eb780c62a132d Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
-Subject: [PATCH 1/9] Add linux-oe-g++ platform
+Subject: [PATCH 01/10] Add linux-oe-g++ platform
 
 * This qmake.conf unlike other platforms reads most variables from
   shell environment, because it's easier for qt recipes to export
@@ -56,7 +56,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index 16e8fb4..9897fe6 100755
+index f247401..011cd70 100755
 --- a/configure
 +++ b/configure
 @@ -342,6 +342,16 @@ getQMakeConf()
@@ -124,7 +124,7 @@ index 16e8fb4..9897fe6 100755
  fi'`
      eval "$cmd"
  done
-@@ -3400,7 +3410,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
+@@ -3418,7 +3428,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
      [ "$CFG_QGTKSTYLE" = "auto" ] && CFG_QGTKSTYLE=no
  fi
  
@@ -133,7 +133,7 @@ index 16e8fb4..9897fe6 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -3457,7 +3467,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
+@@ -3475,7 +3485,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
          exit 1
      fi
  fi
@@ -142,7 +142,7 @@ index 16e8fb4..9897fe6 100755
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3958,6 +3968,14 @@ setBootstrapVariable()
+@@ -3976,6 +3986,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -157,7 +157,7 @@ index 16e8fb4..9897fe6 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -3996,14 +4014,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -4014,14 +4032,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          fi
  
          [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=
@@ -178,9 +178,9 @@ index 16e8fb4..9897fe6 100755
 +        setBootstrapEvalVariable QMAKE_LFLAGS
 +        setBootstrapEvalVariable QMAKE_LFLAGS_GCSECTIONS
  
-         if [ "$CFG_RELEASE_QMAKE" = "yes" ]; then
+         if [ "$CFG_RELEASE_TOOLS" = "yes" ]; then
              setBootstrapVariable QMAKE_CFLAGS_RELEASE
-@@ -4052,6 +4070,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -4070,6 +4088,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
                          \"\$(SOURCE_PATH)/src/corelib/io/qfsfileengine_unix.cpp\" \
                          \"\$(SOURCE_PATH)/src/corelib/tools/qlocale_unix.cpp\""
              EXEEXT=
@@ -209,7 +209,7 @@ index 6b37a04..dcf6025 100644
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
 new file mode 100644
-index 0000000..d0a4166
+index 0000000..311ba04
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qmake.conf
 @@ -0,0 +1,42 @@
@@ -362,5 +362,5 @@ index 0000000..dd12003
 +
 +#endif // QPLATFORMDEFS_H
 -- 
-2.6.2
+2.7.1
 

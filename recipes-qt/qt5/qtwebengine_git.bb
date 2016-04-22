@@ -40,13 +40,14 @@ PACKAGECONFIG[libxslt] = "WEBENGINE_CONFIG+=use_system_libxslt,,libxslt"
 PACKAGECONFIG[speex] = "WEBENGINE_CONFIG+=use_system_speex,,speex"
 PACKAGECONFIG[vpx] = "WEBENGINE_CONFIG+=use_system_vpx,,libvpx"
 
-EXTRA_QMAKEVARS_PRE += "${EXTRA_OECONF}"
+EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
 COMPATIBLE_MACHINE = "(-)"
 COMPATIBLE_MACHINE_x86 = "(.*)"
 COMPATIBLE_MACHINE_x86-64 = "(.*)"
 COMPATIBLE_MACHINE_armv6 = "(.*)"
 COMPATIBLE_MACHINE_armv7a = "(.*)"
+COMPATIBLE_MACHINE_armv7ve = "(.*)"
 
 inherit qmake5
 inherit gettext
@@ -74,7 +75,7 @@ do_configure() {
     export CC_host="gcc"
     export CXX_host="g++"
     export QMAKE_MAKE_ARGS="${EXTRA_OEMAKE}"
-    export QMAKE_CACHE_EVAL="${EXTRA_OECONF}"
+    export QMAKE_CACHE_EVAL="${PACKAGECONFIG_CONFARGS}"
 
     # Disable autodetection from sysroot:
     sed -i 's/packagesExist([^)]*vpx[^)]*):/false:/g; s/config_srtp:/false:/g; s/config_snappy:/false:/g; s/packagesExist(nss):/false:/g; s/packagesExist(minizip, zlib):/false:/g; s/packagesExist(libwebp,libwebpdemux):/false:/g; s/packagesExist(libxml-2.0,libxslt):/false:/g; s/^ *packagesExist($$package):/false:/g' ${S}/tools/qmake/mkspecs/features/configure.prf
@@ -92,6 +93,7 @@ do_configure() {
 
 do_install_append() {
     rmdir ${D}${OE_QMAKE_PATH_PLUGINS}/${BPN} ${D}${OE_QMAKE_PATH_PLUGINS} || true
+    sed -i 's@ -Wl,--start-group.*-Wl,--end-group@@g; s@-L${B}[^ ]* @ @g' ${D}${libdir}/pkgconfig/Qt5WebEngineCore.pc
 }
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
@@ -111,16 +113,19 @@ SRC_URI += " \
     file://0001-functions.prf-Don-t-match-QMAKE_EXT_CPP-or-QMAKE_EXT.patch \
     file://0002-functions.prf-Make-sure-we-only-use-the-file-name-to.patch \
     file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
+    file://0004-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
+    file://0005-Include-dependency-to-QCoreApplication-translate.patch \
     file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch \
-    file://0002-media_capture_devices_dispatcher.h-Include-QCoreApplication-translate.patch \
-    file://0003-WebEngine-qquickwebengineview_p_p.h-add-inc-QColor.patch \
-    file://0001-chromium-jpeg_codec.cc_Change-false-to-FALSE-and-1-to-TRUE.patch \
+    file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
 "
 
-SRCREV_qtwebengine = "40ef43e0d69c4a86c9430b7f264d2cde6340ee0f"
-SRCREV_chromium = "ec5b3304fc266dfdec7666b8b73d57a3971ea35f"
+SRCREV_qtwebengine = "3f02c25de46f5ff296b8189af3435ce5800b39a7"
+SRCREV_chromium = "779a2388fc123a7f3a178ce2ced921ee4a307e2c"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
 
 S = "${WORKDIR}/git"
+
+# WARNING: qtwebengine-5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0 do_package_qa: QA Issue: ELF binary '/OE/build/oe-core/tmp-glibc/work/i586-oe-linux/qtwebengine/5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0/packages-split/qtwebengine/usr/lib/libQt5WebEngineCore.so.5.6.0' has relocations in .text [textrel]
+INSANE_SKIP_${PN} += "textrel"

@@ -26,7 +26,7 @@ require recipes-qt/qt5/qt5.inc
 do_install() {
     install -d ${D}${datadir}/${P}
     install -m 0755 ${B}/Qt5_CinematicExperience ${D}${datadir}/${P}
-    cp -a ${S}/content ${D}${datadir}/${P}
+    cp -R --no-dereference --preserve=mode,links ${S}/content ${D}${datadir}/${P}
     install -m 0644 ${S}/Qt5_CinematicExperience.qml ${D}${datadir}/${P}
 
     install -d ${D}${bindir}

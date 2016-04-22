@@ -1,4 +1,4 @@
-From e3469724404a8afaa51939e17fc85f6cb40b5196 Mon Sep 17 00:00:00 2001
+From efec881d1bff247e6452a10a60821612c2585c67 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 22 Feb 2014 17:47:44 +0100
 Subject: [PATCH] examples/wayland: include server-buffer only when building
@@ -27,5 +27,5 @@ index d633fb9..643c7cd 100644
 +    }
  }
 -- 
-2.6.1
+2.7.0
 

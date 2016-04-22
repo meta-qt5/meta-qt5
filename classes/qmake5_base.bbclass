@@ -47,7 +47,7 @@ OE_QMAKE_WAYLAND_SCANNER = "${STAGING_BINDIR_NATIVE}/wayland-scanner"
 # this one needs to be exported, because qmake reads it from shell env
 export QT_CONF_PATH = "${WORKDIR}/qt.conf"
 
-inherit qmake5_paths
+inherit qmake5_paths remove-libtool
 
 do_generate_qt_config_file() {
     cat > ${QT_CONF_PATH} <<EOF
@@ -160,18 +160,19 @@ qmake5_base_do_configure () {
 
 qmake5_base_native_do_install() {
     oe_runmake install INSTALL_ROOT=${D}
+    find "${D}" -ignore_readdir_race -name "*.la" -delete
 }
 
 qmake5_base_nativesdk_do_install() {
     # Fix install paths for all
-    find -name "Makefile*" | xargs -r sed -i "s,(INSTALL_ROOT)${STAGING_DIR_HOST},(INSTALL_ROOT),g"
+    find . -name "Makefile*" | xargs -r sed -i "s,(INSTALL_ROOT)${STAGING_DIR_HOST},(INSTALL_ROOT),g"
 
     oe_runmake install INSTALL_ROOT=${D}
 }
 
 qmake5_base_do_install() {
     # Fix install paths for all
-    find -name "Makefile*" | xargs -r sed -i "s,(INSTALL_ROOT)${STAGING_DIR_TARGET},(INSTALL_ROOT),g"
+    find . -name "Makefile*" | xargs -r sed -i "s,(INSTALL_ROOT)${STAGING_DIR_TARGET},(INSTALL_ROOT),g"
 
     oe_runmake install INSTALL_ROOT=${D}
 

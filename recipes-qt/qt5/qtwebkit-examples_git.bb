@@ -13,12 +13,10 @@ LIC_FILES_CHKSUM = " \
     file://examples/webkitwidgets/imageanalyzer/imageanalyzer.cpp;endline=39;md5=b0739af76072fbe303dc04b6941e054f \
 "
 
-SRC_URI += " \
-    file://0001-qtwebkit-examples-enable-building-examples-by-defaul.patch \
-"
+PACKAGECONFIG ?= "examples"
 
 DEPENDS += "qtwebkit qtxmlpatterns"
 RDEPENDS_${PN}-examples += "qtwebkit-qmlplugins"
 RDEPENDS_${PN}-examples += "${@base_contains('PACKAGECONFIG_OPENSSL', 'openssl', 'ca-certificates', '', d)}"
 
-SRCREV = "7988aecdbcb07f3a214c2c804a39db3fc5617844"
+SRCREV = "1b9a0fc9d1ded4f4f11b04eb0bb7d1de82d6eb34"

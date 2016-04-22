@@ -20,11 +20,9 @@ DEPENDS += "qtbase qtdeclarative wayland wayland-native qtwayland-native ${XKB_D
 
 QT_WAYLAND_CONFIG ?= "wayland-compositor"
 QT_WAYLAND_DEFINES ?= ""
-QT_WAYLAND_BUILD_PARTS ?= "examples"
 
 EXTRA_QMAKEVARS_PRE += "CONFIG+=${QT_WAYLAND_CONFIG}"
 EXTRA_QMAKEVARS_PRE += "DEFINES+=${QT_WAYLAND_DEFINES}"
-EXTRA_QMAKEVARS_PRE += "QT_BUILD_PARTS+=${QT_WAYLAND_BUILD_PARTS}"
 
 FILES_${PN}-plugins += " \
     ${OE_QMAKE_PATH_PLUGINS}/*/*/*${SOLIBSDEV} \
@@ -38,4 +36,4 @@ SRC_URI += " \
     file://0001-examples-wayland-include-server-buffer-only-when-bui.patch \
 "
 
-SRCREV = "bd21beea9a433a8878c0e719a7bfb8c14df47840"
+SRCREV = "bebe9beff3e9874498474cec32634cf281ddc453"

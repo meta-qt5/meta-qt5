@@ -18,11 +18,11 @@ inherit bluetooth
 PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez', '', d)}"
 PACKAGECONFIG[bluez] = "CONFIG+=OE_BLUEZ_ENABLED,,${BLUEZ}"
 
-EXTRA_QMAKEVARS_PRE += "${EXTRA_OECONF}"
+EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
 do_configure_prepend() {
     # disable bluez test if it isn't enabled by PACKAGECONFIG
     sed -i 's/^qtCompileTest(bluez)/OE_BLUEZ_ENABLED:qtCompileTest(bluez)/g' ${S}/qtconnectivity.pro
 }
 
-SRCREV = "a7617f963c1d375fb7ac7d5c17f450acdb2796b8"
+SRCREV = "dec32076b9153febc575a0418af702f8cb400258"

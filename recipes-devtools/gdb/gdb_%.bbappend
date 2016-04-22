@@ -1,1 +1,1 @@
-PACKAGECONFIG ??= "python"
+PACKAGECONFIG ??= "readline python"

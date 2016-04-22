@@ -1,27 +1,33 @@
-From daf1deee393576f86b22178a7cc18717962cb68e Mon Sep 17 00:00:00 2001
+From 348a74cb924cf6ac4384069d84ee3995644b2ce1 Mon Sep 17 00:00:00 2001
 From: Frieder Schrempf <frieder.schrempf@online.de>
 Date: Mon, 1 Dec 2014 14:34:40 +0000
-Subject: [PATCH 3/3] functions.prf: allow build for linux-oe-g++ platform
+Subject: [PATCH 3/5] functions.prf: allow build for linux-oe-g++ platform
 
 Upstream-Status: Inappropriate [OE specific]
 
 Signed-off-by: Frieder Schrempf <frieder.schrempf@online.de>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- tools/qmake/mkspecs/features/functions.prf | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/qmake/mkspecs/features/functions.prf | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/tools/qmake/mkspecs/features/functions.prf b/tools/qmake/mkspecs/features/functions.prf
-index f761b64..ab5f018 100644
+index 055e960..379c9b5 100644
 --- a/tools/qmake/mkspecs/features/functions.prf
 +++ b/tools/qmake/mkspecs/features/functions.prf
-@@ -1,5 +1,5 @@
- defineTest(isPlatformSupported) {
--  !linux-g++*:!linux-clang:!win32-msvc2013*:!win32-msvc2015*:!macx-clang*:!boot2qt {
-+  !linux-g++*:!linux-oe-g++*:!linux-clang:!win32-msvc2013*:!win32-msvc2015*:!macx-clang*:!boot2qt {
-     skipBuild("Qt WebEngine can currently only be built for Linux (GCC/clang), Windows (MSVC 2013 or 2015), OS X (10.9/XCode 5.1+) or Qt for Device Creation.")
-     return(false)
-   }
+@@ -5,6 +5,12 @@ defineTest(isPlatformSupported) {
+       return(false)
+     }
+     gcc:!clang:!isGCCVersionSupported(): return(false)
++  } else:linux-oe-g++* {
++    !gcc:!clang {
++      skipBuild("Qt WebEngine on Linux requires clang or GCC.")
++      return(false)
++    }
++    gcc:!clang:!isGCCVersionSupported(): return(false)
+   } else:win32 {
+     winrt {
+       skipBuild("WinRT is not supported.")
 -- 
-2.6.2
+2.7.0
 

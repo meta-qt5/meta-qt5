@@ -1,7 +1,7 @@
-From a76a6c33be512a2909904b6136a6044e4b747ffd Mon Sep 17 00:00:00 2001
+From db746d1ca0c41fe3da103d09fc240a0df9db5404 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
-Subject: [PATCH 4/9] qt_module: Fix pkgconfig and libtool replacements
+Subject: [PATCH 04/10] qt_module: Fix pkgconfig and libtool replacements
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,11 +61,36 @@ Content-Transfer-Encoding: 8bit
 Change-Id: Ie1c94b15f2a4e736b65b4d0924d99eb2a7d92a6c
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+Signed-off-by: Jonathan Liu <net147@gmail.com>
 ---
+ mkspecs/features/qt.prf        | 13 +++++++++++++
  mkspecs/features/qt_common.prf |  2 +-
- mkspecs/features/qt_module.prf | 10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
+diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
+index f62b6bb..91be8b3 100644
+--- a/mkspecs/features/qt.prf
++++ b/mkspecs/features/qt.prf
+@@ -321,6 +321,19 @@ contains(TEMPLATE, .*app) {
+     QTPLUGIN = $$manualplugs $$autoplugs
+ }
+ 
++contains(TEMPLATE, .*lib) {
++    pkgconfig_prefix_replace.match = "prefix=$$[QT_SYSROOT]"
++    pkgconfig_prefix_replace.replace = "prefix="
++    pkgconfig_prefix_replace.CONFIG = path
++    QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_prefix_replace
++
++    # drop -L/usr/lib in .prl files
++    prl_replace.match = "-L\$${libdir}"
++    prl_replace.replace = ""
++    prl_replace.CONFIG = path
++    QMAKE_PRL_INSTALL_REPLACE += prl_replace
++}
++
+ QT_PLUGIN_VERIFY = DEPLOYMENT_PLUGIN
+ contains(QT_CONFIG, static) {
+     QT_PLUGIN_VERIFY += QTPLUGIN
 diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
 index 38602f6..f9c401f 100644
 --- a/mkspecs/features/qt_common.prf
@@ -79,34 +104,6 @@ index 38602f6..f9c401f 100644
      }
      lib_replace.CONFIG = path
      QMAKE_PRL_INSTALL_REPLACE += lib_replace
-diff --git a/mkspecs/features/qt_module.prf b/mkspecs/features/qt_module.prf
-index 193629b..38ff9a8 100644
---- a/mkspecs/features/qt_module.prf
-+++ b/mkspecs/features/qt_module.prf
-@@ -255,6 +255,11 @@ unix|mingw {
-     pclib_replace.CONFIG = path
-     QMAKE_PKGCONFIG_INSTALL_REPLACE += pclib_replace
- 
-+    pkgconfig_include_replace.match = $$rplbase/include
-+    pkgconfig_include_replace.replace = "\$$\\{includedir}"
-+    pkgconfig_include_replace.CONFIG = path
-+    QMAKE_PKGCONFIG_INSTALL_REPLACE += pkgconfig_include_replace
-+
-     unix {
-         CONFIG += create_libtool explicitlib
-         host_build: \
-@@ -266,6 +271,11 @@ unix|mingw {
-             ltlib_replace.replace = $$QMAKE_LIBTOOL_LIBDIR
-         ltlib_replace.CONFIG = path
-         QMAKE_LIBTOOL_INSTALL_REPLACE += ltlib_replace
-+        # drop -L/usr/lib in .prl files
-+        prl_replace.match = "-L\$${libdir}"
-+        prl_replace.replace = ""
-+        prl_replace.CONFIG = path
-+        QMAKE_PRL_INSTALL_REPLACE += prl_replace
-     }
- }
- 
 -- 
-2.6.2
+2.7.1
 

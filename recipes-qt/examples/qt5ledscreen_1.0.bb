@@ -14,8 +14,8 @@ S = "${WORKDIR}/ledscreen_1.0"
 
 do_install() {
     install -d ${D}${datadir}/${P}
-    #install -m 0755 ${B}/QUItBattery ${D}${datadir}/${P}  
-    cp -ar ${S}/* ${D}${datadir}/${P}  
+    #install -m 0755 ${B}/QUItBattery ${D}${datadir}/${P}
+    cp -R --no-dereference --preserve=mode,links ${S}/* ${D}${datadir}/${P}
 }
 
 FILES_${PN}-dbg += "${datadir}/${P}/.debug"
