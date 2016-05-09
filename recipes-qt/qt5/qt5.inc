@@ -6,7 +6,7 @@ inherit qmake5
 PACKAGECONFIG_OPENSSL ?= "openssl"
 
 PACKAGECONFIG[examples] = ""
-EXTRA_QMAKEVARS_PRE += "${@base_contains('PACKAGECONFIG', 'examples', 'QT_BUILD_PARTS+=examples', '', d)}"
+EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'examples', 'QT_BUILD_PARTS+=examples', '', d)}"
 
 # we don't want conflicts with qt4
 OE_QMAKE_PATH_HEADERS = "${OE_QMAKE_PATH_QT_HEADERS}"
@@ -92,6 +92,7 @@ FILES_${PN}-plugins-dbg = " \
 FILES_${PN}-qmldesigner += " \
     ${OE_QMAKE_PATH_QML}/*/designer \
     ${OE_QMAKE_PATH_QML}/*/*/designer \
+    ${OE_QMAKE_PATH_QML}/*/*/*/designer \
 "
 
 # qmlplugins 1-4 levels of subdirs qmldir + *{.so,*.qmltypes,*.qml,*js}

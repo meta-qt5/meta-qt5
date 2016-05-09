@@ -1,8 +1,8 @@
-From aab168c504038c7573f72e082a2431bc0502efd9 Mon Sep 17 00:00:00 2001
+From 66af547c2b3ed473b81421aa239d931d364f644d Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Fri, 3 Oct 2014 03:52:11 +0200
-Subject: [PATCH 1/2] <chromium> base.gypi: include
- atomicops_internals_x86_gcc.cc when building for x64 arch
+Subject: [PATCH] <chromium> base.gypi: include atomicops_internals_x86_gcc.cc
+ when building for x64 arch
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
@@ -10,10 +10,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/3rdparty/chromium/base/base.gypi b/src/3rdparty/chromium/base/base.gypi
-index be4e87c..5434828 100644
+index 63c3f76..331c975 100644
 --- a/src/3rdparty/chromium/base/base.gypi
 +++ b/src/3rdparty/chromium/base/base.gypi
-@@ -787,7 +787,7 @@
+@@ -801,7 +801,7 @@
                  ['include', '^nix/'],
                ],
            }],
@@ -22,6 +22,3 @@ index be4e87c..5434828 100644
                'sources/': [
                  ['include', 'atomicops_internals_x86_gcc.cc'],
                ],
--- 
-2.7.0
-

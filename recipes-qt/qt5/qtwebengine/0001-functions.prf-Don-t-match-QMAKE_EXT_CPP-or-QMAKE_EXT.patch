@@ -1,7 +1,7 @@
-From 33fac625554652e137c9fb095425c25240ee83ae Mon Sep 17 00:00:00 2001
+From d28e6ef9c684a7f8f59995995b5cb5a0b1791ee1 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 30 Jun 2014 20:08:17 +0200
-Subject: [PATCH 1/5] functions.prf: Don't match QMAKE_EXT_CPP or QMAKE_EXT_H
+Subject: [PATCH] functions.prf: Don't match QMAKE_EXT_CPP or QMAKE_EXT_H
  anywhere in path, but at the end
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
@@ -10,10 +10,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/qmake/mkspecs/features/functions.prf b/tools/qmake/mkspecs/features/functions.prf
-index 2f7cd39..6ae413a 100644
+index 26db26f..277bf98 100644
 --- a/tools/qmake/mkspecs/features/functions.prf
 +++ b/tools/qmake/mkspecs/features/functions.prf
-@@ -131,9 +131,9 @@ defineReplace(mocOutput) {
+@@ -168,9 +168,9 @@ defineReplace(mocOutput) {
    out = $$1
    # The order is important, since the output of the second replace would end up accidentaly transformed by the first one
    for(ext, $$list($${QMAKE_EXT_CPP})): \
@@ -25,6 +25,3 @@ index 2f7cd39..6ae413a 100644
    return($$out)
  }
  
--- 
-2.7.1
-

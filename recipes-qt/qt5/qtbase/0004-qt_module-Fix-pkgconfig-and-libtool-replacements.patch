@@ -1,7 +1,7 @@
-From 884e27ee424299e2e8270cfa6d9b22fa57243eaf Mon Sep 17 00:00:00 2001
+From ac2f94a42878c1500e1ab6bbbec7834d9e5edfbb Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
-Subject: [PATCH 04/10] qt_module: Fix pkgconfig and libtool replacements
+Subject: [PATCH] qt_module: Fix pkgconfig and libtool replacements
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,10 +68,10 @@ Signed-off-by: Jonathan Liu <net147@gmail.com>
  2 files changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
-index 4b40451..d486881 100644
+index 03ec36a..2ab192b 100644
 --- a/mkspecs/features/qt.prf
 +++ b/mkspecs/features/qt.prf
-@@ -321,6 +321,19 @@ contains(TEMPLATE, .*app) {
+@@ -317,6 +317,19 @@ contains(TEMPLATE, .*app) {
      QTPLUGIN = $$manualplugs $$autoplugs
  }
  
@@ -92,7 +92,7 @@ index 4b40451..d486881 100644
  contains(QT_CONFIG, static) {
      QT_PLUGIN_VERIFY += QTPLUGIN
 diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
-index 0730084..333bb97 100644
+index c1c668a..67d916d 100644
 --- a/mkspecs/features/qt_common.prf
 +++ b/mkspecs/features/qt_common.prf
 @@ -38,7 +38,7 @@ contains(TEMPLATE, .*lib) {
@@ -104,6 +104,3 @@ index 0730084..333bb97 100644
      }
      lib_replace.CONFIG = path
      QMAKE_PRL_INSTALL_REPLACE += lib_replace
--- 
-2.7.1
-

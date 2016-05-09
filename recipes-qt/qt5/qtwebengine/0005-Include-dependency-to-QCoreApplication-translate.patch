@@ -1,7 +1,7 @@
-From 1ad078e7cb9d8fff66f05e828953a2f5b11df7ee Mon Sep 17 00:00:00 2001
+From 0999fbfe32480e737f23ed8fce8f35897b97c20a Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Thu, 24 Dec 2015 15:59:51 -0200
-Subject: [PATCH 5/5] Include dependency to QCoreApplication::translate()
+Subject: [PATCH] Include dependency to QCoreApplication::translate()
 
 Signed-off-by: Cleiton Bueno <cleitonrbueno@gmail.com>
 ---
@@ -21,6 +21,3 @@ index b13a9da..8a54cce 100644
  #include "web_contents_adapter_client.h"
  
  #include "base/callback.h"
--- 
-2.7.1
-

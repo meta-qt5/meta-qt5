@@ -20,13 +20,13 @@ PACKAGECONFIG_class-native ??= "tools-only"
 PACKAGECONFIG_class-nativesdk ??= "tools-only"
 PACKAGECONFIG[tools-only] = "CONFIG+=tools-only"
 
-EXTRA_QMAKEVARS_PRE += "${EXTRA_CONF_PACKAGECONFIG}"
+EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
 FILES_${PN}-qmlplugins += " \
     ${OE_QMAKE_PATH_QML}/*/*/*.bez \
     ${OE_QMAKE_PATH_QML}/*/*/*.obj \
 "
 
-SRCREV = "a21a4e0391b81307d96364db7af3b8bd343d773f"
+SRCREV = "be29a39ede4355a5aa18e93c27a75a1c3f81bde4"
 
 BBCLASSEXTEND += "native nativesdk"

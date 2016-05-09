@@ -1,7 +1,7 @@
 From ed626df67e8287fadbfe2801c241c9717472dcf4 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 5 Jun 2015 19:55:05 -0700
-Subject: [PATCH 3/3] Exclude backtrace() API for non-glibc libraries
+Subject: [PATCH] Exclude backtrace() API for non-glibc libraries
 
 It was excluding musl with current checks, so lets make it such that it
 considers only glibc when using backtrace API
@@ -33,6 +33,3 @@ index 1b2091f..ba03a28 100644
      *size = backtrace(stack, *size);
  #elif OS(WINDOWS) && !OS(WINCE)
      // The CaptureStackBackTrace function is available in XP, but it is not defined
--- 
-2.7.1
-

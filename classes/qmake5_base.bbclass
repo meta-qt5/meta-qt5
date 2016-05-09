@@ -171,7 +171,6 @@ qmake5_base_do_configure () {
 
 qmake5_base_native_do_install() {
     oe_runmake install INSTALL_ROOT=${D}
-    find "${D}" -ignore_readdir_race -name "*.la" -delete
 }
 
 qmake5_base_fix_install() {
@@ -196,7 +195,6 @@ qmake5_base_do_install() {
     find . -name "Makefile*" | xargs -r sed -i "s,(INSTALL_ROOT)${STAGING_DIR_NATIVE},(INSTALL_ROOT),g"
 
     oe_runmake install INSTALL_ROOT=${D}
-    find "${D}" -ignore_readdir_race -name "*.la" -delete
 
     # everything except HostData and HostBinaries is prefixed with sysroot value,
     # but we cannot remove sysroot override, because that's useful for pkg-config etc

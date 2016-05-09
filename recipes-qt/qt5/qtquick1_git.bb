@@ -16,6 +16,8 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtscript qtsvg qtxmlpatterns"
 # qttools
 
+SRC_URI += "file://0001-qdeclarativetextinput-update-to-match-QWidgetLineCon.patch"
+
 PACKAGECONFIG ??= "webkit"
 PACKAGECONFIG[webkit] = "CONFIG+=enable-webkit,CONFIG-=enable-webkit,qtwebkit"
 

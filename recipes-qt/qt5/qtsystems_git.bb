@@ -16,7 +16,7 @@ inherit bluetooth
 PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez', '', d)}"
 PACKAGECONFIG[bluez] = "CONFIG+=OE_BLUEZ_ENABLED,,${BLUEZ}"
 
-EXTRA_QMAKEVARS_PRE += "${EXTRA_CONF_PACKAGECONFIG}"
+EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
 do_configure_prepend() {
     # disable bluez test if it isn't enabled by PACKAGECONFIG
@@ -30,7 +30,4 @@ do_install_append() {
 
 QT_MODULE_BRANCH = "dev"
 
-# qtsystems wasn't released yet, last tag before this SRCREV is 5.0.0-beta1
-# qt5-git PV is only to indicate that this recipe is compatible with qt5 5.6
-
-SRCREV = "cc2077700bd5503d1fcf53aef83cbb76975e745a"
+SRCREV = "236b6b544fd2049eb46e8f79d13bb7aa35ba002f"

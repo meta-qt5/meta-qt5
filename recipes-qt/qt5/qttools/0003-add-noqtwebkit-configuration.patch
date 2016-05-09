@@ -1,7 +1,7 @@
-From a06e526751f430de47e32a39dde16559d3378845 Mon Sep 17 00:00:00 2001
+From 6c5bbd423c3c8f87d00c18384460ab418dccea95 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 4 Jun 2014 11:28:16 +0200
-Subject: [PATCH 3/4] add noqtwebkit configuration
+Subject: [PATCH] add noqtwebkit configuration
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -46,6 +46,3 @@ index 500a153..b60fa2d 100644
 +qtHaveModule(webkitwidgets):!contains(CONFIG, noqtwebkit): SUBDIRS += qwebview
  win32: qtHaveModule(axcontainer): SUBDIRS += activeqt
  qtHaveModule(quickwidgets): SUBDIRS += qquickwidget
--- 
-2.7.1
-

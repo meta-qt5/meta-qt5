@@ -1,7 +1,7 @@
-From 85beb0cf48cdbe99ec153bceeb964431560182e6 Mon Sep 17 00:00:00 2001
+From e1bc7a14ae9e433112006b1b6944f8b0e3f619ab Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Fri, 13 Nov 2015 12:36:11 +0100
-Subject: [PATCH 08/10] configure paths for target qmake properly
+Subject: [PATCH] configure paths for target qmake properly
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -19,10 +19,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/configure b/configure
-index 147d907..a80f3f7 100755
+index 17bca95..6abdd6b 100755
 --- a/configure
 +++ b/configure
-@@ -3779,8 +3779,13 @@ if [ "$CFG_COMPILE_EXAMPLES" = "yes" ]; then
+@@ -3777,8 +3777,13 @@ if [ "$CFG_COMPILE_EXAMPLES" = "yes" ]; then
      QMAKE_CONFIG="$QMAKE_CONFIG compile_examples"
  fi
  
@@ -38,7 +38,7 @@ index 147d907..a80f3f7 100755
  
  QT_CONFIGURE_STR_OFF=0
  
-@@ -3813,7 +3818,11 @@ QT_CONFIGURE_STRS_ALL=$QT_CONFIGURE_STRS
+@@ -3811,7 +3816,11 @@ QT_CONFIGURE_STRS_ALL=$QT_CONFIGURE_STRS
  
  QT_CONFIGURE_STR_OFFSETS=
  QT_CONFIGURE_STRS=
@@ -51,7 +51,7 @@ index 147d907..a80f3f7 100755
  addConfStr "$QT_REL_HOST_BINS"
  addConfStr "$QT_REL_HOST_LIBS"
  addConfStr "$QT_REL_HOST_DATA"
-@@ -3825,6 +3834,12 @@ addConfStr "$shortspec"
+@@ -3823,6 +3832,12 @@ addConfStr "$shortspec"
  #-------------------------------------------------------------------------------
  [ -d "$outpath/src/corelib/global" ] || mkdir -p "$outpath/src/corelib/global"
  
@@ -64,7 +64,7 @@ index 147d907..a80f3f7 100755
  cat > "$outpath/src/corelib/global/qconfig.cpp.new" <<EOF
  /* License Info */
  static const char qt_configure_licensee_str          [256 + 12] = "qt_lcnsuser=$Licensee";
-@@ -3837,7 +3852,7 @@ static const char qt_configure_installation          [12+11]    = "qt_instdate=2
+@@ -3835,7 +3850,7 @@ static const char qt_configure_installation          [12+11]    = "qt_instdate=2
  static const char qt_configure_prefix_path_str       [512 + 12] = "qt_prfxpath=$QT_INSTALL_PREFIX";
  #ifdef QT_BUILD_QMAKE
  static const char qt_configure_ext_prefix_path_str   [512 + 12] = "qt_epfxpath=$QT_EXT_PREFIX";
@@ -73,6 +73,3 @@ index 147d907..a80f3f7 100755
  #endif
  
  static const short qt_configure_str_offsets[] = {
--- 
-2.7.1
-
