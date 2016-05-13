@@ -207,4 +207,4 @@ do_install_append() {
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "84330007e12122bf1b690a4e68b5ef8e973c7882"
+SRCREV = "e64b2234e829cc47872225debcf80d6c06db18f0"
