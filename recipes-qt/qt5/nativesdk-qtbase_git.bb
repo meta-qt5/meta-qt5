@@ -25,6 +25,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-configure-Separate-host-and-build-platform.patch \
+    file://0003-Add-external-hostbindir-option.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
     file://0006-QOpenGLPaintDevice-sub-area-support.patch \

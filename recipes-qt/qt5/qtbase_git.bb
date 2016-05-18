@@ -14,6 +14,7 @@ LIC_FILES_CHKSUM = " \
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-configure-Separate-host-and-build-platform.patch \
+    file://0003-Add-external-hostbindir-option.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
     file://0006-QOpenGLPaintDevice-sub-area-support.patch \
@@ -135,8 +136,6 @@ QT_CONFIG_FLAGS += " \
     -pkg-config \
     ${PACKAGECONFIG_CONFARGS} \
 "
-
-OE_QMAKE_PATH_HOST_BINS = "${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}"
 
 generate_qt_config_file_effective_paths() {
     cat >> ${OE_QMAKE_QTCONF_PATH} <<EOF
