@@ -3,7 +3,7 @@ inherit qmake5_paths
 
 DEPENDS_prepend = "qtbase "
 
-EXTRA_OECMAKE += " \
+EXTRA_OECMAKE_prepend = " \
     -DOE_QMAKE_PATH_PREFIX=${OE_QMAKE_PATH_PREFIX} \
     -DOE_QMAKE_PATH_HEADERS=${OE_QMAKE_PATH_HEADERS} \
     -DOE_QMAKE_PATH_LIBS=${OE_QMAKE_PATH_LIBS} \

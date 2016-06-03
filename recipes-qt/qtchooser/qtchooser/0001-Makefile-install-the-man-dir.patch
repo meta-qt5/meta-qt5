@@ -1,0 +1,35 @@
+From 3f142e100cc3dd69b816ce79152760c823cb86e9 Mon Sep 17 00:00:00 2001
+From: Li Xin <lixin.fnst@cn.fujitsu.com>
+Date: Fri, 29 Apr 2016 12:41:34 +0900
+Subject: [PATCH] Makefile: install the man dir
+
+upstream-status: backported
+
+Signed-off-by: Li Xin <lixin.fnst@cn.fujitsu.com>
+---
+ Makefile | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index 20b9100..1fd8cd3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,5 +1,6 @@
+ prefix = /usr
+ bindir = $(prefix)/bin
++MKDIR  = mkdir -p
+ TOOLS = assistant \
+ 	designer \
+ 	lconvert \
+@@ -56,6 +57,8 @@ install:
+ 	case `uname -s` in Darwin) \
+ 	    for tool in $(MACTOOLS); do ln -sf qtchooser "$(INSTALL_ROOT)$(bindir)/$$tool"; done \
+ 	;; esac
++	$(MKDIR) $(INSTALL_ROOT)$(prefix)/share/man/man1
++	install -m 644 -p doc/qtchooser.1 $(INSTALL_ROOT)$(prefix)/share/man/man1
+ 
+ uninstall:
+ 	cd src/qtchooser && $(MAKE) uninstall
+-- 
+1.8.4.2
+
