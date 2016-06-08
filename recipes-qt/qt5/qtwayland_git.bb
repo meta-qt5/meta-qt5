@@ -16,7 +16,7 @@ LIC_FILES_CHKSUM = " \
 # libxkbcommon isn't mandatory make it easier to remove by .bbappend
 # (e.g. for building qtwayland with danny which doesn't have libxkbcommon in oe-core).
 XKB_DEPENDS = "libxkbcommon xproto"
-DEPENDS += "qtbase qtdeclarative wayland wayland-native qtwayland-native ${XKB_DEPENDS}"
+DEPENDS += "qtbase qtdeclarative wayland wayland-native qtwayland-native ${XKB_DEPENDS} ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libxcomposite', '', d)}"
 
 QT_WAYLAND_CONFIG ?= "wayland-compositor"
 QT_WAYLAND_DEFINES ?= ""
