@@ -92,6 +92,7 @@ FILES_${PN}-plugins-dbg = " \
 FILES_${PN}-qmldesigner += " \
     ${OE_QMAKE_PATH_QML}/*/designer \
     ${OE_QMAKE_PATH_QML}/*/*/designer \
+    ${OE_QMAKE_PATH_QML}/*/*/*/designer \
 "
 
 # qmlplugins 1-4 levels of subdirs qmldir + *{.so,*.qmltypes,*.qml,*js}
