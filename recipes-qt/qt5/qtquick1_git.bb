@@ -19,10 +19,12 @@ DEPENDS += "qtscript qtsvg qtxmlpatterns"
 SRC_URI += "file://0001-qdeclarativetextinput-update-to-match-QWidgetLineCon.patch"
 
 PACKAGECONFIG ??= "webkit"
-PACKAGECONFIG[webkit] = "CONFIG+=enable-webkit,CONFIG-=enable-webkit,qtwebkit"
+PACKAGECONFIG[webkit] = ",,qtwebkit"
+
+EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'webkit', '', 'CONFIG+=noqtwebkit', d)}"
 
 do_configure_prepend() {
-    sed -i 's#^qtHaveModule(webkitwidgets):#enable-webkit:qtHaveModule(webkitwidgets):#g' ${S}/src/imports/imports.pro
+    sed -i 's#^qtHaveModule(webkitwidgets):#qtHaveModule(webkitwidgets):!contains(CONFIG, noqtwebkit):#g' ${S}/src/imports/imports.pro
 }
 
 SRCREV = "5e3bd5cb28e7af95b289a617ca2f7a8892498225"
