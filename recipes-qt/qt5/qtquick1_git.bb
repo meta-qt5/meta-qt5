@@ -18,10 +18,12 @@ DEPENDS += "qtscript qtsvg qtxmlpatterns"
 # qttools
 
 PACKAGECONFIG ??= "webkit"
-PACKAGECONFIG[webkit] = "CONFIG+=enable-webkit,CONFIG-=enable-webkit,qtwebkit"
+PACKAGECONFIG[webkit] = ",,qtwebkit"
+
+EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'webkit', '', 'CONFIG+=noqtwebkit', d)}"
 
 do_configure_prepend() {
-    sed -i 's#^qtHaveModule(webkitwidgets):#enable-webkit:qtHaveModule(webkitwidgets):#g' ${S}/src/imports/imports.pro
+    sed -i 's#^qtHaveModule(webkitwidgets):#qtHaveModule(webkitwidgets):!contains(CONFIG, noqtwebkit):#g' ${S}/src/imports/imports.pro
 }
 
 SRCREV = "e90625f00a3727ca1c89a94407b7686327d03c19"
