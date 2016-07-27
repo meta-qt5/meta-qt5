@@ -1,9 +1,7 @@
 require qt5.inc
 require qt5-git.inc
 
-# There are no LGPLv3-only licensed files in this component.
-# There are no GPLv2 licensed files in this component.
-LICENSE = "GFDL-1.3 & BSD & (LGPL-2.1 | LGPL-3.0)"
+LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.GPLv2;md5=05832301944453ec79e40ba3c3cfceec \
     file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
@@ -19,4 +17,4 @@ DEPENDS += "qtwebkit qtxmlpatterns"
 RDEPENDS_${PN}-examples += "qtwebkit-qmlplugins"
 RDEPENDS_${PN}-examples += "${@bb.utils.contains('PACKAGECONFIG_OPENSSL', 'openssl', 'ca-certificates', '', d)}"
 
-SRCREV = "f3f9e2a1b772b718335331a603a6bee748928e49"
+SRCREV = "1ac4ee240214a0e36b504fa1bcbc0c716d50620f"

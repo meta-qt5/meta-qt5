@@ -2,11 +2,16 @@ DESCRIPTION = "Native version of Qt/[X11|Mac|Embedded]"
 DEPENDS = "zlib-native dbus-native"
 SECTION = "libs"
 HOMEPAGE = "http://qt-project.org"
-LICENSE = "GFDL-1.3 & BSD & (LGPL-2.1 & The-Qt-Company-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
+
+LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
-    file://LICENSE.LGPLv21;md5=d3bb688e8d381a9fa5ee9063114b366d \
-    file://LICENSE.LGPLv3;md5=3fd06ee442011942b532cc6dedb0b39c \
-    file://LICENSE.GPLv3;md5=40f9bf30e783ddc201497165dfb32afb \
+    file://LICENSE.LGPL3;md5=e6a600fd5e1d9cbde2d983680233ad02 \
+    file://LICENSE.LGPLv21;md5=fb91571854638f10b2e5f36562661a5a \
+    file://LICENSE.LGPLv3;md5=a909b94c1c9674b2aa15ff03a86f518a \
+    file://LICENSE.GPL2;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
+    file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
+    file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
+    file://LICENSE.GPLv3;md5=88e2b9117e6be406b5ed6ee4ca99a705 \
     file://LGPL_EXCEPTION.txt;md5=9625233da42f9e0ce9d63651a9d97654 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
@@ -24,12 +29,14 @@ SRC_URI += "\
     file://0006-QOpenGLPaintDevice-sub-area-support.patch \
     file://0007-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
     file://0008-configure-paths-for-target-qmake-properly.patch \
+    file://0009-Reorder-EGL-libraries-from-pkgconfig-and-defaults.patch \
+    file://0010-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
-    file://0009-Always-build-uic.patch \
-    file://0010-Add-external-hostbindir-option-for-native-sdk.patch \
+    file://0011-Always-build-uic.patch \
+    file://0012-Add-external-hostbindir-option-for-native-sdk.patch \
 "
 
 CLEANBROKEN = "1"
@@ -50,7 +57,6 @@ PACKAGECONFIG_CONFARGS = " \
     -no-gif \
     -no-accessibility \
     -no-cups \
-    -no-nis \
     -no-gui \
     -no-qml-debug \
     -no-sql-mysql \
@@ -117,4 +123,4 @@ do_install() {
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
 }
 
-SRCREV = "84330007e12122bf1b690a4e68b5ef8e973c7882"
+SRCREV = "69b43e74d78e050cf5e40197acafa4bc9f90c0bd"

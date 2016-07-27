@@ -1,4 +1,4 @@
-From d623d2c2ed49c4dc57fb0dde1faab20976dfc3dc Mon Sep 17 00:00:00 2001
+From 91b87aed0a2a96b0d6b54757ea13c75ee648a9b0 Mon Sep 17 00:00:00 2001
 From: Julien Gueytat <contact@jgueytat.fr>
 Date: Wed, 27 Apr 2016 19:24:39 +0200
 Subject: [PATCH] Reorder EGL libraries from pkgconfig and defaults:
@@ -59,10 +59,10 @@ index d8b1c3e..06f7241 100644
 +
 +CONFIG -= qt
 diff --git a/configure b/configure
-index 2e99d39..072838b 100755
+index d30d0ca..14f348c 100755
 --- a/configure
 +++ b/configure
-@@ -5803,7 +5803,9 @@ if [ "$CFG_EGL" != "no" ]; then
+@@ -5891,7 +5891,9 @@ if [ "$CFG_EGL" != "no" ]; then
          QMakeVar set QMAKE_INCDIR_EGL "$QMAKE_INCDIR_EGL"
          QMakeVar set QMAKE_LIBS_EGL "$QMAKE_LIBS_EGL"
          QMakeVar set QMAKE_CFLAGS_EGL "`echo " $QMAKE_CFLAGS_EGL " | sed -e 's, -I[^ ]* , ,g;s,^ ,,;s, $,,'`"
@@ -73,7 +73,7 @@ index 2e99d39..072838b 100755
      if compileTest qpa/egl "EGL" $QMAKE_CFLAGS_EGL $QMAKE_LIBS_EGL; then
          CFG_EGL=yes
          if compileTest qpa/egl-x11 "EGL-X11" $QMAKE_CFLAGS_EGL $QMAKE_LIBS_EGL; then
-@@ -5826,8 +5828,18 @@ fi
+@@ -5914,8 +5916,18 @@ fi
  if [ "$CFG_EGLFS" != "no" ]; then
      if [ "$XPLATFORM_QNX" = "no" ] && [ "$CFG_OPENGL" != "no" ]; then
          CFG_EGLFS="$CFG_EGL"
@@ -93,6 +93,3 @@ index 2e99d39..072838b 100755
              CFG_EGLFS_BRCM=yes
          else
              CFG_EGLFS_BRCM=no
--- 
-1.9.1
-

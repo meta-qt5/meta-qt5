@@ -5,8 +5,8 @@ LICENSE = "LGPL-3.0 & BSD & GPL-3.0 & The-Qt-Company-GPL-Exception-1.0"
 LIC_FILES_CHKSUM = " \
     file://src/core/browser_context_qt.cpp;md5=b5193b7d68699260f3b40b201365c8d2;beginline=1;endline=38 \
     file://src/3rdparty/chromium/LICENSE;md5=0fca02217a5d49a14dfe2d11837bb34d \
-    file://LICENSE.LGPL3;md5=3dcffeed712d3c916f9a2d9135703aff \
-    file://LICENSE.GPLv3;md5=40f9bf30e783ddc201497165dfb32afb \
+    file://LICENSE.LGPL3;md5=8211fde12cc8a4e2477602f5953f5b71 \
+    file://LICENSE.GPLv3;md5=88e2b9117e6be406b5ed6ee4ca99a705 \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
     file://LICENSE.GPL2;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
@@ -122,8 +122,10 @@ SRC_URI += " \
     file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
 "
 
-SRCREV_qtwebengine = "63cf26268996ae5580c77095a252696fa549b593"
-SRCREV_chromium = "ba40ed24a6d23e606397b650a7982b0998dbeaf4"
+SRCREV_qtwebengine = "dbf7dd27428ff755444eac5e975cb69802ac9771"
+# This is in git submodule, but we're using the latest in 49-based
+# SRCREV_chromium = "c109a95a067af783e48f93d1cdeca870cda98878"
+SRCREV_chromium = "29c16917b33c26ad32893fa05af971c6c6f50297"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

@@ -1,4 +1,4 @@
-From 9f314e95248795bcce787f88bce77ba6058b34c7 Mon Sep 17 00:00:00 2001
+From aa5bb11072bc0e441dc6533f53ed5359c5000088 Mon Sep 17 00:00:00 2001
 From: Simon Busch <morphis@gravedo.de>
 Date: Tue, 18 Nov 2014 10:38:18 +0100
 Subject: [PATCH] functions.prf: Make sure we only use the file name to
@@ -11,7 +11,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/tools/qmake/mkspecs/features/functions.prf b/tools/qmake/mkspecs/features/functions.prf
-index 277bf98..d263be4 100644
+index 7aa0b4a..9b3a639 100644
 --- a/tools/qmake/mkspecs/features/functions.prf
 +++ b/tools/qmake/mkspecs/features/functions.prf
 @@ -165,7 +165,8 @@ defineReplace(findIncludedMocFiles) {

@@ -1,4 +1,4 @@
-From 502b95b840a5f79e5a68e9bd5b10dbdc92485f1f Mon Sep 17 00:00:00 2001
+From c1dc6165d6a085f162ed32ef5697f645019f9ee0 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH] Add -external-hostbindir option
@@ -39,10 +39,10 @@ Change-Id: Iacaa1c5531cd6dcc094891610c351673db55d7b2
  7 files changed, 44 insertions(+), 8 deletions(-)
 
 diff --git a/configure b/configure
-index ffe6931..5aa87b4 100755
+index 052872e..1fcbb3a 100755
 --- a/configure
 +++ b/configure
-@@ -825,6 +825,7 @@ QT_HOST_BINS=
+@@ -834,6 +834,7 @@ QT_HOST_BINS=
  QT_HOST_LIBS=
  QT_HOST_DATA=
  QT_EXT_PREFIX=
@@ -50,7 +50,7 @@ index ffe6931..5aa87b4 100755
  
  #flags for SQL drivers
  QT_CFLAGS_PSQL=
-@@ -944,6 +945,7 @@ while [ "$#" -gt 0 ]; do
+@@ -953,6 +954,7 @@ while [ "$#" -gt 0 ]; do
      -testsdir| \
      -hostdatadir| \
      -hostbindir| \
@@ -58,7 +58,7 @@ index ffe6931..5aa87b4 100755
      -hostlibdir| \
      -extprefix| \
      -sysroot| \
-@@ -1176,6 +1178,9 @@ while [ "$#" -gt 0 ]; do
+@@ -1185,6 +1187,9 @@ while [ "$#" -gt 0 ]; do
      extprefix)
          QT_EXT_PREFIX="$VAL"
          ;;
@@ -68,7 +68,7 @@ index ffe6931..5aa87b4 100755
      pkg-config)
          if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
              CFG_PKGCONFIG="$VAL"
-@@ -2438,6 +2443,10 @@ Installation options:
+@@ -2447,6 +2452,10 @@ Installation options:
      -hostdatadir <dir> . Data used by qmake will be installed to <dir>
                           (default HOSTPREFIX)
  
@@ -79,7 +79,7 @@ index ffe6931..5aa87b4 100755
  Configure options:
  
   The defaults (*) are usually acceptable. A plus (+) denotes a default value
-@@ -3196,6 +3205,11 @@ fi
+@@ -3209,6 +3218,11 @@ fi
  # command line and environment validation
  #-------------------------------------------------------------------------------
  
@@ -92,7 +92,7 @@ index ffe6931..5aa87b4 100755
  CFG_QCONFIG_PATH=$relpath/src/corelib/global/qconfig-${CFG_QCONFIG}.h
  case "$CFG_QCONFIG" in
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index cfac583..41ca7f1 100644
+index 54641ce..7d7baa4 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
 @@ -71,7 +71,11 @@ defineTest(qtHaveModule) {

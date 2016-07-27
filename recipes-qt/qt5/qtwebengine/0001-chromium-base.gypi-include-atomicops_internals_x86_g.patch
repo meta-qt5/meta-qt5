@@ -1,4 +1,4 @@
-From 66af547c2b3ed473b81421aa239d931d364f644d Mon Sep 17 00:00:00 2001
+From db56cd0fd185a9f3858f5aa6e95b24e63dee119f Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Fri, 3 Oct 2014 03:52:11 +0200
 Subject: [PATCH] <chromium> base.gypi: include atomicops_internals_x86_gcc.cc

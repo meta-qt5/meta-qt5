@@ -1,14 +1,21 @@
 require qt5.inc
 require qt5-git.inc
 
-LICENSE = "BSD & (LGPL-2.1 & The-Qt-Company-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
+LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
-    file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
-    file://LICENSE.LGPLv3;md5=b8c75190712063cde04e1f41b6fdad98 \
-    file://LICENSE.GPLv3;md5=40f9bf30e783ddc201497165dfb32afb \
+    file://LICENSE.LGPLv21;md5=4bfd28363f541b10d9f024181b8df516 \
+    file://LICENSE.LGPLv3;md5=e0459b45c5c4840b353141a8bbed91f0 \
+    file://LICENSE.GPLv3;md5=88e2b9117e6be406b5ed6ee4ca99a705 \
     file://LGPL_EXCEPTION.txt;md5=9625233da42f9e0ce9d63651a9d97654 \
+    file://LICENSE.FDL;md5=f70ee9a6c44ae8917586fea34dff0ab5 \
 "
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
-SRCREV = "0f6e294fb8534f677a5ec75113679cfe24f559c1"
+SRCREV = "cedca298f081e1c1cdac615eed6171fe687f35e2"
+
+do_install_append() {
+    if ls ${D}${libdir}/pkgconfig/Enginio.pc >/dev/null 2>/dev/null; then
+        sed -i "s@-L${STAGING_LIBDIR}@-L\${libdir}@g" ${D}${libdir}/pkgconfig/Enginio.pc
+    fi
+}

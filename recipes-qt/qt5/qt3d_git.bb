@@ -13,7 +13,7 @@ DEPENDS_class-target += "qtdeclarative qt3d-native"
 
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
-    "
+"
 
 PACKAGECONFIG ??= ""
 PACKAGECONFIG_class-native ??= "tools-only"
@@ -27,6 +27,6 @@ FILES_${PN}-qmlplugins += " \
     ${OE_QMAKE_PATH_QML}/*/*/*.obj \
 "
 
-SRCREV = "be29a39ede4355a5aa18e93c27a75a1c3f81bde4"
+SRCREV = "c3fdb888fbd94de0f6b7b1a6859cba8132ecc93d"
 
 BBCLASSEXTEND += "native nativesdk"

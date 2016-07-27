@@ -1,4 +1,4 @@
-From f5a949e17aa8b37491fbc414c38557c9920fa1e5 Mon Sep 17 00:00:00 2001
+From b397a71531e31383ee86135e21072d033480f5bc Mon Sep 17 00:00:00 2001
 From: Pascal Bach <pascal.bach@siemens.com>
 Date: Wed, 11 May 2016 15:20:41 +0200
 Subject: [PATCH] Pretend Qt5 wasn't found if OE_QMAKE_PATH_EXTERNAL_HOST_BINS
@@ -24,7 +24,6 @@ Upstream-Status: Pending
     - 0010-Add-external-hostbindir-option-for-native-sdk.patch
 
 Signed-off-by: Pascal Bach <pascal.bach@siemens.com>
-
 ---
  mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in | 5 +++++
  src/corelib/Qt5Config.cmake.in                      | 5 +++++
@@ -62,6 +61,3 @@ index a872d0e..233d663 100644
  if (NOT Qt5_FIND_COMPONENTS)
      set(Qt5_NOT_FOUND_MESSAGE \"The Qt5 package requires at least one component\")
      set(Qt5_FOUND False)
--- 
-2.1.4
-

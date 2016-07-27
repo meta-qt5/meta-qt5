@@ -1,8 +1,7 @@
 require qt5.inc
 require qt5-git.inc
 
-# There are no LGPLv3-only licensed files in this component.
-LICENSE = "GFDL-1.3 & BSD & (LGPL-2.1 & The-Qt-Company-Qt-LGPL-Exception-1.1 | LGPL-3.0)"
+LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
     file://LICENSE.LGPLv3;md5=b8c75190712063cde04e1f41b6fdad98 \
@@ -13,4 +12,4 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-SRCREV = "612c3041475550837dee7149b9f5e9e4f55c17a0"
+SRCREV = "64ca369c7e3d61f0416bc1fd6a102f0c62924433"

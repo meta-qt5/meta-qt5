@@ -1,4 +1,4 @@
-From 3c5c13f2f991cc79363969fb3873d553dd985e7b Mon Sep 17 00:00:00 2001
+From 733a85c14cb4ade510a0c78b32cd12cb2d70dbbd Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 22 Feb 2014 17:47:44 +0100
 Subject: [PATCH] examples/wayland: include server-buffer only when building
@@ -14,10 +14,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/examples/wayland/wayland.pro b/examples/wayland/wayland.pro
-index b67d12e..c5daad0 100644
+index 503190c..9943c52 100644
 --- a/examples/wayland/wayland.pro
 +++ b/examples/wayland/wayland.pro
-@@ -9,4 +9,6 @@ qtHaveModule(quick) {
+@@ -10,4 +10,6 @@ qtHaveModule(quick) {
      SUBDIRS += custom-extension
  }
  
