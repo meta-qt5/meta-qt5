@@ -1,4 +1,4 @@
-From d26a676827ef2d64b4627090690d3240e62f6565 Mon Sep 17 00:00:00 2001
+From 8228a74e72ad130f8ab91dd3ebe1969c0acfd81b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Eric=20B=C3=A9nard?= <eric@eukrea.com>
 Date: Sun, 26 May 2013 14:26:19 +0200
 Subject: [PATCH] qmltestexample: fix link
@@ -60,7 +60,7 @@ index c6d442e..3181dcd 100644
 +QT += core-private  qml-private testlib gui gui-private quick
  DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 diff --git a/tests/auto/qmltest/qmltest.pro b/tests/auto/qmltest/qmltest.pro
-index 7662cb1..a8f8ae2 100644
+index 175ed42..83e5d7d 100644
 --- a/tests/auto/qmltest/qmltest.pro
 +++ b/tests/auto/qmltest/qmltest.pro
 @@ -4,6 +4,7 @@ CONFIG += qmltestcase

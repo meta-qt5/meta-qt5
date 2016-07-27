@@ -1,4 +1,4 @@
-From 04be78d20ecc23e289e171e907bb5daf9393619d Mon Sep 17 00:00:00 2001
+From 092e3c94fbec392c6b2f29bc2999595a10d0e66f Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Fri, 3 Oct 2014 03:52:11 +0200
 Subject: [PATCH] <chromium> base.gypi: include atomicops_internals_x86_gcc.cc
@@ -6,7 +6,7 @@ Subject: [PATCH] <chromium> base.gypi: include atomicops_internals_x86_gcc.cc
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- src/3rdparty/chromium/base/base.gypi | 2 +-
+ chromium/base/base.gypi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/3rdparty/chromium/base/base.gypi b/src/3rdparty/chromium/base/base.gypi

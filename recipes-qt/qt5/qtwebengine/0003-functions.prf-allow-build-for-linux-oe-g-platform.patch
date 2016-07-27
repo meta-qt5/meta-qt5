@@ -1,4 +1,4 @@
-From f4c64fbabdcc30d46d9181401aa1c9d78fcb0b2f Mon Sep 17 00:00:00 2001
+From 99e307a75a331e60cb9bcb6d75bc3e0afb8e1b24 Mon Sep 17 00:00:00 2001
 From: Frieder Schrempf <frieder.schrempf@online.de>
 Date: Mon, 1 Dec 2014 14:34:40 +0000
 Subject: [PATCH] functions.prf: allow build for linux-oe-g++ platform
@@ -12,7 +12,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/tools/qmake/mkspecs/features/functions.prf b/tools/qmake/mkspecs/features/functions.prf
-index 055e960..379c9b5 100644
+index be2b2a5..fb650c2 100644
 --- a/tools/qmake/mkspecs/features/functions.prf
 +++ b/tools/qmake/mkspecs/features/functions.prf
 @@ -5,6 +5,12 @@ defineTest(isPlatformSupported) {

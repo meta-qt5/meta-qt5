@@ -1,4 +1,4 @@
-From cabe9683b82493e2547e87ae0057f44f71efe519 Mon Sep 17 00:00:00 2001
+From 46260d1a93e10a6a6f47f38d0b4355b4b63a4682 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -56,10 +56,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index 3e97c98..88a308d 100755
+index f4c7813..9ab6a9d 100755
 --- a/configure
 +++ b/configure
-@@ -342,6 +342,16 @@ getQMakeConf()
+@@ -343,6 +343,16 @@ getQMakeConf()
      getSingleQMakeVariable "$1" "$specvals"
  }
  
@@ -76,8 +76,8 @@ index 3e97c98..88a308d 100755
  getXQMakeConf()
  {
      if [ -z "$xspecvals" ]; then
-@@ -351,6 +361,16 @@ getXQMakeConf()
-     getSingleQMakeVariable "$1" "$xspecvals"
+@@ -367,6 +377,16 @@ testXConfig()
+     esac
  }
  
 +# OE qmake.conf is reading some variables from shell env
@@ -93,7 +93,7 @@ index 3e97c98..88a308d 100755
  compilerSupportsFlag()
  {
      cat >conftest.cpp <<EOF
-@@ -557,24 +577,14 @@ fi
+@@ -573,24 +593,14 @@ fi
  # initalize variables
  #-------------------------------------------------------------------------------
  
@@ -124,7 +124,7 @@ index 3e97c98..88a308d 100755
  fi'`
      eval "$cmd"
  done
-@@ -3418,7 +3428,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
+@@ -3443,7 +3453,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
      [ "$CFG_QGTKSTYLE" = "auto" ] && CFG_QGTKSTYLE=no
  fi
  
@@ -133,7 +133,7 @@ index 3e97c98..88a308d 100755
  
  TEST_COMPILER=$QMAKE_CONF_COMPILER
  
-@@ -3475,7 +3485,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
+@@ -3504,7 +3514,7 @@ if [ "$XPLATFORM_SYMBIAN_SBSV2" = "no" ]; then
          exit 1
      fi
  fi
@@ -142,7 +142,7 @@ index 3e97c98..88a308d 100755
  
  GCC_MACHINE_DUMP=
  case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3976,6 +3986,14 @@ setBootstrapVariable()
+@@ -4005,6 +4015,14 @@ setBootstrapVariable()
      getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
@@ -157,7 +157,7 @@ index 3e97c98..88a308d 100755
  # build qmake
  if true; then ###[ '!' -f "$outpath/bin/qmake" ];
      echo "Creating qmake..."
-@@ -4014,14 +4032,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -4043,14 +4061,14 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
          fi
  
          [ "$CFG_SILENT" = "yes" ] && CC_TRANSFORM='s,^,\@,' || CC_TRANSFORM=
@@ -178,9 +178,9 @@ index 3e97c98..88a308d 100755
 +        setBootstrapEvalVariable QMAKE_LFLAGS
 +        setBootstrapEvalVariable QMAKE_LFLAGS_GCSECTIONS
  
-         if [ "$CFG_RELEASE_TOOLS" = "yes" ]; then
+         if [ "$CFG_DEBUG" = "no" ] || [ "$CFG_RELEASE_TOOLS" = "yes" ]; then
              setBootstrapVariable QMAKE_CFLAGS_RELEASE
-@@ -4070,6 +4088,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
+@@ -4093,6 +4111,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
                          \"\$(SOURCE_PATH)/src/corelib/io/qfsfileengine_unix.cpp\" \
                          \"\$(SOURCE_PATH)/src/corelib/tools/qlocale_unix.cpp\""
              EXEEXT=
@@ -189,10 +189,10 @@ index 3e97c98..88a308d 100755
          if [ "$BUILD_ON_MAC" = "yes" ]; then
              echo "COCOA_LFLAGS =-framework Foundation -framework CoreServices" >>"$mkfile"
 diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
-index 6b37a04..dcf6025 100644
+index a3ec227..eef6006 100644
 --- a/mkspecs/features/configure.prf
 +++ b/mkspecs/features/configure.prf
-@@ -63,12 +63,12 @@ defineTest(qtCompileTest) {
+@@ -71,12 +71,12 @@ defineTest(qtCompileTest) {
      }
  
      # Clean up after previous run

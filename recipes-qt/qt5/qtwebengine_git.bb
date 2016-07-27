@@ -4,9 +4,9 @@ LICENSE = "LGPL-3.0 & BSD"
 LIC_FILES_CHKSUM = " \
     file://src/core/browser_context_qt.cpp;md5=5fe719c44250955a5d5f8fb15fc8b1da;beginline=1;endline=35 \
     file://src/3rdparty/chromium/LICENSE;md5=537e0b52077bf0a616d0a0c8a79bc9d5 \
-    file://LICENSE.LGPLv3;md5=3dcffeed712d3c916f9a2d9135703aff \
-    file://LICENSE.GPLv3;md5=40f9bf30e783ddc201497165dfb32afb \
-    file://LICENSE.GPLv2;md5=05832301944453ec79e40ba3c3cfceec \
+    file://LICENSE.LGPLv3;md5=8211fde12cc8a4e2477602f5953f5b71 \
+    file://LICENSE.GPLv3;md5=88e2b9117e6be406b5ed6ee4ca99a705 \
+    file://LICENSE.GPLv2;md5=c96076271561b0e3785dad260634eaa8 \
 "
 
 DEPENDS += " \
@@ -119,8 +119,10 @@ SRC_URI += " \
     file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
 "
 
-SRCREV_qtwebengine = "643aa579fc94933eefa8eb20af6729e2140cf480"
-SRCREV_chromium = "8252b18aa3efa52138e91f9756945afb142a1c8c"
+SRCREV_qtwebengine = "808ca6e6917cf17e4c30fcd3ac609164b36594cc"
+# This is in git submodule, but we're using latest in 45-based
+# SRCREV_chromium = "79930a541473b2e0f950d040c16ab6f22e4aeef3"
+SRCREV_chromium = "9d6566ee193e8996fb867cf776dc13f697400f24"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

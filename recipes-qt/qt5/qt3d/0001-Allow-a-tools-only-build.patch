@@ -1,4 +1,4 @@
-From 778d0c4515bae5bdeb650fb3e6b3e32a73722b51 Mon Sep 17 00:00:00 2001
+From 339e527e5ca0e1b7839d28e9f140630af634b569 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@theqtcompany.com>
 Date: Wed, 10 Feb 2016 09:02:09 +0200
 Subject: [PATCH] Allow a tools-only build
@@ -8,7 +8,7 @@ Subject: [PATCH] Allow a tools-only build
  1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/qt3d.pro b/qt3d.pro
-index a26e76d..263e3c4 100644
+index a26e76d..016fb30 100644
 --- a/qt3d.pro
 +++ b/qt3d.pro
 @@ -1,4 +1,4 @@
@@ -26,6 +26,3 @@ index a26e76d..263e3c4 100644
 +    sub_tools.depends -= sub_src
 +    SUBDIRS = sub_tools
 +}
--- 
-1.9.1
-
