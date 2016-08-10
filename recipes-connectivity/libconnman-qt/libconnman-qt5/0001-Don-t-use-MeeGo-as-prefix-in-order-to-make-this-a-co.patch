@@ -1,0 +1,50 @@
+From 46b6456bc8995b8d6249fb008a538222d30716cd Mon Sep 17 00:00:00 2001
+From: Christophe Chapuis <chris.chapuis@gmail.com>
+Date: Tue, 26 Jan 2016 18:56:42 +0100
+Subject: [PATCH] Don't use MeeGo as prefix in order to make this a common
+ component
+
+Signed-off-by: Christophe Chapuis <chris.chapuis@gmail.com>
+---
+ plugin/components.h | 2 +-
+ plugin/plugin.pro   | 2 +-
+ plugin/qmldir       | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/plugin/components.h b/plugin/components.h
+index d4f2bcd..49b7ac2 100644
+--- a/plugin/components.h
++++ b/plugin/components.h
+@@ -17,7 +17,7 @@
+ class Components : public QQmlExtensionPlugin
+ {
+     Q_OBJECT
+-    Q_PLUGIN_METADATA(IID "MeeGo.Connman")
++    Q_PLUGIN_METADATA(IID "Connman")
+ 
+ public:
+     void registerTypes(const char *uri);
+diff --git a/plugin/plugin.pro b/plugin/plugin.pro
+index 31d9076..da47ad9 100644
+--- a/plugin/plugin.pro
++++ b/plugin/plugin.pro
+@@ -17,7 +17,7 @@ LIBS += -l$$qtLibraryTarget(connman-$$TARGET_SUFFIX)
+ QT += qml
+ OTHER_FILES += plugin.json qmldirs
+ 
+-MODULENAME = MeeGo/Connman
++MODULENAME = Connman
+ TARGETPATH = $$[QT_INSTALL_QML]/$$MODULENAME
+ 
+ target.path = $$TARGETPATH
+diff --git a/plugin/qmldir b/plugin/qmldir
+index 5db82b7..de56688 100644
+--- a/plugin/qmldir
++++ b/plugin/qmldir
+@@ -1,2 +1,2 @@
+-module MeeGo.Connman
++module Connman
+ plugin ConnmanQtDeclarative
+-- 
+1.8.1.2
+
