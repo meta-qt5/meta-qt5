@@ -68,6 +68,7 @@ PACKAGECONFIG ?= " \
 "
 
 PACKAGECONFIG[release] = "-release,-debug"
+PACKAGECONFIG[debug] = ""
 PACKAGECONFIG[developer] = "-developer-build"
 PACKAGECONFIG[sm] = "-sm,-no-sm"
 PACKAGECONFIG[tests] = "-make tests,-nomake tests"
