@@ -12,4 +12,4 @@ SRC_URI = " \
 
 S = "${WORKDIR}/git"
 
-PV = "5.7.0+git${SRCPV}"
+PV = "5.7.1+git${SRCPV}"
