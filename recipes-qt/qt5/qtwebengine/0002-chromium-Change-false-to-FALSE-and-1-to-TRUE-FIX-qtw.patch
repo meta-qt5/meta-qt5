@@ -1,4 +1,4 @@
-From e40a18da9631fa21202836caf69b3343e8bae973 Mon Sep 17 00:00:00 2001
+From de6311b4d556abbe131462a3cd962ae87da59522 Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Thu, 24 Dec 2015 12:46:58 -0200
 Subject: [PATCH] chromium: Change false to FALSE and 1 to TRUE, FIX
@@ -7,7 +7,7 @@ Subject: [PATCH] chromium: Change false to FALSE and 1 to TRUE, FIX
 Signed-off-by: Cleiton Bueno <cleitonrbueno@gmail.com>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- src/3rdparty/chromium/ui/gfx/codec/jpeg_codec.cc | 12 ++++++------
+ chromium/ui/gfx/codec/jpeg_codec.cc | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/src/3rdparty/chromium/ui/gfx/codec/jpeg_codec.cc b/src/3rdparty/chromium/ui/gfx/codec/jpeg_codec.cc

@@ -1,4 +1,4 @@
-From df587e2a3bb2aa297088bd3ada4309c4b9a85195 Mon Sep 17 00:00:00 2001
+From 26fd6cf787a7a413d54205b8b42d16a63ed5d36a Mon Sep 17 00:00:00 2001
 From: Yoann Lopes <yoann.lopes@digia.com>
 Date: Thu, 31 Oct 2013 15:06:30 +0100
 Subject: [PATCH] Initial porting effort to GStreamer 1.0.

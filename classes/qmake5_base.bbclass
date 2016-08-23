@@ -171,6 +171,10 @@ qmake5_base_do_configure () {
 
 qmake5_base_native_do_install() {
     oe_runmake install INSTALL_ROOT=${D}
+    find "${D}" -ignore_readdir_race -name "*.la" -delete
+    if ls ${D}${libdir}/pkgconfig/Qt5*.pc >/dev/null 2>/dev/null; then
+        sed -i "s@-L${STAGING_LIBDIR}@-L\${libdir}@g" ${D}${libdir}/pkgconfig/Qt5*.pc
+    fi
 }
 
 qmake5_base_fix_install() {
@@ -203,4 +207,8 @@ qmake5_base_do_install() {
     qmake5_base_fix_install ${STAGING_DIR_TARGET}
     qmake5_base_fix_install ${STAGING_DIR_HOST}
     qmake5_base_fix_install ${STAGING_DIR_NATIVE}
+
+    if ls ${D}${libdir}/pkgconfig/Qt5*.pc >/dev/null 2>/dev/null; then
+        sed -i "s@-L${STAGING_LIBDIR}@-L\${libdir}@g" ${D}${libdir}/pkgconfig/Qt5*.pc
+    fi
 }
