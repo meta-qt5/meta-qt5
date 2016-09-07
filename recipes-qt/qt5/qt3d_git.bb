@@ -3,9 +3,9 @@ require qt5-git.inc
 
 LICENSE = "LGPL-3.0 | GPL-2.0"
 LIC_FILES_CHKSUM = " \
-    file://LICENSE.LGPLv3;md5=3dcffeed712d3c916f9a2d9135703aff \
-    file://LICENSE.GPLv3;md5=40f9bf30e783ddc201497165dfb32afb \
-    file://LICENSE.GPL;md5=05832301944453ec79e40ba3c3cfceec \
+    file://LICENSE.LGPLv3;md5=8211fde12cc8a4e2477602f5953f5b71 \
+    file://LICENSE.GPLv3;md5=88e2b9117e6be406b5ed6ee4ca99a705 \
+    file://LICENSE.GPL;md5=c96076271561b0e3785dad260634eaa8 \
 "
 
 DEPENDS += "qtbase"
@@ -18,7 +18,7 @@ SRC_URI += " \
 PACKAGECONFIG ??= ""
 PACKAGECONFIG_class-native ??= "tools-only"
 PACKAGECONFIG_class-nativesdk ??= "tools-only"
-PACKAGECONFIG[tools-only] = "CONFIG+=tools-only"
+PACKAGECONFIG[tools-only] = "CONFIG+=tools-only QMAKE_USE_PRIVATE+=zlib"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
@@ -27,6 +27,6 @@ FILES_${PN}-qmlplugins += " \
     ${OE_QMAKE_PATH_QML}/*/*/*.obj \
 "
 
-SRCREV = "c3fdb888fbd94de0f6b7b1a6859cba8132ecc93d"
+SRCREV = "52121396c55e6100316f006c87b4fdaa8b5a0719"
 
 BBCLASSEXTEND += "native nativesdk"

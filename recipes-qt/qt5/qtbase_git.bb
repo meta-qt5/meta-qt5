@@ -17,16 +17,15 @@ LIC_FILES_CHKSUM = " \
 # common for qtbase-native, qtbase-nativesdk and qtbase
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
-    file://0002-configure-Separate-host-and-build-platform.patch \
+    file://0002-configure-force-cross_compile.patch \
     file://0003-Add-external-hostbindir-option.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
     file://0006-QOpenGLPaintDevice-sub-area-support.patch \
     file://0007-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
     file://0008-configure-paths-for-target-qmake-properly.patch \
-    file://0009-Reorder-EGL-libraries-from-pkgconfig-and-defaults.patch \
     file://0010-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
-    file://0013-Fix-build-with-QT_NO_OPENGL.patch \
+    file://0013-Use-pkgconfig-to-configure-freetype2.patch \
 "
 
 DEPENDS += "qtbase-native"
@@ -43,7 +42,7 @@ RDEPENDS_${PN}-tools += "perl"
 
 PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gl', '', d)}"
 PACKAGECONFIG_FB ?= "${@bb.utils.contains('DISTRO_FEATURES', 'directfb', 'directfb', '', d)}"
-PACKAGECONFIG_X11 ?= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcb xsync xshape xrender xrandr xfixes xinput2 xcursor glib xkb', '', d)}"
+PACKAGECONFIG_X11 ?= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcb xrender xinput2 glib xkb', '', d)}"
 PACKAGECONFIG_FONTS ?= ""
 PACKAGECONFIG_SYSTEM ?= "jpeg libpng zlib"
 PACKAGECONFIG_MULTIMEDIA ?= "${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)}"
@@ -75,14 +74,14 @@ PACKAGECONFIG[tests] = "-make tests,-nomake tests"
 PACKAGECONFIG[examples] = "-make examples -compile-examples,-nomake examples"
 PACKAGECONFIG[tools] = "-make tools,-nomake tools"
 # only for completeness, configure will add libs even if you try to explicitly remove it
-PACKAGECONFIG[libs] = "-make libs,-nomake libs"
+PACKAGECONFIG[libs] = "-make libs"
 # accessibility is required to compile qtquickcontrols
 PACKAGECONFIG[accessibility] = "-accessibility,-no-accessibility"
 PACKAGECONFIG[glib] = "-glib,-no-glib,glib-2.0"
 # use either system freetype or bundled freetype, if you disable freetype completely
 # fontdatabases/basic/qbasicfontdatabase.cpp will fail to build and system freetype
 # works only together with fontconfig
-PACKAGECONFIG[freetype] = "-system-freetype,-freetype,freetype"
+PACKAGECONFIG[freetype] = "-system-freetype,-qt-freetype,freetype"
 PACKAGECONFIG[harfbuzz] = "-system-harfbuzz,-no-harfbuzz,harfbuzz"
 PACKAGECONFIG[jpeg] = "-system-libjpeg,-no-libjpeg,jpeg"
 PACKAGECONFIG[libpng] = "-system-libpng,-no-libpng,libpng"
@@ -104,14 +103,8 @@ PACKAGECONFIG[sql-tds] = "-sql-tds,-no-sql-tds"
 PACKAGECONFIG[sql-db2] = "-sql-db2,-no-sql-db2"
 PACKAGECONFIG[sql-sqlite2] = "-sql-sqlite2,-no-sql-sqlite2,sqlite"
 PACKAGECONFIG[sql-sqlite] = "-sql-sqlite -system-sqlite,-no-sql-sqlite,sqlite3"
-PACKAGECONFIG[xcursor] = "-xcursor,-no-xcursor,libxcursor"
 PACKAGECONFIG[xinput2] = "-xinput2,-no-xinput2,libxi"
-PACKAGECONFIG[xfixes] = "-xfixes,-no-xfixes,libxfixes"
-PACKAGECONFIG[xrandr] = "-xrandr,-no-xrandr,libxrandr"
 PACKAGECONFIG[xrender] = "-xrender,-no-xrender,libxrender"
-PACKAGECONFIG[xshape] = "-xshape,-no-xshape"
-PACKAGECONFIG[xsync] = "-xsync,-no-xsync"
-PACKAGECONFIG[openvg] = "-openvg,-no-openvg"
 PACKAGECONFIG[iconv] = "-iconv,-no-iconv,virtual/libiconv"
 PACKAGECONFIG[xkb] = "-xkb,-no-xkb -no-xkbcommon,libxkbcommon"
 PACKAGECONFIG[xkbcommon-evdev] = "-xkbcommon-evdev,-no-xkbcommon-evdev,libxkbcommon,xkeyboard-config"
@@ -122,7 +115,6 @@ PACKAGECONFIG[fontconfig] = "-fontconfig,-no-fontconfig,fontconfig"
 PACKAGECONFIG[gtk] = "-gtk,-no-gtk,gtk+"
 PACKAGECONFIG[directfb] = "-directfb,-no-directfb,directfb"
 PACKAGECONFIG[linuxfb] = "-linuxfb,-no-linuxfb"
-PACKAGECONFIG[mitshm] = "-mitshm,-no-mitshm,mitshm"
 PACKAGECONFIG[kms] = "-kms,-no-kms,drm virtual/egl"
 # needed for qtwebkit
 PACKAGECONFIG[icu] = "-icu,-no-icu,icu"
@@ -144,29 +136,6 @@ QT_CONFIG_FLAGS += " \
     ${PACKAGECONFIG_CONFARGS} \
 "
 
-generate_qt_config_file_effective_paths() {
-    cat >> ${OE_QMAKE_QTCONF_PATH} <<EOF
-[EffectivePaths]
-Prefix=${B}
-EOF
-}
-
-OE_QMAKE_PATH_HOST_DATA = "${STAGING_LIBDIR}${QT_DIR_NAME}"
-# qtbase is exception, we need to use mkspecs from ${S}
-QMAKE_MKSPEC_PATH_TARGET = "${B}"
-QMAKE_MKSPEC_PATH = "${S}"
-
-# qtbase is exception, configure script is using our get(X)QEvalMakeConf and setBootstrapEvalVariable functions to read it from shell
-export OE_QMAKE_COMPILER
-export OE_QMAKE_CC
-export OE_QMAKE_CFLAGS
-export OE_QMAKE_CXX
-export OE_QMAKE_CXXFLAGS
-export OE_QMAKE_LINK
-export OE_QMAKE_LDFLAGS
-export OE_QMAKE_AR
-export OE_QMAKE_STRIP
-
 do_configure() {
     ${S}/configure -v \
         -opensource -confirm-license \
@@ -186,33 +155,26 @@ do_configure() {
         -translationdir ${OE_QMAKE_PATH_TRANSLATIONS} \
         -testsdir ${OE_QMAKE_PATH_TESTS} \
         -examplesdir ${OE_QMAKE_PATH_EXAMPLES} \
+        -hostprefix ${OE_QMAKE_PATH_HOST_PREFIX} \
+        -hostlibdir ${OE_QMAKE_PATH_HOST_LIBS} \
         -hostbindir ${OE_QMAKE_PATH_HOST_BINS} \
         -external-hostbindir ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS} \
         -hostdatadir ${OE_QMAKE_PATH_HOST_DATA} \
         -platform ${OE_QMAKE_PLATFORM_NATIVE} \
         -xplatform linux-oe-g++ \
         ${QT_CONFIG_FLAGS}
-
-    qmake5_base_do_configure
 }
 
 do_install_append() {
-
-    # Remove example.pro file as it is useless
-    rm -f ${D}${OE_QMAKE_PATH_EXAMPLES}/examples.pro
-
-    # Remove macx-ios-clang directory because /usr/lib/qt5/mkspecs/macx-ios-clang/rename_main.sh:#!/bin/bash
-    # triggers QA Issue: qtbase-mkspecs requires /bin/bash, but no providers in its RDEPENDS [file-rdeps]
-    rm -rf ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/macx-ios-clang
-    # and this one has /bin/bash shebang, but checkbashisms doesn't show any reason for it
-    sed -i 's@^#!/bin/bash$@#!/bin/sh@g' ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/data/mac/objc_namespace.sh
-
     # Replace host paths with qmake built-in properties
     sed -i -e 's|${STAGING_DIR_NATIVE}${prefix_native}|$$[QT_HOST_PREFIX/get]|g' \
         -e 's|${STAGING_DIR_HOST}|$$[QT_SYSROOT]|g' \
         ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/*.pri
 }
 
+# mkspecs have mac specific scripts that depend on perl and bash
+INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
+
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "69b43e74d78e050cf5e40197acafa4bc9f90c0bd"
+SRCREV = "e395e79145ff861b2dd87e404d229d769a19ab7e"

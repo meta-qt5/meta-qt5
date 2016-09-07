@@ -1,4 +1,4 @@
-From d6c75f788e15fb552eacb08359698a1342a97f20 Mon Sep 17 00:00:00 2001
+From 93c50c089f2f6d7aa1cd947386813e368100c3c6 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -7,35 +7,12 @@ Subject: [PATCH] Add linux-oe-g++ platform
   shell environment, because it's easier for qt recipes to export
   *FLAGS or CC specific for given recipe
 
-* configure: add getQEvalMakeConf and getXQEvalMakeConf
-  Allow expansion of $(...) references from qmake.conf to generate
-  qmake environment from shell environment as exported by qmake5_base
-
-* configure: don't export SYSTEM_VARIABLES to .qmake.vars
-  linux-oe-g++ should handle this correctly and exporting LD as QMAKE_LINK is
-  causing issues as we need g++ to be used as linker
+* configure: extend setBootstrapVariable to convert $$(...) operator
+  to $(...) operator to work in qmake's Makefiles
 
 * configure.prf: Allow to add extra arguments to make
   sometimes we would like to add -e or define some variable and respect it from both
   Makefiles used in configure tests and also Makefiles to build the application
-
-* OE_QMAKE_CXX in order to allow compiler version check to succeed
-  which allows WebKit to be enabled.
-
-* Other variables in order to let config.tests to use our -platform
-  settings
-
-* Add setBootstrapEvalVariable to bootstrap qmake with our environment
-  too, this allows us to use -platform linux-oe-g++ also for native
-  recipe
-
-* disable gdb_dwarf_index
-  * qmake is trying to call native gdb and we don't depend on gdb-native
-    (or even provide gdb-native)
-  * fixes errors like this:
-    /bin/sh: gdb: command not found
-    /bin/sh: line 0: test: -gt: unary operator expected
-    which are not fatal, but still misleading in do_configure output
 
 Upstream-Status: Inappropriate [embedded specific]
                  too OE specific, probably cannot be upstreamed
@@ -43,136 +20,42 @@ Upstream-Status: Inappropriate [embedded specific]
 Change-Id: I0591ed5da0d61d7cf1509d420e6b293582f1863c
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- configure                            |  55 ++++++++++++-------
+ configure                            |   2 +-
  mkspecs/features/configure.prf       |   4 +-
- mkspecs/linux-oe-g++/qmake.conf      |  42 +++++++++++++++
+ mkspecs/features/qt_functions.prf    |   2 +-
+ mkspecs/linux-oe-g++/qmake.conf      |  43 +++++++++++++++
  mkspecs/linux-oe-g++/qplatformdefs.h | 100 +++++++++++++++++++++++++++++++++++
- 4 files changed, 181 insertions(+), 20 deletions(-)
+ mkspecs/oe-device-extra.pri          |   0
+ 6 files changed, 147 insertions(+), 4 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
+ create mode 100644 mkspecs/oe-device-extra.pri
 
 diff --git a/configure b/configure
-index 0ba0c31..052872e 100755
+index 789ba4c..269f69d 100755
 --- a/configure
 +++ b/configure
-@@ -333,6 +333,16 @@ getQMakeConf()
-     getSingleQMakeVariable "$1" "$specvals"
- }
- 
-+# OE qmake.conf is reading some variables from shell env
-+# read them from qmake.conf, replace qmake () syntax with shell and eval
-+getQEvalMakeConf()
-+{
-+    VAL=`getQMakeConf "$1" | sed -n 's/$[(]\([0-9a-zA-Z_]*\)[)]/$\1/pg'`
-+    EVAL=`eval "echo ${VAL}"`
-+#    echo "Running getQEvalMakeConf: var='$1', val='`getQMakeConf \"$1\"`, val-sed='$VAL', eval='$EVAL'" >&2
-+    eval "echo ${VAL}"
-+}
-+
- getXQMakeConf()
+@@ -1624,7 +1624,7 @@ fi
+ # is where the resulting variable is written to
+ setBootstrapVariable()
  {
-     if [ -z "$xspecvals" ]; then
-@@ -357,6 +367,16 @@ testXConfig()
-     esac
+-    getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
++    getQMakeConf "$1" | sed 's:\$\$(:\$(:' | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
  }
  
-+# OE qmake.conf is reading some variables from shell env
-+# read them from qmake.conf, replace qmake () syntax with shell and eval
-+getXQEvalMakeConf()
-+{
-+    VAL=`getXQMakeConf "$1" | sed -n 's/$[(]\([0-9a-zA-Z_]*\)[)]/$\1/pg'`
-+    EVAL=`eval "echo ${VAL}"`
-+#    echo "Running getXQEvalMakeConf: var='$1', val='`getXQMakeConf \"$1\"`, val-sed='$VAL', eval='$EVAL'" >&2
-+    eval "echo ${VAL}"
-+}
-+
- compilerSupportsFlag()
- {
-     cat >conftest.cpp <<EOF
-@@ -578,24 +598,14 @@ fi
- # initalize variables
- #-------------------------------------------------------------------------------
- 
--SYSTEM_VARIABLES="AR RANLIB STRIP OBJDUMP LD CC CXX CFLAGS CXXFLAGS LDFLAGS"
--for varname in $SYSTEM_VARIABLES; do
-+# Export all OE variables for qmake.conf from shell env to QMakeVars
-+OE_VARIABLES="AR CC CFLAGS COMPILER CXX CXXFLAGS LDFLAGS LINK QT_CONFIG STRIP"
-+for varname in $OE_VARIABLES; do
-     qmakevarname="${varname}"
--    qmakecmdargs=""
--    # use LDFLAGS for autoconf compat, but qmake uses QMAKE_LFLAGS
--    if [ "${varname}" = "LDFLAGS" ]; then
--        qmakevarname="LFLAGS"
--    elif [ "${varname}" = "LD" ]; then
--        qmakevarname="LINK"
--    elif [ "${varname}" = "AR" ]; then
--        # QMAKE_AR needs to be set to "/path/to/ar cqs" but the
--        # environment variable will be set to the command only so we
--        # need to append " cqs" for autoconf compatibility
--        qmakecmdargs=" cqs"
--    fi
-     cmd=`echo \
--'if [ -n "\$'${varname}'" ]; then
--    QMakeVar set QMAKE_'${qmakevarname}' "\$'${varname}${qmakecmdargs}'"
-+'if [ -n "\$OE_QMAKE_'${varname}'" ]; then
-+    QMakeVar set OE_QMAKE_'${qmakevarname}' "\$OE_QMAKE_'${varname}'"
-+#    echo "Exporting OE_QMAKE_'${qmakevarname}' value=\"\$OE_QMAKE_'${varname}'\"" >&2
- fi'`
-     eval "$cmd"
- done
-@@ -3443,7 +3453,7 @@ if [ "$XPLATFORM_MAC" = "yes" ]; then
-     [ "$CFG_GTK" = "auto" ] && CFG_GTK=no
- fi
- 
--QMAKE_CONF_COMPILER=`getXQMakeConf QMAKE_CXX`
-+QMAKE_CONF_COMPILER=`getXQEvalMakeConf QMAKE_CXX`
- 
- TEST_COMPILER=$QMAKE_CONF_COMPILER
- 
-@@ -3494,7 +3504,7 @@ if [ "$XPLATFORM_ANDROID" = "yes" ] ; then
-     fi
- fi
- 
--TEST_COMPILER_CXXFLAGS=`getXQMakeConf QMAKE_CXXFLAGS`
-+TEST_COMPILER_CXXFLAGS=`getXQEvalMakeConf QMAKE_CXXFLAGS`
- 
- GCC_MACHINE_DUMP=
- case "$TEST_COMPILER" in *g++) GCC_MACHINE_DUMP=$($TEST_COMPILER -dumpmachine);; esac
-@@ -3893,6 +3903,14 @@ setBootstrapVariable()
-     getQMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
- }
- 
-+# OE qmake.conf is reading some variables from shell env
-+# read them from qmake.conf, replace qmake () syntax with shell and eval
-+setBootstrapEvalVariable()
-+{
-+    getQEvalMakeConf "$1" | echo ${2-$1} = `if [ -n "$3" ]; then sed "$3"; else cat; fi` >> "$mkfile"
-+}
-+
-+
  # build qmake
- if true; then ###[ '!' -f "$outpath/bin/qmake" ];
-     echo "Creating qmake..."
-@@ -3986,6 +4004,7 @@ if true; then ###[ '!' -f "$outpath/bin/qmake" ];
-             EXEEXT=
-             ;;
-         esac
-+
-         if [ "$BUILD_ON_MAC" = "yes" ]; then
-             echo "COCOA_LFLAGS =-framework Foundation -framework CoreServices" >>"$mkfile"
-             echo "CARBON_LFLAGS =-framework ApplicationServices" >>"$mkfile"
 diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
-index a890c7f..151630c 100644
+index f275e3a..5aa15f5 100644
 --- a/mkspecs/features/configure.prf
 +++ b/mkspecs/features/configure.prf
-@@ -71,14 +71,14 @@ defineTest(qtCompileTest) {
+@@ -37,14 +37,14 @@ defineTest(qtCompileTest) {
      }
  
      # Clean up after previous run
 -    exists($$test_out_dir/Makefile):qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE distclean")
 +    exists($$test_out_dir/Makefile):qtRunLoggedCommand("$$test_cmd_base $$QMAKE_MAKE $$(QMAKE_MAKE_ARGS) distclean")
  
-     mkpath($$test_out_dir)|error("Aborting.")
+     mkpath($$test_out_dir)|error()
  
      !isEmpty (QMAKE_QTCONF): qtconfarg = -qtconf $$QMAKE_QTCONF
  
@@ -182,12 +65,25 @@ index a890c7f..151630c 100644
              log("yes$$escape_expand(\\n)")
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
+diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
+index efbf2fa..78b453c 100644
+--- a/mkspecs/features/qt_functions.prf
++++ b/mkspecs/features/qt_functions.prf
+@@ -67,7 +67,7 @@ defineTest(qtHaveModule) {
+ defineTest(qtPrepareTool) {
+     cmd = $$eval(QT_TOOL.$${2}.binary)
+     isEmpty(cmd) {
+-        cmd = $$[QT_HOST_BINS]/$$2
++        cmd = $$[QT_HOST_BINS/get]/$$2
+         exists($${cmd}.pl) {
+             $${1}_EXE = $${cmd}.pl
+             cmd = perl -w $$system_path($${cmd}.pl)
 diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
 new file mode 100644
-index 0000000..311ba04
+index 0000000..dd8d5c2
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qmake.conf
-@@ -0,0 +1,42 @@
+@@ -0,0 +1,43 @@
 +#
 +# qmake configuration for linux-g++ with modifications for building with OpenEmbedded
 +#
@@ -199,36 +95,37 @@ index 0000000..311ba04
 +include(../common/linux.conf)
 +
 +# QMAKE_<TOOL> (moc, uic, rcc) are gone, overwrite only ar and strip
-+QMAKE_AR              = $(OE_QMAKE_AR) cqs
-+QMAKE_STRIP           = $(OE_QMAKE_STRIP)
-+QMAKE_WAYLAND_SCANNER = $(OE_QMAKE_WAYLAND_SCANNER)
++QMAKE_AR              = $$(OE_QMAKE_AR) cqs
++QMAKE_STRIP           = $$(OE_QMAKE_STRIP)
++QMAKE_WAYLAND_SCANNER = $$(OE_QMAKE_WAYLAND_SCANNER)
 +
 +include(../common/gcc-base-unix.conf)
 +
 +# *FLAGS from gcc-base.conf
-+QMAKE_CFLAGS                += $(OE_QMAKE_CFLAGS)
-+QMAKE_CXXFLAGS              += $(OE_QMAKE_CXXFLAGS)
-+QMAKE_LFLAGS                += $(OE_QMAKE_LDFLAGS)
++QMAKE_CFLAGS                += $$(OE_QMAKE_CFLAGS)
++QMAKE_CXXFLAGS              += $$(OE_QMAKE_CXXFLAGS)
++QMAKE_LFLAGS                += $$(OE_QMAKE_LDFLAGS)
 +
 +include(../common/g++-unix.conf)
 +
 +# tc settings from g++-base.conf
-+QMAKE_COMPILER = $(OE_QMAKE_COMPILER) gcc
-+QMAKE_CC       = $(OE_QMAKE_CC)
-+QMAKE_CXX      = $(OE_QMAKE_CXX)
++QMAKE_COMPILER = $$(OE_QMAKE_COMPILER) gcc
++QMAKE_CC       = $$(OE_QMAKE_CC)
++QMAKE_CXX      = $$(OE_QMAKE_CXX)
 +
-+QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += $(OE_QMAKE_CFLAGS)
++QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += $$(OE_QMAKE_CFLAGS)
 +
-+QMAKE_LINK         = $(OE_QMAKE_LINK)
-+QMAKE_LINK_SHLIB   = $(OE_QMAKE_LINK)
-+QMAKE_LINK_C       = $(OE_QMAKE_LINK)
-+QMAKE_LINK_C_SHLIB = $(OE_QMAKE_LINK)
++QMAKE_LINK         = $$(OE_QMAKE_LINK)
++QMAKE_LINK_SHLIB   = $$(OE_QMAKE_LINK)
++QMAKE_LINK_C       = $$(OE_QMAKE_LINK)
++QMAKE_LINK_C_SHLIB = $$(OE_QMAKE_LINK)
 +
 +# for the SDK
-+isEmpty(QMAKE_QT_CONFIG):QMAKE_QT_CONFIG = $(OE_QMAKE_QT_CONFIG)
++isEmpty(QMAKE_QT_CONFIG):QMAKE_QT_CONFIG = $$(OE_QMAKE_QT_CONFIG)
 +
 +include(../oe-device-extra.pri)
 +
++load(device_config)
 +load(qt_config)
 diff --git a/mkspecs/linux-oe-g++/qplatformdefs.h b/mkspecs/linux-oe-g++/qplatformdefs.h
 new file mode 100644
@@ -336,3 +233,6 @@ index 0000000..dd12003
 +#endif
 +
 +#endif // QPLATFORMDEFS_H
+diff --git a/mkspecs/oe-device-extra.pri b/mkspecs/oe-device-extra.pri
+new file mode 100644
+index 0000000..e69de29

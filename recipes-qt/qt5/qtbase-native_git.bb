@@ -22,14 +22,12 @@ require qt5-git.inc
 # common for qtbase-native, qtbase-nativesdk and qtbase
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
-    file://0002-configure-Separate-host-and-build-platform.patch \
     file://0003-Add-external-hostbindir-option.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
     file://0006-QOpenGLPaintDevice-sub-area-support.patch \
     file://0007-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
     file://0008-configure-paths-for-target-qmake-properly.patch \
-    file://0009-Reorder-EGL-libraries-from-pkgconfig-and-defaults.patch \
     file://0010-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
 "
 
@@ -40,10 +38,6 @@ SRC_URI += " \
 "
 
 CLEANBROKEN = "1"
-
-do_generate_qt_config_file() {
-    :
-}
 
 PACKAGECONFIG_CONFARGS = " \
     -sysroot ${STAGING_DIR_NATIVE} \
@@ -65,6 +59,7 @@ PACKAGECONFIG_CONFARGS = " \
     -verbose \
     -release \
     -prefix ${OE_QMAKE_PATH_PREFIX} \
+    -hostprefix ${OE_QMAKE_PATH_PREFIX} \
     -bindir ${OE_QMAKE_PATH_BINS} \
     -hostbindir ${OE_QMAKE_PATH_BINS} \
     -libdir ${OE_QMAKE_PATH_LIBS} \
@@ -84,20 +79,8 @@ PACKAGECONFIG_CONFARGS = " \
     -platform linux-oe-g++ \
 "
 
-# qtbase is exception, configure script is using our get(X)QEvalMakeConf and setBootstrapEvalVariable functions to read it from shell
-export OE_QMAKE_COMPILER
-export OE_QMAKE_CC
-export OE_QMAKE_CFLAGS
-export OE_QMAKE_CXX
-export OE_QMAKE_CXXFLAGS
-export OE_QMAKE_LINK
-export OE_QMAKE_LDFLAGS
-export OE_QMAKE_AR
-export OE_QMAKE_STRIP
-
 do_configure_prepend() {
     MAKEFLAGS="${PARALLEL_MAKE}" ${S}/configure -opensource -confirm-license ${PACKAGECONFIG_CONFARGS} || die "Configuring qt failed. PACKAGECONFIG_CONFARGS was ${PACKAGECONFIG_CONFARGS}"
-    bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} ${S} -o Makefile || die "Configuring qt with qmake failed. PACKAGECONFIG_CONFARGS was ${PACKAGECONFIG_CONFARGS}"
 }
 
 do_install() {
@@ -123,4 +106,4 @@ do_install() {
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
 }
 
-SRCREV = "69b43e74d78e050cf5e40197acafa4bc9f90c0bd"
+SRCREV = "e395e79145ff861b2dd87e404d229d769a19ab7e"

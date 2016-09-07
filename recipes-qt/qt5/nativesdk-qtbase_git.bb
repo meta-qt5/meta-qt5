@@ -27,14 +27,13 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 # common for qtbase-native, qtbase-nativesdk and qtbase
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
-    file://0002-configure-Separate-host-and-build-platform.patch \
+    file://0002-configure-force-cross_compile.patch \
     file://0003-Add-external-hostbindir-option.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
     file://0006-QOpenGLPaintDevice-sub-area-support.patch \
     file://0007-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
     file://0008-configure-paths-for-target-qmake-properly.patch \
-    file://0009-Reorder-EGL-libraries-from-pkgconfig-and-defaults.patch \
     file://0010-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
 "
 
@@ -96,56 +95,6 @@ QT_CONFIG_FLAGS += " \
 OE_QMAKE_PATH_HOST_DATA = "${libdir}${QT_DIR_NAME}"
 OE_QMAKE_PATH_HOST_LIBS = "${libdir}"
 
-do_generate_qt_config_file() {
-    cat > ${OE_QMAKE_QTCONF_PATH} <<EOF
-[Paths]
-Prefix = ${OE_QMAKE_PATH_PREFIX}
-Headers = ${OE_QMAKE_PATH_HEADERS}
-Libraries = ${OE_QMAKE_PATH_LIBS}
-ArchData = ${OE_QMAKE_PATH_ARCHDATA}
-Data = ${OE_QMAKE_PATH_DATA}
-Binaries = ${OE_QMAKE_PATH_BINS}
-LibraryExecutables = ${OE_QMAKE_PATH_LIBEXECS}
-Plugins = ${OE_QMAKE_PATH_PLUGINS}
-Imports = ${OE_QMAKE_PATH_IMPORTS}
-Qml2Imports = ${OE_QMAKE_PATH_QML}
-Translations = ${OE_QMAKE_PATH_TRANSLATIONS}
-Documentation = ${OE_QMAKE_PATH_DOCS}
-Settings = ${OE_QMAKE_PATH_SETTINGS}
-Examples = ${OE_QMAKE_PATH_EXAMPLES}
-Tests = ${OE_QMAKE_PATH_TESTS}
-HostBinaries = ${OE_QMAKE_PATH_HOST_BINS}
-HostData = ${OE_QMAKE_PATH_HOST_DATA}
-HostLibraries = ${OE_QMAKE_PATH_HOST_LIBS}
-HostSpec = ${OE_QMAKE_PLATFORM_NATIVE}
-TargetSpec = ${OE_QMAKE_PLATFORM}
-ExternalHostBinaries = ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}
-Sysroot =
-EOF
-}
-
-do_generate_qt_config_file_append() {
-    cat >> ${OE_QMAKE_QTCONF_PATH} <<EOF
-
-[EffectivePaths]
-Prefix=${B}
-EOF
-}
-
-# qtbase is exception, we need to use mkspecs from ${S}
-QMAKE_MKSPEC_PATH = "${B}"
-
-# qtbase is exception, configure script is using our get(X)QEvalMakeConf and setBootstrapEvalVariable functions to read it from shell
-export OE_QMAKE_COMPILER
-export OE_QMAKE_CC
-export OE_QMAKE_CFLAGS
-export OE_QMAKE_CXX
-export OE_QMAKE_CXXFLAGS
-export OE_QMAKE_LINK
-export OE_QMAKE_LDFLAGS
-export OE_QMAKE_AR
-export OE_QMAKE_STRIP
-
 do_configure() {
     ${S}/configure -v \
         -opensource -confirm-license \
@@ -190,21 +139,15 @@ do_configure() {
         -silent \
         -nomake examples \
         -nomake tests \
-        -nomake libs \
         -no-compile-examples \
         -no-rpath \
         -platform ${OE_QMAKE_PLATFORM_NATIVE} \
         -xplatform ${OE_QMAKE_PLATFORM} \
         ${QT_CONFIG_FLAGS}
-
-    ${OE_QMAKE_QMAKE} ${OE_QMAKE_DEBUG_OUTPUT} ${OE_QMAKE_QTCONF} ${S} -o Makefile || die "Configuring qt with qmake failed. PACKAGECONFIG_CONFARGS was ${PACKAGECONFIG_CONFARGS}"
 }
 
 do_install() {
-    # Fix install paths for all
-    find . -name "Makefile*" | xargs sed -i "s,(INSTALL_ROOT)${STAGING_DIR_NATIVE}${STAGING_DIR_NATIVE},(INSTALL_ROOT)${STAGING_DIR_NATIVE},g"
-
-    oe_runmake install INSTALL_ROOT=${D}
+    qmake5_base_do_install
 
     # remove things unused in nativesdk, we need the headers and libs
     rm -rf ${D}${datadir} \
@@ -247,4 +190,4 @@ fakeroot do_generate_qt_environment_file() {
 
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "69b43e74d78e050cf5e40197acafa4bc9f90c0bd"
+SRCREV = "e395e79145ff861b2dd87e404d229d769a19ab7e"

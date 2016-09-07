@@ -44,8 +44,4 @@ FILES_${PN}-plugins-dbg += " \
     ${OE_QMAKE_PATH_PLUGINS}/*/*/.debug/* \
 "
 
-SRC_URI += " \
-    file://0001-examples-wayland-include-server-buffer-only-when-bui.patch \
-"
-
-SRCREV = "a172672484b9496819e588b51ac2ff9fb4a21941"
+SRCREV = "3f5111b6c1d92ae4fed008abb53cf4226bfef575"

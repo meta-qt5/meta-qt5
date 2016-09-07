@@ -1,0 +1,32 @@
+From 3ed6db12a1de305eae7c61e6e11572d77a75d595 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@theqtcompany.com>
+Date: Fri, 11 Mar 2016 16:00:23 +0200
+Subject: [PATCH] configure: force cross_compile
+
+Configure enabled cross_compile only if mkspec and xmkspec are difference,
+in yocto build that is never true, so force cross_compile feature.
+
+Use qttools (moc etc.) from correct path defined by qt.conf
+
+Upstream-Status: Inappropriate [embedded specific]
+
+Change-Id: I6bfed072c9826094dcda9c7112b0c8b9d4055366
+---
+ configure.pri | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/configure.pri b/configure.pri
+index 6a75398..940e307 100644
+--- a/configure.pri
++++ b/configure.pri
+@@ -57,9 +57,7 @@ defineTest(qtConfCommandline_sanitize) {
+ # callbacks
+ 
+ defineReplace(qtConfFunc_crossCompile) {
+-    spec = $$[QMAKE_SPEC]
+-    !equals(spec, $$[QMAKE_XSPEC]): return(true)
+-    return(false)
++    return(true)
+ }
+ 
+ # custom tests

@@ -17,7 +17,6 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
 SRC_URI += " \
-    file://0001-Allow-to-build-only-lrelease-lupdate-lconvert.patch \
     file://0002-assistant-help-fix-linking-of-dependent-libraries.patch \
     file://0003-add-noqtwebkit-configuration.patch \
     file://0004-linguist-tools-cmake-allow-overriding-the-location-f.patch \
@@ -27,14 +26,10 @@ FILES_${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
 FILES_${PN}-examples = "${datadir}${QT_DIR_NAME}/examples"
 
 PACKAGECONFIG ??= ""
-PACKAGECONFIG_class-native ??= "linguistonly"
-PACKAGECONFIG_class-nativesdk ??= "linguistonly"
-PACKAGECONFIG[linguistonly] = ""
 PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
 
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)}"
-EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'linguistonly', 'CONFIG+=linguistonly', '', d)}"
 
-SRCREV = "0597b535f82d3458a1db1828c5e5f725bbcf59fd"
+SRCREV = "ea6e06c59e901a5b1fc98bc82d15ba9b85e9faf7"
 
 BBCLASSEXTEND = "native nativesdk"

@@ -1,4 +1,4 @@
-From 0f4ab3e27938002134e8f3f9eb12cf9c50b2ab95 Mon Sep 17 00:00:00 2001
+From cc926956758bf8170c4e49c66e1066524b43f65f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Fri, 13 Nov 2015 12:36:11 +0100
 Subject: [PATCH] configure paths for target qmake properly
@@ -19,11 +19,11 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/configure b/configure
-index f49a674..d30d0ca 100755
+index 8b33c5b..1df248f 100755
 --- a/configure
 +++ b/configure
-@@ -3792,8 +3792,13 @@ if [ "$CFG_COMPILE_EXAMPLES" = "yes" ]; then
-     QMAKE_CONFIG="$QMAKE_CONFIG compile_examples"
+@@ -1545,8 +1545,13 @@ if [ -z "$QT_REL_HOST_DATA" ]; then
+     fi
  fi
  
 -shortxspec=`echo $XQMAKESPEC | sed "s,^${relpath}/mkspecs/,,"`
@@ -38,7 +38,7 @@ index f49a674..d30d0ca 100755
  
  QT_CONFIGURE_STR_OFF=0
  
-@@ -3826,7 +3831,11 @@ QT_CONFIGURE_STRS_ALL=$QT_CONFIGURE_STRS
+@@ -1579,7 +1584,11 @@ QT_CONFIGURE_STRS_ALL=$QT_CONFIGURE_STRS
  
  QT_CONFIGURE_STR_OFFSETS=
  QT_CONFIGURE_STRS=
@@ -51,7 +51,7 @@ index f49a674..d30d0ca 100755
  addConfStr "$QT_REL_HOST_BINS"
  addConfStr "$QT_REL_HOST_LIBS"
  addConfStr "$QT_REL_HOST_DATA"
-@@ -3838,6 +3847,12 @@ addConfStr "$shortspec"
+@@ -1591,6 +1600,12 @@ addConfStr "$shortspec"
  #-------------------------------------------------------------------------------
  [ -d "$outpath/src/corelib/global" ] || mkdir -p "$outpath/src/corelib/global"
  
@@ -62,9 +62,9 @@ index f49a674..d30d0ca 100755
 +fi
 +
  cat > "$outpath/src/corelib/global/qconfig.cpp.new" <<EOF
- /* License Info */
- static const char qt_configure_licensee_str          [256 + 12] = "qt_lcnsuser=$Licensee";
-@@ -3850,7 +3865,7 @@ static const char qt_configure_installation          [12+11]    = "qt_instdate=2
+ /* Installation date */
+ static const char qt_configure_installation          [12+11]    = "qt_instdate=2012-12-20";
+@@ -1599,7 +1614,7 @@ static const char qt_configure_installation          [12+11]    = "qt_instdate=2
  static const char qt_configure_prefix_path_str       [512 + 12] = "qt_prfxpath=$QT_INSTALL_PREFIX";
  #ifdef QT_BUILD_QMAKE
  static const char qt_configure_ext_prefix_path_str   [512 + 12] = "qt_epfxpath=$QT_EXT_PREFIX";
