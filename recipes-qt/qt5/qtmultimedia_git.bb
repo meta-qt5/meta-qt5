@@ -36,6 +36,7 @@ EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains_any('PACKAGECONFIG', 'gstreamer gst
 
 SRC_URI += "\
     file://0001-Initial-porting-effort-to-GStreamer-1.0.patch \
+    file://0001-qtmultimedia-fix-a-conflicting-declaration.patch \
 "
 
 SRCREV = "1be4f74843b41f8bc1d1d64e83485f4eb864e8b4"
