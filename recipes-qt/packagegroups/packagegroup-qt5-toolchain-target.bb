@@ -53,7 +53,6 @@ RDEPENDS_${PN} += " \
     qttranslations-qtconnectivity \
     qtdeclarative-dev \
     qtdeclarative-mkspecs \
-    qtdeclarative-plugins \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtdeclarative-qmlplugins', '', d)} \
     qtdeclarative-tools \
     qtdeclarative-staticdev \

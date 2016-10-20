@@ -1,4 +1,4 @@
-From 93c50c089f2f6d7aa1cd947386813e368100c3c6 Mon Sep 17 00:00:00 2001
+From 2784921c40d0b523c75e613e48b7fd1e90ba3ef1 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -20,19 +20,17 @@ Upstream-Status: Inappropriate [embedded specific]
 Change-Id: I0591ed5da0d61d7cf1509d420e6b293582f1863c
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- configure                            |   2 +-
- mkspecs/features/configure.prf       |   4 +-
- mkspecs/features/qt_functions.prf    |   2 +-
- mkspecs/linux-oe-g++/qmake.conf      |  43 +++++++++++++++
- mkspecs/linux-oe-g++/qplatformdefs.h | 100 +++++++++++++++++++++++++++++++++++
- mkspecs/oe-device-extra.pri          |   0
- 6 files changed, 147 insertions(+), 4 deletions(-)
+ configure                            |  2 +-
+ mkspecs/features/configure.prf       |  4 ++--
+ mkspecs/features/qt_functions.prf    |  2 +-
+ mkspecs/linux-oe-g++/qmake.conf      | 43 ++++++++++++++++++++++++++++++++++++
+ mkspecs/linux-oe-g++/qplatformdefs.h |  1 +
+ 5 files changed, 48 insertions(+), 4 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
- create mode 100644 mkspecs/oe-device-extra.pri
 
 diff --git a/configure b/configure
-index 789ba4c..269f69d 100755
+index 789ba4c..59cce01 100755
 --- a/configure
 +++ b/configure
 @@ -1624,7 +1624,7 @@ fi
@@ -66,7 +64,7 @@ index f275e3a..5aa15f5 100644
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index efbf2fa..78b453c 100644
+index 708815d..097ac49 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
 @@ -67,7 +67,7 @@ defineTest(qtHaveModule) {
@@ -80,7 +78,7 @@ index efbf2fa..78b453c 100644
              cmd = perl -w $$system_path($${cmd}.pl)
 diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
 new file mode 100644
-index 0000000..dd8d5c2
+index 0000000..c1837e6
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qmake.conf
 @@ -0,0 +1,43 @@
@@ -88,7 +86,7 @@ index 0000000..dd8d5c2
 +# qmake configuration for linux-g++ with modifications for building with OpenEmbedded
 +#
 +
-+MAKEFILE_GENERATOR	= UNIX
++MAKEFILE_GENERATOR = UNIX
 +CONFIG += incremental
 +QMAKE_INCREMENTAL_STYLE = sublib
 +
@@ -129,110 +127,8 @@ index 0000000..dd8d5c2
 +load(qt_config)
 diff --git a/mkspecs/linux-oe-g++/qplatformdefs.h b/mkspecs/linux-oe-g++/qplatformdefs.h
 new file mode 100644
-index 0000000..dd12003
+index 0000000..5d22fb4
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qplatformdefs.h
-@@ -0,0 +1,100 @@
-+/****************************************************************************
-+**
-+** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
-+** Contact: http://www.qt-project.org/legal
-+**
-+** This file is part of the qmake spec of the Qt Toolkit.
-+**
-+** $QT_BEGIN_LICENSE:LGPL$
-+** Commercial License Usage
-+** Licensees holding valid commercial Qt licenses may use this file in
-+** accordance with the commercial license agreement provided with the
-+** Software or, alternatively, in accordance with the terms contained in
-+** a written agreement between you and Digia.  For licensing terms and
-+** conditions see http://qt.digia.com/licensing.  For further information
-+** use the contact form at http://qt.digia.com/contact-us.
-+**
-+** GNU Lesser General Public License Usage
-+** Alternatively, this file may be used under the terms of the GNU Lesser
-+** General Public License version 2.1 as published by the Free Software
-+** Foundation and appearing in the file LICENSE.LGPL included in the
-+** packaging of this file.  Please review the following information to
-+** ensure the GNU Lesser General Public License version 2.1 requirements
-+** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-+**
-+** In addition, as a special exception, Digia gives you certain additional
-+** rights.  These rights are described in the Digia Qt LGPL Exception
-+** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-+**
-+** GNU General Public License Usage
-+** Alternatively, this file may be used under the terms of the GNU
-+** General Public License version 3.0 as published by the Free Software
-+** Foundation and appearing in the file LICENSE.GPL included in the
-+** packaging of this file.  Please review the following information to
-+** ensure the GNU General Public License version 3.0 requirements will be
-+** met: http://www.gnu.org/copyleft/gpl.html.
-+**
-+**
-+** $QT_END_LICENSE$
-+**
-+****************************************************************************/
-+
-+#ifndef QPLATFORMDEFS_H
-+#define QPLATFORMDEFS_H
-+
-+// Get Qt defines/settings
-+
-+#include "qglobal.h"
-+
-+// Set any POSIX/XOPEN defines at the top of this file to turn on specific APIs
-+
-+// 1) need to reset default environment if _BSD_SOURCE is defined
-+// 2) need to specify POSIX thread interfaces explicitly in glibc 2.0
-+// 3) it seems older glibc need this to include the X/Open stuff
-+#ifndef _GNU_SOURCE
-+#  define _GNU_SOURCE
-+#endif
-+
-+#include <unistd.h>
-+
-+
-+// We are hot - unistd.h should have turned on the specific APIs we requested
-+
-+#include <features.h>
-+#include <pthread.h>
-+#include <dirent.h>
-+#include <fcntl.h>
-+#include <grp.h>
-+#include <pwd.h>
-+#include <signal.h>
-+
-+#include <sys/types.h>
-+#include <sys/ioctl.h>
-+#include <sys/ipc.h>
-+#include <sys/time.h>
-+#include <sys/shm.h>
-+#include <sys/socket.h>
-+#include <sys/stat.h>
-+#include <sys/wait.h>
-+#include <netinet/in.h>
-+#ifndef QT_NO_IPV6IFNAME
-+#include <net/if.h>
-+#endif
-+
-+#define QT_USE_XOPEN_LFS_EXTENSIONS
-+#include "../common/posix/qplatformdefs.h"
-+
-+#undef QT_SOCKLEN_T
-+
-+#if defined(__GLIBC__) && (__GLIBC__ >= 2)
-+#define QT_SOCKLEN_T            socklen_t
-+#else
-+#define QT_SOCKLEN_T            int
-+#endif
-+
-+#if defined(_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
-+#define QT_SNPRINTF		::snprintf
-+#define QT_VSNPRINTF		::vsnprintf
-+#endif
-+
-+#endif // QPLATFORMDEFS_H
-diff --git a/mkspecs/oe-device-extra.pri b/mkspecs/oe-device-extra.pri
-new file mode 100644
-index 0000000..e69de29
+@@ -0,0 +1 @@
++#include "../linux-g++/qplatformdefs.h"

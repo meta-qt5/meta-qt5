@@ -1,0 +1,75 @@
+From a028632be1f579c873a3585081d9aae4f9c8d738 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Fri, 9 Sep 2016 10:24:54 +0300
+Subject: [PATCH] Allow building only qtwaylandscanner
+
+Change-Id: I81af38e73b4b54aef2a53b9a3e491aaa7c412706
+Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+---
+ qtwayland.pro | 10 +++++-----
+ src/src.pro   |  8 ++++----
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/qtwayland.pro b/qtwayland.pro
+index f71b842..1be518a 100644
+--- a/qtwayland.pro
++++ b/qtwayland.pro
+@@ -14,25 +14,25 @@ qtCompileTest(libhybris_egl_server)
+ 
+ load(qt_parts)
+ 
+-!config_wayland {
++!scanner-only:!config_wayland {
+     warning("QtWayland requires Wayland 1.6.0 or higher, QtWayland will not be built")
+     SUBDIRS =
+ }
+ 
+-!config_xkbcommon {
++!scanner-only:!config_xkbcommon {
+     warning("No xkbcommon 0.2.0 or higher found, disabling support for it")
+ }
+ 
+-!config_wayland_scanner {
++!scanner-only:!config_wayland_scanner {
+     warning("QtWayland requires wayland-scanner, QtWayland will not be built")
+     SUBDIRS =
+ }
+ 
+-!config_wayland_cursor {
++!scanner-only:!config_wayland_cursor {
+     warning("QtWayland requires wayland-cursor, QtWayland will not be built")
+     SUBDIRS =
+ }
+ 
+-!config_wayland_egl {
++!scanner-only:!config_wayland_egl {
+     message("no wayland-egl support detected, cross-toolkit compatibility disabled");
+ }
+diff --git a/src/src.pro b/src/src.pro
+index bf5ffe3..92c82f6 100644
+--- a/src/src.pro
++++ b/src/src.pro
+@@ -7,19 +7,19 @@ SUBDIRS += sub_qtwaylandscanner
+ sub_compositor.subdir = compositor
+ sub_compositor.depends = sub-qtwaylandscanner
+ sub_compositor.target = sub-compositor
+-SUBDIRS += sub_compositor
++!scanner-only:SUBDIRS += sub_compositor
+ 
+ sub_imports.subdir = imports
+ sub_imports.depends += sub-compositor
+ sub_imports.target = sub-imports
+-SUBDIRS += sub_imports
++!scanner-only:SUBDIRS += sub_imports
+ 
+ sub_client.subdir = client
+ sub_client.depends = sub-qtwaylandscanner
+ sub_client.target = sub-client
+-SUBDIRS += sub_client
++!scanner-only:SUBDIRS += sub_client
+ 
+ sub_plugins.subdir = plugins
+ sub_plugins.depends = sub-qtwaylandscanner sub-client sub-compositor
+ sub_plugins.target = sub-plugins
+-SUBDIRS += sub_plugins
++!scanner-only:SUBDIRS += sub_plugins

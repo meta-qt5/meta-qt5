@@ -16,6 +16,8 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
+SRC_URI += "file://0001-Allow-building-only-qtwaylandscanner.patch"
+
 #FIXME: xkb should be optional; we add it here to fix the build error without it
 #       (https://bugreports.qt.io/browse/QTBUG-54851)
 PACKAGECONFIG ?= " \
@@ -24,6 +26,8 @@ PACKAGECONFIG ?= " \
     xkb \
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcompositor xkb glx', '', d)} \
 "
+PACKAGECONFIG_class-native ?= "scanner-only"
+PACKAGECONFIG_class-nativesdk ?= "scanner-only"
 
 PACKAGECONFIG[compositor-api] = "CONFIG+=wayland-compositor"
 PACKAGECONFIG[xcompositor] = "CONFIG+=config_xcomposite CONFIG+=done_config_xcomposite,CONFIG+=done_config_xcomposite,libxcomposite"
@@ -33,6 +37,7 @@ PACKAGECONFIG[wayland-egl] = "CONFIG+=config_wayland_egl CONFIG+=done_config_way
 PACKAGECONFIG[brcm-egl] = "CONFIG+=config_brcm_egl CONFIG+=done_config_brcm_egl,CONFIG+=done_config_brcm_egl,virtual/egl"
 PACKAGECONFIG[drm-egl] = "CONFIG+=config_drm_egl_server CONFIG+=done_config_drm_egl_server,CONFIG+=done_config_drm_egl_server,libdrm virtual/egl"
 PACKAGECONFIG[libhybris-egl] = "CONFIG+=config_libhybris_egl_server CONFIG+=done_config_libhybris_egl_server,CONFIG+=done_config_libhybris_egl_server,libhybris"
+PACKAGECONFIG[scanner-only] = "CONFIG+=scanner-only"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
@@ -44,4 +49,6 @@ FILES_${PN}-plugins-dbg += " \
     ${OE_QMAKE_PATH_PLUGINS}/*/*/.debug/* \
 "
 
-SRCREV = "3f5111b6c1d92ae4fed008abb53cf4226bfef575"
+SRCREV = "582c6a379f6a45648352c538a7df4d675c9d0a65"
+
+BBCLASSEXTEND =+ "native nativesdk"
