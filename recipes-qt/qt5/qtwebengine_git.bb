@@ -119,10 +119,10 @@ SRC_URI += " \
     file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
 "
 
-SRCREV_qtwebengine = "808ca6e6917cf17e4c30fcd3ac609164b36594cc"
+SRCREV_qtwebengine = "ec84507898e58a167b185ba674acf300cc695380"
 # This is in git submodule, but we're using latest in 45-based
 # SRCREV_chromium = "79930a541473b2e0f950d040c16ab6f22e4aeef3"
-SRCREV_chromium = "9d6566ee193e8996fb867cf776dc13f697400f24"
+SRCREV_chromium = "4d61c01b71fcbe706ea4220d33294d4f5600ca31"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
