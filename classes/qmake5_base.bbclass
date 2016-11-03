@@ -71,7 +71,7 @@ HostBinaries = ${OE_QMAKE_PATH_HOST_BINS}
 HostData = ${OE_QMAKE_PATH_HOST_DATA}
 HostLibraries = ${OE_QMAKE_PATH_HOST_LIBS}
 HostSpec = ${OE_QMAKESPEC}
-TartgetSpec = ${OE_XQMAKESPEC} 
+TargetSpec = ${OE_XQMAKESPEC} 
 ExternalHostBinaries = ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}
 Sysroot = ${STAGING_DIR_TARGET}
 EOF
