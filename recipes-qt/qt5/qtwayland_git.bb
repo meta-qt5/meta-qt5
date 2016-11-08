@@ -15,9 +15,6 @@ LIC_FILES_CHKSUM = " \
     file://LGPL_EXCEPTION.txt;md5=9625233da42f9e0ce9d63651a9d97654 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
-
-SRC_URI += "file://0001-Allow-building-only-qtwaylandscanner.patch"
-
 #FIXME: xkb should be optional; we add it here to fix the build error without it
 #       (https://bugreports.qt.io/browse/QTBUG-54851)
 PACKAGECONFIG ?= " \
@@ -26,8 +23,12 @@ PACKAGECONFIG ?= " \
     xkb \
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcompositor xkb glx', '', d)} \
 "
-PACKAGECONFIG_class-native ?= "scanner-only"
-PACKAGECONFIG_class-nativesdk ?= "scanner-only"
+PACKAGECONFIG_class-native ?= ""
+PACKAGECONFIG_class-nativesdk ?= ""
+QMAKE_PROFILES_class-native = "${S}/src/qtwaylandscanner"
+QMAKE_PROFILES_class-nativesdk = "${S}/src/qtwaylandscanner"
+B_class-native = "${SEPB}/src/qtwaylandscanner"
+B_class-nativesdk = "${SEPB}/src/qtwaylandscanner"
 
 PACKAGECONFIG[compositor-api] = "CONFIG+=wayland-compositor"
 PACKAGECONFIG[xcompositor] = "CONFIG+=config_xcomposite CONFIG+=done_config_xcomposite,CONFIG+=done_config_xcomposite,libxcomposite"
@@ -37,18 +38,9 @@ PACKAGECONFIG[wayland-egl] = "CONFIG+=config_wayland_egl CONFIG+=done_config_way
 PACKAGECONFIG[brcm-egl] = "CONFIG+=config_brcm_egl CONFIG+=done_config_brcm_egl,CONFIG+=done_config_brcm_egl,virtual/egl"
 PACKAGECONFIG[drm-egl] = "CONFIG+=config_drm_egl_server CONFIG+=done_config_drm_egl_server,CONFIG+=done_config_drm_egl_server,libdrm virtual/egl"
 PACKAGECONFIG[libhybris-egl] = "CONFIG+=config_libhybris_egl_server CONFIG+=done_config_libhybris_egl_server,CONFIG+=done_config_libhybris_egl_server,libhybris"
-PACKAGECONFIG[scanner-only] = "CONFIG+=scanner-only"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
-FILES_${PN}-plugins += " \
-    ${OE_QMAKE_PATH_PLUGINS}/*/*/*${SOLIBSDEV} \
-"
-
-FILES_${PN}-plugins-dbg += " \
-    ${OE_QMAKE_PATH_PLUGINS}/*/*/.debug/* \
-"
-
-SRCREV = "582c6a379f6a45648352c538a7df4d675c9d0a65"
+SRCREV = "3443483c9efdcfbfe049f96c83f83a5bf1d81e61"
 
 BBCLASSEXTEND =+ "native nativesdk"
