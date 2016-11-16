@@ -15,6 +15,7 @@ LIC_FILES_CHKSUM = " \
     file://LGPL_EXCEPTION.txt;md5=9625233da42f9e0ce9d63651a9d97654 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
+
 #FIXME: xkb should be optional; we add it here to fix the build error without it
 #       (https://bugreports.qt.io/browse/QTBUG-54851)
 PACKAGECONFIG ?= " \
@@ -40,6 +41,10 @@ PACKAGECONFIG[drm-egl] = "CONFIG+=config_drm_egl_server CONFIG+=done_config_drm_
 PACKAGECONFIG[libhybris-egl] = "CONFIG+=config_libhybris_egl_server CONFIG+=done_config_libhybris_egl_server,CONFIG+=done_config_libhybris_egl_server,libhybris"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
+
+SRC_URI += " \
+    file://0001-Fix-building-of-QWaylandIntegration-if-some-Qt5-feat.patch \
+"
 
 SRCREV = "3443483c9efdcfbfe049f96c83f83a5bf1d81e61"
 
