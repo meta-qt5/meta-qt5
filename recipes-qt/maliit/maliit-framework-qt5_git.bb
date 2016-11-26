@@ -11,7 +11,7 @@ SRC_URI = "git://github.com/maliit/framework.git;branch=master \
     file://maliit-server.desktop \
 "
 
-SRCREV = "dbc0403f329d7f6ce2f5a09e6ff5adbd2548a8c9"
+SRCREV = "17fdf8699c53ddfb2c15df8e11d46804e782fec5"
 PV = "0.99.0+git${SRCPV}"
 
 
