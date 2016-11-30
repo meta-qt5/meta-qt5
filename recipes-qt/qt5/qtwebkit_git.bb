@@ -64,6 +64,9 @@ do_configure_prepend() {
     sed -e 's/\s\(config_fontconfig: \)/ OE_FONTCONFIG_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
 }
 
+# Forcibly enable ICU, so qtbase doesn't need it.
+EXTRA_QMAKEVARS_PRE += "QT_CONFIG+=icu"
+
 # qtwebkit gets terribly big when linking with all debug info, disable by default
 QTWEBKIT_DEBUG = "QMAKE_CFLAGS+=-g0 QMAKE_CXXFLAGS+=-g0"
 EXTRA_QMAKEVARS_PRE += "${QTWEBKIT_DEBUG}"
