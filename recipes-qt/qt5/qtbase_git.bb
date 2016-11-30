@@ -37,10 +37,6 @@ DEPENDS += "qtbase-native"
 RDEPENDS_${PN}-tools += "perl"
 
 # separate some parts of PACKAGECONFIG which are often changed
-# be aware that you need to add icu to build qtwebkit, default
-# PACKAGECONFIG is kept rather minimal for people who don't need
-# stuff like webkit (and it's easier to add options than remove)
-
 PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gl', '', d)}"
 PACKAGECONFIG_FB ?= "${@bb.utils.contains('DISTRO_FEATURES', 'directfb', 'directfb', '', d)}"
 PACKAGECONFIG_X11 ?= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcb xsync xshape xrender xrandr xfixes xinput2 xcursor glib xkb', '', d)}"
@@ -124,7 +120,6 @@ PACKAGECONFIG[directfb] = "-directfb,-no-directfb,directfb"
 PACKAGECONFIG[linuxfb] = "-linuxfb,-no-linuxfb"
 PACKAGECONFIG[mitshm] = "-mitshm,-no-mitshm,mitshm"
 PACKAGECONFIG[kms] = "-kms,-no-kms,virtual/mesa virtual/egl"
-# needed for qtwebkit
 PACKAGECONFIG[icu] = "-icu,-no-icu,icu"
 PACKAGECONFIG[udev] = "-libudev,-no-libudev,udev"
 PACKAGECONFIG[openssl] = "-openssl,-no-openssl,openssl,libssl"
