@@ -16,13 +16,11 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-#FIXME: xkb should be optional; we add it here to fix the build error without it
-#       (https://bugreports.qt.io/browse/QTBUG-54851)
 PACKAGECONFIG ?= " \
-    compositor-api \
+    wayland-client \
+    wayland-server \
     wayland-egl \
-    xkb \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcompositor xkb glx', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcomposite-egl xcomposite-glx', '', d)} \
 "
 PACKAGECONFIG_class-native ?= ""
 PACKAGECONFIG_class-nativesdk ?= ""
@@ -31,21 +29,17 @@ QMAKE_PROFILES_class-nativesdk = "${S}/src/qtwaylandscanner"
 B_class-native = "${SEPB}/src/qtwaylandscanner"
 B_class-nativesdk = "${SEPB}/src/qtwaylandscanner"
 
-PACKAGECONFIG[compositor-api] = "CONFIG+=wayland-compositor"
-PACKAGECONFIG[xcompositor] = "CONFIG+=config_xcomposite CONFIG+=done_config_xcomposite,CONFIG+=done_config_xcomposite,libxcomposite"
-PACKAGECONFIG[glx] = "CONFIG+=config_glx CONFIG+=done_config_glx,CONFIG+=done_config_glx,virtual/mesa"
-PACKAGECONFIG[xkb] = "CONFIG+=config_xkbcommon CONFIG+=done_config_xkbcommon,CONFIG+=done_config_xkbcommon,libxkbcommon xproto"
-PACKAGECONFIG[wayland-egl] = "CONFIG+=config_wayland_egl CONFIG+=done_config_wayland_egl,CONFIG+=done_config_wayland_egl,virtual/egl"
-PACKAGECONFIG[brcm-egl] = "CONFIG+=config_brcm_egl CONFIG+=done_config_brcm_egl,CONFIG+=done_config_brcm_egl,virtual/egl"
-PACKAGECONFIG[drm-egl] = "CONFIG+=config_drm_egl_server CONFIG+=done_config_drm_egl_server,CONFIG+=done_config_drm_egl_server,libdrm virtual/egl"
-PACKAGECONFIG[libhybris-egl] = "CONFIG+=config_libhybris_egl_server CONFIG+=done_config_libhybris_egl_server,CONFIG+=done_config_libhybris_egl_server,libhybris"
+PACKAGECONFIG[wayland-client] = "-feature-wayland-client,-no-feature-wayland-client"
+PACKAGECONFIG[wayland-server] = "-feature-wayland-server,-no-feature-wayland-server"
+PACKAGECONFIG[xcomposite-egl] = "-feature-xcomposite-egl,-no-feature-xcomposite-egl,libxcomposite"
+PACKAGECONFIG[xcomposite-glx] = "-feature-xcomposite-glx,-no-feature-xcomposite-glx,virtual/mesa"
+PACKAGECONFIG[wayland-egl] = "-feature-wayland-egl,no-feature-wayland-egl,virtual/egl"
+PACKAGECONFIG[wayland-brcm] = "-feature-wayland-brcm,-no-feature-wayland-brcm,virtual/egl"
+PACKAGECONFIG[drm-egl-server] = "-feature-drm-egl-server,-no-feature-drm-egl-server,libdrm virtual/egl"
+PACKAGECONFIG[libhybris-egl-server] = "-feature-libhybris-egl-server,-no-feature-libhybris-egl-server,libhybris"
 
-EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
+EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRC_URI += " \
-    file://0001-Fix-building-of-QWaylandIntegration-if-some-Qt5-feat.patch \
-"
-
-SRCREV = "3443483c9efdcfbfe049f96c83f83a5bf1d81e61"
+SRCREV = "545ef2e21d74128733f3b9b117d7c6024826cbb5"
 
 BBCLASSEXTEND =+ "native nativesdk"

@@ -1,18 +1,16 @@
 From 6f4746e59c3768a56336f202054ec5498a7d376f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jan=20Kundr=C3=A1t?= <jkt@kde.org>
 Date: Wed, 14 Sep 2016 23:51:14 +0200
-Subject: [PATCH] Remove unused check for the private_headers
+Subject: [PATCH] Remove unused check for private_tests
 
-TL;DR: it is useless and it breaks the build -> remove
-
-The configuration system in qtbase got changed during the 5.8
-development, and as a result, this won't build anymore. It seems that
-the new syntax is `contains(QT_CONFIG, private_tests)`, but it turns out
-that qt_developer_build is never used anyway.
+It turns out that qt_developer_build is never used anyway.
 
 I did some git archeology and it looks like it was nuked when doing the
 5.2 merge from upstream. The original purpose was apparently to control
 -Werror, which is nowadays controlled by CONFIG -= production_build.
+
+This actually fixes the build, as the QT_FOR_CONFIG += core-private which
+would have been required for qtConfig(private_tests) is missing.
 
 Task-number: QTBUG-55950
 Change-Id: Iaaaad184b29b523ce4a4ed8afec2ac527d8f93e3

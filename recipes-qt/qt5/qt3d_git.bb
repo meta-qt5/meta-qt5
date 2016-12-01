@@ -18,15 +18,22 @@ SRC_URI += " \
 PACKAGECONFIG ??= ""
 PACKAGECONFIG_class-native ??= "tools-only"
 PACKAGECONFIG_class-nativesdk ??= "tools-only"
-PACKAGECONFIG[tools-only] = "CONFIG+=tools-only QMAKE_USE_PRIVATE+=zlib"
+PACKAGECONFIG[tools-only] = ""
+PACKAGECONFIG[system-assimp] = "-feature-system-assimp,-no-feature-system-assimp,assimp"
+PACKAGECONFIG[qtgamepad] = ",,qtgamepad"
 
-EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
+EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-FILES_${PN}-qmlplugins += " \
-    ${OE_QMAKE_PATH_QML}/*/*/*.bez \
-    ${OE_QMAKE_PATH_QML}/*/*/*.obj \
-"
+EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'tools-only', 'CONFIG+=tools-only QMAKE_USE_PRIVATE+=zlib', '', d)}"
+EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtgamepad', 'CONFIG+=OE_QTGAMEPAD_ENABLED', '', d)}"
 
-SRCREV = "6e8e228852f0930638b0e0272509809a0fb9ab42"
+do_configure_prepend() {
+    # disable qtgamepad test if it isn't enabled by PACKAGECONFIG
+    sed -e 's/^\(qtHaveModule(gamepad)\)/OE_QTGAMEPAD_ENABLED:\1/' -i \
+         ${S}/src/input/frontend/frontend.pri \
+         ${S}/src/quick3d/imports/input/importsinput.pro
+}
+
+SRCREV = "a2c6c81f5c67390629a313ff7ba985d0967ca1fa"
 
 BBCLASSEXTEND += "native nativesdk"

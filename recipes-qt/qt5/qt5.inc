@@ -6,7 +6,9 @@ inherit qmake5
 PACKAGECONFIG_OPENSSL ?= "openssl"
 
 PACKAGECONFIG[examples] = ""
+PACKAGECONFIG[tests] = ""
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'examples', 'QT_BUILD_PARTS+=examples', '', d)}"
+EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'tests', 'QT_BUILD_PARTS+=tests', '', d)}"
 
 # we don't want conflicts with qt4
 OE_QMAKE_PATH_HEADERS = "${OE_QMAKE_PATH_QT_HEADERS}"

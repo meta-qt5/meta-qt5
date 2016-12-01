@@ -19,13 +19,8 @@ DEPENDS += "qtbase qtdeclarative"
 inherit bluetooth
 
 PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez', '', d)}"
-PACKAGECONFIG[bluez] = "CONFIG+=OE_BLUEZ_ENABLED,,${BLUEZ}"
+PACKAGECONFIG[bluez] = "-feature-bluez,-no-feature-bluez,${BLUEZ}"
 
-EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
+EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-do_configure_prepend() {
-    # disable bluez test if it isn't enabled by PACKAGECONFIG
-    sed -i 's/^qtCompileTest(bluez)/OE_BLUEZ_ENABLED:qtCompileTest(bluez)/g' ${S}/qtconnectivity.pro
-}
-
-SRCREV = "515ff5b0f9a2245a13cec6f2d37edd1715cdae8c"
+SRCREV = "78c593fcdd9cdfa5804404f2120768544c01c7f5"

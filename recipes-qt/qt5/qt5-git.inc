@@ -3,7 +3,7 @@
 
 QT_MODULE ?= "${BPN}"
 QT_MODULE_BRANCH ?= "5.8"
-QT_MODULE_BRANCH_PARAM ?= "branch=${QT_MODULE_BRANCH}"
+QT_MODULE_BRANCH_PARAM ?= "branch=${QT_MODULE_BRANCH};nobranch=1"
 
 # each module needs to define valid SRCREV
 SRC_URI = " \

@@ -20,13 +20,8 @@ DEPENDS += " \
     libdrm fontconfig pixman openssl pango cairo icu pciutils \
     libcap \
     gperf-native \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa-lib', '', d)} \
 "
-
-# when qtbase is built with xcb enabled (default with x11 in DISTRO_FEATURES),
-# qtwebengine will have additional dependencies:
-# contains(QT_CONFIG, xcb): REQUIRED_PACKAGES += libdrm xcomposite xcursor xi xrandr xscrnsaver xtst
-# xscreensaver isn't covered in qtbase DEPENDS
-DEPENDS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libxscrnsaver', '', d)}"
 
 DEPENDS += "yasm-native"
 EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm"
@@ -52,6 +47,7 @@ COMPATIBLE_MACHINE_x86-64 = "(.*)"
 COMPATIBLE_MACHINE_armv6 = "(.*)"
 COMPATIBLE_MACHINE_armv7a = "(.*)"
 COMPATIBLE_MACHINE_armv7ve = "(.*)"
+COMPATIBLE_MACHINE_aarch64 = "(.*)"
 
 inherit qmake5
 inherit gettext
@@ -64,10 +60,6 @@ def gettext_oeconf(d):
 
 require qt5.inc
 require qt5-git.inc
-
-# To avoid trouble start with not separated build directory
-SEPB = "${S}"
-B = "${SEPB}"
 
 export NINJA_PATH="${STAGING_BINDIR_NATIVE}/ninja"
 
@@ -86,7 +78,7 @@ do_configure() {
 
     # qmake can't find the OE_QMAKE_* variables on it's own so directly passing them as
     # arguments here
-    ${OE_QMAKE_QMAKE} ${OE_QMAKE_QTCONF} -r ${EXTRA_QMAKEVARS_PRE} QTWEBENGINE_ROOT="${S}" \
+    ${OE_QMAKE_QMAKE} ${OE_QMAKE_QTCONF} -r ${EXTRA_QMAKEVARS_PRE} ${S} \
         QMAKE_CXX="${OE_QMAKE_CXX}" QMAKE_CC="${OE_QMAKE_CC}" \
         QMAKE_LINK="${OE_QMAKE_LINK}" \
         QMAKE_CFLAGS="${OE_QMAKE_CFLAGS}" \
@@ -123,13 +115,11 @@ SRC_URI += " \
     file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
 "
 
-SRCREV_qtwebengine = "ac3d8780a0293793dbc3cd47b96aab4613dec5d9"
-SRCREV_chromium = "f3ce802c71aeaeb7dd218180a3bc5c6ac63b445d"
+SRCREV_qtwebengine = "a79fd91391c489ea1cd7baf717778b75e4847b92"
+SRCREV_chromium = "93b3786290ac16c95f15c95e2c2f3d8254171ab6"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
-
-S = "${WORKDIR}/git"
 
 # WARNING: qtwebengine-5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0 do_package_qa: QA Issue: ELF binary '/OE/build/oe-core/tmp-glibc/work/i586-oe-linux/qtwebengine/5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0/packages-split/qtwebengine/usr/lib/libQt5WebEngineCore.so.5.6.0' has relocations in .text [textrel]
 INSANE_SKIP_${PN} += "textrel"
