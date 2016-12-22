@@ -18,6 +18,7 @@ DEPENDS = "qtbase-native wayland-native"
 
 SRC_URI += " \
     file://0001-Install-the-qtwaylandscanner-tool-to-the-native-side.patch \
+    file://0001-Fix-building-of-QWaylandIntegration-if-some-Qt5-feat.patch \
 "
 
 do_configure() {
