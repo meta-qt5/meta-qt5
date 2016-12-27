@@ -115,7 +115,7 @@ PACKAGECONFIG[gtk] = "-gtk,-no-gtk,gtk+"
 PACKAGECONFIG[directfb] = "-directfb,-no-directfb,directfb"
 PACKAGECONFIG[linuxfb] = "-linuxfb,-no-linuxfb"
 PACKAGECONFIG[kms] = "-kms,-no-kms,drm virtual/egl"
-PACKAGECONFIG[gbm] = "-gbm,-no-gbm,gbm"
+PACKAGECONFIG[gbm] = "-gbm,-no-gbm,libgbm"
 # needed for qtwebkit
 PACKAGECONFIG[icu] = "-icu,-no-icu,icu"
 PACKAGECONFIG[udev] = "-libudev,-no-libudev,udev"
