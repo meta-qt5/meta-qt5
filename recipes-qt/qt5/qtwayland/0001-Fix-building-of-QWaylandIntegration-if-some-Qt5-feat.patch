@@ -1,4 +1,4 @@
-From de85e1c1ee76be845a21b441d9e4ea12a30d84c7 Mon Sep 17 00:00:00 2001
+From 9d31fbbe3a22985e200e49f164e2971dfa6d963c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Vesa=20J=C3=A4=C3=A4skel=C3=A4inen?= <dachaac@gmail.com>
 Date: Sun, 18 Sep 2016 11:51:59 +0300
 Subject: [PATCH] Fix building of QWaylandIntegration if some Qt5 features are
@@ -9,15 +9,15 @@ QT_NO_CLIPBOARD, QT_NO_DRAGANDDROP, QT_NO_ACCESSIBILITY and
 QT_NO_SESSIONMANAGER, these has to be taken into account when compiling
 QtWayland.
 ---
- src/client/qwaylandintegration.cpp | 21 ++++++++++++++++++---
- src/client/qwaylandintegration_p.h | 12 ++++++++++++
- 2 files changed, 30 insertions(+), 3 deletions(-)
+ src/client/qwaylandintegration.cpp | 17 ++++++++++++++++-
+ src/client/qwaylandintegration_p.h | 10 ++++++++--
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
 diff --git a/src/client/qwaylandintegration.cpp b/src/client/qwaylandintegration.cpp
-index 39fff53..481e3d6 100644
+index df88a48..b9ce6fe 100644
 --- a/src/client/qwaylandintegration.cpp
 +++ b/src/client/qwaylandintegration.cpp
-@@ -39,7 +39,9 @@
+@@ -45,7 +45,9 @@
  #include "qwaylandinputcontext_p.h"
  #include "qwaylandshmbackingstore_p.h"
  #include "qwaylandnativeinterface_p.h"
@@ -27,7 +27,7 @@ index 39fff53..481e3d6 100644
  #include "qwaylanddnd_p.h"
  #include "qwaylandwindowmanagerintegration_p.h"
  #include "qwaylandscreen_p.h"
-@@ -57,7 +59,9 @@
+@@ -63,7 +65,9 @@
  #include <QSocketNotifier>
  
  #include <qpa/qplatforminputcontextfactory_p.h>
@@ -37,16 +37,7 @@ index 39fff53..481e3d6 100644
  #include <qpa/qplatforminputcontext.h>
  
  #include "qwaylandhardwareintegration_p.h"
-@@ -117,8 +121,6 @@ QWaylandIntegration::QWaylandIntegration()
-     , mNativeInterface(new QWaylandNativeInterface(this))
- #ifndef QT_NO_ACCESSIBILITY
-     , mAccessibility(new QPlatformAccessibility())
--#else
--    , mAccessibility(0)
- #endif
-     , mClientBufferIntegrationInitialized(false)
-     , mServerBufferIntegrationInitialized(false)
-@@ -126,9 +128,12 @@ QWaylandIntegration::QWaylandIntegration()
+@@ -132,9 +136,12 @@ QWaylandIntegration::QWaylandIntegration()
  {
      initializeInputDeviceIntegration();
      mDisplay = new QWaylandDisplay(this);
@@ -58,9 +49,9 @@ index 39fff53..481e3d6 100644
 -
 +#endif
      QString icStr = QPlatformInputContextFactory::requested();
-     icStr.isNull() ? mInputContext.reset(new QWaylandInputContext(mDisplay))
-                    : mInputContext.reset(QPlatformInputContextFactory::create(icStr));
-@@ -136,8 +141,12 @@ QWaylandIntegration::QWaylandIntegration()
+     if (!icStr.isNull()) {
+         mInputContext.reset(QPlatformInputContextFactory::create(icStr));
+@@ -153,8 +160,12 @@ QWaylandIntegration::QWaylandIntegration()
  
  QWaylandIntegration::~QWaylandIntegration()
  {
@@ -73,7 +64,7 @@ index 39fff53..481e3d6 100644
  #ifndef QT_NO_ACCESSIBILITY
      delete mAccessibility;
  #endif
-@@ -213,15 +222,19 @@ QPlatformFontDatabase *QWaylandIntegration::fontDatabase() const
+@@ -230,15 +241,19 @@ QPlatformFontDatabase *QWaylandIntegration::fontDatabase() const
      return mFontDb;
  }
  
@@ -93,47 +84,28 @@ index 39fff53..481e3d6 100644
  
  QPlatformInputContext *QWaylandIntegration::inputContext() const
  {
-@@ -243,10 +256,12 @@ QVariant QWaylandIntegration::styleHint(StyleHint hint) const
-     return QPlatformIntegration::styleHint(hint);
- }
- 
-+#ifndef QT_NO_ACCESSIBILITY
- QPlatformAccessibility *QWaylandIntegration::accessibility() const
- {
-     return mAccessibility;
- }
-+#endif
- 
- QPlatformServices *QWaylandIntegration::services() const
- {
 diff --git a/src/client/qwaylandintegration_p.h b/src/client/qwaylandintegration_p.h
-index 987d805..b50ad95 100644
+index 9a49902..0d27f4e 100644
 --- a/src/client/qwaylandintegration_p.h
 +++ b/src/client/qwaylandintegration_p.h
-@@ -80,15 +80,21 @@ public:
+@@ -85,11 +85,13 @@ public:
+     QPlatformFontDatabase *fontDatabase() const Q_DECL_OVERRIDE;
  
      QPlatformNativeInterface *nativeInterface() const Q_DECL_OVERRIDE;
- 
+-
 +#ifndef QT_NO_CLIPBOARD
      QPlatformClipboard *clipboard() const Q_DECL_OVERRIDE;
 +#endif
  
 +#ifndef QT_NO_DRAGANDDROP
      QPlatformDrag *drag() const Q_DECL_OVERRIDE;
+-
 +#endif
- 
      QPlatformInputContext *inputContext() const Q_DECL_OVERRIDE;
  
      QVariant styleHint(StyleHint hint) const Q_DECL_OVERRIDE;
- 
-+#ifndef QT_NO_ACCESSIBILITY
-     QPlatformAccessibility *accessibility() const Q_DECL_OVERRIDE;
-+#endif
- 
-     QPlatformServices *services() const Q_DECL_OVERRIDE;
- 
-@@ -117,12 +123,18 @@ private:
-     void initializeInputDeviceIntegration();
+@@ -126,8 +128,12 @@ private:
+     QWaylandShellIntegration *createShellIntegration(const QString& interfaceName);
  
      QPlatformFontDatabase *mFontDb;
 +#ifndef QT_NO_CLIPBOARD
@@ -145,12 +117,3 @@ index 987d805..b50ad95 100644
      QWaylandDisplay *mDisplay;
      QPlatformNativeInterface *mNativeInterface;
      QScopedPointer<QPlatformInputContext> mInputContext;
-+#ifndef QT_NO_ACCESSIBILITY
-     QPlatformAccessibility *mAccessibility;
-+#endif
-     bool mClientBufferIntegrationInitialized;
-     bool mServerBufferIntegrationInitialized;
-     bool mShellIntegrationInitialized;
--- 
-2.7.4
-

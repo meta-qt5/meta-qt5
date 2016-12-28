@@ -49,4 +49,4 @@ SRC_URI += " \
     file://0001-Fix-building-of-QWaylandIntegration-if-some-Qt5-feat.patch \
 "
 
-SRCREV = "a172672484b9496819e588b51ac2ff9fb4a21941"
+SRCREV = "4b23163fb64a5a8d05320dd006962cf2bcefcd84"
