@@ -12,6 +12,8 @@ DEPENDS += "qtbase qtdeclarative qtxmlpatterns qtscxml-native"
 
 SRCREV = "4704292500b98143eee9b0fb0b6a34a858ed1253"
 
+SRC_URI += "file://0001-Use-external-host-bin-path-for-cmake-file.patch"
+
 do_install_append_class-nativesdk() {
     # qml files not needed in nativesdk
     rm -rf ${D}${OE_QMAKE_PATH_QML}
