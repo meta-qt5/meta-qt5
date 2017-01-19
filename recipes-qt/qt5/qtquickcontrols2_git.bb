@@ -4,10 +4,10 @@ require qt5-git.inc
 LICENSE = "GFDL-1.3 & BSD & LGPL-3.0 | GPL-3.0"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
-    file://LICENSE.LGPLv3;md5=a37e6cd7102174853307e03e6edc5f30 \
-    file://LICENSE.GPLv3;md5=88e2b9117e6be406b5ed6ee4ca99a705 \
+    file://LICENSE.LGPLv3;md5=382747d0119037529ec2b98b24038eb0 \
+    file://LICENSE.GPLv3;md5=dce746aa5261707df6d6999ab9958d8b \
 "
 
 DEPENDS += "qtdeclarative"
 
-SRCREV = "6f7852a307c7ebbdb3b6efa00cbf7626b072bbc1"
+SRCREV = "bb2a6c61777e2500fa00710c8bb752fa7b99f079"

@@ -26,4 +26,4 @@ PACKAGECONFIG[libwebp] = ",CONFIG+=done_config_libwebp,libwebp"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "cd2de115c6216ad747cf4803e65a4ce4af220795"
+SRCREV = "e349e6df7a08b4aa15a63fa5f1dcd0f36d598d53"

@@ -20,4 +20,4 @@ PACKAGECONFIG[gypsy] = "-feature-gypsy,-no-feature-gypsy,gconf gypsy"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "41cc347040226d2c5c16b9df001d03f2724b87e5"
+SRCREV = "93cd42ef606178261e12eeffc88cd4b7d029dbc3"
