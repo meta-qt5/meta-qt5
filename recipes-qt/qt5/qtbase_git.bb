@@ -130,6 +130,9 @@ QT_CONFIG_FLAGS += " \
 "
 
 do_configure() {
+    # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory" during configuration
+    touch ${S}/mkspecs/oe-device-extra.pri
+
     ${S}/configure -v \
         -opensource -confirm-license \
         -sysroot ${STAGING_DIR_TARGET} \
