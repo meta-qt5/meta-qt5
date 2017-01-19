@@ -2,6 +2,7 @@ require qt5.inc
 require qt5-git.inc
 
 DEPENDS += "qtbase qtdeclarative wayland wayland-native qtwayland-native"
+DEPENDS_append_class-target = " libxkbcommon"
 
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
