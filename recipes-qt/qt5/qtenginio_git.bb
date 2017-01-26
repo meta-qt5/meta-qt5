@@ -12,7 +12,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
-SRCREV = "cedca298f081e1c1cdac615eed6171fe687f35e2"
+QT_MODULE_BRANCH = "dev"
+SRCREV = "0555cf73c8b5abd41d8a4ff02457315c9e7c667d"
 
 do_install_append() {
     if ls ${D}${libdir}/pkgconfig/Enginio.pc >/dev/null 2>/dev/null; then

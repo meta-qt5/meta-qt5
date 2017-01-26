@@ -22,33 +22,22 @@ require qt5-git.inc
 # common for qtbase-native, qtbase-nativesdk and qtbase
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
-    file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0003-Add-external-hostbindir-option.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
-    file://0006-QOpenGLPaintDevice-sub-area-support.patch \
-    file://0007-linux-oe-g-Invert-conditional-for-defining-QT_SOCKLE.patch \
     file://0008-configure-paths-for-target-qmake-properly.patch \
-    file://0009-Reorder-EGL-libraries-from-pkgconfig-and-defaults.patch \
+    file://0009-Disable-all-unknown-features-instead-of-erroring-out.patch \
     file://0010-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
     file://0011-Always-build-uic.patch \
-    file://0012-Add-external-hostbindir-option-for-native-sdk.patch \
 "
 
 CLEANBROKEN = "1"
 
-QT_CONF_PATH = "${B}/qt.conf"
-
-do_generate_qt_config_file() {
-    :
-}
-
 PACKAGECONFIG_CONFARGS = " \
-    -prefix ${prefix} \
     -sysroot ${STAGING_DIR_NATIVE} \
     -no-gcc-sysroot \
     -system-zlib \
@@ -68,11 +57,15 @@ PACKAGECONFIG_CONFARGS = " \
     -verbose \
     -release \
     -prefix ${OE_QMAKE_PATH_PREFIX} \
+    -hostprefix ${OE_QMAKE_PATH_PREFIX} \
     -bindir ${OE_QMAKE_PATH_BINS} \
+    -hostbindir ${OE_QMAKE_PATH_BINS} \
     -libdir ${OE_QMAKE_PATH_LIBS} \
+    -hostlibdir ${OE_QMAKE_PATH_LIBS} \
     -headerdir ${OE_QMAKE_PATH_HEADERS} \
     -archdatadir ${OE_QMAKE_PATH_ARCHDATA} \
     -datadir ${OE_QMAKE_PATH_DATA} \
+    -hostdatadir ${QMAKE_MKSPEC_PATH_NATIVE} \
     -docdir ${OE_QMAKE_PATH_DOCS} \
     -sysconfdir ${OE_QMAKE_PATH_SETTINGS} \
     -no-glib \
@@ -84,20 +77,8 @@ PACKAGECONFIG_CONFARGS = " \
     -platform linux-oe-g++ \
 "
 
-# qtbase is exception, configure script is using our get(X)QEvalMakeConf and setBootstrapEvalVariable functions to read it from shell
-export OE_QMAKE_COMPILER
-export OE_QMAKE_CC
-export OE_QMAKE_CFLAGS
-export OE_QMAKE_CXX
-export OE_QMAKE_CXXFLAGS
-export OE_QMAKE_LINK
-export OE_QMAKE_LDFLAGS
-export OE_QMAKE_AR
-export OE_QMAKE_STRIP
-
 do_configure_prepend() {
     MAKEFLAGS="${PARALLEL_MAKE}" ${S}/configure -opensource -confirm-license ${PACKAGECONFIG_CONFARGS} || die "Configuring qt failed. PACKAGECONFIG_CONFARGS was ${PACKAGECONFIG_CONFARGS}"
-    bin/qmake ${OE_QMAKE_DEBUG_OUTPUT} ${S} -o Makefile || die "Configuring qt with qmake failed. PACKAGECONFIG_CONFARGS was ${PACKAGECONFIG_CONFARGS}"
 }
 
 do_install() {
@@ -123,4 +104,4 @@ do_install() {
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
 }
 
-SRCREV = "69b43e74d78e050cf5e40197acafa4bc9f90c0bd"
+SRCREV = "49dc9aa409d727824f26b246054a22b5a7dd5980"

@@ -1,165 +1,23 @@
-From c1dc6165d6a085f162ed32ef5697f645019f9ee0 Mon Sep 17 00:00:00 2001
+From 502b95b840a5f79e5a68e9bd5b10dbdc92485f1f Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH] Add -external-hostbindir option
 
-* when cross-compiling it's sometimes useful to use existing tools from machine
-  (or in OpenEmbedded built with separate native recipe) when building for target
-
-* this way we can skip bootstraping tools we already have
-
-* qt_functions: temporary remove isEmpty check
-* now we assume that every build will provide QT_EXTERNAL_HOST_BINS value
-* isEmpty works correctly only with qmake variables (e.g. $$FOO -
-  isEmpty(FOO)), but doesn't work with system properties like $$[FOO].
-
 * cmake: Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS to determine path to host binaries
 
-Upstream-Status: Pending
-  is a lot better for upstreaming (and it was already sort of approved by
-  Oswald) but in 5.2.0 I've noticed that he added something similar for
-  android builds
+Upstream-Status: Inappropriate [OE specific]
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 Signed-off-by: Simon Busch <morphis@gravedo.de>
 Signed-off-by: Jonathan Liu <net147@gmail.com>
 
-Conflicts:
-        configure
-
 Change-Id: Iacaa1c5531cd6dcc094891610c351673db55d7b2
 ---
- configure                                   | 14 ++++++++++++++
- mkspecs/features/qt_functions.prf           |  6 +++++-
- mkspecs/features/qt_tool.prf                |  4 +++-
- qtbase.pro                                  | 16 ++++++++++++++++
- src/corelib/Qt5CoreConfigExtras.cmake.in    |  6 +++---
- src/dbus/Qt5DBusConfigExtras.cmake.in       |  4 ++--
- src/widgets/Qt5WidgetsConfigExtras.cmake.in |  2 +-
- 7 files changed, 44 insertions(+), 8 deletions(-)
+ src/corelib/Qt5CoreConfigExtras.cmake.in    | 6 +++---
+ src/dbus/Qt5DBusConfigExtras.cmake.in       | 4 ++--
+ src/widgets/Qt5WidgetsConfigExtras.cmake.in | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/configure b/configure
-index 052872e..1fcbb3a 100755
---- a/configure
-+++ b/configure
-@@ -834,6 +834,7 @@ QT_HOST_BINS=
- QT_HOST_LIBS=
- QT_HOST_DATA=
- QT_EXT_PREFIX=
-+QT_EXTERNAL_HOST_BINS=
- 
- #flags for SQL drivers
- QT_CFLAGS_PSQL=
-@@ -953,6 +954,7 @@ while [ "$#" -gt 0 ]; do
-     -testsdir| \
-     -hostdatadir| \
-     -hostbindir| \
-+    -external-hostbindir| \
-     -hostlibdir| \
-     -extprefix| \
-     -sysroot| \
-@@ -1185,6 +1187,9 @@ while [ "$#" -gt 0 ]; do
-     extprefix)
-         QT_EXT_PREFIX="$VAL"
-         ;;
-+    external-hostbindir)
-+        QT_EXTERNAL_HOST_BINS="$VAL"
-+        ;;
-     pkg-config)
-         if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
-             CFG_PKGCONFIG="$VAL"
-@@ -2447,6 +2452,10 @@ Installation options:
-     -hostdatadir <dir> . Data used by qmake will be installed to <dir>
-                          (default HOSTPREFIX)
- 
-+    -external-hostbindir <dir> Use external host executables instead of building them
-+                         (not used by defaut)
-+
-+
- Configure options:
- 
-  The defaults (*) are usually acceptable. A plus (+) denotes a default value
-@@ -3209,6 +3218,11 @@ fi
- # command line and environment validation
- #-------------------------------------------------------------------------------
- 
-+# default is empty, don't call makeabs if it is empty
-+if [ ! -z "$QT_EXTERNAL_HOST_BINS" ]; then
-+    QT_EXTERNAL_HOST_BINS=`"$relpath/config.tests/unix/makeabs" "$QT_EXTERNAL_HOST_BINS"`
-+fi
-+
- # update QT_CONFIG to show our current predefined configuration
- CFG_QCONFIG_PATH=$relpath/src/corelib/global/qconfig-${CFG_QCONFIG}.h
- case "$CFG_QCONFIG" in
-diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 54641ce..7d7baa4 100644
---- a/mkspecs/features/qt_functions.prf
-+++ b/mkspecs/features/qt_functions.prf
-@@ -71,7 +71,11 @@ defineTest(qtHaveModule) {
- defineTest(qtPrepareTool) {
-     cmd = $$eval(QT_TOOL.$${2}.binary)
-     isEmpty(cmd) {
--        cmd = $$[QT_HOST_BINS]/$$2
-+        QT_EXTERNAL_HOST_BINS = $$[QT_EXTERNAL_HOST_BINS]
-+        isEmpty(QT_EXTERNAL_HOST_BINS): \
-+            cmd = $$[QT_HOST_BINS]/$$2
-+        else: \
-+            cmd = $$[QT_EXTERNAL_HOST_BINS]/$$2
-         exists($${cmd}.pl) {
-             $${1}_EXE = $${cmd}.pl
-             cmd = perl -w $$system_path($${cmd}.pl)
-diff --git a/mkspecs/features/qt_tool.prf b/mkspecs/features/qt_tool.prf
-index bdeb59c..b8c539f 100644
---- a/mkspecs/features/qt_tool.prf
-+++ b/mkspecs/features/qt_tool.prf
-@@ -14,10 +14,12 @@ load(qt_app)
- CONFIG += console
- DEFINES *= QT_USE_QSTRINGBUILDER
- 
-+QT_EXTERNAL_HOST_BINS = $$[QT_EXTERNAL_HOST_BINS]
-+
- # If we are doing a prefix build, create a "module" pri which enables
- # qtPrepareTool() to work with the non-installed build.
- # Non-bootstrapped tools always need this because of the environment setup.
--!build_pass:if(!host_build|!force_bootstrap|force_independent|!isEmpty(HOST_QT_TOOLS)) {
-+!build_pass:if(!host_build|!force_bootstrap|force_independent|!isEmpty(HOST_QT_TOOLS)):isEmpty(QT_EXTERNAL_HOST_BINS) {
-     isEmpty(MODULE):MODULE = $$TARGET
- 
-     load(qt_build_paths)
-diff --git a/qtbase.pro b/qtbase.pro
-index 11cff9e..ec03669 100644
---- a/qtbase.pro
-+++ b/qtbase.pro
-@@ -38,6 +38,19 @@ CONFIG -= qt
- 
- ### installations ####
- 
-+QT_EXTERNAL_HOST_BINS = $$[QT_EXTERNAL_HOST_BINS]
-+
-+#qmake
-+qmake.path = $$[QT_HOST_BINS]
-+qmake.files = $$OUT_PWD/bin/qmake
-+!isEmpty(QT_EXTERNAL_HOST_BINS) {
-+   qmake.files = $$[QT_EXTERNAL_HOST_BINS]/qmake
-+}
-+equals(QMAKE_HOST.os, Windows) {
-+   qmake.files = $${qmake.files}.exe
-+}
-+INSTALLS += qmake
-+
- #licheck
- licheck.path = $$[QT_HOST_BINS]
- licheck.files = $$PWD/bin/$$QT_LICHECK
-@@ -51,6 +64,9 @@ INSTALLS += fixqt4headers
- #syncqt
- syncqt.path = $$[QT_HOST_BINS]
- syncqt.files = $$PWD/bin/syncqt.pl
-+!isEmpty(QT_EXTERNAL_HOST_BINS) {
-+   syncqt.files = $$[QT_EXTERNAL_HOST_BINS]/syncqt.pl
-+}
- INSTALLS += syncqt
- 
- # If we are doing a prefix build, create a "module" pri which enables
 diff --git a/src/corelib/Qt5CoreConfigExtras.cmake.in b/src/corelib/Qt5CoreConfigExtras.cmake.in
 index a5ed8b2..0e11a1e 100644
 --- a/src/corelib/Qt5CoreConfigExtras.cmake.in

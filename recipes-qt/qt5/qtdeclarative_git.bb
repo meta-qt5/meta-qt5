@@ -16,14 +16,6 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-SRC_URI += " \
-    file://0001-qmltestexample-fix-link.patch \
-    file://0002-qquickviewcomparison-fix-QCoreApplication-has-not-be.patch \
-    file://0003-Workaround-crashes-in-QtQml-code-related-to-dead-sto.patch \
-"
-
-EXTRA_OEMAKE += "QMAKE_SYNCQT=${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/syncqt"
-
 PACKAGECONFIG ??= "qtxmlpatterns"
 PACKAGECONFIG[qtxmlpatterns] = ",,qtxmlpatterns"
 
@@ -31,13 +23,15 @@ do_configure_prepend() {
     # disable qtxmlpatterns test if it isn't enabled by PACKAGECONFIG
     sed -e 's/^\(qtHaveModule(xmlpatterns)\)/OE_QTXMLPATTERNS_ENABLED:\1/' -i ${S}/src/imports/imports.pro
     sed -e 's/^\(!qtHaveModule(xmlpatterns)\)/!OE_QTXMLPATTERNS_ENABLED|\1/' -i ${S}/tests/auto/quick/quick.pro
+}
 
-    #set the path for syncqt properly
-    echo "QT_TOOL.syncqt.binary = \"${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/syncqt\"" > ${B}/.qmake.cache
+do_install_append_class-nativesdk() {
+    # qml files not needed in nativesdk
+    rm -rf ${D}${OE_QMAKE_PATH_QML}
 }
 
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtxmlpatterns', 'CONFIG+=OE_QTXMLPATTERNS_ENABLED', '', d)}"
 
-SRCREV = "d48b397cc79265e80c8437888f9ded0b0364e418"
+SRCREV = "fffb997e192a72b4dcd66edc2fbad5473dd359f3"
 
 BBCLASSEXTEND =+ "native nativesdk"

@@ -1,0 +1,28 @@
+From 210049f0e53f7fb8e5c44325b13947add9618f89 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Tue, 10 Jan 2017 15:28:26 +0200
+Subject: [PATCH] Use external host bin path for cmake file
+
+Need to use ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS} for cmake to find the
+qscxmlc tool from correct sysroot path.
+
+Upstream-Status: Inappropriate [OE specific]
+Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+Change-Id: Idb814be705e9cbaad7f1e68b5d7cdb79c4b65008
+---
+ src/scxml/Qt5ScxmlConfigExtras.cmake.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/scxml/Qt5ScxmlConfigExtras.cmake.in b/src/scxml/Qt5ScxmlConfigExtras.cmake.in
+index edb320a..c2f8be8 100644
+--- a/src/scxml/Qt5ScxmlConfigExtras.cmake.in
++++ b/src/scxml/Qt5ScxmlConfigExtras.cmake.in
+@@ -40,7 +40,7 @@ if (NOT TARGET Qt5::qscxmlc)
+ !!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
+     set(imported_location \"${_qt5Scxml_install_prefix}/$${CMAKE_BIN_DIR}qscxmlc$$CMAKE_BIN_SUFFIX\")
+ !!ELSE
+-    set(imported_location \"$${CMAKE_BIN_DIR}qscxmlc$$CMAKE_BIN_SUFFIX\")
++    set(imported_location \"${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qscxmlc$$CMAKE_BIN_SUFFIX\")
+ !!ENDIF
+     _qt5_Scxml_check_file_exists(${imported_location})
+ 

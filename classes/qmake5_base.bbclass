@@ -30,27 +30,29 @@ EXTRA_OEMAKE = " \
     OE_QMAKE_INCDIR_QT='${STAGING_DIR_TARGET}/${OE_QMAKE_PATH_HEADERS}' \
 "
 
-OE_QMAKESPEC = "${QMAKE_MKSPEC_PATH_NATIVE}/mkspecs/${OE_QMAKE_PLATFORM_NATIVE}"
-OE_XQMAKESPEC = "${QMAKE_MKSPEC_PATH}/mkspecs/${OE_QMAKE_PLATFORM}"
 OE_QMAKE_QMAKE = "${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qmake"
-OE_QMAKE_COMPILER = "${CC}"
-OE_QMAKE_CC = "${CC}"
-OE_QMAKE_CFLAGS = "${CFLAGS}"
-OE_QMAKE_CXX = "${CXX}"
-OE_QMAKE_CXXFLAGS = "${CXXFLAGS}"
-OE_QMAKE_LINK = "${CXX}"
-OE_QMAKE_LDFLAGS = "${LDFLAGS}"
-OE_QMAKE_AR = "${AR}"
-OE_QMAKE_STRIP = "echo"
-OE_QMAKE_WAYLAND_SCANNER = "${STAGING_BINDIR_NATIVE}/wayland-scanner"
-
-# this one needs to be exported, because qmake reads it from shell env
-export QT_CONF_PATH = "${WORKDIR}/qt.conf"
+export OE_QMAKE_COMPILER = "${CC}"
+export OE_QMAKE_CC = "${CC}"
+export OE_QMAKE_CFLAGS = "${CFLAGS}"
+export OE_QMAKE_CXX = "${CXX}"
+export OE_QMAKE_CXXFLAGS = "${CXXFLAGS}"
+export OE_QMAKE_LINK = "${CXX}"
+export OE_QMAKE_LDFLAGS = "${LDFLAGS}"
+export OE_QMAKE_AR = "${AR}"
+export OE_QMAKE_STRIP = "echo"
+export OE_QMAKE_WAYLAND_SCANNER = "${STAGING_BINDIR_NATIVE}/wayland-scanner"
+OE_QMAKE_QTCONF_PATH = "${WORKDIR}/qt.conf"
+export OE_QMAKE_QTCONF = "-qtconf ${OE_QMAKE_QTCONF_PATH}"
 
 inherit qmake5_paths remove-libtool
 
 do_generate_qt_config_file() {
-    cat > ${QT_CONF_PATH} <<EOF
+    generate_qt_config_file_paths
+    generate_qt_config_file_effective_paths
+}
+
+generate_qt_config_file_paths() {
+    cat > ${OE_QMAKE_QTCONF_PATH} <<EOF
 [Paths]
 Prefix = ${OE_QMAKE_PATH_PREFIX}
 Headers = ${OE_QMAKE_PATH_HEADERS}
@@ -70,10 +72,19 @@ Tests = ${OE_QMAKE_PATH_TESTS}
 HostBinaries = ${OE_QMAKE_PATH_HOST_BINS}
 HostData = ${OE_QMAKE_PATH_HOST_DATA}
 HostLibraries = ${OE_QMAKE_PATH_HOST_LIBS}
-HostSpec = ${OE_QMAKESPEC}
-TartgetSpec = ${OE_XQMAKESPEC} 
+HostSpec = ${OE_QMAKE_PLATFORM_NATIVE}
+TargetSpec = ${OE_QMAKE_PLATFORM}
 ExternalHostBinaries = ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}
 Sysroot = ${STAGING_DIR_TARGET}
+EOF
+}
+
+generate_qt_config_file_effective_paths() {
+    cat >> ${OE_QMAKE_QTCONF_PATH} <<EOF
+[EffectivePaths]
+HostBinaries = ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}
+HostData = ${OE_QMAKE_PATH_HOST_DATA}
+HostPrefix = ${STAGING_DIR_NATIVE}${prefix_native}
 EOF
 }
 #
@@ -151,11 +162,16 @@ qmake5_base_do_configure () {
         bbnote "qmake prevar substitution: '${EXTRA_QMAKEVARS_PRE}'"
     fi
 
+    if [ ! -z "${EXTRA_QMAKEVARS_CONFIGURE}" ]; then
+        QMAKE_VARSUBST_CONFIGURE="${EXTRA_QMAKEVARS_CONFIGURE}"
+        bbnote "qmake configure substitution: '${EXTRA_QMAKEVARS_CONFIGURE}'"
+    fi
+
     # for config.tests to read this
     export QMAKE_MAKE_ARGS="${EXTRA_OEMAKE}"
 
-    CMD="${OE_QMAKE_QMAKE} -makefile -o Makefile ${OE_QMAKE_DEBUG_OUTPUT} ${OE_QMAKE_RECURSIVE} $QMAKE_VARSUBST_PRE $AFTER $PROFILES $QMAKE_VARSUBST_POST"
-    ${OE_QMAKE_QMAKE} -makefile -o Makefile ${OE_QMAKE_DEBUG_OUTPUT} ${OE_QMAKE_RECURSIVE} $QMAKE_VARSUBST_PRE $AFTER $PROFILES $QMAKE_VARSUBST_POST || die "Error calling $CMD"
+    CMD="${OE_QMAKE_QMAKE} -makefile -o Makefile ${OE_QMAKE_QTCONF} ${OE_QMAKE_DEBUG_OUTPUT} ${OE_QMAKE_RECURSIVE} $QMAKE_VARSUBST_PRE $AFTER $PROFILES $QMAKE_VARSUBST_POST -- $QMAKE_VARSUBST_CONFIGURE"
+    ${OE_QMAKE_QMAKE} -makefile -o Makefile ${OE_QMAKE_QTCONF} ${OE_QMAKE_DEBUG_OUTPUT} ${OE_QMAKE_RECURSIVE} $QMAKE_VARSUBST_PRE $AFTER $PROFILES $QMAKE_VARSUBST_POST -- $QMAKE_VARSUBST_CONFIGURE || die "Error calling $CMD"
 }
 
 qmake5_base_native_do_install() {
@@ -166,37 +182,37 @@ qmake5_base_native_do_install() {
     fi
 }
 
-qmake5_base_nativesdk_do_install() {
-    # Fix install paths for all
-    find . -name "Makefile*" | xargs -r sed -i "s,(INSTALL_ROOT)${STAGING_DIR_HOST},(INSTALL_ROOT),g"
-
-    oe_runmake install INSTALL_ROOT=${D}
-    if ls ${D}${libdir}/pkgconfig/Qt5*.pc >/dev/null 2>/dev/null; then
-        sed -i "s@-L${STAGING_LIBDIR}@-L\${libdir}@g" ${D}${libdir}/pkgconfig/Qt5*.pc
+qmake5_base_fix_install() {
+    STAGING_PATH=$1
+    if [ -d ${D}${STAGING_PATH} ] ; then
+        echo "Some files are installed in wrong directory ${D}${STAGING_PATH}"
+        cp -ra ${D}${STAGING_PATH}/* ${D}
+        rm -rf ${D}${STAGING_PATH}
+        # remove empty dirs
+        TMP=`dirname ${D}${STAGING_PATH}`
+        while test ${TMP} != ${D}; do
+            rmdir ${TMP}
+            TMP=`dirname ${TMP}`;
+        done
     fi
 }
 
 qmake5_base_do_install() {
     # Fix install paths for all
     find . -name "Makefile*" | xargs -r sed -i "s,(INSTALL_ROOT)${STAGING_DIR_TARGET},(INSTALL_ROOT),g"
+    find . -name "Makefile*" | xargs -r sed -i "s,(INSTALL_ROOT)${STAGING_DIR_HOST},(INSTALL_ROOT),g"
+    find . -name "Makefile*" | xargs -r sed -i "s,(INSTALL_ROOT)${STAGING_DIR_NATIVE},(INSTALL_ROOT),g"
 
     oe_runmake install INSTALL_ROOT=${D}
 
     # everything except HostData and HostBinaries is prefixed with sysroot value,
     # but we cannot remove sysroot override, because that's useful for pkg-config etc
-    # In some cases like QtQmlDevTools in qtdeclarative, the sed above does not work,
-    # fix them manually
-    if [ -d ${D}${STAGING_DIR_TARGET} ] ; then
-        echo "Some files are installed in wrong directory ${D}${STAGING_DIR_TARGET}"
-        cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
-        rm -rf ${D}${STAGING_DIR_TARGET}
-        # remove empty dirs
-        TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
-        while test ${TMP} != ${D}; do
-            rmdir ${TMP}
-            TMP=`dirname ${TMP}`;
-        done
-    fi
+    # concurrent builds may cause qmake to regenerate Makefiles and override the above
+    # sed changes. If that happens, move files manually to correct location.
+    qmake5_base_fix_install ${STAGING_DIR_TARGET}
+    qmake5_base_fix_install ${STAGING_DIR_HOST}
+    qmake5_base_fix_install ${STAGING_DIR_NATIVE}
+
     if ls ${D}${libdir}/pkgconfig/Qt5*.pc >/dev/null 2>/dev/null; then
         sed -i "s@-L${STAGING_LIBDIR}@-L\${libdir}@g" ${D}${libdir}/pkgconfig/Qt5*.pc
     fi

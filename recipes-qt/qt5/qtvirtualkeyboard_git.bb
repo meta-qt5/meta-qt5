@@ -33,6 +33,7 @@ PACKAGECONFIG[lang-ko_KR] = "CONFIG+=lang-ko_KR"
 PACKAGECONFIG[lang-nb_NO] = "CONFIG+=lang-nb_NO"
 PACKAGECONFIG[lang-pl_PL] = "CONFIG+=lang-pl_PL"
 PACKAGECONFIG[lang-pt_PT] = "CONFIG+=lang-pt_PT"
+PACKAGECONFIG[lang-ro_RO] = "CONFIG+=lang-ro_RO"
 PACKAGECONFIG[lang-ru_RU] = "CONFIG+=lang-ru_RU"
 PACKAGECONFIG[lang-sv_SE] = "CONFIG+=lang-sv_SE"
 PACKAGECONFIG[lang-zh_CN] = "CONFIG+=lang-zh_CN"
@@ -48,4 +49,4 @@ FILES_${PN} += "${OE_QMAKE_PATH_DATA}/qtvirtualkeyboard/lipi_toolkit"
 
 DEPENDS += "qtbase qtdeclarative qtmultimedia qtquickcontrols qtsvg qtxmlpatterns"
 
-SRCREV = "626e78c9660cff063e1f9370538b5a424631571c"
+SRCREV = "cfa4ab4cbf13971d4b71ee920353822755a3bf31"
