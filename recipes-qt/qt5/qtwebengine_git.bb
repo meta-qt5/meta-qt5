@@ -24,7 +24,7 @@ DEPENDS += " \
 "
 
 DEPENDS += "yasm-native"
-EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm"
+EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm GYP_CONFIG+=generate_character_data=0"
 
 # To use system ffmpeg you need to enable also libwebp, opus, vpx											    
 # Only depenedencies available in oe-core are enabled by default
