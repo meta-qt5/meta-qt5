@@ -27,6 +27,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 # common for qtbase-native, qtbase-nativesdk and qtbase
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
+    file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0003-Add-external-hostbindir-option.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
@@ -91,6 +92,10 @@ QT_CONFIG_FLAGS += " \
 # qtbase is exception, as these are used as install path for sysroots
 OE_QMAKE_PATH_HOST_DATA = "${libdir}${QT_DIR_NAME}"
 OE_QMAKE_PATH_HOST_LIBS = "${libdir}"
+
+# for qtbase configuration we need default settings
+# since we cannot set empty set filename to a not existent file
+export OE_QMAKE_QTCONF_PATH = "foodummy"
 
 do_configure() {
     ${S}/configure -v \

@@ -17,6 +17,7 @@ LIC_FILES_CHKSUM = " \
 # common for qtbase-native, qtbase-nativesdk and qtbase
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
+    file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0003-Add-external-hostbindir-option.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
@@ -128,6 +129,10 @@ QT_CONFIG_FLAGS += " \
     -pkg-config \
     ${PACKAGECONFIG_CONFARGS} \
 "
+
+# for qtbase configuration we need default settings
+# since we cannot set empty set filename to a not existent file
+export OE_QMAKE_QTCONF_PATH = "foodummy"
 
 do_configure() {
     # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory" during configuration
