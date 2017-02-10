@@ -33,10 +33,6 @@ DEPENDS += "qtbase-native"
 RDEPENDS_${PN}-tools += "perl"
 
 # separate some parts of PACKAGECONFIG which are often changed
-# be aware that you need to add icu to build qtwebkit, default
-# PACKAGECONFIG is kept rather minimal for people who don't need
-# stuff like webkit (and it's easier to add options than remove)
-
 PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gl', '', d)}"
 PACKAGECONFIG_FB ?= "${@bb.utils.contains('DISTRO_FEATURES', 'directfb', 'directfb', '', d)}"
 PACKAGECONFIG_X11 ?= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcb xrender xinput2 glib xkb xkbcommon-evdev', '', d)}"
@@ -116,7 +112,6 @@ PACKAGECONFIG[directfb] = "-directfb,-no-directfb,directfb"
 PACKAGECONFIG[linuxfb] = "-linuxfb,-no-linuxfb"
 PACKAGECONFIG[kms] = "-kms,-no-kms,drm virtual/egl"
 PACKAGECONFIG[gbm] = "-gbm,-no-gbm,virtual/mesa"
-# needed for qtwebkit
 PACKAGECONFIG[icu] = "-icu,-no-icu,icu"
 PACKAGECONFIG[udev] = "-libudev,-no-libudev,udev"
 PACKAGECONFIG[openssl] = "-openssl,-no-openssl,openssl,libssl"
@@ -135,6 +130,9 @@ QT_CONFIG_FLAGS += " \
 "
 
 do_configure() {
+    # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory" during configuration
+    touch ${S}/mkspecs/oe-device-extra.pri
+
     ${S}/configure -v \
         -opensource -confirm-license \
         -sysroot ${STAGING_DIR_TARGET} \
