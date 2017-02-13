@@ -2,6 +2,7 @@ require qt5.inc
 require qt5-git.inc
 
 DEPENDS += "qtbase qtdeclarative wayland wayland-native qtwayland-native"
+DEPENDS_append_class-target = " libxkbcommon"
 
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
@@ -41,5 +42,8 @@ PACKAGECONFIG[libhybris-egl-server] = "-feature-libhybris-egl-server,-no-feature
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
 SRCREV = "e26696524ceb58f4fe0cb7202d873240b6a9478d"
+
+# From https://bugreports.qt.io/browse/QTBUG-57767
+SRC_URI += "file://0001-fix-build-without-xkbcommon-evdev.patch"
 
 BBCLASSEXTEND =+ "native nativesdk"

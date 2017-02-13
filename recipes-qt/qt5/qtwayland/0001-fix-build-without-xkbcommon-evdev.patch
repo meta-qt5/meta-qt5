@@ -1,0 +1,44 @@
+From c93dbe53e8a1b2203c750a66c7efe6fc9a326903 Mon Sep 17 00:00:00 2001
+From: Raphael Freudiger <raphael.freudiger@siemens.com>
+Date: Thu, 22 Dec 2016 13:54:31 +0100
+Subject: [PATCH] fix build without xkbcommon-evdev
+
+Signed-off-by: Raphael Freudiger <raphael.freudiger@siemens.com>
+---
+ src/compositor/compositor_api/qwaylandkeyboard.cpp | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/src/compositor/compositor_api/qwaylandkeyboard.cpp b/src/compositor/compositor_api/qwaylandkeyboard.cpp
+index 55381b4..5c054c6 100644
+--- a/src/compositor/compositor_api/qwaylandkeyboard.cpp
++++ b/src/compositor/compositor_api/qwaylandkeyboard.cpp
+@@ -338,12 +338,6 @@ void QWaylandKeyboardPrivate::createXKBState(xkb_keymap *keymap)
+     xkb_state = xkb_state_new(keymap);
+ }
+ 
+-uint QWaylandKeyboardPrivate::toWaylandXkbV1Key(const uint nativeScanCode)
+-{
+-    const uint offset = 8;
+-    Q_ASSERT(nativeScanCode >= offset);
+-    return nativeScanCode - offset;
+-}
+ 
+ void QWaylandKeyboardPrivate::createXKBKeymap()
+ {
+@@ -373,6 +367,13 @@ void QWaylandKeyboardPrivate::createXKBKeymap()
+ }
+ #endif
+ 
++uint QWaylandKeyboardPrivate::toWaylandXkbV1Key(const uint nativeScanCode)
++{
++    const uint offset = 8;
++    Q_ASSERT(nativeScanCode >= offset);
++    return nativeScanCode - offset;
++}
++
+ void QWaylandKeyboardPrivate::sendRepeatInfo()
+ {
+     Q_FOREACH (Resource *resource, resourceMap()) {
+-- 
+2.1.4
+
