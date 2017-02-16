@@ -15,8 +15,3 @@ DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 QT_MODULE_BRANCH = "dev"
 SRCREV = "0555cf73c8b5abd41d8a4ff02457315c9e7c667d"
 
-do_install_append() {
-    if ls ${D}${libdir}/pkgconfig/Enginio.pc >/dev/null 2>/dev/null; then
-        sed -i "s@-L${STAGING_LIBDIR}@-L\${libdir}@g" ${D}${libdir}/pkgconfig/Enginio.pc
-    fi
-}
