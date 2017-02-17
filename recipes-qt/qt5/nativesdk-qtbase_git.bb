@@ -114,6 +114,7 @@ do_configure() {
         -no-opengl \
         -no-openssl \
         -no-xcb \
+        -no-feature-bearermanagement \
         -verbose \
         -release \
         -prefix ${OE_QMAKE_PATH_PREFIX} \
@@ -189,4 +190,4 @@ fakeroot do_generate_qt_environment_file() {
 
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "0c50edbe84914469973a3b10e0170023ccdd66fe"
+SRCREV = "1d9270ee42c257e6df104053177653cffa76336e"

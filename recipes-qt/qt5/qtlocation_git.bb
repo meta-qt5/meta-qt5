@@ -20,4 +20,10 @@ PACKAGECONFIG[gypsy] = "-feature-gypsy,-no-feature-gypsy,gconf gypsy"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "93cd42ef606178261e12eeffc88cd4b7d029dbc3"
+SRC_URI += " \
+    ${QT_GIT}/qtlocation-mapboxgl.git;name=qtlocation-mapboxgl;branch=upstream/qt-staging;protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/mapbox-gl-native \
+    "
+SRCREV_qtlocation = "11e6a62957433843816b41ad11fada7ca8eab85c"
+SRCREV_qtlocation-mapboxgl = "eec42f36aed7e446c03807ec6acc477d654548d7"
+
+SRCREV_FORMAT = "qtlocation_qtlocation-mapboxgl"
