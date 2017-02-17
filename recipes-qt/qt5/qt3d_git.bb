@@ -13,6 +13,7 @@ DEPENDS_class-target += "qtdeclarative qt3d-native"
 
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
+    file://0002-qt3d-include-qcoreapplication.h-header-in-qtquicksce.patch \
 "
 
 PACKAGECONFIG ??= ""
@@ -34,6 +35,6 @@ do_configure_prepend() {
          ${S}/src/quick3d/imports/input/importsinput.pro
 }
 
-SRCREV = "0bb720013d93c34d589c352a53405d8110fa57fe"
+SRCREV = "9675579a6d7955b0b278a54050f6f503e2b10b1a"
 
 BBCLASSEXTEND += "native nativesdk"

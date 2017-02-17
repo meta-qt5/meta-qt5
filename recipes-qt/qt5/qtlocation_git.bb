@@ -23,7 +23,8 @@ EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 SRC_URI += " \
     ${QT_GIT}/qtlocation-mapboxgl.git;name=qtlocation-mapboxgl;branch=upstream/qt-staging;protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/mapbox-gl-native \
     "
-SRCREV_qtlocation = "11e6a62957433843816b41ad11fada7ca8eab85c"
-SRCREV_qtlocation-mapboxgl = "eec42f36aed7e446c03807ec6acc477d654548d7"
+
+SRCREV_qtlocation = "dca175454aefdd019952d941c6369c314e8c3b11"
+SRCREV_qtlocation-mapboxgl = "58b3bfbd0001f47fd88288e250d2028173dc0b23"
 
 SRCREV_FORMAT = "qtlocation_qtlocation-mapboxgl"

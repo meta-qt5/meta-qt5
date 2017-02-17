@@ -115,7 +115,7 @@ SRC_URI += " \
     file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
 "
 
-SRCREV_qtwebengine = "6ec0428db1d1dda0a74ead838aa799298e7a1306"
+SRCREV_qtwebengine = "cd475d5727becd6ec4e7605d335721355e049354"
 SRCREV_chromium = "cd3417bc8b5bae4cdc04a9dd714adadacc03b28d"
 SRCREV = "${SRCREV_qtwebengine}"
 
