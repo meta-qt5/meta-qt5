@@ -112,7 +112,7 @@ PACKAGECONFIG[evdev] = "-evdev,-no-evdev"
 PACKAGECONFIG[mtdev] = "-mtdev,-no-mtdev,mtdev"
 # depends on glib
 PACKAGECONFIG[fontconfig] = "-fontconfig,-no-fontconfig,fontconfig"
-PACKAGECONFIG[gtk] = "-gtk,-no-gtk,gtk+"
+PACKAGECONFIG[gtk] = "-gtk,-no-gtk,gtk+3"
 PACKAGECONFIG[directfb] = "-directfb,-no-directfb,directfb"
 PACKAGECONFIG[linuxfb] = "-linuxfb,-no-linuxfb"
 PACKAGECONFIG[kms] = "-kms,-no-kms,drm virtual/egl"
