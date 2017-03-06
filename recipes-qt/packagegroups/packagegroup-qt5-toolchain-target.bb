@@ -83,6 +83,8 @@ RDEPENDS_${PN} += " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtsensors-qmlplugins', '', d)} \
     qtserialport-dev \
     qtserialport-mkspecs \
+    qtserialbus-dev \
+    qtserialbus-mkspecs \
     qtsvg-dev \
     qtsvg-mkspecs \
     qtsvg-plugins \
