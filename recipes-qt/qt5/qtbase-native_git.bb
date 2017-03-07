@@ -33,6 +33,7 @@ SRC_URI += "\
 # common for qtbase-native and nativesdk-qtbase
 SRC_URI += " \
     file://0011-Always-build-uic.patch \
+    file://0012-qdbuscpp2xml.pro-do-not-build-with-bootstrapped-depe.patch \
 "
 
 CLEANBROKEN = "1"
