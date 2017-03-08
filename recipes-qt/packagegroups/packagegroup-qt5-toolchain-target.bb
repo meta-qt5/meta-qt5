@@ -108,6 +108,9 @@ RDEPENDS_${PN} += " \
     qtxmlpatterns-dev \
     qtxmlpatterns-mkspecs \
     qttranslations-qtxmlpatterns \
+    qtquickcontrols2 \
+    qtquickcontrols2-dev \
+    qtquickcontrols2-mkspecs \
 "
 
 RRECOMMENDS_${PN} += " \
