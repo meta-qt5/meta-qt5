@@ -14,6 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += " \
     ninja-native \
+    yasm-native \
     qtwebchannel \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols \
     qtlocation \
@@ -23,8 +24,8 @@ DEPENDS += " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa-lib', '', d)} \
 "
 
-DEPENDS += "yasm-native"
 EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm GYP_CONFIG+=generate_character_data=0"
+EXTRA_QMAKEVARS_CONFIGURE += "-feature-system-ninja -no-feature-system-gn"
 
 # To use system ffmpeg you need to enable also libwebp, opus, vpx											    
 # Only depenedencies available in oe-core are enabled by default
@@ -61,35 +62,33 @@ def gettext_oeconf(d):
 require qt5.inc
 require qt5-git.inc
 
-export NINJA_PATH="${STAGING_BINDIR_NATIVE}/ninja"
-
 do_configure() {
-    # replace LD with CXX, to workaround a possible gyp inheritssue?
-    export LD="${CXX}"
-    export CC="${CC}"
-    export CXX="${CXX}"
-    export CC_host="gcc"
-    export CXX_host="g++"
-    export QMAKE_MAKE_ARGS="${EXTRA_OEMAKE}"
-    export QMAKE_CACHE_EVAL="${PACKAGECONFIG_CONFARGS}"
-
     # Disable autodetection from sysroot:
-    sed -i 's/packagesExist([^)]*vpx[^)]*):/false:/g; s/config_libvpx:/false:/g; s/config_srtp:/false:/g; s/config_snappy:/false:/g; s/packagesExist(nss):/false:/g; s/packagesExist(minizip, zlib):/false:/g; s/packagesExist(libwebp,libwebpdemux):/false:/g; s/packagesExist(libxml-2.0,libxslt):/false:/g; s/^ *packagesExist($$package):/false:/g' ${S}/tools/qmake/mkspecs/features/configure.prf
+    sed -e 's/packagesExist([^)]*vpx[^)]*):/false:/g'\
+        -e 's/config_libvpx:/false:/g' \
+        -e 's/config_srtp:/false:/g' \
+        -e 's/config_snappy:/false:/g' \
+        -e 's/packagesExist(nss):/false:/g' \
+        -e 's/packagesExist(minizip, zlib):/false:/g' \
+        -e 's/packagesExist(libwebp,libwebpdemux):/false:/g' \
+        -e 's/packagesExist(libxml-2.0,libxslt):/false:/g'\
+        -e 's/^ *packagesExist($$package):/false:/g' \
+        -i ${S}/tools/qmake/mkspecs/features/configure.prf
 
     # qmake can't find the OE_QMAKE_* variables on it's own so directly passing them as
     # arguments here
-    ${OE_QMAKE_QMAKE} -r ${EXTRA_QMAKEVARS_PRE} ${S} \
-        QMAKE_CXX="${OE_QMAKE_CXX}" QMAKE_CC="${OE_QMAKE_CC}" \
+    ${OE_QMAKE_QMAKE} ${EXTRA_QMAKEVARS_PRE} ${S} \
+        QMAKE_CXX="${OE_QMAKE_CXX}" \
+        QMAKE_CC="${OE_QMAKE_CC}" \
         QMAKE_LINK="${OE_QMAKE_LINK}" \
         QMAKE_CFLAGS="${OE_QMAKE_CFLAGS}" \
         QMAKE_CXXFLAGS="${OE_QMAKE_CXXFLAGS}" \
-        QMAKE_AR="${OE_QMAKE_AR} cqs" \
-        -after ${EXTRA_QMAKEVARS_POST}
+        -after ${EXTRA_QMAKEVARS_POST} -- \
+        ${EXTRA_QMAKEVARS_CONFIGURE}
 }
 
 do_install_append() {
-    rmdir ${D}${OE_QMAKE_PATH_PLUGINS}/${BPN} ${D}${OE_QMAKE_PATH_PLUGINS} || true
-    sed -i 's@ -Wl,--start-group.*-Wl,--end-group@@g; s@-L${B}[^ ]* @ @g' ${D}${libdir}/pkgconfig/Qt5WebEngineCore.pc
+    sed -i 's@ -Wl,--start-group.*-Wl,--end-group@@g; s@[^ ]*${B}[^ ]* @@g' ${D}${libdir}/pkgconfig/Qt5WebEngineCore.pc
 }
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
@@ -102,7 +101,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "53-based"
+QT_MODULE_BRANCH_CHROMIUM = "55-based"
 
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
@@ -111,12 +110,12 @@ SRC_URI += " \
     file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
     file://0004-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
     file://0005-Include-dependency-to-QCoreApplication-translate.patch \
-    file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch \
     file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
+    file://0001-Force-host-toolchain-configuration.patch \
 "
 
-SRCREV_qtwebengine = "cd475d5727becd6ec4e7605d335721355e049354"
-SRCREV_chromium = "cd3417bc8b5bae4cdc04a9dd714adadacc03b28d"
+SRCREV_qtwebengine = "29afdb0a34e425728ccf85b8421e9b1aadb22f45"
+SRCREV_chromium = "049134677a607781ab9508e7b769b2055d714543"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

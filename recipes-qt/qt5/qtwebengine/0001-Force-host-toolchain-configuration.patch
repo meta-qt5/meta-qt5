@@ -1,0 +1,71 @@
+From 5c879db32cde9bee9c9073842ecc281172f19453 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Wed, 15 Mar 2017 13:53:28 +0200
+Subject: [PATCH] Force host toolchain configuration
+
+Force gcc/g++ to be used for parts using host toolchain, since
+the option(host_build) does not work in yocto builds.
+
+Upstream-Status: Inappropriate [OE specific]
+Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+---
+ src/buildtools/configure_host.pro | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/src/buildtools/configure_host.pro b/src/buildtools/configure_host.pro
+index d8d731d..89dade4 100644
+--- a/src/buildtools/configure_host.pro
++++ b/src/buildtools/configure_host.pro
+@@ -16,9 +16,9 @@ GN_CONTENTS = \
+ "import(\"//build/config/sysroot.gni\")" \
+ "import(\"//build/toolchain/gcc_toolchain.gni\")" \
+ "gcc_toolchain(\"host\") {" \
+-"  cc = \"$$which($$QMAKE_CC)\" " \
+-"  cxx = \"$$which($$QMAKE_CXX)\" " \
+-"  ld = \"$$which($$QMAKE_LINK)\" " \
++"  cc = \"$$which(gcc)\" " \
++"  cxx = \"$$which(g++)\" " \
++"  ld = \"$$which(g++)\" " \
+ "  ar = \"$$which(ar)\" " \
+ "  nm = \"$$which(nm)\" " \
+ "  toolchain_args = { " \
+@@ -27,9 +27,9 @@ GN_CONTENTS = \
+ "  } " \
+ "}" \
+ "gcc_toolchain(\"v8_snapshot\") {" \
+-"  cc = \"$$which($$QMAKE_CC)\" " \
+-"  cxx = \"$$which($$QMAKE_CXX)\" " \
+-"  ld = \"$$which($$QMAKE_LINK)\" " \
++"  cc = \"$$which(gcc)\" " \
++"  cxx = \"$$which(g++)\" " \
++"  ld = \"$$which(g++)\" " \
+ "  ar = \"$$which(ar)\" " \
+ "  nm = \"$$which(nm)\" " \
+ "  toolchain_args = { " \
+diff --git a/src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py b/src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py
+index 75b9690..601f688 100755
+--- a/src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py
++++ b/src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py
+@@ -298,14 +298,14 @@ def write_gn_ninja(path, root_gen_dir, options):
+     ld = os.environ.get('LD', 'link.exe')
+     ar = os.environ.get('AR', 'lib.exe')
+   else:
+-    cc = os.environ.get('CC', 'cc')
+-    cxx = os.environ.get('CXX', 'c++')
+-    ld = os.environ.get('LD', cxx)
+-    ar = os.environ.get('AR', 'ar')
+-
+-  cflags = os.environ.get('CFLAGS', '').split()
+-  cflags_cc = os.environ.get('CXXFLAGS', '').split()
+-  ldflags = os.environ.get('LDFLAGS', '').split()
++    cc = os.environ.get('CC_host', 'cc')
++    cxx = os.environ.get('CXX_host', 'c++')
++    ld = os.environ.get('LD_host', cxx)
++    ar = os.environ.get('AR_host', 'ar')
++
++  cflags = os.environ.get('CFLAGS_host', '').split()
++  cflags_cc = os.environ.get('CXXFLAGS_host', '').split()
++  ldflags = os.environ.get('LDFLAGS_host', '').split()
+   include_dirs = [root_gen_dir, SRC_ROOT]
+   libs = []
+ 
