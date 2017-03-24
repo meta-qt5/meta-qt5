@@ -115,6 +115,7 @@ do_configure() {
         -no-openssl \
         -no-xcb \
         -no-feature-bearermanagement \
+        -no-icu \
         -verbose \
         -release \
         -prefix ${OE_QMAKE_PATH_PREFIX} \
