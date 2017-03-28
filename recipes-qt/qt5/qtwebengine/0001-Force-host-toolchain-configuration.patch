@@ -52,17 +52,15 @@ index 75b9690..601f688 100755
    else:
 -    cc = os.environ.get('CC', 'cc')
 -    cxx = os.environ.get('CXX', 'c++')
--    ld = os.environ.get('LD', cxx)
++    cc = os.environ.get('CC_host', 'cc')
++    cxx = os.environ.get('CXX_host', 'c++')
+     ld = cxx
 -    ar = os.environ.get('AR', 'ar')
--
++    ar = os.environ.get('AR_host', 'ar')
+ 
 -  cflags = os.environ.get('CFLAGS', '').split()
 -  cflags_cc = os.environ.get('CXXFLAGS', '').split()
 -  ldflags = os.environ.get('LDFLAGS', '').split()
-+    cc = os.environ.get('CC_host', 'cc')
-+    cxx = os.environ.get('CXX_host', 'c++')
-+    ld = os.environ.get('LD_host', cxx)
-+    ar = os.environ.get('AR_host', 'ar')
-+
 +  cflags = os.environ.get('CFLAGS_host', '').split()
 +  cflags_cc = os.environ.get('CXXFLAGS_host', '').split()
 +  ldflags = os.environ.get('LDFLAGS_host', '').split()

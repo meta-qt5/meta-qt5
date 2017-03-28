@@ -101,21 +101,16 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "55-based"
+QT_MODULE_BRANCH_CHROMIUM = "56-based"
 
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
-    file://0001-functions.prf-Don-t-match-QMAKE_EXT_CPP-or-QMAKE_EXT.patch \
-    file://0002-functions.prf-Make-sure-we-only-use-the-file-name-to.patch \
-    file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
-    file://0004-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
-    file://0005-Include-dependency-to-QCoreApplication-translate.patch \
-    file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
     file://0001-Force-host-toolchain-configuration.patch \
+    file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
 "
 
-SRCREV_qtwebengine = "29afdb0a34e425728ccf85b8421e9b1aadb22f45"
-SRCREV_chromium = "049134677a607781ab9508e7b769b2055d714543"
+SRCREV_qtwebengine = "140d12802c9ebc54f5816fbf1a410c5bdc730ec6"
+SRCREV_chromium = "8d882ead843178d1ba30f0d80d722e147788e6d1"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
