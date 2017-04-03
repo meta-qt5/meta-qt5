@@ -16,7 +16,7 @@ PV = "39+git${SRCREV}"
 inherit pkgconfig
 
 do_compile() {
-    oe_runmake
+    oe_runmake LFLAGS='${LDFLAGS}'
 }
 
 do_install() {
