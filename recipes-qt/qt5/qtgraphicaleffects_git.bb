@@ -19,4 +19,4 @@ DEPENDS += "qtdeclarative"
 
 RDEPENDS_${PN}-dev = ""
 
-SRCREV = "69bb8a63a5ff1a56629d58e4d03a3bee658c5447"
+SRCREV = "e66fd901fb9e18d45182db56ec3ce70f401d2ac4"

@@ -41,7 +41,7 @@ PACKAGECONFIG[libhybris-egl-server] = "-feature-libhybris-egl-server,-no-feature
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "ec81bfafe16ca021b529813228a095177e302d42"
+SRCREV = "c26f8dbd5c5ff15167e90db529845091705cbe46"
 
 # From https://bugreports.qt.io/browse/QTBUG-57767
 SRC_URI += "file://0001-fix-build-without-xkbcommon-evdev.patch"
