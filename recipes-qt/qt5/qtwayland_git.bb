@@ -44,6 +44,9 @@ EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 SRCREV = "0e2a950895805457a45abe860bc91a7cc4ba405e"
 
 # From https://bugreports.qt.io/browse/QTBUG-57767
-SRC_URI += "file://0001-fix-build-without-xkbcommon-evdev.patch"
+SRC_URI += " \
+    file://0001-fix-build-without-xkbcommon-evdev.patch \
+    file://0002-Fix-initial-window-property-values-being-propagated.patch \
+"
 
 BBCLASSEXTEND =+ "native nativesdk"
