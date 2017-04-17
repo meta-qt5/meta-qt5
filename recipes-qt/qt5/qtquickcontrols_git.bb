@@ -17,8 +17,19 @@ DEPENDS += "qtdeclarative"
 
 RDEPENDS_${PN}-dev = ""
 
+FILES_${PN}-qmlplugins += " \
+  ${OE_QMAKE_PATH_QML}/QtQuick/Controls/Shaders \
+  ${OE_QMAKE_PATH_QML}/QtQuick/Controls/Shaders/* \
+  ${OE_QMAKE_PATH_QML}/QtQuick/Controls/Shaders/+hlsl \
+  ${OE_QMAKE_PATH_QML}/QtQuick/Controls/Shaders/+hlsl/* \
+  ${OE_QMAKE_PATH_QML}/QtQuick/Controls/Shaders/+glslcore \
+  ${OE_QMAKE_PATH_QML}/QtQuick/Controls/Shaders/+glslcore/* \
+  ${OE_QMAKE_PATH_QML}/QtQuick/Controls/Private/*.jsc \
+  ${OE_QMAKE_PATH_QML}/QtQuick/Dialogs/qml/icons.ttf \
+"
+
 SRC_URI += " \
     file://0001-texteditor-fix-invalid-use-of-incomplete-type-class-.patch \
 "
 
-SRCREV = "da9183da38513d5531af3753d14d040991e04132"
+SRCREV = "751f08cf46f505980b8ebe9a228a6c229b470152"
