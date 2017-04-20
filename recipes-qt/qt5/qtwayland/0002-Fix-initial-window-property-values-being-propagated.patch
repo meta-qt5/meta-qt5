@@ -1,0 +1,35 @@
+From 3d30fd8df9b55449844207295ad3d51cc8bb44b1 Mon Sep 17 00:00:00 2001
+From: Robert Griebl <robert.griebl@pelagicore.com>
+Date: Thu, 15 Dec 2016 17:43:00 +0100
+Subject: [PATCH 2/2] Fix initial window property values being propagated
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This was broken since the the shell-surface refactoring.
+
+Change-Id: I130b7396e85c570a9d11d609af6b3016e3f706f0
+Reviewed-by: Dominik Holland <dominik.holland@pelagicore.com>
+Reviewed-by: Paul Olav Tvete <paul.tvete@qt.io>
+Signed-off-by: Gordan Markuš <gordan.markus@pelagicore.com>
+---
+ src/client/qwaylandwindow.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/client/qwaylandwindow.cpp b/src/client/qwaylandwindow.cpp
+index c8be9c1..b6f16f0 100644
+--- a/src/client/qwaylandwindow.cpp
++++ b/src/client/qwaylandwindow.cpp
+@@ -176,6 +176,9 @@ void QWaylandWindow::initWindow()
+                 mShellSurface->setAppId(appId);
+             }
+         }
++        // the user may have already set some window properties, so make sure to send them out
++        for (auto it = m_properties.cbegin(); it != m_properties.cend(); ++it)
++            mShellSurface->sendProperty(it.key(), it.value());
+     }
+ 
+     // Enable high-dpi rendering. Scale() returns the screen scale factor and will
+-- 
+2.9.3
+

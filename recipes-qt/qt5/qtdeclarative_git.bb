@@ -14,6 +14,10 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
+SRC_URI += " \
+    file://0001-Fix-QQmlExpression-leaking-QQmlError-objects.patch \
+"
+
 DEPENDS += "qtbase"
 
 PACKAGECONFIG ??= "qtxmlpatterns"
