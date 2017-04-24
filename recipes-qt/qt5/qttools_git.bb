@@ -14,9 +14,12 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
+inherit ptest
+
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
 SRC_URI += " \
+    file://run-ptest \
     file://0003-add-noqtwebkit-configuration.patch \
     file://0004-linguist-tools-cmake-allow-overriding-the-location-f.patch \
 "
@@ -32,3 +35,17 @@ EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'C
 SRCREV = "5c7b771829c52400ddd8f441972b37ce92da3b78"
 
 BBCLASSEXTEND = "native nativesdk"
+
+do_compile_ptest() {
+    export PATH=${STAGING_DIR_NATIVE}/usr/include/qt5:$PATH
+    cd ${S}/tests
+    qmake -o Makefile tests.pro
+    oe_runmake
+}
+
+do_install_ptest() {
+    mkdir -p ${D}${PTEST_PATH}
+    t=${D}${PTEST_PATH}
+    cp ${S}/tests/auto/qtdiag/tst_tdiag $t
+    cp ${S}/tests/auto/qtattributionsscanner/tst_qtattributionsscanner $t
+}

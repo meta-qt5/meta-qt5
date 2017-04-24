@@ -1,0 +1,4 @@
+#!/bin/sh
+
+./tst_qtdiag
+./tst_qtattributionsscanner
