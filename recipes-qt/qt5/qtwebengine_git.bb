@@ -73,7 +73,7 @@ do_configure() {
         -e 's/packagesExist(libwebp,libwebpdemux):/false:/g' \
         -e 's/packagesExist(libxml-2.0,libxslt):/false:/g'\
         -e 's/^ *packagesExist($$package):/false:/g' \
-        -i ${S}/tools/qmake/mkspecs/features/configure.prf
+        -i ${S}/mkspecs/features/configure.prf
 
     # qmake can't find the OE_QMAKE_* variables on it's own so directly passing them as
     # arguments here
@@ -112,8 +112,8 @@ SRC_URI += " \
     file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
 "
 
-SRCREV_qtwebengine = "61e35009aa276e9d2d7ff1787b52ba06f8cde37f"
-SRCREV_chromium = "853d4069e45b06106f33611c458f5480f71e7c57"
+SRCREV_qtwebengine = "028bd20e41fc1995c34ca4c19e5342ff3efe0c6a"
+SRCREV_chromium = "898afbbf79637101bbd5e6ab12695ced6a759ae7"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
