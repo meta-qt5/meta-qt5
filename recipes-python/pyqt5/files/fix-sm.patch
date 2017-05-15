@@ -1,0 +1,17 @@
+--- PyQt5_gpl-5.8.2/sip/QtGui/qguiapplication.sip.orig	2017-05-13 13:28:42.523392315 -0400
++++ PyQt5_gpl-5.8.2/sip/QtGui/qguiapplication.sip	2017-05-13 13:30:08.081207211 -0400
+@@ -270,12 +270,14 @@
+ %End
+ 
+ public:
++%If (PyQt_SessionManager)
+ %If (Qt_5_6_0 -)
+     static bool isFallbackSessionManagementEnabled();
+ %End
+ %If (Qt_5_6_0 -)
+     static void setFallbackSessionManagementEnabled(bool);
+ %End
++%End
+ 
+ signals:
+ %If (Qt_5_6_0 -)
