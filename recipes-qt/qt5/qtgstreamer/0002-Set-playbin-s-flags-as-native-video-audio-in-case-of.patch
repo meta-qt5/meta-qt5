@@ -1,0 +1,60 @@
+From c580e55d6a3a7bdb549580c9f6f11501fc642711 Mon Sep 17 00:00:00 2001
+From: Ilya Smelykh <ilya.smelykh@gmail.com>
+Date: Thu, 31 Jul 2014 22:48:44 +0700
+Subject: [PATCH] Set playbin's flags as native-video+audio in case of IMX6
+ platform.
+
+---
+ examples/qmlplayer2/CMakeLists.txt |  4 ++++
+ examples/qmlplayer2/player.cpp     | 16 +++++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/examples/qmlplayer2/CMakeLists.txt b/examples/qmlplayer2/CMakeLists.txt
+index cbd58ee..abb8b46 100644
+--- a/examples/qmlplayer2/CMakeLists.txt
++++ b/examples/qmlplayer2/CMakeLists.txt
+@@ -28,3 +28,7 @@ add_executable(qmlplayer2
+ )
+ target_link_libraries(qmlplayer2 ${QTGSTREAMER_QUICK_LIBRARIES})
+ qt4or5_use_modules(qmlplayer2 Core Gui Quick2 Qml)
++
++if (USE_HW_PLATFORM)
++     add_definitions(${QTGSTREAMER_HW_PLATFORM})
++endif()
+\ No newline at end of file
+diff --git a/examples/qmlplayer2/player.cpp b/examples/qmlplayer2/player.cpp
+index 9baf3b3..0ced449 100644
+--- a/examples/qmlplayer2/player.cpp
++++ b/examples/qmlplayer2/player.cpp
+@@ -55,13 +55,27 @@ void Player::stop()
+     }
+ }
+ 
++typedef enum {
++   GST_PLAY_FLAG_VIDEO         = (1 << 0),
++   GST_PLAY_FLAG_AUDIO         = (1 << 1),
++   GST_PLAY_FLAG_TEXT          = (1 << 2),
++   GST_PLAY_FLAG_VIS           = (1 << 3),
++   GST_PLAY_FLAG_SOFT_VOLUME   = (1 << 4),
++   GST_PLAY_FLAG_NATIVE_AUDIO  = (1 << 5),
++   GST_PLAY_FLAG_NATIVE_VIDEO  = (1 << 6),
++   GST_PLAY_FLAG_DOWNLOAD      = (1 << 7),
++   GST_PLAY_FLAG_BUFFERING     = (1 << 8)
++} GstPlayFlags;
++
+ void Player::setUri(const QString & uri)
+ {
+     if (!m_pipeline) {
+         m_pipeline = QGst::ElementFactory::make("playbin").dynamicCast<QGst::Pipeline>();
+         if (m_pipeline) {
+             m_pipeline->setProperty("video-sink", m_videoSink);
+-
++#ifdef HW_PLATFORM_IMX6
++            m_pipeline->setProperty("flags", GST_PLAY_FLAG_NATIVE_VIDEO | GST_PLAY_FLAG_AUDIO);
++#endif
+             //watch the bus for messages
+             QGst::BusPtr bus = m_pipeline->bus();
+             bus->addSignalWatch();
+-- 
+1.9.1
+
