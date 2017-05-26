@@ -1,6 +1,6 @@
 SUMMARY = "QT5 LedScreen"
 DESCRIPTION = "This is LedScreen Qt5 QML component"
-HOMEPAGE = "http://quitcoding.com/?page=work#cinex"
+HOMEPAGE = "http://quitcoding.com/?page=work#ledscreen"
 LICENSE = "CC-BY-3.0"
 LIC_FILES_CHKSUM = "file://README.txt;md5=fe07f4a0be40fe88f8c7ceaca63a28b5"
 
