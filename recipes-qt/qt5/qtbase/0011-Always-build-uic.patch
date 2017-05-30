@@ -1,7 +1,7 @@
-From 1b94b0f2579edcf870bc953f820af8fb2ec4376f Mon Sep 17 00:00:00 2001
+From b63b2819b88ef252a078e7ef595f7f370ec0c050 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 16 Nov 2013 00:32:30 +0100
-Subject: [PATCH] Always build uic
+Subject: [PATCH] Always build uic and qvkgen
 
 Even if we are not building gui or widgets. This tool is needed later
 as a native tool when compiling the target.
@@ -14,15 +14,15 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/src.pro b/src/src.pro
-index 3d18540..d128b3a 100644
+index a2064b1..9fae335 100644
 --- a/src/src.pro
 +++ b/src/src.pro
-@@ -195,7 +195,7 @@ contains(QT_CONFIG, concurrent):SUBDIRS += src_concurrent
+@@ -211,7 +211,7 @@ qtConfig(gui) {
          }
      }
  }
 -SUBDIRS += src_plugins
-+SUBDIRS += src_plugins src_tools_uic
++SUBDIRS += src_plugins src_tools_uic src_tools_qvkgen
  
  nacl: SUBDIRS -= src_network src_testlib
  
