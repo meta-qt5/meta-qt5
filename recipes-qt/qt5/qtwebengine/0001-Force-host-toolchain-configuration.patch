@@ -52,8 +52,8 @@ index 75b9690..601f688 100755
    else:
 -    cc = os.environ.get('CC', 'cc')
 -    cxx = os.environ.get('CXX', 'c++')
-+    cc = os.environ.get('CC_host', 'cc')
-+    cxx = os.environ.get('CXX_host', 'c++')
++    cc = os.environ.get('CC_host', 'gcc')
++    cxx = os.environ.get('CXX_host', 'g++')
      ld = cxx
 -    ar = os.environ.get('AR', 'ar')
 +    ar = os.environ.get('AR_host', 'ar')
