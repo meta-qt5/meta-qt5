@@ -9,6 +9,19 @@ LIC_FILES_CHKSUM = " \
 require qt5.inc
 require qt5-git.inc
 
-DEPENDS += "qtbase qtdeclarative"
+DEPENDS += "qtbase qtdeclarative qtremoteobjects-native"
+
+SRC_URI += " \
+    file://0001-Allow-a-tools-only-build.patch \
+"
+
+PACKAGECONFIG ??= ""
+PACKAGECONFIG_class-native ??= "tools-only"
+PACKAGECONFIG_class-nativesdk ??= "tools-only"
+PACKAGECONFIG[tools-only] = "CONFIG+=tools-only"
+
+EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
 SRCREV = "ae0b101884b05355e3a7bc06dbca722ad3d08d0f"
+
+BBCLASSEXTEND += "native nativesdk"

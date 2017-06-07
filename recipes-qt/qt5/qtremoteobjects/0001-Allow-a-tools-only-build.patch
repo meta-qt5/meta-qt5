@@ -1,0 +1,37 @@
+From dd9d1e5ecdcd8267215523ad08ea893656a7f42d Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Wed, 7 Jun 2017 15:17:12 +0300
+Subject: [PATCH] Allow a tools-only build
+
+Change-Id: I3b33fc1c8877fc82568bd386b063e7a0aa57b706
+---
+ mkspecs/features/repccommon.pri | 2 +-
+ qtremoteobjects.pro             | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/mkspecs/features/repccommon.pri b/mkspecs/features/repccommon.pri
+index 5e88bf8..6efd19e 100644
+--- a/mkspecs/features/repccommon.pri
++++ b/mkspecs/features/repccommon.pri
+@@ -3,7 +3,7 @@ cmd = $${QT.remoteobjects.bins}/repc
+ contains(QMAKE_HOST.os, Windows) {
+     cmd = $$system_path($${cmd}.exe)
+ }
+-exists($$cmd): QT_TOOL.repc.binary = $$cmd
++false:exists($$cmd): QT_TOOL.repc.binary = $$cmd
+ 
+ # qtPrepareTool honors QT_TOOL.repc.binary if set
+ qtPrepareTool(QMAKE_REPC, repc)
+diff --git a/qtremoteobjects.pro b/qtremoteobjects.pro
+index c2e2b6b..93c2bb5 100644
+--- a/qtremoteobjects.pro
++++ b/qtremoteobjects.pro
+@@ -2,3 +2,8 @@ CONFIG += examples_need_tools tests_need_tools
+ load(qt_parts)
+ 
+ SUBDIRS += mkspecs
++
++tools-only {
++    sub_tools.depends -= sub_src
++    SUBDIRS = sub_tools
++}
