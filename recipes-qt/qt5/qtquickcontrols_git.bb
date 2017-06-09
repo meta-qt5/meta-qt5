@@ -15,8 +15,6 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtdeclarative"
 
-RDEPENDS_${PN}-dev = ""
-
 FILES_${PN}-qmlplugins += " \
   ${OE_QMAKE_PATH_QML}/QtQuick/Controls/Shaders \
   ${OE_QMAKE_PATH_QML}/QtQuick/Dialogs/qml/icons.ttf \
@@ -26,4 +24,4 @@ SRC_URI += " \
     file://0001-texteditor-fix-invalid-use-of-incomplete-type-class-.patch \
 "
 
-SRCREV = "dacb91916b202208681471ba764504c7c7d086f0"
+SRCREV = "ae688459bc845ab919ce256f315843d97ba9ff32"

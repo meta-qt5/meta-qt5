@@ -109,4 +109,4 @@ do_install() {
     install -m 755 ${B}/bin/qfloat16-tables ${D}${OE_QMAKE_PATH_BINS}
 }
 
-SRCREV = "f6b36eaafec24b4c67efff621d380a4ca4257d0b"
+SRCREV = "5f0ce2333f7e11a3ffb5d16a27cd9303efa712d5"

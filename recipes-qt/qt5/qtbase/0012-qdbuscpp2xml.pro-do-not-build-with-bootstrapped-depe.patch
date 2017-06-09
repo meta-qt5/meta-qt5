@@ -1,4 +1,4 @@
-From 86ae0ce931edbe0ac30cfe5f94f681f1d055fdb0 Mon Sep 17 00:00:00 2001
+From 9bd7ad277698be81db2af1a86d5b4efad5818203 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Mon, 6 Mar 2017 11:50:38 +0100
 Subject: [PATCH] qdbuscpp2xml.pro: do not build with bootstrapped
@@ -9,15 +9,16 @@ Content-Transfer-Encoding: 8bit
 
 Upstream-Status: Pending
 
+Change-Id: I14e9b9a2bb4aca08d408c8aa76a2c58b54e74e7d
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
 ---
  src/src.pro                             | 9 ++-------
- src/tools/qdbuscpp2xml/qdbuscpp2xml.pro | 3 +--
- src/tools/qdbusxml2cpp/qdbusxml2cpp.pro | 5 +----
- 3 files changed, 4 insertions(+), 13 deletions(-)
+ src/tools/qdbuscpp2xml/qdbuscpp2xml.pro | 1 +
+ src/tools/qdbusxml2cpp/qdbusxml2cpp.pro | 1 +
+ 3 files changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/src/src.pro b/src/src.pro
-index 90d7e2b..0aaf604 100644
+index a2064b1..d6f05e0 100644
 --- a/src/src.pro
 +++ b/src/src.pro
 @@ -4,9 +4,6 @@ QT_FOR_CONFIG += gui-private
@@ -30,7 +31,7 @@ index 90d7e2b..0aaf604 100644
  src_qtzlib.file = $$PWD/corelib/qtzlib.pro
  src_qtzlib.target = sub-zlib
  
-@@ -37,13 +34,11 @@ src_tools_bootstrap_dbus.depends = src_tools_bootstrap
+@@ -41,13 +38,11 @@ src_tools_bootstrap_dbus.depends = src_tools_bootstrap
  
  src_tools_qdbusxml2cpp.subdir = tools/qdbusxml2cpp
  src_tools_qdbusxml2cpp.target = sub-qdbusxml2cpp
@@ -44,36 +45,28 @@ index 90d7e2b..0aaf604 100644
 -else: src_tools_qdbuscpp2xml.depends = src_dbus
 +src_tools_qdbuscpp2xml.depends = src_dbus
  
- src_winmain.subdir = $$PWD/winmain
- src_winmain.target = sub-winmain
+ src_tools_qvkgen.subdir = tools/qvkgen
+ src_tools_qvkgen.target = sub-qvkgen
 diff --git a/src/tools/qdbuscpp2xml/qdbuscpp2xml.pro b/src/tools/qdbuscpp2xml/qdbuscpp2xml.pro
-index 5ac3159..74c507c 100644
+index 5ac3159..65de97e 100644
 --- a/src/tools/qdbuscpp2xml/qdbuscpp2xml.pro
 +++ b/src/tools/qdbuscpp2xml/qdbuscpp2xml.pro
-@@ -1,7 +1,6 @@
+@@ -1,5 +1,6 @@
  option(host_build)
  QT = core-private
--force_bootstrap: QT += bootstrap_dbus-private
--else: QT += dbus-private
-+QT += dbus-private
++CONFIG -= force_bootstrap
+ force_bootstrap: QT += bootstrap_dbus-private
+ else: QT += dbus-private
  DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_FOREACH
- QMAKE_CXXFLAGS += $$QT_HOST_CFLAGS_DBUS
- 
 diff --git a/src/tools/qdbusxml2cpp/qdbusxml2cpp.pro b/src/tools/qdbusxml2cpp/qdbusxml2cpp.pro
-index d9ee5de..e891103 100644
+index 95fcbcb..d1ebdde 100644
 --- a/src/tools/qdbusxml2cpp/qdbusxml2cpp.pro
 +++ b/src/tools/qdbusxml2cpp/qdbusxml2cpp.pro
-@@ -1,9 +1,6 @@
- option(host_build)
--!force_bootstrap:!qtConfig(commandlineparser): \
--    CONFIG += force_bootstrap
+@@ -5,6 +5,7 @@ option(host_build)
+         CONFIG += force_bootstrap
+ }
  QT = core-private
--force_bootstrap: QT += bootstrap_dbus-private
--else: QT += dbus-private
-+QT += dbus-private
++CONFIG -= force_bootstrap
+ force_bootstrap: QT += bootstrap_dbus-private
+ else: QT += dbus-private
  DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_FOREACH
- QMAKE_CXXFLAGS += $$QT_HOST_CFLAGS_DBUS
- 
--- 
-2.9.3
-
