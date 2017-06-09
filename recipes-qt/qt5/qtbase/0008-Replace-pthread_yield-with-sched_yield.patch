@@ -1,0 +1,60 @@
+From 41d7028d2239a98a76cc91939edb2cb728019d08 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 27 Jul 2017 08:02:51 -0700
+Subject: [PATCH] Replace pthread_yield with sched_yield
+
+On Linux pthead_yield is same as sched_yield implementation wise
+and sched_yield is available on all libc
+implementations on Linux
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp   | 4 ++--
+ tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp | 5 +++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp b/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
+index b6106e8c9e..6d6ea0b739 100644
+--- a/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
++++ b/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
+@@ -34,7 +34,7 @@
+ #include "tst_qvariant_common.h"
+ 
+ #ifdef Q_OS_LINUX
+-# include <pthread.h>
++# include <sched.h>
+ #endif
+ 
+ #include <algorithm>
+@@ -197,7 +197,7 @@ protected:
+             const char *nm = name.constData();
+             int tp = qRegisterMetaType<Bar>(nm);
+ #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
+-            pthread_yield();
++            sched_yield();
+ #endif
+             QMetaType info(tp);
+             if (!info.isValid()) {
+diff --git a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
+index 7340817ade..f34162a105 100644
+--- a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
++++ b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
+@@ -77,6 +77,7 @@
+ #include <stdlib.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
++#include <sched.h>
+ #endif
+ 
+ #include "private/qhostinfo_p.h"
+@@ -2131,8 +2132,8 @@ public slots:
+ 
+ #if defined(Q_OS_MAC)
+         pthread_yield_np();
+-#elif defined Q_OS_LINUX && !defined Q_OS_ANDROID
+-        pthread_yield();
++#elif defined Q_OS_LINUX
++        sched_yield();
+ #endif
+         if (!sock->waitForConnected()) {
+             networkTimeout = true;

@@ -214,7 +214,9 @@ qmake5_base_do_install() {
     qmake5_base_fix_install ${STAGING_DIR_HOST}
     qmake5_base_fix_install ${STAGING_DIR_NATIVE}
 
-    if ls ${D}${libdir}/pkgconfig/Qt5*.pc >/dev/null 2>/dev/null; then
-        sed -i "s@-L${STAGING_LIBDIR}@-L\${libdir}@g" ${D}${libdir}/pkgconfig/Qt5*.pc
+    if ls ${D}${libdir}/pkgconfig/*.pc >/dev/null 2>/dev/null; then
+        sed -i ${D}${libdir}/pkgconfig/*.pc \
+            -e "s@-L${STAGING_LIBDIR}@-L\${libdir}@g" \
+            -e "s@${STAGING_DIR_TARGET}@@g"
     fi
 }

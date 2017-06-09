@@ -1,4 +1,4 @@
-From 22ccc94b5501509b516fce17195a598d04dcc2f3 Mon Sep 17 00:00:00 2001
+From dd0f3fefeeefb31ec8cf2417bd3f447f7b9c25c6 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@theqtcompany.com>
 Date: Wed, 10 Feb 2016 09:02:09 +0200
 Subject: [PATCH] Allow a tools-only build
@@ -6,7 +6,8 @@ Subject: [PATCH] Allow a tools-only build
 ---
  qt3d.pro                                  | 7 ++++++-
  src/3rdparty/assimp/assimp_dependency.pri | 2 +-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ tools/tools.pro                           | 2 +-
+ 3 files changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/qt3d.pro b/qt3d.pro
 index 2cc347a1c..81cdeefb0 100644
@@ -38,3 +39,13 @@ index 8ba2d9a41..e973d93dd 100644
      QMAKE_USE_PRIVATE += assimp
  } else {
      include(assimp.pri)
+diff --git a/tools/tools.pro b/tools/tools.pro
+index 8e973aecb..ad51db585 100644
+--- a/tools/tools.pro
++++ b/tools/tools.pro
+@@ -1,4 +1,4 @@
+ TEMPLATE = subdirs
+ QT_FOR_CONFIG += 3dcore-private
+-!android:qtConfig(assimp):qtConfig(commandlineparser): \
++!android:tools-only|qtConfig(assimp):qtConfig(commandlineparser): \
+     SUBDIRS += qgltf

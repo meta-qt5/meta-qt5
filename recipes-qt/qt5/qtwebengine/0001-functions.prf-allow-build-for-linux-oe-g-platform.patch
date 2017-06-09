@@ -1,0 +1,30 @@
+From 491576d7e67d00b93106592140e5d7f0f34ea641 Mon Sep 17 00:00:00 2001
+From: Frieder Schrempf <frieder.schrempf@online.de>
+Date: Mon, 1 Dec 2014 14:34:40 +0000
+Subject: [PATCH] functions.prf: allow build for linux-oe-g++ platform
+
+Upstream-Status: Inappropriate [OE specific]
+
+Signed-off-by: Frieder Schrempf <frieder.schrempf@online.de>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ mkspecs/features/functions.prf | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/mkspecs/features/functions.prf b/mkspecs/features/functions.prf
+index eb421f8b..4513742d 100644
+--- a/mkspecs/features/functions.prf
++++ b/mkspecs/features/functions.prf
+@@ -33,6 +33,12 @@ defineTest(isPlatformSupported) {
+       return(false)
+     }
+     gcc:!clang:!isGCCVersionSupported(): return(false)
++  } else:linux-oe-g++* {
++    !gcc:!clang {
++      skipBuild("Qt WebEngine on Linux requires clang or GCC.")
++      return(false)
++    }
++    gcc:!clang:!isGCCVersionSupported(): return(false)
+   } else:win32 {
+     winrt {
+       skipBuild("WinRT is not supported.")

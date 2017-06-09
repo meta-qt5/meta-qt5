@@ -1,0 +1,40 @@
+From b1a6f73d49a340e99145a4c4cf70dc796ed632ff Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Wed, 15 Mar 2017 13:53:28 +0200
+Subject: [PATCH] chromium: Force host toolchain configuration
+
+Force gcc/g++ to be used for parts using host toolchain, since
+the option(host_build) does not work in yocto builds.
+
+Upstream-Status: Inappropriate [OE specific]
+Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ chromium/tools/gn/bootstrap/bootstrap.py | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/chromium/tools/gn/bootstrap/bootstrap.py b/chromium/tools/gn/bootstrap/bootstrap.py
+index 43d252b43e..e58347848e 100755
+--- a/chromium/tools/gn/bootstrap/bootstrap.py
++++ b/chromium/tools/gn/bootstrap/bootstrap.py
+@@ -298,14 +298,14 @@ def write_gn_ninja(path, root_gen_dir, options):
+     ld = os.environ.get('LD', 'link.exe')
+     ar = os.environ.get('AR', 'lib.exe')
+   else:
+-    cc = os.environ.get('CC', 'cc')
+-    cxx = os.environ.get('CXX', 'c++')
++    cc = os.environ.get('CC_host', 'gcc')
++    cxx = os.environ.get('CXX_host', 'g++')
+     ld = cxx
+-    ar = os.environ.get('AR', 'ar')
++    ar = os.environ.get('AR_host', 'ar')
+ 
+-  cflags = os.environ.get('CFLAGS', '').split()
+-  cflags_cc = os.environ.get('CXXFLAGS', '').split()
+-  ldflags = os.environ.get('LDFLAGS', '').split()
++  cflags = os.environ.get('CFLAGS_host', '').split()
++  cflags_cc = os.environ.get('CXXFLAGS_host', '').split()
++  ldflags = os.environ.get('LDFLAGS_host', '').split()
+   include_dirs = [root_gen_dir, SRC_ROOT]
+   libs = []
+ 

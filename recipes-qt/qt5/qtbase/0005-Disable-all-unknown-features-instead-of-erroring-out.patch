@@ -1,0 +1,25 @@
+From 6ecb404346525a92f4c8926aa285662f3f5010b3 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Mon, 24 Oct 2016 09:45:18 +0300
+Subject: [PATCH] Disable all unknown features instead of erroring out
+
+Task-number: QTBUG-56656
+Change-Id: Ib884fe33cac74439f9592b145937f6b75ced8447
+---
+ mkspecs/features/qt_configure.prf | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/mkspecs/features/qt_configure.prf b/mkspecs/features/qt_configure.prf
+index 966c43108c..32f0dd0041 100644
+--- a/mkspecs/features/qt_configure.prf
++++ b/mkspecs/features/qt_configure.prf
+@@ -1180,7 +1180,8 @@ defineReplace(qtConfEvaluateSingleExpression) {
+                     error("Expression '$$1' is accessing field '$$var' of non-local feature $${feature}.")
+                 return($$result)
+             }
+-            error("Unknown feature object $${feature} in expression '$${1}'.")
++            warning("Unknown feature object $${feature} in expression '$${1}'.")
++            result = false
+         }
+         !qtConfCheckFeature($$feature): \
+             error("Expression '$$1' is accessing non-emitted feature $${feature}.")

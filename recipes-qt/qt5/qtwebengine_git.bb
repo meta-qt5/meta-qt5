@@ -14,6 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += " \
     ninja-native \
+    yasm-native \
     qtwebchannel \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols \
     qtlocation \
@@ -31,6 +32,7 @@ EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm \
                         GYP_CONFIG+=use_allocator=none \
                         GYP_CONFIG+=use_experimental_allocator_shim=false \
 "
+EXTRA_QMAKEVARS_CONFIGURE += "-feature-system-ninja -no-feature-system-gn"
 
 # chromium/third_party/openh264/openh264.gyp adds
 # -Wno-format to openh264_cflags_add
@@ -42,7 +44,7 @@ SECURITY_STRINGFORMAT = ""
 
 # To use system ffmpeg you need to enable also libwebp, opus, vpx											    
 # Only depenedencies available in oe-core are enabled by default
-PACKAGECONFIG ??= "libwebp flac libevent libxslt speex"
+PACKAGECONFIG ??= "libwebp flac libevent libxslt speex nss"
 PACKAGECONFIG[opus] = "WEBENGINE_CONFIG+=use_system_opus,,libopus"
 PACKAGECONFIG[icu] = "WEBENGINE_CONFIG+=use_system_icu,,icu"
 PACKAGECONFIG[ffmpeg] = "WEBENGINE_CONFIG+=use_system_ffmpeg,,libav"
@@ -53,6 +55,7 @@ PACKAGECONFIG[libxslt] = "WEBENGINE_CONFIG+=use_system_libxslt,,libxslt"
 PACKAGECONFIG[speex] = "WEBENGINE_CONFIG+=use_system_speex,,speex"
 PACKAGECONFIG[vpx] = "WEBENGINE_CONFIG+=use_system_vpx,,libvpx"
 PACKAGECONFIG[webrtc] = "WEBENGINE_CONFIG+=use_webrtc,,libvpx"
+PACKAGECONFIG[nss] = "WEBENGINE_CONFIG+=use_nss,,nss"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
@@ -76,30 +79,29 @@ def gettext_oeconf(d):
 require qt5.inc
 require qt5-git.inc
 
-export NINJA_PATH="${STAGING_BINDIR_NATIVE}/ninja"
-
 do_configure() {
-    # replace LD with CXX, to workaround a possible gyp inheritssue?
-    export LD="${CXX}"
-    export CC="${CC}"
-    export CXX="${CXX}"
-    export CC_host="gcc"
-    export CXX_host="g++"
-    export QMAKE_MAKE_ARGS="${EXTRA_OEMAKE}"
-    export QMAKE_CACHE_EVAL="${PACKAGECONFIG_CONFARGS}"
-
     # Disable autodetection from sysroot:
-    sed -i 's/packagesExist([^)]*vpx[^)]*):/false:/g; s/config_libvpx:/false:/g; s/config_srtp:/false:/g; s/config_snappy:/false:/g; s/packagesExist(nss):/false:/g; s/packagesExist(minizip, zlib):/false:/g; s/packagesExist(libwebp,libwebpdemux):/false:/g; s/packagesExist(libxml-2.0,libxslt):/false:/g; s/^ *packagesExist($$package):/false:/g' ${S}/tools/qmake/mkspecs/features/configure.prf
+    sed -e 's/packagesExist([^)]*vpx[^)]*):/false:/g'\
+        -e 's/config_libvpx:/false:/g' \
+        -e 's/config_srtp:/false:/g' \
+        -e 's/config_snappy:/false:/g' \
+        -e 's/packagesExist(nss):/false:/g' \
+        -e 's/packagesExist(minizip, zlib):/false:/g' \
+        -e 's/packagesExist(libwebp,libwebpdemux):/false:/g' \
+        -e 's/packagesExist(libxml-2.0,libxslt):/false:/g'\
+        -e 's/^ *packagesExist($$package):/false:/g' \
+        -i ${S}/mkspecs/features/configure.prf
 
     # qmake can't find the OE_QMAKE_* variables on it's own so directly passing them as
     # arguments here
-    ${OE_QMAKE_QMAKE} -r ${EXTRA_QMAKEVARS_PRE} ${S} \
-        QMAKE_CXX="${OE_QMAKE_CXX}" QMAKE_CC="${OE_QMAKE_CC}" \
+    ${OE_QMAKE_QMAKE} ${EXTRA_QMAKEVARS_PRE} ${S} \
+        QMAKE_CXX="${OE_QMAKE_CXX}" \
+        QMAKE_CC="${OE_QMAKE_CC}" \
         QMAKE_LINK="${OE_QMAKE_LINK}" \
         QMAKE_CFLAGS="${OE_QMAKE_CFLAGS}" \
         QMAKE_CXXFLAGS="${OE_QMAKE_CXXFLAGS}" \
-        QMAKE_AR="${OE_QMAKE_AR} cqs" \
-        -after ${EXTRA_QMAKEVARS_POST}
+        -after ${EXTRA_QMAKEVARS_POST} -- \
+        ${EXTRA_QMAKEVARS_CONFIGURE}
 }
 
 do_configure_prepend_libc-musl() {
@@ -112,8 +114,7 @@ do_configure_prepend_libc-musl() {
 do_compile[progress] = "outof:^\[(\d+)/(\d+)\]\s+"
 
 do_install_append() {
-    rmdir ${D}${OE_QMAKE_PATH_PLUGINS}/${BPN} ${D}${OE_QMAKE_PATH_PLUGINS} || true
-    sed -i 's@ -Wl,--start-group.*-Wl,--end-group@@g; s@-L${B}[^ ]* @ @g' ${D}${libdir}/pkgconfig/Qt5WebEngineCore.pc
+    sed -i 's@ -Wl,--start-group.*-Wl,--end-group@@g; s@[^ ]*${B}[^ ]* @@g' ${D}${libdir}/pkgconfig/Qt5WebEngineCore.pc
 }
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
@@ -126,39 +127,36 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "53-based"
+QT_MODULE_BRANCH_CHROMIUM = "56-based"
 
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
-    file://0001-functions.prf-Don-t-match-QMAKE_EXT_CPP-or-QMAKE_EXT.patch \
-    file://0002-functions.prf-Make-sure-we-only-use-the-file-name-to.patch \
-    file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
-    file://0004-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
-    file://0005-Include-dependency-to-QCoreApplication-translate.patch \
-    file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch;patchdir=src/3rdparty \
-    file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch;patchdir=src/3rdparty \
-    file://0003-chromium-v8-fix-build-with-gcc7.patch;patchdir=src/3rdparty \
-    file://0004-chromium-WebKit-fix-build-with-gcc7.patch;patchdir=src/3rdparty \
-"
-SRC_URI_append_libc-musl = "\
-    file://0005-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch;patchdir=src/3rdparty \
-    file://0006-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty \
-    file://0007-chromium-musl-include-fcntl.h-for-loff_t.patch;patchdir=src/3rdparty \
-    file://0008-chromium-musl-use-off64_t-instead-of-the-internal-__.patch;patchdir=src/3rdparty \
-    file://0009-chromium-musl-linux-glibc-make-the-distinction.patch;patchdir=src/3rdparty \
-    file://0010-chromium-musl-allocator-Do-not-include-glibc_weak_sy.patch;patchdir=src/3rdparty \
-    file://0011-chromium-musl-Use-correct-member-name-__si_fields-fr.patch;patchdir=src/3rdparty \
-    file://0012-chromium-musl-Match-syscalls-to-match-musl.patch;patchdir=src/3rdparty \
-    file://0013-chromium-musl-Define-res_ninit-and-res_nclose-for-no.patch;patchdir=src/3rdparty \
-    file://0014-chromium-musl-Do-not-define-__sbrk-on-musl.patch;patchdir=src/3rdparty \
-    file://0015-chromium-musl-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty \
-    file://0016-chromium-musl-include-asm-generic-ioctl.h-for-TCGETS.patch;patchdir=src/3rdparty \
-    file://0017-chromium-musl-link-with-libexecinfo-on-musl.patch;patchdir=src/3rdparty \
-    file://0018-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
+    file://0001-functions.prf-allow-build-for-linux-oe-g-platform.patch \
+    file://0002-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
+    file://0003-Include-dependency-to-QCoreApplication-translate.patch \
+    file://0004-Force-host-toolchain-configuration.patch \
+    file://0001-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch;patchdir=src/3rdparty \
+    file://0002-chromium-Force-host-toolchain-configuration.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "d740d6a7dbfec387752c7bc8a8b06db0e757c9dc"
-SRCREV_chromium = "15d257fd921f37b32ef643225f21df0ea24c8302"
+SRC_URI_append_libc-musl = "\
+    file://0003-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch;patchdir=src/3rdparty \
+    file://0004-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty \
+    file://0005-chromium-musl-include-fcntl.h-for-loff_t.patch;patchdir=src/3rdparty \
+    file://0006-chromium-musl-use-off64_t-instead-of-the-internal-__.patch;patchdir=src/3rdparty \
+    file://0007-chromium-musl-linux-glibc-make-the-distinction.patch;patchdir=src/3rdparty \
+    file://0008-chromium-musl-allocator-Do-not-include-glibc_weak_sy.patch;patchdir=src/3rdparty \
+    file://0009-chromium-musl-Use-correct-member-name-__si_fields-fr.patch;patchdir=src/3rdparty \
+    file://0010-chromium-musl-Match-syscalls-to-match-musl.patch;patchdir=src/3rdparty \
+    file://0011-chromium-musl-Define-res_ninit-and-res_nclose-for-no.patch;patchdir=src/3rdparty \
+    file://0012-chromium-musl-Do-not-define-__sbrk-on-musl.patch;patchdir=src/3rdparty \
+    file://0013-chromium-musl-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty \
+    file://0014-chromium-musl-include-asm-generic-ioctl.h-for-TCGETS.patch;patchdir=src/3rdparty \
+    file://0015-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
+"
+
+SRCREV_qtwebengine = "73f7be5b2a95eab3dce11caede538eeb7beb71f2"
+SRCREV_chromium = "aa2fdd6be3d465280d2a0c3aacdc738bb4ffec05"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

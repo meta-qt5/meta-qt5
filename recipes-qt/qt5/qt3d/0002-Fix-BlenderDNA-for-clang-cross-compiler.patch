@@ -1,4 +1,4 @@
-From bc5ef10fc6f71cb340ad339bc43f6ce48adb1f59 Mon Sep 17 00:00:00 2001
+From ec40913bc563e3cb0abc1965ce457d3a2fe663b3 Mon Sep 17 00:00:00 2001
 From: Kim Kulling <kim.kulling@googlemail.com>
 Date: Mon, 7 Nov 2016 17:19:49 +0100
 Subject: [PATCH] Fix BlenderDNA for clang cross compiler.
@@ -9,36 +9,36 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/src/3rdparty/assimp/code/BlenderDNA.cpp b/src/3rdparty/assimp/code/BlenderDNA.cpp
-index b380fbe8d..3cc27dff1 100644
+index 18ec9f2b4..5b0b2090f 100644
 --- a/src/3rdparty/assimp/code/BlenderDNA.cpp
 +++ b/src/3rdparty/assimp/code/BlenderDNA.cpp
-@@ -56,10 +56,10 @@ using namespace Assimp::Formatter;
- #define for_each BOOST_FOREACH
- bool match4(StreamReaderAny& stream, const char* string) {
- 	char tmp[] = { 
--		(stream).GetI1(), 
--		(stream).GetI1(),  
--		(stream).GetI1(), 
--		(stream).GetI1()
-+		(const char)(stream).GetI1(),
-+		(const char)(stream).GetI1(),
-+		(const char)(stream).GetI1(),
-+		(const char)(stream).GetI1()
- 	};
- 	return (tmp[0]==string[0] && tmp[1]==string[1] && tmp[2]==string[2] && tmp[3]==string[3]);
- }
-@@ -344,10 +344,10 @@ void SectionParser :: Next()
- 	stream.SetCurrentPos(current.start + current.size);
+@@ -55,10 +55,10 @@ using namespace Assimp::Formatter;
  
- 	const char tmp[] = {
--		stream.GetI1(),
--		stream.GetI1(),
--		stream.GetI1(),
--		stream.GetI1()
-+		(const char)stream.GetI1(),
-+		(const char)stream.GetI1(),
-+		(const char)stream.GetI1(),
-+		(const char)stream.GetI1()
- 	};
- 	current.id = std::string(tmp,tmp[3]?4:tmp[2]?3:tmp[1]?2:1);
+ bool match4(StreamReaderAny& stream, const char* string) {
+     char tmp[] = {
+-        (stream).GetI1(),
+-        (stream).GetI1(),
+-        (stream).GetI1(),
+-        (stream).GetI1()
++        (const char)(stream).GetI1(),
++        (const char)(stream).GetI1(),
++        (const char)(stream).GetI1(),
++        (const char)(stream).GetI1()
+     };
+     return (tmp[0]==string[0] && tmp[1]==string[1] && tmp[2]==string[2] && tmp[3]==string[3]);
+ }
+@@ -345,10 +345,10 @@ void SectionParser :: Next()
+     stream.SetCurrentPos(current.start + current.size);
+ 
+     const char tmp[] = {
+-        stream.GetI1(),
+-        stream.GetI1(),
+-        stream.GetI1(),
+-        stream.GetI1()
++        (const char)stream.GetI1(),
++        (const char)stream.GetI1(),
++        (const char)stream.GetI1(),
++        (const char)stream.GetI1()
+     };
+     current.id = std::string(tmp,tmp[3]?4:tmp[2]?3:tmp[1]?2:1);
  

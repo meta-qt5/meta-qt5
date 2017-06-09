@@ -1,0 +1,28 @@
+From 294e4c718407e66631ce36c37258217c9adb3f83 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sat, 16 Nov 2013 00:32:30 +0100
+Subject: [PATCH] Always build uic
+
+Even if we are not building gui or widgets. This tool is needed later
+as a native tool when compiling the target.
+
+Change-Id: I257668ac28c22b192e7ec7736e6c23fa3be6bab6
+Signed-off-by: Mikko Levonmaa <mikko.levonmaa@palm.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/src.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/src.pro b/src/src.pro
+index 43fc06f2e5..1e9d4dcc0d 100644
+--- a/src/src.pro
++++ b/src/src.pro
+@@ -203,7 +203,7 @@ qtConfig(gui) {
+         }
+     }
+ }
+-SUBDIRS += src_plugins
++SUBDIRS += src_plugins src_tools_uic
+ 
+ nacl: SUBDIRS -= src_network src_testlib
+ 

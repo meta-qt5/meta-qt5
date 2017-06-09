@@ -1,0 +1,34 @@
+From 4848804312f0045b53c85db113ac9e42fe1b7360 Mon Sep 17 00:00:00 2001
+From: Denys Dmytriyenko <denys@ti.com>
+Date: Tue, 25 Aug 2015 10:05:15 -0400
+Subject: [PATCH] configure: bump path length from 256 to 512 characters
+
+Increase the path length that gets hardcoded into generated config.cpp file
+from 256 to 512 characters, as nativesdk path can be quite long.
+
+Also update length of EXT_PREFIX and HOST_PREFIX now.
+
+Change-Id: If98dd57160efe9c98c36148cdf872f50b3d38118
+Signed-off-by: Denys Dmytriyenko <denys@ti.com>
+---
+ configure.pri | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/configure.pri b/configure.pri
+index be1b166080..52f03bf3f2 100644
+--- a/configure.pri
++++ b/configure.pri
+@@ -796,10 +796,10 @@ defineTest(qtConfOutput_preparePaths) {
+         "static const char qt_configure_installation     [12+11]  = \"qt_instdate=2012-12-20\";" \
+         "" \
+         "/* Installation Info */" \
+-        "static const char qt_configure_prefix_path_str  [12+256] = \"qt_prfxpath=$$config.input.prefix\";" \
++        "static const char qt_configure_prefix_path_str  [12+512] = \"qt_prfxpath=$$config.input.prefix\";" \
+         "$${LITERAL_HASH}ifdef QT_BUILD_QMAKE" \
+-        "static const char qt_configure_ext_prefix_path_str   [12+256] = \"qt_epfxpath=$$config.input.extprefix\";" \
+-        "static const char qt_configure_host_prefix_path_str  [12+256] = \"qt_hpfxpath=$$config.input.hostprefix\";" \
++        "static const char qt_configure_ext_prefix_path_str   [12+512] = \"qt_epfxpath=$$config.input.extprefix\";" \
++        "static const char qt_configure_host_prefix_path_str  [12+512] = \"qt_hpfxpath=$$config.input.hostprefix\";" \
+         "$${LITERAL_HASH}endif" \
+         "" \
+         "static const short qt_configure_str_offsets[] = {" \

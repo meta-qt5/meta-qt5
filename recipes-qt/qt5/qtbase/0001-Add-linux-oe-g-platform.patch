@@ -1,4 +1,4 @@
-From 805b338154ed0262a7b8bf5c582ff5b193a55492 Mon Sep 17 00:00:00 2001
+From e13425e6f1e784b0b016cf68a54dfbae32995b86 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -30,10 +30,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index bc18e614d2..579a96d787 100755
+index 73679de621..5a0eebce50 100755
 --- a/configure
 +++ b/configure
-@@ -1614,7 +1614,7 @@ fi
+@@ -709,7 +709,7 @@ fi
  # is where the resulting variable is written to
  setBootstrapVariable()
  {
@@ -43,10 +43,10 @@ index bc18e614d2..579a96d787 100755
  
  # build qmake
 diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
-index 4ca7c6ba07..5b5ac13f1d 100644
+index 934a18a924..0f5b1b6333 100644
 --- a/mkspecs/features/configure.prf
 +++ b/mkspecs/features/configure.prf
-@@ -44,14 +44,14 @@ defineTest(qtCompileTest) {
+@@ -46,14 +46,14 @@ defineTest(qtCompileTest) {
      }
  
      # Clean up after previous run
@@ -64,10 +64,10 @@ index 4ca7c6ba07..5b5ac13f1d 100644
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 999cd18154..2ac91ba519 100644
+index c00fdb73f8..0cf4de7b49 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -67,7 +67,7 @@ defineTest(qtHaveModule) {
+@@ -69,7 +69,7 @@ defineTest(qtHaveModule) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
      isEmpty(cmd) {
