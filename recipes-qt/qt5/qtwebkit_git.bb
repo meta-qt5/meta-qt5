@@ -21,6 +21,7 @@ ARM_INSTRUCTION_SET_armv5 = "arm"
 SRC_URI += "\
     file://0001-qtwebkit-fix-QA-issue-bad-RPATH.patch \
     file://0003-Exclude-backtrace-API-for-non-glibc-libraries.patch \
+    file://0001-Remove-unused-check-for-private_tests.patch \
 "
 
 PACKAGECONFIG ??= "gstreamer qtlocation qtmultimedia qtsensors qtwebchannel \
@@ -85,4 +86,4 @@ PACKAGES_remove = "${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-db
 RUBY_SYS = "${@ '${BUILD_SYS}'.replace('i486', 'i386').replace('i586', 'i386').replace('i686', 'i386') }"
 export RUBYLIB="${STAGING_DATADIR_NATIVE}/rubygems:${STAGING_LIBDIR_NATIVE}/ruby:${STAGING_LIBDIR_NATIVE}/ruby/${RUBY_SYS}"
 
-SRCREV = "0a3506ebe5d7f431f0dd4dffa24ac32063b90ff1"
+SRCREV = "7e104c57a70fdf551bb3d22a5d637cdcbc69dbea"

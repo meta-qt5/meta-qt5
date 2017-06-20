@@ -1,0 +1,35 @@
+From df04226fe0bc6d372e1c237527d0d0c9ea39bca4 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Tue, 20 Jun 2017 13:43:41 +0300
+Subject: [PATCH] Add missing includes for QColor
+
+Change-Id: I1bb5b4653bdc9d7b4fab61df99035715fa280fcd
+---
+ src/imports/controls/qquickdefaultbusyindicator_p.h | 1 +
+ src/imports/controls/qquickdefaultprogressbar_p.h   | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/src/imports/controls/qquickdefaultbusyindicator_p.h b/src/imports/controls/qquickdefaultbusyindicator_p.h
+index e214020..f327c8d 100644
+--- a/src/imports/controls/qquickdefaultbusyindicator_p.h
++++ b/src/imports/controls/qquickdefaultbusyindicator_p.h
+@@ -49,6 +49,7 @@
+ //
+ 
+ #include <QtQuick/qquickitem.h>
++#include <QtGui/qcolor.h>
+ 
+ QT_BEGIN_NAMESPACE
+ 
+diff --git a/src/imports/controls/qquickdefaultprogressbar_p.h b/src/imports/controls/qquickdefaultprogressbar_p.h
+index dbdf5ad..91f8056 100644
+--- a/src/imports/controls/qquickdefaultprogressbar_p.h
++++ b/src/imports/controls/qquickdefaultprogressbar_p.h
+@@ -49,6 +49,7 @@
+ //
+ 
+ #include <QtQuick/qquickitem.h>
++#include <QtGui/qcolor.h>
+ 
+ QT_BEGIN_NAMESPACE
+ 

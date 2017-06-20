@@ -10,7 +10,7 @@ require qt5-git.inc
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns qtscxml-native"
 
-SRCREV = "b490e1b782ac28a82d7902f926f6e041ede179ca"
+SRCREV = "5b89e61c39fb253dae46a8aa48d341a3fd37b4b4"
 
 SRC_URI += "file://0001-Use-external-host-bin-path-for-cmake-file.patch"
 

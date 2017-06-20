@@ -22,6 +22,7 @@ SRC_URI += "\
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
     file://0009-Disable-all-unknown-features-instead-of-erroring-out.patch \
     file://0010-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
+    file://0001-Add-missing-forward-declarations.patch \
 "
 
 DEPENDS += "qtbase-native"
@@ -182,4 +183,4 @@ INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "4480f47f7b0f81483b0cf3c8327eff12938ca018"
+SRCREV = "678ff94ff29db1b0faa4aa8d486d4df544ce3247"
