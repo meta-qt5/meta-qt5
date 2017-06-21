@@ -13,4 +13,4 @@ SRC_URI += "file://0001-Add-missing-include-for-qWarning.patch"
 
 DEPENDS += "qtbase qtwebengine"
 
-SRCREV = "22e7f1941fbbb7aa7212faabf5939b6d2ca7bd49"
+SRCREV = "c795aad0aa9ff62da8d48dfa4b4c92bd55a18e45"

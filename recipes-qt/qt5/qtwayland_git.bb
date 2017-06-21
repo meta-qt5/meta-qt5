@@ -37,7 +37,7 @@ PACKAGECONFIG[libhybris-egl-server] = "-feature-libhybris-egl-server,-no-feature
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "4934b87156a889584a34e36c22abd9aee64cef7e"
+SRCREV = "29dbb9acede3f5d9e477fdedd53d04be4136c0de"
 
 # From https://bugreports.qt.io/browse/QTBUG-57767
 SRC_URI += " \
