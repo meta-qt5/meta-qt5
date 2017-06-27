@@ -16,7 +16,7 @@ LIC_FILES_CHKSUM = " \
 
 inherit ptest
 
-DEPENDS += "qtbase qtdeclarative qtxmlpatterns icu"
+DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
 SRC_URI += " \
     file://run-ptest \
