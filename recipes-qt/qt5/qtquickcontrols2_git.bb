@@ -10,4 +10,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtdeclarative"
 
+SRC_URI += " \
+    file://0001-qtquickcontrols2-fix-compilation-of-examples-textedi.patch \
+"
+
 SRCREV = "6f7852a307c7ebbdb3b6efa00cbf7626b072bbc1"

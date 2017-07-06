@@ -1,0 +1,28 @@
+From 3696a416bd594d3f280c281cb2a66bc837829238 Mon Sep 17 00:00:00 2001
+From: Steffen Sledz <sledz@dresearch-fe.de>
+Date: Thu, 6 Jul 2017 13:28:07 +0200
+Subject: [PATCH] qtquickcontrols2: fix compilation of examples/texteditor
+
+git/examples/quickcontrols2/texteditor/documenthandler.cpp:284:18: error: invalid use of incomplete type 'class QDebug'
+          qWarning() << "load() called before DocumentHandler has QQmlEngine";
+
+Signed-off-by: Steffen Sledz <sledz@dresearch-fe.de>
+---
+ examples/quickcontrols2/texteditor/documenthandler.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/examples/quickcontrols2/texteditor/documenthandler.cpp b/examples/quickcontrols2/texteditor/documenthandler.cpp
+index e57946fd..94ca82ad 100644
+--- a/examples/quickcontrols2/texteditor/documenthandler.cpp
++++ b/examples/quickcontrols2/texteditor/documenthandler.cpp
+@@ -59,6 +59,7 @@
+ #include <QTextCharFormat>
+ #include <QTextCodec>
+ #include <QTextDocument>
++#include <QtCore/QDebug>
+ 
+ DocumentHandler::DocumentHandler(QObject *parent)
+     : QObject(parent)
+-- 
+2.13.2
+
