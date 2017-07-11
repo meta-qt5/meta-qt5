@@ -13,7 +13,7 @@ do_compile_ptest() {
     oe_runmake
 }
 
-do_populate_sysroot_append() {
+do_populate_sysroot_append_class-target() {
     workdir = d.getVar('WORKDIR')
     srcdir = workdir + '/sysroot-destdir/usr/'
     destdir = workdir + '/recipe-sysroot/usr/'
