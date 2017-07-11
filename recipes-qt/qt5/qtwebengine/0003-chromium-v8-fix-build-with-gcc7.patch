@@ -1,0 +1,134 @@
+From 1a163c0cab05761f269fcb5adad5d40d71200d52 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Tue, 11 Jul 2017 10:15:41 +0200
+Subject: [PATCH 3/4] chromium: v8 fix build with gcc7
+
+Use the fix from nodejs:
+https://github.com/nodejs/node/commit/2a2a5565c298639b823250b571101f51210c50e8
+
+* fixes:
+| ../../git/src/v8/src/objects-body-descriptors.h: In static member function 'static void v8::internal::FixedBodyDescriptor<start_offset, end_offset, size>::IterateBody(v8::internal::HeapObject*, int)':
+| ../../git/src/v8/src/objects-body-descriptors.h:102:20: error: no matching function for call to 'v8::internal::FixedBodyDescriptor<start_offset, end_offset, size>::IterateBody(v8::internal::HeapObject*&)'
+|      IterateBody(obj);
+|                     ^
+
+and
+
+| ../../v8/src/objects.h: In member function 'uint32_t v8::internal::HashTable<Derived, Shape, Key>::Hash(Key)':
+| ../../v8/src/objects.h:3205:46: error: invalid use of incomplete type 'class v8::internal::Heap' [-Werror]
+|        return Shape::SeededHash(key, GetHeap()->HashSeed());
+|                                               ^~
+
+and
+
+../../v8/src/heap/mark-compact.cc:3660:43: error: 'v8::internal::PointerUpdateJobTraits<direction>::UpdateTypedPointers(v8::internal::Heap*, v8::internal::MemoryChunk*)::<lambda(v8::internal::SlotType, v8::internal::Address, v8::internal::Address)> [with v8::internal::PointerDirection direction = (v8::internal::PointerDirection)1; v8::internal::Address = unsigned char*; v8::internal::byte = unsigned char]::<lambda(v8::internal::Object**)>' declared with greater visibility than the type of its field 'v8::internal::PointerUpdateJobTraits<direction>::UpdateTypedPointers(v8::internal::Heap*, v8::internal::MemoryChunk*)::<lambda(v8::internal::SlotType, v8::internal::Address, v8::internal::Address)> [with v8::internal::PointerDirection direction = (v8::internal::PointerDirection)1; v8::internal::Address = unsigned char*; v8::internal::byte = unsigned char]::<lambda(v8::internal::Object**)>::<heap capture>' [-Werror=attributes]
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ chromium/v8/src/heap/mark-compact.cc       |  5 +++++
+ chromium/v8/src/objects-body-descriptors.h |  2 +-
+ chromium/v8/src/objects-inl.h              | 20 ++++++++++++++++++++
+ chromium/v8/src/objects.h                  | 20 ++++----------------
+ 4 files changed, 30 insertions(+), 17 deletions(-)
+
+diff --git a/chromium/v8/src/heap/mark-compact.cc b/chromium/v8/src/heap/mark-compact.cc
+index f9a55dfc61..da46270aec 100644
+--- a/chromium/v8/src/heap/mark-compact.cc
++++ b/chromium/v8/src/heap/mark-compact.cc
+@@ -3614,6 +3614,9 @@ void MarkCompactCollector::EvacuateNewSpaceAndCandidates() {
+ #endif
+ }
+ 
++#pragma GCC diagnostic push
++#pragma GCC diagnostic warning "-Wattributes"
++
+ template <PointerDirection direction>
+ class PointerUpdateJobTraits {
+  public:
+@@ -3701,6 +3704,8 @@ class PointerUpdateJobTraits {
+   }
+ };
+ 
++#pragma GCC diagnostic pop
++
+ int NumberOfPointerUpdateTasks(int pages) {
+   if (!FLAG_parallel_pointer_update) return 1;
+   const int kMaxTasks = 4;
+diff --git a/chromium/v8/src/objects-body-descriptors.h b/chromium/v8/src/objects-body-descriptors.h
+index 91cb8883be..a1c3634bd7 100644
+--- a/chromium/v8/src/objects-body-descriptors.h
++++ b/chromium/v8/src/objects-body-descriptors.h
+@@ -99,7 +99,7 @@ class FixedBodyDescriptor final : public BodyDescriptorBase {
+ 
+   template <typename StaticVisitor>
+   static inline void IterateBody(HeapObject* obj, int object_size) {
+-    IterateBody(obj);
++    IterateBody<StaticVisitor>(obj);
+   }
+ };
+ 
+diff --git a/chromium/v8/src/objects-inl.h b/chromium/v8/src/objects-inl.h
+index 58441d3853..e850fd787f 100644
+--- a/chromium/v8/src/objects-inl.h
++++ b/chromium/v8/src/objects-inl.h
+@@ -38,6 +38,26 @@
+ namespace v8 {
+ namespace internal {
+ 
++template <typename Derived, typename Shape, typename Key>
++uint32_t HashTable<Derived, Shape, Key>::Hash(Key key) {
++  if (Shape::UsesSeed) {
++    return Shape::SeededHash(key, GetHeap()->HashSeed());
++  } else {
++    return Shape::Hash(key);
++  }
++}
++
++
++template <typename Derived, typename Shape, typename Key>
++uint32_t HashTable<Derived, Shape, Key>::HashForObject(Key key,
++                                                       Object* object) {
++  if (Shape::UsesSeed) {
++    return Shape::SeededHashForObject(key, GetHeap()->HashSeed(), object);
++  } else {
++    return Shape::HashForObject(key, object);
++  }
++}
++
+ PropertyDetails::PropertyDetails(Smi* smi) {
+   value_ = smi->value();
+ }
+diff --git a/chromium/v8/src/objects.h b/chromium/v8/src/objects.h
+index 7d774beb5b..eda1478766 100644
+--- a/chromium/v8/src/objects.h
++++ b/chromium/v8/src/objects.h
+@@ -3193,22 +3193,10 @@ class HashTable : public HashTableBase {
+  public:
+   typedef Shape ShapeT;
+ 
+-  // Wrapper methods
+-  inline uint32_t Hash(Key key) {
+-    if (Shape::UsesSeed) {
+-      return Shape::SeededHash(key, GetHeap()->HashSeed());
+-    } else {
+-      return Shape::Hash(key);
+-    }
+-  }
+-
+-  inline uint32_t HashForObject(Key key, Object* object) {
+-    if (Shape::UsesSeed) {
+-      return Shape::SeededHashForObject(key, GetHeap()->HashSeed(), object);
+-    } else {
+-      return Shape::HashForObject(key, object);
+-    }
+-  }
++  // Wrapper methods.  Defined in src/objects-inl.h
++  // to break a cycle with src/heap/heap.h.
++  inline uint32_t Hash(Key key);
++  inline uint32_t HashForObject(Key key, Object* object);
+ 
+   // Returns a new HashTable object.
+   MUST_USE_RESULT static Handle<Derived> New(
+-- 
+2.13.2
+
