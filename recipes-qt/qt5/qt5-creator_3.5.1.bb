@@ -21,6 +21,8 @@ DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qtto
 SRC_URI = " \
     http://download.qt.io/official_releases/qtcreator/3.5/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
     file://0001-Fix-Allow-qt-creator-to-build-on-arm-aarch32-and-aar.patch \
+    file://0001-Fix-compilation-with-QT_NO_ACCESSIBILITY.patch \
+    file://0001-Qmlpuppet-add-missing-includes.patch \
     file://qtcreator.desktop.in \
 "
 SRC_URI[md5sum] = "77aef7df837eba07c7ce6037ee504c05"
