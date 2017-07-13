@@ -17,6 +17,7 @@ LIC_FILES_CHKSUM = " \
 inherit qmake5
 
 DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg qtquick1"
+DEPENDS_append_libc-musl = " libexecinfo"
 
 SRC_URI = " \
     http://download.qt.io/official_releases/qtcreator/3.5/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
@@ -25,6 +26,10 @@ SRC_URI = " \
     file://0001-Qmlpuppet-add-missing-includes.patch \
     file://qtcreator.desktop.in \
 "
+
+SRC_URI_append_libc-musl = " file://musl-backtrace.patch "
+
+
 SRC_URI[md5sum] = "77aef7df837eba07c7ce6037ee504c05"
 SRC_URI[sha256sum] = "5925ac818a08be919094e0f28fb4c5d8896765e0975d54d353e4c50f13d63e65"
 
@@ -32,6 +37,7 @@ S = "${WORKDIR}/qt-creator-opensource-src-${PV}"
 
 EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 
+LDFLAGS_append_libc-musl = " -lexecinfo "
 do_configure_append() {
     # Find native tools
     sed -i 's:${STAGING_BINDIR}.*/lrelease:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lrelease:g' ${B}/share/qtcreator/translations/Makefile
