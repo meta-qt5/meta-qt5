@@ -1,0 +1,26 @@
+From 4913850cd644e1fd44ecade5e9faa460de35a7d6 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 7 Jul 2017 14:54:38 -0700
+Subject: [PATCH 06/12] linux != glibc, make the distinction
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ base/allocator/allocator_check.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/base/allocator/allocator_check.cc b/base/allocator/allocator_check.cc
+index 5a0564d2f..8c2dc6491 100644
+--- a/base/allocator/allocator_check.cc
++++ b/base/allocator/allocator_check.cc
+@@ -21,7 +21,7 @@ bool IsAllocatorInitialized() {
+ #if defined(OS_WIN) && defined(ALLOCATOR_SHIM)
+   // Set by allocator_shim_win.cc when the shimmed _set_new_mode() is called.
+   return g_is_win_shim_layer_initialized;
+-#elif defined(OS_LINUX) && defined(USE_TCMALLOC) && \
++#elif defined(__GLIBC__) && defined(USE_TCMALLOC) && \
+     !defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
+ // From third_party/tcmalloc/chromium/src/gperftools/tcmalloc.h.
+ // TODO(primiano): replace with an include once base can depend on allocator.
+-- 
+2.13.2
+

@@ -1,0 +1,48 @@
+From 8defe37306b0d1548592afc12baa45f4aec5375c Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 7 Jul 2017 14:09:06 -0700
+Subject: [PATCH 03/12] Avoid mallinfo() APIs on non-glibc/linux
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ base/trace_event/malloc_dump_provider.cc | 3 ++-
+ content/child/content_child_helpers.cc   | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/base/trace_event/malloc_dump_provider.cc b/base/trace_event/malloc_dump_provider.cc
+index 3b1a933bc..a554d0373 100644
+--- a/base/trace_event/malloc_dump_provider.cc
++++ b/base/trace_event/malloc_dump_provider.cc
+@@ -103,6 +103,7 @@ MallocDumpProvider::~MallocDumpProvider() {}
+ // the current process.
+ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
+                                       ProcessMemoryDump* pmd) {
++#if defined(__GLIBC__)
+   size_t total_virtual_size = 0;
+   size_t resident_size = 0;
+   size_t allocated_objects_size = 0;
+@@ -195,7 +196,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
+     pmd->DumpHeapUsage(metrics_by_context, overhead, "malloc");
+   }
+   tid_dumping_heap_ = kInvalidThreadId;
+-
++#endif // __GLIBC__
+   return true;
+ }
+ 
+diff --git a/content/child/content_child_helpers.cc b/content/child/content_child_helpers.cc
+index 7ddeb4d16..b8c73b09c 100644
+--- a/content/child/content_child_helpers.cc
++++ b/content/child/content_child_helpers.cc
+@@ -25,7 +25,7 @@ namespace content {
+ // though, this provides only a partial and misleading value.
+ // Unfortunately some telemetry benchmark rely on it and these need to
+ // be refactored before getting rid of this. See crbug.com/581365 .
+-#if defined(OS_LINUX) || defined(OS_ANDROID)
++#if defined(__GLIBC__) || defined(OS_ANDROID)
+ size_t GetMemoryUsageKB() {
+   struct mallinfo minfo = mallinfo();
+   uint64_t mem_usage =
+-- 
+2.13.2
+

@@ -1,0 +1,25 @@
+From 4b5aab95e34e1cbebc7566c1267cddc2560601c8 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 7 Jul 2017 17:41:43 -0700
+Subject: [PATCH 2/2] link with libexecinfo on musl
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ base/base.gyp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/base/base.gyp b/base/base.gyp
+index 67e051ae4..7f5dfe214 100644
+--- a/base/base.gyp
++++ b/base/base.gyp
+@@ -126,6 +126,7 @@
+               '-lrt',
+               # For 'native_library_linux.cc'
+               '-ldl',
++              '-lexecinfo',
+             ],
+           },
+           'conditions': [
+-- 
+2.13.2
+

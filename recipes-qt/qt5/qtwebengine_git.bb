@@ -24,7 +24,13 @@ DEPENDS += " \
 "
 
 DEPENDS += "yasm-native"
-EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm GYP_CONFIG+=generate_character_data=0"
+DEPENDS_append_libc-musl = " libexecinfo"
+
+EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm \
+                        GYP_CONFIG+=generate_character_data=0 \
+                        GYP_CONFIG+=use_allocator=none \
+                        GYP_CONFIG+=use_experimental_allocator_shim=false \
+"
 
 # To use system ffmpeg you need to enable also libwebp, opus, vpx											    
 # Only depenedencies available in oe-core are enabled by default
@@ -88,6 +94,13 @@ do_configure() {
         -after ${EXTRA_QMAKEVARS_POST}
 }
 
+do_configure_prepend_libc-musl() {
+        for f in `find ${S}/src/3rdparty/chromium/third_party/ffmpeg/chromium/config/Chromium/linux/ -name config.h -o -name config.asm`; do
+                sed -i -e "s:define HAVE_SYSCTL 1:define HAVE_SYSCTL 0:g" $f
+        done
+        sed -i -e "s:define HAVE_STRUCT_MALLINFO 1:/*undef HAVE_STRUCT_MALLINFO */:g" ${S}/src/3rdparty/chromium/third_party/tcmalloc/chromium/src/config_linux.h
+}
+
 do_compile[progress] = "outof:^\[(\d+)/(\d+)\]\s+"
 
 do_install_append() {
@@ -118,6 +131,22 @@ SRC_URI += " \
     file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch;patchdir=src/3rdparty \
     file://0003-chromium-v8-fix-build-with-gcc7.patch;patchdir=src/3rdparty \
     file://0004-chromium-WebKit-fix-build-with-gcc7.patch;patchdir=src/3rdparty \
+"
+SRC_URI_append_libc-musl = "\
+    file://0001-sandbox-Define-TEMP_FAILURE_RETRY-if-not-defined.patch;patchdir=src/3rdparty/chromium \
+    file://0003-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty/chromium \
+    file://0004-include-fcntl.h-for-loff_t.patch;patchdir=src/3rdparty/chromium \
+    file://0005-use-off64_t-instead-of-the-internal-__off64_t.patch;patchdir=src/3rdparty/chromium \
+    file://0006-linux-glibc-make-the-distinction.patch;patchdir=src/3rdparty/chromium \
+    file://0007-allocator-Do-not-include-glibc_weak_symbols-for-musl.patch;patchdir=src/3rdparty/chromium \
+    file://0008-Use-correct-member-name-__si_fields-from-LinuxSigInf.patch;patchdir=src/3rdparty/chromium \
+    file://0009-Match-syscalls-to-match-musl.patch;patchdir=src/3rdparty/chromium \
+    file://0010-Define-res_ninit-and-res_nclose-for-non-glibc-platfo.patch;patchdir=src/3rdparty/chromium \
+    file://0011-Do-not-define-__sbrk-on-musl.patch;patchdir=src/3rdparty/chromium \
+    file://0012-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty/chromium \
+    file://0013-include-asm-generic-ioctl.h-for-TCGETS2.patch;patchdir=src/3rdparty/chromium \
+    file://0014-link-with-libexecinfo-on-musl.patch;patchdir=src/3rdparty/chromium \
+    file://0018-tcmalloc-Use-off64_t-insread-of-__off64_t.patch;patchdir=src/3rdparty/chromium \
 "
 
 SRCREV_qtwebengine = "d740d6a7dbfec387752c7bc8a8b06db0e757c9dc"
