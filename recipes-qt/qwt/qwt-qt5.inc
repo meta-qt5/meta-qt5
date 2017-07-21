@@ -45,4 +45,4 @@ FILES_${PN}-dbg += "${prefix}/plugins/designer/.debug"
 FILES_${PN}-doc += "${prefix}/doc"
 
 INSANE_SKIP_${PN}-plugins += "libdir"
-
+INSANE_SKIP_${PN}-dbg += "libdir"
