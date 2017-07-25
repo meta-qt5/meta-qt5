@@ -23,7 +23,11 @@ SRC_URI += "\
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
     file://0009-Disable-all-unknown-features-instead-of-erroring-out.patch \
     file://0010-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
+    file://0001-Delete-qlonglong-and-qulonglong.patch \
+    file://run-ptest \
 "
+
+inherit ptest
 
 # only for target qtbase
 SRC_URI += "\
@@ -48,7 +52,7 @@ PACKAGECONFIG_DISTRO ?= ""
 PACKAGECONFIG_RELEASE ?= "release"
 # This is in qt5.inc, because qtwebkit-examples are using it to enable ca-certificates dependency
 # PACKAGECONFIG_OPENSSL ?= "openssl"
-PACKAGECONFIG_DEFAULT ?= "dbus udev evdev widgets tools libs freetype"
+PACKAGECONFIG_DEFAULT ?= "dbus udev evdev widgets tools libs freetype tests"
 
 PACKAGECONFIG ?= " \
     ${PACKAGECONFIG_RELEASE} \
@@ -169,6 +173,17 @@ do_configure() {
         -platform ${OE_QMAKE_PLATFORM_NATIVE} \
         -xplatform linux-oe-g++ \
         ${QT_CONFIG_FLAGS}
+}
+
+fakeroot do_install_ptest() {
+    mkdir -p ${D}${PTEST_PATH}
+    t=${D}${PTEST_PATH}
+    for var in ` find ${B}/tests/auto/ -name tst_*`; do
+        if [ not ` echo ${var##*/} | grep '\.'` ]; then
+            echo ${var##*/} >> ${t}/tst_list
+            install -m 0644 ${var} ${t}
+        fi
+    done
 }
 
 do_install_append() {
