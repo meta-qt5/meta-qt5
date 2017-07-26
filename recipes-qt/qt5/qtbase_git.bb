@@ -24,6 +24,7 @@ SRC_URI += "\
     file://0009-Disable-all-unknown-features-instead-of-erroring-out.patch \
     file://0010-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
     file://0001-Delete-qlonglong-and-qulonglong.patch \
+    file://0010-tst_qstring-Disable-Wformat-security-with-clang-as-w.patch \
     file://run-ptest \
 "
 

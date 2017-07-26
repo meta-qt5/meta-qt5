@@ -1,0 +1,32 @@
+From 8284ebfe59c0011db71df7fb143b8e6a99f6952e Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 25 Jul 2017 19:40:52 -0700
+Subject: [PATCH 10/10] tst_qstring: Disable Wformat-security with clang as
+ well
+
+Currently, its only disabled for gcc, but we need to disable
+it with clang as well in order to compile it successfully with
+clang
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ tests/auto/corelib/tools/qstring/tst_qstring.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/tests/auto/corelib/tools/qstring/tst_qstring.cpp b/tests/auto/corelib/tools/qstring/tst_qstring.cpp
+index a0a872710c..20a9a9f9db 100644
+--- a/tests/auto/corelib/tools/qstring/tst_qstring.cpp
++++ b/tests/auto/corelib/tools/qstring/tst_qstring.cpp
+@@ -1066,6 +1066,9 @@ void tst_QString::acc_01()
+ 
+ QT_WARNING_PUSH
+ QT_WARNING_DISABLE_GCC("-Wformat-security")
++#ifdef __clang__
++QT_WARNING_DISABLE_CLANG("-Wformat-security")
++#endif
+ 
+ void tst_QString::isNull()
+ {
+-- 
+2.13.3
+
