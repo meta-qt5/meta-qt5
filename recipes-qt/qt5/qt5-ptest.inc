@@ -14,7 +14,7 @@ do_compile_ptest() {
 }
 
 do_populate_sysroot_append_class-target() {
-    workdir = d.getVar('WORKDIR')
+    workdir = d.getVar('WORKDIR', True)
     srcdir = workdir + '/sysroot-destdir/usr/'
     destdir = workdir + '/recipe-sysroot/usr/'
     
