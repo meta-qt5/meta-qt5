@@ -25,6 +25,7 @@ SRC_URI += "\
     file://0010-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
     file://0001-Delete-qlonglong-and-qulonglong.patch \
     file://0010-tst_qstring-Disable-Wformat-security-with-clang-as-w.patch \
+    file://0011-Replace-pthread_yield-with-sched_yield.patch \
     file://run-ptest \
 "
 
