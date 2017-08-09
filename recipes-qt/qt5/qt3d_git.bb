@@ -13,6 +13,7 @@ DEPENDS_class-target += "qtdeclarative qt3d-native"
 
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
+    file://0002-Fix-BlenderDNA-for-clang-cross-compiler.patch \
 "
 
 PACKAGECONFIG ??= ""

@@ -1,0 +1,46 @@
+From b28ad8e101d4e2ffae00e43d53b22ace35f8c308 Mon Sep 17 00:00:00 2001
+From: Kim Kulling <kim.kulling@googlemail.com>
+Date: Mon, 7 Nov 2016 17:19:49 +0100
+Subject: [PATCH] Fix BlenderDNA for clang cross compiler.
+
+---
+ src/3rdparty/assimp/code/BlenderDNA.cpp | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/src/3rdparty/assimp/code/BlenderDNA.cpp b/src/3rdparty/assimp/code/BlenderDNA.cpp
+index b380fbe8d..437e44349 100644
+--- a/src/3rdparty/assimp/code/BlenderDNA.cpp
++++ b/src/3rdparty/assimp/code/BlenderDNA.cpp
+@@ -56,10 +56,10 @@ using namespace Assimp::Formatter;
+ #define for_each BOOST_FOREACH
+ bool match4(StreamReaderAny& stream, const char* string) {
+ 	char tmp[] = { 
+-		(stream).GetI1(), 
+-		(stream).GetI1(),  
+-		(stream).GetI1(), 
+-		(stream).GetI1()
++		(const char)(stream).GetI1(), 
++		(const char)(stream).GetI1(),  
++		(const char)(stream).GetI1(), 
++		(const char)(stream).GetI1()
+ 	};
+ 	return (tmp[0]==string[0] && tmp[1]==string[1] && tmp[2]==string[2] && tmp[3]==string[3]);
+ }
+@@ -344,10 +344,10 @@ void SectionParser :: Next()
+ 	stream.SetCurrentPos(current.start + current.size);
+ 
+ 	const char tmp[] = {
+-		stream.GetI1(),
+-		stream.GetI1(),
+-		stream.GetI1(),
+-		stream.GetI1()
++		(const char)stream.GetI1(),
++		(const char)stream.GetI1(),
++		(const char)stream.GetI1(),
++		(const char)stream.GetI1()
+ 	};
+ 	current.id = std::string(tmp,tmp[3]?4:tmp[2]?3:tmp[1]?2:1);
+ 
+-- 
+2.13.3
+
