@@ -36,8 +36,6 @@ SRC_URI += "\
     file://0008-configure-paths-for-target-qmake-properly.patch \
 "
 
-DEPENDS += "qtbase-native"
-
 # LGPL-3.0 is used only in src/plugins/platforms/android/extract.cpp
 
 # for syncqt
