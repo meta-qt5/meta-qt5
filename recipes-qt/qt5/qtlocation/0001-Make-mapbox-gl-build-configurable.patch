@@ -1,0 +1,27 @@
+From 632cfa131a890d42275873a7ca8cdf95ada61360 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Wed, 7 Jun 2017 13:29:29 +0300
+Subject: [PATCH] Make mapbox-gl build configurable
+
+mapbox-gl-native won't compile for ARMv5 or older, so disable the
+build by default.
+
+Task-number: QTBUG-61289
+Change-Id: I5f26200f2735b363c3c322f9035b331b9159c47b
+---
+ src/plugins/geoservices/geoservices.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/plugins/geoservices/geoservices.pro b/src/plugins/geoservices/geoservices.pro
+index 459897a..d97e05d 100644
+--- a/src/plugins/geoservices/geoservices.pro
++++ b/src/plugins/geoservices/geoservices.pro
+@@ -6,7 +6,7 @@ qtConfig(concurrent) {
+     SUBDIRS += osm
+ }
+ 
+-qtConfig(opengl):qtConfig(c++14):!win32|mingw:!qnx {
++mapboxgl:qtConfig(opengl):qtConfig(c++14):!win32|mingw:!qnx {
+     !exists(../../3rdparty/mapbox-gl-native/CMakeLists.txt) {
+         warning("Submodule mapbox-gl-native does not exist. Run 'git submodule update --init' on qtlocation.")
+     } else {

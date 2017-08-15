@@ -1,0 +1,22 @@
+From b946b6ea4a2a30bd12ecd036e40c9ef671681ba8 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Fri, 2 Jun 2017 13:12:18 +0300
+Subject: [PATCH] Add missing include for qWarning
+
+Change-Id: I7c7699e7a2b7ce59e4f659d460ec835f59bba439
+---
+ src/webview/qquickwebview.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/webview/qquickwebview.cpp b/src/webview/qquickwebview.cpp
+index d760564..fbbbfd6 100644
+--- a/src/webview/qquickwebview.cpp
++++ b/src/webview/qquickwebview.cpp
+@@ -39,6 +39,7 @@
+ #include <QtWebView/private/qwebviewloadrequest_p.h>
+ #include <QtQml/qqmlengine.h>
+ #include <QtCore/qmutex.h>
++#include <QtCore/QDebug>
+ 
+ namespace {
+ 
