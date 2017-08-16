@@ -1,8 +1,7 @@
-From 8284ebfe59c0011db71df7fb143b8e6a99f6952e Mon Sep 17 00:00:00 2001
+From 7bab0171601bc769403be62d145164137f1b7b66 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 25 Jul 2017 19:40:52 -0700
-Subject: [PATCH 10/10] tst_qstring: Disable Wformat-security with clang as
- well
+Subject: [PATCH] tst_qstring: Disable Wformat-security with clang as well
 
 Currently, its only disabled for gcc, but we need to disable
 it with clang as well in order to compile it successfully with
@@ -27,6 +26,3 @@ index a0a872710c..20a9a9f9db 100644
  
  void tst_QString::isNull()
  {
--- 
-2.13.3
-

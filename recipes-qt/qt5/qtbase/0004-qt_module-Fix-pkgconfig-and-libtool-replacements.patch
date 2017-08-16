@@ -1,4 +1,4 @@
-From bf1498618415e7b1e57b54881b1e56d74f2cdf6b Mon Sep 17 00:00:00 2001
+From fe9cfbde28c651d00b8f5fda7dc85a97af0c50a1 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 27 Apr 2013 23:15:37 +0200
 Subject: [PATCH] qt_module: Fix pkgconfig and libtool replacements
@@ -68,10 +68,10 @@ Signed-off-by: Jonathan Liu <net147@gmail.com>
  2 files changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
-index 0c5f080..a6e4f09 100644
+index 98f794c485..bd8b7b52e4 100644
 --- a/mkspecs/features/qt.prf
 +++ b/mkspecs/features/qt.prf
-@@ -317,6 +317,19 @@ contains(TEMPLATE, .*app) {
+@@ -315,6 +315,19 @@ contains(TEMPLATE, .*app) {
      QTPLUGIN = $$manualplugs $$autoplugs
  }
  
@@ -92,7 +92,7 @@ index 0c5f080..a6e4f09 100644
  qtConfig(static) {
      QT_PLUGIN_VERIFY += QTPLUGIN
 diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
-index e754a17..4c1530e 100644
+index d30983f62b..6da07e032c 100644
 --- a/mkspecs/features/qt_common.prf
 +++ b/mkspecs/features/qt_common.prf
 @@ -37,7 +37,7 @@ contains(TEMPLATE, .*lib) {

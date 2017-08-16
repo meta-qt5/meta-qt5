@@ -21,11 +21,11 @@ SRC_URI += "\
     file://0003-Add-external-hostbindir-option.patch \
     file://0004-qt_module-Fix-pkgconfig-and-libtool-replacements.patch \
     file://0005-configure-bump-path-length-from-256-to-512-character.patch \
-    file://0009-Disable-all-unknown-features-instead-of-erroring-out.patch \
-    file://0010-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
-    file://0001-Delete-qlonglong-and-qulonglong.patch \
-    file://0010-tst_qstring-Disable-Wformat-security-with-clang-as-w.patch \
-    file://0011-Replace-pthread_yield-with-sched_yield.patch \
+    file://0006-Disable-all-unknown-features-instead-of-erroring-out.patch \
+    file://0007-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
+    file://0008-Delete-qlonglong-and-qulonglong.patch \
+    file://0009-tst_qstring-Disable-Wformat-security-with-clang-as-w.patch \
+    file://0010-Replace-pthread_yield-with-sched_yield.patch \
     file://run-ptest \
 "
 
@@ -33,7 +33,7 @@ inherit ptest
 
 # only for target qtbase
 SRC_URI += "\
-    file://0008-configure-paths-for-target-qmake-properly.patch \
+    file://0011-configure-paths-for-target-qmake-properly.patch \
 "
 
 # LGPL-3.0 is used only in src/plugins/platforms/android/extract.cpp

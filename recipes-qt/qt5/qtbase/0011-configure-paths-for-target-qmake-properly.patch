@@ -1,4 +1,4 @@
-From cc926956758bf8170c4e49c66e1066524b43f65f Mon Sep 17 00:00:00 2001
+From b8e94df3d49be69659e8dfb0809c614f73c21706 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Fri, 13 Nov 2015 12:36:11 +0100
 Subject: [PATCH] configure paths for target qmake properly
@@ -19,10 +19,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/configure b/configure
-index 8b33c5b..1df248f 100755
+index 5af98cd77e..34dedafe91 100755
 --- a/configure
 +++ b/configure
-@@ -1545,8 +1545,13 @@ if [ -z "$QT_REL_HOST_DATA" ]; then
+@@ -1500,8 +1500,13 @@ if [ -z "$QT_REL_HOST_DATA" ]; then
      fi
  fi
  
@@ -38,7 +38,7 @@ index 8b33c5b..1df248f 100755
  
  QT_CONFIGURE_STR_OFF=0
  
-@@ -1579,7 +1584,11 @@ QT_CONFIGURE_STRS_ALL=$QT_CONFIGURE_STRS
+@@ -1534,7 +1539,11 @@ QT_CONFIGURE_STRS_ALL=$QT_CONFIGURE_STRS
  
  QT_CONFIGURE_STR_OFFSETS=
  QT_CONFIGURE_STRS=
@@ -51,7 +51,7 @@ index 8b33c5b..1df248f 100755
  addConfStr "$QT_REL_HOST_BINS"
  addConfStr "$QT_REL_HOST_LIBS"
  addConfStr "$QT_REL_HOST_DATA"
-@@ -1591,6 +1600,12 @@ addConfStr "$shortspec"
+@@ -1546,6 +1555,12 @@ addConfStr "$shortspec"
  #-------------------------------------------------------------------------------
  [ -d "$outpath/src/corelib/global" ] || mkdir -p "$outpath/src/corelib/global"
  
@@ -64,7 +64,7 @@ index 8b33c5b..1df248f 100755
  cat > "$outpath/src/corelib/global/qconfig.cpp.new" <<EOF
  /* Installation date */
  static const char qt_configure_installation          [12+11]    = "qt_instdate=2012-12-20";
-@@ -1599,7 +1614,7 @@ static const char qt_configure_installation          [12+11]    = "qt_instdate=2
+@@ -1554,7 +1569,7 @@ static const char qt_configure_installation          [12+11]    = "qt_instdate=2
  static const char qt_configure_prefix_path_str       [512 + 12] = "qt_prfxpath=$QT_INSTALL_PREFIX";
  #ifdef QT_BUILD_QMAKE
  static const char qt_configure_ext_prefix_path_str   [512 + 12] = "qt_epfxpath=$QT_EXT_PREFIX";

@@ -1,4 +1,4 @@
-From c67a4af2e5db4c1e2213961e6392b59affd1959f Mon Sep 17 00:00:00 2001
+From 2755a80114433e75f08fbb0df0fee9f7526172aa Mon Sep 17 00:00:00 2001
 From: Huang Qiyu <huangqy.fnst@cn.fujitsu.com>
 Date: Wed, 7 Jun 2017 21:00:49 +0900
 Subject: [PATCH] Delete qlonglong and qulonglong
@@ -9,7 +9,7 @@ Signed-off-by: Huang Qiyu <huangqy.fnst@cn.fujitsu.com>
  1 file changed, 2 deletions(-)
 
 diff --git a/tests/auto/corelib/thread/qatomicinteger/qatomicinteger.pro b/tests/auto/corelib/thread/qatomicinteger/qatomicinteger.pro
-index 09458bd..59a120e 100644
+index 09458bd9c3..59a120eb26 100644
 --- a/tests/auto/corelib/thread/qatomicinteger/qatomicinteger.pro
 +++ b/tests/auto/corelib/thread/qatomicinteger/qatomicinteger.pro
 @@ -5,10 +5,8 @@ SUBDIRS=\
@@ -23,6 +23,3 @@ index 09458bd..59a120e 100644
      schar \
      short \
      uchar \
--- 
-2.7.4
-

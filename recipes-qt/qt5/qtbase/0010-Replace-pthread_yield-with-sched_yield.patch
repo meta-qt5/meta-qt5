@@ -1,4 +1,4 @@
-From d1d4b520e29b58e427fc7bd336d34b82d0d2b1f3 Mon Sep 17 00:00:00 2001
+From bbe822066913c0908b6366009517c19e828e1458 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 27 Jul 2017 08:02:51 -0700
 Subject: [PATCH] Replace pthread_yield with sched_yield
@@ -58,6 +58,3 @@ index fe1057bdde..e23e97b259 100644
  #endif
          if (!sock->waitForConnected()) {
              networkTimeout = true;
--- 
-2.13.3
-
