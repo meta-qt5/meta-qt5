@@ -1,7 +1,7 @@
-From 2be0856e09f47e7f2c35e77d4e000d769c6beaf9 Mon Sep 17 00:00:00 2001
+From f62b851edbcc3ac3da448d7570908ad78ebe77dc Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Tue, 11 Jul 2017 10:18:13 +0200
-Subject: [PATCH 4/4] chromium: WebKit fix build with gcc7
+Subject: [PATCH] chromium: WebKit fix build with gcc7
 
 Based on qtwebengine-opensource-src-5.8.0-wtf-gcc7.patch from
 http://git.net/ml/scm-fedora-commits/2017-03/msg15697.html
@@ -39,6 +39,3 @@ index e85c72fd65..6f94cd6734 100644
  template<typename T, typename U, typename V, typename W>
  inline void LinkedHashSet<T, U, V, W>::swap(LinkedHashSet& other)
  {
--- 
-2.13.2
-

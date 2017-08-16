@@ -1,7 +1,7 @@
-From 4aa614106c03793709e5dbd69f45df8a5e5c9fe4 Mon Sep 17 00:00:00 2001
+From 79a62dbe498946f487edcb0228c350d9fe7e4d09 Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Thu, 24 Dec 2015 12:46:58 -0200
-Subject: [PATCH 2/4] chromium: Change false to FALSE and 1 to TRUE, FIX
+Subject: [PATCH] chromium: Change false to FALSE and 1 to TRUE, FIX
  qtwebengine compile
 
 Signed-off-by: Cleiton Bueno <cleitonrbueno@gmail.com>
@@ -61,6 +61,3 @@ index 6d926378be..738d3fdedf 100644
  
    // we want to always get RGB data out
    switch (cinfo.jpeg_color_space) {
--- 
-2.13.2
-

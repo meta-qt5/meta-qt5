@@ -1,19 +1,20 @@
-From 89d6283c91f2229cc51f473eed344de97d09e946 Mon Sep 17 00:00:00 2001
+From fac50c58630264d67e447c2dcdcf54b4f806d35e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:01:12 -0700
-Subject: [PATCH 01/12] sandbox: Define TEMP_FAILURE_RETRY if not defined
+Subject: [PATCH] chromium: musl: sandbox: Define TEMP_FAILURE_RETRY if not
+ defined
 
 Musl does not define this Macro
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- sandbox/linux/suid/sandbox.c | 9 +++++++++
+ chromium/sandbox/linux/suid/sandbox.c | 9 +++++++++
  1 file changed, 9 insertions(+)
 
-diff --git a/sandbox/linux/suid/sandbox.c b/sandbox/linux/suid/sandbox.c
-index b655d1c79..3de34e36f 100644
---- a/sandbox/linux/suid/sandbox.c
-+++ b/sandbox/linux/suid/sandbox.c
+diff --git a/chromium/sandbox/linux/suid/sandbox.c b/chromium/sandbox/linux/suid/sandbox.c
+index b655d1c79c..3de34e36f2 100644
+--- a/chromium/sandbox/linux/suid/sandbox.c
++++ b/chromium/sandbox/linux/suid/sandbox.c
 @@ -44,6 +44,15 @@ static bool DropRoot();
  
  #define HANDLE_EINTR(x) TEMP_FAILURE_RETRY(x)
@@ -30,6 +31,3 @@ index b655d1c79..3de34e36f 100644
  static void FatalError(const char* msg, ...)
      __attribute__((noreturn, format(printf, 1, 2)));
  
--- 
-2.13.2
-

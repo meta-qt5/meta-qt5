@@ -1,20 +1,21 @@
-From df3fd62f7f0c51c11e7f715c2523418c31eb6b0f Mon Sep 17 00:00:00 2001
+From c892406f07b4e214397c55de62eccac3d558b134 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:27:50 -0700
-Subject: [PATCH 10/12] Define res_ninit and res_nclose for non-glibc platforms
+Subject: [PATCH] chromium: musl: Define res_ninit and res_nclose for non-glibc
+ platforms
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- net/dns/dns_config_service_posix.cc |  4 ++++
- net/dns/dns_reloader.cc             |  4 ++++
- net/dns/resolv_compat.h             | 29 +++++++++++++++++++++++++++++
+ chromium/net/dns/dns_config_service_posix.cc |  4 ++++
+ chromium/net/dns/dns_reloader.cc             |  4 ++++
+ chromium/net/dns/resolv_compat.h             | 29 ++++++++++++++++++++++++++++
  3 files changed, 37 insertions(+)
- create mode 100644 net/dns/resolv_compat.h
+ create mode 100644 chromium/net/dns/resolv_compat.h
 
-diff --git a/net/dns/dns_config_service_posix.cc b/net/dns/dns_config_service_posix.cc
-index ba8a36913..e9b40d07f 100644
---- a/net/dns/dns_config_service_posix.cc
-+++ b/net/dns/dns_config_service_posix.cc
+diff --git a/chromium/net/dns/dns_config_service_posix.cc b/chromium/net/dns/dns_config_service_posix.cc
+index ba8a369133..e9b40d07fc 100644
+--- a/chromium/net/dns/dns_config_service_posix.cc
++++ b/chromium/net/dns/dns_config_service_posix.cc
 @@ -25,6 +25,10 @@
  #include "net/dns/notify_watcher_mac.h"
  #include "net/dns/serial_worker.h"
@@ -26,10 +27,10 @@ index ba8a36913..e9b40d07f 100644
  #if defined(OS_MACOSX) && !defined(OS_IOS)
  #include "net/dns/dns_config_watcher_mac.h"
  #endif
-diff --git a/net/dns/dns_reloader.cc b/net/dns/dns_reloader.cc
-index 74534e6b1..2780a776e 100644
---- a/net/dns/dns_reloader.cc
-+++ b/net/dns/dns_reloader.cc
+diff --git a/chromium/net/dns/dns_reloader.cc b/chromium/net/dns/dns_reloader.cc
+index 74534e6b1b..2780a776e4 100644
+--- a/chromium/net/dns/dns_reloader.cc
++++ b/chromium/net/dns/dns_reloader.cc
 @@ -9,6 +9,10 @@
  
  #include <resolv.h>
@@ -41,11 +42,11 @@ index 74534e6b1..2780a776e 100644
  #include "base/lazy_instance.h"
  #include "base/logging.h"
  #include "base/macros.h"
-diff --git a/net/dns/resolv_compat.h b/net/dns/resolv_compat.h
+diff --git a/chromium/net/dns/resolv_compat.h b/chromium/net/dns/resolv_compat.h
 new file mode 100644
-index 000000000..4f0e852a1
+index 0000000000..4f0e852a19
 --- /dev/null
-+++ b/net/dns/resolv_compat.h
++++ b/chromium/net/dns/resolv_compat.h
 @@ -0,0 +1,29 @@
 +#if !defined(__GLIBC__)
 +/***************************************************************************
@@ -76,6 +77,3 @@ index 000000000..4f0e852a1
 +	return 0;
 +}
 +#endif
--- 
-2.13.2
-

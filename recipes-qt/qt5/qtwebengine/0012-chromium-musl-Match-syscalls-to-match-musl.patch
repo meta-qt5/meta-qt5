@@ -1,18 +1,18 @@
-From 5843df01580b0fb956ee4b7e1a60c0130c8c90f9 Mon Sep 17 00:00:00 2001
+From ad184ecc5e5e67d1f3862e9ed3f767dff9bbc414 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:24:49 -0700
-Subject: [PATCH 09/12] Match syscalls to match musl
+Subject: [PATCH] chromium: musl: Match syscalls to match musl
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- third_party/lss/linux_syscall_support.h | 16 ++++++++++++++++
+ chromium/third_party/lss/linux_syscall_support.h | 16 ++++++++++++++++
  1 file changed, 16 insertions(+)
 
-diff --git a/third_party/lss/linux_syscall_support.h b/third_party/lss/linux_syscall_support.h
-index 9dbd2391b..a715de177 100644
---- a/third_party/lss/linux_syscall_support.h
-+++ b/third_party/lss/linux_syscall_support.h
-@@ -793,6 +793,14 @@ struct kernel_statfs {
+diff --git a/chromium/third_party/lss/linux_syscall_support.h b/chromium/third_party/lss/linux_syscall_support.h
+index 8a42c1c868..8e878c70f2 100644
+--- a/chromium/third_party/lss/linux_syscall_support.h
++++ b/chromium/third_party/lss/linux_syscall_support.h
+@@ -717,6 +717,14 @@ struct kernel_statfs {
  #endif
  
  
@@ -27,7 +27,7 @@ index 9dbd2391b..a715de177 100644
  #if defined(__x86_64__)
  #ifndef ARCH_SET_GS
  #define ARCH_SET_GS             0x1001
-@@ -1210,6 +1218,14 @@ struct kernel_statfs {
+@@ -1134,6 +1142,14 @@ struct kernel_statfs {
  #ifndef __NR_fallocate
  #define __NR_fallocate          285
  #endif
@@ -42,6 +42,3 @@ index 9dbd2391b..a715de177 100644
  /* End of x86-64 definitions                                                 */
  #elif defined(__mips__)
  #if _MIPS_SIM == _MIPS_SIM_ABI32
--- 
-2.13.2
-

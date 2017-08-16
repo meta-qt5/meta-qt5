@@ -1,7 +1,7 @@
-From 1a163c0cab05761f269fcb5adad5d40d71200d52 Mon Sep 17 00:00:00 2001
+From 944746d5d04ea8eaf268a97440c98136beae1e47 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Tue, 11 Jul 2017 10:15:41 +0200
-Subject: [PATCH 3/4] chromium: v8 fix build with gcc7
+Subject: [PATCH] chromium: v8 fix build with gcc7
 
 Use the fix from nodejs:
 https://github.com/nodejs/node/commit/2a2a5565c298639b823250b571101f51210c50e8
@@ -129,6 +129,3 @@ index 7d774beb5b..eda1478766 100644
  
    // Returns a new HashTable object.
    MUST_USE_RESULT static Handle<Derived> New(
--- 
-2.13.2
-

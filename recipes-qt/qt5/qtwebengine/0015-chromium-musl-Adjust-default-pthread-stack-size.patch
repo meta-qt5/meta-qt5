@@ -1,19 +1,18 @@
-From 65d516f64c1cca91868cb26aeb93802382704fd5 Mon Sep 17 00:00:00 2001
+From 295fd835b22203807962a3eea08a12b74ae54c2c Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 16:41:23 -0700
-Subject: [PATCH 1/2] Adjust default pthread stack size
+Subject: [PATCH] chromium: musl: Adjust default pthread stack size
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- base/threading/platform_thread_linux.cc                     | 3 ++-
- chrome/browser/chrome_browser_main_posix.cc                 | 9 +++++++++
- third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp | 4 ++--
- 3 files changed, 13 insertions(+), 3 deletions(-)
+ chromium/base/threading/platform_thread_linux.cc                     | 3 ++-
+ chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp | 4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/base/threading/platform_thread_linux.cc b/base/threading/platform_thread_linux.cc
-index 95ed32418..666e85ba3 100644
---- a/base/threading/platform_thread_linux.cc
-+++ b/base/threading/platform_thread_linux.cc
+diff --git a/chromium/base/threading/platform_thread_linux.cc b/chromium/base/threading/platform_thread_linux.cc
+index 95ed32418f..666e85ba33 100644
+--- a/chromium/base/threading/platform_thread_linux.cc
++++ b/chromium/base/threading/platform_thread_linux.cc
 @@ -96,7 +96,8 @@ void TerminateOnThread() {}
  
  size_t GetDefaultThreadStackSize(const pthread_attr_t& attributes) {
@@ -24,10 +23,10 @@ index 95ed32418..666e85ba3 100644
  #else
    // ThreadSanitizer bloats the stack heavily. Evidence has been that the
    // default stack size isn't enough for some browser tests.
-diff --git a/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp b/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
-index 3c0a0395b..2af6073e2 100644
---- a/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
-+++ b/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
+diff --git a/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp b/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
+index 3c0a0395b1..2af6073e21 100644
+--- a/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
++++ b/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
 @@ -73,7 +73,7 @@ size_t StackFrameDepth::getUnderestimatedStackSize()
      // FIXME: On Mac OSX and Linux, this method cannot estimate stack size
      // correctly for the main thread.
@@ -46,6 +45,3 @@ index 3c0a0395b..2af6073e2 100644
      pthread_attr_t attr;
      int error;
  #if OS(FREEBSD)
--- 
-2.13.2
-

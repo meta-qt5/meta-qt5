@@ -133,20 +133,20 @@ SRC_URI += " \
     file://0004-chromium-WebKit-fix-build-with-gcc7.patch;patchdir=src/3rdparty \
 "
 SRC_URI_append_libc-musl = "\
-    file://0001-sandbox-Define-TEMP_FAILURE_RETRY-if-not-defined.patch;patchdir=src/3rdparty/chromium \
-    file://0003-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty/chromium \
-    file://0004-include-fcntl.h-for-loff_t.patch;patchdir=src/3rdparty/chromium \
-    file://0005-use-off64_t-instead-of-the-internal-__off64_t.patch;patchdir=src/3rdparty/chromium \
-    file://0006-linux-glibc-make-the-distinction.patch;patchdir=src/3rdparty/chromium \
-    file://0007-allocator-Do-not-include-glibc_weak_symbols-for-musl.patch;patchdir=src/3rdparty/chromium \
-    file://0008-Use-correct-member-name-__si_fields-from-LinuxSigInf.patch;patchdir=src/3rdparty/chromium \
-    file://0009-Match-syscalls-to-match-musl.patch;patchdir=src/3rdparty/chromium \
-    file://0010-Define-res_ninit-and-res_nclose-for-non-glibc-platfo.patch;patchdir=src/3rdparty/chromium \
-    file://0011-Do-not-define-__sbrk-on-musl.patch;patchdir=src/3rdparty/chromium \
-    file://0012-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty/chromium \
-    file://0013-include-asm-generic-ioctl.h-for-TCGETS2.patch;patchdir=src/3rdparty/chromium \
-    file://0014-link-with-libexecinfo-on-musl.patch;patchdir=src/3rdparty/chromium \
-    file://0018-tcmalloc-Use-off64_t-insread-of-__off64_t.patch;patchdir=src/3rdparty/chromium \
+    file://0005-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch;patchdir=src/3rdparty \
+    file://0006-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty \
+    file://0007-chromium-musl-include-fcntl.h-for-loff_t.patch;patchdir=src/3rdparty \
+    file://0008-chromium-musl-use-off64_t-instead-of-the-internal-__.patch;patchdir=src/3rdparty \
+    file://0009-chromium-musl-linux-glibc-make-the-distinction.patch;patchdir=src/3rdparty \
+    file://0010-chromium-musl-allocator-Do-not-include-glibc_weak_sy.patch;patchdir=src/3rdparty \
+    file://0011-chromium-musl-Use-correct-member-name-__si_fields-fr.patch;patchdir=src/3rdparty \
+    file://0012-chromium-musl-Match-syscalls-to-match-musl.patch;patchdir=src/3rdparty \
+    file://0013-chromium-musl-Define-res_ninit-and-res_nclose-for-no.patch;patchdir=src/3rdparty \
+    file://0014-chromium-musl-Do-not-define-__sbrk-on-musl.patch;patchdir=src/3rdparty \
+    file://0015-chromium-musl-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty \
+    file://0016-chromium-musl-include-asm-generic-ioctl.h-for-TCGETS.patch;patchdir=src/3rdparty \
+    file://0017-chromium-musl-link-with-libexecinfo-on-musl.patch;patchdir=src/3rdparty \
+    file://0018-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
 SRCREV_qtwebengine = "d740d6a7dbfec387752c7bc8a8b06db0e757c9dc"

@@ -1,17 +1,17 @@
-From 1a468dd5239ebdf013d9ffb3a2d181d0434b4c6c Mon Sep 17 00:00:00 2001
+From d05c22bdabe10c0db9b65252e442251efc81a379 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 8 Jul 2017 09:08:23 -0700
-Subject: [PATCH 2/2] tcmalloc: Use off64_t insread of __off64_t
+Subject: [PATCH] chromium: musl: tcmalloc: Use off64_t insread of __off64_t
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- third_party/tcmalloc/chromium/src/base/linux_syscall_support.h | 2 +-
+ chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h b/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
-index b53dd46c5..58da4d19d 100644
---- a/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
-+++ b/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
+diff --git a/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h b/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
+index b53dd46c57..58da4d19d7 100644
+--- a/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
++++ b/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
 @@ -1930,7 +1930,7 @@ typedef unsigned long int ulong;
    #if defined(__x86_64__)
      /* Need to make sure __off64_t isn't truncated to 32-bits under x32.  */
@@ -21,6 +21,3 @@ index b53dd46c5..58da4d19d 100644
        LSS_BODY(6, void*, mmap, LSS_SYSCALL_ARG(s), LSS_SYSCALL_ARG(l),
                                 LSS_SYSCALL_ARG(p), LSS_SYSCALL_ARG(f),
                                 LSS_SYSCALL_ARG(d), (uint64_t)(o));
--- 
-2.13.2
-
