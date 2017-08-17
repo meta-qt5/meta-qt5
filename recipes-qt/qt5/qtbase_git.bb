@@ -141,7 +141,7 @@ QT_CONFIG_FLAGS += " \
 
 # for qtbase configuration we need default settings
 # since we cannot set empty set filename to a not existent file
-export OE_QMAKE_QTCONF_PATH = "foodummy"
+deltask generate_qt_config_file
 
 do_configure() {
     # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory" during configuration

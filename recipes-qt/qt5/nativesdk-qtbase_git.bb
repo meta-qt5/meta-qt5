@@ -97,7 +97,7 @@ OE_QMAKE_PATH_HOST_LIBS = "${libdir}"
 
 # for qtbase configuration we need default settings
 # since we cannot set empty set filename to a not existent file
-export OE_QMAKE_QTCONF_PATH = "foodummy"
+deltask generate_qt_config_file
 
 do_configure() {
     ${S}/configure -v \
