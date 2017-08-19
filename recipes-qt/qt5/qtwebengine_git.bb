@@ -32,6 +32,14 @@ EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm \
                         GYP_CONFIG+=use_experimental_allocator_shim=false \
 "
 
+# chromium/third_party/openh264/openh264.gyp adds
+# -Wno-format to openh264_cflags_add
+# similarly chromium/third_party/openh264/BUILD.gn for newer qtwebengine
+# causing following error, because -Wformat-security cannot be used together with -Wno-format
+# cc1plus: error: -Wformat-security ignored without -Wformat [-Werror=format-security]
+# http://errors.yoctoproject.org/Errors/Details/150333/
+SECURITY_STRINGFORMAT = ""
+
 # To use system ffmpeg you need to enable also libwebp, opus, vpx											    
 # Only depenedencies available in oe-core are enabled by default
 PACKAGECONFIG ??= "libwebp flac libevent libxslt speex"
