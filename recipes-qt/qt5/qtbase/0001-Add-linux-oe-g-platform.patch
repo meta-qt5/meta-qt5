@@ -1,4 +1,4 @@
-From e13425e6f1e784b0b016cf68a54dfbae32995b86 Mon Sep 17 00:00:00 2001
+From 85da054ff867fbf1a4c10e3f1cad782123ffdfe4 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -30,10 +30,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index 73679de621..5a0eebce50 100755
+index 08b49a8d12..5876721743 100755
 --- a/configure
 +++ b/configure
-@@ -709,7 +709,7 @@ fi
+@@ -712,7 +712,7 @@ fi
  # is where the resulting variable is written to
  setBootstrapVariable()
  {

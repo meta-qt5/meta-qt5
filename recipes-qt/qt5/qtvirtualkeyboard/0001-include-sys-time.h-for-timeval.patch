@@ -1,4 +1,4 @@
-From 78106c5b939cc7d84710fe4c8e2a356ac1f110ef Mon Sep 17 00:00:00 2001
+From 2e76f24615766593ad6eb182627fa9d0bdba3c2d Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 12 Jul 2017 23:59:52 -0700
 Subject: [PATCH] include sys/time.h for timeval
@@ -23,6 +23,3 @@ index 1b9673f..924be7b 100644
  #ifdef _WIN32
  #include <winsock.h> // timeval
  #else
--- 
-2.13.2
-

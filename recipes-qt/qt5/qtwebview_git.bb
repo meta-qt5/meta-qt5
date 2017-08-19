@@ -9,10 +9,6 @@ LIC_FILES_CHKSUM = " \
 require qt5.inc
 require qt5-git.inc
 
-# Patches from https://github.com/meta-qt5/qtwebview/commits/b5.9
-# 5.9.meta-qt5.1
-SRC_URI += "file://0001-Add-missing-include-for-qWarning.patch"
-
 DEPENDS += "qtbase qtwebengine"
 
 COMPATIBLE_MACHINE = "(-)"
@@ -23,4 +19,4 @@ COMPATIBLE_MACHINE_armv7a = "(.*)"
 COMPATIBLE_MACHINE_armv7ve = "(.*)"
 COMPATIBLE_MACHINE_aarch64 = "(.*)"
 
-SRCREV = "6e55abf3b6a5f373cd4b649c2318a45c49b40589"
+SRCREV = "e4016a67bbffefed71a407494e249e978d212b3d"

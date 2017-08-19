@@ -15,7 +15,7 @@ inherit ptest
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
 # Patches from https://github.com/meta-qt5/qttools/commits/b5.9
-# 5.9.meta-qt5.1
+# 5.9.meta-qt5.2
 SRC_URI += " \
     file://run-ptest \
     file://0001-add-noqtwebkit-configuration.patch \
@@ -30,7 +30,7 @@ PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
 
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)}"
 
-SRCREV = "88e02bb0a9b97d68a4b270e4ddfb6d0847c702a9"
+SRCREV = "fdc5749b5603653c5d0c59db267f44fd1609457e"
 
 BBCLASSEXTEND = "native nativesdk"
 

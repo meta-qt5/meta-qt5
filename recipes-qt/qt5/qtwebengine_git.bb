@@ -16,7 +16,7 @@ DEPENDS += " \
     ninja-native \
     yasm-native \
     qtwebchannel \
-    qtbase qtdeclarative qtxmlpatterns qtquickcontrols \
+    qtbase qtdeclarative qtxmlpatterns qtquickcontrols qtquickcontrols2 \
     qtlocation \
     libdrm fontconfig pixman openssl pango cairo icu pciutils \
     libcap \
@@ -130,18 +130,17 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "56-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.9
-# 5.9.meta-qt5.1
+# 5.9.meta-qt5.2
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-functions.prf-allow-build-for-linux-oe-g-platform.patch \
     file://0002-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
     file://0003-Include-dependency-to-QCoreApplication-translate.patch \
     file://0004-Force-host-toolchain-configuration.patch \
-    file://0005-Always-compile-QWebEnginePage-print.patch \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/56-based 
-# 56-based.meta-qt5.1
+# 56-based.meta-qt5.2
 SRC_URI += " \
     file://0001-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch;patchdir=src/3rdparty \
     file://0002-chromium-Force-host-toolchain-configuration.patch;patchdir=src/3rdparty \
@@ -163,8 +162,8 @@ SRC_URI_append_libc-musl = "\
     file://0015-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "73f7be5b2a95eab3dce11caede538eeb7beb71f2"
-SRCREV_chromium = "aa2fdd6be3d465280d2a0c3aacdc738bb4ffec05"
+SRCREV_qtwebengine = "99f84ffd2c0c78014a24534a863aa1c755abd51c"
+SRCREV_chromium = "21508b5b5421f10ba8627c3c66c5281efb39b2f9"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

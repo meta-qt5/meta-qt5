@@ -1,5 +1,5 @@
 # Copyright (C) 2012-2016 O.S. Systems Software LTDA.
-# Copyright (C) 2013-2016 Martin Jansa <martin.jansa@gmail.com>
+# Copyright (C) 2013-2017 Martin Jansa <martin.jansa@gmail.com>
 
 QT_MODULE ?= "${BPN}"
 QT_MODULE_BRANCH ?= "5.9"
@@ -14,4 +14,4 @@ CVE_PRODUCT = "qt"
 
 S = "${WORKDIR}/git"
 
-PV = "5.9.0+git${SRCPV}"
+PV = "5.9.2+git${SRCPV}"

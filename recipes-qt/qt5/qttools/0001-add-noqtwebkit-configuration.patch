@@ -1,4 +1,4 @@
-From e0387540876944a20461d60d2208191c734e00b1 Mon Sep 17 00:00:00 2001
+From 0098107f710e363d41b4913758302b43adccf2bd Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 4 Jun 2014 11:28:16 +0200
 Subject: [PATCH] add noqtwebkit configuration
@@ -16,16 +16,16 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/assistant/assistant/assistant.pro b/src/assistant/assistant/assistant.pro
-index 540c9689..2312b521 100644
+index 82f55092..ef07ee03 100644
 --- a/src/assistant/assistant/assistant.pro
 +++ b/src/assistant/assistant/assistant.pro
 @@ -1,4 +1,4 @@
--false:qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static) {
-+false:qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static):!contains(CONFIG, noqtwebkit) {
-     # FIXME: currently broken
+-qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static) {
++qtHaveModule(webkitwidgets):!contains(QT_CONFIG, static):!contains(CONFIG, noqtwebkit) {
      BROWSER = qtwebkit
  } else {
-@@ -76,7 +76,7 @@ SOURCES += aboutdialog.cpp \
+     BROWSER = qtextbrowser
+@@ -75,7 +75,7 @@ SOURCES += aboutdialog.cpp \
      openpagesmanager.cpp \
      openpagesswitcher.cpp
  

@@ -1,4 +1,4 @@
-From e81f0a5139f8f1ea131438def3fe1aabe997aeff Mon Sep 17 00:00:00 2001
+From 5106be504b7edb7bc75309d581dfd33a89ed04fc Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -13,10 +13,10 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/src/buildtools/configure_host.pro b/src/buildtools/configure_host.pro
-index fd27643e..f9acb6ff 100644
+index f1b3d47b..521c507b 100644
 --- a/src/buildtools/configure_host.pro
 +++ b/src/buildtools/configure_host.pro
-@@ -28,9 +28,9 @@ GN_CONTENTS = \
+@@ -29,9 +29,9 @@ GN_CONTENTS = \
  "import(\"//build/config/sysroot.gni\")" \
  "import(\"//build/toolchain/gcc_toolchain.gni\")" \
  "gcc_toolchain(\"host\") {" \
@@ -29,7 +29,7 @@ index fd27643e..f9acb6ff 100644
  "  ar = \"$$which(ar)\" " \
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
-@@ -41,9 +41,9 @@ GN_CONTENTS = \
+@@ -42,9 +42,9 @@ GN_CONTENTS = \
  "  } " \
  "}" \
  "gcc_toolchain(\"v8_snapshot\") {" \

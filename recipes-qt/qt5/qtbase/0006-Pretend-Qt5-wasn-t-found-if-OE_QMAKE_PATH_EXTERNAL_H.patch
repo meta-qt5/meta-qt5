@@ -1,4 +1,4 @@
-From 3730ac03a1473a0e1fdfe1537b73818ab99961e9 Mon Sep 17 00:00:00 2001
+From 515acdcfe158982f31b31e410bbedb3db94bea1c Mon Sep 17 00:00:00 2001
 From: Pascal Bach <pascal.bach@siemens.com>
 Date: Wed, 11 May 2016 15:20:41 +0200
 Subject: [PATCH] Pretend Qt5 wasn't found if OE_QMAKE_PATH_EXTERNAL_HOST_BINS
@@ -30,7 +30,7 @@ Signed-off-by: Pascal Bach <pascal.bach@siemens.com>
  2 files changed, 10 insertions(+)
 
 diff --git a/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in b/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in
-index 4f342d67d7..202b723882 100644
+index 55c74aad66..f9ec328c83 100644
 --- a/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in
 +++ b/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in
 @@ -9,6 +9,11 @@ if (CMAKE_VERSION VERSION_LESS 3.0.0)

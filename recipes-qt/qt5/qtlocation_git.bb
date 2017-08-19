@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase qtxmlpatterns qtdeclarative qtquickcontrols"
 
 # Patches from https://github.com/meta-qt5/qtlocation/commits/b5.9
-# 5.9.meta-qt5.1
+# 5.9.meta-qt5.2
 SRC_URI += "file://0001-Make-mapbox-gl-build-configurable.patch"
 
 PACKAGECONFIG ??= ""
@@ -34,7 +34,7 @@ SRC_URI += " \
     ${QT_GIT}/qtlocation-mapboxgl.git;name=qtlocation-mapboxgl;branch=upstream/qt-staging;protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/mapbox-gl-native \
 "
 
-SRCREV_qtlocation = "888d351cb0c7fe6d05ab1efe8d4dbb4b6f06cd5f"
-SRCREV_qtlocation-mapboxgl = "d45c177e8a23eefcc94930af9fa085e61136bb94"
+SRCREV_qtlocation = "c832af789766fcebd8cfb15e53ce14f36278ca6d"
+SRCREV_qtlocation-mapboxgl = "9ecbe3642fb4a53b558598239b59bf1d0224c25b"
 
 SRCREV_FORMAT = "qtlocation_qtlocation-mapboxgl"
