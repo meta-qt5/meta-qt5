@@ -21,3 +21,7 @@ PACKAGECONFIG[gypsy] = "-feature-gypsy,-no-feature-gypsy,gconf gypsy"
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
 SRCREV = "41cc347040226d2c5c16b9df001d03f2724b87e5"
+
+# The same issue as in qtbase:
+# http://errors.yoctoproject.org/Errors/Details/152640/
+LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
