@@ -1,4 +1,4 @@
-From ed626df67e8287fadbfe2801c241c9717472dcf4 Mon Sep 17 00:00:00 2001
+From 5d4f3219be0b66d63765e077644a51e18b1f4502 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 5 Jun 2015 19:55:05 -0700
 Subject: [PATCH] Exclude backtrace() API for non-glibc libraries
@@ -12,7 +12,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Source/WTF/wtf/Assertions.cpp b/Source/WTF/wtf/Assertions.cpp
-index 1b2091f..ba03a28 100644
+index 1b2091f53..ba03a28ec 100644
 --- a/Source/WTF/wtf/Assertions.cpp
 +++ b/Source/WTF/wtf/Assertions.cpp
 @@ -61,7 +61,7 @@

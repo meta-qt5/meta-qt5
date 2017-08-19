@@ -20,6 +20,8 @@ require qt5-native.inc
 require qt5-git.inc
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.9-shared
+# 5.9.meta-qt5-shared.1
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -32,6 +34,8 @@ SRC_URI += "\
 "
 
 # common for qtbase-native and nativesdk-qtbase
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.9-native
+# 5.9.meta-qt5-native.1
 SRC_URI += " \
     file://0009-Always-build-uic.patch \
 "

@@ -9,6 +9,8 @@ LIC_FILES_CHKSUM = " \
 require qt5.inc
 require qt5-git.inc
 
+# Patches from https://github.com/meta-qt5/qtwebview/commits/b5.9
+# 5.9.meta-qt5.1
 SRC_URI += "file://0001-Add-missing-include-for-qWarning.patch"
 
 DEPENDS += "qtbase qtwebengine"

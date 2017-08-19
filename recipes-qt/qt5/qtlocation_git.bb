@@ -13,6 +13,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtxmlpatterns qtdeclarative qtquickcontrols"
 
+# Patches from https://github.com/meta-qt5/qtlocation/commits/b5.9
+# 5.9.meta-qt5.1
 SRC_URI += "file://0001-Make-mapbox-gl-build-configurable.patch"
 
 PACKAGECONFIG ??= ""
