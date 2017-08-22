@@ -29,4 +29,4 @@ SRC_URI += "\
     file://0001-qtmultimedia-fix-a-conflicting-declaration.patch \
 "
 
-SRCREV = "a6cc1af0546ab10701c10475315139ebb50ad1e5"
+SRCREV = "116cd7bdbd1e148aef05c27602780d65be335205"

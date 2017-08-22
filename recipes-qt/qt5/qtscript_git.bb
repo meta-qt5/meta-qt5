@@ -25,4 +25,4 @@ ARM_INSTRUCTION_SET_armv5 = "arm"
 
 DEPENDS += "qtbase"
 
-SRCREV = "ab816ddbfeca2ff6dadca0a31de168f1a5a3f7f4"
+SRCREV = "86ee61734e0331459f9cfeb1ad56f773b7e994be"
