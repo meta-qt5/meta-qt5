@@ -33,6 +33,7 @@ SRC_URI += "\
 SRC_URI += " \
     file://0011-Always-build-uic.patch \
     file://0012-qdbuscpp2xml.pro-do-not-build-with-bootstrapped-depe.patch \
+    file://0001-Disable-unnamed-tmp-files.patch \
 "
 
 CLEANBROKEN = "1"
@@ -109,4 +110,4 @@ do_install() {
     install -m 755 ${B}/bin/qfloat16-tables ${D}${OE_QMAKE_PATH_BINS}
 }
 
-SRCREV = "678ff94ff29db1b0faa4aa8d486d4df544ce3247"
+SRCREV = "f537dc0da288949c4df903c1f2b21156e62fbae5"

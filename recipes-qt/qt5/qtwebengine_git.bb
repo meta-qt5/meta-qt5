@@ -104,7 +104,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "56-based"
+QT_MODULE_BRANCH_CHROMIUM = "58-based"
 
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
@@ -113,8 +113,8 @@ SRC_URI += " \
     file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
 "
 
-SRCREV_qtwebengine = "fa19227c3ac7df7c0d2f8a548a9a36ac9a7b803c"
-SRCREV_chromium = "aa2fdd6be3d465280d2a0c3aacdc738bb4ffec05"
+SRCREV_qtwebengine = "647307f534d45758832f23912ed281af819f0174"
+SRCREV_chromium = "582c5493439ba9ac57c6c14c706f530741f5bfc8"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

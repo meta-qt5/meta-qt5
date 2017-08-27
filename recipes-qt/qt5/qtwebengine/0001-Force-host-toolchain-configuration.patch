@@ -1,4 +1,4 @@
-From 5c879db32cde9bee9c9073842ecc281172f19453 Mon Sep 17 00:00:00 2001
+From e7d1e5dfdece59f247a1d71ad0ca1b0c8cadda21 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -6,17 +6,32 @@ Subject: [PATCH] Force host toolchain configuration
 Force gcc/g++ to be used for parts using host toolchain, since
 the option(host_build) does not work in yocto builds.
 
+Don't use QT_ARCH for the host architecture, since that's always
+the target architecture in bitbake builds, instead ask specifically
+for the qmakes's host architecture.
+
+Change-Id: I38329d545e527dbc5892547b6951822171ab761f
 Upstream-Status: Inappropriate [OE specific]
 Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
 ---
- src/buildtools/configure_host.pro | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ src/buildtools/configure_host.pro | 14 +++++++-------
+ src/core/config/linux.pri         |  2 +-
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/src/buildtools/configure_host.pro b/src/buildtools/configure_host.pro
-index d8d731d..89dade4 100644
+index f1b3d47..1212372 100644
 --- a/src/buildtools/configure_host.pro
 +++ b/src/buildtools/configure_host.pro
-@@ -16,9 +16,9 @@ GN_CONTENTS = \
+@@ -4,7 +4,7 @@ TEMPLATE = aux
+ # Pick up the host toolchain
+ option(host_build)
+ 
+-GN_HOST_CPU = $$gnArch($$QT_ARCH)
++GN_HOST_CPU = $$gnArch($$QMAKE_HOST.arch)
+ !isEmpty(QT_TARGET_ARCH): GN_TARGET_CPU = $$gnArch($$QT_TARGET_ARCH)
+ else: GN_TARGET_CPU = $$GN_HOST_CPU
+ GN_OS = $$gnOS()
+@@ -29,9 +29,9 @@ GN_CONTENTS = \
  "import(\"//build/config/sysroot.gni\")" \
  "import(\"//build/toolchain/gcc_toolchain.gni\")" \
  "gcc_toolchain(\"host\") {" \
@@ -29,7 +44,7 @@ index d8d731d..89dade4 100644
  "  ar = \"$$which(ar)\" " \
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
-@@ -27,9 +27,9 @@ GN_CONTENTS = \
+@@ -42,9 +42,9 @@ GN_CONTENTS = \
  "  } " \
  "}" \
  "gcc_toolchain(\"v8_snapshot\") {" \
@@ -42,6 +57,19 @@ index d8d731d..89dade4 100644
  "  ar = \"$$which(ar)\" " \
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
+diff --git a/src/core/config/linux.pri b/src/core/config/linux.pri
+index 714c864..f66ca55 100644
+--- a/src/core/config/linux.pri
++++ b/src/core/config/linux.pri
+@@ -98,7 +98,7 @@ contains(QT_ARCH, "mips"):!host_build {
+ 
+ host_build {
+     gn_args += custom_toolchain=\"$$QTWEBENGINE_OUT_ROOT/src/toolchain:host\"
+-    GN_HOST_CPU = $$gnArch($$QT_ARCH)
++    GN_HOST_CPU = $$gnArch($$QMAKE_HOST.arch)
+     gn_args += host_cpu=\"$$GN_HOST_CPU\"
+     # Don't bother trying to use system libraries in this case
+     gn_args += use_glib=false
 diff --git a/src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py b/src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py
 index 75b9690..601f688 100755
 --- a/src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py

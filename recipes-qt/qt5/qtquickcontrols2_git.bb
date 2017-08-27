@@ -10,6 +10,4 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtdeclarative"
 
-SRC_URI += "file://0001-Add-missing-includes-for-QColor.patch"
-
-SRCREV = "20d141034b48ae73eee70743dc410d35491cd00f"
+SRCREV = "4200f7117973969392be48b0c82f1b4bc214e546"

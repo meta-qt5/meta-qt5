@@ -14,4 +14,4 @@ PACKAGECONFIG[sdl2] = "-feature-sdl2,-no-feature-sdl2,libsdl2"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "d4c6ba6afe1d7a3165f1ac108fef6eb2b994175a"
+SRCREV = "ffa5a03da503c3cd00f960debf3f43b85958c874"
