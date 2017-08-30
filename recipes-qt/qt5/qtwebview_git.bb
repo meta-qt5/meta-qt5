@@ -9,8 +9,6 @@ LIC_FILES_CHKSUM = " \
 require qt5.inc
 require qt5-git.inc
 
-SRC_URI += "file://0001-Add-missing-include-for-qWarning.patch"
-
 DEPENDS += "qtbase qtwebengine"
 
 SRCREV = "e4016a67bbffefed71a407494e249e978d212b3d"
