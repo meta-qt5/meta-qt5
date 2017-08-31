@@ -13,12 +13,15 @@ LIC_FILES_CHKSUM = " \
 "
 
 DEPENDS += " \
+    libpng-native \
+    nss-native \
+    nspr-native \
     ninja-native \
     yasm-native \
     qtwebchannel \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols qtquickcontrols2 \
     qtlocation \
-    libdrm fontconfig pixman openssl pango cairo icu pciutils \
+    libdrm fontconfig pixman openssl pango cairo icu pciutils nss \
     libcap \
     gperf-native \
     ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa-lib', '', d)} \
@@ -43,7 +46,7 @@ SECURITY_STRINGFORMAT = ""
 
 # To use system ffmpeg you need to enable also libwebp, opus, vpx											    
 # Only depenedencies available in oe-core are enabled by default
-PACKAGECONFIG ??= "libwebp flac libevent libxslt speex nss"
+PACKAGECONFIG ??= "libwebp flac libevent libxslt speex"
 PACKAGECONFIG[opus] = "WEBENGINE_CONFIG+=use_system_opus,,libopus"
 PACKAGECONFIG[icu] = "WEBENGINE_CONFIG+=use_system_icu,,icu"
 PACKAGECONFIG[ffmpeg] = "WEBENGINE_CONFIG+=use_system_ffmpeg,,libav"
@@ -54,7 +57,6 @@ PACKAGECONFIG[libxslt] = "WEBENGINE_CONFIG+=use_system_libxslt,,libxslt"
 PACKAGECONFIG[speex] = "WEBENGINE_CONFIG+=use_system_speex,,speex"
 PACKAGECONFIG[vpx] = "WEBENGINE_CONFIG+=use_system_vpx,,libvpx"
 PACKAGECONFIG[webrtc] = "WEBENGINE_CONFIG+=use_webrtc,,libvpx"
-PACKAGECONFIG[nss] = "WEBENGINE_CONFIG+=use_nss,,nss"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
