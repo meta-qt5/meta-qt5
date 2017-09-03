@@ -38,9 +38,13 @@ SRC_URI += "\
 # 5.9.meta-qt5-native.2
 SRC_URI += " \
     file://0009-Always-build-uic.patch \
+    file://0010-Add-OE-specific-specs-for-clang-compiler.patch \
 "
 
 CLEANBROKEN = "1"
+
+XPLATFORM_toolchain-clang = "linux-oe-clang"
+XPLATFORM ?= "linux-oe-g++"
 
 PACKAGECONFIG_CONFARGS = " \
     -sysroot ${STAGING_DIR_NATIVE} \
@@ -79,7 +83,7 @@ PACKAGECONFIG_CONFARGS = " \
     -nomake examples \
     -nomake tests \
     -no-rpath \
-    -platform linux-oe-g++ \
+    -platform ${XPLATFORM} \
 "
 
 # for qtbase configuration we need default settings

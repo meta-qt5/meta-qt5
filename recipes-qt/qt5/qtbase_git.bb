@@ -26,6 +26,7 @@ SRC_URI += "\
     file://0006-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
     file://0007-Delete-qlonglong-and-qulonglong.patch \
     file://0008-Replace-pthread_yield-with-sched_yield.patch \
+    file://0010-Add-OE-specific-specs-for-clang-compiler.patch \
     file://run-ptest \
 "
 
@@ -160,6 +161,9 @@ QT_CONFIG_FLAGS += " \
 # since we cannot set empty set filename to a not existent file
 deltask generate_qt_config_file
 
+XPLATFORM_toolchain-clang = "linux-oe-clang"
+XPLATFORM ?= "linux-oe-g++"
+
 do_configure() {
     # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory" during configuration
     touch ${S}/mkspecs/oe-device-extra.pri
@@ -188,7 +192,7 @@ do_configure() {
         -external-hostbindir ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS} \
         -hostdatadir ${OE_QMAKE_PATH_HOST_DATA} \
         -platform ${OE_QMAKE_PLATFORM_NATIVE} \
-        -xplatform linux-oe-g++ \
+        -xplatform ${XPLATFORM} \
         ${QT_CONFIG_FLAGS}
 }
 
