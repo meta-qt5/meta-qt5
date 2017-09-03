@@ -39,6 +39,8 @@ SRC_URI += "\
 SRC_URI += " \
     file://0009-Always-build-uic.patch \
     file://0010-Add-OE-specific-specs-for-clang-compiler.patch \
+    file://0011-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
+    file://0012-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
 "
 
 CLEANBROKEN = "1"

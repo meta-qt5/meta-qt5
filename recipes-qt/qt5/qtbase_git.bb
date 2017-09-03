@@ -27,6 +27,8 @@ SRC_URI += "\
     file://0007-Delete-qlonglong-and-qulonglong.patch \
     file://0008-Replace-pthread_yield-with-sched_yield.patch \
     file://0010-Add-OE-specific-specs-for-clang-compiler.patch \
+    file://0011-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
+    file://0012-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://run-ptest \
 "
 
