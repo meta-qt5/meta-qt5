@@ -27,7 +27,7 @@ PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
 
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)}"
 
-SRCREV = "8492e448666931a33d53a52df31ac2fd796239a5"
+SRCREV = "1ace238ce0347857a5ba55d6fa30ba81fed204b9"
 
 BBCLASSEXTEND = "native nativesdk"
 
