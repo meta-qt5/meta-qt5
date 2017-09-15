@@ -13,5 +13,5 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
 QT_MODULE_BRANCH = "dev"
-SRCREV = "b0ad5907f480307853f7ac951bacfaa61dcbd94e"
+SRCREV = "0555cf73c8b5abd41d8a4ff02457315c9e7c667d"
 
