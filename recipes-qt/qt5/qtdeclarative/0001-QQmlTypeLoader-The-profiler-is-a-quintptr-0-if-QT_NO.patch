@@ -1,0 +1,32 @@
+From 330e96565b37e227162ab7ec6d4c6f3f56d2a1fe Mon Sep 17 00:00:00 2001
+From: Ulf Hermann <ulf.hermann@qt.io>
+Date: Mon, 25 Sep 2017 11:55:20 +0200
+Subject: [PATCH] QQmlTypeLoader: The profiler is a quintptr(0) if
+ QT_NO_QML_DEBUGGING
+
+This follows the pattern established in other places.
+
+Task-number: QTBUG-63392
+Change-Id: I11cd66d5552f751804dd0a9460b26bda546c1726
+Reviewed-by: Mikko Gronoff <mikko.gronoff@qt.io>
+Reviewed-by: Shawn Rutledge <shawn.rutledge@qt.io>
+Reviewed-by: Samuli Piippo <samuli.piippo@qt.io>
+---
+ src/qml/qml/qqmltypeloader_p.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/qml/qml/qqmltypeloader_p.h b/src/qml/qml/qqmltypeloader_p.h
+index c214f0c..abc0df9 100644
+--- a/src/qml/qml/qqmltypeloader_p.h
++++ b/src/qml/qml/qqmltypeloader_p.h
+@@ -322,8 +322,8 @@ public:
+     void invalidate();
+ 
+ #ifdef QT_NO_QML_DEBUGGER
+-    QQmlProfiler *profiler() const { return nullptr; }
+-    void setProfiler(QQmlProfiler *) {}
++    quintptr profiler() const { return 0; }
++    void setProfiler(quintptr) {}
+ #else
+     QQmlProfiler *profiler() const { return m_profiler.data(); }
+     void setProfiler(QQmlProfiler *profiler);

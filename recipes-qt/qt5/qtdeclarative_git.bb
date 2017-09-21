@@ -10,11 +10,9 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-SRC_URI += " \
-    file://0001-Fix-QQmlExpression-leaking-QQmlError-objects.patch \
-"
-
 DEPENDS += "qtbase"
+
+SRC_URI += "file://0001-QQmlTypeLoader-The-profiler-is-a-quintptr-0-if-QT_NO.patch"
 
 PACKAGECONFIG ??= "qtxmlpatterns"
 PACKAGECONFIG[qtxmlpatterns] = ",,qtxmlpatterns"
@@ -32,6 +30,6 @@ do_install_append_class-nativesdk() {
 
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtxmlpatterns', 'CONFIG+=OE_QTXMLPATTERNS_ENABLED', '', d)}"
 
-SRCREV = "00adacd7934d7553eaea7c6d2b43bcb3df439e3e"
+SRCREV = "ff5c83087e94f340a8c5695998f2ea81e29da8ea"
 
 BBCLASSEXTEND =+ "native nativesdk"

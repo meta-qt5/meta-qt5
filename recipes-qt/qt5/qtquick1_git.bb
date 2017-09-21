@@ -23,4 +23,4 @@ do_configure_prepend() {
 }
 
 QT_MODULE_BRANCH = "dev"
-SRCREV = "695460401d9a89d2f156016d51601b2e59b64105"
+SRCREV = "9bf0edd9bd46ecb900bcdc3349d14869b87ab7de"
