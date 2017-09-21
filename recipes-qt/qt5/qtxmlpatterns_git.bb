@@ -1,5 +1,6 @@
 require qt5.inc
 require qt5-git.inc
+require qt5-ptest.inc
 
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
@@ -19,3 +20,4 @@ DEPENDS += "qtbase"
 SRCREV = "fcfa824402bb4edaf644fad786dac3560c743ebe"
 
 BBCLASSEXTEND =+ "native nativesdk"
+

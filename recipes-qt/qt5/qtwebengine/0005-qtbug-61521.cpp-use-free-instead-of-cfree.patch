@@ -1,0 +1,25 @@
+From 331de4be615b8552e498ac2f3deff4b49b4b0fc0 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sun, 20 Aug 2017 20:37:38 +0200
+Subject: [PATCH] qtbug-61521.cpp: use free instead of cfree
+
+* as cfree man says:
+  This  function  should  never  be used.  Use free(3) instead.
+  Starting with version 2.26, it has been removed from glibc.
+---
+ src/core/api/qtbug-61521.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/core/api/qtbug-61521.cpp b/src/core/api/qtbug-61521.cpp
+index 86d5998e..1dcc4cfa 100644
+--- a/src/core/api/qtbug-61521.cpp
++++ b/src/core/api/qtbug-61521.cpp
+@@ -100,7 +100,7 @@ SHIM_HIDDEN void* ShimCalloc(size_t n, size_t size) {
+ }
+ 
+ SHIM_HIDDEN void ShimCFree(void* ptr) {
+-    cfree(ptr);
++    free(ptr);
+ }
+ 
+ SHIM_HIDDEN void* ShimMemalign(size_t align, size_t s) {

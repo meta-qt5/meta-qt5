@@ -25,18 +25,24 @@ require qt5-git.inc
 FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.9-shared
+# 5.9.meta-qt5-shared.2
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
-    file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
-    file://0005-configure-bump-path-length-from-256-to-512-character.patch \
-    file://0009-Disable-all-unknown-features-instead-of-erroring-out.patch \
-    file://0010-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
+    file://0003-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
+    file://0004-configure-bump-path-length-from-256-to-512-character.patch \
+    file://0005-Disable-all-unknown-features-instead-of-erroring-out.patch \
+    file://0006-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
+    file://0007-Delete-qlonglong-and-qulonglong.patch \
+    file://0008-Replace-pthread_yield-with-sched_yield.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.9-native
+# 5.9.meta-qt5-native.2
 SRC_URI += " \
-    file://0011-Always-build-uic.patch \
+    file://0009-Always-build-uic.patch \
 "
 
 # CMake's toolchain configuration of nativesdk-qtbase

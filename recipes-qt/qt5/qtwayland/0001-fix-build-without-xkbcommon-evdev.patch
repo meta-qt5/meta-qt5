@@ -1,4 +1,4 @@
-From 2b72ad7955fe19abb4a0b4ebb6bc7aa498e454bc Mon Sep 17 00:00:00 2001
+From c4fae91b3d2b2b0f64e3fafac456a6a917c69e88 Mon Sep 17 00:00:00 2001
 From: Raphael Freudiger <laser_b@gmx.ch>
 Date: Tue, 10 Jan 2017 15:49:55 +0100
 Subject: [PATCH] fix build without xkbcommon-evdev
@@ -16,17 +16,17 @@ Signed-off-by: Gordan Markuš <gordan.markus@pelagicore.com>
  3 files changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/src/client/client.pro b/src/client/client.pro
-index 7482cfd..cb3578c 100644
+index eae7ad52..0bb7b188 100644
 --- a/src/client/client.pro
 +++ b/src/client/client.pro
-@@ -120,3 +120,5 @@ MODULE_PLUGIN_TYPES = \
+@@ -147,3 +147,5 @@ MODULE_PLUGIN_TYPES = \
              wayland-decoration-client \
              wayland-shell-integration
  load(qt_module)
 +
 +LIBS += -lxkbcommon
 diff --git a/src/compositor/compositor.pro b/src/compositor/compositor.pro
-index dc9000d..4eebfd6 100644
+index dc9000d9..4eebfd64 100644
 --- a/src/compositor/compositor.pro
 +++ b/src/compositor/compositor.pro
 @@ -32,3 +32,5 @@ include ($$PWD/extensions/extensions.pri)
@@ -36,10 +36,10 @@ index dc9000d..4eebfd6 100644
 +
 +LIBS += -lxkbcommon
 diff --git a/src/compositor/compositor_api/qwaylandkeyboard.cpp b/src/compositor/compositor_api/qwaylandkeyboard.cpp
-index 55381b4..5c054c6 100644
+index c30f7b18..e6f1a0b3 100644
 --- a/src/compositor/compositor_api/qwaylandkeyboard.cpp
 +++ b/src/compositor/compositor_api/qwaylandkeyboard.cpp
-@@ -338,12 +338,6 @@ void QWaylandKeyboardPrivate::createXKBState(xkb_keymap *keymap)
+@@ -349,12 +349,6 @@ void QWaylandKeyboardPrivate::createXKBState(xkb_keymap *keymap)
      xkb_state = xkb_state_new(keymap);
  }
  
@@ -52,7 +52,7 @@ index 55381b4..5c054c6 100644
  
  void QWaylandKeyboardPrivate::createXKBKeymap()
  {
-@@ -373,6 +367,13 @@ void QWaylandKeyboardPrivate::createXKBKeymap()
+@@ -384,6 +378,13 @@ void QWaylandKeyboardPrivate::createXKBKeymap()
  }
  #endif
  
@@ -66,6 +66,3 @@ index 55381b4..5c054c6 100644
  void QWaylandKeyboardPrivate::sendRepeatInfo()
  {
      Q_FOREACH (Resource *resource, resourceMap()) {
--- 
-2.9.3
-

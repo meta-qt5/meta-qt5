@@ -1,5 +1,6 @@
 require qt5.inc
 require qt5-git.inc
+require qt5-ptest.inc
 
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
@@ -23,4 +24,7 @@ do_configure_prepend() {
 }
 
 QT_MODULE_BRANCH = "dev"
-SRCREV = "695460401d9a89d2f156016d51601b2e59b64105"
+# one commit behind:
+# 8a7b80eb Use QRandomGenerator instead of q?rand
+# because QRandomGenerator is only since Qt 5.10
+SRCREV = "9bf0edd9bd46ecb900bcdc3349d14869b87ab7de"

@@ -11,4 +11,12 @@ require qt5-git.inc
 
 DEPENDS += "qtbase qtwebengine"
 
+COMPATIBLE_MACHINE = "(-)"
+COMPATIBLE_MACHINE_x86 = "(.*)"
+COMPATIBLE_MACHINE_x86-64 = "(.*)"
+COMPATIBLE_MACHINE_armv6 = "(.*)"
+COMPATIBLE_MACHINE_armv7a = "(.*)"
+COMPATIBLE_MACHINE_armv7ve = "(.*)"
+COMPATIBLE_MACHINE_aarch64 = "(.*)"
+
 SRCREV = "e4016a67bbffefed71a407494e249e978d212b3d"

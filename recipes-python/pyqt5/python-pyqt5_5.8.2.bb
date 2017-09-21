@@ -11,6 +11,7 @@ DEPENDS = "sip sip-native qtbase python"
 SRC_URI = "\
     ${SOURCEFORGE_MIRROR}/pyqt/PyQt5_gpl-${PV}.tar.gz \
     file://fix-sm.patch \
+    file://0001-qtabbar.sip-fix-build-with-accessibility-disabled.patch \
 "
 SRC_URI[md5sum] = "c3048e9d242f3e72fd393630da1d971a"
 SRC_URI[sha256sum] = "ebd70515b30bbd6098fee29e6271a6696b1183c5530ee30e6ba9aaab195536e8"
@@ -31,8 +32,8 @@ DISABLED_FEATURES = "PyQt_Desktop_OpenGL PyQt_Accessibility PyQt_SessionManager"
 
 DISABLED_FEATURES_append_arm = " PyQt_qreal_double"
 
-PYQT_MODULES = "QtCore QtGui QtNetwork"
-PYQT_MODULES_aarch64 = "QtCore QtGui QtNetwork"
+PYQT_MODULES = "QtCore QtGui QtNetwork QtWidgets"
+PYQT_MODULES_aarch64 = "QtCore QtGui QtNetwork QtWidgets"
 
 do_configure_prepend() {
     cd ${S}
