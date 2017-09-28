@@ -26,7 +26,6 @@ EXTRA_OEMAKE = " \
     OE_QMAKE_LDFLAGS='${OE_QMAKE_LDFLAGS}' \
     OE_QMAKE_AR='${OE_QMAKE_AR}' \
     OE_QMAKE_STRIP='${OE_QMAKE_STRIP}' \
-    OE_QMAKE_WAYLAND_SCANNER='${OE_QMAKE_WAYLAND_SCANNER}' \
     OE_QMAKE_INCDIR_QT='${STAGING_DIR_TARGET}/${OE_QMAKE_PATH_HEADERS}' \
 "
 
@@ -40,7 +39,6 @@ export OE_QMAKE_LINK = "${CXX}"
 export OE_QMAKE_LDFLAGS = "${LDFLAGS}"
 export OE_QMAKE_AR = "${AR}"
 export OE_QMAKE_STRIP = "echo"
-export OE_QMAKE_WAYLAND_SCANNER = "${STAGING_BINDIR_NATIVE}/wayland-scanner"
 
 # qmake reads if from shell environment
 export OE_QMAKE_QTCONF_PATH = "${WORKDIR}/qt.conf"
