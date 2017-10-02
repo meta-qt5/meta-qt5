@@ -48,6 +48,7 @@ EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', 'CONF
 
 PACKAGES += "${PN}-dictionaries"
 RRECOMMENDS_${PN} += "${PN}-dictionaries"
+RDEPENDS_${PN}-qmlplugins += "${PN}-plugins"
 FILES_${PN}-dictionaries = "${OE_QMAKE_PATH_DATA}/qtvirtualkeyboard/*/*.dat"
 FILES_${PN} += "${OE_QMAKE_PATH_DATA}/qtvirtualkeyboard/lipi_toolkit"
 
