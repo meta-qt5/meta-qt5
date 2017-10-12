@@ -28,4 +28,4 @@ SRC_URI += " \
     file://0001-texteditor-fix-invalid-use-of-incomplete-type-class-.patch \
 "
 
-SRCREV = "a77494140324c3ede1f7c16086593c070d81e2b3"
+SRCREV = "8476f8fff7dc5b6f140074d280828cc0f9590088"

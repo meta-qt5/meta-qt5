@@ -137,7 +137,6 @@ SRC_URI += " \
     file://0002-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
     file://0003-Include-dependency-to-QCoreApplication-translate.patch \
     file://0004-Force-host-toolchain-configuration.patch \
-    file://0005-qtbug-61521.cpp-use-free-instead-of-cfree.patch \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/56-based 
@@ -164,8 +163,8 @@ SRC_URI_append_libc-musl = "\
     file://0016-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "99f84ffd2c0c78014a24534a863aa1c755abd51c"
-SRCREV_chromium = "21508b5b5421f10ba8627c3c66c5281efb39b2f9"
+SRCREV_qtwebengine = "c11c2c8981e647c1eb2c6753ce77d436b92fff87"
+SRCREV_chromium = "cfe8c60903b327ac94406661350f4ac05aa8c21b"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

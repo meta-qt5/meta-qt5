@@ -1,22 +1,23 @@
-From 46b6456bc8995b8d6249fb008a538222d30716cd Mon Sep 17 00:00:00 2001
+From 827b323ee9a6db04c1f5b644abea0ced2095096a Mon Sep 17 00:00:00 2001
 From: Christophe Chapuis <chris.chapuis@gmail.com>
 Date: Tue, 26 Jan 2016 18:56:42 +0100
 Subject: [PATCH] Don't use MeeGo as prefix in order to make this a common
  component
 
 Signed-off-by: Christophe Chapuis <chris.chapuis@gmail.com>
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
 ---
- plugin/components.h | 2 +-
- plugin/plugin.pro   | 2 +-
- plugin/qmldir       | 2 +-
+ plugin/plugin.cpp | 2 +-
+ plugin/plugin.pro | 2 +-
+ plugin/qmldir     | 2 +-
  3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/plugin/components.h b/plugin/components.h
-index d4f2bcd..49b7ac2 100644
---- a/plugin/components.h
-+++ b/plugin/components.h
-@@ -17,7 +17,7 @@
- class Components : public QQmlExtensionPlugin
+diff --git a/plugin/plugin.cpp b/plugin/plugin.cpp
+index a383482..451c95f 100644
+--- a/plugin/plugin.cpp
++++ b/plugin/plugin.cpp
+@@ -24,7 +24,7 @@
+ class ConnmanPlugin: public QQmlExtensionPlugin
  {
      Q_OBJECT
 -    Q_PLUGIN_METADATA(IID "MeeGo.Connman")
@@ -25,7 +26,7 @@ index d4f2bcd..49b7ac2 100644
  public:
      void registerTypes(const char *uri);
 diff --git a/plugin/plugin.pro b/plugin/plugin.pro
-index 31d9076..da47ad9 100644
+index c4f54cf..3763f57 100644
 --- a/plugin/plugin.pro
 +++ b/plugin/plugin.pro
 @@ -17,7 +17,7 @@ LIBS += -l$$qtLibraryTarget(connman-$$TARGET_SUFFIX)
@@ -46,5 +47,5 @@ index 5db82b7..de56688 100644
 +module Connman
  plugin ConnmanQtDeclarative
 -- 
-1.8.1.2
+2.11.0.windows.3
 
