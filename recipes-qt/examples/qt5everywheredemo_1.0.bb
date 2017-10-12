@@ -1,12 +1,12 @@
 SUMMARY = "Qt5 everywhere demo"
 DESCRIPTION = "Quick tour of Qt 5.0, primarily focusing on its graphical capabilities."
+LICENSE = "BSD"
 HOMEPAGE = "https://qt.gitorious.org/qt-labs"
-LICENSE = "LGPLv2.1"
-LIC_FILES_CHKSUM = "file://main.cpp;md5=1187cb795a0f96bce64e63dd1a67dc2b"
+LIC_FILES_CHKSUM = "file://qml/QtDemo/main.qml;endline=39;md5=7d80863906a4bc8ffca77fd869e335a9"
 
-DEPENDS = "qtdeclarative qtgraphicaleffects"
+DEPENDS = "qtdeclarative qtgraphicaleffects qtsvg qtmultimedia"
 
-SRCREV = "c17fe9e0ec0882ac4c4dc1168095f569acab5d09"
+SRCREV = "35d72a2eba7456a2efc5eb8b77afbc00f69ba0ac"
 SRC_URI = "${QT_LABS_GIT}/qt-labs-qt5-everywhere-demo"
 
 S = "${WORKDIR}/git/QtDemo"

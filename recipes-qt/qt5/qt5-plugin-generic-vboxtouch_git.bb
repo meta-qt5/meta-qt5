@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = " \
     file://evdevmousehandler.cpp;beginline=1;endline=40;md5=9081062f6e7f74b6e62ad7ecee4a71be \
 "
 
-PV = "1.1.3+gitr${SRCPV}"
+PV = "1.1.4+gitr${SRCPV}"
 
 DEPENDS = "qtbase"
 
@@ -17,7 +17,7 @@ DEPENDS = "qtbase"
 CXXFLAGS += "-Wno-narrowing"
 
 SRC_URI = "git://github.com/nemomobile/qt5-plugin-generic-vboxtouch.git"
-SRCREV = "d613ad1cc64d7a6a9b38df4d49146170be6876aa"
+SRCREV = "3f2bdb5a1d346f02d5ab185522271ba2288a42bb"
 S = "${WORKDIR}/git/vboxtouch"
 
 inherit qmake5

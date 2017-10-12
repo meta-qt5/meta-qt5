@@ -5,11 +5,11 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c"
 
 DEPENDS += "qtbase qtdeclarative"
 
-SRCREV = "54435de3bed0b454ef4ea3ea32c7234fcd9f24c6"
+SRCREV = "6916cd030b05f0bd137ea9b669fee48f20c19084"
 SRC_URI = "git://git.merproject.org/mer-core/libqofono.git"
 S = "${WORKDIR}/git"
 
-PV = "0.87+gitr${SRCPV}"
+PV = "0.92+gitr${SRCPV}"
 
 inherit qmake5
 
