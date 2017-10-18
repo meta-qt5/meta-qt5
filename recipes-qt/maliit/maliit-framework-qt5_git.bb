@@ -7,9 +7,10 @@ LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=5c917f6ce94ceb8d8d5e16e2fca5b9ad"
 inherit qmake5 qmake5_paths
 
 SRC_URI = "git://github.com/maliit/framework.git;branch=master \
-    file://0001-Fix-MALIIT_INSTALL_PRF-to-allow-the-build-with-opene.patch \
-    file://maliit-server.desktop \
-"
+           file://0001-Fix-MALIIT_INSTALL_PRF-to-allow-the-build-with-opene.patch \
+           file://maliit-server.desktop \
+           file://0001-config.pri-Use-O1-optimization-in-DEBUG-flags.patch \
+           "
 
 SRCREV = "60b1b10de14f932420313c547ab801daf522d539"
 PV = "0.99.0+git${SRCPV}"
@@ -57,7 +58,6 @@ EXTRA_QMAKEVARS_PRE = "\
     CONFIG+=enable-dbus-activation \
     CONFIG+=qt5-inputcontext \
 "
-
 EXTRA_OEMAKE += "INSTALL_ROOT=${D}"
 
 do_install_append() {

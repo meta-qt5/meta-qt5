@@ -1,0 +1,23 @@
+From 06e9e7844ffa2b6985e5fa7a1c475c8a54ca252a Mon Sep 17 00:00:00 2001
+From: Cleiton Bueno <cleitonrbueno@gmail.com>
+Date: Fri, 25 Dec 2015 18:16:05 -0200
+Subject: [PATCH] WebEngine qquickwebengineview_p_p.h add include QColor
+
+Signed-off-by: Cleiton Bueno <cleitonrbueno@gmail.com>
+---
+ src/webengine/api/qquickwebengineview_p_p.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/webengine/api/qquickwebengineview_p_p.h b/src/webengine/api/qquickwebengineview_p_p.h
+index 19ecf5e1..f6f638ee 100644
+--- a/src/webengine/api/qquickwebengineview_p_p.h
++++ b/src/webengine/api/qquickwebengineview_p_p.h
+@@ -59,6 +59,8 @@
+ #include <QString>
+ #include <QtCore/qcompilerdetection.h>
+ #include <QtGui/qaccessibleobject.h>
++#include <QColor>
++
+ 
+ namespace QtWebEngineCore {
+ class WebContentsAdapter;

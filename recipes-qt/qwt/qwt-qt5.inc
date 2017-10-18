@@ -8,9 +8,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=dac2743472b0462ff3cfb4af42051c88"
 DEPENDS = "qtbase qtsvg qttools"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/qwt/qwt-${PV}.tar.bz2;name=qwt \
+           file://remove_rpath.patch \
           "
-#           file://qwt6.patch 
-#           file://qwt6-fix-linking-with-ld-gold.patch"
 
 S = "${WORKDIR}/qwt-${PV}"
 
@@ -45,3 +44,5 @@ FILES_${PN}-plugins = "${prefix}/plugins/designer/*.so"
 FILES_${PN}-dbg += "${prefix}/plugins/designer/.debug"
 FILES_${PN}-doc += "${prefix}/doc"
 
+INSANE_SKIP_${PN}-plugins += "libdir"
+INSANE_SKIP_${PN}-dbg += "libdir"

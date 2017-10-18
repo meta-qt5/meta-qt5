@@ -1,7 +1,7 @@
 require qt5.inc
 require qt5-git.inc
 
-LICENSE = "LGPL-3.0 | GPL-2.0"
+LICENSE = "LGPL-3.0 | GPL-2.0 | The-Qt-Company-Commercial"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPLv3;md5=8211fde12cc8a4e2477602f5953f5b71 \
     file://LICENSE.GPLv3;md5=88e2b9117e6be406b5ed6ee4ca99a705 \
@@ -11,8 +11,11 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase"
 DEPENDS_class-target += "qtdeclarative qt3d-native"
 
+# Patches from https://github.com/meta-qt5/qt3d/commits/b5.9
+# 5.9.meta-qt5.2
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
+    file://0002-Fix-BlenderDNA-for-clang-cross-compiler.patch \
 "
 
 PACKAGECONFIG ??= ""

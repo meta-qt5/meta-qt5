@@ -39,10 +39,15 @@ EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
 SRCREV = "04f6ff77ef0c8858629766e191ecc3d4ef056848"
 
+# Patches from https://github.com/meta-qt5/qtwayland/commits/b5.9
+# 5.9.meta-qt5.2
 # From https://bugreports.qt.io/browse/QTBUG-57767
 SRC_URI += " \
     file://0001-fix-build-without-xkbcommon-evdev.patch \
-    file://0002-Fix-initial-window-property-values-being-propagated.patch \
 "
 
 BBCLASSEXTEND =+ "native nativesdk"
+
+# The same issue as in qtbase:
+# http://errors.yoctoproject.org/Errors/Details/152641/
+LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"

@@ -25,4 +25,8 @@ ARM_INSTRUCTION_SET_armv5 = "arm"
 
 DEPENDS += "qtbase"
 
+# The same issue as in qtbase:
+# http://errors.yoctoproject.org/Errors/Build/44915/
+LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
+
 SRCREV = "3d44bf7ce2a45d461f1d74a3f1dbdff313845898"

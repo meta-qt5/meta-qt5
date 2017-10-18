@@ -1,4 +1,4 @@
-From e7d1e5dfdece59f247a1d71ad0ca1b0c8cadda21 Mon Sep 17 00:00:00 2001
+From 9bdd03ad0bbb221ad7bffe0e570605c21c28b1b5 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -10,7 +10,6 @@ Don't use QT_ARCH for the host architecture, since that's always
 the target architecture in bitbake builds, instead ask specifically
 for the qmakes's host architecture.
 
-Change-Id: I38329d545e527dbc5892547b6951822171ab761f
 Upstream-Status: Inappropriate [OE specific]
 Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
 ---
@@ -19,7 +18,7 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  2 files changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/src/buildtools/configure_host.pro b/src/buildtools/configure_host.pro
-index f1b3d47..1212372 100644
+index f1b3d47b..12123729 100644
 --- a/src/buildtools/configure_host.pro
 +++ b/src/buildtools/configure_host.pro
 @@ -4,7 +4,7 @@ TEMPLATE = aux
@@ -58,7 +57,7 @@ index f1b3d47..1212372 100644
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
 diff --git a/src/core/config/linux.pri b/src/core/config/linux.pri
-index 714c864..f66ca55 100644
+index 714c864d..f66ca551 100644
 --- a/src/core/config/linux.pri
 +++ b/src/core/config/linux.pri
 @@ -98,7 +98,7 @@ contains(QT_ARCH, "mips"):!host_build {
@@ -70,28 +69,3 @@ index 714c864..f66ca55 100644
      gn_args += host_cpu=\"$$GN_HOST_CPU\"
      # Don't bother trying to use system libraries in this case
      gn_args += use_glib=false
-diff --git a/src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py b/src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py
-index 75b9690..601f688 100755
---- a/src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py
-+++ b/src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py
-@@ -298,14 +298,14 @@ def write_gn_ninja(path, root_gen_dir, options):
-     ld = os.environ.get('LD', 'link.exe')
-     ar = os.environ.get('AR', 'lib.exe')
-   else:
--    cc = os.environ.get('CC', 'cc')
--    cxx = os.environ.get('CXX', 'c++')
-+    cc = os.environ.get('CC_host', 'gcc')
-+    cxx = os.environ.get('CXX_host', 'g++')
-     ld = cxx
--    ar = os.environ.get('AR', 'ar')
-+    ar = os.environ.get('AR_host', 'ar')
- 
--  cflags = os.environ.get('CFLAGS', '').split()
--  cflags_cc = os.environ.get('CXXFLAGS', '').split()
--  ldflags = os.environ.get('LDFLAGS', '').split()
-+  cflags = os.environ.get('CFLAGS_host', '').split()
-+  cflags_cc = os.environ.get('CXXFLAGS_host', '').split()
-+  ldflags = os.environ.get('LDFLAGS_host', '').split()
-   include_dirs = [root_gen_dir, SRC_ROOT]
-   libs = []
- 

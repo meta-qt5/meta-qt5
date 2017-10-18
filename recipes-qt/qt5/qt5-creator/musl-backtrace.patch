@@ -1,0 +1,18 @@
+Index: qt-creator-opensource-src-3.5.1/src/plugins/debugger/debugger.pro
+===================================================================
+--- qt-creator-opensource-src-3.5.1.orig/src/plugins/debugger/debugger.pro
++++ qt-creator-opensource-src-3.5.1/src/plugins/debugger/debugger.pro
+@@ -148,3 +148,4 @@ include(qml/qml.pri)
+ include(namedemangler/namedemangler.pri)
+ 
+ include(shared/shared.pri)
++LIBS  *= -lexecinfo
+Index: qt-creator-opensource-src-3.5.1/src/plugins/qmldesigner/config.pri
+===================================================================
+--- qt-creator-opensource-src-3.5.1.orig/src/plugins/qmldesigner/config.pri
++++ qt-creator-opensource-src-3.5.1/src/plugins/qmldesigner/config.pri
+@@ -9,3 +9,4 @@ equals(TMP_BAUHAUS_NO_OUTPUT, true):DEFI
+ DEFINES += ENABLE_TEXT_VIEW
+ 
+ isEmpty($$(BAUHAUS_OUTPUT_IN_TEST)):DEFINES += QDEBUG_IN_TESTS WARNINGS_IN_TESTS
++LIBS  *= -lexecinfo

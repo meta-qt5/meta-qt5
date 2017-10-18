@@ -1,4 +1,4 @@
-From de6311b4d556abbe131462a3cd962ae87da59522 Mon Sep 17 00:00:00 2001
+From d559da6ab0834aeb7307008015b6232e586fea00 Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Thu, 24 Dec 2015 12:46:58 -0200
 Subject: [PATCH] chromium: Change false to FALSE and 1 to TRUE, FIX
@@ -10,11 +10,11 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  chromium/ui/gfx/codec/jpeg_codec.cc | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/src/3rdparty/chromium/ui/gfx/codec/jpeg_codec.cc b/src/3rdparty/chromium/ui/gfx/codec/jpeg_codec.cc
-index 8a08fe0..32b2a05 100644
---- a/src/3rdparty/chromium/ui/gfx/codec/jpeg_codec.cc
-+++ b/src/3rdparty/chromium/ui/gfx/codec/jpeg_codec.cc
-@@ -120,7 +120,7 @@ boolean EmptyOutputBuffer(jpeg_compress_struct* cinfo) {
+diff --git a/chromium/ui/gfx/codec/jpeg_codec.cc b/chromium/ui/gfx/codec/jpeg_codec.cc
+index 6d926378be..738d3fdedf 100644
+--- a/chromium/ui/gfx/codec/jpeg_codec.cc
++++ b/chromium/ui/gfx/codec/jpeg_codec.cc
+@@ -121,7 +121,7 @@ boolean EmptyOutputBuffer(jpeg_compress_struct* cinfo) {
    // tell libjpeg where to write the next data
    cinfo->dest->next_output_byte = &(*state->out)[state->image_buffer_used];
    cinfo->dest->free_in_buffer = state->out->size() - state->image_buffer_used;
@@ -23,7 +23,7 @@ index 8a08fe0..32b2a05 100644
  }
  
  // Cleans up the JpegEncoderState to prepare for returning in the final form.
-@@ -261,7 +261,7 @@ bool JPEGCodec::Encode(const unsigned char* input, ColorFormat format,
+@@ -262,7 +262,7 @@ bool JPEGCodec::Encode(const unsigned char* input, ColorFormat format,
    cinfo.data_precision = 8;
  
    jpeg_set_defaults(&cinfo);
@@ -32,7 +32,7 @@ index 8a08fe0..32b2a05 100644
  
    // set up the destination manager
    jpeg_destination_mgr destmgr;
-@@ -273,7 +273,7 @@ bool JPEGCodec::Encode(const unsigned char* input, ColorFormat format,
+@@ -274,7 +274,7 @@ bool JPEGCodec::Encode(const unsigned char* input, ColorFormat format,
    JpegEncoderState state(output);
    cinfo.client_data = &state;
  
@@ -41,7 +41,7 @@ index 8a08fe0..32b2a05 100644
  
    // feed it the rows, doing necessary conversions for the color format
  #ifdef JCS_EXTENSIONS
-@@ -359,7 +359,7 @@ void InitSource(j_decompress_ptr cinfo) {
+@@ -360,7 +360,7 @@ void InitSource(j_decompress_ptr cinfo) {
  //   set to a positive value if TRUE is returned. A FALSE return should only
  //   be used when I/O suspension is desired."
  boolean FillInputBuffer(j_decompress_ptr cinfo) {
@@ -50,7 +50,7 @@ index 8a08fe0..32b2a05 100644
  }
  
  // Skip data in the buffer. Since we have all the data at once, this operation
-@@ -487,8 +487,8 @@ bool JPEGCodec::Decode(const unsigned char* input, size_t input_size,
+@@ -488,8 +488,8 @@ bool JPEGCodec::Decode(const unsigned char* input, size_t input_size,
    cinfo.client_data = &state;
  
    // fill the file metadata into our buffer

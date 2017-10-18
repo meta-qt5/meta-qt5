@@ -14,4 +14,3 @@ DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
 QT_MODULE_BRANCH = "dev"
 SRCREV = "0555cf73c8b5abd41d8a4ff02457315c9e7c667d"
-

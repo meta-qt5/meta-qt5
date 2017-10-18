@@ -14,9 +14,12 @@ inherit ptest
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
+# Patches from https://github.com/meta-qt5/qttools/commits/b5.9
+# 5.9.meta-qt5.2
 SRC_URI += " \
     file://run-ptest \
-    file://0004-linguist-tools-cmake-allow-overriding-the-location-f.patch \
+    file://0001-add-noqtwebkit-configuration.patch \
+    file://0002-linguist-tools-cmake-allow-overriding-the-location-f.patch \
 "
 
 FILES_${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"

@@ -1,0 +1,25 @@
+From 2e76f24615766593ad6eb182627fa9d0bdba3c2d Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Wed, 12 Jul 2017 23:59:52 -0700
+Subject: [PATCH] include sys/time.h for timeval
+
+Musl exposes this issue since its not indirectly
+including sys/time.h like glibc
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/virtualkeyboard/3rdparty/pinyin/include/userdict.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/virtualkeyboard/3rdparty/pinyin/include/userdict.h b/src/virtualkeyboard/3rdparty/pinyin/include/userdict.h
+index 1b9673f..924be7b 100644
+--- a/src/virtualkeyboard/3rdparty/pinyin/include/userdict.h
++++ b/src/virtualkeyboard/3rdparty/pinyin/include/userdict.h
+@@ -24,6 +24,7 @@
+ // Debug performance for operations
+ // #define ___DEBUG_PERF___
+ 
++#include <sys/time.h>
+ #ifdef _WIN32
+ #include <winsock.h> // timeval
+ #else

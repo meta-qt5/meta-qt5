@@ -1,0 +1,45 @@
+From e695f37fc52defd1b96664b003444692e9b6cb65 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 7 Jul 2017 14:09:06 -0700
+Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ chromium/base/trace_event/malloc_dump_provider.cc | 3 ++-
+ chromium/content/child/content_child_helpers.cc   | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/chromium/base/trace_event/malloc_dump_provider.cc b/chromium/base/trace_event/malloc_dump_provider.cc
+index 7d0cb57931..10be59ebad 100644
+--- a/chromium/base/trace_event/malloc_dump_provider.cc
++++ b/chromium/base/trace_event/malloc_dump_provider.cc
+@@ -210,6 +210,7 @@ MallocDumpProvider::~MallocDumpProvider() {}
+ // the current process.
+ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
+                                       ProcessMemoryDump* pmd) {
++#if defined(__GLIBC__)
+   size_t total_virtual_size = 0;
+   size_t resident_size = 0;
+   size_t allocated_objects_size = 0;
+@@ -321,7 +322,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
+     pmd->DumpHeapUsage(metrics_by_context, overhead, "malloc");
+   }
+   tid_dumping_heap_ = kInvalidThreadId;
+-
++#endif // __GLIBC__
+   return true;
+ }
+ 
+diff --git a/chromium/content/child/content_child_helpers.cc b/chromium/content/child/content_child_helpers.cc
+index 7ddeb4d16a..b8c73b09c5 100644
+--- a/chromium/content/child/content_child_helpers.cc
++++ b/chromium/content/child/content_child_helpers.cc
+@@ -25,7 +25,7 @@ namespace content {
+ // though, this provides only a partial and misleading value.
+ // Unfortunately some telemetry benchmark rely on it and these need to
+ // be refactored before getting rid of this. See crbug.com/581365 .
+-#if defined(OS_LINUX) || defined(OS_ANDROID)
++#if defined(__GLIBC__) || defined(OS_ANDROID)
+ size_t GetMemoryUsageKB() {
+   struct mallinfo minfo = mallinfo();
+   uint64_t mem_usage =
