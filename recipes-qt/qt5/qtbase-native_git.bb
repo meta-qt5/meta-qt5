@@ -38,14 +38,21 @@ SRC_URI += "\
 # 5.9.meta-qt5-native.2
 SRC_URI += " \
     file://0009-Always-build-uic.patch \
+    file://0010-Add-OE-specific-specs-for-clang-compiler.patch \
+    file://0011-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
+    file://0012-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
 "
 
 CLEANBROKEN = "1"
+
+XPLATFORM_toolchain-clang = "linux-oe-clang"
+XPLATFORM ?= "linux-oe-g++"
 
 PACKAGECONFIG_CONFARGS = " \
     -sysroot ${STAGING_DIR_NATIVE} \
     -no-gcc-sysroot \
     -system-zlib \
+    -qt-pcre \
     -no-libjpeg \
     -no-libpng \
     -no-gif \
@@ -79,7 +86,7 @@ PACKAGECONFIG_CONFARGS = " \
     -nomake examples \
     -nomake tests \
     -no-rpath \
-    -platform linux-oe-g++ \
+    -platform ${XPLATFORM} \
 "
 
 # for qtbase configuration we need default settings
@@ -112,6 +119,10 @@ do_install() {
     fi
 
     install -m 755 ${B}/bin/qfloat16-tables ${D}${OE_QMAKE_PATH_BINS}
+
+    # since 5.9.2 something sets a very strange path to mkspec ("${_qt5Core_install_prefix}/../../../../../../../../../../usr/lib/qt5//mkspecs/linux-oe-g++")
+    # override this until somebody finds a better way
+    echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
 SRCREV = "ec16ba393baf504d4b192cc349775c62d3c96aa0"
