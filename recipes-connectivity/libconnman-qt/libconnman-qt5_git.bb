@@ -5,9 +5,9 @@ HOMEPAGE = "https://git.merproject.org/mer-core/libconnman-qt"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://libconnman-qt/clockmodel.h;endline=8;md5=ea9f724050803f15d2d900ce3c5dac88"
 DEPENDS += "qtbase qtdeclarative"
-PV = "1.1.10+git${SRCPV}"
+PV = "1.2.4+git${SRCPV}"
 
-SRCREV = "4d6def3053eaccaac04e4f9e03ee24dea8b9e8d8"
+SRCREV = "9d98e12ed60ae4fa9da62485cb8a82129ed1a464"
 SRC_URI = "git://git.merproject.org/mer-core/libconnman-qt.git;protocol=https \
     file://0001-Don-t-use-MeeGo-as-prefix-in-order-to-make-this-a-co.patch \
 "
