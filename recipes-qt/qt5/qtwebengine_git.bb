@@ -80,6 +80,8 @@ def gettext_oeconf(d):
 require qt5.inc
 require qt5-git.inc
 
+export GN_PKG_CONFIG_HOST = "${STAGING_BINDIR_NATIVE}/pkg-config-native"
+
 do_configure() {
     # Disable autodetection from sysroot:
     sed -e 's/packagesExist([^)]*vpx[^)]*):/false:/g'\
