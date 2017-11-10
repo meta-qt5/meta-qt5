@@ -23,9 +23,9 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  configure                            |  2 +-
  mkspecs/features/configure.prf       |  4 ++--
  mkspecs/features/qt_functions.prf    |  2 +-
- mkspecs/linux-oe-g++/qmake.conf      | 43 ++++++++++++++++++++++++++++++++++++
+ mkspecs/linux-oe-g++/qmake.conf      | 42 ++++++++++++++++++++++++++++++++++++
  mkspecs/linux-oe-g++/qplatformdefs.h |  1 +
- 5 files changed, 48 insertions(+), 4 deletions(-)
+ 5 files changed, 47 insertions(+), 4 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
@@ -78,10 +78,10 @@ index c00fdb73f8..0cf4de7b49 100644
              cmd = perl -w $$system_path($${cmd}.pl)
 diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
 new file mode 100644
-index 0000000000..c1837e6d55
+index 0000000..30d31ed
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qmake.conf
-@@ -0,0 +1,43 @@
+@@ -0,0 +1,42 @@
 +#
 +# qmake configuration for linux-g++ with modifications for building with OpenEmbedded
 +#
@@ -95,7 +95,6 @@ index 0000000000..c1837e6d55
 +# QMAKE_<TOOL> (moc, uic, rcc) are gone, overwrite only ar and strip
 +QMAKE_AR              = $$(OE_QMAKE_AR) cqs
 +QMAKE_STRIP           = $$(OE_QMAKE_STRIP)
-+QMAKE_WAYLAND_SCANNER = $$(OE_QMAKE_WAYLAND_SCANNER)
 +
 +include(../common/gcc-base-unix.conf)
 +
