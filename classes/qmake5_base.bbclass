@@ -88,7 +88,7 @@ generate_qt_config_file_effective_paths() {
 [EffectivePaths]
 HostBinaries = ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}
 HostData = ${OE_QMAKE_PATH_HOST_DATA}
-HostPrefix = ${STAGING_DIR_NATIVE}${prefix_native}
+HostPrefix = ${STAGING_DIR_NATIVE}
 EOF
 }
 #
