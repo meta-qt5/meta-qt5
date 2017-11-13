@@ -29,12 +29,7 @@ DEPENDS += " \
 
 DEPENDS_append_libc-musl = " libexecinfo"
 
-EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm \
-                        GYP_CONFIG+=generate_character_data=0 \
-                        GYP_CONFIG+=use_allocator=none \
-                        GYP_CONFIG+=use_experimental_allocator_shim=false \
-"
-EXTRA_QMAKEVARS_CONFIGURE += "-feature-system-ninja -no-feature-system-gn"
+EXTRA_QMAKEVARS_CONFIGURE += "-feature-webengine-system-ninja -no-feature-webengine-system-gn"
 
 # chromium/third_party/openh264/openh264.gyp adds
 # -Wno-format to openh264_cflags_add
@@ -44,21 +39,26 @@ EXTRA_QMAKEVARS_CONFIGURE += "-feature-system-ninja -no-feature-system-gn"
 # http://errors.yoctoproject.org/Errors/Details/150333/
 SECURITY_STRINGFORMAT = ""
 
-# To use system ffmpeg you need to enable also libwebp, opus, vpx											    
+# To use system ffmpeg you need to enable also libwebp, opus, vpx
 # Only depenedencies available in oe-core are enabled by default
-PACKAGECONFIG ??= "libwebp flac libevent libxslt speex"
-PACKAGECONFIG[opus] = "WEBENGINE_CONFIG+=use_system_opus,,libopus"
-PACKAGECONFIG[icu] = "WEBENGINE_CONFIG+=use_system_icu,,icu"
-PACKAGECONFIG[ffmpeg] = "WEBENGINE_CONFIG+=use_system_ffmpeg,,libav"
-PACKAGECONFIG[libwebp] = "WEBENGINE_CONFIG+=use_system_libwebp,,libwebp"
-PACKAGECONFIG[flac] = "WEBENGINE_CONFIG+=use_system_flac,,flac"
-PACKAGECONFIG[libevent] = "WEBENGINE_CONFIG+=use_system_libevent,,libevent"
-PACKAGECONFIG[libxslt] = "WEBENGINE_CONFIG+=use_system_libxslt,,libxslt"
-PACKAGECONFIG[speex] = "WEBENGINE_CONFIG+=use_system_speex,,speex"
-PACKAGECONFIG[vpx] = "WEBENGINE_CONFIG+=use_system_vpx,,libvpx"
-PACKAGECONFIG[webrtc] = "WEBENGINE_CONFIG+=use_webrtc,,libvpx"
+PACKAGECONFIG ??= "libwebp libevent libpng"
+PACKAGECONFIG[icu] = "-feature-webengine-system-icu,-no-feature-webengine-system-icu,icu"
+PACKAGECONFIG[ffmpeg] = "-feature-webengine-system-ffmpeg,-no-feature-webengine-system-ffmpeg,libav"
+PACKAGECONFIG[webrtc] = "-feature-webengine-webrtc,-no-feature-webengine-webrtc,libvpx"
+PACKAGECONFIG[libwebp] = "-feature-webengine-system-libwebp,-no-feature-webengine-system-libwebp,libwebp"
+PACKAGECONFIG[opus] = "-feature-webengine-system-opus,-no-feature-webengine-system-opus,libopus"
+PACKAGECONFIG[libvpx] = "-feature-webengine-system-libvpx,-no-feature-webengine-system-libvpx,libvpx"
+PACKAGECONFIG[libevent] = "-feature-webengine-system-libevent,-no-feature-webengine-system-libevent,libevent"
+PACKAGECONFIG[libpng] = "-feature-webengine-system-png,-no-feature-webengine-system-png,libpng"
+PACKAGECONFIG[harfbuzz] = "-feature-webengine-system-harfbuzz,-no-feature-webengine-system-harfbuzz,harfbuzz"
+PACKAGECONFIG[glib] = "-feature-webengine-system-glib,-no-feature-webengine-system-glib,glib"
+PACKAGECONFIG[zlib] = "-feature-webengine-system-zlib,-no-feature-webengine-system-zlib,zlib"
+PACKAGECONFIG[protobuf] = "-feature-webengine-system-protobuf,-no-feature-webengine-system-protobuf,protobuf"
+PACKAGECONFIG[jasoncpp] = "-feature-webengine-system-jsoncpp,-no-feature-webengine-system-jsoncpp,jasoncpp"
+PACKAGECONFIG[libxml2] = "-feature-webengine-system-libxml2,-no-feature-webengine-system-libxml2,libxml2"
+PACKAGECONFIG[minizip] = "-feature-webengine-system-minizip,-no-feature-webengine-system-minizip,minizip"
 
-EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
+EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
 COMPATIBLE_MACHINE = "(-)"
 COMPATIBLE_MACHINE_x86 = "(.*)"
@@ -84,17 +84,6 @@ export GN_PKG_CONFIG_HOST = "${STAGING_BINDIR_NATIVE}/pkg-config-native"
 export GN_HOST_TOOLCHAIN_EXTRA_CPPFLAGS = "-I${STAGING_DIR_NATIVE}/usr/include"
 
 do_configure() {
-    # Disable autodetection from sysroot:
-    sed -e 's/packagesExist([^)]*vpx[^)]*):/false:/g'\
-        -e 's/config_libvpx:/false:/g' \
-        -e 's/config_srtp:/false:/g' \
-        -e 's/config_snappy:/false:/g' \
-        -e 's/packagesExist(nss):/false:/g' \
-        -e 's/packagesExist(minizip, zlib):/false:/g' \
-        -e 's/packagesExist(libwebp,libwebpdemux):/false:/g' \
-        -e 's/packagesExist(libxml-2.0,libxslt):/false:/g'\
-        -e 's/^ *packagesExist($$package):/false:/g' \
-        -i ${S}/mkspecs/features/configure.prf
 
     # qmake can't find the OE_QMAKE_* variables on it's own so directly passing them as
     # arguments here
