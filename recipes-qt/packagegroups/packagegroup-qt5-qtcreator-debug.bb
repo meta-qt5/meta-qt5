@@ -12,5 +12,5 @@ RDEPENDS_${PN} = " \
     gdbserver \
     ${VIRTUAL-RUNTIME_qtcreator-debug-ssh-daemon} \
     openssh-sftp-server \
-    qtdeclarative-plugins \
+    qtdeclarative \
 "
