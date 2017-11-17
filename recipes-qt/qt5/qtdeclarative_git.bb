@@ -14,8 +14,6 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-SRC_URI += "file://0001-QQmlTypeLoader-The-profiler-is-a-quintptr-0-if-QT_NO.patch"
-
 PACKAGECONFIG ??= "qtxmlpatterns"
 PACKAGECONFIG[qtxmlpatterns] = ",,qtxmlpatterns"
 
@@ -32,6 +30,6 @@ do_install_append_class-nativesdk() {
 
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtxmlpatterns', 'CONFIG+=OE_QTXMLPATTERNS_ENABLED', '', d)}"
 
-SRCREV = "ff5c83087e94f340a8c5695998f2ea81e29da8ea"
+SRCREV = "19f54245d35ee5eb66b991274908f780b103e3b4"
 
 BBCLASSEXTEND =+ "native nativesdk"

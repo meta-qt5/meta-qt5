@@ -37,11 +37,15 @@ SRC_URI += "\
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.9-native
 # 5.9.meta-qt5-native.2
 SRC_URI += " \
-    file://0001-Disable-unnamed-tmp-files.patch \
     file://0009-Always-build-uic.patch \
     file://0010-Add-OE-specific-specs-for-clang-compiler.patch \
     file://0011-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0012-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
+"
+
+# only for qtbase-native
+SRC_URI += " \
+    file://0001-Bootstrap-without-linkat-feature.patch \
 "
 
 CLEANBROKEN = "1"
@@ -87,6 +91,7 @@ PACKAGECONFIG_CONFARGS = " \
     -nomake examples \
     -nomake tests \
     -no-rpath \
+    -no-feature-linkat \
     -platform ${XPLATFORM} \
 "
 
@@ -126,4 +131,4 @@ do_install() {
     echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
-SRCREV = "f27e029ef2e8400b803cec1b17ffd4e244d8610a"
+SRCREV = "36984dc8cec09703290692ce7e899e88754173c4"
