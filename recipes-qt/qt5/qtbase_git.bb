@@ -239,6 +239,8 @@ do_install_append() {
     echo "isEmpty(QMAKE_LINK_C_SHLIB): QMAKE_LINK_C_SHLIB = $OE_QMAKE_LINK_NO_SYSROOT" >> $conf
     echo "isEmpty(QMAKE_LFLAGS): QMAKE_LFLAGS = ${OE_QMAKE_LDFLAGS}" >> $conf
     echo "isEmpty(QMAKE_STRIP): QMAKE_STRIP = ${TARGET_PREFIX}strip" >> $conf
+
+    generate_target_qt_config_file ${D}${OE_QMAKE_PATH_BINS}/qt.conf
 }
 
 # mkspecs have mac specific scripts that depend on perl and bash
