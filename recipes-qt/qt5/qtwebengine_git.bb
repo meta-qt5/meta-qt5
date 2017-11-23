@@ -42,7 +42,7 @@ EXTRA_QMAKEVARS_CONFIGURE += "-feature-system-ninja -no-feature-system-gn"
 # http://errors.yoctoproject.org/Errors/Details/150333/
 SECURITY_STRINGFORMAT = ""
 
-# To use system ffmpeg you need to enable also libwebp, opus, vpx											    
+# To use system ffmpeg you need to enable also libwebp, opus, vpx
 # Only depenedencies available in oe-core are enabled by default
 PACKAGECONFIG ??= "libwebp flac libevent libxslt speex nss"
 PACKAGECONFIG[opus] = "WEBENGINE_CONFIG+=use_system_opus,,libopus"
@@ -139,7 +139,7 @@ SRC_URI += " \
     file://0004-Force-host-toolchain-configuration.patch \
 "
 
-# Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/56-based 
+# Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/56-based
 # 56-based.meta-qt5.2
 SRC_URI += " \
     file://0001-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch;patchdir=src/3rdparty \
@@ -163,8 +163,8 @@ SRC_URI_append_libc-musl = "\
     file://0016-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "c11c2c8981e647c1eb2c6753ce77d436b92fff87"
-SRCREV_chromium = "cfe8c60903b327ac94406661350f4ac05aa8c21b"
+SRCREV_qtwebengine = "bc6915f0ae19a5bd5223b2b722c4c7f684972e4f"
+SRCREV_chromium = "a83d8cdb8d8361eadb86ac48d020486f56543114"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
