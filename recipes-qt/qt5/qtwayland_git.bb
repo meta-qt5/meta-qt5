@@ -34,7 +34,6 @@ FILES_${PN}-plugins-dbg += " \
 
 SRC_URI += " \
     file://0001-examples-wayland-include-server-buffer-only-when-bui.patch \
-    file://0001-Fix-building-of-QWaylandIntegration-if-some-Qt5-feat.patch \
 "
 
-SRCREV = "82e11583928d47576c160d35c9df05c0eec34df8"
+SRCREV = "70575643cfece4f0aca4b40e77ac5d7c0e8042a2"

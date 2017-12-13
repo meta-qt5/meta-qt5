@@ -15,7 +15,6 @@ DEPENDS = "qtbase-native wayland-native"
 
 SRC_URI += " \
     file://0001-Install-the-qtwaylandscanner-tool-to-the-native-side.patch \
-    file://0001-Fix-building-of-QWaylandIntegration-if-some-Qt5-feat.patch \
 "
 
 do_configure() {
@@ -26,4 +25,4 @@ do_install() {
     oe_runmake install INSTALL_ROOT=${D}
 }
 
-SRCREV = "82e11583928d47576c160d35c9df05c0eec34df8"
+SRCREV = "70575643cfece4f0aca4b40e77ac5d7c0e8042a2"
