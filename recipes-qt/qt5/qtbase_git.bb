@@ -217,10 +217,6 @@ do_install_append() {
     sed -i -e 's|${STAGING_DIR_NATIVE}${prefix_native}|$$[QT_HOST_PREFIX/get]|g' \
         -e 's|${STAGING_DIR_HOST}|$$[QT_SYSROOT]|g' \
         ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/*.pri
-
-    # Fix up absolute paths in scripts
-    grep -lr /usr/bin/perl ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/ | \
-        xargs -r sed -i -e '1s,#!.*perl,#! ${USRBINPATH}/env perl,'
 }
 
 # mkspecs have mac specific scripts that depend on perl and bash
@@ -228,4 +224,4 @@ INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "ec16ba393baf504d4b192cc349775c62d3c96aa0"
+SRCREV = "50117d738af526cbfbd5afa50b9a501acb0fb9ce"

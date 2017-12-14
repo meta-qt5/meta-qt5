@@ -11,4 +11,6 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtserialport"
 
-SRCREV = "ce5a3ced5eeefe05675736d3279d4d45bbb6df90"
+SRC_URI += "file://0001-Add-missing-include-for-struct-timeval.patch"
+
+SRCREV = "f25ddea7b12beff8d4de863fec18ce698d726ffa"

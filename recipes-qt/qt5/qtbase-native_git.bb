@@ -43,6 +43,11 @@ SRC_URI += " \
     file://0012-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
 "
 
+# only for qtbase-native
+SRC_URI += " \
+    file://0001-Bootstrap-without-linkat-feature.patch \
+"
+
 CLEANBROKEN = "1"
 
 XPLATFORM_toolchain-clang = "linux-oe-clang"
@@ -86,6 +91,7 @@ PACKAGECONFIG_CONFARGS = " \
     -nomake examples \
     -nomake tests \
     -no-rpath \
+    -no-feature-linkat \
     -platform ${XPLATFORM} \
 "
 
@@ -125,4 +131,4 @@ do_install() {
     echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
-SRCREV = "ec16ba393baf504d4b192cc349775c62d3c96aa0"
+SRCREV = "50117d738af526cbfbd5afa50b9a501acb0fb9ce"

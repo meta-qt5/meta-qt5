@@ -1,4 +1,4 @@
-From 9bdd03ad0bbb221ad7bffe0e570605c21c28b1b5 Mon Sep 17 00:00:00 2001
+From 2a3c39550955ed44cfc8410ab2da124c58ca66c0 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -18,7 +18,7 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  2 files changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/src/buildtools/configure_host.pro b/src/buildtools/configure_host.pro
-index f1b3d47b..12123729 100644
+index dd0d3e3..70161c8 100644
 --- a/src/buildtools/configure_host.pro
 +++ b/src/buildtools/configure_host.pro
 @@ -4,7 +4,7 @@ TEMPLATE = aux
@@ -30,7 +30,7 @@ index f1b3d47b..12123729 100644
  !isEmpty(QT_TARGET_ARCH): GN_TARGET_CPU = $$gnArch($$QT_TARGET_ARCH)
  else: GN_TARGET_CPU = $$GN_HOST_CPU
  GN_OS = $$gnOS()
-@@ -29,9 +29,9 @@ GN_CONTENTS = \
+@@ -31,9 +31,9 @@ GN_CONTENTS = \
  "import(\"//build/config/sysroot.gni\")" \
  "import(\"//build/toolchain/gcc_toolchain.gni\")" \
  "gcc_toolchain(\"host\") {" \
@@ -42,8 +42,8 @@ index f1b3d47b..12123729 100644
 +"  ld = \"$$which(g++)\" " \
  "  ar = \"$$which(ar)\" " \
  "  nm = \"$$which(nm)\" " \
- "  toolchain_args = { " \
-@@ -42,9 +42,9 @@ GN_CONTENTS = \
+ "  extra_cppflags = \"$$GN_HOST_EXTRA_CPPFLAGS\" " \
+@@ -45,9 +45,9 @@ GN_CONTENTS = \
  "  } " \
  "}" \
  "gcc_toolchain(\"v8_snapshot\") {" \
@@ -57,10 +57,10 @@ index f1b3d47b..12123729 100644
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
 diff --git a/src/core/config/linux.pri b/src/core/config/linux.pri
-index 714c864d..f66ca551 100644
+index 6f7b27f..1b9434b 100644
 --- a/src/core/config/linux.pri
 +++ b/src/core/config/linux.pri
-@@ -98,7 +98,7 @@ contains(QT_ARCH, "mips"):!host_build {
+@@ -91,7 +91,7 @@ contains(QT_ARCH, "mips") {
  
  host_build {
      gn_args += custom_toolchain=\"$$QTWEBENGINE_OUT_ROOT/src/toolchain:host\"
