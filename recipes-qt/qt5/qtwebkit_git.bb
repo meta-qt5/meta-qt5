@@ -22,7 +22,6 @@ ARM_INSTRUCTION_SET_armv5 = "arm"
 # 5.9.meta-qt5.2
 SRC_URI += "\
     file://0001-qtwebkit-fix-QA-issue-bad-RPATH.patch \
-    file://0001-Remove-unused-check-for-private_tests.patch \
     file://0002-Exclude-backtrace-API-for-non-glibc-libraries.patch \
 "
 
@@ -88,4 +87,4 @@ PACKAGES_remove = "${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-db
 RUBY_SYS = "${@ '${BUILD_SYS}'.replace('i486', 'i386').replace('i586', 'i386').replace('i686', 'i386') }"
 export RUBYLIB="${STAGING_DATADIR_NATIVE}/rubygems:${STAGING_LIBDIR_NATIVE}/ruby:${STAGING_LIBDIR_NATIVE}/ruby/${RUBY_SYS}"
 
-SRCREV = "7e104c57a70fdf551bb3d22a5d637cdcbc69dbea"
+SRCREV = "97c4a80a1282c8c3eaa343011286b76fd4838c5f"
