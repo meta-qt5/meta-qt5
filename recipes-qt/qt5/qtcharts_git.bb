@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative qtmultimedia"
 
-SRCREV = "a58dfcb2460a2dd4db83a33bb5349e94303e6278"
+SRCREV = "2d962cffd5d6d5b1c40bef8807a2a774cc6fb637"
 
 # The same issue as in qtbase:
 # http://errors.yoctoproject.org/Errors/Details/152641/
