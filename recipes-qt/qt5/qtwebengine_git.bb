@@ -118,7 +118,7 @@ SRC_URI += " \
 "
 
 SRCREV_qtwebengine = "d740d6a7dbfec387752c7bc8a8b06db0e757c9dc"
-SRCREV_chromium = "15d257fd921f37b32ef643225f21df0ea24c8302"
+SRCREV_chromium = "4210035e25d6832c217aab56d4e15b3183ca4f79"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
