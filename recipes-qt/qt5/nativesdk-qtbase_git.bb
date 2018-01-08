@@ -103,7 +103,7 @@ deltask generate_qt_config_file
 
 do_configure() {
     ${S}/configure -v \
-        -opensource -confirm-license \
+        -${QT_EDITION} -confirm-license \
         -sysroot ${STAGING_DIR_TARGET} \
         -no-gcc-sysroot \
         -system-zlib \

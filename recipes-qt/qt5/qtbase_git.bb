@@ -171,7 +171,7 @@ do_configure() {
     touch ${S}/mkspecs/oe-device-extra.pri
 
     ${S}/configure -v \
-        -opensource -confirm-license \
+        -${QT_EDITION} -confirm-license \
         -sysroot ${STAGING_DIR_TARGET} \
         -prefix ${OE_QMAKE_PATH_PREFIX} \
         -bindir ${OE_QMAKE_PATH_BINS} \
