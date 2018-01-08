@@ -100,6 +100,11 @@ PACKAGECONFIG_CONFARGS = " \
 deltask generate_qt_config_file
 
 do_configure_prepend() {
+    # Regenerate header files when they are included in source tarball
+    # Otherwise cmake files don't set PRIVATE_HEADERS correctly
+    rm -rf ${S}/include
+    mkdir -p ${S}/.git || true
+
     # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory"
     touch ${S}/mkspecs/oe-device-extra.pri
 

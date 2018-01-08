@@ -167,6 +167,11 @@ XPLATFORM_toolchain-clang = "linux-oe-clang"
 XPLATFORM ?= "linux-oe-g++"
 
 do_configure() {
+    # Regenerate header files when they are included in source tarball
+    # Otherwise cmake files don't set PRIVATE_HEADERS correctly
+    rm -rf ${S}/include
+    mkdir -p ${S}/.git || true
+
     # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory" during configuration
     touch ${S}/mkspecs/oe-device-extra.pri
 

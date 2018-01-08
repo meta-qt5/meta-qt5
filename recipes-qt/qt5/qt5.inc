@@ -35,13 +35,6 @@ python __anonymous() {
             d.setVar("PACKAGE_ARCH", tarch)
 }
 
-# Regenerate header files when they are included in source tarball
-# Otherwise cmake files don't set PRIVATE_HEADERS correctly
-do_configure_prepend() {
-    rm -rf ${S}/include
-    mkdir -p ${S}/.git || true
-}
-
 # Many examples come with libraries installed outside of standard libdir,
 # suppress QA check complaining
 INSANE_SKIP_${PN}-dbg += "libdir"

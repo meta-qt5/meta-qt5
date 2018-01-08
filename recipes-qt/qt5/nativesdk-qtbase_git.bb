@@ -102,6 +102,11 @@ OE_QMAKE_PATH_HOST_LIBS = "${libdir}"
 deltask generate_qt_config_file
 
 do_configure() {
+    # Regenerate header files when they are included in source tarball
+    # Otherwise cmake files don't set PRIVATE_HEADERS correctly
+    rm -rf ${S}/include
+    mkdir -p ${S}/.git || true
+
     ${S}/configure -v \
         -${QT_EDITION} -confirm-license \
         -sysroot ${STAGING_DIR_TARGET} \
