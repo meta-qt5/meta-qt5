@@ -1,0 +1,25 @@
+From 896e90350f94654901e88f3365dd54986a6ba1fd Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Mon, 11 Dec 2017 14:39:34 +0200
+Subject: [PATCH] Add missing include for struct timeval
+
+Fix build failure with musl libc:
+socketcanbackend.h:88:38: error: 'timeval' was not declared in this scope
+
+Change-Id: I4089f5a906095c21b2790d35ad131d9a0713ff3b
+---
+ src/plugins/canbus/socketcan/socketcanbackend.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/plugins/canbus/socketcan/socketcanbackend.h b/src/plugins/canbus/socketcan/socketcanbackend.h
+index 50976b1..b49d267 100644
+--- a/src/plugins/canbus/socketcan/socketcanbackend.h
++++ b/src/plugins/canbus/socketcan/socketcanbackend.h
+@@ -50,6 +50,7 @@
+ #include <sys/socket.h>
+ #include <sys/uio.h>
+ #include <linux/can.h>
++#include <sys/time.h>
+ 
+ QT_BEGIN_NAMESPACE
+ 

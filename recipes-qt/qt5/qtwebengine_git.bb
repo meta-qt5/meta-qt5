@@ -139,6 +139,8 @@ SRC_URI += " \
 "
 
 SRC_URI_append_libc-musl = "\
+    file://0005-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
+    file://0006-musl-link-against-libexecinfo.patch \
     file://0004-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch;patchdir=src/3rdparty \
     file://0005-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty \
     file://0006-chromium-musl-include-fcntl.h-for-loff_t.patch;patchdir=src/3rdparty \

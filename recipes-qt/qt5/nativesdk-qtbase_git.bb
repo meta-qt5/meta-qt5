@@ -165,6 +165,10 @@ do_install() {
     # Install CMake's toolchain configuration
     mkdir -p ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
     install -m 644 ${WORKDIR}/OEQt5Toolchain.cmake ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
+
+    # Fix up absolute paths in scripts
+    grep -lr /usr/bin/python ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/ | \
+        xargs -r sed -i -e '1s,#!.*python,#! ${USRBINPATH}/env python,'
 }
 
 fakeroot do_generate_qt_environment_file() {
@@ -179,6 +183,7 @@ fakeroot do_generate_qt_environment_file() {
     echo 'export OE_QMAKE_CXX=$CXX' >> $script
     echo 'export OE_QMAKE_LINK=$CXX' >> $script
     echo 'export OE_QMAKE_AR=$AR' >> $script
+    echo 'export OE_QMAKE_STRIP=$STRIP' >> $script
     echo 'export QT_CONF_PATH=${OE_QMAKE_PATH_HOST_BINS}/qt.conf' >> $script
     echo 'export OE_QMAKE_LIBDIR_QT=`qmake -query QT_INSTALL_LIBS`' >> $script
     echo 'export OE_QMAKE_INCDIR_QT=`qmake -query QT_INSTALL_HEADERS`' >> $script

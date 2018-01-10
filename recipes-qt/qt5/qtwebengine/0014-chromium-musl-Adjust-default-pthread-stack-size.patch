@@ -1,16 +1,16 @@
-From 72a77c994434ecb708b2790ba9efaf1decc02503 Mon Sep 17 00:00:00 2001
+From d42b48975e92cfc4510030315ad8093bece4b7c5 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 16:41:23 -0700
 Subject: [PATCH] chromium: musl: Adjust default pthread stack size
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- chromium/base/threading/platform_thread_linux.cc                     | 3 ++-
- chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp | 4 ++--
+ chromium/base/threading/platform_thread_linux.cc              | 3 ++-
+ chromium/third_party/WebKit/Source/platform/wtf/StackUtil.cpp | 4 ++--
  2 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/base/threading/platform_thread_linux.cc b/chromium/base/threading/platform_thread_linux.cc
-index 92fbda5ee1..c41579d4ed 100644
+index 8d411ed..4b56cf3 100644
 --- a/chromium/base/threading/platform_thread_linux.cc
 +++ b/chromium/base/threading/platform_thread_linux.cc
 @@ -175,7 +175,8 @@ void TerminateOnThread() {}
@@ -23,25 +23,25 @@ index 92fbda5ee1..c41579d4ed 100644
  #else
    // ThreadSanitizer bloats the stack heavily. Evidence has been that the
    // default stack size isn't enough for some browser tests.
-diff --git a/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp b/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
-index 1d164f510a..3358deb256 100644
---- a/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
-+++ b/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
-@@ -68,7 +68,7 @@ size_t StackFrameDepth::getUnderestimatedStackSize() {
+diff --git a/chromium/third_party/WebKit/Source/platform/wtf/StackUtil.cpp b/chromium/third_party/WebKit/Source/platform/wtf/StackUtil.cpp
+index 13c3f90..07308e0 100644
+--- a/chromium/third_party/WebKit/Source/platform/wtf/StackUtil.cpp
++++ b/chromium/third_party/WebKit/Source/platform/wtf/StackUtil.cpp
+@@ -28,7 +28,7 @@ size_t GetUnderestimatedStackSize() {
  // FIXME: On Mac OSX and Linux, this method cannot estimate stack size
  // correctly for the main thread.
  
--#if defined(__GLIBC__) || OS(ANDROID) || OS(FREEBSD)
-+#if OS(LINUX) || OS(ANDROID) || OS(FREEBSD)
+-#if defined(__GLIBC__) || defined(OS_ANDROID) || defined(OS_FREEBSD) || \
++#if defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_FREEBSD) || \
+     defined(OS_FUCHSIA)
    // pthread_getattr_np() can fail if the thread is not invoked by
    // pthread_create() (e.g., the main thread of webkit_unit_tests).
-   // If so, a conservative size estimate is returned.
-@@ -135,7 +135,7 @@ size_t StackFrameDepth::getUnderestimatedStackSize() {
+@@ -96,7 +96,7 @@ size_t GetUnderestimatedStackSize() {
  }
  
- void* StackFrameDepth::getStackStart() {
--#if defined(__GLIBC__) || OS(ANDROID) || OS(FREEBSD)
-+#if OS(LINUX) || OS(ANDROID) || OS(FREEBSD)
+ void* GetStackStart() {
+-#if defined(__GLIBC__) || defined(OS_ANDROID) || defined(OS_FREEBSD) || \
++#if defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_FREEBSD) || \
+     defined(OS_FUCHSIA)
    pthread_attr_t attr;
    int error;
- #if OS(FREEBSD)

@@ -1,0 +1,24 @@
+From 59fd9db95db829e51840df09962f7c6baf484246 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Thu, 14 Dec 2017 11:28:10 +0200
+Subject: [PATCH] musl: link against libexecinfo
+
+Change-Id: Ifada60f9c72691973612850121f6fb152d70839a
+Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+---
+ src/core/core_module.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/core/core_module.pro b/src/core/core_module.pro
+index 2409ccb..e41e5a9 100644
+--- a/src/core/core_module.pro
++++ b/src/core/core_module.pro
+@@ -45,7 +45,7 @@ else: QMAKE_LFLAGS += $$NINJA_LFLAGS
+ POST_TARGETDEPS += $$NINJA_TARGETDEPS
+ 
+ 
+-LIBS_PRIVATE += -L$$api_library_path
++LIBS_PRIVATE += -L$$api_library_path -lexecinfo
+ CONFIG *= no_smart_library_merge
+ osx {
+     LIBS_PRIVATE += -Wl,-force_load,$${api_library_path}$${QMAKE_DIR_SEP}lib$${api_library_name}.a
