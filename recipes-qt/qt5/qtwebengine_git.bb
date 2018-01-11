@@ -18,6 +18,7 @@ DEPENDS += " \
     nspr-native \
     ninja-native \
     yasm-native \
+    bison-native \
     qtwebchannel \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols qtquickcontrols2 \
     qtlocation \
