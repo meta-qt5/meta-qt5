@@ -15,6 +15,7 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += " \
     ninja-native \
     yasm-native \
+    bison-native \
     qtwebchannel \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols qtquickcontrols2 \
     qtlocation \
