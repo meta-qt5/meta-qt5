@@ -31,6 +31,8 @@ EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'gstreamer010', 'G
 # Disable GStreamer if completely disabled
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains_any('PACKAGECONFIG', 'gstreamer gstreamer010', '', 'CONFIG+=done_config_gstreamer', d)}"
 
+# Patches from https://github.com/meta-qt5/qtmultimedia/commits/b5.6
+# 5.6.meta-qt5.1
 SRC_URI += "\
      file://0001-Initial-porting-effort-to-GStreamer-1.0.patch \
 "

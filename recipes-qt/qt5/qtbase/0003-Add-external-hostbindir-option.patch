@@ -1,4 +1,4 @@
-From 7421a689c695a09fff2d5ffbdbe56e34d73f771d Mon Sep 17 00:00:00 2001
+From 1e9313a736c9d381c70e723d8075c206bfaf47f5 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH] Add -external-hostbindir option
@@ -37,7 +37,7 @@ Conflicts:
  7 files changed, 38 insertions(+), 12 deletions(-)
 
 diff --git a/configure b/configure
-index 9ab6a9d..225b9f3 100755
+index 9e552c6..ae724d6 100755
 --- a/configure
 +++ b/configure
 @@ -826,6 +826,7 @@ QT_HOST_BINS=
@@ -125,7 +125,7 @@ index 839c3d6..45934a0 100644
  
      !host_build|!force_bootstrap: MODULE_DEPENDS = $$replace(QT, -private$, _private)
 diff --git a/qtbase.pro b/qtbase.pro
-index 98ca86a..0eed475 100644
+index 78f9b3a..f4b7fc4 100644
 --- a/qtbase.pro
 +++ b/qtbase.pro
 @@ -37,12 +37,16 @@ CONFIG -= qt

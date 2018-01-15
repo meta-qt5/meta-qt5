@@ -107,6 +107,8 @@ RDEPENDS_${PN}-examples += " \
 
 QT_MODULE_BRANCH_CHROMIUM = "49-based"
 
+# Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.6
+# 5.6.meta-qt5.1
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};destsuffix=git/src/3rdparty \
     file://0001-functions.prf-Don-t-match-QMAKE_EXT_CPP-or-QMAKE_EXT.patch \
@@ -114,13 +116,16 @@ SRC_URI += " \
     file://0003-functions.prf-allow-build-for-linux-oe-g-platform.patch \
     file://0004-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
     file://0005-Include-dependency-to-QCoreApplication-translate.patch \
-    file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch \
-    file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch \
+"
+
+# Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/49-based
+# 49-based.meta-qt5.1
+SRC_URI += " \
+    file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch;patchdir=src/3rdparty \
+    file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patchh;patchdir=src/3rdparty \
 "
 
 SRCREV_qtwebengine = "fad625e0ba39e855817bbf206ab9a846d07aeeec"
-# This is in git submodule, but we're using latest in 45-based
-# SRCREV_chromium = "79930a541473b2e0f950d040c16ab6f22e4aeef3"
 SRCREV_chromium = "cb094c05c5f06489fa64412e7f5d9e194a3f9495"
 SRCREV = "${SRCREV_qtwebengine}"
 

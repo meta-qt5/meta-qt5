@@ -13,6 +13,8 @@ DEPENDS += "qtdeclarative"
 
 RDEPENDS_${PN}-dev = ""
 
+# Patches from https://github.com/meta-qt5/qtquickcontrols/commits/b5.6
+# 5.6.meta-qt5.1
 SRC_URI += " \
     file://0001-texteditor-fix-invalid-use-of-incomplete-type-class-.patch \
 "

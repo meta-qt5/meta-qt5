@@ -13,6 +13,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
+# Patches from https://github.com/meta-qt5/qtdeclarative/commits/b5.6
+# 5.6.meta-qt5.7
 SRC_URI += " \
     file://0001-qmltestexample-fix-link.patch \
     file://0002-qquickviewcomparison-fix-QCoreApplication-has-not-be.patch \

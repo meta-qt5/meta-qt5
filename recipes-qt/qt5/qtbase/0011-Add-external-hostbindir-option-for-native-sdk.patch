@@ -1,4 +1,4 @@
-From a67370ba276ae4a098a8c34bda72dba5387d9dae Mon Sep 17 00:00:00 2001
+From 1bea31d8abd34ab33daec6df91ffc0bc63b75f9e Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH] Add -external-hostbindir option for native(sdk)

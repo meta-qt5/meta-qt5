@@ -1,4 +1,4 @@
-From 46260d1a93e10a6a6f47f38d0b4355b4b63a4682 Mon Sep 17 00:00:00 2001
+From 5d1bf6c3e826af7282b858c192c62aad77095fc0 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -56,7 +56,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index f4c7813..9ab6a9d 100755
+index 6ebeab3..9e552c6 100755
 --- a/configure
 +++ b/configure
 @@ -343,6 +343,16 @@ getQMakeConf()

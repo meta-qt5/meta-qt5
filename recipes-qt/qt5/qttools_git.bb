@@ -12,6 +12,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
+# Patches from https://github.com/meta-qt5/qttools/commits/b5.6
+# 5.6.meta-qt5.1
 SRC_URI += " \
     file://0001-Allow-to-build-only-lrelease-lupdate-lconvert.patch \
     file://0002-assistant-help-fix-linking-of-dependent-libraries.patch \

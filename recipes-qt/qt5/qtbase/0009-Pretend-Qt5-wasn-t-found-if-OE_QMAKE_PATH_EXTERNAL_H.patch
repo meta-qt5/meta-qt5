@@ -1,4 +1,4 @@
-From e70b35ba680f2138f0a7ff65852e76248462d459 Mon Sep 17 00:00:00 2001
+From 34864cac45a112f27c2587ebfff7f10184607fad Mon Sep 17 00:00:00 2001
 From: Pascal Bach <pascal.bach@siemens.com>
 Date: Wed, 11 May 2016 15:20:41 +0200
 Subject: [PATCH] Pretend Qt5 wasn't found if OE_QMAKE_PATH_EXTERNAL_HOST_BINS

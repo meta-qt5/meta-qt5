@@ -22,6 +22,8 @@ require qt5-git.inc
 FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.6-shared
+# 5.6.meta-qt5-shared.9
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
@@ -35,6 +37,8 @@ SRC_URI += "\
 "
 
 # common for qtbase-native and nativesdk-qtbase
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.6-native
+# 5.6.meta-qt5-native.9
 SRC_URI += " \
     file://0010-Always-build-uic.patch \
     file://0011-Add-external-hostbindir-option-for-native-sdk.patch \

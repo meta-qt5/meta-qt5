@@ -1,4 +1,4 @@
-From af6fed015c4d685e922ed6761262610910ea2219 Mon Sep 17 00:00:00 2001
+From b4be62e9ac936b110375492dcdc7aeccfe46bd29 Mon Sep 17 00:00:00 2001
 From: Jani Hautakangas <jani.hautakangas@ixonos.com>
 Date: Thu, 16 May 2013 09:52:07 +0300
 Subject: [PATCH] QOpenGLPaintDevice sub-area support

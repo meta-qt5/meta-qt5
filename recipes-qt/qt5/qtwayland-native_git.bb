@@ -13,6 +13,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS = "qtbase-native wayland-native"
 
+# Patches from https://github.com/meta-qt5/qtwayland/commits/b5.6-native
+# 5.6.meta-qt5-native.1
 SRC_URI += " \
     file://0001-Install-the-qtwaylandscanner-tool-to-the-native-side.patch \
 "

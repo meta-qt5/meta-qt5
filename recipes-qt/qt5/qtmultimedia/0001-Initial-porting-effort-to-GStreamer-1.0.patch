@@ -1,4 +1,4 @@
-From 98455d75df7b040817e323417b6042118c093d56 Mon Sep 17 00:00:00 2001
+From d8911e0db56151d39f7c8c6d9f32349ca54e8c48 Mon Sep 17 00:00:00 2001
 From: Yoann Lopes <yoann.lopes@digia.com>
 Date: Thu, 31 Oct 2013 15:06:30 +0100
 Subject: [PATCH] Initial porting effort to GStreamer 1.0.
@@ -17,7 +17,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 14 insertions(+), 12 deletions(-)
 
 diff --git a/qtmultimedia.pro b/qtmultimedia.pro
-index 98bb315..287887f 100644
+index e58ae1d..81e6ce8 100644
 --- a/qtmultimedia.pro
 +++ b/qtmultimedia.pro
 @@ -17,19 +17,21 @@ win32 {

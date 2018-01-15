@@ -1,4 +1,4 @@
-From 58cea434f7b4f0f2469ba6e8eb892a448e20f6a6 Mon Sep 17 00:00:00 2001
+From 07ec1f1728be3dff2f93f939065b7fb58f1df434 Mon Sep 17 00:00:00 2001
 From: Simon Busch <morphis@gravedo.de>
 Date: Fri, 19 Jul 2013 13:35:14 +0000
 Subject: [PATCH] Install the qtwaylandscanner tool to the native side

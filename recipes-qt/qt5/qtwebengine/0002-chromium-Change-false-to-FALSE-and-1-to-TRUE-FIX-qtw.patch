@@ -1,4 +1,4 @@
-From eaaf8074a826137d3ad061f4c09bb36f449188a3 Mon Sep 17 00:00:00 2001
+From 3c3e4d07a9950e818798d585ec797667a72c531f Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Thu, 24 Dec 2015 12:46:58 -0200
 Subject: [PATCH] chromium: Change false to FALSE and 1 to TRUE, FIX
@@ -10,10 +10,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  chromium/ui/gfx/codec/jpeg_codec.cc | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/src/3rdparty/chromium/ui/gfx/codec/jpeg_codec.cc b/src/3rdparty/chromium/ui/gfx/codec/jpeg_codec.cc
+diff --git a/chromium/ui/gfx/codec/jpeg_codec.cc b/chromium/ui/gfx/codec/jpeg_codec.cc
 index 8a08fe0..32b2a05 100644
---- a/src/3rdparty/chromium/ui/gfx/codec/jpeg_codec.cc
-+++ b/src/3rdparty/chromium/ui/gfx/codec/jpeg_codec.cc
+--- a/chromium/ui/gfx/codec/jpeg_codec.cc
++++ b/chromium/ui/gfx/codec/jpeg_codec.cc
 @@ -120,7 +120,7 @@ boolean EmptyOutputBuffer(jpeg_compress_struct* cinfo) {
    // tell libjpeg where to write the next data
    cinfo->dest->next_output_byte = &(*state->out)[state->image_buffer_used];

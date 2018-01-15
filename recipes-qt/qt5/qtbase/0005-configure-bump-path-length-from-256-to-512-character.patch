@@ -1,4 +1,4 @@
-From 4316f6b00153765fd39a0054896910049c607169 Mon Sep 17 00:00:00 2001
+From 8eaae5ee0e77b3783afd0f10a89004fd981f29b3 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Tue, 25 Aug 2015 10:05:15 -0400
 Subject: [PATCH] configure: bump path length from 256 to 512 characters
@@ -14,7 +14,7 @@ Signed-off-by: Denys Dmytriyenko <denys@ti.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/configure b/configure
-index 225b9f3..746a088 100755
+index ae724d6..df089f2 100755
 --- a/configure
 +++ b/configure
 @@ -3959,10 +3959,10 @@ static const char qt_configure_licensed_products_str [256 + 12] = "qt_lcnsprod=$

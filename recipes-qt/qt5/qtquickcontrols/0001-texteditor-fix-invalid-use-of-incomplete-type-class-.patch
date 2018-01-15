@@ -1,4 +1,4 @@
-From 0dcc16dafac2fec76c178f3b3195f57bb2ac3d8e Mon Sep 17 00:00:00 2001
+From 61dfc0e7b4c78ba7296e8e6c3a1da0c688b73513 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Thu, 31 Mar 2016 19:57:01 -0400
 Subject: [PATCH] texteditor: fix invalid use of incomplete type 'class QDebug'
@@ -11,7 +11,7 @@ Signed-off-by: Denys Dmytriyenko <denys@ti.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/examples/quickcontrols/controls/texteditor/src/documenthandler.cpp b/examples/quickcontrols/controls/texteditor/src/documenthandler.cpp
-index 2e03f74..3d1b3c8 100644
+index b07099e..6a34e55 100644
 --- a/examples/quickcontrols/controls/texteditor/src/documenthandler.cpp
 +++ b/examples/quickcontrols/controls/texteditor/src/documenthandler.cpp
 @@ -44,6 +44,7 @@

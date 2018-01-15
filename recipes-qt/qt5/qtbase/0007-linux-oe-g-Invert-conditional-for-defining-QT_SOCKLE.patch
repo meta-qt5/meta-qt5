@@ -1,4 +1,4 @@
-From 92eafaf0f5902916ca87b8e3bd63040602ff18bf Mon Sep 17 00:00:00 2001
+From 6649a3df359d3d55b1caaa6601692a1dcc2ef92c Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Mon, 8 Jun 2015 13:59:25 -0700
 Subject: [PATCH] linux-oe-g++: Invert conditional for defining QT_SOCKLEN_T

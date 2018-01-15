@@ -1,4 +1,4 @@
-From 24f843d4b73de923712c40335068f6f32ff65c7c Mon Sep 17 00:00:00 2001
+From 2c2f861f1495f477290d5bd8c49b59bcd20ae845 Mon Sep 17 00:00:00 2001
 From: Trevor Woerner <trevor.woerner@linaro.org>
 Date: Fri, 7 Feb 2014 04:07:17 +0100
 Subject: [PATCH] qtwebkit: fix QA issue (bad RPATH)

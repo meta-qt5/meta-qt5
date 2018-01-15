@@ -11,6 +11,8 @@ LIC_FILES_CHKSUM = " \
 "
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.6-shared
+# 5.6.meta-qt5-shared.9
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \

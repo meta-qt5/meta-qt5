@@ -1,4 +1,4 @@
-From 92b13af05077dec0d194d4018e36568146d41232 Mon Sep 17 00:00:00 2001
+From 5e8f8f44227fea48b84fd79e1fc4122d66776bf3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Fri, 13 Nov 2015 12:36:11 +0100
 Subject: [PATCH] configure paths for target qmake properly
@@ -19,7 +19,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/configure b/configure
-index 746a088..d98ea53 100755
+index df089f2..224f9f5 100755
 --- a/configure
 +++ b/configure
 @@ -3904,8 +3904,13 @@ if [ "$CFG_COMPILE_EXAMPLES" = "yes" ]; then

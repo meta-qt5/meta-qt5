@@ -32,6 +32,8 @@ FILES_${PN}-plugins-dbg += " \
     ${OE_QMAKE_PATH_PLUGINS}/*/*/.debug/* \
 "
 
+# Patches from https://github.com/meta-qt5/qtwayland/commits/b5.6
+# 5.6.meta-qt5.1
 SRC_URI += " \
     file://0001-examples-wayland-include-server-buffer-only-when-bui.patch \
 "
