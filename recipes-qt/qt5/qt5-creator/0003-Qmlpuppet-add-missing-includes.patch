@@ -1,4 +1,4 @@
-From 51088a424416a8ca5cdf5161b792ac5e8a01f749 Mon Sep 17 00:00:00 2001
+From 896624d715e20e658344ac85db91cd55d25e7211 Mon Sep 17 00:00:00 2001
 From: Marco Benelli <marco.benelli@qt.io>
 Date: Thu, 6 Jul 2017 09:31:41 +0200
 Subject: [PATCH] Qmlpuppet: add missing includes
@@ -36,6 +36,3 @@ index 5a9342f..bacbc12 100644
  #include <QEvent>
  #include <QQmlContext>
  #include <QQmlError>
--- 
-2.13.2
-

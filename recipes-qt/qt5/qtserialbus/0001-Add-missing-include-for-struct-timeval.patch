@@ -1,4 +1,4 @@
-From 896e90350f94654901e88f3365dd54986a6ba1fd Mon Sep 17 00:00:00 2001
+From 3c9a3e3bdb220c6aacee1db04a3f997e08dab161 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Mon, 11 Dec 2017 14:39:34 +0200
 Subject: [PATCH] Add missing include for struct timeval

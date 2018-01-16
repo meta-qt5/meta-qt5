@@ -1,4 +1,4 @@
-From 429347dda56a4d45dc03fee2362eb02294161bfd Mon Sep 17 00:00:00 2001
+From fbae8e85e74976b79308c203d38839b364757302 Mon Sep 17 00:00:00 2001
 From: Eike Ziller <eike.ziller@qt.io>
 Date: Fri, 24 Jun 2016 10:23:24 +0200
 Subject: [PATCH] Fix compilation with QT_NO_ACCESSIBILITY
@@ -33,6 +33,3 @@ index 9477f17..1ee425f 100644
  
          setActive(false);
  
--- 
-2.13.2
-

@@ -1,4 +1,4 @@
-From bd3d6bd46e792e312435897e925cca5ccedc1dda Mon Sep 17 00:00:00 2001
+From f2f765369ea6f3972f5dc78f86e0d4679795357a Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:24:49 -0700
 Subject: [PATCH] chromium: musl: Match syscalls to match musl
@@ -9,10 +9,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 16 insertions(+)
 
 diff --git a/chromium/third_party/lss/linux_syscall_support.h b/chromium/third_party/lss/linux_syscall_support.h
-index 9dbd2391b2..a715de177c 100644
+index 80a3e56..1e57b1a 100644
 --- a/chromium/third_party/lss/linux_syscall_support.h
 +++ b/chromium/third_party/lss/linux_syscall_support.h
-@@ -793,6 +793,14 @@ struct kernel_statfs {
+@@ -794,6 +794,14 @@ struct kernel_statfs {
  #endif
  
  
@@ -27,7 +27,7 @@ index 9dbd2391b2..a715de177c 100644
  #if defined(__x86_64__)
  #ifndef ARCH_SET_GS
  #define ARCH_SET_GS             0x1001
-@@ -1210,6 +1218,14 @@ struct kernel_statfs {
+@@ -1211,6 +1219,14 @@ struct kernel_statfs {
  #ifndef __NR_fallocate
  #define __NR_fallocate          285
  #endif
