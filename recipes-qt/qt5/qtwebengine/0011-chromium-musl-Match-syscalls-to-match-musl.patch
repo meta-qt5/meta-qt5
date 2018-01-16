@@ -1,4 +1,4 @@
-From bd3d6bd46e792e312435897e925cca5ccedc1dda Mon Sep 17 00:00:00 2001
+From 2b395d8cdc8180c897ffc0d876fd9023dcfd6ffa Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:24:49 -0700
 Subject: [PATCH] chromium: musl: Match syscalls to match musl
@@ -9,7 +9,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 16 insertions(+)
 
 diff --git a/chromium/third_party/lss/linux_syscall_support.h b/chromium/third_party/lss/linux_syscall_support.h
-index 9dbd2391b2..a715de177c 100644
+index 9dbd239..a715de1 100644
 --- a/chromium/third_party/lss/linux_syscall_support.h
 +++ b/chromium/third_party/lss/linux_syscall_support.h
 @@ -793,6 +793,14 @@ struct kernel_statfs {

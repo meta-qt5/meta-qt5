@@ -1,4 +1,4 @@
-From 505fcfa52c49c9975e63066f631244ace6061d3c Mon Sep 17 00:00:00 2001
+From bc9239f4d89fb3143f76f5e44dd54b4dfa604195 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:27:50 -0700
 Subject: [PATCH] chromium: musl: Define res_ninit and res_nclose for non-glibc
@@ -13,7 +13,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  create mode 100644 chromium/net/dns/resolv_compat.h
 
 diff --git a/chromium/net/dns/dns_config_service_posix.cc b/chromium/net/dns/dns_config_service_posix.cc
-index ba8a369133..e9b40d07fc 100644
+index ba8a369..e9b40d0 100644
 --- a/chromium/net/dns/dns_config_service_posix.cc
 +++ b/chromium/net/dns/dns_config_service_posix.cc
 @@ -25,6 +25,10 @@
@@ -28,7 +28,7 @@ index ba8a369133..e9b40d07fc 100644
  #include "net/dns/dns_config_watcher_mac.h"
  #endif
 diff --git a/chromium/net/dns/dns_reloader.cc b/chromium/net/dns/dns_reloader.cc
-index 74534e6b1b..2780a776e4 100644
+index 74534e6..2780a77 100644
 --- a/chromium/net/dns/dns_reloader.cc
 +++ b/chromium/net/dns/dns_reloader.cc
 @@ -9,6 +9,10 @@
@@ -44,7 +44,7 @@ index 74534e6b1b..2780a776e4 100644
  #include "base/macros.h"
 diff --git a/chromium/net/dns/resolv_compat.h b/chromium/net/dns/resolv_compat.h
 new file mode 100644
-index 0000000000..4f0e852a19
+index 0000000..4f0e852
 --- /dev/null
 +++ b/chromium/net/dns/resolv_compat.h
 @@ -0,0 +1,29 @@

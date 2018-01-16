@@ -1,4 +1,4 @@
-From 3a46fb7b47d19c5261e1590f8d70fe41443def64 Mon Sep 17 00:00:00 2001
+From 096d8538fdde74606fc0b9da7465ec8d78fea0a0 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 3 Sep 2017 09:11:44 -0700
 Subject: [PATCH] Add OE specific specs for clang compiler
@@ -13,7 +13,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
 
 diff --git a/mkspecs/linux-oe-clang/qmake.conf b/mkspecs/linux-oe-clang/qmake.conf
 new file mode 100644
-index 0000000000..ffc9f051db
+index 0000000..ffc9f05
 --- /dev/null
 +++ b/mkspecs/linux-oe-clang/qmake.conf
 @@ -0,0 +1,43 @@
@@ -62,11 +62,8 @@ index 0000000000..ffc9f051db
 +load(qt_config)
 diff --git a/mkspecs/linux-oe-clang/qplatformdefs.h b/mkspecs/linux-oe-clang/qplatformdefs.h
 new file mode 100644
-index 0000000000..880c927b21
+index 0000000..880c927
 --- /dev/null
 +++ b/mkspecs/linux-oe-clang/qplatformdefs.h
 @@ -0,0 +1 @@
 +#include "../linux-clang/qplatformdefs.h"
--- 
-2.14.1
-

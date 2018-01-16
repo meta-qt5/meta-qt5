@@ -16,7 +16,7 @@ inherit ptest
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
 # Patches from https://github.com/meta-qt5/qttools/commits/b5.9
-# 5.9.meta-qt5.2
+# 5.9.meta-qt5.3
 SRC_URI += " \
     file://run-ptest \
     file://0001-add-noqtwebkit-configuration.patch \

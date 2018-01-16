@@ -1,4 +1,4 @@
-From c4fae91b3d2b2b0f64e3fafac456a6a917c69e88 Mon Sep 17 00:00:00 2001
+From 04cab2db5b179f0ff3a223385e7505f9756fbb3c Mon Sep 17 00:00:00 2001
 From: Raphael Freudiger <laser_b@gmx.ch>
 Date: Tue, 10 Jan 2017 15:49:55 +0100
 Subject: [PATCH] fix build without xkbcommon-evdev
@@ -16,7 +16,7 @@ Signed-off-by: Gordan Markuš <gordan.markus@pelagicore.com>
  3 files changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/src/client/client.pro b/src/client/client.pro
-index eae7ad52..0bb7b188 100644
+index eae7ad5..0bb7b18 100644
 --- a/src/client/client.pro
 +++ b/src/client/client.pro
 @@ -147,3 +147,5 @@ MODULE_PLUGIN_TYPES = \
@@ -26,7 +26,7 @@ index eae7ad52..0bb7b188 100644
 +
 +LIBS += -lxkbcommon
 diff --git a/src/compositor/compositor.pro b/src/compositor/compositor.pro
-index dc9000d9..4eebfd64 100644
+index dc9000d..4eebfd6 100644
 --- a/src/compositor/compositor.pro
 +++ b/src/compositor/compositor.pro
 @@ -32,3 +32,5 @@ include ($$PWD/extensions/extensions.pri)
@@ -36,7 +36,7 @@ index dc9000d9..4eebfd64 100644
 +
 +LIBS += -lxkbcommon
 diff --git a/src/compositor/compositor_api/qwaylandkeyboard.cpp b/src/compositor/compositor_api/qwaylandkeyboard.cpp
-index c30f7b18..e6f1a0b3 100644
+index c30f7b1..e6f1a0b 100644
 --- a/src/compositor/compositor_api/qwaylandkeyboard.cpp
 +++ b/src/compositor/compositor_api/qwaylandkeyboard.cpp
 @@ -349,12 +349,6 @@ void QWaylandKeyboardPrivate::createXKBState(xkb_keymap *keymap)

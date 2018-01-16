@@ -26,7 +26,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.9-shared
-# 5.9.meta-qt5-shared.2
+# 5.9.meta-qt5-shared.3
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -36,13 +36,16 @@ SRC_URI += "\
     file://0006-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
     file://0007-Delete-qlonglong-and-qulonglong.patch \
     file://0008-Replace-pthread_yield-with-sched_yield.patch \
+    file://0009-Add-OE-specific-specs-for-clang-compiler.patch \
+    file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
+    file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.9-native
-# 5.9.meta-qt5-native.2
+# 5.9.meta-qt5-native.3
 SRC_URI += " \
-    file://0009-Always-build-uic.patch \
+    file://0012-Always-build-uic.patch \
 "
 
 # CMake's toolchain configuration of nativesdk-qtbase
@@ -197,4 +200,4 @@ fakeroot do_generate_qt_environment_file() {
 
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "73573fce295caef35da706a8c8c796ec18e6baf1"
+SRCREV = "4d8ae444c2b15ec7da5ef133aa5ad5a548180e21"

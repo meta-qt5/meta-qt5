@@ -1,4 +1,4 @@
-From 849355a1c59d76fa39dc93b537458a084190fa45 Mon Sep 17 00:00:00 2001
+From 6119c88abf41f36b790e86e07e7a73d39e5f936b Mon Sep 17 00:00:00 2001
 From: Wenlin Kang <wenlin.kang@windriver.com>
 Date: Thu, 8 Sep 2016 12:18:13 +0800
 Subject: [PATCH] qtmultimedia: fix a conflicting declaration
@@ -67,10 +67,10 @@ index 0000000..2423697
 +
 +#endif
 diff --git a/src/plugins/videonode/imx6/qsgvivantevideomaterial.cpp b/src/plugins/videonode/imx6/qsgvivantevideomaterial.cpp
-index 2e2092b..54568db 100644
+index 465ccfa..40e7592 100644
 --- a/src/plugins/videonode/imx6/qsgvivantevideomaterial.cpp
 +++ b/src/plugins/videonode/imx6/qsgvivantevideomaterial.cpp
-@@ -31,8 +31,9 @@
+@@ -37,8 +37,9 @@
  **
  ****************************************************************************/
  
@@ -83,10 +83,10 @@ index 2e2092b..54568db 100644
  #include "qsgvivantevideomaterial.h"
  #include "qsgvivantevideomaterialshader.h"
 diff --git a/src/plugins/videonode/imx6/qsgvivantevideonode.cpp b/src/plugins/videonode/imx6/qsgvivantevideonode.cpp
-index 229a69b..184fd12 100644
+index c8d83b4..5b1b8f2 100644
 --- a/src/plugins/videonode/imx6/qsgvivantevideonode.cpp
 +++ b/src/plugins/videonode/imx6/qsgvivantevideonode.cpp
-@@ -31,8 +31,9 @@
+@@ -37,8 +37,9 @@
  **
  ****************************************************************************/
  
@@ -98,6 +98,3 @@ index 229a69b..184fd12 100644
  
  #include "qsgvivantevideonode.h"
  #include "qsgvivantevideomaterialshader.h"
--- 
-1.9.1
-

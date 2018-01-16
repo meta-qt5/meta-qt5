@@ -1,4 +1,4 @@
-From 99fb23c0258ed0dacb03dc2eb57792c42b33316f Mon Sep 17 00:00:00 2001
+From 223eebb055ebaaf5533782a3fde5842fb80c715b Mon Sep 17 00:00:00 2001
 From: Kim Kulling <kim.kulling@googlemail.com>
 Date: Mon, 7 Nov 2016 17:19:49 +0100
 Subject: [PATCH] Fix BlenderDNA for clang cross compiler.
@@ -9,7 +9,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/src/3rdparty/assimp/code/BlenderDNA.cpp b/src/3rdparty/assimp/code/BlenderDNA.cpp
-index 18ec9f2b4..5b0b2090f 100644
+index 18ec9f2..5b0b209 100644
 --- a/src/3rdparty/assimp/code/BlenderDNA.cpp
 +++ b/src/3rdparty/assimp/code/BlenderDNA.cpp
 @@ -55,10 +55,10 @@ using namespace Assimp::Formatter;

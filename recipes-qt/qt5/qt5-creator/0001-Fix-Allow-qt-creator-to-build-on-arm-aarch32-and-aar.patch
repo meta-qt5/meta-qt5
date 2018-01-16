@@ -1,7 +1,7 @@
-From 748174788b318c6316e6d41ce323306120223e02 Mon Sep 17 00:00:00 2001
+From 056bc88a15df06443a4a6bdea2b1ead045f89bf6 Mon Sep 17 00:00:00 2001
 From: Greg Nietsky <gregory@distrotech.co.za>
 Date: Tue, 4 Mar 2014 11:33:40 +0200
-Subject: [PATCH 1/2] Fix: Allow qt-creator to build on arm aarch32 and aarch64
+Subject: [PATCH] Fix: Allow qt-creator to build on arm aarch32 and aarch64
 
 Botan is imported hardwired for x86 this small patch allows it
 too operate on arm other platforms could be added.
@@ -14,7 +14,7 @@ Change-Id: Iddea28f21c9fa1afd2fdd5d16a44e6c96a516a7a
  2 files changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/src/libs/3rdparty/botan/botan.cpp b/src/libs/3rdparty/botan/botan.cpp
-index b7a9ddf..c5b9826 100644
+index e6a5f22..7b625ac 100644
 --- a/src/libs/3rdparty/botan/botan.cpp
 +++ b/src/libs/3rdparty/botan/botan.cpp
 @@ -1101,6 +1101,8 @@ class Montgomery_Exponentiator : public Modular_Exponentiator
@@ -76,10 +76,10 @@ index b7a9ddf..c5b9826 100644
  * Helper Macros for x86 Assembly
  */
 diff --git a/src/libs/3rdparty/botan/botan.h b/src/libs/3rdparty/botan/botan.h
-index 2981d2c..1c8d828 100644
+index 2caa4a3..39b8079 100644
 --- a/src/libs/3rdparty/botan/botan.h
 +++ b/src/libs/3rdparty/botan/botan.h
-@@ -82,7 +82,9 @@
+@@ -85,7 +85,9 @@
  #endif
  
  #define BOTAN_TARGET_CPU_IS_LITTLE_ENDIAN
@@ -89,6 +89,3 @@ index 2981d2c..1c8d828 100644
  #define BOTAN_TARGET_UNALIGNED_MEMORY_ACCESS_OK 1
  
  #if defined(BOTAN_TARGET_CPU_IS_LITTLE_ENDIAN) || \
--- 
-1.8.3.1
-
