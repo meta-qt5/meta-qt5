@@ -131,7 +131,7 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "56-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.9
-# 5.9.meta-qt5.3
+# 5.9.meta-qt5.4
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-functions.prf-allow-build-for-linux-oe-g-platform.patch \
@@ -141,7 +141,7 @@ SRC_URI += " \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/56-based
-# 56-based.meta-qt5.3
+# 56-based.meta-qt5.4
 SRC_URI += " \
     file://0001-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch;patchdir=src/3rdparty \
     file://0002-chromium-Force-host-toolchain-configuration.patch;patchdir=src/3rdparty \
@@ -164,8 +164,8 @@ SRC_URI_append_libc-musl = "\
     file://0016-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "bc6915f0ae19a5bd5223b2b722c4c7f684972e4f"
-SRCREV_chromium = "a83d8cdb8d8361eadb86ac48d020486f56543114"
+SRCREV_qtwebengine = "a86ac3eb0a917766897284a6404ada00bf327629"
+SRCREV_chromium = "b7a9c9bf5b6bc08ae8746b7679317a9027868681"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

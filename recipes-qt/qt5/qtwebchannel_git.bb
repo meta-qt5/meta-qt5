@@ -12,4 +12,4 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtdeclarative qtwebsockets"
 
-SRCREV = "10a2704788f0bdf8dad3f7872db11f76ca2f4a18"
+SRCREV = "2661593df95b8a5a56af0a8fd22af5be7f7ea8fb"

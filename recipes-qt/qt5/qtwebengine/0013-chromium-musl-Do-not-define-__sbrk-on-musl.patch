@@ -1,4 +1,4 @@
-From a15558818ed6903e0244f13dce7160f8d189389c Mon Sep 17 00:00:00 2001
+From f2ad400acf2c1f20dc9c4a903965d304589a2b93 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:39:57 -0700
 Subject: [PATCH] chromium: musl: Do not define __sbrk on musl

@@ -1,4 +1,4 @@
-From c90b7784c3b4ec3cbc9de2c84cee9646d547f021 Mon Sep 17 00:00:00 2001
+From ae3bedf79b92ab4ce4d14f8738733cbd854f8902 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Thu, 31 Mar 2016 19:57:01 -0400
 Subject: [PATCH] texteditor: fix invalid use of incomplete type 'class QDebug'

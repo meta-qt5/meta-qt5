@@ -1,4 +1,4 @@
-From fc2773961eaa536e6a617ded7c1a972d979fa2e4 Mon Sep 17 00:00:00 2001
+From 0c2be869a8fde2a0d2e8cbe9bf093077166f0942 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 5 Jun 2015 19:55:05 -0700
 Subject: [PATCH] Exclude backtrace() API for non-glibc libraries

@@ -1,4 +1,4 @@
-From 4bb0cabf3228d74fa0a596dd8edfde116630c11f Mon Sep 17 00:00:00 2001
+From cb5db71f4b2872976d2a5af247c7267d03e914da Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] chromium: Force host toolchain configuration

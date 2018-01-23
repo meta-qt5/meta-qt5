@@ -1,4 +1,4 @@
-From eccda1ac1ffa38fe1844c6893de7919ed072e87f Mon Sep 17 00:00:00 2001
+From 39e02612e0822eda0331caeac4c9fcd10610bf57 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:37:49 -0700
 Subject: [PATCH] chromium: musl: include fcntl.h for loff_t

@@ -1,4 +1,4 @@
-From 4959437c202598a3398b3253daaf2432a2725a35 Mon Sep 17 00:00:00 2001
+From b7ca9eb9abd3cb0b3966519c3a34e74b5e0c6c0e Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 16 Nov 2013 00:32:30 +0100
 Subject: [PATCH] Always build uic
