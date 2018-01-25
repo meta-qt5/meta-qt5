@@ -87,7 +87,6 @@ PACKAGECONFIG ?= " \
 PACKAGECONFIG[release] = "-release,-debug"
 PACKAGECONFIG[debug] = ""
 PACKAGECONFIG[developer] = "-developer-build"
-PACKAGECONFIG[qml-debug] = "-qml-debug,-no-qml-debug"
 PACKAGECONFIG[sm] = "-sm,-no-sm"
 PACKAGECONFIG[tests] = "-make tests,-nomake tests"
 PACKAGECONFIG[examples] = "-make examples -compile-examples,-nomake examples"
@@ -233,6 +232,10 @@ do_install_append() {
     echo "isEmpty(QMAKE_STRIP): QMAKE_STRIP = ${TARGET_PREFIX}strip" >> $conf
 
     generate_target_qt_config_file ${D}${OE_QMAKE_PATH_BINS}/qt.conf
+
+    # Fix up absolute paths in scripts
+    sed -i -e '1s,#!/usr/bin/python,#! ${USRBINPATH}/env python,' \
+        ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
 }
 
 # mkspecs have mac specific scripts that depend on perl and bash
@@ -240,4 +243,4 @@ INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "41cdfbe3a473a4f691c193a58206d860cb9c676d"
+SRCREV = "2cb1db64370989fffeec313c196fe573c479e6aa"

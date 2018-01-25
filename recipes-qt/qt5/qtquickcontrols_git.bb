@@ -13,11 +13,11 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-DEPENDS += "qtdeclarative"
+DEPENDS += "qtdeclarative qtdeclarative-native"
 
 FILES_${PN}-qmlplugins += " \
   ${OE_QMAKE_PATH_QML}/QtQuick/Controls/Shaders \
   ${OE_QMAKE_PATH_QML}/QtQuick/Dialogs/qml/icons.ttf \
 "
 
-SRCREV = "698a8268f786d74726eb07255df2d26ac2269079"
+SRCREV = "4459886e3f949821425dd5fd9fc9da0416d0ffc9"

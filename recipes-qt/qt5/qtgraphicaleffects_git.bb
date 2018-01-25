@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPL3;md5=e6a600fd5e1d9cbde2d983680233ad02 \
 "
 
-DEPENDS += "qtdeclarative"
+DEPENDS += "qtdeclarative qtdeclarative-native"
 
 RDEPENDS_${PN}-dev = ""
 
@@ -18,4 +18,4 @@ RDEPENDS_${PN}-dev = ""
 # http://errors.yoctoproject.org/Errors/Build/44912/
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-SRCREV = "66031e932c321ccb936e254b5d1810fa633c6cb0"
+SRCREV = "586476ff2ce59ba4ea2cee2ab59818e0bda4b90c"

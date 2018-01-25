@@ -8,6 +8,6 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPLv3;md5=dce746aa5261707df6d6999ab9958d8b \
 "
 
-DEPENDS += "qtdeclarative"
+DEPENDS += "qtdeclarative qtdeclarative-native"
 
-SRCREV = "b500fbfb5b24f24f6cb3cb02981726fb858287ce"
+SRCREV = "72abc4e94764b4a5592a9d153ff9991fe66d7395"

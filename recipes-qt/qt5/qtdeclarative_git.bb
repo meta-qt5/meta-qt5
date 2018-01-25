@@ -14,8 +14,10 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-PACKAGECONFIG ??= "qtxmlpatterns"
+PACKAGECONFIG ??= "qtxmlpatterns qml-debug qml-network"
 PACKAGECONFIG[qtxmlpatterns] = ",,qtxmlpatterns"
+PACKAGECONFIG[qml-debug] = "-qml-debug,-no-qml-debug"
+PACKAGECONFIG[qml-network] = "-qml-network, -no-qml-network"
 
 do_configure_prepend() {
     # disable qtxmlpatterns test if it isn't enabled by PACKAGECONFIG
@@ -30,6 +32,6 @@ do_install_append_class-nativesdk() {
 
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtxmlpatterns', 'CONFIG+=OE_QTXMLPATTERNS_ENABLED', '', d)}"
 
-SRCREV = "1b96186d1418adcba85fdbfd794da2d2f6ea122d"
+SRCREV = "5cef1f6b505939976684c00e8deee614f2c20928"
 
 BBCLASSEXTEND =+ "native nativesdk"

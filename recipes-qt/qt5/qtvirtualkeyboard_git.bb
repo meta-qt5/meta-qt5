@@ -17,7 +17,7 @@ SRC_URI += "file://0001-include-sys-time.h-for-timeval.patch"
 #SRC_URI += "file://${T9WRITEPACKAGE};subdir=git/src/virtualkeyboard/3rdparty/t9write"
 #PACKAGECONFIG = "t9write lang-all"
 
-PACKAGECONFIG ?= "lang-all lipi-toolkit"
+PACKAGECONFIG ?= "lang-all lipi-toolkit qtquickcompiler"
 PACKAGECONFIG[hunspell] = ",CONFIG+=disable-hunspell,hunspell"
 PACKAGECONFIG[t9write] = "CONFIG+=t9write"
 PACKAGECONFIG[lipi-toolkit] = "CONFIG+=lipi-toolkit"
@@ -51,6 +51,6 @@ RRECOMMENDS_${PN} += "${PN}-dictionaries"
 FILES_${PN}-dictionaries = "${OE_QMAKE_PATH_DATA}/qtvirtualkeyboard/*/*.dat"
 FILES_${PN} += "${OE_QMAKE_PATH_DATA}/qtvirtualkeyboard/lipi_toolkit"
 
-DEPENDS += "qtbase qtdeclarative qtmultimedia qtquickcontrols qtsvg qtxmlpatterns"
+DEPENDS += "qtbase qtdeclarative qtdeclarative-native qtmultimedia qtquickcontrols qtsvg qtxmlpatterns"
 
-SRCREV = "1a9158bfbdd8dd01bac591c11bb0d0bf46514ddb"
+SRCREV = "93af389b0cb786864af8e54d53c7da308cb557a8"

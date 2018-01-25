@@ -64,7 +64,6 @@ PACKAGECONFIG_CONFARGS = " \
     -no-accessibility \
     -no-cups \
     -no-gui \
-    -no-qml-debug \
     -no-sql-mysql \
     -no-sql-sqlite \
     -no-opengl \
@@ -136,4 +135,4 @@ do_install() {
     echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
-SRCREV = "41cdfbe3a473a4f691c193a58206d860cb9c676d"
+SRCREV = "2cb1db64370989fffeec313c196fe573c479e6aa"

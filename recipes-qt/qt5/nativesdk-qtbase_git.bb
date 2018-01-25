@@ -122,7 +122,6 @@ do_configure() {
         -no-accessibility \
         -no-cups \
         -no-gui \
-        -no-qml-debug \
         -no-sql-mysql \
         -no-sql-sqlite \
         -no-opengl \
@@ -175,11 +174,9 @@ do_install() {
     install -m 644 ${WORKDIR}/OEQt5Toolchain.cmake ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
 
     # Fix up absolute paths in scripts
-    grep -lr /usr/bin/python ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/ | \
-        xargs -r sed -i -e '1s,#!.*python,#! ${USRBINPATH}/env python,'
-}
+    sed -i -e '1s,#!/usr/bin/python,#! ${USRBINPATH}/env python,' \
+        ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
 
-fakeroot do_generate_qt_environment_file() {
     mkdir -p ${D}${SDKPATHNATIVE}/environment-setup.d/
     script=${D}${SDKPATHNATIVE}/environment-setup.d/qt5.sh
 
@@ -208,6 +205,4 @@ fakeroot do_generate_qt_environment_file() {
     sed -i -e 's:${SDKPATHNATIVE}:$OECORE_NATIVE_SYSROOT:g' $script
 }
 
-addtask generate_qt_environment_file after do_install before do_package
-
-SRCREV = "41cdfbe3a473a4f691c193a58206d860cb9c676d"
+SRCREV = "2cb1db64370989fffeec313c196fe573c479e6aa"

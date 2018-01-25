@@ -3,7 +3,7 @@ SECTION = "libs"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c"
 
-DEPENDS += "qtbase qtdeclarative"
+DEPENDS += "qtbase qtxmlpatterns qtdeclarative"
 
 SRCREV = "6916cd030b05f0bd137ea9b669fee48f20c19084"
 SRC_URI = "git://git.merproject.org/mer-core/libqofono.git"

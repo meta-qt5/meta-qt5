@@ -111,4 +111,4 @@ FILES_${PN}-qt = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qt_*.qm \
 "
 
-SRCREV = "c3486e072ebc704f9c82c005044143b07bb88f12"
+SRCREV = "25eb2bbb4bf5e7b556d60b2328a19fcedbc3f4fe"

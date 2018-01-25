@@ -1,0 +1,36 @@
+From 7604806e71e6b7931b3ea06ed3aa9aae33ac5883 Mon Sep 17 00:00:00 2001
+From: Michal Klocek <michal.klocek@qt.io>
+Date: Thu, 8 Feb 2018 10:55:01 +0100
+Subject: [PATCH] Ignore PKG_CONFIG* shell exports for Yocto
+
+Yocto sets GN_HOST_PKG_CONFIG script for native
+tools builds, therefore skip host pkg-config script
+generation even if PKG_CONFIG* shell variables for target
+are exported.
+
+Task-number: QTBUG-66275
+Change-Id: I4a9939cd67ca5f32faeb827b5df0d3274ae7c30e
+Reviewed-by: Samuli Piippo <samuli.piippo@qt.io>
+---
+ src/core/config/linux.pri | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/core/config/linux.pri b/src/core/config/linux.pri
+index d337f686..1ce3ea89 100644
+--- a/src/core/config/linux.pri
++++ b/src/core/config/linux.pri
+@@ -115,12 +115,12 @@ host_build {
+         PKG_CONFIG_HOST = $$(GN_PKG_CONFIG_HOST)
+         pkgConfigLibDir = $$(PKG_CONFIG_LIBDIR)
+         pkgConfigSysrootDir = $$(PKG_CONFIG_SYSROOT_DIR)
+-        isEmpty(PKG_CONFIG_HOST): PKG_CONFIG_HOST = $$QMAKE_PKG_CONFIG_HOST
+-        cross_compile {
++        isEmpty(PKG_CONFIG_HOST): cross_compile {
+             !isEmpty(pkgConfigLibDir)|!isEmpty(pkgConfigSysrootDir) {
+                 PKG_CONFIG_HOST = $$pkgConfigHostExecutable()
+             }
+         }
++        isEmpty(PKG_CONFIG_HOST): PKG_CONFIG_HOST = $$QMAKE_PKG_CONFIG_HOST
+         gn_args += host_pkg_config=\"$$PKG_CONFIG_HOST\"
+     }
+ 

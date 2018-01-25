@@ -121,7 +121,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "61-based"
+QT_MODULE_BRANCH_CHROMIUM = "63-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.10
 # 5.10.meta-qt5.1
@@ -130,6 +130,7 @@ SRC_URI += " \
     file://0001-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
     file://0002-Include-dependency-to-QCoreApplication-translate.patch \
     file://0003-Force-host-toolchain-configuration.patch \
+    file://0001-Ignore-PKG_CONFIG-shell-exports-for-Yocto.patch \
 "
 SRC_URI_append_libc-musl = "\
     file://0004-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
@@ -159,8 +160,8 @@ SRC_URI_append_libc-musl = "\
     file://0015-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "14b58276822c12e8d21580f61869b5a9bbf43f22"
-SRCREV_chromium = "f0775ea93ab66f0676993db1633c9098dfb3a3ad"
+SRCREV_qtwebengine = "7a3e38d779352ca09e9118d735c9a2b0ea55b763"
+SRCREV_chromium = "3fa04d22883e42bd987e4f83d394a1040b410024"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
