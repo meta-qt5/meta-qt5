@@ -19,4 +19,4 @@ COMPATIBLE_MACHINE_armv7a = "(.*)"
 COMPATIBLE_MACHINE_armv7ve = "(.*)"
 COMPATIBLE_MACHINE_aarch64 = "(.*)"
 
-SRCREV = "eef3467cfad9f6ad892344bfcadbd59b5bcb4f53"
+SRCREV = "7445cd28616e68af3cf5e074a5576cbe6c5bf491"
