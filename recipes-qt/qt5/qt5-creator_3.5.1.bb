@@ -19,15 +19,17 @@ inherit qmake5
 DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg qtquick1"
 DEPENDS_append_libc-musl = " libexecinfo"
 
+# Patches from https://github.com/meta-qt5/qtcreator/commits/b5.3.1
+# 5.3.1.meta-qt5.1
 SRC_URI = " \
     http://download.qt.io/official_releases/qtcreator/3.5/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
     file://0001-Fix-Allow-qt-creator-to-build-on-arm-aarch32-and-aar.patch \
-    file://0001-Fix-compilation-with-QT_NO_ACCESSIBILITY.patch \
-    file://0001-Qmlpuppet-add-missing-includes.patch \
+    file://0002-Fix-compilation-with-QT_NO_ACCESSIBILITY.patch \
+    file://0003-Qmlpuppet-add-missing-includes.patch \
     file://qtcreator.desktop.in \
 "
 
-SRC_URI_append_libc-musl = " file://musl-backtrace.patch "
+SRC_URI_append_libc-musl = " file://0004-Link-with-libexecinfo-on-musl.patch"
 
 
 SRC_URI[md5sum] = "77aef7df837eba07c7ce6037ee504c05"

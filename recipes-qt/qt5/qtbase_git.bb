@@ -15,8 +15,8 @@ LIC_FILES_CHKSUM = " \
 "
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.9-shared
-# 5.9.meta-qt5-shared.2
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.10-shared
+# 5.10.meta-qt5-shared.1
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -26,9 +26,9 @@ SRC_URI += "\
     file://0006-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
     file://0007-Delete-qlonglong-and-qulonglong.patch \
     file://0008-Replace-pthread_yield-with-sched_yield.patch \
-    file://0010-Add-OE-specific-specs-for-clang-compiler.patch \
-    file://0011-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
-    file://0012-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
+    file://0009-Add-OE-specific-specs-for-clang-compiler.patch \
+    file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
+    file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://run-ptest \
 "
 
@@ -167,11 +167,16 @@ XPLATFORM_toolchain-clang = "linux-oe-clang"
 XPLATFORM ?= "linux-oe-g++"
 
 do_configure() {
+    # Regenerate header files when they are included in source tarball
+    # Otherwise cmake files don't set PRIVATE_HEADERS correctly
+    rm -rf ${S}/include
+    mkdir -p ${S}/.git || true
+
     # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory" during configuration
     touch ${S}/mkspecs/oe-device-extra.pri
 
     ${S}/configure -v \
-        -opensource -confirm-license \
+        -${QT_EDITION} -confirm-license \
         -sysroot ${STAGING_DIR_TARGET} \
         -prefix ${OE_QMAKE_PATH_PREFIX} \
         -bindir ${OE_QMAKE_PATH_BINS} \

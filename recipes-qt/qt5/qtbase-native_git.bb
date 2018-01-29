@@ -20,8 +20,8 @@ require qt5-native.inc
 require qt5-git.inc
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.9-shared
-# 5.9.meta-qt5-shared.2
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.10-shared
+# 5.10.meta-qt5-shared.1
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -31,21 +31,21 @@ SRC_URI += "\
     file://0006-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
     file://0007-Delete-qlonglong-and-qulonglong.patch \
     file://0008-Replace-pthread_yield-with-sched_yield.patch \
+    file://0009-Add-OE-specific-specs-for-clang-compiler.patch \
+    file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
+    file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.9-native
-# 5.9.meta-qt5-native.2
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.10-native
+# 5.10.meta-qt5-native.1
 SRC_URI += " \
-    file://0009-Always-build-uic.patch \
-    file://0010-Add-OE-specific-specs-for-clang-compiler.patch \
-    file://0011-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
-    file://0012-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
+    file://0012-Always-build-uic-and-qvkgen.patch \
 "
 
 # only for qtbase-native
 SRC_URI += " \
-    file://0001-Bootstrap-without-linkat-feature.patch \
+    file://0013-Bootstrap-without-linkat-feature.patch \
 "
 
 CLEANBROKEN = "1"
@@ -100,10 +100,15 @@ PACKAGECONFIG_CONFARGS = " \
 deltask generate_qt_config_file
 
 do_configure_prepend() {
+    # Regenerate header files when they are included in source tarball
+    # Otherwise cmake files don't set PRIVATE_HEADERS correctly
+    rm -rf ${S}/include
+    mkdir -p ${S}/.git || true
+
     # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory"
     touch ${S}/mkspecs/oe-device-extra.pri
 
-    MAKEFLAGS="${PARALLEL_MAKE}" ${S}/configure -opensource -confirm-license ${PACKAGECONFIG_CONFARGS} || die "Configuring qt failed. PACKAGECONFIG_CONFARGS was ${PACKAGECONFIG_CONFARGS}"
+    MAKEFLAGS="${PARALLEL_MAKE}" ${S}/configure -${QT_EDITION} -confirm-license ${PACKAGECONFIG_CONFARGS} || die "Configuring qt failed. PACKAGECONFIG_CONFARGS was ${PACKAGECONFIG_CONFARGS}"
 }
 
 do_install() {
