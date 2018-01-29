@@ -122,7 +122,7 @@ SRC_URI += " \
 # 49-based.meta-qt5.1
 SRC_URI += " \
     file://0001-chromium-base.gypi-include-atomicops_internals_x86_g.patch;patchdir=src/3rdparty \
-    file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patchh;patchdir=src/3rdparty \
+    file://0002-chromium-Change-false-to-FALSE-and-1-to-TRUE-FIX-qtw.patch;patchdir=src/3rdparty \
 "
 
 SRCREV_qtwebengine = "fad625e0ba39e855817bbf206ab9a846d07aeeec"
