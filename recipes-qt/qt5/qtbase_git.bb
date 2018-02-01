@@ -1,5 +1,6 @@
 require qt5.inc
 require qt5-git.inc
+require qt5-ptest.inc
 
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
@@ -29,10 +30,7 @@ SRC_URI += "\
     file://0009-Add-OE-specific-specs-for-clang-compiler.patch \
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
-    file://run-ptest \
 "
-
-inherit ptest
 
 # LGPL-3.0 is used only in src/plugins/platforms/android/extract.cpp
 
@@ -201,17 +199,6 @@ do_configure() {
         -platform ${OE_QMAKE_PLATFORM_NATIVE} \
         -xplatform ${XPLATFORM} \
         ${QT_CONFIG_FLAGS}
-}
-
-fakeroot do_install_ptest() {
-    mkdir -p ${D}${PTEST_PATH}
-    t=${D}${PTEST_PATH}
-    for var in ` find ${B}/tests/auto/ -name tst_*`; do
-        if [ not ` echo ${var##*/} | grep '\.'` ]; then
-            echo ${var##*/} >> ${t}/tst_list
-            install -m 0644 ${var} ${t}
-        fi
-    done
 }
 
 do_install_append() {
