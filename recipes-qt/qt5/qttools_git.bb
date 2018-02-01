@@ -1,5 +1,6 @@
 require qt5.inc
 require qt5-git.inc
+require qt5-ptest.inc
 
 HOMEPAGE = "http://www.qt.io"
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
@@ -11,14 +12,11 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-inherit ptest
-
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
 # Patches from https://github.com/meta-qt5/qttools/commits/b5.10
 # 5.10.meta-qt5.1
 SRC_URI += " \
-    file://run-ptest \
     file://0001-add-noqtwebkit-configuration.patch \
     file://0002-linguist-tools-cmake-allow-overriding-the-location-f.patch \
 "
@@ -35,16 +33,9 @@ SRCREV = "3ce89dc37d3c73033c18dcec9e4710afd747ce01"
 
 BBCLASSEXTEND = "native nativesdk"
 
-do_compile_ptest() {
-    export PATH=${STAGING_DIR_NATIVE}/usr/include/qt5:$PATH
-    cd ${S}/tests
-    qmake -o Makefile tests.pro
-    oe_runmake
-}
-
 do_install_ptest() {
     mkdir -p ${D}${PTEST_PATH}
     t=${D}${PTEST_PATH}
-    cp ${S}/tests/auto/qtdiag/tst_tdiag $t
-    cp ${S}/tests/auto/qtattributionsscanner/tst_qtattributionsscanner $t
+    cp ${B}/tests/auto/qtdiag/tst_tdiag $t
+    cp ${B}/tests/auto/qtattributionsscanner/tst_qtattributionsscanner $t
 }

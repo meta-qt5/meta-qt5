@@ -1,6 +1,0 @@
-#!/bin/sh
-
-for x in ` awk '{print $1}' tst_list `;do
-    ./${x};
-done
-
