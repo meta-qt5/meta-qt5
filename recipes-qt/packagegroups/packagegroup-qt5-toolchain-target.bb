@@ -47,6 +47,9 @@ RDEPENDS_${PN} += " \
     qttranslations-qtbase \
     qttranslations-qtconfig \
     qttranslations-qthelp \
+    qtcharts-dev \
+    qtcharts-mkspecs \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtcharts-qmlplugins', '', d)} \
     qtconnectivity-dev \
     qtconnectivity-mkspecs \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtconnectivity-qmlplugins', '', d)} \
@@ -69,6 +72,8 @@ RDEPENDS_${PN} += " \
     qtlocation-plugins \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtlocation-qmlplugins', '', d)} \
     qttranslations-qtlocation \
+    qtmqtt-dev \
+    qtmqtt-mkspecs \
     qtmultimedia-dev \
     qtmultimedia-mkspecs \
     qtmultimedia-plugins \
