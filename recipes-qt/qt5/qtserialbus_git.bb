@@ -11,8 +11,4 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtserialport"
 
-# Patches from https://github.com/meta-qt5/qtserialbus/commits/b5.10
-# 5.10.meta-qt5.1
-SRC_URI += "file://0001-Add-missing-include-for-struct-timeval.patch"
-
-SRCREV = "f25ddea7b12beff8d4de863fec18ce698d726ffa"
+SRCREV = "d5d35d64d06729322c80327de40badaf553df87e"
