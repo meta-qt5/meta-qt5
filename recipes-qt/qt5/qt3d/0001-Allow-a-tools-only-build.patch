@@ -1,4 +1,4 @@
-From 0ed3e6bbbb83bb7325bddb7d088ef36224af3680 Mon Sep 17 00:00:00 2001
+From b29e44be0294d5c0c6ac0a5e14a6e1c150a122a4 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@theqtcompany.com>
 Date: Wed, 10 Feb 2016 09:02:09 +0200
 Subject: [PATCH] Allow a tools-only build
@@ -10,7 +10,7 @@ Subject: [PATCH] Allow a tools-only build
  3 files changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/qt3d.pro b/qt3d.pro
-index 2cc347a..81cdeef 100644
+index 2cc347a1c..81cdeefb0 100644
 --- a/qt3d.pro
 +++ b/qt3d.pro
 @@ -1,4 +1,4 @@
@@ -29,7 +29,7 @@ index 2cc347a..81cdeef 100644
 +    SUBDIRS = sub_tools
 +}
 diff --git a/src/3rdparty/assimp/assimp_dependency.pri b/src/3rdparty/assimp/assimp_dependency.pri
-index 8ba2d9a..e973d93 100644
+index 8ba2d9a41..e973d93dd 100644
 --- a/src/3rdparty/assimp/assimp_dependency.pri
 +++ b/src/3rdparty/assimp/assimp_dependency.pri
 @@ -1,5 +1,5 @@
@@ -40,12 +40,12 @@ index 8ba2d9a..e973d93 100644
  } else {
      include(assimp.pri)
 diff --git a/tools/tools.pro b/tools/tools.pro
-index 8e973ae..ad51db5 100644
+index 64f2b9fc7..d108e7fa7 100644
 --- a/tools/tools.pro
 +++ b/tools/tools.pro
 @@ -1,4 +1,4 @@
  TEMPLATE = subdirs
  QT_FOR_CONFIG += 3dcore-private
--!android:qtConfig(assimp):qtConfig(commandlineparser): \
-+!android:tools-only|qtConfig(assimp):qtConfig(commandlineparser): \
+-qtConfig(assimp):qtConfig(commandlineparser): \
++tools-only|qtConfig(assimp):qtConfig(commandlineparser): \
      SUBDIRS += qgltf
