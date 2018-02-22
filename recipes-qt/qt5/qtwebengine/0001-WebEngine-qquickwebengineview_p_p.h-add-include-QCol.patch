@@ -1,4 +1,4 @@
-From b5808d9ad3573f5af3b51d8366c8b075598c0d87 Mon Sep 17 00:00:00 2001
+From a70b6d2183934e4d9a3ad00167acfaf0a78a90a9 Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Fri, 25 Dec 2015 18:16:05 -0200
 Subject: [PATCH] WebEngine qquickwebengineview_p_p.h add include QColor
@@ -9,7 +9,7 @@ Signed-off-by: Cleiton Bueno <cleitonrbueno@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/src/webengine/api/qquickwebengineview_p_p.h b/src/webengine/api/qquickwebengineview_p_p.h
-index bd9b290..1c13955 100644
+index 1b8edc8..03d6558 100644
 --- a/src/webengine/api/qquickwebengineview_p_p.h
 +++ b/src/webengine/api/qquickwebengineview_p_p.h
 @@ -59,6 +59,8 @@

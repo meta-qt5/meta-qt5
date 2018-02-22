@@ -40,7 +40,7 @@ EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 SRCREV = "db36bc0d9ccae21e84cd54be3e18ae539542eadc"
 
 # Patches from https://github.com/meta-qt5/qtwayland/commits/b5.10
-# 5.10.meta-qt5.1
+# 5.10.meta-qt5.2
 # From https://bugreports.qt.io/browse/QTBUG-57767
 SRC_URI += " \
     file://0001-fix-build-without-xkbcommon-evdev.patch \

@@ -17,7 +17,7 @@ LIC_FILES_CHKSUM = " \
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.10-shared
-# 5.10.meta-qt5-shared.1
+# 5.10.meta-qt5-shared.2
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -30,7 +30,7 @@ SRC_URI += "\
     file://0009-Add-OE-specific-specs-for-clang-compiler.patch \
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
-    file://0014-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
+    file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
 "
 
 # LGPL-3.0 is used only in src/plugins/platforms/android/extract.cpp

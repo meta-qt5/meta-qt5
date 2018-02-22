@@ -1,4 +1,4 @@
-From c2878f35c98b413a456fe2df9b7ce05c86020bc0 Mon Sep 17 00:00:00 2001
+From e735b0adfa9b1dcaa93e3ce65d9cc01255ab340b Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Thu, 14 Dec 2017 11:28:10 +0200
 Subject: [PATCH] musl: link against libexecinfo
@@ -10,10 +10,10 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/core/core_module.pro b/src/core/core_module.pro
-index 2409ccb..e41e5a9 100644
+index d21985e..eeebeb4 100644
 --- a/src/core/core_module.pro
 +++ b/src/core/core_module.pro
-@@ -45,7 +45,7 @@ else: QMAKE_LFLAGS += $$NINJA_LFLAGS
+@@ -54,7 +54,7 @@ linux {
  POST_TARGETDEPS += $$NINJA_TARGETDEPS
  
  
