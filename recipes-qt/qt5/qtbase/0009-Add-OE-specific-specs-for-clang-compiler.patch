@@ -1,4 +1,4 @@
-From aaeadb4326f1f9df7bbafa0b9fa6937504a1c035 Mon Sep 17 00:00:00 2001
+From 1b03528718e7665804c9e0443d45d43a6559034f Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 3 Sep 2017 09:11:44 -0700
 Subject: [PATCH] Add OE specific specs for clang compiler

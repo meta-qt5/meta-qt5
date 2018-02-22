@@ -1,4 +1,4 @@
-From c6e7171bf8f5ecb8b82d911581a45defe93854e1 Mon Sep 17 00:00:00 2001
+From 5d7080bf2001a022223c4089a199605b5f9a5cce Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:01:12 -0700
 Subject: [PATCH] chromium: musl: sandbox: Define TEMP_FAILURE_RETRY if not

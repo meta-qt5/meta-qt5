@@ -17,6 +17,6 @@ DEPENDS += "qtwebkit qtxmlpatterns"
 RDEPENDS_${PN}-examples += "qtwebkit-qmlplugins"
 RDEPENDS_${PN}-examples += "${@bb.utils.contains('PACKAGECONFIG_OPENSSL', 'openssl', 'ca-certificates', '', d)}"
 
-QT_MODULE_BRANCH = "5.9"
+QT_MODULE_BRANCH = "dev"
 
-SRCREV = "a24c780b60d7d8bc00c4a48042cf7f32db777d55"
+SRCREV = "2d68492004bf4ba49cf58c9bd72706cb282cf59b"

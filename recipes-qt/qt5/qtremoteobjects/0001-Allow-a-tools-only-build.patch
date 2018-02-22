@@ -1,4 +1,4 @@
-From 6235a3fdd0807205c818d70582033970ee008013 Mon Sep 17 00:00:00 2001
+From 2bf23e29ff3ec25e394fe1f633479013185a57d7 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 7 Jun 2017 15:17:12 +0300
 Subject: [PATCH] Allow a tools-only build

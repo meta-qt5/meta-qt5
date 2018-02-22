@@ -25,8 +25,8 @@ require qt5-git.inc
 FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.10-shared
-# 5.10.meta-qt5-shared.2
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-shared
+# 5.11.meta-qt5-shared.1
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -43,8 +43,8 @@ SRC_URI += "\
 "
 
 # common for qtbase-native and nativesdk-qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.10-native
-# 5.10.meta-qt5-native.2
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-native
+# 5.11.meta-qt5-native.1
 SRC_URI += " \
     file://0013-Always-build-uic-and-qvkgen.patch \
 "
@@ -123,7 +123,6 @@ do_configure() {
         -no-accessibility \
         -no-cups \
         -no-gui \
-        -no-qml-debug \
         -no-sql-mysql \
         -no-sql-sqlite \
         -no-opengl \
@@ -212,4 +211,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "6c6ace9d23f90845fd424e474d38fe30f070775e"
+SRCREV = "17b73b0d2b8e0d643bdf13b543cc23d657a4b330"

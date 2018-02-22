@@ -26,8 +26,9 @@ EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 EXTRA_QMAKEVARS_CONFIGURE += "${@bb.utils.contains_any('PACKAGECONFIG', 'gstreamer gstreamer010', '', '-no-gstreamer', d)}"
 
 CXXFLAGS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', '-DMESA_EGL_NO_X11_HEADERS=1', d)}"
-# Patches from https://github.com/meta-qt5/qtmultimedia/commits/b5.10
-# 5.10.meta-qt5.2
+
+# Patches from https://github.com/meta-qt5/qtmultimedia/commits/b5.11
+# 5.11.meta-qt5.1
 SRC_URI += "\
     file://0001-qtmultimedia-fix-a-conflicting-declaration.patch \
 "
@@ -36,4 +37,4 @@ SRC_URI += "\
 # http://errors.yoctoproject.org/Errors/Build/44914/
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-SRCREV = "038716bb1f2d9b95f2d638e2d61d297563343af9"
+SRCREV = "0354fdda8b430f7749082ca55ad6c1dc781f3918"

@@ -30,4 +30,4 @@ DEPENDS += "qtbase"
 # http://errors.yoctoproject.org/Errors/Build/44915/
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-SRCREV = "76bcf9b526f96edb35469e9de4b032a112a2b1c0"
+SRCREV = "781c745277f9b4faa87d341b10ec0ca46eb45a73"
