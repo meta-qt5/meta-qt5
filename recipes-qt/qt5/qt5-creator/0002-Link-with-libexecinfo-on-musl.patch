@@ -1,0 +1,20 @@
+From a30f4335d49516eb4654111af5bf073b633f7336 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 16 Jan 2018 13:26:57 +0000
+Subject: [PATCH] Link with libexecinfo on musl
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/plugins/debugger/debugger.pro | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/plugins/debugger/debugger.pro b/src/plugins/debugger/debugger.pro
+index f5a34aa..4a1359d 100644
+--- a/src/plugins/debugger/debugger.pro
++++ b/src/plugins/debugger/debugger.pro
+@@ -141,3 +141,4 @@ include(console/console.pri)
+ include(analyzer/analyzer.pri)
+ 
+ include(shared/shared.pri)
++LIBS  *= -lexecinfo
