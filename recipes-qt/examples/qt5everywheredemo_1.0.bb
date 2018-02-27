@@ -7,7 +7,8 @@ LIC_FILES_CHKSUM = "file://qml/QtDemo/main.qml;endline=39;md5=7d80863906a4bc8ffc
 DEPENDS = "qtdeclarative qtxmlpatterns qtgraphicaleffects qtsvg qtmultimedia"
 
 SRCREV = "35d72a2eba7456a2efc5eb8b77afbc00f69ba0ac"
-SRC_URI = "${QT_LABS_GIT}/qt-labs-qt5-everywhere-demo"
+QT_GIT_PROJECT = "qt-labs"
+SRC_URI = "${QT_GIT}/qt5-everywhere-demo"
 
 S = "${WORKDIR}/git/QtDemo"
 
