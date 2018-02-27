@@ -37,7 +37,7 @@ PACKAGECONFIG[libhybris-egl-server] = "-feature-libhybris-egl-server,-no-feature
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "abfdf34f510b64439c85cc54f47b41c4ce3f9c61"
+SRCREV = "ec495c98189f1d849e793108b09b5af0ce2c8984"
 
 # Patches from https://github.com/meta-qt5/qtwayland/commits/b5.10
 # 5.10.meta-qt5.1

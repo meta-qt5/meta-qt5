@@ -205,4 +205,4 @@ do_install() {
     sed -i -e 's:${SDKPATHNATIVE}:$OECORE_NATIVE_SYSROOT:g' $script
 }
 
-SRCREV = "8a66924ca000fe4e05b680ca82c6587da8d28e0b"
+SRCREV = "9df6f3367e971d4fad63e59bb42615e2b7a580ce"
