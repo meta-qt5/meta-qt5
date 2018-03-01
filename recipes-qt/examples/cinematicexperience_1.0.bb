@@ -19,7 +19,7 @@ S = "${WORKDIR}/Qt5_CinematicExperience_rpi_${PV}/"
 #S = "${WORKDIR}/Qt5_CinematicExperience_${PV}/"
 
 DEPENDS = "qtdeclarative qtgraphicaleffects"
-RDEPENDS_${PN} = "qtdeclarative-qmlplugins qtgraphicaleffects-qmlplugins"
+RDEPENDS_${PN} = "liberation-fonts qtdeclarative-qmlplugins qtgraphicaleffects-qmlplugins"
 
 require recipes-qt/qt5/qt5.inc
 
