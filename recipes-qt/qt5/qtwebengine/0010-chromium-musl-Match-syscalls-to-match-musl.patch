@@ -1,4 +1,4 @@
-From f2f765369ea6f3972f5dc78f86e0d4679795357a Mon Sep 17 00:00:00 2001
+From ce23b6a6e5a5ebae15dedeebf7044ac9a0249a80 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:24:49 -0700
 Subject: [PATCH] chromium: musl: Match syscalls to match musl

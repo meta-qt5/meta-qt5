@@ -17,7 +17,7 @@ diff --git a/src/src.pro b/src/src.pro
 index a2064b1..9fae335 100644
 --- a/src/src.pro
 +++ b/src/src.pro
-@@ -211,7 +211,7 @@ qtConfig(gui) {
+@@ -222,7 +222,7 @@ qtConfig(gui) {
          }
      }
  }
