@@ -6,9 +6,9 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
 "
 
-DEPENDS += "qtbase qtdeclarative qtmultimedia"
+DEPENDS += "qtbase qtdeclarative qtdeclarative-native qtmultimedia"
 
-SRCREV = "27d2c7035b1812dc2bdf7f0e580a42c613199fd8"
+SRCREV = "f61c26916edf9944ed1dd465f031620a80e98597"
 
 # The same issue as in qtbase:
 # http://errors.yoctoproject.org/Errors/Details/152641/
