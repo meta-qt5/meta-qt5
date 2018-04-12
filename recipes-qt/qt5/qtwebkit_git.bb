@@ -19,7 +19,7 @@ ARM_INSTRUCTION_SET_armv4 = "arm"
 ARM_INSTRUCTION_SET_armv5 = "arm"
 
 # Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.9
-# 5.9.meta-qt5.4
+# 5.9.meta-qt5.5
 SRC_URI += "\
     file://0001-qtwebkit-fix-QA-issue-bad-RPATH.patch \
     file://0002-Exclude-backtrace-API-for-non-glibc-libraries.patch \

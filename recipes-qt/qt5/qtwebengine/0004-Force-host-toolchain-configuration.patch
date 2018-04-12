@@ -1,4 +1,4 @@
-From 0f3236a53f7d08ab5f2d9f02e97b037f2a7fc77e Mon Sep 17 00:00:00 2001
+From dbcfd868d551beb55a9411c26912050ea278ec48 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration

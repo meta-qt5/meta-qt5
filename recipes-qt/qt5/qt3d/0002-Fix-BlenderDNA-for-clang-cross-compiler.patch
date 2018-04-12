@@ -1,4 +1,4 @@
-From 9077cda0426de08c2d4ce74bf793316171427bfc Mon Sep 17 00:00:00 2001
+From 535d2ecd0ccaae5a36d40e9b64ffa2ef32f09cdb Mon Sep 17 00:00:00 2001
 From: Kim Kulling <kim.kulling@googlemail.com>
 Date: Mon, 7 Nov 2016 17:19:49 +0100
 Subject: [PATCH] Fix BlenderDNA for clang cross compiler.

@@ -1,4 +1,4 @@
-From 634bef4346219a8566d909778247f71556a0eabc Mon Sep 17 00:00:00 2001
+From 5e2fae4322189dc359c469fed55c7fadbf46418e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 8 Jul 2017 09:08:23 -0700
 Subject: [PATCH] chromium: musl: tcmalloc: Use off64_t insread of __off64_t

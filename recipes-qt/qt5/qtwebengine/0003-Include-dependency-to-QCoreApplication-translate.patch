@@ -1,4 +1,4 @@
-From 11779e40fbf007f7c77e0170adb6cc88a3ec5d74 Mon Sep 17 00:00:00 2001
+From 4e95d44468ed954d68402c585c6df3c6cd6c5638 Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Thu, 24 Dec 2015 15:59:51 -0200
 Subject: [PATCH] Include dependency to QCoreApplication::translate()

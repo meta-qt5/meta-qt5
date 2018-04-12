@@ -1,4 +1,4 @@
-From aaa3d0e57ea0eea6dbd4179eecc3756fdddc0681 Mon Sep 17 00:00:00 2001
+From bf2fa82b9ee1a9ab38ddbcdd68327bb5aed06c12 Mon Sep 17 00:00:00 2001
 From: Wenlin Kang <wenlin.kang@windriver.com>
 Date: Thu, 8 Sep 2016 12:18:13 +0800
 Subject: [PATCH] qtmultimedia: fix a conflicting declaration
