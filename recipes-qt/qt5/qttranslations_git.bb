@@ -22,7 +22,6 @@ PACKAGES =. " \
     ${PN}-qtwebsockets \
     ${PN}-qtwebengine \
     ${PN}-qtxmlpatterns \
-    ${PN}-qtconfig \
     ${PN}-qtquick1 \
     ${PN}-qtscript \
     ${PN}-qtserialport \
@@ -81,10 +80,6 @@ FILES_${PN}-qtwebengine = " \
 
 FILES_${PN}-qtxmlpatterns = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qtxmlpatterns_*.qm \
-"
-
-FILES_${PN}-qtconfig = " \
-    ${OE_QMAKE_PATH_TRANSLATIONS}/qtconfig_*.qm \
 "
 
 FILES_${PN}-qtquick1 = " \

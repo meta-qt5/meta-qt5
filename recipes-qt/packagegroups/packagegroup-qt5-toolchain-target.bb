@@ -45,7 +45,6 @@ RDEPENDS_${PN} += " \
     qtbase-staticdev \
     qttranslations-qt \
     qttranslations-qtbase \
-    qttranslations-qtconfig \
     qttranslations-qthelp \
     qtcharts-dev \
     qtcharts-mkspecs \
