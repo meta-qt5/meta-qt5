@@ -15,7 +15,6 @@ DEPENDS_class-target += "qtdeclarative qt3d-native"
 # 5.10.meta-qt5.2
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
-    file://0002-Fix-BlenderDNA-for-clang-cross-compiler.patch \
 "
 
 PACKAGECONFIG ??= ""
@@ -37,6 +36,6 @@ do_configure_prepend() {
          ${S}/src/quick3d/imports/input/importsinput.pro
 }
 
-SRCREV = "2a260617b96281375e2ee018af8c7547d99e4a6d"
+SRCREV = "4f7726155f586ae3aef0b111ae25eacaab91afe9"
 
 BBCLASSEXTEND += "native nativesdk"

@@ -159,8 +159,8 @@ SRC_URI_append_libc-musl = "\
     file://0015-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "dd2acb8a0a5ccbbf34664987fdcf4b3a418c54f9"
-SRCREV_chromium = "293e8de891f03c47d336bb91aa631d496f19fdb3"
+SRCREV_qtwebengine = "db7187bb1420bcbdd933035451895372782ed7e1"
+SRCREV_chromium = "aa9e7d7264980e8ca189dcae4d841cf0e33e03db"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
