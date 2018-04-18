@@ -5,19 +5,18 @@ require qt5-ptest.inc
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPL3;md5=e6a600fd5e1d9cbde2d983680233ad02 \
-    file://LICENSE.LGPLv21;md5=fb91571854638f10b2e5f36562661a5a \
-    file://LICENSE.LGPLv3;md5=a909b94c1c9674b2aa15ff03a86f518a \
+    file://LICENSE.LGPLv3;md5=86d02ed8764e77c1c0b194fde895a51b \
     file://LICENSE.GPL2;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
-    file://LICENSE.GPLv3;md5=88e2b9117e6be406b5ed6ee4ca99a705 \
     file://LGPL_EXCEPTION.txt;md5=9625233da42f9e0ce9d63651a9d97654 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
+    file://LICENSE.PREVIEW.COMMERCIAL;md5=8ee24b8d305ef7779e07647a7b70e1bc \
 "
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-shared
-# 5.11.meta-qt5-shared.1
+# 5.11.meta-qt5-shared.2
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -32,8 +31,6 @@ SRC_URI += "\
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
 "
-
-# LGPL-3.0 is used only in src/plugins/platforms/android/extract.cpp
 
 # for syncqt
 RDEPENDS_${PN}-tools += "perl"
@@ -243,4 +240,4 @@ INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "17b73b0d2b8e0d643bdf13b543cc23d657a4b330"
+SRCREV = "2b5587d901a0cc23749bf27a923d50bf0e5860d3"

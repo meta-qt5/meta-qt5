@@ -1,4 +1,4 @@
-From 4e1945bd0867c018d06b5fa9c2dcb60619f260b2 Mon Sep 17 00:00:00 2001
+From ca13ad2d1a5c119fb3f45c805d2f3caaede95a7d Mon Sep 17 00:00:00 2001
 From: Raphael Freudiger <laser_b@gmx.ch>
 Date: Tue, 10 Jan 2017 15:49:55 +0100
 Subject: [PATCH] fix build without xkbcommon-evdev
@@ -36,10 +36,10 @@ index 47be591..805c81e 100644
 +
 +LIBS += -lxkbcommon
 diff --git a/src/compositor/compositor_api/qwaylandkeyboard.cpp b/src/compositor/compositor_api/qwaylandkeyboard.cpp
-index e35c0f3..45e82ca 100644
+index 7ab8bff..8c36774 100644
 --- a/src/compositor/compositor_api/qwaylandkeyboard.cpp
 +++ b/src/compositor/compositor_api/qwaylandkeyboard.cpp
-@@ -349,12 +349,6 @@ void QWaylandKeyboardPrivate::createXKBState(xkb_keymap *keymap)
+@@ -334,12 +334,6 @@ void QWaylandKeyboardPrivate::createXKBState(xkb_keymap *keymap)
      xkb_state = xkb_state_new(keymap);
  }
  
@@ -52,7 +52,7 @@ index e35c0f3..45e82ca 100644
  
  void QWaylandKeyboardPrivate::createXKBKeymap()
  {
-@@ -384,6 +378,13 @@ void QWaylandKeyboardPrivate::createXKBKeymap()
+@@ -369,6 +363,13 @@ void QWaylandKeyboardPrivate::createXKBKeymap()
  }
  #endif
  

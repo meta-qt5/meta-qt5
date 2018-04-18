@@ -121,10 +121,10 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "63-based"
+QT_MODULE_BRANCH_CHROMIUM = "65-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.11
-# 5.11.meta-qt5.1
+# 5.11.meta-qt5.2
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
@@ -136,8 +136,8 @@ SRC_URI_append_libc-musl = "\
     file://0005-musl-link-against-libexecinfo.patch \
 "
 
-# Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/63-based
-# 63-based.meta-qt5.1
+# Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/65-based
+# 65-based.meta-qt5.2
 SRC_URI += " \
     file://0001-chromium-Force-host-toolchain-configuration.patch;patchdir=src/3rdparty \
     file://0002-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
@@ -158,8 +158,8 @@ SRC_URI_append_libc-musl = "\
     file://0014-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "732d09331c1e4efa51501aae9bcd6924eecdd5c3"
-SRCREV_chromium = "3fa04d22883e42bd987e4f83d394a1040b410024"
+SRCREV_qtwebengine = "b7e5722cce95730004ef6cb9f4aabde5bbd5685d"
+SRCREV_chromium = "e173cb17d97aa3c2065189275c85db79eb7d1748"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
