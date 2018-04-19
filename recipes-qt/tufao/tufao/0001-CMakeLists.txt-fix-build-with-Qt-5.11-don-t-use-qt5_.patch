@@ -1,0 +1,91 @@
+From 85a4a1fcba0d81fbd8c4af3421114360f32c384e Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Thu, 19 Apr 2018 06:31:09 +0000
+Subject: [PATCH] CMakeLists.txt: fix build with Qt 5.11, don't use
+ qt5_use_modules
+
+* replace deprecated (and in 5.11 removed) qt5_use_modules macro usage with
+  the list of libraries in target_link_libraries as suggested in:
+  https://stackoverflow.com/questions/31172156/what-to-use-instead-of-qt5-use-modules
+
+Upstream-Status: Submitted https://github.com/vinipsmaker/tufao/pull/91
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ examples/cmake/hello-cmake/CMakeLists.txt           | 3 +--
+ examples/cmake/sample_plugin/plugins/CMakeLists.txt | 3 +--
+ examples/cmake/sample_plugin/src/CMakeLists.txt     | 3 +--
+ src/CMakeLists.txt                                  | 2 +-
+ src/tests/CMakeLists.txt                            | 3 +--
+ 5 files changed, 5 insertions(+), 9 deletions(-)
+
+diff --git a/examples/cmake/hello-cmake/CMakeLists.txt b/examples/cmake/hello-cmake/CMakeLists.txt
+index 1995220..e93c83c 100644
+--- a/examples/cmake/hello-cmake/CMakeLists.txt
++++ b/examples/cmake/hello-cmake/CMakeLists.txt
+@@ -13,5 +13,4 @@ find_package(CXX11 REQUIRED)
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX11_FLAGS}")
+ 
+ add_executable(${PROJECT_NAME} main.cpp)
+-qt5_use_modules(${PROJECT_NAME} Core Network)
+-target_link_libraries(${PROJECT_NAME} ${TUFAO_LIBRARIES})
++target_link_libraries(${PROJECT_NAME} ${TUFAO_LIBRARIES} Qt5::Core Qt5::Network)
+diff --git a/examples/cmake/sample_plugin/plugins/CMakeLists.txt b/examples/cmake/sample_plugin/plugins/CMakeLists.txt
+index 3099dfb..b0ded18 100644
+--- a/examples/cmake/sample_plugin/plugins/CMakeLists.txt
++++ b/examples/cmake/sample_plugin/plugins/CMakeLists.txt
+@@ -9,5 +9,4 @@ set(PLUGIN_HEADERS
+ )
+ 
+ add_library(Test SHARED ${PLUGIN_HEADERS} ${PLUGIN_SOURCE})
+-qt5_use_modules(Test Core Network)
+-target_link_libraries(Test ${TUFAO_LIBRARIES})
++target_link_libraries(Test ${TUFAO_LIBRARIES} Qt5::Test Qt5::Core Qt5::Network)
+diff --git a/examples/cmake/sample_plugin/src/CMakeLists.txt b/examples/cmake/sample_plugin/src/CMakeLists.txt
+index 379440f..fe97a0f 100644
+--- a/examples/cmake/sample_plugin/src/CMakeLists.txt
++++ b/examples/cmake/sample_plugin/src/CMakeLists.txt
+@@ -9,5 +9,4 @@ set(${PROJECT_NAME}_HEADERS
+ )
+ 
+ add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_HEADERS} ${${PROJECT_NAME}_SOURCE})
+-qt5_use_modules(${PROJECT_NAME} Core Network)
+-target_link_libraries(${PROJECT_NAME} ${TUFAO_LIBRARIES} ${Test})
++target_link_libraries(${PROJECT_NAME} ${TUFAO_LIBRARIES} ${Test} Qt5::Core Qt5::Network)
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 3b10a35..91e619e 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -36,7 +36,7 @@ endif()
+ 
+ add_library("${TUFAO_LIBRARY}" SHARED ${tufao_SRC})
+ 
+-qt5_use_modules("${TUFAO_LIBRARY}" Core Network)
++target_link_libraries("${TUFAO_LIBRARY}" Qt5::Core Qt5::Network)
+ 
+ set_target_properties(
+     "${TUFAO_LIBRARY}"
+diff --git a/src/tests/CMakeLists.txt b/src/tests/CMakeLists.txt
+index cc2fef7..2ec9fa9 100644
+--- a/src/tests/CMakeLists.txt
++++ b/src/tests/CMakeLists.txt
+@@ -20,7 +20,6 @@ set(tests
+ )
+ 
+ macro(setup_test_target target)
+-    qt5_use_modules("${target}" Core Network Test)
+     set_target_properties(
+         "${target}"
+         PROPERTIES
+@@ -43,7 +42,7 @@ macro(setup_test_target target)
+ endif()
+ 
+ 
+-    target_link_libraries("${target}" "${TUFAO_LIBRARY}")
++target_link_libraries("${target}" "${TUFAO_LIBRARY}" Qt5::Core Qt5::Network Qt5::Test)
+ 
+     add_test(NAME "${target}"
+         WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/src"
+-- 
+2.17.0
+
