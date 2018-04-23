@@ -22,7 +22,6 @@ PACKAGES =. " \
     ${PN}-qtwebsockets \
     ${PN}-qtwebengine \
     ${PN}-qtxmlpatterns \
-    ${PN}-qtconfig \
     ${PN}-qtquick1 \
     ${PN}-qtscript \
     ${PN}-qtserialport \
@@ -83,10 +82,6 @@ FILES_${PN}-qtxmlpatterns = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qtxmlpatterns_*.qm \
 "
 
-FILES_${PN}-qtconfig = " \
-    ${OE_QMAKE_PATH_TRANSLATIONS}/qtconfig_*.qm \
-"
-
 FILES_${PN}-qtquick1 = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qtquick1_*.qm \
 "
@@ -111,4 +106,4 @@ FILES_${PN}-qt = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qt_*.qm \
 "
 
-SRCREV = "446f2f8e444362b393efe57904e178a20346e88f"
+SRCREV = "0bf644a075634ca49ee28c0f42566f1012506f31"
