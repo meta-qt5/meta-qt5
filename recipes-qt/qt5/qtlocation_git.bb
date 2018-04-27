@@ -25,11 +25,13 @@ EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 # http://errors.yoctoproject.org/Errors/Details/152640/
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
+QT_MODULE_BRANCH_MAPBOXGL = "upstream/qt-staging-5.11.0"
+
 SRC_URI += " \
-    ${QT_GIT}/qtlocation-mapboxgl.git;name=qtlocation-mapboxgl;branch=upstream/qt-staging;protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/mapbox-gl-native \
+    ${QT_GIT}/qtlocation-mapboxgl.git;name=qtlocation-mapboxgl;branch=${QT_MODULE_BRANCH_MAPBOXGL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/mapbox-gl-native \
 "
 
-SRCREV_qtlocation = "ecb6fbd235a8f23f0844bb2b926b78566c1aaa76"
-SRCREV_qtlocation-mapboxgl = "8c1be4ec01ef46bf453856531ebf53b48ce3dbe7"
+SRCREV_qtlocation = "139414573ab27bd1df1b491aeb6003a6fc0d3d5d"
+SRCREV_qtlocation-mapboxgl = "74df5203628b47931b4edcb5e8fe352f40fe7df4"
 
 SRCREV_FORMAT = "qtlocation_qtlocation-mapboxgl"
