@@ -11,14 +11,15 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
     file://LGPL_EXCEPTION.txt;md5=9625233da42f9e0ce9d63651a9d97654 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
+    file://LICENSE.PREVIEW.COMMERCIAL;md5=8ee24b8d305ef7779e07647a7b70e1bc \
 "
 
 require qt5-native.inc
 require qt5-git.inc
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.10-shared
-# 5.10.meta-qt5-shared.2
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-shared
+# 5.11.meta-qt5-shared.2
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -36,7 +37,7 @@ SRC_URI += "\
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.10-native
-# 5.10.meta-qt5-native.2
+# 5.11.meta-qt5-native.2
 SRC_URI += " \
     file://0013-Always-build-uic-and-qvkgen.patch \
 "

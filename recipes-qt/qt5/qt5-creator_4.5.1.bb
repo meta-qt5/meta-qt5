@@ -7,11 +7,9 @@ SUMMARY = "Qt Creator is a new cross-platform Qt IDE"
 # 'System GDB at /usr/bin/gdb.
 
 HOMEPAGE = "https://qt-project.org/"
-LICENSE = "LGPLv2.1 | GPLv3"
+LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = " \
-    file://LGPL_EXCEPTION.TXT;md5=f4748b0d1a72c5c8fb5dab2dd1f7fa46 \
-    file://LICENSE.LGPLv21;md5=825920de5f6db2eeb1bebe625476346d \
-    file://LICENSE.LGPLv3;md5=0786418af032b9e608909874f334a2d1 \
+    file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
 "
 
 inherit qmake5
@@ -19,39 +17,25 @@ inherit qmake5
 DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg qtquick1"
 DEPENDS_append_libc-musl = " libexecinfo"
 
-# Patches from https://github.com/meta-qt5/qtcreator/commits/b5.3.1
-# 5.3.1.meta-qt5.1
+# Patches from https://github.com/meta-qt5/qtcreator/commits/b5.4.1
+# 5.4.1.meta-qt5.1
 SRC_URI = " \
-    http://download.qt.io/official_releases/qtcreator/3.5/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
+    http://download.qt.io/official_releases/qtcreator/4.5/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
     file://0001-Fix-Allow-qt-creator-to-build-on-arm-aarch32-and-aar.patch \
-    file://0002-Fix-compilation-with-QT_NO_ACCESSIBILITY.patch \
-    file://0003-Qmlpuppet-add-missing-includes.patch \
     file://qtcreator.desktop.in \
 "
+SRC_URI_append_libc-musl = " file://0002-Link-with-libexecinfo-on-musl.patch"
 
-SRC_URI_append_libc-musl = " file://0004-Link-with-libexecinfo-on-musl.patch"
-
-
-SRC_URI[md5sum] = "77aef7df837eba07c7ce6037ee504c05"
-SRC_URI[sha256sum] = "5925ac818a08be919094e0f28fb4c5d8896765e0975d54d353e4c50f13d63e65"
+SRC_URI[md5sum] = "bd7fdbcdfa84df1171fb28174353e57f"
+SRC_URI[sha256sum] = "5fdfc8f05694e37162f208616627262c9971749d6958d8881d62933b3b53e909"
 
 S = "${WORKDIR}/qt-creator-opensource-src-${PV}"
 
 EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 
-LDFLAGS_append_libc-musl = " -lexecinfo "
 do_configure_append() {
     # Find native tools
-    sed -i 's:${STAGING_BINDIR}.*/lrelease:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lrelease:g' ${B}/share/qtcreator/translations/Makefile
     sed -i 's:${STAGING_BINDIR}.*/qdoc:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qdoc:g' ${B}/Makefile
-
-    # see qtbase-native.inc
-    # sed -i 's:QT_INSTALL_DOCS=${docdir}:QT_INSTALL_DOCS=${STAGING_DATADIR_NATIVE}${QT_DIR_NAME}/doc:g' ${B}/Makefile
-}
-
-do_compile_append() {
-    # build docs
-    #oe_runmake docs_online
 }
 
 do_install() {
@@ -65,6 +49,7 @@ do_install() {
 
 FILES_${PN} += " \
     ${datadir}/qtcreator \
+    ${datadir}/metainfo \
     ${datadir}/icons \
     ${libdir}${QT_DIR_NAME}/qtcreator \
 "
@@ -79,7 +64,7 @@ FILES_${PN}-dev += " \
     ${libdir}${QT_DIR_NAME}/qtcreator/*${SOLIBSDEV} \
 "
 
-RDEPENDS_${PN} += "perl"
+RDEPENDS_${PN} += "perl python"
 RCONFLICTS_${PN} = "qt-creator"
 
 # To give best user experience out of the box..
@@ -91,3 +76,6 @@ RRECOMMENDS_${PN} += " \
     gcc-symlinks g++-symlinks cpp-symlinks \
     gdb \
 "
+
+# ERROR: qt5-creator-4.5.1-r0 do_package_qa: QA Issue: No GNU_HASH in the elf binary: '/OE/build/oe-core/tmp-glibc/work/core2-64-oe-linux/qt5-creator/4.5.1-r0/packages-split/qt5-creator/usr/lib/qt5/qtcreator/libqbscore.so.1.10.1'
+INSANE_SKIP_${PN} += "ldflags"

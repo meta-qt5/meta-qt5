@@ -11,6 +11,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
     file://LGPL_EXCEPTION.txt;md5=9625233da42f9e0ce9d63651a9d97654 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
+    file://LICENSE.PREVIEW.COMMERCIAL;md5=8ee24b8d305ef7779e07647a7b70e1bc \
 "
 
 QT_MODULE = "qtbase"
@@ -22,8 +23,8 @@ require qt5-git.inc
 FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.10-shared
-# 5.10.meta-qt5-shared.2
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-shared
+# 5.11.meta-qt5-shared.2
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -40,8 +41,8 @@ SRC_URI += "\
 "
 
 # common for qtbase-native and nativesdk-qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.10-native
-# 5.10.meta-qt5-native.2
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-native
+# 5.11.meta-qt5-native.2
 SRC_URI += " \
     file://0013-Always-build-uic-and-qvkgen.patch \
 "
@@ -174,7 +175,9 @@ do_install() {
     # Fix up absolute paths in scripts
     sed -i -e '1s,#!/usr/bin/python,#! ${USRBINPATH}/env python,' \
         ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
+}
 
+fakeroot do_generate_qt_environment_file() {
     mkdir -p ${D}${SDKPATHNATIVE}/environment-setup.d/
     script=${D}${SDKPATHNATIVE}/environment-setup.d/qt5.sh
 
@@ -202,5 +205,8 @@ do_install() {
     # Use relocable sysroot
     sed -i -e 's:${SDKPATHNATIVE}:$OECORE_NATIVE_SYSROOT:g' $script
 }
+
+do_generate_qt_environment_file[umask] = "022"
+addtask generate_qt_environment_file after do_install before do_package
 
 SRCREV = "cf204590ea94bb3a191b5e783471bd6f5a04ab8e"

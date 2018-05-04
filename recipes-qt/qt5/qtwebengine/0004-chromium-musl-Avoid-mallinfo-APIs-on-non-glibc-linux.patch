@@ -1,4 +1,4 @@
-From 104d93f24a44dc4a1939d6e2c99f346526a5a7d9 Mon Sep 17 00:00:00 2001
+From 2ddd74e630db38b951697c0b020245c0c83b2316 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:09:06 -0700
 Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
@@ -11,7 +11,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  3 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/chromium/base/process/process_metrics_posix.cc b/chromium/base/process/process_metrics_posix.cc
-index 0eb5c1f..8af7799 100644
+index 73a52d6..4867198 100644
 --- a/chromium/base/process/process_metrics_posix.cc
 +++ b/chromium/base/process/process_metrics_posix.cc
 @@ -94,14 +94,14 @@ size_t ProcessMetrics::GetMallocUsage() {
@@ -32,18 +32,18 @@ index 0eb5c1f..8af7799 100644
    return 0;
  #endif
 diff --git a/chromium/base/trace_event/malloc_dump_provider.cc b/chromium/base/trace_event/malloc_dump_provider.cc
-index 14ba0a2..e5d9581 100644
+index ffd5191..0c9131e 100644
 --- a/chromium/base/trace_event/malloc_dump_provider.cc
 +++ b/chromium/base/trace_event/malloc_dump_provider.cc
-@@ -197,6 +197,7 @@ MallocDumpProvider::~MallocDumpProvider() {}
+@@ -197,6 +197,7 @@ MallocDumpProvider::~MallocDumpProvider() = default;
  // the current process.
  bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
                                        ProcessMemoryDump* pmd) {
 +#if defined(__GLIBC__)
-   size_t total_virtual_size = 0;
-   size_t resident_size = 0;
-   size_t allocated_objects_size = 0;
-@@ -317,7 +318,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
+   {
+     base::AutoLock auto_lock(emit_metrics_on_memory_dump_lock_);
+     if (!emit_metrics_on_memory_dump_)
+@@ -322,7 +323,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
      pmd->DumpHeapUsage(metrics_by_context, overhead, "malloc");
    }
    tid_dumping_heap_ = kInvalidThreadId;

@@ -1,4 +1,4 @@
-From e3fe48be51aa67227ac1b34c01e4c913d82866c2 Mon Sep 17 00:00:00 2001
+From 2df6d12cfef0769f7801410cad012dd20d0497e2 Mon Sep 17 00:00:00 2001
 From: Pascal Bach <pascal.bach@siemens.com>
 Date: Wed, 11 May 2016 15:20:41 +0200
 Subject: [PATCH] Pretend Qt5 wasn't found if OE_QMAKE_PATH_EXTERNAL_HOST_BINS
@@ -30,12 +30,12 @@ Signed-off-by: Pascal Bach <pascal.bach@siemens.com>
  2 files changed, 10 insertions(+)
 
 diff --git a/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in b/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in
-index 55c74aa..f9ec328 100644
+index 27f4c27..01f68a5 100644
 --- a/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in
 +++ b/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in
-@@ -9,6 +9,11 @@ if (CMAKE_VERSION VERSION_LESS 3.0.0)
+@@ -3,6 +3,11 @@ if (CMAKE_VERSION VERSION_LESS 3.1.0)
+     message(FATAL_ERROR \"Qt 5 $${CMAKE_MODULE_NAME} module requires at least CMake version 3.1.0\")
  endif()
- !!ENDIF
  
 +if(NOT DEFINED OE_QMAKE_PATH_EXTERNAL_HOST_BINS)
 +    message(WARNING "Skipping because OE_QMAKE_PATH_EXTERNAL_HOST_BINS is not defined")
@@ -46,11 +46,11 @@ index 55c74aa..f9ec328 100644
  !!IF !isEmpty(CMAKE_LIB_DIR_IS_ABSOLUTE)
  set(_qt5$${CMAKE_MODULE_NAME}_install_prefix \"$$[QT_INSTALL_PREFIX]\")
 diff --git a/src/corelib/Qt5Config.cmake.in b/src/corelib/Qt5Config.cmake.in
-index 75b5348..ed31888 100644
+index 6b6544f..d317912 100644
 --- a/src/corelib/Qt5Config.cmake.in
 +++ b/src/corelib/Qt5Config.cmake.in
-@@ -3,6 +3,11 @@ if (CMAKE_VERSION VERSION_LESS 2.8.9)
-     message(FATAL_ERROR \"Qt5 requires at least CMake version 2.8.9\")
+@@ -3,6 +3,11 @@ if (CMAKE_VERSION VERSION_LESS 3.1.0)
+     message(FATAL_ERROR \"Qt5 requires at least CMake version 3.1.0\")
  endif()
  
 +if(NOT DEFINED OE_QMAKE_PATH_EXTERNAL_HOST_BINS)

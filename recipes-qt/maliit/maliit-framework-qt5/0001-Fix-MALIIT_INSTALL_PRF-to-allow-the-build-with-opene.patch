@@ -1,4 +1,4 @@
-From 33554f9b3fd493c7e28617fd01466ffa87251f27 Mon Sep 17 00:00:00 2001
+From be5c73c72d1efa90ba440957d6f5ff3278c25545 Mon Sep 17 00:00:00 2001
 From: Samuel Stirtzel <s.stirtzel@googlemail.com>
 Date: Wed, 1 Aug 2012 13:21:51 +0200
 Subject: [PATCH] Fix MALIIT_INSTALL_PRF to allow the build with openembedded
@@ -6,16 +6,17 @@ Subject: [PATCH] Fix MALIIT_INSTALL_PRF to allow the build with openembedded
 Upstream-Status: Inappropriate [configuration]
 
 Signed-off-by: Samuel Stirtzel <s.stirtzel@googlemail.com>
+
 ---
- config.pri |    8 +++++---
+ config.pri | 8 +++++---
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/config.pri b/config.pri
-index b037b8c..43409f3 100644
+index 8f24864..94d595a 100644
 --- a/config.pri
 +++ b/config.pri
-@@ -161,9 +161,11 @@ contains(QT_MAJOR_VERSION, 4) {
-     QT_WIDGETS = gui widgets
+@@ -144,9 +144,11 @@ noxcb {
+     DEFINES += NOXCB
  }
  
 -MALIIT_INSTALL_PRF = $$[QT_INSTALL_DATA]/mkspecs/features
@@ -29,6 +30,3 @@ index b037b8c..43409f3 100644
  }
  
  defineTest(outputFile) {
--- 
-1.7.9.5
-

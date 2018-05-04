@@ -1,0 +1,2 @@
+# linguist overrides
+recipes-*/**/*.inc linguist-language=BitBake

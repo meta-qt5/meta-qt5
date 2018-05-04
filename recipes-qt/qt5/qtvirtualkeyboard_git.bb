@@ -6,10 +6,6 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
 "
 
-# Patches from https://github.com/meta-qt5/qtvirtualkeyboard/commits/b5.10
-# 5.10.meta-qt5.2
-SRC_URI += "file://0001-include-sys-time.h-for-timeval.patch"
-
 # To enabled Nuance T9 Write support, you need to provide the licensed components
 # and enable "t9write" in PACKAGECONFIG. This can be done in a separate .bbappend file.
 # for example:
@@ -51,6 +47,6 @@ RRECOMMENDS_${PN} += "${PN}-dictionaries"
 FILES_${PN}-dictionaries = "${OE_QMAKE_PATH_DATA}/qtvirtualkeyboard/*/*.dat"
 FILES_${PN} += "${OE_QMAKE_PATH_DATA}/qtvirtualkeyboard/lipi_toolkit"
 
-DEPENDS += "qtbase qtdeclarative qtdeclarative-native qtmultimedia qtquickcontrols qtsvg qtxmlpatterns"
+DEPENDS += "qtbase qtdeclarative qtmultimedia qtquickcontrols qtsvg qtxmlpatterns qtdeclarative-native"
 
 SRCREV = "0945042c5c8f78365b39b1528a25261e8c670b9d"

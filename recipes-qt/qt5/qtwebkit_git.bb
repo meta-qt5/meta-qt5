@@ -3,9 +3,7 @@ require qt5-git.inc
 
 LICENSE = "BSD & LGPLv2+ | GPL-2.0"
 LIC_FILES_CHKSUM = " \
-    file://LICENSE.GPLv2;md5=05832301944453ec79e40ba3c3cfceec \
-    file://Source/WebCore/rendering/RenderApplet.h;endline=22;md5=fb9694013ad71b78f8913af7a5959680 \
-    file://Source/WebKit/gtk/webkit/webkit.h;endline=21;md5=b4fbe9f4a944f1d071dba1d2c76b3351 \
+    file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
     file://Source/JavaScriptCore/parser/Parser.h;endline=21;md5=bd69f72183a7af673863f057576e21ee \
 "
 
@@ -18,12 +16,13 @@ DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-
 ARM_INSTRUCTION_SET_armv4 = "arm"
 ARM_INSTRUCTION_SET_armv5 = "arm"
 
-# Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.10
-# 5.10.meta-qt5.1
-SRC_URI += "\
-    file://0001-qtwebkit-fix-QA-issue-bad-RPATH.patch \
-    file://0002-Exclude-backtrace-API-for-non-glibc-libraries.patch \
-"
+# https://bugzilla.yoctoproject.org/show_bug.cgi?id=9474
+# https://bugs.webkit.org/show_bug.cgi?id=159880
+# JSC JIT can build on ARMv7 with -marm, but doesn't work on runtime.
+# Upstream only tests regularly the JSC JIT on ARMv7 with Thumb2 (-mthumb).
+ARM_INSTRUCTION_SET_armv7a = "thumb"
+ARM_INSTRUCTION_SET_armv7r = "thumb"
+ARM_INSTRUCTION_SET_armv7ve = "thumb"
 
 PACKAGECONFIG ??= "gstreamer qtlocation qtmultimedia qtsensors qtwebchannel \
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libxcomposite libxrender', '', d)} \
@@ -42,27 +41,6 @@ PACKAGECONFIG[fontconfig] = "OE_FONTCONFIG_ENABLED,,fontconfig"
 
 do_configure_prepend() {
     export QMAKE_CACHE_EVAL="CONFIG+=${PACKAGECONFIG_CONFARGS}"
-    # disable gstreamer-1.0 test if it isn't enabled by PACKAGECONFIG
-    sed -e 's/\s\(packagesExist(".*\<gstreamer-1.0\>.*")\)/ OE_GSTREAMER_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
-    # disable gstreamer-0.10 test if it isn't enabled by PACKAGECONFIG
-    sed -e 's/\s\(packagesExist(".*\<gstreamer-0.10\>.*")\)/ OE_GSTREAMER010_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
-    # disable qtlocation test if it isn't enabled by PACKAGECONFIG
-    sed -e 's/\s\(qtHaveModule(positioning)\)/ OE_QTLOCATION_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
-    # disable qtmultimedia test if it isn't enabled by PACKAGECONFIG
-    sed -e 's/(video):\(qtHaveModule(multimediawidgets)\)/(video):OE_QTMULTIMEDIA_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
-    # disable qtsensors test if it isn't enabled by PACKAGECONFIG
-    sed -e 's/\s\(qtHaveModule(sensors)\)/ OE_QTSENSORS_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
-    # disable qtwebchannel test if it isn't enabled by PACKAGECONFIG
-    sed -e 's/\s\(qtHaveModule(webchannel)\)/ OE_QTWEBCHANNEL_ENABLED:\1/' -i ${S}/Source/WebKit2/Target.pri
-    sed -e 's/\s\(qtHaveModule(webchannel)\)/ OE_QTWEBCHANNEL_ENABLED:\1/' -i ${S}/Source/WebKit2/WebKit2.pri
-    # disable libwebp test if it isn't enabled by PACKAGECONFIG
-    sed -e 's/\s\(config_libwebp: \)/ OE_LIBWEBP_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
-    # disable libxcomposite test if it isn't enabled by PACKAGECONFIG
-    sed -e 's/\s\(config_libXcomposite: \)/ OE_LIBXCOMPOSITE_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
-    # disable libxrender test if it isn't enabled by PACKAGECONFIG
-    sed -e 's/\s\(config_libXrender: \)/ OE_LIBXRENDER_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
-    # disable fontconfig test if it isn't enabled by PACKAGECONFIG
-    sed -e 's/\s\(config_fontconfig: \)/ OE_FONTCONFIG_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
 }
 
 # Forcibly enable ICU, so qtbase doesn't need it.
@@ -71,12 +49,6 @@ EXTRA_QMAKEVARS_PRE += "QT_CONFIG+=icu"
 # qtwebkit gets terribly big when linking with all debug info, disable by default
 QTWEBKIT_DEBUG = "QMAKE_CFLAGS+=-g0 QMAKE_CXXFLAGS+=-g0"
 EXTRA_QMAKEVARS_PRE += "${QTWEBKIT_DEBUG}"
-
-do_install_append() {
-    # Remove paths to workdir, qtwebkit is dead now, so I won't spend extra time trying to prevent this
-    # from some .prl or .prf file like for other modules
-    sed -i 's@-Wl,-no-whole-archive -L${B}[^ ]* @ @g' ${D}${libdir}/pkgconfig/Qt5WebKit.pc
-}
 
 # remove default ${PN}-examples* set in qt5.inc, because they conflicts with ${PN} from separate webkit-examples recipe
 PACKAGES_remove = "${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples"
@@ -87,4 +59,6 @@ PACKAGES_remove = "${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-db
 RUBY_SYS = "${@ '${BUILD_SYS}'.replace('i486', 'i386').replace('i586', 'i386').replace('i686', 'i386') }"
 export RUBYLIB="${STAGING_DATADIR_NATIVE}/rubygems:${STAGING_LIBDIR_NATIVE}/ruby:${STAGING_LIBDIR_NATIVE}/ruby/${RUBY_SYS}"
 
-SRCREV = "97c4a80a1282c8c3eaa343011286b76fd4838c5f"
+QT_MODULE_BRANCH = "dev"
+
+SRCREV = "beaeeb99881184fd368c121fcbb1a31c78b794a3"

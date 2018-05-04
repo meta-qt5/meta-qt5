@@ -1,4 +1,4 @@
-From d79fecb4e8d2040efdc295d06c5e24bdf3cf6b60 Mon Sep 17 00:00:00 2001
+From 9f9eac8d12531fe6ec3aa77f719c0b8ca7cfdd75 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 27 Jul 2017 08:02:51 -0700
 Subject: [PATCH] Replace pthread_yield with sched_yield
@@ -14,7 +14,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp b/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
-index 076610a..cb8431f 100644
+index c6fd5d1..7bf6bfd 100644
 --- a/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
 +++ b/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
 @@ -34,7 +34,7 @@
@@ -26,7 +26,7 @@ index 076610a..cb8431f 100644
  #endif
  
  #include <algorithm>
-@@ -199,7 +199,7 @@ protected:
+@@ -205,7 +205,7 @@ protected:
              const char *nm = name.constData();
              int tp = qRegisterMetaType<Bar>(nm);
  #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
@@ -36,7 +36,7 @@ index 076610a..cb8431f 100644
              QMetaType info(tp);
              if (!info.isValid()) {
 diff --git a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
-index e45eda2..e64f329 100644
+index fc92ed6..e59b858 100644
 --- a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
 +++ b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
 @@ -78,6 +78,7 @@

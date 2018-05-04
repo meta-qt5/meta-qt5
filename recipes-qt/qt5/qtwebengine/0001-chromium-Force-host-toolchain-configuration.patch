@@ -1,4 +1,4 @@
-From d760fcdd764985f05a480ba475855f92844a6f0d Mon Sep 17 00:00:00 2001
+From 42ad6935a99271f9b481423162d9ead15ffa9ec9 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] chromium: Force host toolchain configuration
@@ -14,10 +14,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/tools/gn/bootstrap/bootstrap.py b/chromium/tools/gn/bootstrap/bootstrap.py
-index b1ff7e7..bccabbb 100755
+index 93c6446..0fe7e67 100755
 --- a/chromium/tools/gn/bootstrap/bootstrap.py
 +++ b/chromium/tools/gn/bootstrap/bootstrap.py
-@@ -318,10 +318,10 @@ def write_gn_ninja(path, root_gen_dir, options):
+@@ -352,10 +352,10 @@ def write_gn_ninja(path, root_gen_dir, options):
      ld = os.environ.get('LD', cxx)
      ar = os.environ.get('AR', 'ar -X64')
    else:

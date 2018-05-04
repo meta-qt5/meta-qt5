@@ -123,8 +123,8 @@ RDEPENDS_${PN}-examples += " \
 
 QT_MODULE_BRANCH_CHROMIUM = "65-based"
 
-# Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.10
-# 5.10.meta-qt5.2
+# Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.11
+# 5.11.meta-qt5.2
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
@@ -136,8 +136,8 @@ SRC_URI_append_libc-musl = "\
     file://0005-musl-link-against-libexecinfo.patch \
 "
 
-# Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/61-based
-# 61-based.meta-qt5.2
+# Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/65-based
+# 65-based.meta-qt5.2
 SRC_URI += " \
     file://0001-chromium-Force-host-toolchain-configuration.patch;patchdir=src/3rdparty \
     file://0002-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
@@ -151,12 +151,11 @@ SRC_URI_append_libc-musl = "\
     file://0007-chromium-musl-linux-glibc-make-the-distinction.patch;patchdir=src/3rdparty \
     file://0008-chromium-musl-allocator-Do-not-include-glibc_weak_sy.patch;patchdir=src/3rdparty \
     file://0009-chromium-musl-Use-correct-member-name-__si_fields-fr.patch;patchdir=src/3rdparty \
-    file://0010-chromium-musl-Match-syscalls-to-match-musl.patch;patchdir=src/3rdparty \
-    file://0011-chromium-musl-Define-res_ninit-and-res_nclose-for-no.patch;patchdir=src/3rdparty \
-    file://0012-chromium-musl-Do-not-define-__sbrk-on-musl.patch;patchdir=src/3rdparty \
-    file://0013-chromium-musl-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty \
-    file://0014-chromium-musl-include-asm-generic-ioctl.h-for-TCGETS.patch;patchdir=src/3rdparty \
-    file://0015-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
+    file://0010-chromium-musl-Define-res_ninit-and-res_nclose-for-no.patch;patchdir=src/3rdparty \
+    file://0011-chromium-musl-Do-not-define-__sbrk-on-musl.patch;patchdir=src/3rdparty \
+    file://0012-chromium-musl-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty \
+    file://0013-chromium-musl-include-asm-generic-ioctl.h-for-TCGETS.patch;patchdir=src/3rdparty \
+    file://0014-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
 SRCREV_qtwebengine = "df1d549c56ff6a1214e566336f0c7dad2eacd503"

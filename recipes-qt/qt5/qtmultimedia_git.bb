@@ -25,8 +25,10 @@ EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 # Disable GStreamer if completely disabled
 EXTRA_QMAKEVARS_CONFIGURE += "${@bb.utils.contains_any('PACKAGECONFIG', 'gstreamer gstreamer010', '', '-no-gstreamer', d)}"
 
-# Patches from https://github.com/meta-qt5/qtmultimedia/commits/b5.10
-# 5.10.meta-qt5.2
+CXXFLAGS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', '-DMESA_EGL_NO_X11_HEADERS=1', d)}"
+
+# Patches from https://github.com/meta-qt5/qtmultimedia/commits/b5.11
+# 5.11.meta-qt5.2
 SRC_URI += "\
     file://0001-qtmultimedia-fix-a-conflicting-declaration.patch \
 "

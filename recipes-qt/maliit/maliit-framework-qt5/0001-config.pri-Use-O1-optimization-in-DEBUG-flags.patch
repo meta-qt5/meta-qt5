@@ -1,4 +1,4 @@
-From cb38c078fa34a3d0cff6bc195edd9f507477d2e1 Mon Sep 17 00:00:00 2001
+From fb4316ca6e44a6b34e7d109360fc716c372e1293 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 12 Jul 2017 11:45:06 -0700
 Subject: [PATCH] config.pri: Use -O1 optimization in DEBUG flags
@@ -10,15 +10,16 @@ O1 is a good compromise between debug quality and
 optimization level.
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
 ---
  config.pri | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/config.pri b/config.pri
-index 1505f9d..7cc196a 100644
+index 94d595a..d7b221f 100644
 --- a/config.pri
 +++ b/config.pri
-@@ -13,8 +13,8 @@ include(defines.pri)
+@@ -15,8 +15,8 @@ include(defines.pri)
  # Linker optimization for release build
  QMAKE_LFLAGS_RELEASE+=-Wl,--as-needed
  # Compiler warnings are error if the build type is debug
@@ -29,6 +30,3 @@ index 1505f9d..7cc196a 100644
  
  OBJECTS_DIR = .obj
  MOC_DIR = .moc
--- 
-2.13.2
-
