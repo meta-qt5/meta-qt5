@@ -29,7 +29,7 @@ index b4ba0b5..11d4c00 100644
 -    QString qtconfig = qmake_libraryInfoFile();
 +    QByteArray config = getenv("OE_QMAKE_QTCONF_PATH");
 +    QString qtconfig = QFile::decodeName(config);
-+    if(!QFile::exists(qtconfig))
++    if(qtconfig.isEmpty() || !QFile::exists(qtconfig))
 +        qtconfig = qmake_libraryInfoFile();
      if (QFile::exists(qtconfig))
          return new QSettings(qtconfig, QSettings::IniFormat);
