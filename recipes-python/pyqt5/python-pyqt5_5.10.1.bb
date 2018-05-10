@@ -10,11 +10,9 @@ DEPENDS = "sip sip-native qtbase python"
 
 SRC_URI = "\
     ${SOURCEFORGE_MIRROR}/pyqt/PyQt5_gpl-${PV}.tar.gz \
-    file://fix-sm.patch \
-    file://0001-qtabbar.sip-fix-build-with-accessibility-disabled.patch \
 "
-SRC_URI[md5sum] = "c3048e9d242f3e72fd393630da1d971a"
-SRC_URI[sha256sum] = "ebd70515b30bbd6098fee29e6271a6696b1183c5530ee30e6ba9aaab195536e8"
+SRC_URI[md5sum] = "be36c2abaffc9daa8b993f1ca982968f"
+SRC_URI[sha256sum] = "9932e971e825ece4ea08f84ad95017837fa8f3f29c6b0496985fa1093661e9ef"
 
 S = "${WORKDIR}/PyQt5_gpl-${PV}"
 
@@ -63,7 +61,7 @@ do_install() {
     oe_runmake install
 }
 
-RDEPENDS_${PN} = "python-core python-sip"
+RDEPENDS_${PN} = "python-core python-sip qtbase"
 
 FILES_${PN} += "${libdir}/${PYTHON_DIR}/site-packages ${datadir}/sip/PyQt5/"
 FILES_${PN}-dbg += "${libdir}/${PYTHON_DIR}/site-packages/*/.debug/"
