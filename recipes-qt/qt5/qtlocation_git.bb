@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = " \
     file://src/3rdparty/mapbox-gl-native/LICENSE.md;md5=0ab9025299bcee16858021d557f09449 \
 "
 
-DEPENDS += "qtbase qtxmlpatterns qtdeclarative qtdeclarative-native qtquickcontrols"
+DEPENDS += "qtbase qtxmlpatterns qtdeclarative qtquickcontrols"
 
 PACKAGECONFIG ??= ""
 # older geoclue 0.12.99 is needed

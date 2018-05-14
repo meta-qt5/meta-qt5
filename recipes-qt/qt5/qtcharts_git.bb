@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
 "
 
-DEPENDS += "qtbase qtdeclarative qtdeclarative-native qtmultimedia"
+DEPENDS += "qtbase qtdeclarative qtmultimedia"
 
 SRCREV = "4f66d1ffeecd95b4bf6666b71536c42dea7450ed"
 
