@@ -4,7 +4,7 @@ LICENSE = "BSD"
 HOMEPAGE = "https://qt.gitorious.org/qt-labs"
 LIC_FILES_CHKSUM = "file://qml/QtDemo/main.qml;endline=39;md5=7d80863906a4bc8ffca77fd869e335a9"
 
-DEPENDS = "qtdeclarative qtxmlpatterns qtgraphicaleffects qtsvg qtmultimedia"
+DEPENDS = "qtdeclarative qtgraphicaleffects qtsvg qtmultimedia"
 
 SRCREV = "35d72a2eba7456a2efc5eb8b77afbc00f69ba0ac"
 QT_GIT_PROJECT = "qt-labs"
