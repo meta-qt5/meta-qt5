@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = " \
 #SRC_URI += "file://${T9WRITEPACKAGE};subdir=git/src/virtualkeyboard/3rdparty/t9write"
 #PACKAGECONFIG = "t9write lang-all"
 
-PACKAGECONFIG ?= "lang-all lipi-toolkit"
+PACKAGECONFIG ?= "lang-all lipi-toolkit qtquickcompiler"
 PACKAGECONFIG[hunspell] = ",CONFIG+=disable-hunspell,hunspell"
 PACKAGECONFIG[t9write] = "CONFIG+=t9write"
 PACKAGECONFIG[lipi-toolkit] = "CONFIG+=lipi-toolkit"
