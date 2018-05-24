@@ -139,6 +139,11 @@ QT_CONFIG_FLAGS += " \
 # since we cannot set empty set filename to a not existent file
 export OE_QMAKE_QTCONF_PATH = "foodummy"
 
+# Causes qdrawhelper.s: Error: unaligned opcodes detected in executable segment
+# when building qtbase/5.6.3+gitAUTOINC+e6f8b072d2-r0/git/src/gui/painting/qdrawhelper.cpp
+ARM_INSTRUCTION_SET_armv4 = "arm"
+ARM_INSTRUCTION_SET_armv5 = "arm"
+
 do_configure() {
     # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory" during configuration
     touch ${S}/mkspecs/oe-device-extra.pri
