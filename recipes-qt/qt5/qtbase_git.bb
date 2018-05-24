@@ -151,6 +151,11 @@ Prefix=..
 EOF
 }
 
+# Causes qdrawhelper.s: Error: unaligned opcodes detected in executable segment
+# when building qtbase/5.6.3+gitAUTOINC+e6f8b072d2-r0/git/src/gui/painting/qdrawhelper.cpp
+ARM_INSTRUCTION_SET_armv4 = "arm"
+ARM_INSTRUCTION_SET_armv5 = "arm"
+
 # qtbase is exception, we need to use mkspecs from ${S}
 QMAKE_MKSPEC_PATH = "${B}"
 
