@@ -6,7 +6,6 @@ HOMEPAGE = "http://qt-project.org"
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPL3;md5=e6a600fd5e1d9cbde2d983680233ad02 \
-    file://LICENSE.LGPLv3;md5=86d02ed8764e77c1c0b194fde895a51b \
     file://LICENSE.GPL2;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
@@ -174,8 +173,8 @@ do_install() {
     install -m 644 ${WORKDIR}/OEQt5Toolchain.cmake ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
 
     # Fix up absolute paths in scripts
-    grep -lr /usr/bin/python ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/ | \
-        xargs -r sed -i -e '1s,#!.*python,#! ${USRBINPATH}/env python,'
+    sed -i -e '1s,#!/usr/bin/python,#! ${USRBINPATH}/env python,' \
+        ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
 }
 
 fakeroot do_generate_qt_environment_file() {
@@ -210,4 +209,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "2b5587d901a0cc23749bf27a923d50bf0e5860d3"
+SRCREV = "6eef81ee1c82f934e14d47047d8b6103b8755321"
