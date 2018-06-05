@@ -1,4 +1,4 @@
-From 1633367ce21f63a747b1523867a1bf431098f223 Mon Sep 17 00:00:00 2001
+From 85d7a5e3cd7db85b5a9305f35ba4c1a76c96a696 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 17:15:34 -0700
 Subject: [PATCH] chromium: musl: include asm-generic/ioctl.h for TCGETS2
