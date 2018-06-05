@@ -1,4 +1,4 @@
-From 2a61817d5eac01b1dbc445a65d14573294b7ed71 Mon Sep 17 00:00:00 2001
+From f54b0d7ee9af320971371c169b8d5c8d1432be71 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 4 Jun 2014 11:28:16 +0200
 Subject: [PATCH] add noqtwebkit configuration
@@ -16,7 +16,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/assistant/assistant/assistant.pro b/src/assistant/assistant/assistant.pro
-index 1374c07..28c45a2 100644
+index 1374c073..28c45a25 100644
 --- a/src/assistant/assistant/assistant.pro
 +++ b/src/assistant/assistant/assistant.pro
 @@ -1,4 +1,4 @@
@@ -35,7 +35,7 @@ index 1374c07..28c45a2 100644
      QT += webkitwidgets
      SOURCES += helpviewer_qwv.cpp
 diff --git a/src/designer/src/plugins/plugins.pro b/src/designer/src/plugins/plugins.pro
-index 500a153..b60fa2d 100644
+index 500a1534..b60fa2d9 100644
 --- a/src/designer/src/plugins/plugins.pro
 +++ b/src/designer/src/plugins/plugins.pro
 @@ -1,6 +1,6 @@

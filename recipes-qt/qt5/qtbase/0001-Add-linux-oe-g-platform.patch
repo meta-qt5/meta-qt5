@@ -1,4 +1,4 @@
-From 6a84c4a36742716b5db715c2538901f37ff8b1c5 Mon Sep 17 00:00:00 2001
+From 0152f09dc119c93cc92bc2bb9de38c64fb0a854e Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -21,16 +21,16 @@ Change-Id: I0591ed5da0d61d7cf1509d420e6b293582f1863c
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  configure                            |  2 +-
- mkspecs/features/configure.prf       |  4 ++--
+ mkspecs/features/configure.prf       |  4 +--
  mkspecs/features/qt_functions.prf    |  2 +-
- mkspecs/linux-oe-g++/qmake.conf      | 42 ++++++++++++++++++++++++++++++++++++
+ mkspecs/linux-oe-g++/qmake.conf      | 42 ++++++++++++++++++++++++++++
  mkspecs/linux-oe-g++/qplatformdefs.h |  1 +
  5 files changed, 47 insertions(+), 4 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index 2830a1b..6445dc2 100755
+index 2830a1b189..6445dc2d5a 100755
 --- a/configure
 +++ b/configure
 @@ -712,7 +712,7 @@ fi
@@ -43,7 +43,7 @@ index 2830a1b..6445dc2 100755
  
  # build qmake
 diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
-index 934a18a..0f5b1b6 100644
+index 934a18a924..0f5b1b6333 100644
 --- a/mkspecs/features/configure.prf
 +++ b/mkspecs/features/configure.prf
 @@ -46,14 +46,14 @@ defineTest(qtCompileTest) {
@@ -64,7 +64,7 @@ index 934a18a..0f5b1b6 100644
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 1903e50..c093dd4 100644
+index 1903e509c8..c093dd4592 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
 @@ -69,7 +69,7 @@ defineTest(qtHaveModule) {
@@ -78,7 +78,7 @@ index 1903e50..c093dd4 100644
              cmd = perl -w $$system_path($${cmd}.pl)
 diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
 new file mode 100644
-index 0000000..30d31ed
+index 0000000000..30d31ed16d
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qmake.conf
 @@ -0,0 +1,42 @@
@@ -126,7 +126,7 @@ index 0000000..30d31ed
 +load(qt_config)
 diff --git a/mkspecs/linux-oe-g++/qplatformdefs.h b/mkspecs/linux-oe-g++/qplatformdefs.h
 new file mode 100644
-index 0000000..5d22fb4
+index 0000000000..5d22fb4101
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qplatformdefs.h
 @@ -0,0 +1 @@

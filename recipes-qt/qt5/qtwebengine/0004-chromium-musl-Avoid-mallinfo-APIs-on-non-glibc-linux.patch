@@ -1,4 +1,4 @@
-From 2ddd74e630db38b951697c0b020245c0c83b2316 Mon Sep 17 00:00:00 2001
+From e77a7338d6c25babab860fd1456047ec90297fe9 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:09:06 -0700
 Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
@@ -11,7 +11,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  3 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/chromium/base/process/process_metrics_posix.cc b/chromium/base/process/process_metrics_posix.cc
-index 73a52d6..4867198 100644
+index 73a52d6210..4867198a50 100644
 --- a/chromium/base/process/process_metrics_posix.cc
 +++ b/chromium/base/process/process_metrics_posix.cc
 @@ -94,14 +94,14 @@ size_t ProcessMetrics::GetMallocUsage() {
@@ -32,7 +32,7 @@ index 73a52d6..4867198 100644
    return 0;
  #endif
 diff --git a/chromium/base/trace_event/malloc_dump_provider.cc b/chromium/base/trace_event/malloc_dump_provider.cc
-index ffd5191..0c9131e 100644
+index ffd519133c..0c9131e98e 100644
 --- a/chromium/base/trace_event/malloc_dump_provider.cc
 +++ b/chromium/base/trace_event/malloc_dump_provider.cc
 @@ -197,6 +197,7 @@ MallocDumpProvider::~MallocDumpProvider() = default;
@@ -53,7 +53,7 @@ index ffd5191..0c9131e 100644
  }
  
 diff --git a/chromium/content/child/content_child_helpers.cc b/chromium/content/child/content_child_helpers.cc
-index 7ddeb4d..b8c73b0 100644
+index 7ddeb4d16a..b8c73b09c5 100644
 --- a/chromium/content/child/content_child_helpers.cc
 +++ b/chromium/content/child/content_child_helpers.cc
 @@ -25,7 +25,7 @@ namespace content {

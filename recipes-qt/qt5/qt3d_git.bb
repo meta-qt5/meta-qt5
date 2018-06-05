@@ -12,7 +12,7 @@ DEPENDS += "qtbase"
 DEPENDS_class-target += "qtdeclarative qt3d-native"
 
 # Patches from https://github.com/meta-qt5/qt3d/commits/b5.11
-# 5.11.meta-qt5.2
+# 5.11.meta-qt5.3
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
 "
