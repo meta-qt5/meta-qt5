@@ -28,6 +28,11 @@ ARM_INSTRUCTION_SET_armv7a = "thumb"
 ARM_INSTRUCTION_SET_armv7r = "thumb"
 ARM_INSTRUCTION_SET_armv7ve = "thumb"
 
+# http://errors.yoctoproject.org/Errors/Details/179245/
+# just use -fpermissive in this case like fedora did:
+# https://bugzilla.redhat.com/show_bug.cgi?id=1582954
+CXXFLAGS += "-fpermissive"
+
 EXTRA_OECMAKE = " \
     -DPORT=Qt \
     -DECM_MKSPECS_INSTALL_DIR=${libdir}${QT_DIR_NAME}/mkspecs/modules \
