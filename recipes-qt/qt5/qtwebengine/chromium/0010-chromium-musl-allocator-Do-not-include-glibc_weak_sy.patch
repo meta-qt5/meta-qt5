@@ -1,4 +1,4 @@
-From cc0cf540da630b6646601b20c3b55a828ba337f7 Mon Sep 17 00:00:00 2001
+From 2feb363e9a5e256c68b2f3c0207d9d057a51440f Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:09:02 -0700
 Subject: [PATCH] chromium: musl: allocator: Do not include glibc_weak_symbols

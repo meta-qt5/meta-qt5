@@ -1,7 +1,7 @@
-From 334c96ea89c49d559f955182c9a30c62919622ca Mon Sep 17 00:00:00 2001
+From c0047b885faafaab35d6dde4578c3c1a00b80cee Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Tue, 5 Jun 2018 13:58:16 +0000
-Subject: [PATCH] Fix build with gcc8
+Subject: [PATCH] chromium: Fix build with gcc8
 
 ---
  chromium/mojo/public/c/system/buffer.h       | 2 +-
