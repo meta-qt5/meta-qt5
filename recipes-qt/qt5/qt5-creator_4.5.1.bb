@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 inherit qmake5
 
-DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg qtquick1"
+DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg"
 DEPENDS_append_libc-musl = " libexecinfo"
 
 # Patches from https://github.com/meta-qt5/qtcreator/commits/b5.4.1
