@@ -8,6 +8,13 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qttools-native"
 
+do_install_append() {
+    # remove qtquick1 translations - qtquick1 is gone
+    for transfile in `find ${D}/${OE_QMAKE_PATH_TRANSLATIONS} -name qtquick1_*.qm`; do
+        rm $transfile
+    done
+}
+
 PACKAGES =. " \
     ${PN}-assistant \
     ${PN}-designer \
@@ -22,7 +29,6 @@ PACKAGES =. " \
     ${PN}-qtwebsockets \
     ${PN}-qtwebengine \
     ${PN}-qtxmlpatterns \
-    ${PN}-qtquick1 \
     ${PN}-qtscript \
     ${PN}-qtserialport \
     ${PN}-qtbase \
@@ -80,10 +86,6 @@ FILES_${PN}-qtwebengine = " \
 
 FILES_${PN}-qtxmlpatterns = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qtxmlpatterns_*.qm \
-"
-
-FILES_${PN}-qtquick1 = " \
-    ${OE_QMAKE_PATH_TRANSLATIONS}/qtquick1_*.qm \
 "
 
 FILES_${PN}-qtscript = " \
