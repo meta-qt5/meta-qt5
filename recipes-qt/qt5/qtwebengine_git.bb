@@ -124,16 +124,17 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "65-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.11
-# 5.11.meta-qt5.3
+# 5.11.meta-qt5.5
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
     file://0002-Include-dependency-to-QCoreApplication-translate.patch \
     file://0003-Force-host-toolchain-configuration.patch \
+    file://0004-chromium_overrides.cpp-Fix-build-with-plugins-and-oz.patch \
 "
 SRC_URI_append_libc-musl = "\
-    file://0004-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
-    file://0005-musl-link-against-libexecinfo.patch \
+    file://0005-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
+    file://0006-musl-link-against-libexecinfo.patch \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/65-based
