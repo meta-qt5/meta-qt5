@@ -28,6 +28,7 @@ PACKAGES =. " \
     ${PN}-qtbase \
     ${PN}-qthelp \
     ${PN}-qt \
+    ${PN}-qtconfig
 "
 
 FILES_${PN}-assistant = " \
@@ -104,6 +105,10 @@ FILES_${PN}-qthelp = " \
 
 FILES_${PN}-qt = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qt_*.qm \
+"
+
+FILES_${PN}-qtconfig = " \
+    ${OE_QMAKE_PATH_TRANSLATIONS}/qtconfig*.qm \
 "
 
 SRCREV = "c3486e072ebc704f9c82c005044143b07bb88f12"
