@@ -1,15 +1,15 @@
-From 5e2fae4322189dc359c469fed55c7fadbf46418e Mon Sep 17 00:00:00 2001
+From 69ab8dd347721db368d2dad63987a69c9c4f128e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 8 Jul 2017 09:08:23 -0700
 Subject: [PATCH] chromium: musl: tcmalloc: Use off64_t insread of __off64_t
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h | 2 +-
+ .../tcmalloc/chromium/src/base/linux_syscall_support.h          | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h b/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
-index 91f77dd..bb84a0b 100644
+index 91f77dd88d..bb84a0b305 100644
 --- a/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
 +++ b/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
 @@ -1929,7 +1929,7 @@ typedef unsigned long int ulong;

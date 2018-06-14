@@ -1,4 +1,4 @@
-From 6d7823f7bd60aa63aa11b4c6ac9d8814122e8396 Mon Sep 17 00:00:00 2001
+From 48f6dbfb20364f5184d43959cb1a6b65e1a6cba6 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:01:12 -0700
 Subject: [PATCH] chromium: musl: sandbox: Define TEMP_FAILURE_RETRY if not
@@ -12,7 +12,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 9 insertions(+)
 
 diff --git a/chromium/sandbox/linux/suid/sandbox.c b/chromium/sandbox/linux/suid/sandbox.c
-index b655d1c..3de34e3 100644
+index b655d1c79c..3de34e36f2 100644
 --- a/chromium/sandbox/linux/suid/sandbox.c
 +++ b/chromium/sandbox/linux/suid/sandbox.c
 @@ -44,6 +44,15 @@ static bool DropRoot();

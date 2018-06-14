@@ -1,4 +1,4 @@
-From 7efbed6af08caf6ce2bedbb8fb653b60c3aaa920 Mon Sep 17 00:00:00 2001
+From 87b283dd966ef68df24fd4c988b348f53c59e11b Mon Sep 17 00:00:00 2001
 From: Frieder Schrempf <frieder.schrempf@online.de>
 Date: Mon, 1 Dec 2014 14:34:40 +0000
 Subject: [PATCH] functions.prf: allow build for linux-oe-g++ platform
@@ -12,7 +12,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/mkspecs/features/functions.prf b/mkspecs/features/functions.prf
-index b78d2a1..14dd07e 100644
+index b78d2a11..14dd07e5 100644
 --- a/mkspecs/features/functions.prf
 +++ b/mkspecs/features/functions.prf
 @@ -21,6 +21,12 @@ defineTest(isPlatformSupported) {

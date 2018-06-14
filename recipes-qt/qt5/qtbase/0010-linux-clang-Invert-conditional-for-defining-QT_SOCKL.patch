@@ -1,4 +1,4 @@
-From c295b6fad2183ff47c8f5c061484713f2fe44583 Mon Sep 17 00:00:00 2001
+From 1bd6f92d57ff09665241343870ebf6c4882c62e4 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 3 Sep 2017 09:44:48 -0700
 Subject: [PATCH] linux-clang: Invert conditional for defining QT_SOCKLEN_T
@@ -13,7 +13,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/mkspecs/linux-clang/qplatformdefs.h b/mkspecs/linux-clang/qplatformdefs.h
-index d29225f..a0cdb57 100644
+index d29225f12f..a0cdb57343 100644
 --- a/mkspecs/linux-clang/qplatformdefs.h
 +++ b/mkspecs/linux-clang/qplatformdefs.h
 @@ -84,10 +84,10 @@

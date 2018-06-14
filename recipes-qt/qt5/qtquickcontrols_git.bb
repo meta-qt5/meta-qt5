@@ -20,9 +20,9 @@ FILES_${PN}-qmlplugins += " \
 "
 
 # Patches from https://github.com/meta-qt5/qtquickcontrols/commits/b5.9
-# 5.9.meta-qt5.5
+# 5.9.meta-qt5.6
 SRC_URI += " \
     file://0001-texteditor-fix-invalid-use-of-incomplete-type-class-.patch \
 "
 
-SRCREV = "75e9561d4fdf8e94c6d556b9a37bdccdaaf80c10"
+SRCREV = "ca6bba7163850222ea8b71dd7db9c70de56a0d4e"

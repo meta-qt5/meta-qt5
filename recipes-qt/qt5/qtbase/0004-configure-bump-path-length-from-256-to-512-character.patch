@@ -1,4 +1,4 @@
-From 4c827328e3d654b4e179864149cb9edee1a58f53 Mon Sep 17 00:00:00 2001
+From 0a1329319dcc60f041090abb4625054ed94d6097 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Tue, 25 Aug 2015 10:05:15 -0400
 Subject: [PATCH] configure: bump path length from 256 to 512 characters
@@ -15,7 +15,7 @@ Signed-off-by: Denys Dmytriyenko <denys@ti.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/configure.pri b/configure.pri
-index dc703ec..961b41e 100644
+index dc703ecb14..961b41e3f8 100644
 --- a/configure.pri
 +++ b/configure.pri
 @@ -796,10 +796,10 @@ defineTest(qtConfOutput_preparePaths) {

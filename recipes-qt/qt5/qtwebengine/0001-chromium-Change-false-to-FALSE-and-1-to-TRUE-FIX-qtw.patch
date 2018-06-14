@@ -1,4 +1,4 @@
-From 78a0bfb1026cd1a66e25663266896db6920636b9 Mon Sep 17 00:00:00 2001
+From b3ef942f47b12546c558d94683719da8d23282f0 Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Thu, 24 Dec 2015 12:46:58 -0200
 Subject: [PATCH] chromium: Change false to FALSE and 1 to TRUE, FIX
@@ -11,7 +11,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/chromium/ui/gfx/codec/jpeg_codec.cc b/chromium/ui/gfx/codec/jpeg_codec.cc
-index 6d92637..738d3fd 100644
+index 6d926378be..738d3fdedf 100644
 --- a/chromium/ui/gfx/codec/jpeg_codec.cc
 +++ b/chromium/ui/gfx/codec/jpeg_codec.cc
 @@ -121,7 +121,7 @@ boolean EmptyOutputBuffer(jpeg_compress_struct* cinfo) {

@@ -1,4 +1,4 @@
-From f61a6e50fbff57b17c113a70d8c50e460831fe70 Mon Sep 17 00:00:00 2001
+From 14826486fbde132cdea45837b645b3cfe26630ee Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@theqtcompany.com>
 Date: Wed, 10 Feb 2016 09:02:09 +0200
 Subject: [PATCH] Allow a tools-only build
@@ -10,7 +10,7 @@ Subject: [PATCH] Allow a tools-only build
  3 files changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/qt3d.pro b/qt3d.pro
-index 2cc347a..81cdeef 100644
+index 2cc347a1c..81cdeefb0 100644
 --- a/qt3d.pro
 +++ b/qt3d.pro
 @@ -1,4 +1,4 @@
@@ -29,7 +29,7 @@ index 2cc347a..81cdeef 100644
 +    SUBDIRS = sub_tools
 +}
 diff --git a/src/3rdparty/assimp/assimp_dependency.pri b/src/3rdparty/assimp/assimp_dependency.pri
-index 8ba2d9a..e973d93 100644
+index 8ba2d9a41..e973d93dd 100644
 --- a/src/3rdparty/assimp/assimp_dependency.pri
 +++ b/src/3rdparty/assimp/assimp_dependency.pri
 @@ -1,5 +1,5 @@
@@ -40,7 +40,7 @@ index 8ba2d9a..e973d93 100644
  } else {
      include(assimp.pri)
 diff --git a/tools/tools.pro b/tools/tools.pro
-index 8e973ae..ad51db5 100644
+index 8e973aecb..ad51db585 100644
 --- a/tools/tools.pro
 +++ b/tools/tools.pro
 @@ -1,4 +1,4 @@

@@ -1,4 +1,4 @@
-From bf2fa82b9ee1a9ab38ddbcdd68327bb5aed06c12 Mon Sep 17 00:00:00 2001
+From ee219bf33cf52c7a7eab7c02823b2e4960392ce0 Mon Sep 17 00:00:00 2001
 From: Wenlin Kang <wenlin.kang@windriver.com>
 Date: Thu, 8 Sep 2016 12:18:13 +0800
 Subject: [PATCH] qtmultimedia: fix a conflicting declaration
@@ -8,15 +8,15 @@ fix a "conflicting declaration" error.
 
 Signed-off-by: Wenlin Kang <wenlin.kang@windriver.com>
 ---
- src/plugins/videonode/imx6/lgl2.h                  | 46 ++++++++++++++++++++++
- .../videonode/imx6/qsgvivantevideomaterial.cpp     |  5 ++-
- src/plugins/videonode/imx6/qsgvivantevideonode.cpp |  5 ++-
+ src/plugins/videonode/imx6/lgl2.h             | 46 +++++++++++++++++++
+ .../imx6/qsgvivantevideomaterial.cpp          |  5 +-
+ .../videonode/imx6/qsgvivantevideonode.cpp    |  5 +-
  3 files changed, 52 insertions(+), 4 deletions(-)
  create mode 100644 src/plugins/videonode/imx6/lgl2.h
 
 diff --git a/src/plugins/videonode/imx6/lgl2.h b/src/plugins/videonode/imx6/lgl2.h
 new file mode 100644
-index 0000000..2423697
+index 00000000..24236976
 --- /dev/null
 +++ b/src/plugins/videonode/imx6/lgl2.h
 @@ -0,0 +1,46 @@
@@ -67,7 +67,7 @@ index 0000000..2423697
 +
 +#endif
 diff --git a/src/plugins/videonode/imx6/qsgvivantevideomaterial.cpp b/src/plugins/videonode/imx6/qsgvivantevideomaterial.cpp
-index 465ccfa..40e7592 100644
+index 465ccfa7..40e7592b 100644
 --- a/src/plugins/videonode/imx6/qsgvivantevideomaterial.cpp
 +++ b/src/plugins/videonode/imx6/qsgvivantevideomaterial.cpp
 @@ -37,8 +37,9 @@
@@ -83,7 +83,7 @@ index 465ccfa..40e7592 100644
  #include "qsgvivantevideomaterial.h"
  #include "qsgvivantevideomaterialshader.h"
 diff --git a/src/plugins/videonode/imx6/qsgvivantevideonode.cpp b/src/plugins/videonode/imx6/qsgvivantevideonode.cpp
-index c8d83b4..5b1b8f2 100644
+index c8d83b4b..5b1b8f24 100644
 --- a/src/plugins/videonode/imx6/qsgvivantevideonode.cpp
 +++ b/src/plugins/videonode/imx6/qsgvivantevideonode.cpp
 @@ -37,8 +37,9 @@

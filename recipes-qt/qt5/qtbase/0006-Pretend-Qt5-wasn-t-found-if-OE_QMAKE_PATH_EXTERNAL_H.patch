@@ -1,4 +1,4 @@
-From 9c6fc0f0e5f2da02b6b2a21c113f6b29588fc52c Mon Sep 17 00:00:00 2001
+From d1303277bc34d8ab38082ead9733c25a3ab2a236 Mon Sep 17 00:00:00 2001
 From: Pascal Bach <pascal.bach@siemens.com>
 Date: Wed, 11 May 2016 15:20:41 +0200
 Subject: [PATCH] Pretend Qt5 wasn't found if OE_QMAKE_PATH_EXTERNAL_HOST_BINS
@@ -30,7 +30,7 @@ Signed-off-by: Pascal Bach <pascal.bach@siemens.com>
  2 files changed, 10 insertions(+)
 
 diff --git a/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in b/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in
-index 55c74aa..f9ec328 100644
+index 55c74aad66..f9ec328c83 100644
 --- a/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in
 +++ b/mkspecs/features/data/cmake/Qt5BasicConfig.cmake.in
 @@ -9,6 +9,11 @@ if (CMAKE_VERSION VERSION_LESS 3.0.0)
@@ -46,7 +46,7 @@ index 55c74aa..f9ec328 100644
  !!IF !isEmpty(CMAKE_LIB_DIR_IS_ABSOLUTE)
  set(_qt5$${CMAKE_MODULE_NAME}_install_prefix \"$$[QT_INSTALL_PREFIX]\")
 diff --git a/src/corelib/Qt5Config.cmake.in b/src/corelib/Qt5Config.cmake.in
-index 75b5348..ed31888 100644
+index 75b53485b7..ed31888c93 100644
 --- a/src/corelib/Qt5Config.cmake.in
 +++ b/src/corelib/Qt5Config.cmake.in
 @@ -3,6 +3,11 @@ if (CMAKE_VERSION VERSION_LESS 2.8.9)

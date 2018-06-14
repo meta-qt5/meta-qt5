@@ -1,4 +1,4 @@
-From 7336279ff0cca9216a095dcabf8872418372ee42 Mon Sep 17 00:00:00 2001
+From 00456ee9fa12e815066af7a159e321f274b81e36 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:54:38 -0700
 Subject: [PATCH] chromium: musl: linux != glibc, make the distinction
@@ -9,7 +9,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/chromium/base/allocator/allocator_check.cc b/chromium/base/allocator/allocator_check.cc
-index 5a0564d..8c2dc64 100644
+index 5a0564d2f3..8c2dc6491d 100644
 --- a/chromium/base/allocator/allocator_check.cc
 +++ b/chromium/base/allocator/allocator_check.cc
 @@ -21,7 +21,7 @@ bool IsAllocatorInitialized() {
