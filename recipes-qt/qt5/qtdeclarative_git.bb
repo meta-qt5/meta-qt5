@@ -14,10 +14,11 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-PACKAGECONFIG ??= "qtxmlpatterns qml-debug qml-network"
+PACKAGECONFIG ??= "qtxmlpatterns qml-debug qml-network ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)}"
 PACKAGECONFIG[qtxmlpatterns] = ",,qtxmlpatterns"
 PACKAGECONFIG[qml-debug] = "-qml-debug,-no-qml-debug"
 PACKAGECONFIG[qml-network] = "-qml-network, -no-qml-network"
+PACKAGECONFIG[static] = ",,qtdeclarative-native"
 
 do_configure_prepend() {
     # disable qtxmlpatterns test if it isn't enabled by PACKAGECONFIG
