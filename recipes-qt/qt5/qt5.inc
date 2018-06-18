@@ -37,6 +37,14 @@ python __anonymous() {
             d.setVar("PACKAGE_ARCH", tarch)
 }
 
+# if building static Qt5, add qtdeclarative-native dependency to all recipes
+# that depend on qtdeclarative as it's required for qmlimportscannertool
+python __anonymous() {
+    if bb.utils.contains('DISTRO_FEATURES', "qt5-static", True, False, d):
+        if bb.utils.contains('DEPENDS', "qtdeclarative", True, False, d):
+            d.appendVar("DEPENDS", " qtdeclarative-native")
+}
+
 # Many examples come with libraries installed outside of standard libdir,
 # suppress QA check complaining
 INSANE_SKIP_${PN}-dbg += "libdir"
@@ -48,6 +56,8 @@ PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmldes
 
 ALLOW_EMPTY_${PN} = "1"
 ALLOW_EMPTY_${PN}-dbg = "1"
+ALLOW_EMPTY_${PN}-plugins = "1"
+ALLOW_EMPTY_${PN}-qmlplugins = "1"
 
 RRECOMMENDS_${PN} = " \
     ${PN}-plugins \
@@ -159,6 +169,18 @@ FILES_${PN}-dbg += " \
 "
 FILES_${PN}-staticdev += " \
     ${OE_QMAKE_PATH_LIBS}/*.a \
+    ${OE_QMAKE_PATH_PLUGINS}/*/*.a \
+    ${OE_QMAKE_PATH_PLUGINS}/*/*.prl \
+    ${OE_QMAKE_PATH_PLUGINS}/*/*/*.a \
+    ${OE_QMAKE_PATH_PLUGINS}/*/*/*.prl \
+    ${OE_QMAKE_PATH_QML}/*/*.a \
+    ${OE_QMAKE_PATH_QML}/*/*.prl \
+    ${OE_QMAKE_PATH_QML}/*/*/*.a \
+    ${OE_QMAKE_PATH_QML}/*/*/*.prl \
+    ${OE_QMAKE_PATH_QML}/*/*/*/*.a \
+    ${OE_QMAKE_PATH_QML}/*/*/*/*.prl \
+    ${OE_QMAKE_PATH_QML}/*/*/*/*/*.a \
+    ${OE_QMAKE_PATH_QML}/*/*/*/*/*.prl \
 "
 FILES_${PN}-examples = " \
     ${OE_QMAKE_PATH_EXAMPLES}/* \

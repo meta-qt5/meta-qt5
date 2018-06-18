@@ -70,6 +70,7 @@ PACKAGECONFIG_RELEASE ?= "release"
 # PACKAGECONFIG_OPENSSL ?= "openssl"
 PACKAGECONFIG_DEFAULT ?= "dbus udev evdev widgets tools libs freetype tests \
     ${@bb.utils.contains('SELECTED_OPTIMIZATION', '-Os', 'optimize-size ltcg', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)} \
 "
 
 PACKAGECONFIG ?= " \
@@ -84,6 +85,7 @@ PACKAGECONFIG ?= " \
     ${PACKAGECONFIG_DISTRO} \
 "
 
+PACKAGECONFIG[static] = "-static,-shared"
 PACKAGECONFIG[release] = "-release,-debug"
 PACKAGECONFIG[debug] = ""
 PACKAGECONFIG[developer] = "-developer-build"
