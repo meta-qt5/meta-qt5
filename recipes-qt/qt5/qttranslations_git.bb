@@ -8,6 +8,10 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qttools-native"
 
+do_install_append() {
+    find "${D}/${OE_QMAKE_PATH_TRANSLATIONS}" -type f -name "qtconfig_*.qm" -exec rm -f {} \;
+}
+
 PACKAGES =. " \
     ${PN}-assistant \
     ${PN}-designer \
