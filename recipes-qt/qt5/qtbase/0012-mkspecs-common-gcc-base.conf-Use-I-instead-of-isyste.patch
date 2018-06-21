@@ -1,4 +1,4 @@
-From f09d998036af014a42c464eea72368c8f2920f6a Mon Sep 17 00:00:00 2001
+From b41e0477f9b7aad73c94833dc750971a606871dc Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 14 Feb 2018 17:08:43 -0800
 Subject: [PATCH] mkspecs/common/gcc-base.conf: Use -I instead of -isystem
@@ -19,7 +19,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mkspecs/common/gcc-base.conf b/mkspecs/common/gcc-base.conf
-index 234f71d..ee3da02 100644
+index 234f71d495..ee3da023e6 100644
 --- a/mkspecs/common/gcc-base.conf
 +++ b/mkspecs/common/gcc-base.conf
 @@ -46,7 +46,7 @@ QMAKE_CFLAGS_DEBUG         += -g

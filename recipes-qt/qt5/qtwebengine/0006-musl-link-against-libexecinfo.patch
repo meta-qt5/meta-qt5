@@ -1,4 +1,4 @@
-From 447dea44ae95e7011ab3921b2b88a4295d406e87 Mon Sep 17 00:00:00 2001
+From 418ff96920a520a4c9d082f56864ee8654f584f7 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Thu, 14 Dec 2017 11:28:10 +0200
 Subject: [PATCH] musl: link against libexecinfo

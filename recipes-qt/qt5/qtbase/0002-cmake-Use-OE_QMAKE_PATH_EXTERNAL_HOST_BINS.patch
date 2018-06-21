@@ -1,4 +1,4 @@
-From eb39258656c27c72c34674201b946d27eeefe24a Mon Sep 17 00:00:00 2001
+From 4941648d4b26d625e86273d992697129209d8256 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH] cmake: Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS
