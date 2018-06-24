@@ -33,6 +33,7 @@ SRC_URI += "\
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
+    file://0015-Upgrade-double-conversion-to-v3.0.0.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase

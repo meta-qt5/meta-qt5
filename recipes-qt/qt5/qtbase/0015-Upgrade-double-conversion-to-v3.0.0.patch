@@ -1,0 +1,347 @@
+From 6a39e49a6cdeb28a04a3657bb6a22f848d5dfa9d Mon Sep 17 00:00:00 2001
+From: Ulf Hermann <ulf.hermann@qt.io>
+Date: Fri, 27 Apr 2018 10:38:18 +0200
+Subject: [PATCH] Upgrade double-conversion to v3.0.0
+
+This fixes their issue #41, a potential undefined behavior.
+
+We preserve the locally added "__ghs" clause as well as the _M_ARM_FP
+clause necessary for winrt in utils.h.
+
+[ChangeLog][Third-Party Code] double-conversion got updated to upstream
+version 3.0.0.
+
+Task-number: QTBUG-66561
+Change-Id: Id79125bdeeaebb61dca2e2885d3370accce9030c
+Reviewed-by: Simon Hausmann <simon.hausmann@qt.io>
+Upstream-Status: Backport
+---
+ src/3rdparty/double-conversion/bignum.cc      |  2 +-
+ src/3rdparty/double-conversion/bignum.h       |  1 -
+ .../double-conversion/cached-powers.cc        |  5 +--
+ src/3rdparty/double-conversion/diy-fp.h       | 22 +++++------
+ .../double-conversion/double-conversion.cc    | 21 ++++++----
+ src/3rdparty/double-conversion/fixed-dtoa.cc  |  5 ++-
+ src/3rdparty/double-conversion/ieee.h         |  2 +-
+ .../include/double-conversion/utils.h         | 38 +++++++++++++------
+ .../double-conversion/qt_attribution.json     |  4 +-
+ src/3rdparty/double-conversion/strtod.cc      |  2 +-
+ 10 files changed, 60 insertions(+), 42 deletions(-)
+
+diff --git a/src/3rdparty/double-conversion/bignum.cc b/src/3rdparty/double-conversion/bignum.cc
+index 2743d67e8d..8892de8f2a 100644
+--- a/src/3rdparty/double-conversion/bignum.cc
++++ b/src/3rdparty/double-conversion/bignum.cc
+@@ -104,7 +104,7 @@ void Bignum::AssignDecimalString(Vector<const char> value) {
+   const int kMaxUint64DecimalDigits = 19;
+   Zero();
+   int length = value.length();
+-  int pos = 0;
++  unsigned int pos = 0;
+   // Let's just say that each digit needs 4 bits.
+   while (length >= kMaxUint64DecimalDigits) {
+     uint64_t digits = ReadUInt64(value, pos, kMaxUint64DecimalDigits);
+diff --git a/src/3rdparty/double-conversion/bignum.h b/src/3rdparty/double-conversion/bignum.h
+index 5ec3544f57..c385f2237b 100644
+--- a/src/3rdparty/double-conversion/bignum.h
++++ b/src/3rdparty/double-conversion/bignum.h
+@@ -49,7 +49,6 @@ class Bignum {
+ 
+   void AssignPowerUInt16(uint16_t base, int exponent);
+ 
+-  void AddUInt16(uint16_t operand);
+   void AddUInt64(uint64_t operand);
+   void AddBignum(const Bignum& other);
+   // Precondition: this >= other.
+diff --git a/src/3rdparty/double-conversion/cached-powers.cc b/src/3rdparty/double-conversion/cached-powers.cc
+index 9536f26927..2b43f06412 100644
+--- a/src/3rdparty/double-conversion/cached-powers.cc
++++ b/src/3rdparty/double-conversion/cached-powers.cc
+@@ -131,7 +131,6 @@ static const CachedPower kCachedPowers[] = {
+   {UINT64_2PART_C(0xaf87023b, 9bf0ee6b), 1066, 340},
+ };
+ 
+-static const int kCachedPowersLength = ARRAY_SIZE(kCachedPowers);
+ static const int kCachedPowersOffset = 348;  // -1 * the first decimal_exponent.
+ static const double kD_1_LOG2_10 = 0.30102999566398114;  //  1 / lg(10)
+ // Difference between the decimal exponents in the table above.
+@@ -144,14 +143,12 @@ void PowersOfTenCache::GetCachedPowerForBinaryExponentRange(
+     int max_exponent,
+     DiyFp* power,
+     int* decimal_exponent) {
+-  (void)max_exponent; // Silence unused parameter warning in release builds
+-  (void)kCachedPowersLength; // Silence unused parameter warning in release builds
+   int kQ = DiyFp::kSignificandSize;
+   double k = ceil((min_exponent + kQ - 1) * kD_1_LOG2_10);
+   int foo = kCachedPowersOffset;
+   int index =
+       (foo + static_cast<int>(k) - 1) / kDecimalExponentDistance + 1;
+-  ASSERT(0 <= index && index < kCachedPowersLength);
++  ASSERT(0 <= index && index < static_cast<int>(ARRAY_SIZE(kCachedPowers)));
+   CachedPower cached_power = kCachedPowers[index];
+   ASSERT(min_exponent <= cached_power.binary_exponent);
+   (void) max_exponent;  // Mark variable as used.
+diff --git a/src/3rdparty/double-conversion/diy-fp.h b/src/3rdparty/double-conversion/diy-fp.h
+index 9dcf8fbdba..2edf34674e 100644
+--- a/src/3rdparty/double-conversion/diy-fp.h
++++ b/src/3rdparty/double-conversion/diy-fp.h
+@@ -42,7 +42,7 @@ class DiyFp {
+   static const int kSignificandSize = 64;
+ 
+   DiyFp() : f_(0), e_(0) {}
+-  DiyFp(uint64_t f, int e) : f_(f), e_(e) {}
++  DiyFp(uint64_t significand, int exponent) : f_(significand), e_(exponent) {}
+ 
+   // this = this - other.
+   // The exponents of both numbers must be the same and the significand of this
+@@ -76,22 +76,22 @@ class DiyFp {
+ 
+   void Normalize() {
+     ASSERT(f_ != 0);
+-    uint64_t f = f_;
+-    int e = e_;
++    uint64_t significand = f_;
++    int exponent = e_;
+ 
+     // This method is mainly called for normalizing boundaries. In general
+     // boundaries need to be shifted by 10 bits. We thus optimize for this case.
+     const uint64_t k10MSBits = UINT64_2PART_C(0xFFC00000, 00000000);
+-    while ((f & k10MSBits) == 0) {
+-      f <<= 10;
+-      e -= 10;
++    while ((significand & k10MSBits) == 0) {
++      significand <<= 10;
++      exponent -= 10;
+     }
+-    while ((f & kUint64MSB) == 0) {
+-      f <<= 1;
+-      e--;
++    while ((significand & kUint64MSB) == 0) {
++      significand <<= 1;
++      exponent--;
+     }
+-    f_ = f;
+-    e_ = e;
++    f_ = significand;
++    e_ = exponent;
+   }
+ 
+   static DiyFp Normalize(const DiyFp& a) {
+diff --git a/src/3rdparty/double-conversion/double-conversion.cc b/src/3rdparty/double-conversion/double-conversion.cc
+index 909985be82..6f21a0124c 100644
+--- a/src/3rdparty/double-conversion/double-conversion.cc
++++ b/src/3rdparty/double-conversion/double-conversion.cc
+@@ -118,7 +118,7 @@ void DoubleToStringConverter::CreateDecimalRepresentation(
+     StringBuilder* result_builder) const {
+   // Create a representation that is padded with zeros if needed.
+   if (decimal_point <= 0) {
+-      // "0.00000decimal_rep".
++      // "0.00000decimal_rep" or "0.000decimal_rep00".
+     result_builder->AddCharacter('0');
+     if (digits_after_point > 0) {
+       result_builder->AddCharacter('.');
+@@ -129,7 +129,7 @@ void DoubleToStringConverter::CreateDecimalRepresentation(
+       result_builder->AddPadding('0', remaining_digits);
+     }
+   } else if (decimal_point >= length) {
+-    // "decimal_rep0000.00000" or "decimal_rep.0000"
++    // "decimal_rep0000.00000" or "decimal_rep.0000".
+     result_builder->AddSubstring(decimal_digits, length);
+     result_builder->AddPadding('0', decimal_point - length);
+     if (digits_after_point > 0) {
+@@ -137,7 +137,7 @@ void DoubleToStringConverter::CreateDecimalRepresentation(
+       result_builder->AddPadding('0', digits_after_point);
+     }
+   } else {
+-    // "decima.l_rep000"
++    // "decima.l_rep000".
+     ASSERT(digits_after_point > 0);
+     result_builder->AddSubstring(decimal_digits, decimal_point);
+     result_builder->AddCharacter('.');
+@@ -494,10 +494,17 @@ static double SignedZero(bool sign) {
+ // because it constant-propagated the radix and concluded that the last
+ // condition was always true. By moving it into a separate function the
+ // compiler wouldn't warn anymore.
++#if _MSC_VER
++#pragma optimize("",off)
+ static bool IsDecimalDigitForRadix(int c, int radix) {
+   return '0' <= c && c <= '9' && (c - '0') < radix;
+ }
+-
++#pragma optimize("",on)
++#else
++static bool inline IsDecimalDigitForRadix(int c, int radix) {
++	return '0' <= c && c <= '9' && (c - '0') < radix;
++}
++#endif
+ // Returns true if 'c' is a character digit that is valid for the given radix.
+ // The 'a_character' should be 'a' or 'A'.
+ //
+@@ -852,9 +859,9 @@ double StringToDoubleConverter::StringToIeee(
+         return junk_string_value_;
+       }
+     }
+-    char sign = '+';
++    char exponen_sign = '+';
+     if (*current == '+' || *current == '-') {
+-      sign = static_cast<char>(*current);
++      exponen_sign = static_cast<char>(*current);
+       ++current;
+       if (current == end) {
+         if (allow_trailing_junk) {
+@@ -888,7 +895,7 @@ double StringToDoubleConverter::StringToIeee(
+       ++current;
+     } while (current != end && *current >= '0' && *current <= '9');
+ 
+-    exponent += (sign == '-' ? -num : num);
++    exponent += (exponen_sign == '-' ? -num : num);
+   }
+ 
+   if (!(allow_trailing_spaces || allow_trailing_junk) && (current != end)) {
+diff --git a/src/3rdparty/double-conversion/fixed-dtoa.cc b/src/3rdparty/double-conversion/fixed-dtoa.cc
+index aef65fdc21..0f55a0b6eb 100644
+--- a/src/3rdparty/double-conversion/fixed-dtoa.cc
++++ b/src/3rdparty/double-conversion/fixed-dtoa.cc
+@@ -98,7 +98,7 @@ class UInt128 {
+     return high_bits_ == 0 && low_bits_ == 0;
+   }
+ 
+-  int BitAt(int position) {
++  int BitAt(int position) const {
+     if (position >= 64) {
+       return static_cast<int>(high_bits_ >> (position - 64)) & 1;
+     } else {
+@@ -259,7 +259,8 @@ static void FillFractionals(uint64_t fractionals, int exponent,
+       fractionals -= static_cast<uint64_t>(digit) << point;
+     }
+     // If the first bit after the point is set we have to round up.
+-    if (((fractionals >> (point - 1)) & 1) == 1) {
++    ASSERT(fractionals == 0 || point - 1 >= 0);
++    if ((fractionals != 0) && ((fractionals >> (point - 1)) & 1) == 1) {
+       RoundUp(buffer, length, decimal_point);
+     }
+   } else {  // We need 128 bits.
+diff --git a/src/3rdparty/double-conversion/ieee.h b/src/3rdparty/double-conversion/ieee.h
+index 661141d1a8..b14cf4f717 100644
+--- a/src/3rdparty/double-conversion/ieee.h
++++ b/src/3rdparty/double-conversion/ieee.h
+@@ -99,7 +99,7 @@ class Double {
+   }
+ 
+   double PreviousDouble() const {
+-    if (d64_ == (kInfinity | kSignMask)) return -Double::Infinity();
++    if (d64_ == (kInfinity | kSignMask)) return -Infinity();
+     if (Sign() < 0) {
+       return Double(d64_ + 1).value();
+     } else {
+diff --git a/src/3rdparty/double-conversion/include/double-conversion/utils.h b/src/3rdparty/double-conversion/include/double-conversion/utils.h
+index 20bfd36c84..ca7646d817 100644
+--- a/src/3rdparty/double-conversion/include/double-conversion/utils.h
++++ b/src/3rdparty/double-conversion/include/double-conversion/utils.h
+@@ -33,19 +33,29 @@
+ 
+ #include <assert.h>
+ #ifndef ASSERT
+-# if defined(WINCE) || defined(_WIN32_WCE)
+-#  define ASSERT(condition)
+-# else
+-#  define ASSERT(condition)         \
++#define ASSERT(condition)         \
+     assert(condition);
+-# endif
+ #endif
+ #ifndef UNIMPLEMENTED
+-# define UNIMPLEMENTED() (exit(-1))
++#define UNIMPLEMENTED() (abort())
++#endif
++#ifndef DOUBLE_CONVERSION_NO_RETURN
++#ifdef _MSC_VER
++#define DOUBLE_CONVERSION_NO_RETURN __declspec(noreturn)
++#else
++#define DOUBLE_CONVERSION_NO_RETURN __attribute__((noreturn))
++#endif
+ #endif
+ #ifndef UNREACHABLE
+-# define UNREACHABLE()   (exit(-1))
++#ifdef _MSC_VER
++void DOUBLE_CONVERSION_NO_RETURN abort_noreturn();
++inline void abort_noreturn() { abort(); }
++#define UNREACHABLE()   (abort_noreturn())
++#else
++#define UNREACHABLE()   (abort())
+ #endif
++#endif
++
+ 
+ // Double operations detection based on target architecture.
+ // Linux uses a 80bit wide floating point stack on x86. This induces double
+@@ -62,11 +72,15 @@
+     defined(__hppa__) || defined(__ia64__) || \
+     defined(__mips__) || \
+     defined(__powerpc__) || defined(__ppc__) || defined(__ppc64__) || \
++    defined(_POWER) || defined(_ARCH_PPC) || defined(_ARCH_PPC64) || \
+     defined(__sparc__) || defined(__sparc) || defined(__s390__) || \
+     defined(__SH4__) || defined(__alpha__) || \
+     defined(_MIPS_ARCH_MIPS32R2) || \
+-    defined(__AARCH64EL__)
++    defined(__AARCH64EL__) || defined(__aarch64__) || \
++    defined(__riscv)
+ #define DOUBLE_CONVERSION_CORRECT_DOUBLE_OPERATIONS 1
++#elif defined(__mc68000__)
++#undef DOUBLE_CONVERSION_CORRECT_DOUBLE_OPERATIONS
+ #elif defined(_M_IX86) || defined(__i386__) || defined(__i386)
+ #if defined(_WIN32)
+ // Windows uses a 64bit wide floating point stack.
+@@ -172,8 +186,8 @@ template <typename T>
+ class Vector {
+  public:
+   Vector() : start_(NULL), length_(0) {}
+-  Vector(T* data, int length) : start_(data), length_(length) {
+-    ASSERT(length == 0 || (length > 0 && data != NULL));
++  Vector(T* data, int len) : start_(data), length_(len) {
++    ASSERT(len == 0 || (len > 0 && data != NULL));
+   }
+ 
+   // Returns a vector using the same backing storage as this one,
+@@ -215,8 +229,8 @@ class Vector {
+ // buffer bounds on all operations in debug mode.
+ class StringBuilder {
+  public:
+-  StringBuilder(char* buffer, int size)
+-      : buffer_(buffer, size), position_(0) { }
++  StringBuilder(char* buffer, int buffer_size)
++      : buffer_(buffer, buffer_size), position_(0) { }
+ 
+   ~StringBuilder() { if (!is_finalized()) Finalize(); }
+ 
+diff --git a/src/3rdparty/double-conversion/qt_attribution.json b/src/3rdparty/double-conversion/qt_attribution.json
+index 92118ac779..d41a7ef332 100644
+--- a/src/3rdparty/double-conversion/qt_attribution.json
++++ b/src/3rdparty/double-conversion/qt_attribution.json
+@@ -5,8 +5,8 @@
+     "QtUsage": "Used in Qt Core. Configure with -system-doubleconversion or -no-doubleconversion to avoid.",
+ 
+     "Homepage": "https://github.com/google/double-conversion",
+-    "Version": "2.0.1",
+-    "DownloadLocation": "https://github.com/google/double-conversion/commit/2fb03de56faa32bbba5e02222528e7b760f71d77",
++    "Version": "3.0.0",
++    "DownloadLocation": "https://github.com/google/double-conversion/commit/ca220cbafa83ca706f028bfbb5adc7eb2f1f90e1",
+     "License": "BSD 3-clause \"New\" or \"Revised\" License",
+     "LicenseId": "BSD-3-Clause",
+     "LicenseFile": "LICENSE",
+diff --git a/src/3rdparty/double-conversion/strtod.cc b/src/3rdparty/double-conversion/strtod.cc
+index 34717562bd..17abcbb2a5 100644
+--- a/src/3rdparty/double-conversion/strtod.cc
++++ b/src/3rdparty/double-conversion/strtod.cc
+@@ -286,7 +286,7 @@ static bool DiyFpStrtod(Vector<const char> buffer,
+   const int kDenominator = 1 << kDenominatorLog;
+   // Move the remaining decimals into the exponent.
+   exponent += remaining_decimals;
+-  int error = (remaining_decimals == 0 ? 0 : kDenominator / 2);
++  uint64_t error = (remaining_decimals == 0 ? 0 : kDenominator / 2);
+ 
+   int old_e = input.e();
+   input.Normalize();
+-- 
+2.17.1
+
