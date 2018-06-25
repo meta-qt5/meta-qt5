@@ -101,7 +101,7 @@ PACKAGECONFIG[glib] = "-glib,-no-glib,glib-2.0"
 # fontdatabases/basic/qbasicfontdatabase.cpp will fail to build and system freetype
 # works only together with fontconfig
 PACKAGECONFIG[freetype] = "-system-freetype,-qt-freetype,freetype"
-PACKAGECONFIG[harfbuzz] = "-system-harfbuzz,-no-harfbuzz,harfbuzz"
+PACKAGECONFIG[harfbuzz] = "-system-harfbuzz,-qt-harfbuzz,harfbuzz"
 PACKAGECONFIG[jpeg] = "-system-libjpeg,-no-libjpeg,jpeg"
 PACKAGECONFIG[libpng] = "-system-libpng,-no-libpng,libpng"
 PACKAGECONFIG[gif] = "-gif,-no-gif"
@@ -220,4 +220,4 @@ INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "9c50112304033c631e52f062496f3111f24835a2"
+SRCREV = "81b29a44d248b5037a2f05dd8815e000d9472f0e"
