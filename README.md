@@ -3,9 +3,7 @@ Qt5 OpenEmbedded/Yocto Project layer
 
 This layer depends on:
 
-URI: https://github.com/openembedded/openembedded-core
-branch: master
-revision: HEAD
+URI: https://github.com/openembedded/openembedded-core (branch: master)
 
 When building stuff like `qtdeclarative`, `qtquick`, `qtwebkit`, make
 sure that you have required `PACKAGECONFIG` options enabled in qtbase
@@ -28,5 +26,7 @@ Maintainers
 Yocto Project Compatible
 ------------------------
 
-meta-qt5 has Yocto Project Compatible status since 2013:
+![Yocto Project Compatible](https://github.com/meta-qt5/meta-qt5/blob/master/files/YoctoProject_Badge_Compatible.png)
+
+meta-qt5 has Yocto Project Compatible status since 2013. Check it at:
 https://www.yoctoproject.org/product/meta-qt5
