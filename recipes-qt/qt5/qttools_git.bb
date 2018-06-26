@@ -33,6 +33,10 @@ SRCREV = "a01f3629377f25506d523406d2b93ffbff711a51"
 
 BBCLASSEXTEND = "native nativesdk"
 
+do_install_append() {
+    cp ${B}/bin/qdbus ${D}/${bindir}/qdbus
+}
+
 do_install_ptest() {
     mkdir -p ${D}${PTEST_PATH}
     t=${D}${PTEST_PATH}
