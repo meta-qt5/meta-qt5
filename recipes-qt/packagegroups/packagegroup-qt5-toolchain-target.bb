@@ -9,11 +9,6 @@ PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
 
 # Requires Ruby to work
 USE_RUBY = " \
-    qtquick1-dev \
-    qtquick1-mkspecs \
-    qtquick1-plugins \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtquick1-qmlplugins', '', d)} \
-    qttranslations-qtquick1 \
     qtwebkit-dev \
 "
 

@@ -1,6 +1,8 @@
 require qt5.inc
 require qt5-git.inc
 
+SRC_URI += "file://0001-Do-not-skip-build-for-cross-compile.patch"
+
 LICENSE = "BSD & LGPLv2+ | GPL-2.0"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
@@ -8,6 +10,8 @@ LIC_FILES_CHKSUM = " \
 "
 
 DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-native"
+
+inherit cmake_qt5 perlnative pythonnative
 
 # qemuarm build fails with:
 # | {standard input}: Assembler messages:
@@ -24,40 +28,36 @@ ARM_INSTRUCTION_SET_armv7a = "thumb"
 ARM_INSTRUCTION_SET_armv7r = "thumb"
 ARM_INSTRUCTION_SET_armv7ve = "thumb"
 
-PACKAGECONFIG ??= "gstreamer qtlocation qtmultimedia qtsensors qtwebchannel \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libxcomposite libxrender', '', d)} \
+# http://errors.yoctoproject.org/Errors/Details/179245/
+# just use -fpermissive in this case like fedora did:
+# https://bugzilla.redhat.com/show_bug.cgi?id=1582954
+CXXFLAGS += "-fpermissive"
+
+EXTRA_OECMAKE = " \
+    -DPORT=Qt \
+    -DECM_MKSPECS_INSTALL_DIR=${libdir}${QT_DIR_NAME}/mkspecs/modules \
+    -DQML_INSTALL_DIR=${OE_QMAKE_PATH_QML} \
+"
+
+PACKAGECONFIG ??= "qtlocation qtmultimedia qtsensors qtwebchannel \
+    ${@bb.utils.filter('DISTRO_FEATURES', 'x11', d)} \
     fontconfig \
 "
-PACKAGECONFIG[gstreamer] = "OE_GSTREAMER_ENABLED,,gstreamer1.0 gstreamer1.0-plugins-base"
-PACKAGECONFIG[gstreamer010] = "OE_GSTREAMER010_ENABLED,,gstreamer gst-plugins-base"
-PACKAGECONFIG[qtlocation] = "OE_QTLOCATION_ENABLED,,qtlocation"
-PACKAGECONFIG[qtmultimedia] = "OE_QTMULTIMEDIA_ENABLED,,qtmultimedia"
-PACKAGECONFIG[qtsensors] = "OE_QTSENSORS_ENABLED,,qtsensors"
-PACKAGECONFIG[qtwebchannel] = "OE_QTWEBCHANNEL_ENABLED,,qtwebchannel"
-PACKAGECONFIG[libwebp] = "OE_LIBWEBP_ENABLED,,libwebp"
-PACKAGECONFIG[libxcomposite] = "OE_LIBXCOMPOSITE_ENABLED,,libxcomposite"
-PACKAGECONFIG[libxrender] = "OE_LIBXRENDER_ENABLED,,libxrender"
-PACKAGECONFIG[fontconfig] = "OE_FONTCONFIG_ENABLED,,fontconfig"
 
-do_configure_prepend() {
-    export QMAKE_CACHE_EVAL="CONFIG+=${PACKAGECONFIG_CONFARGS}"
-}
-
-# Forcibly enable ICU, so qtbase doesn't need it.
-EXTRA_QMAKEVARS_PRE += "QT_CONFIG+=icu"
-
-# qtwebkit gets terribly big when linking with all debug info, disable by default
-QTWEBKIT_DEBUG = "QMAKE_CFLAGS+=-g0 QMAKE_CXXFLAGS+=-g0"
-EXTRA_QMAKEVARS_PRE += "${QTWEBKIT_DEBUG}"
+# gstreamer conflicts with qtmultimedia!
+PACKAGECONFIG[gstreamer] = "-DUSE_GSTREAMER=ON,-DUSE_GSTREAMER=OFF,gstreamer1.0 gstreamer1.0-plugins-base"
+PACKAGECONFIG[qtlocation] = "-DENABLE_GEOLOCATION=ON,-DENABLE_GEOLOCATION=OFF,qtlocation"
+PACKAGECONFIG[qtmultimedia] = "-DUSE_QT_MULTIMEDIA=ON,-DUSE_QT_MULTIMEDIA=OFF,qtmultimedia"
+PACKAGECONFIG[qtsensors] = "-DENABLE_DEVICE_ORIENTATION=ON,-DENABLE_DEVICE_ORIENTATION=OFF,qtsensors"
+PACKAGECONFIG[qtwebchannel] = "-DENABLE_QT_WEBCHANNEL=ON,-DENABLE_QT_WEBCHANNEL=OFF,qtwebchannel"
+PACKAGECONFIG[libwebp] = ",,libwebp"
+PACKAGECONFIG[x11] = "-DENABLE_X11_TARGET=ON,-DENABLE_X11_TARGET=OFF,libxcomposite libxrender"
+PACKAGECONFIG[fontconfig] = "-DENABLE_TEST_SUPPORT=ON,-DENABLE_TEST_SUPPORT=OFF,fontconfig"
+# hyphen is only in meta-office currently!
+PACKAGECONFIG[hyphen] = "-DUSE_LIBHYPHEN=ON,-DUSE_LIBHYPHEN=OFF,hyphen"
 
 # remove default ${PN}-examples* set in qt5.inc, because they conflicts with ${PN} from separate webkit-examples recipe
 PACKAGES_remove = "${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples"
-
-# make sure rb files are used from sysroot, not from host
-# ruby-1.9.3-always-use-i386.patch is doing target_cpu=`echo $target_cpu | sed s/i.86/i386/`
-# we need to replace it too (a bit longer version without importing re)
-RUBY_SYS = "${@ '${BUILD_SYS}'.replace('i486', 'i386').replace('i586', 'i386').replace('i686', 'i386') }"
-export RUBYLIB="${STAGING_DATADIR_NATIVE}/rubygems:${STAGING_LIBDIR_NATIVE}/ruby:${STAGING_LIBDIR_NATIVE}/ruby/${RUBY_SYS}"
 
 QT_MODULE_BRANCH = "dev"
 

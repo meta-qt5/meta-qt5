@@ -1,4 +1,4 @@
-From 1095ff439340980b297eb988f23fceb5d198b18e Mon Sep 17 00:00:00 2001
+From 0101ed343c6f6eb652c5992ed2279ddd5c6d5969 Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Thu, 24 Dec 2015 15:59:51 -0200
 Subject: [PATCH] Include dependency to QCoreApplication::translate()
@@ -9,7 +9,7 @@ Signed-off-by: Cleiton Bueno <cleitonrbueno@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/src/core/media_capture_devices_dispatcher.h b/src/core/media_capture_devices_dispatcher.h
-index 579d159..0904c46 100644
+index 579d159a..0904c468 100644
 --- a/src/core/media_capture_devices_dispatcher.h
 +++ b/src/core/media_capture_devices_dispatcher.h
 @@ -45,6 +45,8 @@

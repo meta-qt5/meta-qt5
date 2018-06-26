@@ -1,4 +1,4 @@
-From acc9fd7805f48fc998f1733db1fd58b05d381582 Mon Sep 17 00:00:00 2001
+From 418ff96920a520a4c9d082f56864ee8654f584f7 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Thu, 14 Dec 2017 11:28:10 +0200
 Subject: [PATCH] musl: link against libexecinfo
@@ -10,7 +10,7 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/core/core_module.pro b/src/core/core_module.pro
-index d21985e..eeebeb4 100644
+index d21985e6..eeebeb4f 100644
 --- a/src/core/core_module.pro
 +++ b/src/core/core_module.pro
 @@ -54,7 +54,7 @@ linux {

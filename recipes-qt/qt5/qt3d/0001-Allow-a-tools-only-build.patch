@@ -1,4 +1,4 @@
-From 0fc2916634a213f38b81ae74160136cf384f6166 Mon Sep 17 00:00:00 2001
+From 15ba3204df65645f604a23f71f819a392ff1e4b7 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@theqtcompany.com>
 Date: Wed, 10 Feb 2016 09:02:09 +0200
 Subject: [PATCH] Allow a tools-only build
@@ -40,7 +40,7 @@ index 8ba2d9a41..e973d93dd 100644
  } else {
      include(assimp.pri)
 diff --git a/tools/tools.pro b/tools/tools.pro
-index 64f2b9f..d108e7f 100644
+index 64f2b9fc7..d108e7fa7 100644
 --- a/tools/tools.pro
 +++ b/tools/tools.pro
 @@ -1,4 +1,4 @@

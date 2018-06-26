@@ -1,4 +1,4 @@
-From db6995482d1bd290ea8f09a02ff31f8e769f87c4 Mon Sep 17 00:00:00 2001
+From d754f1e1d4579d8005283dfdc3c9eb7995e61739 Mon Sep 17 00:00:00 2001
 From: Cody P Schafer <dev@codyps.com>
 Date: Thu, 9 Jul 2015 11:28:19 -0400
 Subject: [PATCH] linguist-tools cmake: allow overriding the location for
@@ -9,7 +9,7 @@ Subject: [PATCH] linguist-tools cmake: allow overriding the location for
  1 file changed, 3 insertions(+), 12 deletions(-)
 
 diff --git a/src/linguist/Qt5LinguistToolsConfig.cmake.in b/src/linguist/Qt5LinguistToolsConfig.cmake.in
-index 4318b16..2e3b70f 100644
+index 4318b16f..2e3b70fa 100644
 --- a/src/linguist/Qt5LinguistToolsConfig.cmake.in
 +++ b/src/linguist/Qt5LinguistToolsConfig.cmake.in
 @@ -26,6 +26,9 @@ get_filename_component(_qt5_linguisttools_install_prefix \"${CMAKE_CURRENT_LIST_

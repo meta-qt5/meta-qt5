@@ -79,7 +79,6 @@ class Qmake5RecipeHandler(RecipeHandler):
               'core': 'qtbase',
               'gui': 'qtbase',
               'dbus': 'qtbase',
-              'declarative': 'qtquick1',
               'designer': 'qttools',
               'help': 'qttools',
               'multimedia': 'qtmultimedia',

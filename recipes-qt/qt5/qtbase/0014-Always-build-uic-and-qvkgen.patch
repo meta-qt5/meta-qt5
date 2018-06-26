@@ -1,4 +1,4 @@
-From 10f419678fe4f7087c973a8d8dd96bb0d781487b Mon Sep 17 00:00:00 2001
+From 7b0de75cc3d85b44f96f1c6869c65399351a1398 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 16 Nov 2013 00:32:30 +0100
 Subject: [PATCH] Always build uic and qvkgen
@@ -14,7 +14,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/src.pro b/src/src.pro
-index 1f7c5d9..6b39379 100644
+index 1f7c5d99c1..6b39379dd0 100644
 --- a/src/src.pro
 +++ b/src/src.pro
 @@ -222,7 +222,7 @@ qtConfig(gui) {
