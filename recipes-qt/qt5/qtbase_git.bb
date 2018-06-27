@@ -190,7 +190,6 @@ do_configure() {
         -archdatadir ${OE_QMAKE_PATH_ARCHDATA} \
         -libexecdir ${OE_QMAKE_PATH_LIBEXECS} \
         -plugindir ${OE_QMAKE_PATH_PLUGINS} \
-        -importdir ${OE_QMAKE_PATH_IMPORTS} \
         -qmldir ${OE_QMAKE_PATH_QML} \
         -translationdir ${OE_QMAKE_PATH_TRANSLATIONS} \
         -testsdir ${OE_QMAKE_PATH_TESTS} \

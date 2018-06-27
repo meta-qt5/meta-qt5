@@ -14,7 +14,6 @@ create_sdk_files_prepend () {
     echo 'Binaries = ${OE_QMAKE_PATH_QT_BINS}' >> $qtconf
     echo 'LibraryExecutables = ${OE_QMAKE_PATH_LIBEXECS}' >> $qtconf
     echo 'Plugins = ${OE_QMAKE_PATH_PLUGINS}' >> $qtconf
-    echo 'Imports = ${OE_QMAKE_PATH_IMPORTS}' >> $qtconf
     echo 'Qml2Imports = ${OE_QMAKE_PATH_QML}' >> $qtconf
     echo 'Translations = ${OE_QMAKE_PATH_QT_TRANSLATIONS}' >> $qtconf
     echo 'Documentation = ${OE_QMAKE_PATH_QT_DOCS}' >> $qtconf
