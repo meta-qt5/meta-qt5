@@ -10,7 +10,7 @@ DEPENDS += "qtbase qttools-native"
 
 do_install_append() {
     # remove qtquick1 translations - qtquick1 is gone
-    for transfile in `find ${D}/${OE_QMAKE_PATH_TRANSLATIONS} -name qtquick1_*.qm`; do
+    for transfile in `find ${D}/${OE_QMAKE_PATH_TRANSLATIONS} -name qtquick1_*.qm -o -name qt_*.qm ! -name qt_help_*.qm`; do
         rm $transfile
     done
 }
@@ -33,7 +33,6 @@ PACKAGES =. " \
     ${PN}-qtserialport \
     ${PN}-qtbase \
     ${PN}-qthelp \
-    ${PN}-qt \
 "
 
 FILES_${PN}-assistant = " \
@@ -102,10 +101,6 @@ FILES_${PN}-qtbase = " \
 
 FILES_${PN}-qthelp = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qt_help_*.qm \
-"
-
-FILES_${PN}-qt = " \
-    ${OE_QMAKE_PATH_TRANSLATIONS}/qt_*.qm \
 "
 
 SRCREV = "3e0de1e1cd4fd194d1069b61f57a55b8d23ab60d"
