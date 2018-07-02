@@ -69,7 +69,7 @@ PACKAGECONFIG_RELEASE ?= "release"
 # This is in qt5.inc, because qtwebkit-examples are using it to enable ca-certificates dependency
 # PACKAGECONFIG_OPENSSL ?= "openssl"
 PACKAGECONFIG_DEFAULT ?= "dbus udev evdev widgets tools libs freetype tests \
-    ${@bb.utils.contains('SELECTED_OPTIMIZATION', '-Os', 'optimize-size', '', d)} \
+    ${@bb.utils.contains('SELECTED_OPTIMIZATION', '-Os', 'optimize-size ltcg', '', d)} \
 "
 
 PACKAGECONFIG ?= " \
@@ -88,6 +88,7 @@ PACKAGECONFIG[release] = "-release,-debug"
 PACKAGECONFIG[debug] = ""
 PACKAGECONFIG[developer] = "-developer-build"
 PACKAGECONFIG[optimize-size] = "-optimize-size"
+PACKAGECONFIG[ltcg] = "-ltcg"
 PACKAGECONFIG[sm] = "-sm,-no-sm"
 PACKAGECONFIG[tests] = "-make tests,-nomake tests"
 PACKAGECONFIG[examples] = "-make examples -compile-examples,-nomake examples"
