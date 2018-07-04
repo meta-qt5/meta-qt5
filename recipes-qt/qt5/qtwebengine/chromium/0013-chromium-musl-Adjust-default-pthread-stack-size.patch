@@ -6,7 +6,7 @@ Subject: [PATCH] chromium: musl: Adjust default pthread stack size
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
  chromium/base/threading/platform_thread_linux.cc              | 3 ++-
- chromium/third_party/WebKit/Source/platform/wtf/StackUtil.cpp | 4 ++--
+ .../third_party/blink/renderer/platform/wtf/stack_util.cc     | 4 ++--
  2 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/base/threading/platform_thread_linux.cc b/chromium/base/threading/platform_thread_linux.cc
@@ -23,10 +23,10 @@ index 9917a7b1fd6..cb406659b90 100644
  #else
    // ThreadSanitizer bloats the stack heavily. Evidence has been that the
    // default stack size isn't enough for some browser tests.
-diff --git a/chromium/third_party/WebKit/Source/platform/wtf/StackUtil.cpp b/chromium/third_party/WebKit/Source/platform/wtf/StackUtil.cpp
-index 13c3f907f8e..07308e08351 100644
---- a/chromium/third_party/WebKit/Source/platform/wtf/StackUtil.cpp
-+++ b/chromium/third_party/WebKit/Source/platform/wtf/StackUtil.cpp
+diff --git a/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc b/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
+index 10f1c0df11..8e86a2eb1e 100644
+--- a/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
++++ b/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
 @@ -28,7 +28,7 @@ size_t GetUnderestimatedStackSize() {
  // FIXME: On Mac OSX and Linux, this method cannot estimate stack size
  // correctly for the main thread.

@@ -14,7 +14,6 @@ LIC_FILES_CHKSUM = " \
 # Patches from https://github.com/meta-qt5/qtscript/commits/b5.11
 # 5.11.meta-qt5.2
 SRC_URI += " \
-    file://0001-3rdparty-javascriptcore-Add-RISC-V-support.patch \
     file://0002-Include-asm-sgidefs.h-on-non-glibc-systems.patch \
 "
 
@@ -37,4 +36,4 @@ DEPENDS += "qtbase"
 # http://errors.yoctoproject.org/Errors/Build/44915/
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-SRCREV = "cf09bc7285793d81a9755bf7e807c9d51d47d980"
+SRCREV = "78be34c5125142a16c117f7508fee603c52cbb36"

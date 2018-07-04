@@ -15,16 +15,16 @@ diff --git a/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
 index 715c045f66c..edc8cf2db70 100644
 --- a/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
 +++ b/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
-@@ -77,7 +77,7 @@ typedef off64_t __off64_t;
+@@ -60,7 +60,7 @@
  
  static inline void* do_mmap64(void *start, size_t length,
                                int prot, int flags,
 -                              int fd, __off64_t offset) __THROW {
 +                              int fd, off64_t offset) __THROW {
-   // The original gperftools uses sys_mmap() here.  But, it is not allowed by
-   // Chromium's sandbox.
-   return (void *)syscall(SYS_mmap, start, length, prot, flags, fd, offset);
-@@ -90,7 +90,7 @@ static inline void* do_mmap64(void *start, size_t length,
+   return sys_mmap(start, length, prot, flags, fd, offset);
+ }
+ 
+@@ -71,7 +71,7 @@ static inline void* do_mmap64(void *start, size_t length,
  
  static inline void* do_mmap64(void *start, size_t length,
                                int prot, int flags,
@@ -33,7 +33,7 @@ index 715c045f66c..edc8cf2db70 100644
    void *result;
  
    // Try mmap2() unless it's not supported
-@@ -161,7 +161,7 @@ static inline void* do_mmap64(void *start, size_t length,
+@@ -142,7 +142,7 @@ static inline void* do_mmap64(void *start, size_t length,
  
  extern "C" {
    void* mmap64(void *start, size_t length, int prot, int flags,
@@ -42,7 +42,7 @@ index 715c045f66c..edc8cf2db70 100644
      ATTRIBUTE_SECTION(malloc_hook);
    void* mmap(void *start, size_t length,int prot, int flags,
               int fd, off_t offset) __THROW
-@@ -178,7 +178,7 @@ extern "C" {
+@@ -157,7 +157,7 @@ extern "C" {
  }
  
  extern "C" void* mmap64(void *start, size_t length, int prot, int flags,
@@ -51,7 +51,7 @@ index 715c045f66c..edc8cf2db70 100644
    MallocHook::InvokePreMmapHook(start, length, prot, flags, fd, offset);
    void *result;
    if (!MallocHook::InvokeMmapReplacement(
-@@ -189,7 +189,7 @@ extern "C" void* mmap64(void *start, size_t length, int prot, int flags,
+@@ -168,7 +168,7 @@ extern "C" void* mmap64(void *start, size_t length, int prot, int flags,
    return result;
  }
  

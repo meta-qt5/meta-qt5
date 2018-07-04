@@ -11,8 +11,8 @@ SRC_URI += "file://0001-runtime-Include-missing-QCoreApplication-header.patch"
 
 DEPENDS += "qtbase qtdeclarative qt3d"
 
-QT_MODULE_BRANCH = "2.0"
+QT_MODULE_BRANCH = "2.1"
 QT_GIT_PROJECT = "qt3dstudio"
-PV = "2.0+git${SRCPV}"
+PV = "2.1+git${SRCPV}"
 
-SRCREV = "ed19232a75b371727c76a9ad8a56f211a0b827ec"
+SRCREV = "95942f6b187c5272074c191424a18e33f8516967"

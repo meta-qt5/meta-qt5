@@ -15,10 +15,10 @@ Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
  1 file changed, 11 insertions(+)
 
 diff --git a/src/corelib/io/qfilesystemengine_unix.cpp b/src/corelib/io/qfilesystemengine_unix.cpp
-index 964dcebeb2..c09eb0154b 100644
+index 5a5a3a8..e5469ff 100644
 --- a/src/corelib/io/qfilesystemengine_unix.cpp
 +++ b/src/corelib/io/qfilesystemengine_unix.cpp
-@@ -95,6 +95,17 @@ extern "C" NSString *NSTemporaryDirectory();
+@@ -93,6 +93,17 @@ extern "C" NSString *NSTemporaryDirectory();
  #ifndef FICLONE
  #  define FICLONE       _IOW(0x94, 9, int)
  #endif

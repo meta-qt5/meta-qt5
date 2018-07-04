@@ -12,7 +12,7 @@ diff --git a/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_suppo
 index b29ec2d29a7..91f77dd88d4 100644
 --- a/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
 +++ b/chromium/third_party/tcmalloc/chromium/src/base/linux_syscall_support.h
-@@ -150,6 +150,7 @@ extern "C" {
+@@ -154,6 +154,7 @@ extern "C" {
  #include <stddef.h>
  #include <stdint.h>
  #include <string.h>

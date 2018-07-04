@@ -36,15 +36,15 @@ Signed-off-by: Christophe Chapuis <chris.chapuis@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/core/chromium_overrides.cpp b/src/core/chromium_overrides.cpp
-index 8f6687ff..994e2799 100644
+index f3b7d389..915d38fb 100644
 --- a/src/core/chromium_overrides.cpp
 +++ b/src/core/chromium_overrides.cpp
-@@ -159,7 +159,7 @@ std::unique_ptr<base::ListValue> GetFontList_SlowBlocking()
+@@ -134,7 +134,7 @@ std::unique_ptr<base::ListValue> GetFontList_SlowBlocking()
      return std::move(font_list);
  }
  
--#if BUILDFLAG(ENABLE_PLUGINS)
-+#if BUILDFLAG(ENABLE_PLUGINS) && !defined(USE_OZONE)
+-#if QT_CONFIG(webengine_pepper_plugins)
++#if QT_CONFIG(webengine_pepper_plugins) && !defined(USE_OZONE)
  // content/browser/renderer_host/pepper/pepper_truetype_font_list.h
  void GetFontFamilies_SlowBlocking(std::vector<std::string> *font_families)
  {

@@ -14,14 +14,14 @@ le.rsp): Unable to create file. File name too long
 Task-number: QTBUG-59769
 Change-Id: I73c5e64ae5174412be2a675e35b0b6047f2bf4c1
 ---
- chromium/tools/gn/ninja_action_target_writer.cc | 9 +++++++++
+ gn/tools/gn/ninja_action_target_writer.cc | 9 +++++++++
  1 file changed, 9 insertions(+)
 
-diff --git a/chromium/tools/gn/ninja_action_target_writer.cc b/chromium/tools/gn/ninja_action_target_writer.cc
-index bab07c5d2bb..8f889aebc18 100644
---- a/chromium/tools/gn/ninja_action_target_writer.cc
-+++ b/chromium/tools/gn/ninja_action_target_writer.cc
-@@ -117,9 +117,18 @@ std::string NinjaActionTargetWriter::WriteRuleDefinition() {
+diff --git a/gn/tools/gn/ninja_action_target_writer.cc b/gn/tools/gn/ninja_action_target_writer.cc
+index 7e945c0de0..3deb587668 100644
+--- a/gn/tools/gn/ninja_action_target_writer.cc
++++ b/gn/tools/gn/ninja_action_target_writer.cc
+@@ -118,9 +118,18 @@ std::string NinjaActionTargetWriter::WriteRuleDefinition() {
      // strictly necessary for regular one-shot actions, but it's easier to
      // just always define unique_name.
      std::string rspfile = custom_rule_name;
@@ -30,7 +30,7 @@ index bab07c5d2bb..8f889aebc18 100644
 +    //please note ".$unique_name" is not used at the moment
 +    int pos = 0;
 +    std::string delimiter("_");
-+    while (rspfile.length() > 251 && (pos = rspfile.find_last_of(delimiter)) != std::string::npos)
++    while (rspfile.length() > 250 && (pos = rspfile.find_last_of(delimiter)) != std::string::npos)
 +        rspfile = rspfile.substr(0,pos);
 +
      if (!target_->sources().empty())
