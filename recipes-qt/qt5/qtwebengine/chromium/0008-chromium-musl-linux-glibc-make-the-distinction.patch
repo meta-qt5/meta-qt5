@@ -1,4 +1,4 @@
-From a64b55c98bf45d66c3c99172c32b2c282d61168e Mon Sep 17 00:00:00 2001
+From 4710eba530c905803965811071aced2e793fedad Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:54:38 -0700
 Subject: [PATCH] chromium: musl: linux != glibc, make the distinction
