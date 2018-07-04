@@ -3,7 +3,6 @@ SUMMARY = "QtWebEngine combines the power of Chromium and Qt"
 # Read http://blog.qt.io/blog/2016/01/13/new-agreement-with-the-kde-free-qt-foundation/
 LICENSE = "BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
-    file://src/core/browser_context_qt.cpp;md5=b5193b7d68699260f3b40b201365c8d2;beginline=1;endline=38 \
     file://src/3rdparty/chromium/LICENSE;md5=0fca02217a5d49a14dfe2d11837bb34d \
     file://LICENSE.LGPL3;md5=8211fde12cc8a4e2477602f5953f5b71 \
     file://LICENSE.GPLv3;md5=88e2b9117e6be406b5ed6ee4ca99a705 \
@@ -26,6 +25,7 @@ DEPENDS += " \
     libcap \
     gperf-native \
     ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa-lib', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libxcomposite libxcursor libxi libxrandr libxtst', '', d)} \
 "
 
 DEPENDS_append_libc-musl = " libexecinfo"
@@ -125,7 +125,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "65-based"
+QT_MODULE_BRANCH_CHROMIUM = "67-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.11
 # 5.11.meta-qt5.6
@@ -164,8 +164,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0015-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "d603b705539e1ec0d93761707d7df6d07bced98a"
-SRCREV_chromium = "c020786f57b8f5f3a450a8b77f850afe7c0d3f25"
+SRCREV_qtwebengine = "a5bdc6236ad52586579a9a3da6a059835ed60761"
+SRCREV_chromium = "d4ae420c54b0e8b4660b5c41ec0c38049115f9a9"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

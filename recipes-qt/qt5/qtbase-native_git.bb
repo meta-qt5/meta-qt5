@@ -32,7 +32,6 @@ SRC_URI += "\
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
-    file://0013-Upgrade-double-conversion-to-v3.0.0.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
@@ -134,4 +133,4 @@ do_install() {
     echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
-SRCREV = "9a04453b50ea22d6060aeb49250cf3e263d86ad3"
+SRCREV = "01e57909d4bce31483d023cf11dd2298391b38f3"

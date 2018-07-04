@@ -1,4 +1,4 @@
-From 15ba3204df65645f604a23f71f819a392ff1e4b7 Mon Sep 17 00:00:00 2001
+From da05164543625a93f3a646967d4692bcf13f441f Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@theqtcompany.com>
 Date: Wed, 10 Feb 2016 09:02:09 +0200
 Subject: [PATCH] Allow a tools-only build
@@ -10,12 +10,12 @@ Subject: [PATCH] Allow a tools-only build
  3 files changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/qt3d.pro b/qt3d.pro
-index 2cc347a1c..81cdeefb0 100644
+index 6f759b293..5f07c7c4e 100644
 --- a/qt3d.pro
 +++ b/qt3d.pro
 @@ -1,4 +1,4 @@
--requires(qtConfig(opengl))
-+!tools-only:requires(qtConfig(opengl))
+-requires(qtConfig(opengl):!html5)
++!tools-only:requires(qtConfig(opengl):!html5)
  
  CONFIG += examples_need_tools
  load(qt_parts)
