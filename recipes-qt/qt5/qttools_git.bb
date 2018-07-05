@@ -27,7 +27,10 @@ FILES_${PN}-examples = "${datadir}${QT_DIR_NAME}/examples"
 PACKAGECONFIG ??= ""
 PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
 
-EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)}"
+EXTRA_QMAKEVARS_PRE += " \
+    CONFIG-=config_clang \
+    ${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)} \
+"
 
 SRCREV = "4ec82667f632992e827299c96d3bfd2b221a029b"
 

@@ -73,6 +73,10 @@ inherit qmake5
 inherit gettext
 inherit pythonnative
 inherit perlnative
+inherit distro_features_check
+
+# Static builds of QtWebEngine aren't supported.
+CONFLICT_DISTRO_FEATURES = "qt5-static"
 
 # we don't want gettext.bbclass to append --enable-nls
 def gettext_oeconf(d):
