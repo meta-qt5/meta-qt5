@@ -22,11 +22,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  configure                            |  2 +-
  mkspecs/features/configure.prf       |  4 +--
- mkspecs/features/qt.prf              |  6 ++--
  mkspecs/features/qt_functions.prf    |  2 +-
  mkspecs/linux-oe-g++/qmake.conf      | 42 ++++++++++++++++++++++++++++
  mkspecs/linux-oe-g++/qplatformdefs.h |  1 +
- 6 files changed, 50 insertions(+), 7 deletions(-)
+ 5 files changed, 47 insertions(+), 4 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
@@ -64,30 +63,6 @@ index 934a18a924..0f5b1b6333 100644
              log("yes$$escape_expand(\\n)")
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
-diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
-index b57afcf72d..afa1c39b3e 100644
---- a/mkspecs/features/qt.prf
-+++ b/mkspecs/features/qt.prf
-@@ -147,7 +147,7 @@ import_plugins:qtConfig(static) {
-         !isEmpty(plug_type) {
-             plug_path = $$eval(QT_PLUGIN.$${plug}.PATH)
-             isEmpty(plug_path): \
--                plug_path = $$[QT_INSTALL_PLUGINS/get]
-+                plug_path = $$[QT_INSTALL_PLUGINS]
-             LIBS += -L$$plug_path/$$plug_type
-         }
-         LIBS += -l$${plug}$$qtPlatformTargetSuffix()
-@@ -298,8 +298,8 @@ for(ever) {
- # static builds: link qml import plugins into the target.
- contains(all_qt_module_deps, qml): \
-         qtConfig(static):import_plugins:!host_build:!no_import_scan {
--    exists($$[QT_INSTALL_QML/get]): \
--        QMLPATHS *= $$[QT_INSTALL_QML/get]
-+    exists($$[QT_INSTALL_QML]): \
-+        QMLPATHS *= $$[QT_INSTALL_QML]
- 
-     # run qmlimportscanner
-     qtPrepareTool(QMLIMPORTSCANNER, qmlimportscanner, , system)
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
 index 1903e509c8..c093dd4592 100644
 --- a/mkspecs/features/qt_functions.prf
