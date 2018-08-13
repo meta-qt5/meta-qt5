@@ -151,8 +151,21 @@ PACKAGECONFIG[libinput] = "-libinput,-no-libinput,libinput"
 PACKAGECONFIG[journald] = "-journald,-no-journald,systemd"
 
 QT_CONFIG_FLAGS_GOLD = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', '-use-gold-linker', '-no-use-gold-linker', d)}"
+
+def if_kernel_older_than(d, version, older_flag):
+    if bb.utils.vercmp_string(d.getVar('OLDEST_KERNEL'), version) < 0:
+        return older_flag
+    else:
+        return ''
+
+QT_CONFIG_FLAGS_KERNEL = " \
+    ${@if_kernel_older_than(d, '3.16', '-no-feature-renameat2')} \
+    ${@if_kernel_older_than(d, '3.17', '-no-feature-getentropy')} \
+"
+
 QT_CONFIG_FLAGS += " \
     ${QT_CONFIG_FLAGS_GOLD} \
+    ${QT_CONFIG_FLAGS_KERNEL} \
     -shared \
     -silent \
     -no-pch \
