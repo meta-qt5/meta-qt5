@@ -3,12 +3,12 @@ require qt5-git.inc
 
 LICENSE = "GFDL-1.3 & (LGPL-3.0 | GPL-2.0+) | The-Qt-Company-Commercial"
 LIC_FILES_CHKSUM = " \
-    file://LICENSE.LGPLv3;md5=e0459b45c5c4840b353141a8bbed91f0 \
+    file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
     file://LICENSE.GPLv2;md5=c96076271561b0e3785dad260634eaa8 \
     file://LICENSE.GPLv3;md5=88e2b9117e6be406b5ed6ee4ca99a705 \
-    file://LICENSE.FDL;md5=f70ee9a6c44ae8917586fea34dff0ab5 \
+    file://LICENSE.LGPLv3;md5=e0459b45c5c4840b353141a8bbed91f0 \
 "
 
 DEPENDS += "qtbase qtserialport"
 
-SRCREV = "9fe2ea2e0d8e696d7ba7d2dd03325007c2e415cc"
+SRCREV = "23a4f70d26ac2c74e695a0138eb1d766918973bb"

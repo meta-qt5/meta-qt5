@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-SRCREV = "3b5a20dc02bd00032a19c2951bfa940e6d83aca0"
+SRCREV = "dbc1311af757c5acdca034d3632dca3bf1f81af5"
 
 BBCLASSEXTEND =+ "native nativesdk"
 
