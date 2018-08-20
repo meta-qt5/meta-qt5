@@ -153,8 +153,6 @@ PACKAGECONFIG[widgets] = "-widgets,-no-widgets"
 PACKAGECONFIG[libproxy] = "-libproxy,-no-libproxy,libproxy"
 PACKAGECONFIG[libinput] = "-libinput,-no-libinput,libinput"
 PACKAGECONFIG[journald] = "-journald,-no-journald,systemd"
-# needs kernel 3.16+
-PACKAGECONFIG[renameat2] = "-feature-renameat2,-no-feature-renameat2,"
 # needs kernel 3.17+
 PACKAGECONFIG[getentropy] = "-feature-getentropy,-no-feature-getentropy,"
 
