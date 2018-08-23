@@ -1,0 +1,29 @@
+From e6247a6823d372cc779934cf6c74d65bae9652b5 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 23 Aug 2018 03:23:20 +0000
+Subject: [PATCH] runtime: Include missing <QCoreApplication> header
+
+Fixes following errors seen on mips
+
+q3dsengine.cpp:1327:9: error: 'QCoreApplication' has not been declared
+         QCoreApplication::sendEvent(&m_profileUiEventSource, e);
+         ^~~~~~~~~~~~~~~~
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/runtime/q3dsengine.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/runtime/q3dsengine.cpp b/src/runtime/q3dsengine.cpp
+index 1a438f0..d6d4eb5 100644
+--- a/src/runtime/q3dsengine.cpp
++++ b/src/runtime/q3dsengine.cpp
+@@ -36,6 +36,7 @@
+ #include "q3dsinlineqmlsubpresentation_p.h"
+ #include "q3dsviewersettings.h"
+ 
++#include <QCoreApplication>
+ #include <QLoggingCategory>
+ #include <QKeyEvent>
+ #include <QMouseEvent>
