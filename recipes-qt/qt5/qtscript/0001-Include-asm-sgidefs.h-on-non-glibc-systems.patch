@@ -1,0 +1,36 @@
+From c10293d932c63b36eac8a1e18756068f218a044a Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 23 Aug 2018 02:58:14 +0000
+Subject: [PATCH] Include asm/sgidefs.h on non-glibc systems
+
+sgidefs.h wrapper is glibc specific and causes build
+failures on musl
+
+Fixes
+Platform.h:380:10: fatal error: sgidefs.h: No such file or directory
+ #include <sgidefs.h>
+          ^~~~~~~~~~~
+compilation terminated.
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h b/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h
+index 00caa6d..485ec25 100644
+--- a/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h
++++ b/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h
+@@ -377,7 +377,11 @@
+ 
+ #if (defined(mips) || defined(__mips__) || defined(MIPS) || defined(_MIPS_))
+ #define WTF_CPU_MIPS 1
++#if defined(__GLIBC__)
+ #include <sgidefs.h>
++#else
++#include <asm/sgidefs.h>
++#endif
+ #if defined(__MIPSEB__)
+ #define WTF_CPU_BIG_ENDIAN 1
+ #endif
