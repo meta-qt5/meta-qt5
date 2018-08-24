@@ -22,6 +22,7 @@ DEPENDS_append_libc-musl = " libexecinfo"
 SRC_URI = " \
     http://download.qt.io/official_releases/qtcreator/4.5/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
     file://0001-Fix-Allow-qt-creator-to-build-on-arm-aarch32-and-aar.patch \
+    file://botan-non-x86.patch \
     file://qtcreator.desktop.in \
 "
 SRC_URI_append_libc-musl = " file://0002-Link-with-libexecinfo-on-musl.patch"
