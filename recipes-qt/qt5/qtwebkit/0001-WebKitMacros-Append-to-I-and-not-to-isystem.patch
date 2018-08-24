@@ -1,0 +1,207 @@
+From 7c2e6013caf7720530f963ca03eab2baa540c512 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 24 Aug 2018 07:13:39 +0000
+Subject: [PATCH] WebKitMacros: Append to -I and not to -isystem
+
+gcc-6 has now introduced stdlib.h in libstdc++ for better
+compliance and its including the C library stdlib.h using
+include_next which is sensitive to order of system header
+include paths. Its infact better to not tinker with the
+system header include paths at all. Since adding /usr/include
+to -system is redundant and compiler knows about it moreover
+now with gcc6 it interferes with compiler's functioning
+and ends up with compile errors e.g.
+
+/usr/include/c++/6.0.0/cstdlib:75:25: fatal error: stdlib.h: No such file or directory
+
+Upstream-Status: Pending
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ Source/JavaScriptCore/shell/CMakeLists.txt             | 2 +-
+ Source/WebKit/qt/declarative/CMakeLists.txt            | 2 +-
+ Source/WebKit/qt/tests/CMakeLists.txt                  | 2 +-
+ Source/WebKit2/UIProcess/API/qt/tests/CMakeLists.txt   | 2 +-
+ Source/cmake/WebKitMacros.cmake                        | 2 +-
+ Tools/DumpRenderTree/CMakeLists.txt                    | 2 +-
+ Tools/DumpRenderTree/TestNetscapePlugIn/CMakeLists.txt | 2 +-
+ Tools/ImageDiff/CMakeLists.txt                         | 2 +-
+ Tools/MiniBrowser/qt/CMakeLists.txt                    | 2 +-
+ Tools/QtTestBrowser/CMakeLists.txt                     | 2 +-
+ Tools/TestWebKitAPI/PlatformQt.cmake                   | 2 +-
+ Tools/TestWebKitAPI/Tests/WebKit2Gtk/CMakeLists.txt    | 2 +-
+ Tools/WebKitTestRunner/CMakeLists.txt                  | 2 +-
+ 13 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/Source/JavaScriptCore/shell/CMakeLists.txt b/Source/JavaScriptCore/shell/CMakeLists.txt
+index 27d8133..9480f6d 100644
+--- a/Source/JavaScriptCore/shell/CMakeLists.txt
++++ b/Source/JavaScriptCore/shell/CMakeLists.txt
+@@ -20,7 +20,7 @@ WEBKIT_INCLUDE_CONFIG_FILES_IF_EXISTS()
+ 
+ WEBKIT_WRAP_SOURCELIST(${JSC_SOURCES})
+ include_directories(./ ${JavaScriptCore_INCLUDE_DIRECTORIES})
+-include_directories(SYSTEM ${JavaScriptCore_SYSTEM_INCLUDE_DIRECTORIES})
++include_directories(${JavaScriptCore_SYSTEM_INCLUDE_DIRECTORIES})
+ add_executable(jsc ${JSC_SOURCES})
+ target_link_libraries(jsc ${JSC_LIBRARIES})
+ set_target_properties(jsc PROPERTIES FOLDER "JavaScriptCore")
+diff --git a/Source/WebKit/qt/declarative/CMakeLists.txt b/Source/WebKit/qt/declarative/CMakeLists.txt
+index e1ba22b..84cb565 100644
+--- a/Source/WebKit/qt/declarative/CMakeLists.txt
++++ b/Source/WebKit/qt/declarative/CMakeLists.txt
+@@ -15,7 +15,7 @@ include_directories(
+ 
+     ${WTF_DIR}
+ )
+-include_directories(SYSTEM
++include_directories(
+     ${ICU_INCLUDE_DIRS}
+     ${Qt5Quick_INCLUDE_DIRS}
+     ${Qt5Quick_PRIVATE_INCLUDE_DIRS}
+diff --git a/Source/WebKit/qt/tests/CMakeLists.txt b/Source/WebKit/qt/tests/CMakeLists.txt
+index 3dc6af1..d821f02 100644
+--- a/Source/WebKit/qt/tests/CMakeLists.txt
++++ b/Source/WebKit/qt/tests/CMakeLists.txt
+@@ -7,7 +7,7 @@ include_directories(
+     "${WEBKIT_DIR}/qt/WidgetApi"
+ )
+ 
+-include_directories(SYSTEM
++include_directories(
+     ${ICU_INCLUDE_DIRS}
+     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+     ${Qt5Widgets_INCLUDE_DIRS}
+diff --git a/Source/WebKit2/UIProcess/API/qt/tests/CMakeLists.txt b/Source/WebKit2/UIProcess/API/qt/tests/CMakeLists.txt
+index 210342e..bfc768f 100644
+--- a/Source/WebKit2/UIProcess/API/qt/tests/CMakeLists.txt
++++ b/Source/WebKit2/UIProcess/API/qt/tests/CMakeLists.txt
+@@ -4,7 +4,7 @@ include_directories(
+     "${WEBKIT_DIR}/qt/Api"
+ )
+ 
+-include_directories(SYSTEM
++include_directories(
+     ${Qt5Quick_INCLUDE_DIRS}
+     ${Qt5Quick_PRIVATE_INCLUDE_DIRS}
+     ${Qt5QuickTest_INCLUDE_DIRS}
+diff --git a/Source/cmake/WebKitMacros.cmake b/Source/cmake/WebKitMacros.cmake
+index 07e3143..a1e5887 100644
+--- a/Source/cmake/WebKitMacros.cmake
++++ b/Source/cmake/WebKitMacros.cmake
+@@ -260,7 +260,7 @@ endmacro()
+ 
+ macro(WEBKIT_FRAMEWORK _target)
+     include_directories(${${_target}_INCLUDE_DIRECTORIES})
+-    include_directories(SYSTEM ${${_target}_SYSTEM_INCLUDE_DIRECTORIES})
++    include_directories(${${_target}_SYSTEM_INCLUDE_DIRECTORIES})
+     add_library(${_target} ${${_target}_LIBRARY_TYPE}
+         ${${_target}_HEADERS}
+         ${${_target}_SOURCES}
+diff --git a/Tools/DumpRenderTree/CMakeLists.txt b/Tools/DumpRenderTree/CMakeLists.txt
+index 4a726cc..cd0c5e3 100644
+--- a/Tools/DumpRenderTree/CMakeLists.txt
++++ b/Tools/DumpRenderTree/CMakeLists.txt
+@@ -115,7 +115,7 @@ list(APPEND TestNetscapePlugin_LIBRARIES
+ WEBKIT_INCLUDE_CONFIG_FILES_IF_EXISTS()
+ 
+ include_directories(${DumpRenderTree_INCLUDE_DIRECTORIES})
+-include_directories(SYSTEM ${DumpRenderTree_SYSTEM_INCLUDE_DIRECTORIES})
++include_directories(${DumpRenderTree_SYSTEM_INCLUDE_DIRECTORIES})
+ 
+ add_executable(DumpRenderTree ${DumpRenderTree_SOURCES})
+ target_link_libraries(DumpRenderTree ${DumpRenderTree_LIBRARIES})
+diff --git a/Tools/DumpRenderTree/TestNetscapePlugIn/CMakeLists.txt b/Tools/DumpRenderTree/TestNetscapePlugIn/CMakeLists.txt
+index c431667..6dff244 100644
+--- a/Tools/DumpRenderTree/TestNetscapePlugIn/CMakeLists.txt
++++ b/Tools/DumpRenderTree/TestNetscapePlugIn/CMakeLists.txt
+@@ -42,7 +42,7 @@ set(WebKitTestNetscapePlugin_SYSTEM_INCLUDE_DIRECTORIES
+ )
+ 
+ include_directories(${WebKitTestNetscapePlugin_INCLUDE_DIRECTORIES})
+-include_directories(SYSTEM ${WebKitTestNetscapePlugin_SYSTEM_INCLUDE_DIRECTORIES})
++include_directories(${WebKitTestNetscapePlugin_SYSTEM_INCLUDE_DIRECTORIES})
+ 
+ set(WebKitTestNetscapePlugin_LIBRARIES
+     ${X11_LIBRARIES}
+diff --git a/Tools/ImageDiff/CMakeLists.txt b/Tools/ImageDiff/CMakeLists.txt
+index 6ce4ed5..4dd6c4a 100644
+--- a/Tools/ImageDiff/CMakeLists.txt
++++ b/Tools/ImageDiff/CMakeLists.txt
+@@ -14,7 +14,7 @@ set(IMAGE_DIFF_LIBRARIES
+ WEBKIT_INCLUDE_CONFIG_FILES_IF_EXISTS()
+ 
+ include_directories(${IMAGE_DIFF_INCLUDE_DIRECTORIES})
+-include_directories(SYSTEM ${IMAGE_DIFF_SYSTEM_INCLUDE_DIRECTORIES})
++include_directories(${IMAGE_DIFF_SYSTEM_INCLUDE_DIRECTORIES})
+ add_executable(ImageDiff ${IMAGE_DIFF_SOURCES})
+ target_link_libraries(ImageDiff ${IMAGE_DIFF_LIBRARIES})
+ set_target_properties(ImageDiff PROPERTIES FOLDER "Tools")
+diff --git a/Tools/MiniBrowser/qt/CMakeLists.txt b/Tools/MiniBrowser/qt/CMakeLists.txt
+index 68dd13c..b491df2 100644
+--- a/Tools/MiniBrowser/qt/CMakeLists.txt
++++ b/Tools/MiniBrowser/qt/CMakeLists.txt
+@@ -64,7 +64,7 @@ if (ENABLE_TEST_SUPPORT)
+ endif ()
+ 
+ include_directories(${MiniBrowser_INCLUDE_DIRECTORIES})
+-include_directories(SYSTEM ${MiniBrowser_SYSTEM_INCLUDE_DIRECTORIES})
++include_directories(${MiniBrowser_SYSTEM_INCLUDE_DIRECTORIES})
+ add_executable(MiniBrowser ${MiniBrowser_SOURCES})
+ target_link_libraries(MiniBrowser ${MiniBrowser_LIBRARIES})
+ set_target_properties(MiniBrowser PROPERTIES FOLDER "Tools" AUTOMOC ON)
+diff --git a/Tools/QtTestBrowser/CMakeLists.txt b/Tools/QtTestBrowser/CMakeLists.txt
+index ccd8e0f..18de9f2 100644
+--- a/Tools/QtTestBrowser/CMakeLists.txt
++++ b/Tools/QtTestBrowser/CMakeLists.txt
+@@ -62,7 +62,7 @@ if (ENABLE_TEST_SUPPORT)
+ endif ()
+ 
+ include_directories(${QtTestBrowser_INCLUDE_DIRECTORIES})
+-include_directories(SYSTEM ${QtTestBrowser_SYSTEM_INCLUDE_DIRECTORIES})
++include_directories(${QtTestBrowser_SYSTEM_INCLUDE_DIRECTORIES})
+ add_executable(QtTestBrowser ${QtTestBrowser_SOURCES})
+ target_link_libraries(QtTestBrowser ${QtTestBrowser_LIBRARIES})
+ set_target_properties(QtTestBrowser PROPERTIES FOLDER "Tools" AUTOMOC ON)
+diff --git a/Tools/TestWebKitAPI/PlatformQt.cmake b/Tools/TestWebKitAPI/PlatformQt.cmake
+index c054c66..046a91a 100644
+--- a/Tools/TestWebKitAPI/PlatformQt.cmake
++++ b/Tools/TestWebKitAPI/PlatformQt.cmake
+@@ -7,7 +7,7 @@ include_directories(
+     ${TESTWEBKITAPI_DIR}
+ )
+ 
+-include_directories(SYSTEM
++include_directories(
+     ${ICU_INCLUDE_DIRS}
+     ${Qt5Gui_INCLUDE_DIRS}
+ )
+diff --git a/Tools/TestWebKitAPI/Tests/WebKit2Gtk/CMakeLists.txt b/Tools/TestWebKitAPI/Tests/WebKit2Gtk/CMakeLists.txt
+index b0b4739..434e4ca 100644
+--- a/Tools/TestWebKitAPI/Tests/WebKit2Gtk/CMakeLists.txt
++++ b/Tools/TestWebKitAPI/Tests/WebKit2Gtk/CMakeLists.txt
+@@ -23,7 +23,7 @@ include_directories(
+     ${TOOLS_DIR}/TestWebKitAPI/gtk/WebKit2Gtk
+ )
+ 
+-include_directories(SYSTEM
++include_directories(
+     ${ATSPI_INCLUDE_DIRS}
+     ${GLIB_INCLUDE_DIRS}
+     ${GSTREAMER_INCLUDE_DIRS}
+diff --git a/Tools/WebKitTestRunner/CMakeLists.txt b/Tools/WebKitTestRunner/CMakeLists.txt
+index 6355772..6279658 100644
+--- a/Tools/WebKitTestRunner/CMakeLists.txt
++++ b/Tools/WebKitTestRunner/CMakeLists.txt
+@@ -116,7 +116,7 @@ GENERATE_BINDINGS(WebKitTestRunner_SOURCES
+ WEBKIT_INCLUDE_CONFIG_FILES_IF_EXISTS()
+ 
+ include_directories(${WebKitTestRunner_INCLUDE_DIRECTORIES})
+-include_directories(SYSTEM ${WebKitTestRunner_SYSTEM_INCLUDE_DIRECTORIES})
++include_directories(${WebKitTestRunner_SYSTEM_INCLUDE_DIRECTORIES})
+ 
+ add_library(TestRunnerInjectedBundle SHARED ${WebKitTestRunnerInjectedBundle_SOURCES})
+ target_link_libraries(TestRunnerInjectedBundle ${WebKitTestRunner_LIBRARIES})
+-- 
+1.9.1
+
