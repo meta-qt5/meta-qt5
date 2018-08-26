@@ -1,0 +1,19 @@
+Just check for x86 or x86_64 to define X86 based support
+This makes sure it compiles for non-x86 platforms
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+Index: qt-creator-opensource-src-4.5.1/src/libs/3rdparty/botan/botan.h
+===================================================================
+--- qt-creator-opensource-src-4.5.1.orig/src/libs/3rdparty/botan/botan.h
++++ qt-creator-opensource-src-4.5.1/src/libs/3rdparty/botan/botan.h
+@@ -85,7 +85,7 @@
+ #endif
+ 
+ #define BOTAN_TARGET_CPU_IS_LITTLE_ENDIAN
+-#if !defined(__arm__) && !defined(__aarch64__)
++#if defined(__i386__) || defined(__x86_64__)
+ #define BOTAN_TARGET_CPU_IS_X86_FAMILY
+ #endif
+ #define BOTAN_TARGET_UNALIGNED_MEMORY_ACCESS_OK 1

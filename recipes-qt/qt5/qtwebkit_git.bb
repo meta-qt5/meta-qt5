@@ -1,7 +1,11 @@
 require qt5.inc
 require qt5-git.inc
 
-SRC_URI += "file://0001-Do-not-skip-build-for-cross-compile.patch"
+SRC_URI += "\
+           file://0001-Do-not-skip-build-for-cross-compile.patch \
+           file://0001-Fix-build-with-non-glibc-libc-on-musl.patch \
+           file://0001-WebKitMacros-Append-to-I-and-not-to-isystem.patch \
+           "
 
 LICENSE = "BSD & LGPLv2+ | GPL-2.0"
 LIC_FILES_CHKSUM = " \

@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 inherit qmake5
 
-DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg"
+DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native"
 DEPENDS_append_libc-musl = " libexecinfo"
 
 # Patches from https://github.com/meta-qt5/qtcreator/commits/b5.4.1
@@ -22,6 +22,7 @@ DEPENDS_append_libc-musl = " libexecinfo"
 SRC_URI = " \
     http://download.qt.io/official_releases/qtcreator/4.5/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
     file://0001-Fix-Allow-qt-creator-to-build-on-arm-aarch32-and-aar.patch \
+    file://botan-non-x86.patch \
     file://qtcreator.desktop.in \
 "
 SRC_URI_append_libc-musl = " file://0002-Link-with-libexecinfo-on-musl.patch"
@@ -32,6 +33,8 @@ SRC_URI[sha256sum] = "5fdfc8f05694e37162f208616627262c9971749d6958d8881d62933b3b
 S = "${WORKDIR}/qt-creator-opensource-src-${PV}"
 
 EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
+
+EXTRANATIVEPATH += "chrpath-native"
 
 do_configure_append() {
     # Find native tools
@@ -45,6 +48,9 @@ do_install() {
     install -d ${D}${datadir}/applications
     install -m 0644 ${WORKDIR}/qtcreator.desktop.in ${D}${datadir}/applications/qtcreator.desktop
     sed -i 's:@QT5_QMAKE@:${OE_QMAKE_PATH_QT_BINS}:g' ${D}${datadir}/applications/qtcreator.desktop
+    chrpath --delete ${D}${libexecdir}/qtcreator/qtcreator_process_stub
+    chrpath --delete ${D}${libexecdir}/qtcreator/qbs_processlauncher
+    chrpath --delete ${D}${libdir}/qt5/qtcreator/libqbscore.so.*
 }
 
 FILES_${PN} += " \
