@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-shared
-# 5.11.meta-qt5-shared.8
+# 5.11.meta-qt5-shared.9
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -30,6 +30,7 @@ SRC_URI += "\
     file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
     file://0013-Upgrade-double-conversion-to-v3.0.0.patch \
     file://0014-Check-glibc-version-for-renameat2-statx-on-non-boots.patch \
+    file://0015-double-conversion-support-AARCH64EB-and-arm-BE.patch \
 "
 
 

@@ -1,0 +1,40 @@
+From 3aada36f6706f86b811dafb26e622cd6c99341d6 Mon Sep 17 00:00:00 2001
+From: Lei Maohui <leimaohui@cn.fujitsu.com>
+Date: Wed, 29 Aug 2018 18:20:14 +0900
+Subject: [PATCH] double-conversion: support AARCH64EB and arm BE
+
+Big endian can work well. So,
+- Make qtbase support aarch64 BE
+- Make qtbase support arm BE
+
+Upstream-Status: Pending
+
+Change-Id: Ie5b104fa2b23af8e89bae57fb56f3663be1bbb48
+Signed-off-by: Lei Maohui <leimaohui@cn.fujitsu.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ .../double-conversion/include/double-conversion/utils.h       | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/3rdparty/double-conversion/include/double-conversion/utils.h b/src/3rdparty/double-conversion/include/double-conversion/utils.h
+index ca7646d817..69aa17171c 100644
+--- a/src/3rdparty/double-conversion/include/double-conversion/utils.h
++++ b/src/3rdparty/double-conversion/include/double-conversion/utils.h
+@@ -68,7 +68,7 @@ inline void abort_noreturn() { abort(); }
+ // disabled.)
+ // On Linux,x86 89255e-22 != Div_double(89255.0/1e22)
+ #if defined(_M_X64) || defined(__x86_64__) || \
+-    defined(__ARMEL__) || defined(__avr32__) || _M_ARM_FP || \
++    defined(__arm__) || defined(__avr32__) || _M_ARM_FP || \
+     defined(__hppa__) || defined(__ia64__) || \
+     defined(__mips__) || \
+     defined(__powerpc__) || defined(__ppc__) || defined(__ppc64__) || \
+@@ -76,7 +76,7 @@ inline void abort_noreturn() { abort(); }
+     defined(__sparc__) || defined(__sparc) || defined(__s390__) || \
+     defined(__SH4__) || defined(__alpha__) || \
+     defined(_MIPS_ARCH_MIPS32R2) || \
+-    defined(__AARCH64EL__) || defined(__aarch64__) || \
++    defined(__AARCH64EL__) || defined(__AARCH64EB__) || defined(__aarch64__) || \
+     defined(__riscv)
+ #define DOUBLE_CONVERSION_CORRECT_DOUBLE_OPERATIONS 1
+ #elif defined(__mc68000__)
