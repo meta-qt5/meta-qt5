@@ -31,6 +31,7 @@ SRC_URI += "\
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
+    file://0013-Modified-to-support-armv8BE.patch \
 "
 
 # LGPL-3.0 is used only in src/plugins/platforms/android/extract.cpp
