@@ -31,6 +31,7 @@ ARM_INSTRUCTION_SET_armv7ve = "thumb"
 SRC_URI += "\
     file://0001-qtwebkit-fix-QA-issue-bad-RPATH.patch \
     file://0002-Exclude-backtrace-API-for-non-glibc-libraries.patch \
+    file://0003-Fix-build-bug-for-armv32-BE.patch \
 "
 
 PACKAGECONFIG ??= "gstreamer qtlocation qtmultimedia qtsensors qtwebchannel \
