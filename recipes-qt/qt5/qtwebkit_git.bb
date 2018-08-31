@@ -10,11 +10,12 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-native bison-native"
 
 # Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.11
-# 5.11.meta-qt5.1
+# 5.11.meta-qt5.2
 SRC_URI += "\
     file://0001-Do-not-skip-build-for-cross-compile.patch \
     file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
     file://0003-WebKitMacros-Append-to-I-and-not-to-isystem.patch \
+    file://0004-Fix-build-bug-for-armv32-BE.patch \
 "
 
 inherit cmake_qt5 perlnative pythonnative
