@@ -23,7 +23,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-shared
-# 5.11.meta-qt5-shared.6
+# 5.11.meta-qt5-shared.7
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -38,13 +38,14 @@ SRC_URI += "\
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
     file://0013-Upgrade-double-conversion-to-v3.0.0.patch \
+    file://0015-Check-glibc-version-for-renameat2-statx-on-non-boots.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-native
-# 5.11.meta-qt5-native.6
+# 5.11.meta-qt5-native.7
 SRC_URI += " \
-    file://0014-Always-build-uic-and-qvkgen.patch \
+    file://0016-Always-build-uic-and-qvkgen.patch \
 "
 
 # CMake's toolchain configuration of nativesdk-qtbase

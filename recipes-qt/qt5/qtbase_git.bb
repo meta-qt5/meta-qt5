@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-shared
-# 5.11.meta-qt5-shared.6
+# 5.11.meta-qt5-shared.7
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -29,7 +29,9 @@ SRC_URI += "\
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
     file://0013-Upgrade-double-conversion-to-v3.0.0.patch \
+    file://0015-Check-glibc-version-for-renameat2-statx-on-non-boots.patch \
 "
+
 
 # for syncqt
 RDEPENDS_${PN}-tools += "perl"
@@ -60,6 +62,7 @@ LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -f
 PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gl', '', d)}"
 PACKAGECONFIG_FB ?= "${@bb.utils.contains('DISTRO_FEATURES', 'directfb', 'directfb', '', d)}"
 PACKAGECONFIG_X11 ?= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcb xinput2 glib xkb xkbcommon-evdev', '', d)}"
+PACKAGECONFIG_KDE ?= "${@bb.utils.contains('DISTRO_FEATURES', 'kde', 'sm cups fontconfig kms gbm libinput', '', d)}"
 PACKAGECONFIG_FONTS ?= ""
 PACKAGECONFIG_SYSTEM ?= "jpeg libpng zlib"
 PACKAGECONFIG_DISTRO ?= ""
@@ -79,6 +82,7 @@ PACKAGECONFIG ?= " \
     ${PACKAGECONFIG_GL} \
     ${PACKAGECONFIG_FB} \
     ${PACKAGECONFIG_X11} \
+    ${PACKAGECONFIG_KDE} \
     ${PACKAGECONFIG_FONTS} \
     ${PACKAGECONFIG_SYSTEM} \
     ${PACKAGECONFIG_DISTRO} \
@@ -139,7 +143,7 @@ PACKAGECONFIG[gtk] = "-gtk,-no-gtk,gtk+3"
 PACKAGECONFIG[directfb] = "-directfb,-no-directfb,directfb"
 PACKAGECONFIG[linuxfb] = "-linuxfb,-no-linuxfb"
 PACKAGECONFIG[kms] = "-kms,-no-kms,drm virtual/egl"
-PACKAGECONFIG[gbm] = "-gbm,-no-gbm,virtual/mesa"
+PACKAGECONFIG[gbm] = "-gbm,-no-gbm,virtual/libgbm"
 PACKAGECONFIG[icu] = "-icu,-no-icu,icu"
 PACKAGECONFIG[udev] = "-libudev,-no-libudev,udev"
 PACKAGECONFIG[openssl] = "-openssl,-no-openssl,openssl,libssl"
@@ -147,8 +151,6 @@ PACKAGECONFIG[widgets] = "-widgets,-no-widgets"
 PACKAGECONFIG[libproxy] = "-libproxy,-no-libproxy,libproxy"
 PACKAGECONFIG[libinput] = "-libinput,-no-libinput,libinput"
 PACKAGECONFIG[journald] = "-journald,-no-journald,systemd"
-# needs kernel 3.16+
-PACKAGECONFIG[renameat2] = "-feature-renameat2,-no-feature-renameat2,"
 # needs kernel 3.17+
 PACKAGECONFIG[getentropy] = "-feature-getentropy,-no-feature-getentropy,"
 

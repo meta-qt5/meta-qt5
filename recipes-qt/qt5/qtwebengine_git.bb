@@ -53,12 +53,16 @@ PACKAGECONFIG[libvpx] = "-feature-webengine-system-libvpx,-no-feature-webengine-
 PACKAGECONFIG[libevent] = "-feature-webengine-system-libevent,-no-feature-webengine-system-libevent,libevent"
 PACKAGECONFIG[libpng] = "-feature-webengine-system-png,-no-feature-webengine-system-png,libpng"
 PACKAGECONFIG[harfbuzz] = "-feature-webengine-system-harfbuzz,-no-feature-webengine-system-harfbuzz,harfbuzz"
-PACKAGECONFIG[glib] = "-feature-webengine-system-glib,-no-feature-webengine-system-glib,glib"
+PACKAGECONFIG[glib] = "-feature-webengine-system-glib,-no-feature-webengine-system-glib,glib-2.0"
 PACKAGECONFIG[zlib] = "-feature-webengine-system-zlib,-no-feature-webengine-system-zlib,zlib"
 PACKAGECONFIG[protobuf] = "-feature-webengine-system-protobuf,-no-feature-webengine-system-protobuf,protobuf"
 PACKAGECONFIG[jasoncpp] = "-feature-webengine-system-jsoncpp,-no-feature-webengine-system-jsoncpp,jasoncpp"
 PACKAGECONFIG[libxml2] = "-feature-webengine-system-libxml2,-no-feature-webengine-system-libxml2,libxml2"
 PACKAGECONFIG[minizip] = "-feature-webengine-system-minizip,-no-feature-webengine-system-minizip,minizip"
+PACKAGECONFIG[proprietary-codecs] = "-feature-webengine-proprietary-codecs,-no-feature-webengine-proprietary-codecs"
+PACKAGECONFIG[pepper-plugins] = "-feature-webengine-pepper-plugins,-no-feature-webengine-pepper-plugins"
+PACKAGECONFIG[printing-and-pdf] = "-feature-webengine-printing-and-pdf,-no-feature-webengine-printing-and-pdf"
+PACKAGECONFIG[spellchecker] = "-feature-webengine-spellchecker,-no-feature-webengine-spellchecker"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
@@ -119,6 +123,9 @@ PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
 # for /usr/share/qt5/qtwebengine_resources.pak
 FILES_${PN} += "${OE_QMAKE_PATH_QT_TRANSLATIONS} ${OE_QMAKE_PATH_QT_DATA}"
+
+# Chromium uses libpci to determine which optimizations/workarounds to apply
+RDEPENDS_${PN}_append_x86 = " libpci"
 
 RDEPENDS_${PN}-examples += " \
     ${PN}-qmlplugins \

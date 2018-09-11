@@ -1,8 +1,7 @@
 DESCRIPTION = "Wrapper to select between Qt development binary versions"
 HOMEPAGE = "http://macieira.org/qtchooser"
 LICENSE = "LGPL-2.1 & Digia-Qt-LGPL-Exception-1.1 | GPL-3.0"
-SRC_URI = "git://code.qt.io/cgit/qtsdk/qtchooser.git;branch=master \
-           file://0001-Makefile-install-the-man-dir.patch"
+SRC_URI = "git://code.qt.io/cgit/qtsdk/qtchooser.git"
 
 LIC_FILES_CHKSUM = " \
     file://LGPL_EXCEPTION.txt;md5=0145c4d1b6f96a661c2c139dfb268fb6 \
@@ -11,7 +10,7 @@ LIC_FILES_CHKSUM = " \
 "
 S = "${WORKDIR}/git"
 SRCREV = "a1b6736e4f2daf86cd1626004d40ef57db85fbb5"
-#PV = "39+git${SRCREV}"
+PV = "39+git${SRCPV}"
 
 inherit pkgconfig
 
