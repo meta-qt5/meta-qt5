@@ -9,8 +9,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative qt3d"
 
-QT_MODULE_BRANCH = "2.0"
+QT_MODULE_BRANCH = "2.1"
 QT_GIT_PROJECT = "qt3dstudio"
-PV = "2.0+git${SRCPV}"
+PV = "2.1+git${SRCPV}"
 
-SRCREV = "f3396eb52e1333dc06e1fc0aef1e7cb60f243270"
+SRCREV = "41d130aa70f58189dc12fb27060f0497117ceb17"
