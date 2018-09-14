@@ -49,9 +49,8 @@ python __anonymous() {
 # suppress QA check complaining
 INSANE_SKIP_${PN}-dbg += "libdir"
 INSANE_SKIP_${PN}-examples += "libdir"
-INSANE_SKIP_${PN}-examples-dev += "libdir dev-elf"
 
-PACKAGES =. "${PN}-qmldesigner ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples "
+PACKAGES =. "${PN}-qmldesigner ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples "
 
 ALLOW_EMPTY_${PN} = "1"
 ALLOW_EMPTY_${PN}-plugins = "1"
@@ -139,6 +138,14 @@ FILES_${PN}-dev += " \
     ${OE_QMAKE_PATH_LIBS}/*.prl \
     ${OE_QMAKE_PATH_LIBS}/*.la \
     ${OE_QMAKE_PATH_HEADERS}/* \
+    ${OE_QMAKE_PATH_EXAMPLES}/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*${SOLIBSDEV} \
+    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*/*${SOLIBSDEV} \
 "
 FILES_${PN}-staticdev += " \
     ${OE_QMAKE_PATH_LIBS}/*.a \
@@ -154,21 +161,6 @@ FILES_${PN}-staticdev += " \
     ${OE_QMAKE_PATH_QML}/*/*/*/*.prl \
     ${OE_QMAKE_PATH_QML}/*/*/*/*/*.a \
     ${OE_QMAKE_PATH_QML}/*/*/*/*/*.prl \
-"
-FILES_${PN}-examples = " \
-    ${OE_QMAKE_PATH_EXAMPLES}/* \
-"
-FILES_${PN}-examples-dev = " \
-    ${OE_QMAKE_PATH_EXAMPLES}/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*/*${SOLIBSDEV} \
-"
-FILES_${PN}-examples-staticdev = " \
     ${OE_QMAKE_PATH_EXAMPLES}/*.a \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*.a \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*.a \
@@ -177,6 +169,9 @@ FILES_${PN}-examples-staticdev = " \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*.a \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*.a \
     ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*/*.a \
+"
+FILES_${PN}-examples = " \
+    ${OE_QMAKE_PATH_EXAMPLES}/* \
 "
 
 PATH_prepend = "${STAGING_DIR_NATIVE}${OE_QMAKE_PATH_QT_BINS}:"
