@@ -1,5 +1,5 @@
 # Copyright (C) 2012, 2014 O.S. Systems Software LTDA.
-# Copyright (C) 2013 Martin Jansa <martin.jansa@gmail.com>
+# Copyright (C) 2013-2018 Martin Jansa <martin.jansa@gmail.com>
 
 inherit qmake5
 
@@ -48,7 +48,7 @@ python __anonymous() {
 # Many examples come with libraries installed outside of standard libdir,
 # suppress QA check complaining
 INSANE_SKIP_${PN}-dbg += "libdir"
-INSANE_SKIP_${PN}-examples += "libdir"
+INSANE_SKIP_${PN}-examples += "libdir staticdev dev-so"
 
 PACKAGES =. "${PN}-qmldesigner ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples "
 
@@ -138,14 +138,6 @@ FILES_${PN}-dev += " \
     ${OE_QMAKE_PATH_LIBS}/*.prl \
     ${OE_QMAKE_PATH_LIBS}/*.la \
     ${OE_QMAKE_PATH_HEADERS}/* \
-    ${OE_QMAKE_PATH_EXAMPLES}/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*/*${SOLIBSDEV} \
 "
 FILES_${PN}-staticdev += " \
     ${OE_QMAKE_PATH_LIBS}/*.a \
@@ -161,17 +153,9 @@ FILES_${PN}-staticdev += " \
     ${OE_QMAKE_PATH_QML}/*/*/*/*.prl \
     ${OE_QMAKE_PATH_QML}/*/*/*/*/*.a \
     ${OE_QMAKE_PATH_QML}/*/*/*/*/*.prl \
-    ${OE_QMAKE_PATH_EXAMPLES}/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*/*.a \
 "
 FILES_${PN}-examples = " \
-    ${OE_QMAKE_PATH_EXAMPLES}/* \
+    ${OE_QMAKE_PATH_EXAMPLES} \
 "
 
 PATH_prepend = "${STAGING_DIR_NATIVE}${OE_QMAKE_PATH_QT_BINS}:"
