@@ -55,34 +55,22 @@ SRC_URI += " \
     file://OEQt5Toolchain.cmake \
 "
 
-PACKAGES = "${PN}-tools-dev ${PN}-tools-staticdev ${PN}-tools"
-
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
-FILES_${PN}-tools-dev = " \
-    ${includedir} \
-    ${FILES_SOLIBSDEV} ${libdir}/*.la \
-    ${libdir}/*.prl \
+FILES_${PN}-dev += " \
     ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
     ${OE_QMAKE_PATH_LIBS}/*.prl \
 "
 
-FILES_${PN}-tools-staticdev = " \
-    ${OE_QMAKE_PATH_LIBS}/*.a \
-"
-
-FILES_${PN}-tools = " \
-    ${libdir}/lib*${SOLIBS} \
-    ${OE_QMAKE_PATH_BINS}/* \
+FILES_${PN} += " \
     ${SDKPATHNATIVE}/environment-setup.d \
-    ${datadir}/cmake \
 "
 
 # qttools binaries are placed in a subdir of bin in order to avoid
 # collisions with qt4. This would trigger debian.bbclass to rename the
 # package, since it doesn't detect binaries in subdirs. Explicitly
 # disable package auto-renaming for the tools-package.
-DEBIAN_NOAUTONAME_${PN}-tools = "1"
+DEBIAN_NOAUTONAME_${PN} = "1"
 
 QT_CONFIG_FLAGS += " \
     -shared \
