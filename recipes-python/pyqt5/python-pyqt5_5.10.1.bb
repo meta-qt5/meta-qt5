@@ -48,7 +48,7 @@ do_configure_prepend() {
     QT_VERSION=`${OE_QMAKE_QMAKE} -query QT_VERSION`
     echo "[Qt $QT_VERSION]" >> pyqt.cfg
     echo "pyqt_modules = ${PYQT_MODULES}" >> pyqt.cfg
-    echo yes | python configure.py --verbose --qmake  ${STAGING_BINDIR_NATIVE}/qt5/qmake --configuration pyqt.cfg --sysroot ${STAGING_DIR_HOST}
+    echo yes | python configure.py --verbose --qmake  ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}/qmake --configuration pyqt.cfg --sysroot ${STAGING_DIR_HOST}
 }
 
 do_compile() {

@@ -26,10 +26,10 @@ FILES_${PN}-tests = " \
     /opt/tests/libqofono-qt5 \
 "
 FILES_${PN} += " \
-    ${libdir}/qt5/qml/MeeGo/QOfono/qmldir \
-    ${libdir}/qt5/qml/MeeGo/QOfono/libQOfonoQtDeclarative.so \
+    ${OE_QMAKE_PATH_QML}/MeeGo/QOfono/qmldir \
+    ${OE_QMAKE_PATH_QML}/MeeGo/QOfono/libQOfonoQtDeclarative.so \
 "
 FILES_${PN}-dev += " \
-    ${datadir}/qt5/mkspecs \
+    ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
     ${libdir}/libqofono-qt5.prl \
 "
