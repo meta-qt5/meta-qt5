@@ -59,12 +59,6 @@ FILES_${PN} += " \
     ${datadir}/icons \
     ${libdir}${QT_DIR_NAME}/qtcreator \
 "
-FILES_${PN}-dbg += " \
-    ${libdir}${QT_DIR_NAME}/qtcreator/.debug \
-    ${libdir}${QT_DIR_NAME}/qtcreator/plugins/.debug \
-    ${libdir}${QT_DIR_NAME}/qtcreator/plugins/qmldesigner/.debug \
-    ${libdir}${QT_DIR_NAME}/qtcreator/plugins/qbs/plugins/.debug \
-"
 
 FILES_${PN}-dev += " \
     ${libdir}${QT_DIR_NAME}/qtcreator/*${SOLIBSDEV} \

@@ -55,7 +55,7 @@ SRC_URI += " \
     file://OEQt5Toolchain.cmake \
 "
 
-PACKAGES = "${PN}-tools-dbg ${PN}-tools-dev ${PN}-tools-staticdev ${PN}-tools"
+PACKAGES = "${PN}-tools-dev ${PN}-tools-staticdev ${PN}-tools"
 
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
@@ -69,11 +69,6 @@ FILES_${PN}-tools-dev = " \
 
 FILES_${PN}-tools-staticdev = " \
     ${OE_QMAKE_PATH_LIBS}/*.a \
-"
-
-FILES_${PN}-tools-dbg = " \
-    ${libdir}/.debug \
-    ${OE_QMAKE_PATH_BINS}/.debug \
 "
 
 FILES_${PN}-tools = " \

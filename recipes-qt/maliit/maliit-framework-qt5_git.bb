@@ -33,7 +33,6 @@ FILES_${PN} += "\
 
 FILES_${PN}-dbg += "\
     ${libdir}/maliit-framework-tests \
-    ${OE_QMAKE_PATH_PLUGINS}/platforminputcontexts/.debug \
 "
 
 FILES_${PN}-dev += "\

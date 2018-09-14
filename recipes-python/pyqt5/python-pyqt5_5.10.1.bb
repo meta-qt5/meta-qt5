@@ -64,5 +64,4 @@ do_install() {
 RDEPENDS_${PN} = "python-core python-sip qtbase"
 
 FILES_${PN} += "${libdir}/${PYTHON_DIR}/site-packages ${datadir}/sip/PyQt5/"
-FILES_${PN}-dbg += "${libdir}/${PYTHON_DIR}/site-packages/*/.debug/"
 

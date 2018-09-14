@@ -22,7 +22,6 @@ do_install() {
     cp -R --no-dereference --preserve=mode,links ${S}/content ${D}${datadir}/${P}
 }
 
-FILES_${PN}-dbg += "${datadir}/${P}/.debug"
 FILES_${PN} += "${datadir}"
 
 RDEPENDS_${PN} = "qtdeclarative-qmlplugins qtgraphicaleffects-qmlplugins"
