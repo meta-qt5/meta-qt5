@@ -1,4 +1,4 @@
-From c8840a63123e084cd5b2b3b8f10df72ed0ba2efb Mon Sep 17 00:00:00 2001
+From 7dff9f4506d9d0e3059d0016de748ea2074e19aa Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 3 Sep 2017 09:44:48 -0700
 Subject: [PATCH] linux-clang: Invert conditional for defining QT_SOCKLEN_T

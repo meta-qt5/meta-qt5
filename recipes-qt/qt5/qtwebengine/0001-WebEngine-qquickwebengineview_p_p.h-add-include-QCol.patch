@@ -1,4 +1,4 @@
-From 8638cd129e040e8958570c95a3d4e91d9366f5a8 Mon Sep 17 00:00:00 2001
+From 50a92a60b04d0e6253a903a53f5b01da2d00072d Mon Sep 17 00:00:00 2001
 From: Cleiton Bueno <cleitonrbueno@gmail.com>
 Date: Fri, 25 Dec 2015 18:16:05 -0200
 Subject: [PATCH] WebEngine qquickwebengineview_p_p.h add include QColor

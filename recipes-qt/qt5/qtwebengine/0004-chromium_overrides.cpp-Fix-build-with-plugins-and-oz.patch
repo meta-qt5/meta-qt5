@@ -1,4 +1,4 @@
-From 9e8b0fda6b2338feed486d238a61c2a51e4fd2b3 Mon Sep 17 00:00:00 2001
+From 50ff15028627c8a4cb9556b014291d560197be50 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sun, 10 Jun 2018 10:26:17 +0000
 Subject: [PATCH] chromium_overrides.cpp: Fix build with plugins and ozone
