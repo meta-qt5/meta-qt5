@@ -1,4 +1,4 @@
-From b41e0477f9b7aad73c94833dc750971a606871dc Mon Sep 17 00:00:00 2001
+From 18d57dc5c7946f06f087031be259b9b8922f4691 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 14 Feb 2018 17:08:43 -0800
 Subject: [PATCH] mkspecs/common/gcc-base.conf: Use -I instead of -isystem

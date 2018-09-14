@@ -136,7 +136,7 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "65-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.11
-# 5.11.meta-qt5.6
+# 5.11.meta-qt5.7
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
@@ -172,7 +172,7 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0015-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "6426f1e93622cb08a2286705398e7762cbcd0a45"
+SRCREV_qtwebengine = "89afebb830f616a6e8c43dd37bf34551f243b264"
 SRCREV_chromium = "7085115f51ce9d02cfff216a3f74b1fb6715f38d"
 SRCREV = "${SRCREV_qtwebengine}"
 

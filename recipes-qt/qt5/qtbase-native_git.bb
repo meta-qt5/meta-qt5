@@ -18,7 +18,7 @@ require qt5-git.inc
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-shared
-# 5.11.meta-qt5-shared.7
+# 5.11.meta-qt5-shared.8
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -33,19 +33,19 @@ SRC_URI += "\
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
     file://0013-Upgrade-double-conversion-to-v3.0.0.patch \
-    file://0015-Check-glibc-version-for-renameat2-statx-on-non-boots.patch \
+    file://0014-Check-glibc-version-for-renameat2-statx-on-non-boots.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.10-native
-# 5.11.meta-qt5-native.7
+# 5.11.meta-qt5-native.8
 SRC_URI += " \
-    file://0016-Always-build-uic-and-qvkgen.patch \
+    file://0015-Always-build-uic-and-qvkgen.patch \
 "
 
 # only for qtbase-native
 SRC_URI += " \
-    file://0017-Bootstrap-without-linkat-feature.patch \
+    file://0016-Bootstrap-without-linkat-feature.patch \
 "
 
 CLEANBROKEN = "1"
@@ -135,4 +135,4 @@ do_install() {
     echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
-SRCREV = "b0dce506cc91c4b623eb323db7bbc18469e721c2"
+SRCREV = "49efea26a5fae8c2275999c36c7c8d24cf4125de"

@@ -1,4 +1,4 @@
-From 542b69b5534214e9d0ddb4ba328325d0bfcccb50 Mon Sep 17 00:00:00 2001
+From 4c54d7c45a47a9a63530e821468f7bc76dd78f77 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -31,7 +31,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index 2830a1b1897..6445dc2d5a0 100755
+index 2830a1b189..6445dc2d5a 100755
 --- a/configure
 +++ b/configure
 @@ -712,7 +712,7 @@ fi
@@ -44,7 +44,7 @@ index 2830a1b1897..6445dc2d5a0 100755
  
  # build qmake
 diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
-index 934a18a9249..0f5b1b63334 100644
+index 934a18a924..0f5b1b6333 100644
 --- a/mkspecs/features/configure.prf
 +++ b/mkspecs/features/configure.prf
 @@ -46,14 +46,14 @@ defineTest(qtCompileTest) {
@@ -65,7 +65,7 @@ index 934a18a9249..0f5b1b63334 100644
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
-index b57afcf72d7..afa1c39b3e9 100644
+index b57afcf72d..afa1c39b3e 100644
 --- a/mkspecs/features/qt.prf
 +++ b/mkspecs/features/qt.prf
 @@ -147,7 +147,7 @@ import_plugins:qtConfig(static) {
@@ -89,7 +89,7 @@ index b57afcf72d7..afa1c39b3e9 100644
      # run qmlimportscanner
      qtPrepareTool(QMLIMPORTSCANNER, qmlimportscanner, , system)
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 1903e509c8e..c093dd4592d 100644
+index 1903e509c8..c093dd4592 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
 @@ -69,7 +69,7 @@ defineTest(qtHaveModule) {
@@ -103,7 +103,7 @@ index 1903e509c8e..c093dd4592d 100644
              cmd = perl -w $$system_path($${cmd}.pl)
 diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
 new file mode 100644
-index 00000000000..d90dfeb4482
+index 0000000000..d90dfeb448
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qmake.conf
 @@ -0,0 +1,40 @@
@@ -149,7 +149,7 @@ index 00000000000..d90dfeb4482
 +load(qt_config)
 diff --git a/mkspecs/linux-oe-g++/qplatformdefs.h b/mkspecs/linux-oe-g++/qplatformdefs.h
 new file mode 100644
-index 00000000000..5d22fb41013
+index 0000000000..5d22fb4101
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qplatformdefs.h
 @@ -0,0 +1 @@

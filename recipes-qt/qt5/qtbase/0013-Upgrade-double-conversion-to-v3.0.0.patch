@@ -1,4 +1,4 @@
-From 1f9aefc7b4dee2f64ae64b72f7a20b139feb8440 Mon Sep 17 00:00:00 2001
+From 1f0101170508a11618ed444d3691cb5369daf7e5 Mon Sep 17 00:00:00 2001
 From: Ulf Hermann <ulf.hermann@qt.io>
 Date: Fri, 27 Apr 2018 10:38:18 +0200
 Subject: [PATCH] Upgrade double-conversion to v3.0.0
