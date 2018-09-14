@@ -1,4 +1,4 @@
-From 356ef55b985d8d874f2358b937d396bea52ebff6 Mon Sep 17 00:00:00 2001
+From 9db9a8850602c2446b1a7ee96608fd74cf56a342 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 23 Aug 2018 04:06:17 +0000
 Subject: [PATCH] Fix build with non-glibc libc on musl
@@ -8,12 +8,12 @@ Need to ensure glibc features are not assumed to be linux-wide
 Upstream-Status: Pending
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- Source/JavaScriptCore/heap/MachineStackMarker.cpp                 | 8 ++++----
- .../inspector/JSGlobalObjectInspectorController.cpp               | 2 ++
+ Source/JavaScriptCore/heap/MachineStackMarker.cpp         | 8 ++++----
+ .../inspector/JSGlobalObjectInspectorController.cpp       | 2 ++
  2 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/Source/JavaScriptCore/heap/MachineStackMarker.cpp b/Source/JavaScriptCore/heap/MachineStackMarker.cpp
-index 883914f..ce4e8d3 100644
+index 883914fd3..ce4e8d331 100644
 --- a/Source/JavaScriptCore/heap/MachineStackMarker.cpp
 +++ b/Source/JavaScriptCore/heap/MachineStackMarker.cpp
 @@ -566,7 +566,7 @@ void* MachineThreads::Thread::Registers::stackPointer() const
@@ -53,7 +53,7 @@ index 883914f..ce4e8d3 100644
  // The following sequence depends on glibc's sys/ucontext.h.
  #if CPU(X86)
 diff --git a/Source/JavaScriptCore/inspector/JSGlobalObjectInspectorController.cpp b/Source/JavaScriptCore/inspector/JSGlobalObjectInspectorController.cpp
-index fd7f869..e95391b 100644
+index fd7f869d4..e95391b32 100644
 --- a/Source/JavaScriptCore/inspector/JSGlobalObjectInspectorController.cpp
 +++ b/Source/JavaScriptCore/inspector/JSGlobalObjectInspectorController.cpp
 @@ -51,8 +51,10 @@

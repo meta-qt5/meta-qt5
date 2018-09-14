@@ -1,12 +1,6 @@
 require qt5.inc
 require qt5-git.inc
 
-SRC_URI += "\
-    file://0001-Do-not-skip-build-for-cross-compile.patch \
-    file://0001-Fix-build-with-non-glibc-libc-on-musl.patch \
-    file://0001-WebKitMacros-Append-to-I-and-not-to-isystem.patch \
-"
-
 LICENSE = "BSD & LGPLv2+ | GPL-2.0"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
@@ -14,6 +8,14 @@ LIC_FILES_CHKSUM = " \
 "
 
 DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-native bison-native"
+
+# Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.11
+# 5.11.meta-qt5.1
+SRC_URI += "\
+    file://0001-Do-not-skip-build-for-cross-compile.patch \
+    file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
+    file://0003-WebKitMacros-Append-to-I-and-not-to-isystem.patch \
+"
 
 inherit cmake_qt5 perlnative pythonnative
 
