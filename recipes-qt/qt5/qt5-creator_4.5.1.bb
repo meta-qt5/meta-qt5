@@ -50,7 +50,9 @@ do_install() {
     sed -i 's:@QT5_QMAKE@:${OE_QMAKE_PATH_QT_BINS}:g' ${D}${datadir}/applications/qtcreator.desktop
     chrpath --delete ${D}${libexecdir}/qtcreator/qtcreator_process_stub
     chrpath --delete ${D}${libexecdir}/qtcreator/qbs_processlauncher
-    chrpath --delete ${D}${libdir}/qt5/qtcreator/libqbscore.so.*
+    chrpath --delete ${D}${libdir}/${QT_DIR_NAME}/qtcreator/libqbscore.so.*
+    chrpath --delete ${D}${libdir}/${QT_DIR_NAME}/qtcreator/plugins/qmldesigner/libcomponentsplugin.so
+    chrpath --delete ${D}${libdir}/${QT_DIR_NAME}/qtcreator/plugins/qmldesigner/libqtquickplugin.so
 }
 
 FILES_${PN} += " \
