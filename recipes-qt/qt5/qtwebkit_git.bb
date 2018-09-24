@@ -14,8 +14,8 @@ DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-
 SRC_URI += "\
     file://0001-Do-not-skip-build-for-cross-compile.patch \
     file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
-    file://0003-WebKitMacros-Append-to-I-and-not-to-isystem.patch \
     file://0004-Fix-build-bug-for-armv32-BE.patch \
+    file://0001-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
 "
 
 inherit cmake_qt5 perlnative pythonnative
@@ -40,8 +40,9 @@ ARM_INSTRUCTION_SET_armv7ve = "thumb"
 # https://bugzilla.redhat.com/show_bug.cgi?id=1582954
 CXXFLAGS += "-fpermissive"
 
-EXTRA_OECMAKE = " \
+EXTRA_OECMAKE += " \
     -DPORT=Qt \
+    -DCROSS_COMPILE=ON \
     -DECM_MKSPECS_INSTALL_DIR=${libdir}${QT_DIR_NAME}/mkspecs/modules \
     -DQML_INSTALL_DIR=${OE_QMAKE_PATH_QML} \
 "
@@ -64,7 +65,7 @@ PACKAGECONFIG[fontconfig] = "-DENABLE_TEST_SUPPORT=ON,-DENABLE_TEST_SUPPORT=OFF,
 PACKAGECONFIG[hyphen] = "-DUSE_LIBHYPHEN=ON,-DUSE_LIBHYPHEN=OFF,hyphen"
 
 # remove default ${PN}-examples* set in qt5.inc, because they conflicts with ${PN} from separate webkit-examples recipe
-PACKAGES_remove = "${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples"
+PACKAGES_remove = "${PN}-examples"
 
 QT_MODULE_BRANCH = "dev"
 
