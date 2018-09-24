@@ -1,0 +1,48 @@
+From e07f1fcba5a291ef0ab31fd85fbc4836eda19a66 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Mon, 24 Sep 2018 03:14:29 -0700
+Subject: [PATCH] Fix build with qt 5.11
+
+Fixes
+
+examples/webkitwidgets/scroller/wheel/main.cpp:93:84: error: cannot call
+member function 'int QRandomGenerator::bounded(int)' without object
+         m_wheel1->scrollTo(m_wheel1->currentIndex() +
+QRandomGenerator::bounded(200));
+
+Upstream-Status: Pending
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ examples/webkitwidgets/scroller/wheel/main.cpp | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/examples/webkitwidgets/scroller/wheel/main.cpp b/examples/webkitwidgets/scroller/wheel/main.cpp
+index 11fad08..9a6a225 100644
+--- a/examples/webkitwidgets/scroller/wheel/main.cpp
++++ b/examples/webkitwidgets/scroller/wheel/main.cpp
+@@ -40,7 +40,7 @@
+ 
+ #include <QtWidgets>
+ #include <qmath.h>
+-
++#include <QRandomGenerator>
+ #include "wheelwidget.h"
+ 
+ class MainWindow : public QMainWindow
+@@ -90,9 +90,9 @@ public:
+ private slots:
+     void rotateRandom()
+     {
+-        m_wheel1->scrollTo(m_wheel1->currentIndex() + QRandomGenerator::bounded(200));
+-        m_wheel2->scrollTo(m_wheel2->currentIndex() + QRandomGenerator::bounded(200));
+-        m_wheel3->scrollTo(m_wheel3->currentIndex() + QRandomGenerator::bounded(200));
++        m_wheel1->scrollTo(m_wheel1->currentIndex() + QRandomGenerator::global()->bounded(200));
++        m_wheel2->scrollTo(m_wheel2->currentIndex() + QRandomGenerator::global()->bounded(200));
++        m_wheel3->scrollTo(m_wheel3->currentIndex() + QRandomGenerator::global()->bounded(200));
+     }
+ 
+ private:
+-- 
+2.19.0
+
