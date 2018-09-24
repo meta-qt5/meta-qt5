@@ -1,4 +1,4 @@
-From 067dd79223c12e40930e612964a77066393a4131 Mon Sep 17 00:00:00 2001
+From 21cb4725d17fa2f491da8e1cd228d74d9d890292 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Tue, 21 Aug 2018 00:29:06 +0200
 Subject: [PATCH] Check glibc version for renameat2/statx on non bootstrapped

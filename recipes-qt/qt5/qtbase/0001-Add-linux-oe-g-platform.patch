@@ -1,4 +1,4 @@
-From 4c54d7c45a47a9a63530e821468f7bc76dd78f77 Mon Sep 17 00:00:00 2001
+From a6f4987a281315dacc7b8b55928b9c0793cd0813 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -103,7 +103,7 @@ index 1903e509c8..c093dd4592 100644
              cmd = perl -w $$system_path($${cmd}.pl)
 diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
 new file mode 100644
-index 0000000000..d90dfeb448
+index 0000000000..f34a66599a
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qmake.conf
 @@ -0,0 +1,40 @@
@@ -139,7 +139,7 @@ index 0000000000..d90dfeb448
 +QMAKE_LINK_SHLIB   = $$(OE_QMAKE_LINK)
 +QMAKE_LINK_C       = $$(OE_QMAKE_LINK)
 +QMAKE_LINK_C_SHLIB = $$(OE_QMAKE_LINK)
-+
++QMAKE_CFLAGS_ISYSTEM =
 +# for the SDK
 +isEmpty(QMAKE_QT_CONFIG):QMAKE_QT_CONFIG = $$(OE_QMAKE_QT_CONFIG)
 +

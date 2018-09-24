@@ -1,4 +1,4 @@
-From 3aada36f6706f86b811dafb26e622cd6c99341d6 Mon Sep 17 00:00:00 2001
+From bd82e15fc5d9d5cecade652c8854f33aa71212dd Mon Sep 17 00:00:00 2001
 From: Lei Maohui <leimaohui@cn.fujitsu.com>
 Date: Wed, 29 Aug 2018 18:20:14 +0900
 Subject: [PATCH] double-conversion: support AARCH64EB and arm BE
