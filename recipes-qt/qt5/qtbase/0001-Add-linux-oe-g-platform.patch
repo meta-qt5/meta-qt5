@@ -30,10 +30,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
-diff --git a/configure b/configure
-index 2830a1b189..6445dc2d5a 100755
---- a/configure
-+++ b/configure
+Index: git/configure
+===================================================================
+--- git.orig/configure
++++ git/configure
 @@ -712,7 +712,7 @@ fi
  # is where the resulting variable is written to
  setBootstrapVariable()
@@ -43,10 +43,10 @@ index 2830a1b189..6445dc2d5a 100755
  }
  
  # build qmake
-diff --git a/mkspecs/features/configure.prf b/mkspecs/features/configure.prf
-index 934a18a924..0f5b1b6333 100644
---- a/mkspecs/features/configure.prf
-+++ b/mkspecs/features/configure.prf
+Index: git/mkspecs/features/configure.prf
+===================================================================
+--- git.orig/mkspecs/features/configure.prf
++++ git/mkspecs/features/configure.prf
 @@ -46,14 +46,14 @@ defineTest(qtCompileTest) {
      }
  
@@ -64,10 +64,10 @@ index 934a18a924..0f5b1b6333 100644
              log("yes$$escape_expand(\\n)")
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
-diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
-index b57afcf72d..afa1c39b3e 100644
---- a/mkspecs/features/qt.prf
-+++ b/mkspecs/features/qt.prf
+Index: git/mkspecs/features/qt.prf
+===================================================================
+--- git.orig/mkspecs/features/qt.prf
++++ git/mkspecs/features/qt.prf
 @@ -147,7 +147,7 @@ import_plugins:qtConfig(static) {
          !isEmpty(plug_type) {
              plug_path = $$eval(QT_PLUGIN.$${plug}.PATH)
@@ -88,10 +88,10 @@ index b57afcf72d..afa1c39b3e 100644
  
      # run qmlimportscanner
      qtPrepareTool(QMLIMPORTSCANNER, qmlimportscanner, , system)
-diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 1903e509c8..c093dd4592 100644
---- a/mkspecs/features/qt_functions.prf
-+++ b/mkspecs/features/qt_functions.prf
+Index: git/mkspecs/features/qt_functions.prf
+===================================================================
+--- git.orig/mkspecs/features/qt_functions.prf
++++ git/mkspecs/features/qt_functions.prf
 @@ -69,7 +69,7 @@ defineTest(qtHaveModule) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
@@ -101,11 +101,10 @@ index 1903e509c8..c093dd4592 100644
          exists($${cmd}.pl) {
              $${1}_EXE = $${cmd}.pl
              cmd = perl -w $$system_path($${cmd}.pl)
-diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
-new file mode 100644
-index 0000000000..d90dfeb448
+Index: git/mkspecs/linux-oe-g++/qmake.conf
+===================================================================
 --- /dev/null
-+++ b/mkspecs/linux-oe-g++/qmake.conf
++++ git/mkspecs/linux-oe-g++/qmake.conf
 @@ -0,0 +1,40 @@
 +#
 +# qmake configuration for linux-g++ with modifications for building with OpenEmbedded
@@ -139,7 +138,7 @@ index 0000000000..d90dfeb448
 +QMAKE_LINK_SHLIB   = $$(OE_QMAKE_LINK)
 +QMAKE_LINK_C       = $$(OE_QMAKE_LINK)
 +QMAKE_LINK_C_SHLIB = $$(OE_QMAKE_LINK)
-+
++QMAKE_CFLAGS_ISYSTEM =
 +# for the SDK
 +isEmpty(QMAKE_QT_CONFIG):QMAKE_QT_CONFIG = $$(OE_QMAKE_QT_CONFIG)
 +
@@ -147,10 +146,9 @@ index 0000000000..d90dfeb448
 +
 +load(device_config)
 +load(qt_config)
-diff --git a/mkspecs/linux-oe-g++/qplatformdefs.h b/mkspecs/linux-oe-g++/qplatformdefs.h
-new file mode 100644
-index 0000000000..5d22fb4101
+Index: git/mkspecs/linux-oe-g++/qplatformdefs.h
+===================================================================
 --- /dev/null
-+++ b/mkspecs/linux-oe-g++/qplatformdefs.h
++++ git/mkspecs/linux-oe-g++/qplatformdefs.h
 @@ -0,0 +1 @@
 +#include "../linux-g++/qplatformdefs.h"

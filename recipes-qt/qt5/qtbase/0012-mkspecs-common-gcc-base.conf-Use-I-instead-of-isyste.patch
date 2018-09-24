@@ -18,16 +18,44 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  mkspecs/common/gcc-base.conf | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mkspecs/common/gcc-base.conf b/mkspecs/common/gcc-base.conf
-index 234f71d495..ee3da023e6 100644
---- a/mkspecs/common/gcc-base.conf
-+++ b/mkspecs/common/gcc-base.conf
+Index: git/mkspecs/common/gcc-base.conf
+===================================================================
+--- git.orig/mkspecs/common/gcc-base.conf
++++ git/mkspecs/common/gcc-base.conf
 @@ -46,7 +46,7 @@ QMAKE_CFLAGS_DEBUG         += -g
  QMAKE_CFLAGS_SHLIB         += $$QMAKE_CFLAGS_PIC
  QMAKE_CFLAGS_STATIC_LIB    += $$QMAKE_CFLAGS_PIC
  QMAKE_CFLAGS_APP           += $$QMAKE_CFLAGS_PIC
 -QMAKE_CFLAGS_ISYSTEM        = -isystem
-+QMAKE_CFLAGS_ISYSTEM        = -I
++QMAKE_CFLAGS_ISYSTEM        =
  QMAKE_CFLAGS_YACC          += -Wno-unused -Wno-parentheses
  QMAKE_CFLAGS_HIDESYMS      += -fvisibility=hidden
  QMAKE_CFLAGS_EXCEPTIONS_OFF += -fno-exceptions
+Index: git/mkspecs/common/clang.conf
+===================================================================
+--- git.orig/mkspecs/common/clang.conf
++++ git/mkspecs/common/clang.conf
+@@ -16,7 +16,7 @@ QMAKE_LINK_SHLIB        = $$QMAKE_CXX
+ CONFIG                 += clang_pch_style
+ QMAKE_PCH_OUTPUT_EXT    = .pch
+ 
+-QMAKE_CFLAGS_ISYSTEM             = -isystem
++QMAKE_CFLAGS_ISYSTEM             =
+ QMAKE_CFLAGS_PRECOMPILE          = -x c-header -c ${QMAKE_PCH_INPUT} -o ${QMAKE_PCH_OUTPUT}
+ QMAKE_CFLAGS_USE_PRECOMPILE      = -Xclang -include-pch -Xclang ${QMAKE_PCH_OUTPUT}
+ QMAKE_CFLAGS_LTCG                = -flto
+Index: git/mkspecs/features/toolchain.prf
+===================================================================
+--- git.orig/mkspecs/features/toolchain.prf
++++ git/mkspecs/features/toolchain.prf
+@@ -152,8 +152,8 @@ isEmpty($${target_prefix}.INCDIRS) {
+     }
+ 
+     unix {
+-        isEmpty(QMAKE_DEFAULT_INCDIRS): QMAKE_DEFAULT_INCDIRS = /usr/include /usr/local/include
+-        isEmpty(QMAKE_DEFAULT_LIBDIRS): QMAKE_DEFAULT_LIBDIRS = /lib /usr/lib
++        isEmpty(QMAKE_DEFAULT_INCDIRS) & !cross_compile: QMAKE_DEFAULT_INCDIRS = /usr/include /usr/local/include
++        isEmpty(QMAKE_DEFAULT_LIBDIRS) & !cross_compile: QMAKE_DEFAULT_LIBDIRS = /lib /usr/lib
+     }
+ 
+     cache($${target_prefix}.INCDIRS, set stash, QMAKE_DEFAULT_INCDIRS)
