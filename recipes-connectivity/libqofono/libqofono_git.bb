@@ -32,4 +32,5 @@ FILES_${PN} += " \
 FILES_${PN}-dev += " \
     ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
     ${libdir}/libqofono-qt5.prl \
+    ${datadir}/qt5/mkspecs \
 "
