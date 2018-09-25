@@ -17,21 +17,19 @@ inherit qmake5
 DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native"
 DEPENDS_append_libc-musl = " libexecinfo"
 
-# Patches from https://github.com/meta-qt5/qtcreator/commits/b4.5.1
-# 4.5.1.meta-qt5.2
+SRCREV = "8768e39d3c8e74e583eca3897cc6de53a99c3dde"
+PV = "4.7.1+git${SRCPV}"
+
+# Patches from https://github.com/meta-qt5/qtcreator/commits/b4.7.1
+# 4.7.1.meta-qt5.1
 SRC_URI = " \
-    http://download.qt.io/official_releases/qtcreator/4.5/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
-    file://0001-Fix-Allow-qt-creator-to-build-on-arm-aarch32-and-aar.patch \
-    file://0002-Use-correct-path-prefix.patch \
-    file://0003-botan-check-for-i386-x86_64.patch \
+    git://code.qt.io/qt-creator/qt-creator.git;branch=4.7 \
+    file://0001-Use-correct-path-prefix.patch \
     file://qtcreator.desktop.in \
 "
-SRC_URI_append_libc-musl = " file://0004-Link-with-libexecinfo-on-musl.patch"
+SRC_URI_append_libc-musl = " file://0002-Link-with-libexecinfo-on-musl.patch"
 
-SRC_URI[md5sum] = "bd7fdbcdfa84df1171fb28174353e57f"
-SRC_URI[sha256sum] = "5fdfc8f05694e37162f208616627262c9971749d6958d8881d62933b3b53e909"
-
-S = "${WORKDIR}/qt-creator-opensource-src-${PV}"
+S = "${WORKDIR}/git"
 
 EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 

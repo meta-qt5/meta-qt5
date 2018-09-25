@@ -1,4 +1,4 @@
-From 9841dfba76dba7812405418049f259802cd06163 Mon Sep 17 00:00:00 2001
+From 88afa7173c7d0c97e15d9ee9c58e8c0364799bb7 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 16 Jan 2018 13:26:57 +0000
 Subject: [PATCH] Link with libexecinfo on musl

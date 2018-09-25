@@ -1,4 +1,4 @@
-From 22ff2f705ee47d41c41a0a39bbda454ce54f9819 Mon Sep 17 00:00:00 2001
+From 50443809cc261a3f466cdebd3fa2dd4dda6e6a28 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 25 Sep 2018 23:15:08 +0000
 Subject: [PATCH] Use correct path prefix
@@ -12,7 +12,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/share/qtcreator/translations/translations.pro b/share/qtcreator/translations/translations.pro
-index 5f752f2855..87bc3d9cab 100644
+index 0df9762fcc..de09bc47ed 100644
 --- a/share/qtcreator/translations/translations.pro
 +++ b/share/qtcreator/translations/translations.pro
 @@ -12,10 +12,10 @@ defineReplace(prependAll) {
