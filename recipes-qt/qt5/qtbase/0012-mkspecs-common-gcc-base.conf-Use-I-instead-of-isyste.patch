@@ -1,4 +1,4 @@
-From 4cd70420175107d3d707b66735729f3668a447df Mon Sep 17 00:00:00 2001
+From 9048b31285d643c52b4461bca646c91f1a5729d1 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 14 Feb 2018 17:08:43 -0800
 Subject: [PATCH] mkspecs/common/gcc-base.conf: Use -I instead of -isystem
@@ -13,12 +13,13 @@ make[2]: *** [Makefile:11592: .obj/qgenericpluginfactory.o] Error 1
 
 Upstream-Status: Pending
 
+Change-Id: Ia47832a6339a6ee59c0a6301fc5e552cd28b1029
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- mkspecs/common/clang.conf      | 2 +-
- mkspecs/common/gcc-base.conf   | 2 +-
- mkspecs/features/toolchain.prf | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ mkspecs/common/clang.conf    | 2 +-
+ mkspecs/common/gcc-base.conf | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/mkspecs/common/clang.conf b/mkspecs/common/clang.conf
 index 0fb84bc1b3..68b49b5303 100644
@@ -46,18 +47,3 @@ index 234f71d495..c7d81a902e 100644
  QMAKE_CFLAGS_YACC          += -Wno-unused -Wno-parentheses
  QMAKE_CFLAGS_HIDESYMS      += -fvisibility=hidden
  QMAKE_CFLAGS_EXCEPTIONS_OFF += -fno-exceptions
-diff --git a/mkspecs/features/toolchain.prf b/mkspecs/features/toolchain.prf
-index fdf3d1cdd3..fb5413736f 100644
---- a/mkspecs/features/toolchain.prf
-+++ b/mkspecs/features/toolchain.prf
-@@ -152,8 +152,8 @@ isEmpty($${target_prefix}.INCDIRS) {
-     }
- 
-     unix {
--        isEmpty(QMAKE_DEFAULT_INCDIRS): QMAKE_DEFAULT_INCDIRS = /usr/include /usr/local/include
--        isEmpty(QMAKE_DEFAULT_LIBDIRS): QMAKE_DEFAULT_LIBDIRS = /lib /usr/lib
-+        isEmpty(QMAKE_DEFAULT_INCDIRS) & !cross_compile: QMAKE_DEFAULT_INCDIRS = /usr/include /usr/local/include
-+        isEmpty(QMAKE_DEFAULT_LIBDIRS) & !cross_compile: QMAKE_DEFAULT_LIBDIRS = /lib /usr/lib
-     }
- 
-     cache($${target_prefix}.INCDIRS, set stash, QMAKE_DEFAULT_INCDIRS)
