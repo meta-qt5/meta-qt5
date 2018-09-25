@@ -1,11 +1,20 @@
-Remove path prefix so it can find these tools from buildhost or native packages
+From 22ff2f705ee47d41c41a0a39bbda454ce54f9819 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 25 Sep 2018 23:15:08 +0000
+Subject: [PATCH] Use correct path prefix
 
 Upstream-Status: Pending
+
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
-Index: qt-creator-opensource-src-4.5.1/share/qtcreator/translations/translations.pro
-===================================================================
---- qt-creator-opensource-src-4.5.1.orig/share/qtcreator/translations/translations.pro
-+++ qt-creator-opensource-src-4.5.1/share/qtcreator/translations/translations.pro
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ share/qtcreator/translations/translations.pro | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/share/qtcreator/translations/translations.pro b/share/qtcreator/translations/translations.pro
+index 5f752f2855..87bc3d9cab 100644
+--- a/share/qtcreator/translations/translations.pro
++++ b/share/qtcreator/translations/translations.pro
 @@ -12,10 +12,10 @@ defineReplace(prependAll) {
      return($$result)
  }

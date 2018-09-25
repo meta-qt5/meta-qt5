@@ -17,16 +17,16 @@ inherit qmake5
 DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native"
 DEPENDS_append_libc-musl = " libexecinfo"
 
-# Patches from https://github.com/meta-qt5/qtcreator/commits/b5.4.1
-# 5.4.1.meta-qt5.1
+# Patches from https://github.com/meta-qt5/qtcreator/commits/b4.5.1
+# 4.5.1.meta-qt5.2
 SRC_URI = " \
     http://download.qt.io/official_releases/qtcreator/4.5/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
     file://0001-Fix-Allow-qt-creator-to-build-on-arm-aarch32-and-aar.patch \
-    file://botan-non-x86.patch \
-    file://linguisttool.patch \
+    file://0002-Use-correct-path-prefix.patch \
+    file://0003-botan-check-for-i386-x86_64.patch \
     file://qtcreator.desktop.in \
 "
-SRC_URI_append_libc-musl = " file://0002-Link-with-libexecinfo-on-musl.patch"
+SRC_URI_append_libc-musl = " file://0004-Link-with-libexecinfo-on-musl.patch"
 
 SRC_URI[md5sum] = "bd7fdbcdfa84df1171fb28174353e57f"
 SRC_URI[sha256sum] = "5fdfc8f05694e37162f208616627262c9971749d6958d8881d62933b3b53e909"

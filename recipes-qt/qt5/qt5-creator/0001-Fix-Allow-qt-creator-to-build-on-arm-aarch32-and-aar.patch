@@ -14,7 +14,7 @@ Change-Id: Iddea28f21c9fa1afd2fdd5d16a44e6c96a516a7a
  2 files changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/src/libs/3rdparty/botan/botan.cpp b/src/libs/3rdparty/botan/botan.cpp
-index 87736d5..2e950d8 100644
+index 87736d5fe3..2e950d88bf 100644
 --- a/src/libs/3rdparty/botan/botan.cpp
 +++ b/src/libs/3rdparty/botan/botan.cpp
 @@ -1101,6 +1101,8 @@ class Montgomery_Exponentiator : public Modular_Exponentiator
@@ -76,7 +76,7 @@ index 87736d5..2e950d8 100644
  * Helper Macros for x86 Assembly
  */
 diff --git a/src/libs/3rdparty/botan/botan.h b/src/libs/3rdparty/botan/botan.h
-index d7b90cc..26ca8ac 100644
+index d7b90cc92f..26ca8aca37 100644
 --- a/src/libs/3rdparty/botan/botan.h
 +++ b/src/libs/3rdparty/botan/botan.h
 @@ -85,7 +85,9 @@
