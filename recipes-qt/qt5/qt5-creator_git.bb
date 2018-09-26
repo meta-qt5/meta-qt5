@@ -25,9 +25,10 @@ PV = "4.7.1+git${SRCPV}"
 SRC_URI = " \
     git://code.qt.io/qt-creator/qt-creator.git;branch=4.7 \
     file://0001-Use-correct-path-prefix.patch \
+    file://0002-botan.pro-pass-QMAKE_AR.patch \
     file://qtcreator.desktop.in \
 "
-SRC_URI_append_libc-musl = " file://0002-Link-with-libexecinfo-on-musl.patch"
+SRC_URI_append_libc-musl = " file://0003-Link-with-libexecinfo-on-musl.patch"
 
 S = "${WORKDIR}/git"
 
