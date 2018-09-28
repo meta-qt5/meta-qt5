@@ -133,7 +133,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "67-based"
+QT_MODULE_BRANCH_CHROMIUM = "69-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.11
 # 5.11.meta-qt5.6
@@ -172,8 +172,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0015-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "874ca9668bae643445b282a1681f15dc67008d29"
-SRCREV_chromium = "922a17dfc0045e5ca565faf446c8ce09557e92cf"
+SRCREV_qtwebengine = "8f6fe913d1e7df4f65b023b5a9670167772869fc"
+SRCREV_chromium = "0ba5e6626ae4aff6f32140b810e7650a10181079"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
