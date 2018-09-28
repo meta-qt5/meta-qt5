@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 inherit qmake5
 
-DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native"
+DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg"
 DEPENDS_append_libc-musl = " libexecinfo"
 
 SRCREV = "8768e39d3c8e74e583eca3897cc6de53a99c3dde"
@@ -24,8 +24,8 @@ PV = "4.7.1+git${SRCPV}"
 # 4.7.1.meta-qt5.1
 SRC_URI = " \
     git://code.qt.io/qt-creator/qt-creator.git;branch=4.7 \
-    file://0001-Use-correct-path-prefix.patch \
     file://0002-botan.pro-pass-QMAKE_AR.patch \
+    file://0001-botan-Always-define-BOTAN_ARCH_SWITCH-when-cross-bui.patch \
     file://qtcreator.desktop.in \
 "
 SRC_URI_append_libc-musl = " file://0003-Link-with-libexecinfo-on-musl.patch"
@@ -34,25 +34,22 @@ S = "${WORKDIR}/git"
 
 EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 
-EXTRANATIVEPATH += "chrpath-native"
-
 do_configure_append() {
     # Find native tools
     sed -i 's:${STAGING_BINDIR}.*/qdoc:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qdoc:g' ${B}/Makefile
+    sed -i 's:${STAGING_BINDIR}.*/lrelease:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lrelease:g' ${B}/share/qtcreator/translations/Makefile
+    sed -i 's:${STAGING_BINDIR}.*/lupdate:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lupdate:g' ${B}/share/qtcreator/translations/Makefile
+    sed -i 's:${STAGING_BINDIR}.*/xmlpatterns:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/xmlpatterns:g' ${B}/share/qtcreator/translations/Makefile
+    sed -i 's:${STAGING_BINDIR}.*/lconvert:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lconvert:g' ${B}/share/qtcreator/translations/Makefile
+
 }
 
 do_install() {
     oe_runmake install INSTALL_ROOT=${D}${prefix}
-    oe_runmake install_inst_qch_docs INSTALL_ROOT=${D}${prefix}
     # install desktop and ensure that qt-creator finds qmake
     install -d ${D}${datadir}/applications
     install -m 0644 ${WORKDIR}/qtcreator.desktop.in ${D}${datadir}/applications/qtcreator.desktop
     sed -i 's:@QT5_QMAKE@:${OE_QMAKE_PATH_QT_BINS}:g' ${D}${datadir}/applications/qtcreator.desktop
-    chrpath --delete ${D}${libexecdir}/qtcreator/qtcreator_process_stub
-    chrpath --delete ${D}${libexecdir}/qtcreator/qbs_processlauncher
-    chrpath --delete ${D}${libdir}/${QT_DIR_NAME}/qtcreator/libqbscore.so.*
-    test -e ${D}${libdir}/${QT_DIR_NAME}/qtcreator/plugins/qmldesigner/libcomponentsplugin.so && chrpath --delete ${D}${libdir}/${QT_DIR_NAME}/qtcreator/plugins/qmldesigner/libcomponentsplugin.so
-    test -e ${D}${libdir}/${QT_DIR_NAME}/qtcreator/plugins/qmldesigner/libqtquickplugin.so && chrpath --delete ${D}${libdir}/${QT_DIR_NAME}/qtcreator/plugins/qmldesigner/libqtquickplugin.so
 }
 
 FILES_${PN} += " \
