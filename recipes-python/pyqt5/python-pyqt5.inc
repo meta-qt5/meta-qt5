@@ -6,20 +6,16 @@ LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "\
     file://LICENSE;md5=d32239bcb673463ab874e80d47fae504 \
 "
-DEPENDS = "sip sip-native qtbase python"
-
 SRC_URI = "\
     ${SOURCEFORGE_MIRROR}/pyqt/PyQt5_gpl-${PV}.tar.gz \
 "
-SRC_URI[md5sum] = "be36c2abaffc9daa8b993f1ca982968f"
-SRC_URI[sha256sum] = "9932e971e825ece4ea08f84ad95017837fa8f3f29c6b0496985fa1093661e9ef"
+SRC_URI[md5sum] = "aac3428e90eca5df68c5764282fd9b98"
+SRC_URI[sha256sum] = "c9b57d15601d436faf35dacf8e0acefa220194829a653e771e80b189b3261073"
 
 S = "${WORKDIR}/PyQt5_gpl-${PV}"
 
-
-inherit qmake5 pythonnative python-dir distro_features_check
-# depends on qt4-x11-free
-REQUIRED_DISTRO_FEATURES = "x11"
+inherit qmake5
+DEPENDS = "qtbase"
 
 export BUILD_SYS
 export HOST_SYS
@@ -36,19 +32,19 @@ PYQT_MODULES_aarch64 = "QtCore QtGui QtNetwork QtWidgets"
 do_configure_prepend() {
     cd ${S}
     echo "py_platform = linux" > pyqt.cfg
-    echo "py_inc_dir = %(sysroot)/$includedir/python%(py_major).%(py_minor)" >> pyqt.cfg
-    echo "py_pylib_dir = %(sysroot)/${libdir}/python%(py_major).%(py_minor)" >> pyqt.cfg
-    echo "py_pylib_lib = python%(py_major).%(py_minor)mu" >> pyqt.cfg
-    echo "pyqt_module_dir = ${D}/${libdir}/python%(py_major).%(py_minor)/site-packages" >> pyqt.cfg
+    echo "py_inc_dir = %(sysroot)/$includedir/python${PYTHON_BASEVERSION}${PYTHON_ABI}" >> pyqt.cfg
+    echo "py_pylib_dir = %(sysroot)/${libdir}/python${PYTHON_BASEVERSION}${PYTHON_ABI}" >> pyqt.cfg
+    echo "py_pylib_lib = python${PYTHON_BASEVERSION}${PYTHON_ABI}" >> pyqt.cfg
+    echo "pyqt_module_dir = ${D}/${libdir}/python${PYTHON_BASEVERSION}${PYTHON_ABI}/site-packages" >> pyqt.cfg
     echo "pyqt_bin_dir = ${D}/${bindir}" >> pyqt.cfg
     echo "pyqt_sip_dir = ${D}/${datadir}/sip/PyQt5" >> pyqt.cfg
-    echo "pyuic_interpreter = ${D}/${bindir}/python%(py_major).%(py_minor)" >> pyqt.cfg
+    echo "pyuic_interpreter = ${D}/${bindir}/python${PYTHON_BASEVERSION}${PYTHON_ABI}" >> pyqt.cfg
     echo "pyqt_disabled_features = ${DISABLED_FEATURES}" >> pyqt.cfg
     echo "qt_shared = True" >> pyqt.cfg
     QT_VERSION=`${OE_QMAKE_QMAKE} -query QT_VERSION`
     echo "[Qt $QT_VERSION]" >> pyqt.cfg
     echo "pyqt_modules = ${PYQT_MODULES}" >> pyqt.cfg
-    echo yes | python configure.py --verbose --qmake  ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}/qmake --configuration pyqt.cfg --sysroot ${STAGING_DIR_HOST}
+    echo yes | ${PYTHON} configure.py --verbose --qmake  ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}/qmake --configuration pyqt.cfg --sysroot ${STAGING_DIR_HOST}
 }
 
 do_compile() {
@@ -61,7 +57,6 @@ do_install() {
     oe_runmake install
 }
 
-RDEPENDS_${PN} = "python-core python-sip qtbase"
+FILES_${PN} += "${libdir}/${PYTHON_DIR}${PYTHON_ABI}/site-packages ${datadir}/sip/PyQt5/"
 
-FILES_${PN} += "${libdir}/${PYTHON_DIR}/site-packages ${datadir}/sip/PyQt5/"
-
+RDEPENDS_${PN} = "qtbase"
