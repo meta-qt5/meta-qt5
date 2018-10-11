@@ -1,4 +1,4 @@
-From 46137e8cf94fd24fe5270739da72e03b7bb92673 Mon Sep 17 00:00:00 2001
+From 55670231dcc22e00e08ec44acda8ca93c9368860 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@theqtcompany.com>
 Date: Wed, 10 Feb 2016 09:02:09 +0200
 Subject: [PATCH] Allow a tools-only build
@@ -10,12 +10,12 @@ Subject: [PATCH] Allow a tools-only build
  3 files changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/qt3d.pro b/qt3d.pro
-index 6f759b293..5f07c7c4e 100644
+index 3fc7d14..7311eff 100644
 --- a/qt3d.pro
 +++ b/qt3d.pro
 @@ -1,4 +1,4 @@
--requires(qtConfig(opengl):!html5)
-+!tools-only:requires(qtConfig(opengl):!html5)
+-requires(qtConfig(opengl):!wasm)
++!tools-only:requires(qtConfig(opengl):!wasm)
  
  CONFIG += examples_need_tools
  load(qt_parts)
@@ -29,7 +29,7 @@ index 6f759b293..5f07c7c4e 100644
 +    SUBDIRS = sub_tools
 +}
 diff --git a/src/3rdparty/assimp/assimp_dependency.pri b/src/3rdparty/assimp/assimp_dependency.pri
-index 8ba2d9a41..e973d93dd 100644
+index 8ba2d9a..e973d93 100644
 --- a/src/3rdparty/assimp/assimp_dependency.pri
 +++ b/src/3rdparty/assimp/assimp_dependency.pri
 @@ -1,5 +1,5 @@
@@ -40,7 +40,7 @@ index 8ba2d9a41..e973d93dd 100644
  } else {
      include(assimp.pri)
 diff --git a/tools/tools.pro b/tools/tools.pro
-index c2f692034..24c49ad5a 100644
+index c2f6920..24c49ad 100644
 --- a/tools/tools.pro
 +++ b/tools/tools.pro
 @@ -1,5 +1,5 @@
