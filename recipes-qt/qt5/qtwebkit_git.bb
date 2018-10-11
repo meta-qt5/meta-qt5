@@ -1,8 +1,6 @@
 require qt5.inc
 require qt5-git.inc
 
-SRC_URI += "file://0001-Do-not-skip-build-for-cross-compile.patch"
-
 LICENSE = "BSD & LGPLv2+ | GPL-2.0"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
@@ -10,6 +8,15 @@ LIC_FILES_CHKSUM = " \
 "
 
 DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-native bison-native"
+
+# Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.11
+# 5.11.meta-qt5.2
+SRC_URI += "\
+    file://0001-Do-not-skip-build-for-cross-compile.patch \
+    file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
+    file://0004-Fix-build-bug-for-armv32-BE.patch \
+    file://0001-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
+"
 
 inherit cmake_qt5 perlnative pythonnative
 
@@ -33,8 +40,9 @@ ARM_INSTRUCTION_SET_armv7ve = "thumb"
 # https://bugzilla.redhat.com/show_bug.cgi?id=1582954
 CXXFLAGS += "-fpermissive"
 
-EXTRA_OECMAKE = " \
+EXTRA_OECMAKE += " \
     -DPORT=Qt \
+    -DCROSS_COMPILE=ON \
     -DECM_MKSPECS_INSTALL_DIR=${libdir}${QT_DIR_NAME}/mkspecs/modules \
     -DQML_INSTALL_DIR=${OE_QMAKE_PATH_QML} \
 "
@@ -57,7 +65,7 @@ PACKAGECONFIG[fontconfig] = "-DENABLE_TEST_SUPPORT=ON,-DENABLE_TEST_SUPPORT=OFF,
 PACKAGECONFIG[hyphen] = "-DUSE_LIBHYPHEN=ON,-DUSE_LIBHYPHEN=OFF,hyphen"
 
 # remove default ${PN}-examples* set in qt5.inc, because they conflicts with ${PN} from separate webkit-examples recipe
-PACKAGES_remove = "${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples"
+PACKAGES_remove = "${PN}-examples"
 
 QT_MODULE_BRANCH = "dev"
 

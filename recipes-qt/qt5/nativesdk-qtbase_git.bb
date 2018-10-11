@@ -23,7 +23,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-shared
-# 5.11.meta-qt5-shared.7
+# 5.11.meta-qt5-shared.11
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -38,12 +38,13 @@ SRC_URI += "\
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
     file://0013-Upgrade-double-conversion-to-v3.0.0.patch \
-    file://0015-Check-glibc-version-for-renameat2-statx-on-non-boots.patch \
+    file://0014-Check-glibc-version-for-renameat2-statx-on-non-boots.patch \
+    file://0015-double-conversion-support-AARCH64EB-and-arm-BE.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-native
-# 5.11.meta-qt5-native.7
+# 5.11.meta-qt5-native.11
 SRC_URI += " \
     file://0016-Always-build-uic-and-qvkgen.patch \
 "
@@ -53,39 +54,22 @@ SRC_URI += " \
     file://OEQt5Toolchain.cmake \
 "
 
-PACKAGES = "${PN}-tools-dbg ${PN}-tools-dev ${PN}-tools-staticdev ${PN}-tools"
-
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
-FILES_${PN}-tools-dev = " \
-    ${includedir} \
-    ${FILES_SOLIBSDEV} ${libdir}/*.la \
-    ${libdir}/*.prl \
+FILES_${PN}-dev += " \
     ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
     ${OE_QMAKE_PATH_LIBS}/*.prl \
 "
 
-FILES_${PN}-tools-staticdev = " \
-    ${OE_QMAKE_PATH_LIBS}/*.a \
-"
-
-FILES_${PN}-tools-dbg = " \
-    ${libdir}/.debug \
-    ${OE_QMAKE_PATH_BINS}/.debug \
-"
-
-FILES_${PN}-tools = " \
-    ${libdir}/lib*${SOLIBS} \
-    ${OE_QMAKE_PATH_BINS}/* \
+FILES_${PN} += " \
     ${SDKPATHNATIVE}/environment-setup.d \
-    ${datadir}/cmake \
 "
 
 # qttools binaries are placed in a subdir of bin in order to avoid
 # collisions with qt4. This would trigger debian.bbclass to rename the
 # package, since it doesn't detect binaries in subdirs. Explicitly
 # disable package auto-renaming for the tools-package.
-DEBIAN_NOAUTONAME_${PN}-tools = "1"
+DEBIAN_NOAUTONAME_${PN} = "1"
 
 QT_CONFIG_FLAGS += " \
     -shared \

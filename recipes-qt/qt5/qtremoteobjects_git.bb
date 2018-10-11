@@ -12,7 +12,7 @@ require qt5-git.inc
 DEPENDS += "qtbase qtdeclarative qtremoteobjects-native"
 
 # Patches from https://github.com/meta-qt5/qtremoteobjects/commits/b5.11
-# 5.11.meta-qt5.4
+# 5.11.meta-qt5.5
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
 "

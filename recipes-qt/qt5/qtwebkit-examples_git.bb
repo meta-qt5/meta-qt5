@@ -11,6 +11,8 @@ LIC_FILES_CHKSUM = " \
     file://examples/webkitwidgets/imageanalyzer/imageanalyzer.cpp;endline=39;md5=b0739af76072fbe303dc04b6941e054f \
 "
 
+SRC_URI += "file://0001-Fix-build-with-qt-5.11.patch"
+
 PACKAGECONFIG ?= "examples"
 
 DEPENDS += "qtwebkit qtxmlpatterns"

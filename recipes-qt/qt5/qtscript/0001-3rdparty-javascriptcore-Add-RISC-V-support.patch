@@ -1,4 +1,4 @@
-From 21781f11a71d4e6449d89372aa9cc5b95ce8a67c Mon Sep 17 00:00:00 2001
+From a67b00eb05abcb5242ee21049400a1e4a033389f Mon Sep 17 00:00:00 2001
 From: Alistair Francis <alistair.francis@wdc.com>
 Date: Wed, 18 Jul 2018 14:26:21 -0700
 Subject: [PATCH] 3rdparty/javascriptcore: Add RISC-V support
@@ -45,6 +45,3 @@ index 00caa6d..96942c7 100644
  #define WTF_USE_JSVALUE32 1
  #elif OS(WINDOWS) && COMPILER(MINGW)
  /* Using JSVALUE32_64 causes padding/alignement issues for JITStubArg
--- 
-2.17.1
-
