@@ -11,6 +11,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
+SRC_URI += "file://0001-Software-render-Fix-warnings-flood.patch"
 
 DEPENDS += "qtbase"
 

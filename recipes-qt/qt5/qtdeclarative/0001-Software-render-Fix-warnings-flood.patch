@@ -1,0 +1,33 @@
+From d4f89ae32e0f206dc3609467e9923652d0ec56d1 Mon Sep 17 00:00:00 2001
+From: Friedemann Kleint <Friedemann.Kleint@qt.io>
+Date: Mon, 19 Feb 2018 11:51:24 +0100
+Subject: [PATCH] Software render: Fix warnings flood
+
+Add missing QPainter::end(), fixing:
+
+QBackingStore::endPaint() called with active painter on backingstore paint device
+
+Task-number: QTBUG-66452
+Change-Id: Ia00e61953528b15015b3e41ba1868e670818cf14
+Reviewed-by: Laszlo Agocs <laszlo.agocs@qt.io>
+(cherry picked from commit 047f161b1a706e81034ccd8d4700a3126c16dfe4)
+Upstream-Status: Backport
+---
+ .../scenegraph/adaptations/software/qsgsoftwarerenderer.cpp      | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/quick/scenegraph/adaptations/software/qsgsoftwarerenderer.cpp b/src/quick/scenegraph/adaptations/software/qsgsoftwarerenderer.cpp
+index d403884b4..ffcee5f56 100644
+--- a/src/quick/scenegraph/adaptations/software/qsgsoftwarerenderer.cpp
++++ b/src/quick/scenegraph/adaptations/software/qsgsoftwarerenderer.cpp
+@@ -156,6 +156,7 @@ void QSGSoftwareRenderer::render()
+     m_flushRegion = renderNodes(&painter);
+     qint64 renderTime = renderTimer.elapsed();
+ 
++    painter.end();
+     if (m_backingStore != nullptr)
+         m_backingStore->endPaint();
+ 
+-- 
+2.19.1
+
