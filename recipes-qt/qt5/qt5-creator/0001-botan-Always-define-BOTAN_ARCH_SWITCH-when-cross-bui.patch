@@ -1,0 +1,26 @@
+From 766e5b37a42b440b66823262eb553f9981940115 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 27 Sep 2018 20:48:17 -0700
+Subject: [PATCH] botan: Always define BOTAN_ARCH_SWITCH when cross-building
+
+this helps in compiling botan for non-x86 architectures
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/libs/botan/botan.pro | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/libs/botan/botan.pro b/src/libs/botan/botan.pro
+index 0c939b2a30..6e1a85fe84 100644
+--- a/src/libs/botan/botan.pro
++++ b/src/libs/botan/botan.pro
+@@ -18,6 +18,7 @@ else: clang: BOTAN_CC_TYPE = clang
+ else: BOTAN_CC_TYPE = gcc
+ contains(QT_ARCH, i386): BOTAN_ARCH_SWITCH = "--cpu=x86"
+ else: contains(QT_ARCH, x86_64): BOTAN_ARCH_SWITCH = "--cpu=x86_64"
++else: BOTAN_ARCH_SWITCH = --cpu=$$QT_ARCH
+ BOTAN_MODULES = aes aes_ssse3 auto_rng bigint block cbc ctr des dh dsa ec_group ecdh ecdsa entropy \
+                 filters hmac mode_pad pubkey rsa sha1 sha1_sse2 sha1_x86 sha2_32 sha2_32_x86 \
+                 sha2_64 simd system_rng,emsa_pkcs1,pbes2,pbkdf2
+-- 2.19.0
+

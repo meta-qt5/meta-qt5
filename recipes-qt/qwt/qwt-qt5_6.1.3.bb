@@ -40,7 +40,6 @@ PACKAGES_prepend = "${PN}-examples ${PN}-features ${PN}-plugins "
 FILES_${PN}-examples = "${bindir}/*"
 FILES_${PN}-features = "${prefix}/features"
 FILES_${PN}-plugins = "${prefix}/plugins/designer/*.so"
-FILES_${PN}-dbg += "${prefix}/plugins/designer/.debug"
 FILES_${PN}-doc += "${prefix}/doc"
 
 INSANE_SKIP_${PN}-plugins += "libdir"

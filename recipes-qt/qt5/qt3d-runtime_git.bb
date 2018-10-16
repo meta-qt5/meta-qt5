@@ -7,6 +7,8 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
 "
 
+SRC_URI += "file://0001-runtime-Include-missing-QCoreApplication-header.patch"
+
 DEPENDS += "qtbase qtdeclarative qt3d"
 
 QT_MODULE_BRANCH = "2.1"

@@ -16,7 +16,7 @@ DEPENDS += " \
     nss-native \
     nspr-native \
     ninja-native \
-    yasm-native \
+    nasm-native \
     bison-native \
     qtwebchannel \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols qtquickcontrols2 \
@@ -136,7 +136,7 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "69-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.11
-# 5.11.meta-qt5.6
+# 5.11.meta-qt5.7
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
@@ -170,6 +170,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0013-chromium-musl-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty \
     file://chromium/0014-chromium-musl-include-asm-generic-ioctl.h-for-TCGETS.patch;patchdir=src/3rdparty \
     file://chromium/0015-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
+    file://chromium/0016-chromium-musl-Use-_fpstate-instead-of-_libc_fpstate-on-linux.patch;patchdir=src/3rdparty \
+    file://chromium/0017-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get-__WORDSIZE-on.patch;patchdir=src/3rdparty \
 "
 
 SRCREV_qtwebengine = "75f6f4d3178d9356aff9a5a14f8601ebc8b70c95"

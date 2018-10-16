@@ -28,8 +28,6 @@ FILES_${PN} += "\
     ${datadir} \
 "
 
-FILES_${PN}-dbg += "${libdir}/maliit/plugins/.debug"
-
 S= "${WORKDIR}/git"
 
 EXTRA_OEMAKE += "INSTALL_ROOT=${D}"

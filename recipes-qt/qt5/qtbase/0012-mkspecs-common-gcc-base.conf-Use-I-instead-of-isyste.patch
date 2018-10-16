@@ -1,4 +1,4 @@
-From b41e0477f9b7aad73c94833dc750971a606871dc Mon Sep 17 00:00:00 2001
+From 9048b31285d643c52b4461bca646c91f1a5729d1 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 14 Feb 2018 17:08:43 -0800
 Subject: [PATCH] mkspecs/common/gcc-base.conf: Use -I instead of -isystem
@@ -13,13 +13,29 @@ make[2]: *** [Makefile:11592: .obj/qgenericpluginfactory.o] Error 1
 
 Upstream-Status: Pending
 
+Change-Id: Ia47832a6339a6ee59c0a6301fc5e552cd28b1029
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
+ mkspecs/common/clang.conf    | 2 +-
  mkspecs/common/gcc-base.conf | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/mkspecs/common/clang.conf b/mkspecs/common/clang.conf
+index 0fb84bc1b3..68b49b5303 100644
+--- a/mkspecs/common/clang.conf
++++ b/mkspecs/common/clang.conf
+@@ -16,7 +16,7 @@ QMAKE_LINK_SHLIB        = $$QMAKE_CXX
+ CONFIG                 += clang_pch_style
+ QMAKE_PCH_OUTPUT_EXT    = .pch
+ 
+-QMAKE_CFLAGS_ISYSTEM             = -isystem
++QMAKE_CFLAGS_ISYSTEM             =
+ QMAKE_CFLAGS_PRECOMPILE          = -x c-header -c ${QMAKE_PCH_INPUT} -o ${QMAKE_PCH_OUTPUT}
+ QMAKE_CFLAGS_USE_PRECOMPILE      = -Xclang -include-pch -Xclang ${QMAKE_PCH_OUTPUT}
+ QMAKE_CFLAGS_LTCG                = -flto
 diff --git a/mkspecs/common/gcc-base.conf b/mkspecs/common/gcc-base.conf
-index 234f71d495..ee3da023e6 100644
+index 234f71d495..c7d81a902e 100644
 --- a/mkspecs/common/gcc-base.conf
 +++ b/mkspecs/common/gcc-base.conf
 @@ -46,7 +46,7 @@ QMAKE_CFLAGS_DEBUG         += -g
@@ -27,7 +43,7 @@ index 234f71d495..ee3da023e6 100644
  QMAKE_CFLAGS_STATIC_LIB    += $$QMAKE_CFLAGS_PIC
  QMAKE_CFLAGS_APP           += $$QMAKE_CFLAGS_PIC
 -QMAKE_CFLAGS_ISYSTEM        = -isystem
-+QMAKE_CFLAGS_ISYSTEM        = -I
++QMAKE_CFLAGS_ISYSTEM        =
  QMAKE_CFLAGS_YACC          += -Wno-unused -Wno-parentheses
  QMAKE_CFLAGS_HIDESYMS      += -fvisibility=hidden
  QMAKE_CFLAGS_EXCEPTIONS_OFF += -fno-exceptions

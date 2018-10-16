@@ -1,0 +1,80 @@
+From cd006f4a79b3c1435a8a8321b5af9191f104bbb3 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Wed, 26 Sep 2018 21:14:06 +0000
+Subject: [PATCH] botan.pro: pass QMAKE_AR
+
+* otherwise AR from environment sets it with cqs params, e.g.:
+  x86_64-oe-linux-ar cqs
+  from QMAKE_AR = ${OE_QMAKE_AR} cqs
+
+  but then botan's Makefile will add "crs" after it causing:
+  http://errors.yoctoproject.org/Errors/Details/194653/
+
+  x86_64-oe-linux-ar cqs crs libbotan-2.a build/obj/lib/botan_all.o build/obj/lib/botan_all_ssse3.o
+  x86_64-oe-linux-ar: libbotan-2.a: No such file or directory
+  Makefile:79: recipe for target 'libbotan-2.a' failed
+  make[4]: *** [libbotan-2.a] Error 1
+
+* add --ar-options parameter to botan configure and respect the
+  value when set (before cc.ar_options and osinfo.ar_options)
+  then use this to pass empty ar_options as we already include
+  the options in ar_command
+
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/libs/3rdparty/botan/configure.py | 13 ++++++++++++-
+ src/libs/botan/botan.pro             |  1 +
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/src/libs/3rdparty/botan/configure.py b/src/libs/3rdparty/botan/configure.py
+index b09f07bb5e..2b5b9c6417 100755
+--- a/src/libs/3rdparty/botan/configure.py
++++ b/src/libs/3rdparty/botan/configure.py
+@@ -321,6 +321,9 @@ def process_command_line(args): # pylint: disable=too-many-locals
+     target_group.add_option('--ar-command', dest='ar_command', metavar='AR', default=None,
+                             help='set path to static archive creator')
+ 
++    target_group.add_option('--ar-options', dest='ar_options', metavar='crs', default='crs',
++                            help='set options for static archive creator')
++
+     target_group.add_option('--msvc-runtime', metavar='RT', default=None,
+                             help='specify MSVC runtime (MT, MD, MTd, MDd)')
+ 
+@@ -1786,6 +1789,14 @@ def create_template_vars(source_paths, build_paths, options, modules, cc, arch,
+ 
+         return osinfo.ar_command
+ 
++    def ar_options():
++        if options.ar_options:
++            return options.ar_options
++        if cc.ar_options:
++            return cc.ar_options
++
++        return osinfo.ar_options
++
+     def choose_endian(arch_info, options):
+         if options.with_endian != None:
+             return options.with_endian
+@@ -1938,7 +1949,7 @@ def create_template_vars(source_paths, build_paths, options, modules, cc, arch,
+         'post_link_cmd': '',
+ 
+         'ar_command': ar_command(),
+-        'ar_options': cc.ar_options or osinfo.ar_options,
++        'ar_options': ar_options(),
+         'ar_output_to': cc.ar_output_to,
+ 
+         'link_to': ' '.join(
+diff --git a/src/libs/botan/botan.pro b/src/libs/botan/botan.pro
+index 0c939b2a30..e8082c4bbb 100644
+--- a/src/libs/botan/botan.pro
++++ b/src/libs/botan/botan.pro
+@@ -46,6 +46,7 @@ configure.variable_out = BOTAN_MAKEFILE
+ configure.commands = cd $$BOTAN_BUILD_DIR_FOR_SHELL && \
+                      python $$CONFIGURE_FILE_PATH_FOR_SHELL \
+                      --cc=$$BOTAN_CC_TYPE --cc-bin=$$shell_quote($$QMAKE_CXX) \
++                     --ar-command=$$shell_quote($$QMAKE_AR) --ar-options=$$shell_quote(' ') \
+                      $$BOTAN_ARCH_SWITCH $$BOTAN_OS_SWITCH $$OTHER_FLAGS
+ QMAKE_EXTRA_COMPILERS += configure
+ 

@@ -21,19 +21,16 @@ do_install_append() {
 
 PACKAGES += "${PN}-tests"
 
-FILES_${PN}-dbg += " \
-    /lib/libqofono-qt5/tests/.debug \
-    ${libdir}/qt5/qml/MeeGo/QOfono/.debug \
-"
 FILES_${PN}-tests = " \
     ${libdir}/libqofono-qt5/tests/tst_* \
     /opt/tests/libqofono-qt5 \
 "
 FILES_${PN} += " \
-    ${libdir}/qt5/qml/MeeGo/QOfono/qmldir \
-    ${libdir}/qt5/qml/MeeGo/QOfono/libQOfonoQtDeclarative.so \
+    ${OE_QMAKE_PATH_QML}/MeeGo/QOfono/qmldir \
+    ${OE_QMAKE_PATH_QML}/MeeGo/QOfono/libQOfonoQtDeclarative.so \
 "
 FILES_${PN}-dev += " \
-    ${datadir}/qt5/mkspecs \
+    ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
     ${libdir}/libqofono-qt5.prl \
+    ${datadir}/qt5/mkspecs \
 "

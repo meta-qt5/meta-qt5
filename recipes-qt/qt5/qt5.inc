@@ -1,5 +1,5 @@
 # Copyright (C) 2012, 2014 O.S. Systems Software LTDA.
-# Copyright (C) 2013 Martin Jansa <martin.jansa@gmail.com>
+# Copyright (C) 2013-2018 Martin Jansa <martin.jansa@gmail.com>
 
 inherit qmake5
 
@@ -48,14 +48,11 @@ python __anonymous() {
 # Many examples come with libraries installed outside of standard libdir,
 # suppress QA check complaining
 INSANE_SKIP_${PN}-dbg += "libdir"
-INSANE_SKIP_${PN}-examples += "libdir"
-INSANE_SKIP_${PN}-examples-dbg += "libdir"
-INSANE_SKIP_${PN}-examples-dev += "libdir dev-elf"
+INSANE_SKIP_${PN}-examples += "libdir staticdev dev-so"
 
-PACKAGES =. "${PN}-qmlplugins-dbg ${PN}-tools-dbg ${PN}-plugins-dbg ${PN}-qmldesigner ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples-dev ${PN}-examples-staticdev ${PN}-examples-dbg ${PN}-examples "
+PACKAGES =. "${PN}-qmldesigner ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples "
 
 ALLOW_EMPTY_${PN} = "1"
-ALLOW_EMPTY_${PN}-dbg = "1"
 ALLOW_EMPTY_${PN}-plugins = "1"
 ALLOW_EMPTY_${PN}-qmlplugins = "1"
 
@@ -70,27 +67,6 @@ RRECOMMENDS_${PN}-dev = " \
     ${PN}-mkspecs \
     ${PN}-qmldesigner \
     "
-
-RRECOMMENDS_${PN}-dbg = " \
-    ${PN}-plugins-dbg \
-    ${PN}-qmlplugins-dbg \
-    "
-
-# extra -dbg packages
-FILES_${PN}-qmlplugins-dbg = " \
-    ${OE_QMAKE_PATH_QML}/*/.debug \
-    ${OE_QMAKE_PATH_QML}/*/*/.debug \
-    ${OE_QMAKE_PATH_QML}/*/*/*/.debug \
-    ${OE_QMAKE_PATH_QML}/*/*/*/*/.debug \
-"
-FILES_${PN}-tools-dbg = " \
-    ${OE_QMAKE_PATH_BINS}/.debug \
-"
-FILES_${PN}-plugins-dbg = " \
-    ${OE_QMAKE_PATH_PLUGINS}/*/.debug/* \
-    ${OE_QMAKE_PATH_PLUGINS}/*/*/.debug/* \
-    ${OE_QMAKE_PATH_PLUGINS}/*/*/*/.debug/* \
-"
 
 # extra packages
 FILES_${PN}-qmldesigner += " \
@@ -163,10 +139,6 @@ FILES_${PN}-dev += " \
     ${OE_QMAKE_PATH_LIBS}/*.la \
     ${OE_QMAKE_PATH_HEADERS}/* \
 "
-FILES_${PN}-dbg += " \
-    ${OE_QMAKE_PATH_LIBS}/.debug \
-    ${OE_QMAKE_PATH_LIBEXECS}/.debug \
-"
 FILES_${PN}-staticdev += " \
     ${OE_QMAKE_PATH_LIBS}/*.a \
     ${OE_QMAKE_PATH_PLUGINS}/*/*.a \
@@ -183,37 +155,7 @@ FILES_${PN}-staticdev += " \
     ${OE_QMAKE_PATH_QML}/*/*/*/*/*.prl \
 "
 FILES_${PN}-examples = " \
-    ${OE_QMAKE_PATH_EXAMPLES}/* \
-"
-FILES_${PN}-examples-dev = " \
-    ${OE_QMAKE_PATH_EXAMPLES}/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*${SOLIBSDEV} \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*/*${SOLIBSDEV} \
-"
-FILES_${PN}-examples-dbg = " \
-    ${OE_QMAKE_PATH_EXAMPLES}/.debug \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/.debug \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/.debug \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/.debug \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/.debug \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/.debug \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/.debug \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*/.debug \
-"
-FILES_${PN}-examples-staticdev = " \
-    ${OE_QMAKE_PATH_EXAMPLES}/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*.a \
-    ${OE_QMAKE_PATH_EXAMPLES}/*/*/*/*/*/*/*/*.a \
+    ${OE_QMAKE_PATH_EXAMPLES} \
 "
 
 PATH_prepend = "${STAGING_DIR_NATIVE}${OE_QMAKE_PATH_QT_BINS}:"

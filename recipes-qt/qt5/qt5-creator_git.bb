@@ -17,30 +17,36 @@ inherit qmake5
 DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg"
 DEPENDS_append_libc-musl = " libexecinfo"
 
-# Patches from https://github.com/meta-qt5/qtcreator/commits/b5.4.1
-# 5.4.1.meta-qt5.1
+SRCREV = "8768e39d3c8e74e583eca3897cc6de53a99c3dde"
+PV = "4.7.1+git${SRCPV}"
+
+# Patches from https://github.com/meta-qt5/qtcreator/commits/b4.7.1
+# 4.7.1.meta-qt5.1
 SRC_URI = " \
-    http://download.qt.io/official_releases/qtcreator/4.5/${PV}/qt-creator-opensource-src-${PV}.tar.gz \
-    file://0001-Fix-Allow-qt-creator-to-build-on-arm-aarch32-and-aar.patch \
+    git://code.qt.io/qt-creator/qt-creator.git;branch=4.7 \
+    file://0002-botan.pro-pass-QMAKE_AR.patch \
+    file://0001-botan-Always-define-BOTAN_ARCH_SWITCH-when-cross-bui.patch \
     file://qtcreator.desktop.in \
 "
-SRC_URI_append_libc-musl = " file://0002-Link-with-libexecinfo-on-musl.patch"
+SRC_URI_append_libc-musl = " file://0003-Link-with-libexecinfo-on-musl.patch"
 
-SRC_URI[md5sum] = "bd7fdbcdfa84df1171fb28174353e57f"
-SRC_URI[sha256sum] = "5fdfc8f05694e37162f208616627262c9971749d6958d8881d62933b3b53e909"
-
-S = "${WORKDIR}/qt-creator-opensource-src-${PV}"
+S = "${WORKDIR}/git"
 
 EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 
 do_configure_append() {
     # Find native tools
     sed -i 's:${STAGING_BINDIR}.*/qdoc:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qdoc:g' ${B}/Makefile
+    if [ -e ${B}/share/qtcreator/translations/Makefile ]; then
+        sed -i 's:${STAGING_BINDIR}.*/lrelease:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lrelease:g' ${B}/share/qtcreator/translations/Makefile
+        sed -i 's:${STAGING_BINDIR}.*/lupdate:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lupdate:g' ${B}/share/qtcreator/translations/Makefile
+        sed -i 's:${STAGING_BINDIR}.*/xmlpatterns:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/xmlpatterns:g' ${B}/share/qtcreator/translations/Makefile
+        sed -i 's:${STAGING_BINDIR}.*/lconvert:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lconvert:g' ${B}/share/qtcreator/translations/Makefile
+    fi
 }
 
 do_install() {
     oe_runmake install INSTALL_ROOT=${D}${prefix}
-    oe_runmake install_inst_qch_docs INSTALL_ROOT=${D}${prefix}
     # install desktop and ensure that qt-creator finds qmake
     install -d ${D}${datadir}/applications
     install -m 0644 ${WORKDIR}/qtcreator.desktop.in ${D}${datadir}/applications/qtcreator.desktop
@@ -52,12 +58,6 @@ FILES_${PN} += " \
     ${datadir}/metainfo \
     ${datadir}/icons \
     ${libdir}${QT_DIR_NAME}/qtcreator \
-"
-FILES_${PN}-dbg += " \
-    ${libdir}${QT_DIR_NAME}/qtcreator/.debug \
-    ${libdir}${QT_DIR_NAME}/qtcreator/plugins/.debug \
-    ${libdir}${QT_DIR_NAME}/qtcreator/plugins/qmldesigner/.debug \
-    ${libdir}${QT_DIR_NAME}/qtcreator/plugins/qbs/plugins/.debug \
 "
 
 FILES_${PN}-dev += " \

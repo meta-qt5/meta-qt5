@@ -24,5 +24,3 @@ do_install_append() {
 
 FILES_${PN} += "${libdir}/${P}"
 RDEPENDS_${PN} += "qtdeclarative-qmlplugins"
-
-FILES_${PN}-dbg += "${libdir}/${P}/.debug"
