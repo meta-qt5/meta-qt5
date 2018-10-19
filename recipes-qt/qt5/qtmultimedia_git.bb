@@ -37,4 +37,4 @@ SRC_URI += "\
 # http://errors.yoctoproject.org/Errors/Build/44914/
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-SRCREV = "7750d9014ee38cffe349af5c50f715774e7b1982"
+SRCREV = "30cbbd98e7159de08bb71ab4332dbd0bab19eba5"
