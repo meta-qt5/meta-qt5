@@ -38,6 +38,7 @@ SRC_URI += "\
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
     file://0014-Check-glibc-version-for-renameat2-statx-on-non-boots.patch \
+    file://0015-Disable-ltcg-for-host_build.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
