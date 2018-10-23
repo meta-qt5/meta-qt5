@@ -1,4 +1,4 @@
-From 986bf2ecd7b450dceff5cb0f3f76fe886b58d884 Mon Sep 17 00:00:00 2001
+From e6b0d8e952706f450ba6204ffe894330f2087f86 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 25 Sep 2018 12:59:05 -0700
 Subject: [PATCH] elf_reader.cc: include <sys/reg.h> to get __WORDSIZE on musl
@@ -6,14 +6,15 @@ Subject: [PATCH] elf_reader.cc: include <sys/reg.h> to get __WORDSIZE on musl
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- chromium/third_party/breakpad/breakpad/configure.ac          | 2 +-
- .../breakpad/breakpad/src/common/dwarf/elf_reader.cc         | 5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ chromium/third_party/breakpad/breakpad/configure.ac            | 2 +-
+ .../breakpad/breakpad/src/common/dwarf/elf_reader.cc           | 3 ++-
+ .../breakpad/breakpad/src/common/linux/elf_core_dump.h         | 1 +
+ 3 files changed, 4 insertions(+), 2 deletions(-)
 
-Index: 3rdparty/chromium/third_party/breakpad/breakpad/configure.ac
-===================================================================
---- 3rdparty.orig/chromium/third_party/breakpad/breakpad/configure.ac
-+++ 3rdparty/chromium/third_party/breakpad/breakpad/configure.ac
+diff --git a/chromium/third_party/breakpad/breakpad/configure.ac b/chromium/third_party/breakpad/breakpad/configure.ac
+index 9cca5aa069..04139a728c 100644
+--- a/chromium/third_party/breakpad/breakpad/configure.ac
++++ b/chromium/third_party/breakpad/breakpad/configure.ac
 @@ -72,7 +72,7 @@ AC_ARG_ENABLE(m32,
  AC_HEADER_STDC
  AC_SYS_LARGEFILE
@@ -23,10 +24,10 @@ Index: 3rdparty/chromium/third_party/breakpad/breakpad/configure.ac
  AC_CHECK_FUNCS([arc4random getrandom])
  
  AX_CXX_COMPILE_STDCXX(11, noext, mandatory)
-Index: 3rdparty/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_reader.cc
-===================================================================
---- 3rdparty.orig/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_reader.cc
-+++ 3rdparty/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_reader.cc
+diff --git a/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_reader.cc b/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_reader.cc
+index 4135a51a98..be92b792d3 100644
+--- a/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_reader.cc
++++ b/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_reader.cc
 @@ -29,10 +29,11 @@
  #ifndef _GNU_SOURCE
  #define _GNU_SOURCE  // needed for pread()
@@ -40,10 +41,10 @@ Index: 3rdparty/chromium/third_party/breakpad/breakpad/src/common/dwarf/elf_read
  #include <unistd.h>
  #include <fcntl.h>
  #include <string.h>
-Index: 3rdparty/chromium/third_party/breakpad/breakpad/src/common/linux/elf_core_dump.h
-===================================================================
---- 3rdparty.orig/chromium/third_party/breakpad/breakpad/src/common/linux/elf_core_dump.h
-+++ 3rdparty/chromium/third_party/breakpad/breakpad/src/common/linux/elf_core_dump.h
+diff --git a/chromium/third_party/breakpad/breakpad/src/common/linux/elf_core_dump.h b/chromium/third_party/breakpad/breakpad/src/common/linux/elf_core_dump.h
+index d03c7a88d3..28b55ab630 100644
+--- a/chromium/third_party/breakpad/breakpad/src/common/linux/elf_core_dump.h
++++ b/chromium/third_party/breakpad/breakpad/src/common/linux/elf_core_dump.h
 @@ -33,6 +33,7 @@
  #ifndef COMMON_LINUX_ELF_CORE_DUMP_H_
  #define COMMON_LINUX_ELF_CORE_DUMP_H_

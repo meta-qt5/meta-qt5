@@ -1,4 +1,4 @@
-From d886de89a3afad81d0b3ac012098d064eb00d8ed Mon Sep 17 00:00:00 2001
+From 22a60b7403ba8404e2936caf9126c6c666fa577b Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:09:06 -0700
 Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
@@ -6,15 +6,14 @@ Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
  chromium/base/process/process_metrics_posix.cc    | 4 ++--
- chromium/base/trace_event/malloc_dump_provider.cc | 3 ++-
- chromium/content/child/content_child_helpers.cc   | 2 +-
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ chromium/base/trace_event/malloc_dump_provider.cc | 2 ++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/chromium/base/process/process_metrics_posix.cc b/chromium/base/process/process_metrics_posix.cc
-index 73a52d6210..4867198a50 100644
+index a09bbf2c56..b309f6b694 100644
 --- a/chromium/base/process/process_metrics_posix.cc
 +++ b/chromium/base/process/process_metrics_posix.cc
-@@ -94,14 +94,14 @@ size_t ProcessMetrics::GetMallocUsage() {
+@@ -100,14 +100,14 @@ size_t ProcessMetrics::GetMallocUsage() {
    malloc_statistics_t stats = {0};
    malloc_zone_statistics(nullptr, &stats);
    return stats.size_in_use;
@@ -32,10 +31,10 @@ index 73a52d6210..4867198a50 100644
    return 0;
  #endif
 diff --git a/chromium/base/trace_event/malloc_dump_provider.cc b/chromium/base/trace_event/malloc_dump_provider.cc
-index ffd519133c..0c9131e98e 100644
+index 46fdb3e214..27936e6b20 100644
 --- a/chromium/base/trace_event/malloc_dump_provider.cc
 +++ b/chromium/base/trace_event/malloc_dump_provider.cc
-@@ -197,6 +197,7 @@ MallocDumpProvider::~MallocDumpProvider() = default;
+@@ -77,6 +77,7 @@ MallocDumpProvider::~MallocDumpProvider() = default;
  // the current process.
  bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
                                        ProcessMemoryDump* pmd) {
@@ -43,25 +42,11 @@ index ffd519133c..0c9131e98e 100644
    {
      base::AutoLock auto_lock(emit_metrics_on_memory_dump_lock_);
      if (!emit_metrics_on_memory_dump_)
-@@ -322,7 +323,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
-     pmd->DumpHeapUsage(metrics_by_context, overhead, "malloc");
+@@ -172,6 +173,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
+                           MemoryAllocatorDump::kUnitsBytes,
+                           resident_size - allocated_objects_size);
    }
-   tid_dumping_heap_ = kInvalidThreadId;
--
 +#endif // __GLIBC__
    return true;
  }
  
-diff --git a/chromium/content/child/content_child_helpers.cc b/chromium/content/child/content_child_helpers.cc
-index 7ddeb4d16a..b8c73b09c5 100644
---- a/chromium/content/child/content_child_helpers.cc
-+++ b/chromium/content/child/content_child_helpers.cc
-@@ -25,7 +25,7 @@ namespace content {
- // though, this provides only a partial and misleading value.
- // Unfortunately some telemetry benchmark rely on it and these need to
- // be refactored before getting rid of this. See crbug.com/581365 .
--#if defined(OS_LINUX) || defined(OS_ANDROID)
-+#if defined(__GLIBC__) || defined(OS_ANDROID)
- size_t GetMemoryUsageKB() {
-   struct mallinfo minfo = mallinfo();
-   uint64_t mem_usage =

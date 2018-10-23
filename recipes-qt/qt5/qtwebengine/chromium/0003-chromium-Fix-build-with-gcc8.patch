@@ -1,4 +1,4 @@
-From 4a8e2acea8759c6eafa22d325f6c2e27862404de Mon Sep 17 00:00:00 2001
+From 301d74843b0e897dccfe1c32f27c5b3c608446ae Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Tue, 5 Jun 2018 13:58:16 +0000
 Subject: [PATCH] chromium: Fix build with gcc8
@@ -10,7 +10,7 @@ Subject: [PATCH] chromium: Fix build with gcc8
  3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/mojo/public/c/system/buffer.h b/chromium/mojo/public/c/system/buffer.h
-index 2cc5427..917415f 100644
+index 2cc54270ad..917415f8db 100644
 --- a/chromium/mojo/public/c/system/buffer.h
 +++ b/chromium/mojo/public/c/system/buffer.h
 @@ -30,7 +30,7 @@ struct MOJO_ALIGNAS(8) MojoCreateSharedBufferOptions {
@@ -23,7 +23,7 @@ index 2cc5427..917415f 100644
                     "MojoCreateSharedBufferOptions has wrong size");
  
 diff --git a/chromium/mojo/public/c/system/data_pipe.h b/chromium/mojo/public/c/system/data_pipe.h
-index 3702cdb..a86c8e8 100644
+index 3702cdb624..a86c8e8b32 100644
 --- a/chromium/mojo/public/c/system/data_pipe.h
 +++ b/chromium/mojo/public/c/system/data_pipe.h
 @@ -40,7 +40,7 @@ struct MOJO_ALIGNAS(8) MojoCreateDataPipeOptions {
@@ -36,7 +36,7 @@ index 3702cdb..a86c8e8 100644
                     "MojoCreateDataPipeOptions has wrong size");
  
 diff --git a/chromium/mojo/public/c/system/message_pipe.h b/chromium/mojo/public/c/system/message_pipe.h
-index 9f222f9..4878774 100644
+index 9f222f9aa8..4878774707 100644
 --- a/chromium/mojo/public/c/system/message_pipe.h
 +++ b/chromium/mojo/public/c/system/message_pipe.h
 @@ -35,7 +35,7 @@ struct MOJO_ALIGNAS(8) MojoCreateMessagePipeOptions {
