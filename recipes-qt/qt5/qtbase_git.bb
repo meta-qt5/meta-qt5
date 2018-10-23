@@ -31,6 +31,7 @@ SRC_URI += "\
     file://0013-Upgrade-double-conversion-to-v3.0.0.patch \
     file://0014-Check-glibc-version-for-renameat2-statx-on-non-boots.patch \
     file://0015-double-conversion-support-AARCH64EB-and-arm-BE.patch \
+    file://0016-Disable-ltcg-for-host_build.patch \
 "
 
 
