@@ -1,4 +1,4 @@
-From f63242fbcac990839eff2ce9f970377d6350fd8a Mon Sep 17 00:00:00 2001
+From ca1e8d402703351fd71560f8a5e94ae9304edb85 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Tue, 21 Aug 2018 00:29:06 +0200
 Subject: [PATCH] Check glibc version for renameat2/statx on non bootstrapped
@@ -15,13 +15,14 @@ Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
  1 file changed, 11 insertions(+)
 
 diff --git a/src/corelib/io/qfilesystemengine_unix.cpp b/src/corelib/io/qfilesystemengine_unix.cpp
-index deb4a9f220..ecf23168e7 100644
+index 5a5a3a8..e5469ff 100644
 --- a/src/corelib/io/qfilesystemengine_unix.cpp
 +++ b/src/corelib/io/qfilesystemengine_unix.cpp
-@@ -97,6 +97,17 @@ extern "C" NSString *NSTemporaryDirectory();
+@@ -93,6 +93,17 @@ extern "C" NSString *NSTemporaryDirectory();
+ #ifndef FICLONE
  #  define FICLONE       _IOW(0x94, 9, int)
  #endif
- 
++
 +// renameat2/statx features for non bootstrapped build
 +#ifndef QT_BOOTSTRAPPED
 +#ifdef __GLIBC_PREREQ
@@ -32,7 +33,6 @@ index deb4a9f220..ecf23168e7 100644
 +# define QT_FEATURE_statx -1
 +#endif
 +#endif
-+
- #  if defined(Q_OS_ANDROID)
- // renameat2() and statx() are disabled on Android because quite a few systems
- // come with sandboxes that kill applications that make system calls outside a
+ #endif
+ 
+ #if defined(Q_OS_ANDROID)
