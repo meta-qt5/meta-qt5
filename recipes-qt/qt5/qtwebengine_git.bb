@@ -137,8 +137,6 @@ QT_MODULE_BRANCH_CHROMIUM = "69-based"
 # 5.11.meta-qt5.7
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
-    file://0001-WebEngine-qquickwebengineview_p_p.h-add-include-QCol.patch \
-    file://0002-Include-dependency-to-QCoreApplication-translate.patch \
     file://0003-Force-host-toolchain-configuration.patch \
     file://0004-chromium_overrides.cpp-Fix-build-with-plugins-and-oz.patch \
 "
@@ -170,8 +168,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0017-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get-__WORDSIZE-on.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "e77ed6f1686dab1852106d2ffa5f74e7526dbce9"
-SRCREV_chromium = "156c2b70ceef9a4464a5a241c9f816dea4fd3168"
+SRCREV_qtwebengine = "8eda96bc8ae68387807e079cd557c98c4a452c4f"
+SRCREV_chromium = "d521ec6dd1ed0114b9c6d32b047fb024420a6cda"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
