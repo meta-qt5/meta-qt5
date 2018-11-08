@@ -14,6 +14,16 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
+PACKAGECONFIG ?= "qtdeclarative"
+PACKAGECONFIG[qtdeclarative] = ",,qtdeclarative"
+
+do_configure_prepend() {
+    # disable qtdeclarative test if it isn't enabled by PACKAGECONFIG
+    sed -e 's/qtHaveModule(qml)/OE_QTDECLARATIVE_ENABLED/' -i ${S}/src/src.pro
+}
+
+EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtdeclarative', 'CONFIG+=OE_QTDECLARATIVE_ENABLED', '', d)}"
+
 SRCREV = "803b4cafe125ea18e50e3e6557920b6d705e67f0"
 
 BBCLASSEXTEND =+ "native nativesdk"
