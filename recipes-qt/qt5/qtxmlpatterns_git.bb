@@ -14,7 +14,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-PACKAGECONFIG ?= "qtdeclarative"
+PACKAGECONFIG ?= ""
+PACKAGECONFIG_class-target ?= "qtdeclarative"
 PACKAGECONFIG[qtdeclarative] = ",,qtdeclarative"
 
 do_configure_prepend() {
