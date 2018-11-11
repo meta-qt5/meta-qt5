@@ -69,6 +69,7 @@ PACKAGECONFIG_CONFARGS = " \
     -no-gui \
     -no-sql-mysql \
     -no-sql-sqlite \
+    -no-sql-psql \
     -no-opengl \
     -no-openssl \
     -no-xcb \
