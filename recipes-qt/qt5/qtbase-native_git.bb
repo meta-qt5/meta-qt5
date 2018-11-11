@@ -68,6 +68,7 @@ PACKAGECONFIG_CONFARGS = " \
     -no-qml-debug \
     -no-sql-mysql \
     -no-sql-sqlite \
+    -no-sql-psql \
     -no-opengl \
     -no-openssl \
     -no-xcb \
