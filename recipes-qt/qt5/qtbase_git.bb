@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.11-shared
-# 5.11.meta-qt5-shared.11
+# 5.11.meta-qt5-shared.12
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -31,6 +31,8 @@ SRC_URI += "\
     file://0013-Upgrade-double-conversion-to-v3.0.0.patch \
     file://0014-Check-glibc-version-for-renameat2-statx-on-non-boots.patch \
     file://0015-double-conversion-support-AARCH64EB-and-arm-BE.patch \
+    file://0016-Disable-ltcg-for-host_build.patch \
+    file://0017-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
 "
 
 
@@ -172,6 +174,11 @@ deltask generate_qt_config_file
 
 XPLATFORM_toolchain-clang = "linux-oe-clang"
 XPLATFORM ?= "linux-oe-g++"
+
+# Causes qdrawhelper.s: Error: unaligned opcodes detected in executable segment
+# when building qtbase/5.6.3+gitAUTOINC+e6f8b072d2-r0/git/src/gui/painting/qdrawhelper.cpp
+ARM_INSTRUCTION_SET_armv4 = "arm"
+ARM_INSTRUCTION_SET_armv5 = "arm"
 
 do_configure() {
     # Regenerate header files when they are included in source tarball
