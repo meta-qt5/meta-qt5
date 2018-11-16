@@ -168,8 +168,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0017-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get-__WORDSIZE-on.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "40bd9e91108045f1e393f4c98d19cd8df4ee73ce"
-SRCREV_chromium = "d521ec6dd1ed0114b9c6d32b047fb024420a6cda"
+SRCREV_qtwebengine = "5f4e77307b38e2f8155063e249a6c98802b9175f"
+SRCREV_chromium = "91432e048e9bef479cc61f97d6ab4599121a1990"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
