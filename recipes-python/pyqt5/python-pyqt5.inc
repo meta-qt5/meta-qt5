@@ -22,6 +22,8 @@ export HOST_SYS
 export STAGING_INCDIR
 export STAGING_LIBDIR
 
+PARALLEL_MAKEINST = ""
+
 DISABLED_FEATURES = "PyQt_Desktop_OpenGL PyQt_Accessibility PyQt_SessionManager"
 
 DISABLED_FEATURES_append_arm = " PyQt_qreal_double"
