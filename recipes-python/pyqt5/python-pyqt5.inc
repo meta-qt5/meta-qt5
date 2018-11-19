@@ -14,7 +14,7 @@ SRC_URI[sha256sum] = "c9b57d15601d436faf35dacf8e0acefa220194829a653e771e80b189b3
 
 S = "${WORKDIR}/PyQt5_gpl-${PV}"
 
-inherit qmake5
+inherit qmake5 python3native python3-dir
 DEPENDS = "qtbase"
 
 export BUILD_SYS
@@ -56,6 +56,8 @@ do_install() {
     cd ${S}
     oe_runmake install
 }
+
+PARALLEL_MAKEINST = ""
 
 FILES_${PN} += "${libdir}/${PYTHON_DIR}${PYTHON_ABI}/site-packages ${datadir}/sip/PyQt5/"
 
