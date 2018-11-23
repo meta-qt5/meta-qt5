@@ -1,0 +1,31 @@
+From 260e165993fe15a1668cfd36caee18a95b2d2f59 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Mon, 2 Jul 2018 13:32:44 +0300
+Subject: [PATCH] Always use commit sha1 for QML_COMPILE_HASH
+
+git describe can produce different strings for the same sha1, depending
+on the version of git (length of short hash) and whether release tag was
+in place when build was done (v5.11.1-0- vs. v5.11.0-66-).
+
+Instead use rev-parse to get the unambiguous commit sha1 which is also
+what is used from the .tag file.
+
+Change-Id: If378f03eb764e2d858bda5b662106aa4402d6559
+Reviewed-by: Simon Hausmann <simon.hausmann@qt.io>
+---
+ src/qml/qml.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/qml/qml.pro b/src/qml/qml.pro
+index 940ebb325..a76a87b15 100644
+--- a/src/qml/qml.pro
++++ b/src/qml/qml.pro
+@@ -31,7 +31,7 @@ DEFINES += QT_NO_FOREACH
+     !equals(tag, "$${LITERAL_DOLLAR}Format:%H$${LITERAL_DOLLAR}") {
+         QML_COMPILE_HASH = $$tag
+     } else:exists($$PWD/../../.git) {
+-        commit = $$system(git describe --tags --always --long --dirty)
++        commit = $$system(git rev-parse HEAD)
+         QML_COMPILE_HASH = $$commit
+     }
+     compile_hash_contents = \
