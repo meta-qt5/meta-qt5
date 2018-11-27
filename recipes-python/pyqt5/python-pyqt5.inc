@@ -56,7 +56,7 @@ do_compile() {
 
 do_install() {
     cd ${S}
-    oe_runmake install
+    oe_runmake MAKEFLAGS='-j 1' install
 }
 
 FILES_${PN} += "${libdir}/${PYTHON_DIR}${PYTHON_ABI}/site-packages ${datadir}/sip/PyQt5/"
