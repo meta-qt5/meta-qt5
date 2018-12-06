@@ -37,6 +37,7 @@ SRC_URI += "\
     file://0015-double-conversion-support-AARCH64EB-and-arm-BE.patch \
     file://0016-Disable-ltcg-for-host_build.patch \
     file://0017-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
+    file://0020-corelib-Include-sys-types.h-for-uint32_t.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
