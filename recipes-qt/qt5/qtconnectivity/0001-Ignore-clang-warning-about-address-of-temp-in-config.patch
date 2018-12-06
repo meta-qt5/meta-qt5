@@ -1,0 +1,40 @@
+From 162749d36f4bdea62d456516ae2bbcdc84b9ba87 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 6 Dec 2018 13:21:23 -0800
+Subject: [PATCH] Ignore clang warning about address of temp in
+ config.tests/bluez
+
+There is a similar error with gcc which is suppressed by using
+-fpermissive, clang however is more concerned and has specific flag for
+it, this flag is not implemented in gcc so we can not use it via general
+cmdline options to compiler, so resort to using diagnostic pragma
+
+Upstream-Status: Pending
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ config.tests/bluez/main.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/config.tests/bluez/main.cpp b/config.tests/bluez/main.cpp
+index 3fe5ee09..8d1c968a 100644
+--- a/config.tests/bluez/main.cpp
++++ b/config.tests/bluez/main.cpp
+@@ -30,11 +30,14 @@
+ 
+ int main()
+ {
++#pragma clang diagnostic push
++#pragma clang diagnostic ignored "-Waddress-of-temporary"
+ #ifdef BDADDR_NONE
+     bacmp(BDADDR_ANY, BDADDR_NONE);
+ #else
+     bacmp(BDADDR_ANY, BDADDR_LOCAL);
+ #endif
++#pragma clang diagnostic pop
+ 
+     return 0;
+ }
+-- 
+2.19.2
+
