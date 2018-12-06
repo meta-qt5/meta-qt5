@@ -20,3 +20,5 @@ PACKAGECONFIG[bluez] = "-feature-bluez,-no-feature-bluez,${BLUEZ}"
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
 SRCREV = "5f30c77484a9af223d32067f579d440010520eb2"
+
+SRC_URI += "file://0001-Ignore-clang-warning-about-address-of-temp-in-config.patch"
