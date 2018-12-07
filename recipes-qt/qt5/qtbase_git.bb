@@ -34,6 +34,7 @@ SRC_URI += "\
     file://0016-Disable-ltcg-for-host_build.patch \
     file://0017-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0020-corelib-Include-sys-types.h-for-uint32_t.patch \
+    file://0021-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
 "
 
 
