@@ -11,12 +11,11 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  create mode 100644 mkspecs/linux-oe-clang/qmake.conf
  create mode 100644 mkspecs/linux-oe-clang/qplatformdefs.h
 
-diff --git a/mkspecs/linux-oe-clang/qmake.conf b/mkspecs/linux-oe-clang/qmake.conf
-new file mode 100644
-index 0000000000..b0a5630fdd
+Index: git/mkspecs/linux-oe-clang/qmake.conf
+===================================================================
 --- /dev/null
-+++ b/mkspecs/linux-oe-clang/qmake.conf
-@@ -0,0 +1,43 @@
++++ git/mkspecs/linux-oe-clang/qmake.conf
+@@ -0,0 +1,42 @@
 +#
 +# qmake configuration for linux-g++ with modifications for building with OpenEmbedded
 +#
@@ -30,7 +29,6 @@ index 0000000000..b0a5630fdd
 +# QMAKE_<TOOL> (moc, uic, rcc) are gone, overwrite only ar and strip
 +QMAKE_AR              = $$(OE_QMAKE_AR) cqs
 +QMAKE_STRIP           = $$(OE_QMAKE_STRIP)
-+QMAKE_WAYLAND_SCANNER = $$(OE_QMAKE_WAYLAND_SCANNER)
 +
 +include(../common/gcc-base-unix.conf)
 +
@@ -60,10 +58,9 @@ index 0000000000..b0a5630fdd
 +
 +load(device_config)
 +load(qt_config)
-diff --git a/mkspecs/linux-oe-clang/qplatformdefs.h b/mkspecs/linux-oe-clang/qplatformdefs.h
-new file mode 100644
-index 0000000000..880c927b21
+Index: git/mkspecs/linux-oe-clang/qplatformdefs.h
+===================================================================
 --- /dev/null
-+++ b/mkspecs/linux-oe-clang/qplatformdefs.h
++++ git/mkspecs/linux-oe-clang/qplatformdefs.h
 @@ -0,0 +1 @@
 +#include "../linux-clang/qplatformdefs.h"
