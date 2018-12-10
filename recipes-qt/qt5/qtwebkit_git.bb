@@ -47,6 +47,8 @@ EXTRA_OECMAKE += " \
     -DQML_INSTALL_DIR=${OE_QMAKE_PATH_QML} \
 "
 
+EXTRA_OECMAKE_append_toolchain-clang = " -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES:PATH='${STAGING_INCDIR}'"
+
 PACKAGECONFIG ??= "qtlocation qtmultimedia qtsensors qtwebchannel \
     ${@bb.utils.filter('DISTRO_FEATURES', 'x11', d)} \
     fontconfig \
