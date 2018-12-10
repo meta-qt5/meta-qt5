@@ -53,6 +53,7 @@ EXTRA_QMAKEVARS_PRE = "\
     CONFIG+=local-install \
     CONFIG+=nosdk \
     CONFIG+=nodoc \
+    CONFIG+=notests \
     CONFIG+=noxcb \
     CONFIG+=enable-dbus-activation \
     CONFIG+=qt5-inputcontext \

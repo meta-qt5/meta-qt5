@@ -21,6 +21,7 @@ EXTRA_QMAKEVARS_PRE = "\
     MALIIT_PLUGINS_DATA_DIR=${datadir} \
     LIBDIR=${libdir} \
     CONFIG+=nodoc \
+    CONFIG+=notests \
 "
 
 FILES_${PN} += "\
