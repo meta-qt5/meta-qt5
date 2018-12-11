@@ -59,7 +59,6 @@ PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 FILES_${PN}-dev += " \
     ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
     ${OE_QMAKE_PATH_LIBS}/*.prl \
-    ${datadir}/cmake \
 "
 
 FILES_${PN} += " \
