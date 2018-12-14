@@ -7,12 +7,10 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
 "
 
-SRC_URI += "file://0001-runtime-Include-missing-QCoreApplication-header.patch"
-
 DEPENDS += "qtbase qtdeclarative qt3d"
 
-QT_MODULE_BRANCH = "2.1"
+QT_MODULE_BRANCH = "2.2"
 QT_GIT_PROJECT = "qt3dstudio"
-PV = "2.1+git${SRCPV}"
+PV = "2.2+git${SRCPV}"
 
-SRCREV = "95942f6b187c5272074c191424a18e33f8516967"
+SRCREV = "8cdb99c910f2f57972b652c3fb8d520ba615f110"
