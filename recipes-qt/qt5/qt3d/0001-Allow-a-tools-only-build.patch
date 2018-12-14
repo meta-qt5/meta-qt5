@@ -1,4 +1,4 @@
-From 4c68386b6c42853b6ed2903ff81f6019133e6641 Mon Sep 17 00:00:00 2001
+From 80e99dc96f974b8a1731f8873e1cc8eace73d7e2 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Fri, 17 Aug 2018 13:23:58 +0300
 Subject: [PATCH] Allow a tools-only build
@@ -40,13 +40,13 @@ index 8ba2d9a..e973d93 100644
  } else {
      include(assimp.pri)
 diff --git a/tools/tools.pro b/tools/tools.pro
-index c2f6920..24c49ad 100644
+index 1215076..24c49ad 100644
 --- a/tools/tools.pro
 +++ b/tools/tools.pro
 @@ -1,5 +1,5 @@
  TEMPLATE = subdirs
  QT_FOR_CONFIG += 3dcore-private
--qtConfig(assimp):qtConfig(commandlineparser):!cross_compile: {
+-qtConfig(assimp):qtConfig(commandlineparser): {
 +tools-only|qtConfig(assimp):qtConfig(commandlineparser): {
      SUBDIRS += qgltf
  }
