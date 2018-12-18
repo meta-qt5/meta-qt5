@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = " \
 "
 
 # Patches from https://github.com/meta-qt5/qtscript/commits/b5.11
-# 5.11.meta-qt5.1
+# 5.11.meta-qt5.2
 SRC_URI += " \
     file://0001-3rdparty-javascriptcore-Add-RISC-V-support.patch \
     file://0002-Include-asm-sgidefs.h-on-non-glibc-systems.patch \

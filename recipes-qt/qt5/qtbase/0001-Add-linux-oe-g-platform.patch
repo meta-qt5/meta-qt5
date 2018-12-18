@@ -1,4 +1,4 @@
-From a6f4987a281315dacc7b8b55928b9c0793cd0813 Mon Sep 17 00:00:00 2001
+From ff46b3e91a384888b299a5444adc0e9abc110d3b Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform

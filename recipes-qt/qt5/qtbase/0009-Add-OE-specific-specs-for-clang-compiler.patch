@@ -1,20 +1,21 @@
-From 51bc56305205a154db22c1373eb19d835ba2c64e Mon Sep 17 00:00:00 2001
+From d8c3ea974639c70d9a158d4e01c3f782133a46f8 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 3 Sep 2017 09:11:44 -0700
 Subject: [PATCH] Add OE specific specs for clang compiler
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- mkspecs/linux-oe-clang/qmake.conf      | 43 ++++++++++++++++++++++++++
+ mkspecs/linux-oe-clang/qmake.conf      | 42 ++++++++++++++++++++++++++
  mkspecs/linux-oe-clang/qplatformdefs.h |  1 +
- 2 files changed, 44 insertions(+)
+ 2 files changed, 43 insertions(+)
  create mode 100644 mkspecs/linux-oe-clang/qmake.conf
  create mode 100644 mkspecs/linux-oe-clang/qplatformdefs.h
 
-Index: git/mkspecs/linux-oe-clang/qmake.conf
-===================================================================
+diff --git a/mkspecs/linux-oe-clang/qmake.conf b/mkspecs/linux-oe-clang/qmake.conf
+new file mode 100644
+index 0000000000..443d4b0dff
 --- /dev/null
-+++ git/mkspecs/linux-oe-clang/qmake.conf
++++ b/mkspecs/linux-oe-clang/qmake.conf
 @@ -0,0 +1,42 @@
 +#
 +# qmake configuration for linux-g++ with modifications for building with OpenEmbedded
@@ -58,9 +59,10 @@ Index: git/mkspecs/linux-oe-clang/qmake.conf
 +
 +load(device_config)
 +load(qt_config)
-Index: git/mkspecs/linux-oe-clang/qplatformdefs.h
-===================================================================
+diff --git a/mkspecs/linux-oe-clang/qplatformdefs.h b/mkspecs/linux-oe-clang/qplatformdefs.h
+new file mode 100644
+index 0000000000..880c927b21
 --- /dev/null
-+++ git/mkspecs/linux-oe-clang/qplatformdefs.h
++++ b/mkspecs/linux-oe-clang/qplatformdefs.h
 @@ -0,0 +1 @@
 +#include "../linux-clang/qplatformdefs.h"

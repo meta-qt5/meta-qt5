@@ -1,4 +1,4 @@
-From d48cd5f4c46ec4ba129ae8abdfb8707285485933 Mon Sep 17 00:00:00 2001
+From dd16d19bc6b4e8ee5d61fae94cd65b7f10d6e835 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 6 Dec 2018 11:47:52 -0800
 Subject: [PATCH] corelib: Include sys/types.h for uint32_t
@@ -25,6 +25,3 @@ index 5f8a124bcc..fe1711cf1b 100644
  
  #if defined(Q_CC_MSVC)
  #  include <intrin.h>
--- 
-2.19.2
-

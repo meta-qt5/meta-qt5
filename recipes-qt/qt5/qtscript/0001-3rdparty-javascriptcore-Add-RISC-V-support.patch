@@ -1,4 +1,4 @@
-From a67b00eb05abcb5242ee21049400a1e4a033389f Mon Sep 17 00:00:00 2001
+From 028ec1bdce6dde67cc1486e5bee311b69354e41e Mon Sep 17 00:00:00 2001
 From: Alistair Francis <alistair.francis@wdc.com>
 Date: Wed, 18 Jul 2018 14:26:21 -0700
 Subject: [PATCH] 3rdparty/javascriptcore: Add RISC-V support
