@@ -1,4 +1,4 @@
-From 4a8e2acea8759c6eafa22d325f6c2e27862404de Mon Sep 17 00:00:00 2001
+From ad0dd667c3459538149de4479d18c1793af91d43 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Tue, 5 Jun 2018 13:58:16 +0000
 Subject: [PATCH] chromium: Fix build with gcc8
@@ -10,7 +10,7 @@ Subject: [PATCH] chromium: Fix build with gcc8
  3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/mojo/public/c/system/buffer.h b/chromium/mojo/public/c/system/buffer.h
-index 09f6d285f3..e516a09e49 100644
+index 09f6d285f3e..e516a09e498 100644
 --- a/chromium/mojo/public/c/system/buffer.h
 +++ b/chromium/mojo/public/c/system/buffer.h
 @@ -35,7 +35,7 @@ const MojoCreateSharedBufferOptionsFlags
@@ -23,7 +23,7 @@ index 09f6d285f3..e516a09e49 100644
    uint32_t struct_size;
    MojoCreateSharedBufferOptionsFlags flags;
 diff --git a/chromium/mojo/public/c/system/data_pipe.h b/chromium/mojo/public/c/system/data_pipe.h
-index 62adbea1ea..76225858ba 100644
+index 62adbea1ea6..76225858ba8 100644
 --- a/chromium/mojo/public/c/system/data_pipe.h
 +++ b/chromium/mojo/public/c/system/data_pipe.h
 @@ -46,7 +46,7 @@ const MojoCreateDataPipeOptionsFlags MOJO_CREATE_DATA_PIPE_OPTIONS_FLAG_NONE =
@@ -36,7 +36,7 @@ index 62adbea1ea..76225858ba 100644
    MOJO_ALIGNAS(4) uint32_t struct_size;
    MOJO_ALIGNAS(4) MojoCreateDataPipeOptionsFlags flags;
 diff --git a/chromium/mojo/public/c/system/message_pipe.h b/chromium/mojo/public/c/system/message_pipe.h
-index f0f69d1025..364a02971e 100644
+index f0f69d1025f..364a02971e2 100644
 --- a/chromium/mojo/public/c/system/message_pipe.h
 +++ b/chromium/mojo/public/c/system/message_pipe.h
 @@ -44,7 +44,7 @@ const MojoCreateMessagePipeOptionsFlags

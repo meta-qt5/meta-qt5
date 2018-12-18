@@ -1,4 +1,4 @@
-From b836ce7350f40f9f031835f71793788d922452bd Mon Sep 17 00:00:00 2001
+From 2a49b947ad8e586229411bdd2a00bd496c9e3d0e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:39:57 -0700
 Subject: [PATCH] chromium: musl: Do not define __sbrk on musl
@@ -12,7 +12,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h b/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
-index edc8cf2db7..a868b50d30 100644
+index edc8cf2db70..a868b50d30f 100644
 --- a/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
 +++ b/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
 @@ -233,7 +233,7 @@ extern "C" void* mremap(void* old_addr, size_t old_size, size_t new_size,

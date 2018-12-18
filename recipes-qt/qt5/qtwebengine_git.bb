@@ -137,19 +137,19 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "65-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.11
-# 5.11.meta-qt5.7
+# 5.11.meta-qt5.8
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
-    file://0003-Force-host-toolchain-configuration.patch \
-    file://0004-chromium_overrides.cpp-Fix-build-with-plugins-and-oz.patch \
+    file://0001-Force-host-toolchain-configuration.patch \
+    file://0002-chromium_overrides.cpp-Fix-build-with-plugins-and-oz.patch \
 "
 SRC_URI_append_libc-musl = "\
-    file://0005-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
-    file://0006-musl-link-against-libexecinfo.patch \
+    file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
+    file://0004-musl-link-against-libexecinfo.patch \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/65-based
-# 65-based.meta-qt5.6
+# 65-based.meta-qt5.7
 SRC_URI += " \
     file://chromium/0001-chromium-Force-host-toolchain-configuration.patch;patchdir=src/3rdparty \
     file://chromium/0002-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
@@ -169,8 +169,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0013-chromium-musl-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty \
     file://chromium/0014-chromium-musl-include-asm-generic-ioctl.h-for-TCGETS.patch;patchdir=src/3rdparty \
     file://chromium/0015-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
-    file://chromium/0016-chromium-musl-Use-_fpstate-instead-of-_libc_fpstate-on-linux.patch;patchdir=src/3rdparty \
-    file://chromium/0017-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get-__WORDSIZE-on.patch;patchdir=src/3rdparty \
+    file://chromium/0016-chromium-musl-Use-_fpstate-instead-of-_libc_fpstate-.patch;patchdir=src/3rdparty \
+    file://chromium/0017-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get.patch;patchdir=src/3rdparty \
 "
 
 SRCREV_qtwebengine = "18412af977d658f243eb5b25b62284924cfa362f"

@@ -1,4 +1,4 @@
-From ac37250356e2923572e33491198f27117d4afa6a Mon Sep 17 00:00:00 2001
+From 081561227fb55b9a419632b1f6187d9d7bedd8f9 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:38:37 -0700
 Subject: [PATCH] chromium: musl: use off64_t instead of the internal __off64_t
@@ -12,7 +12,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h b/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
-index 715c045f66..edc8cf2db7 100644
+index 715c045f66c..edc8cf2db70 100644
 --- a/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
 +++ b/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
 @@ -77,7 +77,7 @@ typedef off64_t __off64_t;
