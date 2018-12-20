@@ -1,4 +1,4 @@
-From c79578126a744dda2feeeff7521438714859508a Mon Sep 17 00:00:00 2001
+From d836722dee0305cec50c23620600743f363b35c6 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 6 Dec 2018 15:06:20 -0800
 Subject: [PATCH] Define QMAKE_CXX.COMPILER_MACROS for clang on linux
@@ -13,10 +13,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 9 insertions(+)
 
 diff --git a/mkspecs/features/toolchain.prf b/mkspecs/features/toolchain.prf
-index c7ea20e180..8a6bb0052d 100644
+index 4ecfb8d889..5ed7e2f080 100644
 --- a/mkspecs/features/toolchain.prf
 +++ b/mkspecs/features/toolchain.prf
-@@ -210,6 +210,13 @@ defineReplace(qtVariablesFromGCC) {
+@@ -205,6 +205,13 @@ defineReplace(qtVariablesFromGCC) {
      return($$ret)
  }
  
@@ -30,7 +30,7 @@ index c7ea20e180..8a6bb0052d 100644
  isEmpty($${target_prefix}.COMPILER_MACROS) {
      msvc {
          clang_cl {
-@@ -229,6 +236,8 @@ isEmpty($${target_prefix}.COMPILER_MACROS) {
+@@ -224,6 +231,8 @@ isEmpty($${target_prefix}.COMPILER_MACROS) {
          } else {
              vars = $$qtVariablesFromMSVC($$QMAKE_CXX)
          }

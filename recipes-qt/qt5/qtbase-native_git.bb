@@ -18,7 +18,7 @@ require qt5-git.inc
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-shared
-# 5.12.meta-qt5-shared.1
+# 5.12.meta-qt5-shared.2
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -37,18 +37,19 @@ SRC_URI += "\
     file://0015-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0016-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0017-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
+    file://0018-Fix-compile-issue-with-gcc-9.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-native
-# 5.12.meta-qt5-native.1
+# 5.12.meta-qt5-native.2
 SRC_URI += " \
-    file://0018-Always-build-uic-and-qvkgen.patch \
+    file://0019-Always-build-uic-and-qvkgen.patch \
 "
 
 # only for qtbase-native
 SRC_URI += " \
-    file://0019-Bootstrap-without-linkat-feature.patch \
+    file://0020-Bootstrap-without-linkat-feature.patch \
 "
 
 CLEANBROKEN = "1"
@@ -59,6 +60,7 @@ XPLATFORM ?= "linux-oe-g++"
 PACKAGECONFIG_CONFARGS = " \
     -sysroot ${STAGING_DIR_NATIVE} \
     -no-gcc-sysroot \
+    -system-zlib \
     -qt-pcre \
     -no-libjpeg \
     -no-libpng \
@@ -138,4 +140,4 @@ do_install() {
     echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
-SRCREV = "7fc427ba23a624a433d93e1c604d870656835305"
+SRCREV = "13ed06640c6cf32ea8c784c896c6bf017053edb3"
