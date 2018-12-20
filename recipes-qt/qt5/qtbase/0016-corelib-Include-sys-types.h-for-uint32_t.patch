@@ -1,4 +1,4 @@
-From dd16d19bc6b4e8ee5d61fae94cd65b7f10d6e835 Mon Sep 17 00:00:00 2001
+From 10d6966a88bdc997d2fdade463d267c25ba86f7d Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 6 Dec 2018 11:47:52 -0800
 Subject: [PATCH] corelib: Include sys/types.h for uint32_t
@@ -14,7 +14,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/src/corelib/global/qnumeric_p.h b/src/corelib/global/qnumeric_p.h
-index 5f8a124bcc..fe1711cf1b 100644
+index 0a6db9afcd..b791d0a172 100644
 --- a/src/corelib/global/qnumeric_p.h
 +++ b/src/corelib/global/qnumeric_p.h
 @@ -55,6 +55,7 @@

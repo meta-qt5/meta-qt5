@@ -1,4 +1,4 @@
-From 40b0cf799c4af4ae92eebab64e91015d67e428c1 Mon Sep 17 00:00:00 2001
+From 1caa83ba191dd4a819a6b7db5da8c293a1f46c57 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 27 Jul 2017 08:02:51 -0700
 Subject: [PATCH] Replace pthread_yield with sched_yield
@@ -14,10 +14,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp b/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
-index e312199980..5789174ad5 100644
+index 5d9b5ca95c..ffcbddc442 100644
 --- a/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
 +++ b/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
-@@ -34,7 +34,7 @@
+@@ -35,7 +35,7 @@
  #include "tst_qvariant_common.h"
  
  #ifdef Q_OS_LINUX
@@ -26,7 +26,7 @@ index e312199980..5789174ad5 100644
  #endif
  
  #include <algorithm>
-@@ -205,7 +205,7 @@ protected:
+@@ -365,7 +365,7 @@ protected:
              const char *nm = name.constData();
              int tp = qRegisterMetaType<Bar>(nm);
  #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
@@ -36,7 +36,7 @@ index e312199980..5789174ad5 100644
              QMetaType info(tp);
              if (!info.isValid()) {
 diff --git a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
-index 263a475435..11994b3c4f 100644
+index c473230246..1db8d6f225 100644
 --- a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
 +++ b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
 @@ -78,6 +78,7 @@

@@ -1,4 +1,4 @@
-From fb6a20e6917cfa32e69791e0adb130140f4b5688 Mon Sep 17 00:00:00 2001
+From ebd6d61f9031fec80c7dde35819cabec727179aa Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Tue, 21 Aug 2018 00:29:06 +0200
 Subject: [PATCH] Check glibc version for renameat2/statx on non bootstrapped
@@ -15,10 +15,10 @@ Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
  1 file changed, 11 insertions(+)
 
 diff --git a/src/corelib/io/qfilesystemengine_unix.cpp b/src/corelib/io/qfilesystemengine_unix.cpp
-index 964dcebeb2..c09eb0154b 100644
+index b2d81066db..b90e3dc15d 100644
 --- a/src/corelib/io/qfilesystemengine_unix.cpp
 +++ b/src/corelib/io/qfilesystemengine_unix.cpp
-@@ -95,6 +95,17 @@ extern "C" NSString *NSTemporaryDirectory();
+@@ -93,6 +93,17 @@ extern "C" NSString *NSTemporaryDirectory();
  #ifndef FICLONE
  #  define FICLONE       _IOW(0x94, 9, int)
  #endif
