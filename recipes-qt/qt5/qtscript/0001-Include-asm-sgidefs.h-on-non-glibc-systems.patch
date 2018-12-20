@@ -1,4 +1,4 @@
-From e9b8d8d23681cfef9efbb654ecea2eeb128a9d00 Mon Sep 17 00:00:00 2001
+From e60c7bff6556d9c36952de525a85c479a30f0030 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 23 Aug 2018 02:58:14 +0000
 Subject: [PATCH] Include asm/sgidefs.h on non-glibc systems

@@ -1,4 +1,4 @@
-From 2a49b947ad8e586229411bdd2a00bd496c9e3d0e Mon Sep 17 00:00:00 2001
+From 100d52256a2b46154fd376276347d6998a146b68 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:39:57 -0700
 Subject: [PATCH] chromium: musl: Do not define __sbrk on musl
@@ -12,15 +12,15 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h b/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
-index edc8cf2db70..a868b50d30f 100644
+index 7486a05a272..610a10b659a 100755
 --- a/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
 +++ b/chromium/third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h
-@@ -233,7 +233,7 @@ extern "C" void* mremap(void* old_addr, size_t old_size, size_t new_size,
+@@ -206,7 +206,7 @@ extern "C" void* mremap(void* old_addr, size_t old_size, size_t new_size,
+   return result;
  }
  
- // Don't hook sbrk() in Android, since it doesn't expose __sbrk.
--#if !defined(__ANDROID__)
-+#if !defined(__ANDROID__) && defined(__GLIBC__)
+-#ifndef __UCLIBC__
++#if !defined(__UCLIBC__) && defined(__GLIBC__)
  // libc's version:
- extern "C" void* __sbrk(ptrdiff_t increment);
+ extern "C" void* __sbrk(intptr_t increment);
  

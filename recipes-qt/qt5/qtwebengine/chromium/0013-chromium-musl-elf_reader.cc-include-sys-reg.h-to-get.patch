@@ -1,4 +1,4 @@
-From c1a7511a323997411728689078946122d176551b Mon Sep 17 00:00:00 2001
+From e6ff3e4d84b459a0d74818d0c9d842d6d485f5c4 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 25 Sep 2018 12:59:05 -0700
 Subject: [PATCH] chromium: musl: elf_reader.cc: include <sys/reg.h> to get
@@ -13,7 +13,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  3 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/chromium/third_party/breakpad/breakpad/configure.ac b/chromium/third_party/breakpad/breakpad/configure.ac
-index ec194ddd203..767c2af11ee 100644
+index 9cca5aa069c..04139a728cc 100644
 --- a/chromium/third_party/breakpad/breakpad/configure.ac
 +++ b/chromium/third_party/breakpad/breakpad/configure.ac
 @@ -72,7 +72,7 @@ AC_ARG_ENABLE(m32,

@@ -1,4 +1,4 @@
-From 7c9b995ee8bc8798e41a14cb8007c06073006e64 Mon Sep 17 00:00:00 2001
+From a321d1b96ce0563a08d0bb44c39d24f86608f6ae Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -57,10 +57,10 @@ index dd0d3e32..70161c82 100644
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
 diff --git a/src/core/config/linux.pri b/src/core/config/linux.pri
-index 4ade2827..cad3d7bf 100644
+index 85b948db..c529c641 100644
 --- a/src/core/config/linux.pri
 +++ b/src/core/config/linux.pri
-@@ -92,7 +92,7 @@ contains(QT_ARCH, "mips") {
+@@ -112,7 +112,7 @@ contains(QT_ARCH, "mips") {
  
  host_build {
      gn_args += custom_toolchain=\"$$QTWEBENGINE_OUT_ROOT/src/toolchain:host\"

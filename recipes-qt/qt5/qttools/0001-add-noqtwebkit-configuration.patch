@@ -1,4 +1,4 @@
-From 9cdaa2696552e90bac815889bf6fe45bc9637ca1 Mon Sep 17 00:00:00 2001
+From 6bb830c68a7a530f0a18b9ceb4ef65eed0787fa5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
 Date: Wed, 4 Jun 2014 11:28:16 +0200
 Subject: [PATCH] add noqtwebkit configuration

@@ -3,7 +3,6 @@ SUMMARY = "QtWebEngine combines the power of Chromium and Qt"
 # Read http://blog.qt.io/blog/2016/01/13/new-agreement-with-the-kde-free-qt-foundation/
 LICENSE = "BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
-    file://src/core/browser_context_qt.cpp;md5=b5193b7d68699260f3b40b201365c8d2;beginline=1;endline=38 \
     file://src/3rdparty/chromium/LICENSE;md5=0fca02217a5d49a14dfe2d11837bb34d \
     file://LICENSE.LGPL3;md5=8211fde12cc8a4e2477602f5953f5b71 \
     file://LICENSE.GPLv3;md5=88e2b9117e6be406b5ed6ee4ca99a705 \
@@ -134,47 +133,42 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "65-based"
+QT_MODULE_BRANCH_CHROMIUM = "69-based"
 
-# Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.11
-# 5.11.meta-qt5.8
+# Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.12
+# 5.12.meta-qt5.1
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
-    file://0002-chromium_overrides.cpp-Fix-build-with-plugins-and-oz.patch \
 "
 SRC_URI_append_libc-musl = "\
-    file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
-    file://0004-musl-link-against-libexecinfo.patch \
+    file://0002-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
+    file://0003-musl-link-against-libexecinfo.patch \
 "
 
-# Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/65-based
-# 65-based.meta-qt5.7
+# Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/69-based
+# 69-based.meta-qt5.1
 SRC_URI += " \
     file://chromium/0001-chromium-Force-host-toolchain-configuration.patch;patchdir=src/3rdparty \
-    file://chromium/0002-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
-    file://chromium/0003-chromium-Fix-build-with-gcc8.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI_append_libc-musl = "\
-    file://chromium/0004-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch;patchdir=src/3rdparty \
-    file://chromium/0005-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty \
-    file://chromium/0006-chromium-musl-include-fcntl.h-for-loff_t.patch;patchdir=src/3rdparty \
-    file://chromium/0007-chromium-musl-use-off64_t-instead-of-the-internal-__.patch;patchdir=src/3rdparty \
-    file://chromium/0008-chromium-musl-linux-glibc-make-the-distinction.patch;patchdir=src/3rdparty \
-    file://chromium/0009-chromium-musl-allocator-Do-not-include-glibc_weak_sy.patch;patchdir=src/3rdparty \
-    file://chromium/0010-chromium-musl-Use-correct-member-name-__si_fields-fr.patch;patchdir=src/3rdparty \
-    file://chromium/0011-chromium-musl-Define-res_ninit-and-res_nclose-for-no.patch;patchdir=src/3rdparty \
-    file://chromium/0012-chromium-musl-Do-not-define-__sbrk-on-musl.patch;patchdir=src/3rdparty \
-    file://chromium/0013-chromium-musl-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty \
-    file://chromium/0014-chromium-musl-include-asm-generic-ioctl.h-for-TCGETS.patch;patchdir=src/3rdparty \
-    file://chromium/0015-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
-    file://chromium/0016-chromium-musl-Use-_fpstate-instead-of-_libc_fpstate-.patch;patchdir=src/3rdparty \
-    file://chromium/0017-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get.patch;patchdir=src/3rdparty \
+    file://chromium/0002-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch;patchdir=src/3rdparty \
+    file://chromium/0003-chromium-musl-include-fcntl.h-for-loff_t.patch;patchdir=src/3rdparty \
+    file://chromium/0004-chromium-musl-use-off64_t-instead-of-the-internal-__.patch;patchdir=src/3rdparty \
+    file://chromium/0005-chromium-musl-linux-glibc-make-the-distinction.patch;patchdir=src/3rdparty \
+    file://chromium/0006-chromium-musl-allocator-Do-not-include-glibc_weak_sy.patch;patchdir=src/3rdparty \
+    file://chromium/0007-chromium-musl-Use-correct-member-name-__si_fields-fr.patch;patchdir=src/3rdparty \
+    file://chromium/0008-chromium-musl-Define-res_ninit-and-res_nclose-for-no.patch;patchdir=src/3rdparty \
+    file://chromium/0009-chromium-musl-Do-not-define-__sbrk-on-musl.patch;patchdir=src/3rdparty \
+    file://chromium/0010-chromium-musl-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty \
+    file://chromium/0011-chromium-musl-include-asm-generic-ioctl.h-for-TCGETS.patch;patchdir=src/3rdparty \
+    file://chromium/0012-chromium-musl-Use-_fpstate-instead-of-_libc_fpstate-.patch;patchdir=src/3rdparty \
+    file://chromium/0013-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "18412af977d658f243eb5b25b62284924cfa362f"
-SRCREV_chromium = "2095a35f300bcbe82e968e9a547dff7c79be29d8"
+SRCREV_qtwebengine = "4f1e0003d98116e33a847360e0e95c46daae25fc"
+SRCREV_chromium = "323b45aa242e0b4e75689d67418ec124ba1ca815"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

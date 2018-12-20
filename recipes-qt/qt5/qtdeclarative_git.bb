@@ -12,8 +12,6 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-SRC_URI += "file://0001-Always-use-commit-sha1-for-QML_COMPILE_HASH.patch"
-
 DEPENDS += "qtbase"
 
 PACKAGECONFIG ??= "qtxmlpatterns qml-debug qml-network ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)}"
@@ -35,6 +33,6 @@ do_install_append_class-nativesdk() {
 
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtxmlpatterns', 'CONFIG+=OE_QTXMLPATTERNS_ENABLED', '', d)}"
 
-SRCREV = "e3c0bb7811407bad1f65ea55639a4b1d1d39be15"
+SRCREV = "c401ae278b4bb91c70c6d7df974a241d7c68855b"
 
 BBCLASSEXTEND =+ "native nativesdk"
