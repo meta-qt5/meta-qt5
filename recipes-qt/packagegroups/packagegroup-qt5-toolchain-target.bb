@@ -50,7 +50,6 @@ RDEPENDS_${PN} += " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtdeclarative-qmlplugins', '', d)} \
     qtdeclarative-tools \
     qtdeclarative-staticdev \
-    qttranslations-qmlviewer \
     qttranslations-qtdeclarative \
     qtenginio-dev \
     qtenginio-mkspecs \
