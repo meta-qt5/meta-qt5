@@ -1,0 +1,560 @@
+From 6a3be262635cff2811e6da6799c17980a0f67bef Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sat, 22 Dec 2018 18:03:56 +0000
+Subject: [PATCH] Revert "use new feature name xkbcommon_evdev -> xkbcommon"
+
+This reverts commit a8fed20181729cae70de43079c4a34ad1780cfd7.
+
+To be compatible with qtbase 5.12.0, remove this patch when upgrading
+qtbase to 5.12.1
+---
+ README                                        |  4 ++--
+ src/client/client.pro                         |  4 ++--
+ src/client/qwaylandinputdevice.cpp            | 22 +++++++++----------
+ src/client/qwaylandinputdevice_p.h            | 10 ++++-----
+ .../compositor_api/qwaylandcompositor.cpp     |  2 +-
+ .../compositor_api/qwaylandkeyboard.cpp       | 22 +++++++++----------
+ .../compositor_api/qwaylandkeyboard_p.h       |  8 +++----
+ .../wayland_wrapper/wayland_wrapper.pri       |  4 ++--
+ .../shellintegration/ivi-shell/ivi-shell.pro  |  4 ++--
+ .../shellintegration/wl-shell/wl-shell.pro    |  4 ++--
+ .../xdg-shell-v5/xdg-shell-v5.pro             |  4 ++--
+ .../xdg-shell-v6/xdg-shell-v6.pro             |  4 ++--
+ .../shellintegration/xdg-shell/xdg-shell.pro  |  4 ++--
+ src/shared/qwaylandxkb.cpp                    | 10 ++++-----
+ src/shared/qwaylandxkb_p.h                    |  2 +-
+ .../auto/compositor/compositor/compositor.pro |  4 ++--
+ .../compositor/compositor/tst_compositor.cpp  |  6 ++---
+ 17 files changed, 59 insertions(+), 59 deletions(-)
+
+diff --git a/README b/README
+index bc6569ef..4fd99495 100644
+--- a/README
++++ b/README
+@@ -9,8 +9,8 @@ QtWaylandCompositor API:
+     Enables the creation of Wayland compositors using Qt and QtQuick.
+ 
+ To build the QtWayland module you need the external dependencies:
+-xkbcommon - http://xkbcommon.org/
+-wayland - http://wayland.freedesktop.org/
++xkbcommon 0.2.0 - http://xkbcommon.org/
++wayland 1.6.0 - http://wayland.freedesktop.org/
+ 
+ QtWaylandCompositor supports loading client buffer integrations that don't use
+ the wayland-egl interfaces. These client buffer integrations are picked up by
+diff --git a/src/client/client.pro b/src/client/client.pro
+index 30f32dd7..45bbb976 100644
+--- a/src/client/client.pro
++++ b/src/client/client.pro
+@@ -15,8 +15,8 @@ use_gold_linker: CONFIG += no_linker_version_script
+ CONFIG -= precompile_header
+ CONFIG += link_pkgconfig wayland-scanner
+ 
+-qtConfig(xkbcommon): \
+-    QMAKE_USE_PRIVATE += xkbcommon
++qtConfig(xkbcommon-evdev): \
++    QMAKE_USE_PRIVATE += xkbcommon_evdev
+ 
+ QMAKE_USE += wayland-client
+ 
+diff --git a/src/client/qwaylandinputdevice.cpp b/src/client/qwaylandinputdevice.cpp
+index ba55e6e1..9d675ae2 100644
+--- a/src/client/qwaylandinputdevice.cpp
++++ b/src/client/qwaylandinputdevice.cpp
+@@ -70,7 +70,7 @@
+ 
+ #include <QtGui/QGuiApplication>
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ #include <xkbcommon/xkbcommon-compose.h>
+ #endif
+ 
+@@ -84,7 +84,7 @@ QWaylandInputDevice::Keyboard::Keyboard(QWaylandInputDevice *p)
+     connect(&mRepeatTimer, SIGNAL(timeout()), this, SLOT(repeatKey()));
+ }
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ bool QWaylandInputDevice::Keyboard::createDefaultKeyMap()
+ {
+     if (mXkbContext && mXkbMap && mXkbState) {
+@@ -156,7 +156,7 @@ void QWaylandInputDevice::Keyboard::releaseComposeState()
+ 
+ QWaylandInputDevice::Keyboard::~Keyboard()
+ {
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     releaseComposeState();
+     releaseKeyMap();
+ #endif
+@@ -344,7 +344,7 @@ Qt::KeyboardModifiers QWaylandInputDevice::Keyboard::modifiers() const
+ {
+     Qt::KeyboardModifiers ret = Qt::NoModifier;
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     if (!mXkbState)
+         return ret;
+ 
+@@ -625,7 +625,7 @@ void QWaylandInputDevice::Pointer::pointer_axis(uint32_t time, uint32_t axis, in
+ 
+ void QWaylandInputDevice::Keyboard::keyboard_keymap(uint32_t format, int32_t fd, uint32_t size)
+ {
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     if (format != WL_KEYBOARD_KEYMAP_FORMAT_XKB_V1) {
+         close(fd);
+         return;
+@@ -728,7 +728,7 @@ void QWaylandInputDevice::Keyboard::keyboard_key(uint32_t serial, uint32_t time,
+     if (isDown)
+         mParent->mQDisplay->setLastInputDevice(mParent, serial, window);
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     if (!createDefaultKeyMap()) {
+         return;
+     }
+@@ -771,7 +771,7 @@ void QWaylandInputDevice::Keyboard::keyboard_key(uint32_t serial, uint32_t time,
+ #endif
+ 
+     if (state == WL_KEYBOARD_KEY_STATE_PRESSED
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+         && xkb_keymap_key_repeats(mXkbMap, code)
+ #endif
+         ) {
+@@ -779,7 +779,7 @@ void QWaylandInputDevice::Keyboard::keyboard_key(uint32_t serial, uint32_t time,
+         mRepeatCode = code;
+         mRepeatTime = time;
+         mRepeatText = text;
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+         mRepeatSym = sym;
+ #endif
+         mRepeatTimer.setInterval(400);
+@@ -793,7 +793,7 @@ void QWaylandInputDevice::Keyboard::repeatKey()
+ {
+     mRepeatTimer.setInterval(25);
+     sendKey(mFocus->window(), mRepeatTime, QEvent::KeyRelease, mRepeatKey, modifiers(), mRepeatCode,
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+             mRepeatSym, mNativeModifiers,
+ #else
+             0, 0,
+@@ -801,7 +801,7 @@ void QWaylandInputDevice::Keyboard::repeatKey()
+             mRepeatText, true);
+ 
+     sendKey(mFocus->window(), mRepeatTime, QEvent::KeyPress, mRepeatKey, modifiers(), mRepeatCode,
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+             mRepeatSym, mNativeModifiers,
+ #else
+             0, 0,
+@@ -816,7 +816,7 @@ void QWaylandInputDevice::Keyboard::keyboard_modifiers(uint32_t serial,
+                                              uint32_t group)
+ {
+     Q_UNUSED(serial);
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     if (mXkbState)
+         xkb_state_update_mask(mXkbState,
+                               mods_depressed, mods_latched, mods_locked,
+diff --git a/src/client/qwaylandinputdevice_p.h b/src/client/qwaylandinputdevice_p.h
+index 7aa86539..4b12cc08 100644
+--- a/src/client/qwaylandinputdevice_p.h
++++ b/src/client/qwaylandinputdevice_p.h
+@@ -65,7 +65,7 @@
+ 
+ #include <QtWaylandClient/private/qwayland-wayland.h>
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ #include <xkbcommon/xkbcommon.h>
+ #include <xkbcommon/xkbcommon-keysyms.h>
+ #endif
+@@ -77,7 +77,7 @@
+ struct wl_cursor_image;
+ #endif
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ struct xkb_compose_state;
+ struct xkb_compose_table;
+ #endif
+@@ -209,7 +209,7 @@ public:
+ 
+     QWaylandInputDevice *mParent = nullptr;
+     QPointer<QWaylandWindow> mFocus;
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     xkb_context *mXkbContext = nullptr;
+     xkb_keymap *mXkbMap = nullptr;
+     xkb_state *mXkbState = nullptr;
+@@ -222,7 +222,7 @@ public:
+     uint32_t mRepeatCode;
+     uint32_t mRepeatTime;
+     QString mRepeatText;
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     xkb_keysym_t mRepeatSym;
+ #endif
+     QTimer mRepeatTimer;
+@@ -233,7 +233,7 @@ private slots:
+     void repeatKey();
+ 
+ private:
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     bool createDefaultKeyMap();
+     void releaseKeyMap();
+     void createComposeState();
+diff --git a/src/compositor/compositor_api/qwaylandcompositor.cpp b/src/compositor/compositor_api/qwaylandcompositor.cpp
+index 173b50ce..c782304e 100644
+--- a/src/compositor/compositor_api/qwaylandcompositor.cpp
++++ b/src/compositor/compositor_api/qwaylandcompositor.cpp
+@@ -128,7 +128,7 @@ public:
+         uint32_t code = ke->nativeScanCode;
+         bool isDown = ke->keyType == QEvent::KeyPress;
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+         QString text;
+         Qt::KeyboardModifiers modifiers = QWaylandXkb::modifiers(keyb->xkbState());
+ 
+diff --git a/src/compositor/compositor_api/qwaylandkeyboard.cpp b/src/compositor/compositor_api/qwaylandkeyboard.cpp
+index 68d855a6..e067eeaf 100644
+--- a/src/compositor/compositor_api/qwaylandkeyboard.cpp
++++ b/src/compositor/compositor_api/qwaylandkeyboard.cpp
+@@ -51,7 +51,7 @@
+ 
+ #include <fcntl.h>
+ #include <unistd.h>
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ #include <sys/mman.h>
+ #include <sys/types.h>
+ #include <qwaylandxkb_p.h>
+@@ -66,7 +66,7 @@ QWaylandKeyboardPrivate::QWaylandKeyboardPrivate(QWaylandSeat *seat)
+ 
+ QWaylandKeyboardPrivate::~QWaylandKeyboardPrivate()
+ {
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     if (xkb_context) {
+         if (keymap_area)
+             munmap(keymap_area, keymap_size);
+@@ -136,7 +136,7 @@ void QWaylandKeyboardPrivate::keyboard_bind_resource(wl_keyboard::Resource *reso
+     if (resource->version() >= WL_KEYBOARD_REPEAT_INFO_SINCE_VERSION)
+         send_repeat_info(resource->handle, repeatRate, repeatDelay);
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     if (xkb_context) {
+         send_keymap(resource->handle, WL_KEYBOARD_KEYMAP_FORMAT_XKB_V1,
+                     keymap_fd, keymap_size);
+@@ -164,7 +164,7 @@ void QWaylandKeyboardPrivate::keyboard_release(wl_keyboard::Resource *resource)
+ 
+ void QWaylandKeyboardPrivate::keyEvent(uint code, uint32_t state)
+ {
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     uint key = toWaylandXkbV1Key(code);
+ #else
+     uint key = code;
+@@ -180,7 +180,7 @@ void QWaylandKeyboardPrivate::sendKeyEvent(uint code, uint32_t state)
+ {
+     uint32_t time = compositor()->currentTimeMsecs();
+     uint32_t serial = compositor()->nextSerial();
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     uint key = toWaylandXkbV1Key(code);
+ #else
+     uint key = code;
+@@ -197,7 +197,7 @@ void QWaylandKeyboardPrivate::modifiers(uint32_t serial, uint32_t mods_depressed
+     }
+ }
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ void QWaylandKeyboardPrivate::maybeUpdateXkbScanCodeTable()
+ {
+     if (!scanCodesByQtKey.isEmpty() || !xkbState())
+@@ -225,7 +225,7 @@ void QWaylandKeyboardPrivate::maybeUpdateXkbScanCodeTable()
+ 
+ void QWaylandKeyboardPrivate::updateModifierState(uint code, uint32_t state)
+ {
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     if (!xkb_context)
+         return;
+ 
+@@ -265,7 +265,7 @@ void QWaylandKeyboardPrivate::maybeUpdateKeymap()
+         return;
+ 
+     pendingKeymap = false;
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     if (!xkb_context)
+         return;
+ 
+@@ -285,7 +285,7 @@ void QWaylandKeyboardPrivate::maybeUpdateKeymap()
+ #endif
+ }
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ static int createAnonymousFile(size_t size)
+ {
+     QString path = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
+@@ -429,7 +429,7 @@ QWaylandKeyboard::QWaylandKeyboard(QWaylandSeat *seat, QObject *parent)
+     connect(keymap, &QWaylandKeymap::optionsChanged, this, &QWaylandKeyboard::updateKeymap);
+     connect(keymap, &QWaylandKeymap::rulesChanged, this, &QWaylandKeyboard::updateKeymap);
+     connect(keymap, &QWaylandKeymap::modelChanged, this, &QWaylandKeyboard::updateKeymap);
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     d->initXKB();
+ #endif
+ }
+@@ -592,7 +592,7 @@ void QWaylandKeyboard::addClient(QWaylandClient *client, uint32_t id, uint32_t v
+ uint QWaylandKeyboard::keyToScanCode(int qtKey) const
+ {
+     uint scanCode = 0;
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     Q_D(const QWaylandKeyboard);
+     const_cast<QWaylandKeyboardPrivate *>(d)->maybeUpdateXkbScanCodeTable();
+     scanCode = d->scanCodesByQtKey.value({d->group, qtKey}, 0);
+diff --git a/src/compositor/compositor_api/qwaylandkeyboard_p.h b/src/compositor/compositor_api/qwaylandkeyboard_p.h
+index 87e89e85..cd1f2795 100644
+--- a/src/compositor/compositor_api/qwaylandkeyboard_p.h
++++ b/src/compositor/compositor_api/qwaylandkeyboard_p.h
+@@ -62,7 +62,7 @@
+ 
+ #include <QtCore/QVector>
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ #include <xkbcommon/xkbcommon.h>
+ #endif
+ 
+@@ -86,7 +86,7 @@ public:
+     void modifiers(uint32_t serial, uint32_t mods_depressed,
+                    uint32_t mods_latched, uint32_t mods_locked, uint32_t group);
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     struct xkb_state *xkbState() const { return xkb_state; }
+     uint32_t xkbModsMask() const { return modsDepressed | modsLatched | modsLocked; }
+     void maybeUpdateXkbScanCodeTable();
+@@ -106,7 +106,7 @@ protected:
+     void keyboard_release(Resource *resource) override;
+ 
+ private:
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     void initXKB();
+     void createXKBKeymap();
+     void createXKBState(xkb_keymap *keymap);
+@@ -128,7 +128,7 @@ private:
+     uint32_t group = 0;
+ 
+     bool pendingKeymap = false;
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     size_t keymap_size;
+     int keymap_fd = -1;
+     char *keymap_area = nullptr;
+diff --git a/src/compositor/wayland_wrapper/wayland_wrapper.pri b/src/compositor/wayland_wrapper/wayland_wrapper.pri
+index 3041d769..e19ea253 100644
+--- a/src/compositor/wayland_wrapper/wayland_wrapper.pri
++++ b/src/compositor/wayland_wrapper/wayland_wrapper.pri
+@@ -30,5 +30,5 @@ qtConfig(wayland-datadevice) {
+ 
+ INCLUDEPATH += wayland_wrapper
+ 
+-qtConfig(xkbcommon): \
+-    QMAKE_USE += xkbcommon
++qtConfig(xkbcommon-evdev): \
++    QMAKE_USE += xkbcommon_evdev
+diff --git a/src/plugins/shellintegration/ivi-shell/ivi-shell.pro b/src/plugins/shellintegration/ivi-shell/ivi-shell.pro
+index 67e659ab..ba716c10 100644
+--- a/src/plugins/shellintegration/ivi-shell/ivi-shell.pro
++++ b/src/plugins/shellintegration/ivi-shell/ivi-shell.pro
+@@ -3,8 +3,8 @@ CONFIG += wayland-scanner
+ 
+ QMAKE_USE += wayland-client
+ 
+-qtConfig(xkbcommon): \
+-    QMAKE_USE += xkbcommon
++qtConfig(xkbcommon-evdev): \
++    QMAKE_USE += xkbcommon_evdev
+ 
+ WAYLANDCLIENTSOURCES += \
+     ../../../3rdparty/protocol/ivi-application.xml \
+diff --git a/src/plugins/shellintegration/wl-shell/wl-shell.pro b/src/plugins/shellintegration/wl-shell/wl-shell.pro
+index bb2c1829..fbff63c7 100644
+--- a/src/plugins/shellintegration/wl-shell/wl-shell.pro
++++ b/src/plugins/shellintegration/wl-shell/wl-shell.pro
+@@ -2,8 +2,8 @@ QT += gui-private waylandclient-private
+ CONFIG += wayland-scanner
+ 
+ QMAKE_USE += wayland-client
+-qtConfig(xkbcommon): \
+-    QMAKE_USE_PRIVATE += xkbcommon
++qtConfig(xkbcommon-evdev): \
++    QMAKE_USE_PRIVATE += xkbcommon_evdev
+ 
+ WAYLANDCLIENTSOURCES += \
+     ../../../3rdparty/protocol/wayland.xml
+diff --git a/src/plugins/shellintegration/xdg-shell-v5/xdg-shell-v5.pro b/src/plugins/shellintegration/xdg-shell-v5/xdg-shell-v5.pro
+index 4f6dde9b..bf9edba7 100644
+--- a/src/plugins/shellintegration/xdg-shell-v5/xdg-shell-v5.pro
++++ b/src/plugins/shellintegration/xdg-shell-v5/xdg-shell-v5.pro
+@@ -3,8 +3,8 @@ CONFIG += wayland-scanner
+ 
+ QMAKE_USE += wayland-client
+ 
+-qtConfig(xkbcommon): \
+-    QMAKE_USE += xkbcommon
++qtConfig(xkbcommon-evdev): \
++    QMAKE_USE += xkbcommon_evdev
+ 
+ HEADERS += \
+     qwaylandxdgpopupv5_p.h \
+diff --git a/src/plugins/shellintegration/xdg-shell-v6/xdg-shell-v6.pro b/src/plugins/shellintegration/xdg-shell-v6/xdg-shell-v6.pro
+index 3c1aaee8..5d5046f6 100644
+--- a/src/plugins/shellintegration/xdg-shell-v6/xdg-shell-v6.pro
++++ b/src/plugins/shellintegration/xdg-shell-v6/xdg-shell-v6.pro
+@@ -2,8 +2,8 @@ QT += gui-private waylandclient-private
+ CONFIG += wayland-scanner
+ 
+ QMAKE_USE += wayland-client
+-qtConfig(xkbcommon): \
+-    QMAKE_USE_PRIVATE += xkbcommon
++qtConfig(xkbcommon-evdev): \
++    QMAKE_USE_PRIVATE += xkbcommon_evdev
+ 
+ WAYLANDCLIENTSOURCES += \
+     ../../../3rdparty/protocol/xdg-shell-unstable-v6.xml
+diff --git a/src/plugins/shellintegration/xdg-shell/xdg-shell.pro b/src/plugins/shellintegration/xdg-shell/xdg-shell.pro
+index 26171584..2b1191af 100644
+--- a/src/plugins/shellintegration/xdg-shell/xdg-shell.pro
++++ b/src/plugins/shellintegration/xdg-shell/xdg-shell.pro
+@@ -2,8 +2,8 @@ QT += gui-private waylandclient-private
+ CONFIG += wayland-scanner
+ 
+ QMAKE_USE += wayland-client
+-qtConfig(xkbcommon): \
+-    QMAKE_USE_PRIVATE += xkbcommon
++qtConfig(xkbcommon-evdev): \
++    QMAKE_USE_PRIVATE += xkbcommon_evdev
+ 
+ WAYLANDCLIENTSOURCES += \
+     ../../../3rdparty/protocol/xdg-decoration-unstable-v1.xml \
+diff --git a/src/shared/qwaylandxkb.cpp b/src/shared/qwaylandxkb.cpp
+index 3cfc4b07..a0e388a1 100644
+--- a/src/shared/qwaylandxkb.cpp
++++ b/src/shared/qwaylandxkb.cpp
+@@ -43,13 +43,13 @@
+ #include <QKeyEvent>
+ #include <QString>
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ #include <xkbcommon/xkbcommon-keysyms.h>
+ #endif
+ 
+ QT_BEGIN_NAMESPACE
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ static const uint32_t KeyTbl[] = {
+     XKB_KEY_Escape,                  Qt::Key_Escape,
+     XKB_KEY_Tab,                     Qt::Key_Tab,
+@@ -297,7 +297,7 @@ static xkb_keysym_t toKeysymFromTable(uint32_t key)
+ 
+ std::pair<int, QString> QWaylandXkb::keysymToQtKey(xkb_keysym_t keysym, Qt::KeyboardModifiers &modifiers)
+ {
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     QString text;
+     uint utf32 = xkb_keysym_to_utf32(keysym);
+     if (utf32)
+@@ -339,7 +339,7 @@ std::pair<int, QString> QWaylandXkb::keysymToQtKey(xkb_keysym_t keysym, Qt::Keyb
+ 
+ Qt::KeyboardModifiers QWaylandXkb::modifiers(struct xkb_state *state)
+ {
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     Qt::KeyboardModifiers modifiers = Qt::NoModifier;
+ 
+     xkb_state_component cstate = static_cast<xkb_state_component>(XKB_STATE_DEPRESSED | XKB_STATE_LATCHED | XKB_STATE_LOCKED);
+@@ -367,7 +367,7 @@ QEvent::Type QWaylandXkb::toQtEventType(uint32_t state)
+ 
+ QVector<xkb_keysym_t> QWaylandXkb::toKeysym(QKeyEvent *event)
+ {
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     QVector<xkb_keysym_t> keysyms;
+     if (event->key() >= Qt::Key_F1 && event->key() <= Qt::Key_F35) {
+         keysyms.append(XKB_KEY_F1 + (event->key() - Qt::Key_F1));
+diff --git a/src/shared/qwaylandxkb_p.h b/src/shared/qwaylandxkb_p.h
+index 4820d94b..6fa1ea45 100644
+--- a/src/shared/qwaylandxkb_p.h
++++ b/src/shared/qwaylandxkb_p.h
+@@ -45,7 +45,7 @@
+ #include <Qt>
+ #include <QEvent>
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ #include <xkbcommon/xkbcommon.h>
+ #else
+ typedef quint32 xkb_keysym_t;
+diff --git a/tests/auto/compositor/compositor/compositor.pro b/tests/auto/compositor/compositor/compositor.pro
+index 0ce2c6be..d69db4ca 100644
+--- a/tests/auto/compositor/compositor/compositor.pro
++++ b/tests/auto/compositor/compositor/compositor.pro
+@@ -7,8 +7,8 @@ QT += core-private gui-private waylandcompositor waylandcompositor-private
+ 
+ QMAKE_USE += wayland-client wayland-server
+ 
+-qtConfig(xkbcommon): \
+-    QMAKE_USE += xkbcommon
++qtConfig(xkbcommon-evdev): \
++    QMAKE_USE += xkbcommon_evdev
+ 
+ WAYLANDCLIENTSOURCES += \
+             ../../../../src/3rdparty/protocol/xdg-shell-unstable-v5.xml \
+diff --git a/tests/auto/compositor/compositor/tst_compositor.cpp b/tests/auto/compositor/compositor/tst_compositor.cpp
+index 97e650d9..a8af4c39 100644
+--- a/tests/auto/compositor/compositor/tst_compositor.cpp
++++ b/tests/auto/compositor/compositor/tst_compositor.cpp
+@@ -58,7 +58,7 @@ class tst_WaylandCompositor : public QObject
+ private slots:
+     void init();
+     void seatCapabilities();
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+     void simpleKeyboard();
+     void keyboardKeymaps();
+     void keyboardLayoutSwitching();
+@@ -170,7 +170,7 @@ void tst_WaylandCompositor::multipleClients()
+     QTRY_COMPARE(compositor.surfaces.size(), 0);
+ }
+ 
+-#if QT_CONFIG(xkbcommon)
++#if QT_CONFIG(xkbcommon_evdev)
+ 
+ void tst_WaylandCompositor::simpleKeyboard()
+ {
+@@ -283,7 +283,7 @@ void tst_WaylandCompositor::keyboardLayoutSwitching()
+     QTRY_COMPARE(mockKeyboard->m_lastKeyCode, 44u);
+ }
+ 
+-#endif // QT_CONFIG(xkbcommon)
++#endif // QT_CONFIG(xkbcommon_evdev)
+ 
+ void tst_WaylandCompositor::keyboardGrab()
+ {
