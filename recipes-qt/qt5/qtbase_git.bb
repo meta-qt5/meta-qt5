@@ -34,6 +34,7 @@ SRC_URI += "\
     file://0016-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0017-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
     file://0018-Fix-compile-issue-with-gcc-9.patch \
+    file://0021-qendian-Adding-Q_DECL_CONSTEXPR-to-float-conversion-.patch \
 "
 
 
