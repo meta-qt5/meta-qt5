@@ -1,4 +1,4 @@
-From 2da25a561f24b3a759c1c26e98b252e47aea19c9 Mon Sep 17 00:00:00 2001
+From 7f95397de67e00390fd90ed6b2f70dcfde8d7285 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 16:41:23 -0700
 Subject: [PATCH] chromium: musl: Adjust default pthread stack size
