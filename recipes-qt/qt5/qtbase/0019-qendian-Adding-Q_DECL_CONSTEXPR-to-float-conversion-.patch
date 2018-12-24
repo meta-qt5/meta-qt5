@@ -1,0 +1,49 @@
+From c10b4df78f56f4ad3db563fe73d0ebece3e5284c Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Mon, 24 Dec 2018 00:05:06 -0800
+Subject: [PATCH] qendian: Adding Q_DECL_CONSTEXPR to float conversion
+ specializations
+
+This fixes build failures seen with gcc 4.8
+Fixes https://bugreports.qt.io/browse/QTBUG-71945
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/corelib/global/qendian.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/corelib/global/qendian.h b/src/corelib/global/qendian.h
+index 0e67a1ab8e..75f109f26c 100644
+--- a/src/corelib/global/qendian.h
++++ b/src/corelib/global/qendian.h
+@@ -153,7 +153,7 @@ template <> inline Q_DECL_CONSTEXPR qint8 qbswap<qint8>(qint8 source)
+ }
+ 
+ // floating specializations
+-template<typename Float>
++template<typename Float> Q_DECL_CONSTEXPR
+ Float qbswapFloatHelper(Float source)
+ {
+     // memcpy call in qFromUnaligned is recognized by optimizer as a correct way of type prunning
+@@ -162,17 +162,17 @@ Float qbswapFloatHelper(Float source)
+     return qFromUnaligned<Float>(&temp);
+ }
+ 
+-template <> inline qfloat16 qbswap<qfloat16>(qfloat16 source)
++template <> inline Q_DECL_CONSTEXPR qfloat16 qbswap<qfloat16>(qfloat16 source)
+ {
+     return qbswapFloatHelper(source);
+ }
+ 
+-template <> inline float qbswap<float>(float source)
++template <> inline Q_DECL_CONSTEXPR float qbswap<float>(float source)
+ {
+     return qbswapFloatHelper(source);
+ }
+ 
+-template <> inline double qbswap<double>(double source)
++template <> inline Q_DECL_CONSTEXPR double qbswap<double>(double source)
+ {
+     return qbswapFloatHelper(source);
+ }

@@ -1,4 +1,4 @@
-From 394f8c1f2faae7cf54dc6882b3817c226d84152c Mon Sep 17 00:00:00 2001
+From e5036f7002281cd122a9992da59270a25d9cff89 Mon Sep 17 00:00:00 2001
 From: Denys Dmytriyenko <denys@ti.com>
 Date: Tue, 25 Aug 2015 10:05:15 -0400
 Subject: [PATCH] configure: bump path length from 256 to 512 characters

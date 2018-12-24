@@ -1,4 +1,4 @@
-From d836722dee0305cec50c23620600743f363b35c6 Mon Sep 17 00:00:00 2001
+From 8d03a813e3354af543f6b54928629c75ce989781 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 6 Dec 2018 15:06:20 -0800
 Subject: [PATCH] Define QMAKE_CXX.COMPILER_MACROS for clang on linux
