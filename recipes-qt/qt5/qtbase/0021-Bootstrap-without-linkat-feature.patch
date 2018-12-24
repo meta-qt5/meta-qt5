@@ -1,4 +1,4 @@
-From f21492a98b2a738e53134be8b7bf8ce44af71712 Mon Sep 17 00:00:00 2001
+From 4d5e38f1b5f42d61428b7984f9f4d7f22ebe2a2e Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Fri, 24 Nov 2017 15:16:31 +0200
 Subject: [PATCH] Bootstrap without linkat feature
