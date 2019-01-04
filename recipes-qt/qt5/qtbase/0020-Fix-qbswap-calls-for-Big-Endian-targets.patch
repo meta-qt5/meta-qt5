@@ -1,0 +1,28 @@
+From c94a6510ae983e46f60e0cfb1b0f20229c990d93 Mon Sep 17 00:00:00 2001
+From: Ville Voutilainen <ville.voutilainen@qt.io>
+Date: Fri, 4 Jan 2019 09:35:40 +0200
+Subject: [PATCH] Fix qbswap calls for Big Endian targets
+
+Upstream-Status: Backport
+Task-number: QTBUG-71945
+Change-Id: I5356f8e32d00ea591b1f65cdd4111276fcf876ac
+---
+ src/corelib/global/qendian.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/corelib/global/qendian.h b/src/corelib/global/qendian.h
+index f2e5833468..615f523888 100644
+--- a/src/corelib/global/qendian.h
++++ b/src/corelib/global/qendian.h
+@@ -204,9 +204,9 @@ template <typename T> inline Q_DECL_CONSTEXPR T qToBigEndian(T source)
+ template <typename T> inline Q_DECL_CONSTEXPR T qFromBigEndian(T source)
+ { return source; }
+ template <typename T> inline Q_DECL_CONSTEXPR T qToLittleEndian(T source)
+-{ return qbswap<T>(source); }
++{ return qbswap(source); }
+ template <typename T> inline Q_DECL_CONSTEXPR T qFromLittleEndian(T source)
+-{ return qbswap<T>(source); }
++{ return qbswap(source); }
+ template <typename T> inline void qToBigEndian(T src, void *dest)
+ { qToUnaligned<T>(src, dest); }
+ template <typename T> inline void qToLittleEndian(T src, void *dest)

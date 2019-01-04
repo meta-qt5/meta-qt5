@@ -44,11 +44,12 @@ SRC_URI += "\
     file://0017-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
     file://0018-Fix-compile-issue-with-gcc-9.patch \
     file://0019-Fix-compilation-of-qendian-s-qswap-specializations-o.patch \
+    file://0022-Fix-qbswap-calls-for-Big-Endian-targets.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-native
-# 5.12.meta-qt5-native.4
+# 5.12.meta-qt5-native.5
 SRC_URI += " \
     file://0020-Always-build-uic-and-qvkgen.patch \
 "
