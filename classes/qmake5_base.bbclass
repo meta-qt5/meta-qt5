@@ -20,7 +20,6 @@ SSTATE_SCAN_FILES += "*.pri *.prl *.prf"
 # then OE_QMAKE_CFLAGS are exported and used correctly, but then whole CFLAGS is overwritten from env (and -fPIC lost and build fails)
 EXTRA_OEMAKE = " \
     MAKEFLAGS='${PARALLEL_MAKE}' \
-    OE_QMAKE_COMPILER='${OE_QMAKE_COMPILER}' \
     OE_QMAKE_CC='${OE_QMAKE_CC}' \
     OE_QMAKE_CXX='${OE_QMAKE_CXX}' \
     OE_QMAKE_CFLAGS='${OE_QMAKE_CFLAGS}' \
@@ -33,7 +32,6 @@ EXTRA_OEMAKE = " \
 "
 
 OE_QMAKE_QMAKE = "${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qmake"
-export OE_QMAKE_COMPILER = "${CC}"
 export OE_QMAKE_CC = "${CC}"
 export OE_QMAKE_CFLAGS = "${CFLAGS}"
 export OE_QMAKE_CXX = "${CXX}"
