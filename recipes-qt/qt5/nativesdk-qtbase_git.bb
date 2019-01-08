@@ -80,7 +80,6 @@ QT_CONFIG_FLAGS += " \
     -shared \
     -silent \
     -no-pch \
-    -no-rpath \
     -pkg-config \
     ${PACKAGECONFIG_CONFARGS} \
 "
@@ -142,7 +141,6 @@ do_configure() {
         -nomake examples \
         -nomake tests \
         -no-compile-examples \
-        -no-rpath \
         -platform ${OE_QMAKE_PLATFORM_NATIVE} \
         -xplatform ${OE_QMAKE_PLATFORM} \
         ${QT_CONFIG_FLAGS}
