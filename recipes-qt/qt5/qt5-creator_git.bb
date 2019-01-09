@@ -14,7 +14,8 @@ LIC_FILES_CHKSUM = " \
 
 inherit qmake5
 
-DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg"
+DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native"
+DEPENDS_append_toolchain-clang = " clang llvm-common"
 DEPENDS_append_libc-musl = " libexecinfo"
 
 SRCREV = "8768e39d3c8e74e583eca3897cc6de53a99c3dde"
@@ -34,6 +35,8 @@ S = "${WORKDIR}/git"
 
 EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 
+EXTRANATIVEPATH += "chrpath-native"
+
 do_configure_append() {
     # Find native tools
     sed -i 's:${STAGING_BINDIR}.*/qdoc:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qdoc:g' ${B}/Makefile
@@ -51,6 +54,11 @@ do_install() {
     install -d ${D}${datadir}/applications
     install -m 0644 ${WORKDIR}/qtcreator.desktop.in ${D}${datadir}/applications/qtcreator.desktop
     sed -i 's:@QT5_QMAKE@:${OE_QMAKE_PATH_QT_BINS}:g' ${D}${datadir}/applications/qtcreator.desktop
+}
+do_install_append_toolchain-clang () {
+    # Remove RPATHs embedded in bins
+    chrpath --delete ${D}${libdir}/qtcreator/plugins/libClang*
+    chrpath --delete ${D}${libexecdir}/qtcreator/clang*
 }
 
 FILES_${PN} += " \

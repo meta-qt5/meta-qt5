@@ -24,3 +24,5 @@ inherit qmake5
 
 FILES_${PN} += "${OE_QMAKE_PATH_PLUGINS}/generic/libvboxtouchplugin.so"
 FILES_${PN}-dev += "${OE_QMAKE_PATH_LIBS}/cmake/*"
+
+SRC_URI += "file://0001-VirtualboxTouchScreenHandler-initialize-m_mouse.patch;patchdir=.."

@@ -1,0 +1,74 @@
+From 29665ab1a97bb0ca4b74275f5526e9afe09ccc64 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Tue, 18 Dec 2018 17:38:21 +0000
+Subject: [PATCH] VirtualboxTouchScreenHandler initialize m_mouse
+
+* make sure m_mouse is initialized for cases where shutdown is called before:
+  m_mouse = EvdevMouseHandler::create(evdev_device, specification);
+  e.g. with following ioctl fails with vboxguest driver from vanila 4.19 kernel:
+  ioctl(m_fd, _IOWR('V', 10, features), &features);
+
+* fixes following crash:
+(gdb) set args -plugin evdevkeyboard -plugin vboxtouch
+(gdb) r
+Starting program: /usr/sbin/luna-next -plugin evdevkeyboard -plugin vboxtouch
+warning: File "/usr/lib/libstdc++.so.6.0.25-gdb.py" auto-loading has been declined by your `auto-load safe-path' set to "$debugdir:$datadir/auto-load".
+To enable execution of this file add
+        add-auto-load-safe-path /usr/lib/libstdc++.so.6.0.25-gdb.py
+line to your configuration file "/media/internal/.gdbinit".
+To completely disable this security protection add
+        set auto-load safe-path /
+line to your configuration file "/media/internal/.gdbinit".
+For more information about this security protection see the
+"Auto-loading safe path" section in the GDB manual.  E.g., run from the shell:
+        info "(gdb)Auto-loading safe path"
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/libthread_db.so.1".
+** Message: 17:05:20.472: App to allow in Low memory: org.webosports.app.phone
+** Message: 17:05:20.479: App to allow in Low memory: org.webosports.app.contacts
+** Message: 17:05:20.479: App to allow in Low memory: org.webosports.app.messaging
+
+** (process:993): WARNING **: 17:05:20.485: Settings::load(): 6 application paths defined:
+** Message: 17:05:20.487: Running on authenticamd with hardware type emulator
+pci id for fd 7: 80ee:beef, driver (null)
+BFD: error: /usr/lib/llvm6.0/.debug/libLLVM-6.0.so(.debug_info) is too large (0x2a793ad1 bytes)
+warning: Can't read data for section '.debug_info' in file '/usr/lib/llvm6.0/.debug/libLLVM-6.0.so'
+[New Thread 0xafe21b40 (LWP 997)]
+[New Thread 0xaf620b40 (LWP 998)]
+BFD: error: /usr/lib/.debug/libQt5Quick.so.5.11.3(.debug_info) is too large (0x5a05c4d bytes)
+warning: Can't read data for section '.debug_info' in file '/usr/lib/.debug/libQt5Quick.so.5.11.3'
+DEBUG: 17:05:39.393: vboxtouch: Using vbox device /dev/vboxguest
+WARNING: 17:05:39.402: vboxtouch setpointershape: ioctl error: Invalid argument
+WARNING: 17:05:39.403: vboxtouch init: ioctl error: Invalid argument
+DEBUG: 17:05:39.403: shutting down vboxtouch
+
+Thread 1 "luna-next" received signal SIGSEGV, Segmentation fault.
+0xaee18e1c in VirtualboxTouchScreenHandler::shutdown (this=0x80da570) at /usr/src/debug/qt5-plugin-generic-vboxtouch/1.1.4+gitrAUTOINC+3f2bdb5a1d-r0/git/vboxtouch/vboxtouch.cpp:179
+179             delete m_mouse;
+(gdb) bt
+ #0  0xaee18e1c in VirtualboxTouchScreenHandler::shutdown (this=0x80da570) at /usr/src/debug/qt5-plugin-generic-vboxtouch/1.1.4+gitrAUTOINC+3f2bdb5a1d-r0/git/vboxtouch/vboxtouch.cpp:179
+ #1  0xaee19319 in VirtualboxTouchScreenHandler::VirtualboxTouchScreenHandler (this=0x80da570, specification=..., parent=0x0) at /usr/src/debug/qt5-plugin-generic-vboxtouch/1.1.4+gitrAUTOINC+3f2bdb5a1d-r0/git/vboxtouch/vboxtouch.cpp:122
+ #2  0xaee1877b in VirtualboxTouchScreenPlugin::create (this=0x80d7a30, key=..., specification=...) at /usr/src/debug/qt5-plugin-generic-vboxtouch/1.1.4+gitrAUTOINC+3f2bdb5a1d-r0/git/vboxtouch/main.cpp:51
+ #3  0xb7afc6c1 in qLoadPlugin<QObject, QGenericPlugin, QString const&> (key=..., loader=<optimized out>) at ../../include/QtCore/../../../git/src/corelib/kernel/qobject.h:499
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ vboxtouch/vboxtouch.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/vboxtouch/vboxtouch.cpp b/vboxtouch/vboxtouch.cpp
+index 6e0aac8..345fdcb 100644
+--- a/vboxtouch/vboxtouch.cpp
++++ b/vboxtouch/vboxtouch.cpp
+@@ -82,7 +82,7 @@ const static vbox_mouse_status_request blank_mouse_status_request = {
+ #define VBOXMOUSE_IS_ABSOLUTE 2
+ 
+ VirtualboxTouchScreenHandler::VirtualboxTouchScreenHandler(const QString &specification, QObject *parent)
+-    : QObject(parent), m_fd(-1), m_notifier(0), m_device(0), m_failures(0),
++    : QObject(parent), m_fd(-1), m_notifier(0), m_device(0), m_failures(0), m_mouse(0),
+       m_button(false), m_x(0), m_y(0)
+ {
+     setObjectName("Virtualbox Touch Handler");
+-- 
+2.17.1
+

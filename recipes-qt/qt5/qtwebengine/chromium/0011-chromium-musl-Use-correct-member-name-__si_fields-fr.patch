@@ -1,4 +1,4 @@
-From b082f048a5789f7ab6466c84d7e955a4f2c03d03 Mon Sep 17 00:00:00 2001
+From 69d01ff29ba4e338c9d13369a511e90ab0168afa Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:12:39 -0700
 Subject: [PATCH] chromium: musl: Use correct member name __si_fields from
@@ -10,7 +10,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/chromium/sandbox/linux/seccomp-bpf/trap.cc b/chromium/sandbox/linux/seccomp-bpf/trap.cc
-index 003708d2c8..0fef3148f9 100644
+index 003708d2c89..0fef3148f9d 100644
 --- a/chromium/sandbox/linux/seccomp-bpf/trap.cc
 +++ b/chromium/sandbox/linux/seccomp-bpf/trap.cc
 @@ -168,7 +168,7 @@ void Trap::SigSys(int nr, LinuxSigInfo* info, ucontext_t* ctx) {

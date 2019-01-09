@@ -1,4 +1,4 @@
-From f00d8dcdccde47a969f8c670baba1b196076bac0 Mon Sep 17 00:00:00 2001
+From 3701cce26ce6f90e4b5e4c71c73d333d43b5ac08 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -65,7 +65,7 @@ index 934a18a924..0f5b1b6333 100644
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
-index 5da82fdb5b..3f56aac97a 100644
+index d16b3cf1be..df219ce34c 100644
 --- a/mkspecs/features/qt.prf
 +++ b/mkspecs/features/qt.prf
 @@ -147,7 +147,7 @@ import_plugins:qtConfig(static) {
@@ -77,7 +77,7 @@ index 5da82fdb5b..3f56aac97a 100644
              LIBS += -L$$plug_path/$$plug_type
          }
          LIBS += -l$${plug}$$qtPlatformTargetSuffix()
-@@ -285,8 +285,8 @@ for(ever) {
+@@ -307,8 +307,8 @@ for(ever) {
  # static builds: link qml import plugins into the target.
  contains(all_qt_module_deps, qml): \
          qtConfig(static):import_plugins:!host_build:!no_import_scan {

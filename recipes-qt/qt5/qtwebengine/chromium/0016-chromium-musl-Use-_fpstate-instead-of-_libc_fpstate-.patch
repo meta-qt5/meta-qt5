@@ -1,7 +1,8 @@
-From 5d74f21ea59cc3a2ed214b83432a634d93140c3f Mon Sep 17 00:00:00 2001
+From 7bc63fb1e62c906db5be40acd1d10095461cd4bd Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 25 Sep 2018 12:35:07 -0700
-Subject: [PATCH] Use _fpstate instead of _libc_fpstate on linux
+Subject: [PATCH] chromium: musl: Use _fpstate instead of _libc_fpstate on
+ linux
 
 glibc defines both. musl libc only the former.
 
@@ -13,7 +14,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  3 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/chromium/third_party/breakpad/breakpad/src/client/linux/dump_writer_common/ucontext_reader.cc b/chromium/third_party/breakpad/breakpad/src/client/linux/dump_writer_common/ucontext_reader.cc
-index 052ce37cb4..95b0fb44e1 100644
+index 052ce37cb44..95b0fb44e12 100644
 --- a/chromium/third_party/breakpad/breakpad/src/client/linux/dump_writer_common/ucontext_reader.cc
 +++ b/chromium/third_party/breakpad/breakpad/src/client/linux/dump_writer_common/ucontext_reader.cc
 @@ -49,7 +49,7 @@ uintptr_t UContextReader::GetInstructionPointer(const ucontext_t* uc) {
@@ -35,7 +36,7 @@ index 052ce37cb4..95b0fb44e1 100644
  
    out->context_flags = MD_CONTEXT_AMD64_FULL;
 diff --git a/chromium/third_party/breakpad/breakpad/src/client/linux/dump_writer_common/ucontext_reader.h b/chromium/third_party/breakpad/breakpad/src/client/linux/dump_writer_common/ucontext_reader.h
-index f830618f24..f3dde1f4df 100644
+index f830618f240..f3dde1f4dff 100644
 --- a/chromium/third_party/breakpad/breakpad/src/client/linux/dump_writer_common/ucontext_reader.h
 +++ b/chromium/third_party/breakpad/breakpad/src/client/linux/dump_writer_common/ucontext_reader.h
 @@ -50,7 +50,7 @@ struct UContextReader {
@@ -48,7 +49,7 @@ index f830618f24..f3dde1f4df 100644
    static void FillCPUContext(RawContextCPU *out, const ucontext_t *uc,
                               const struct fpsimd_context* fpregs);
 diff --git a/chromium/third_party/breakpad/breakpad/src/client/linux/minidump_writer/minidump_writer.h b/chromium/third_party/breakpad/breakpad/src/client/linux/minidump_writer/minidump_writer.h
-index d1dc331215..d1cc5624cd 100644
+index d1dc331215a..d1cc5624cd4 100644
 --- a/chromium/third_party/breakpad/breakpad/src/client/linux/minidump_writer/minidump_writer.h
 +++ b/chromium/third_party/breakpad/breakpad/src/client/linux/minidump_writer/minidump_writer.h
 @@ -48,7 +48,7 @@ class ExceptionHandler;

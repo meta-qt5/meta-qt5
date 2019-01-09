@@ -1,4 +1,4 @@
-From 9a97eb31696f24ed9edd9193bf65a439cbcc1bc1 Mon Sep 17 00:00:00 2001
+From f430c2c9b3d38f9150588da6dc154aa2285584e6 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] chromium: Force host toolchain configuration
@@ -14,7 +14,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/gn/build/gen.py b/gn/build/gen.py
-index 87db4c26bc..34c853b7f4 100755
+index 87db4c26bcf..34c853b7f4a 100755
 --- a/gn/build/gen.py
 +++ b/gn/build/gen.py
 @@ -310,10 +310,10 @@ def WriteGNNinja(path, platform, host, options, linux_sysroot):

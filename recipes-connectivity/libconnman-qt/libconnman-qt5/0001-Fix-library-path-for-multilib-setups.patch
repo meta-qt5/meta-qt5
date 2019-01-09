@@ -1,0 +1,25 @@
+From 9692239a31f0e47ea75b60388d5491d5155a888d Mon Sep 17 00:00:00 2001
+From: Andreas Oberritter <obi@saftware.de>
+Date: Mon, 17 Dec 2018 14:00:44 +0100
+Subject: [PATCH] Fix library path for multilib setups.
+
+Upstream-Status: Pending
+
+Signed-off-by: Andreas Oberritter <obi@saftware.de>
+---
+ libconnman-qt/libconnman-qt.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libconnman-qt/libconnman-qt.pro b/libconnman-qt/libconnman-qt.pro
+index 8cd58e8..bad8a5e 100644
+--- a/libconnman-qt/libconnman-qt.pro
++++ b/libconnman-qt/libconnman-qt.pro
+@@ -71,7 +71,7 @@ SOURCES += \
+     networksession.cpp \
+     counter.cpp
+ 
+-target.path = $$INSTALL_ROOT$$PREFIX/lib
++target.path = $$[QT_INSTALL_LIBS]
+ 
+ headers.files = $$PUBLIC_HEADERS
+ 

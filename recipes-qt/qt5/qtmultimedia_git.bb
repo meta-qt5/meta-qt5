@@ -27,8 +27,8 @@ EXTRA_QMAKEVARS_CONFIGURE += "${@bb.utils.contains_any('PACKAGECONFIG', 'gstream
 
 CXXFLAGS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', '-DMESA_EGL_NO_X11_HEADERS=1', d)}"
 
-# Patches from https://github.com/meta-qt5/qtmultimedia/commits/b5.11
-# 5.11.meta-qt5.5
+# Patches from https://github.com/meta-qt5/qtmultimedia/commits/b5.12
+# 5.12.meta-qt5.1
 SRC_URI += "\
     file://0001-qtmultimedia-fix-a-conflicting-declaration.patch \
 "

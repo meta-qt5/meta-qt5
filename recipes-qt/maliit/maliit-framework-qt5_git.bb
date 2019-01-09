@@ -57,6 +57,10 @@ EXTRA_QMAKEVARS_PRE = "\
     CONFIG+=enable-dbus-activation \
     CONFIG+=qt5-inputcontext \
 "
+
+# tests fail to build with clang
+EXTRA_QMAKEVARS_PRE_append_toolchain-clang = " CONFIG+=notests"
+
 EXTRA_OEMAKE += "INSTALL_ROOT=${D}"
 
 do_install_append() {

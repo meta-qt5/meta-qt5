@@ -22,6 +22,8 @@ export HOST_SYS
 export STAGING_INCDIR
 export STAGING_LIBDIR
 
+PARALLEL_MAKEINST = ""
+
 DISABLED_FEATURES = "PyQt_Desktop_OpenGL PyQt_Accessibility PyQt_SessionManager"
 
 DISABLED_FEATURES_append_arm = " PyQt_qreal_double"
@@ -54,7 +56,7 @@ do_compile() {
 
 do_install() {
     cd ${S}
-    oe_runmake install
+    oe_runmake MAKEFLAGS='-j 1' install
 }
 
 FILES_${PN} += "${libdir}/${PYTHON_DIR}${PYTHON_ABI}/site-packages ${datadir}/sip/PyQt5/"

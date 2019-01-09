@@ -1,4 +1,4 @@
-From e9a71c8bc66cd4ae996a81130ec9995cd1121b2a Mon Sep 17 00:00:00 2001
+From 010cff20ca97bba43ed9d6332bd3e9b0198c97a4 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 17:15:34 -0700
 Subject: [PATCH] chromium: musl: include asm-generic/ioctl.h for TCGETS2
@@ -9,7 +9,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/chromium/device/serial/serial_io_handler_posix.cc b/chromium/device/serial/serial_io_handler_posix.cc
-index d6ed5e1f88..b550f895ef 100644
+index d6ed5e1f889..b550f895ef5 100644
 --- a/chromium/device/serial/serial_io_handler_posix.cc
 +++ b/chromium/device/serial/serial_io_handler_posix.cc
 @@ -6,6 +6,7 @@

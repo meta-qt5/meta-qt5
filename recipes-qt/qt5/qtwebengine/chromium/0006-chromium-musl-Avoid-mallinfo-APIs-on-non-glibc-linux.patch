@@ -1,4 +1,4 @@
-From 22a60b7403ba8404e2936caf9126c6c666fa577b Mon Sep 17 00:00:00 2001
+From 8a99b4662109d03502baa1578d5484bfdd399caf Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:09:06 -0700
 Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
@@ -10,7 +10,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/chromium/base/process/process_metrics_posix.cc b/chromium/base/process/process_metrics_posix.cc
-index a09bbf2c56..b309f6b694 100644
+index a09bbf2c56e..b309f6b694e 100644
 --- a/chromium/base/process/process_metrics_posix.cc
 +++ b/chromium/base/process/process_metrics_posix.cc
 @@ -100,14 +100,14 @@ size_t ProcessMetrics::GetMallocUsage() {
@@ -31,7 +31,7 @@ index a09bbf2c56..b309f6b694 100644
    return 0;
  #endif
 diff --git a/chromium/base/trace_event/malloc_dump_provider.cc b/chromium/base/trace_event/malloc_dump_provider.cc
-index 46fdb3e214..27936e6b20 100644
+index 46fdb3e2146..27936e6b200 100644
 --- a/chromium/base/trace_event/malloc_dump_provider.cc
 +++ b/chromium/base/trace_event/malloc_dump_provider.cc
 @@ -77,6 +77,7 @@ MallocDumpProvider::~MallocDumpProvider() = default;

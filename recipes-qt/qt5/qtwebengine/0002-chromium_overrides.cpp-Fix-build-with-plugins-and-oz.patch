@@ -1,4 +1,4 @@
-From 50ff15028627c8a4cb9556b014291d560197be50 Mon Sep 17 00:00:00 2001
+From 76e9084f139341218eccb4c71766bbc3eaa3e61e Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sun, 10 Jun 2018 10:26:17 +0000
 Subject: [PATCH] chromium_overrides.cpp: Fix build with plugins and ozone
@@ -36,10 +36,10 @@ Signed-off-by: Christophe Chapuis <chris.chapuis@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/core/chromium_overrides.cpp b/src/core/chromium_overrides.cpp
-index f3b7d389..915d38fb 100644
+index 841dcf4c..2f2299b4 100644
 --- a/src/core/chromium_overrides.cpp
 +++ b/src/core/chromium_overrides.cpp
-@@ -134,7 +134,7 @@ std::unique_ptr<base::ListValue> GetFontList_SlowBlocking()
+@@ -140,7 +140,7 @@ std::unique_ptr<base::ListValue> GetFontList_SlowBlocking()
      return std::move(font_list);
  }
  

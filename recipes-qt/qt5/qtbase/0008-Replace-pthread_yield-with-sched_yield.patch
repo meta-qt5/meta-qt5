@@ -1,4 +1,4 @@
-From 83965aee0017fb424406d895af5ec2cec696f26c Mon Sep 17 00:00:00 2001
+From cbdcde6b124da35443cf435e0f04cfe75360ce90 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 27 Jul 2017 08:02:51 -0700
 Subject: [PATCH] Replace pthread_yield with sched_yield
@@ -14,10 +14,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp b/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
-index e312199980..5789174ad5 100644
+index 5d9b5ca95c..ffcbddc442 100644
 --- a/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
 +++ b/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
-@@ -34,7 +34,7 @@
+@@ -35,7 +35,7 @@
  #include "tst_qvariant_common.h"
  
  #ifdef Q_OS_LINUX
@@ -26,7 +26,7 @@ index e312199980..5789174ad5 100644
  #endif
  
  #include <algorithm>
-@@ -205,7 +205,7 @@ protected:
+@@ -365,7 +365,7 @@ protected:
              const char *nm = name.constData();
              int tp = qRegisterMetaType<Bar>(nm);
  #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)

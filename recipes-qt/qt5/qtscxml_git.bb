@@ -12,8 +12,8 @@ DEPENDS += "qtbase qtdeclarative qtxmlpatterns qtscxml-native"
 
 SRCREV = "2dfb1d046d4a1dcb046bfb287d240a8869c78baa"
 
-# Patches from https://github.com/meta-qt5/qtscxml/commits/b5.11
-# 5.11.meta-qt5.5
+# Patches from https://github.com/meta-qt5/qtscxml/commits/b5.12
+# 5.12.meta-qt5.1
 SRC_URI += "file://0001-Use-external-host-bin-path-for-cmake-file.patch"
 
 do_install_append_class-nativesdk() {

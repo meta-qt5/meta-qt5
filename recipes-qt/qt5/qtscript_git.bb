@@ -11,10 +11,10 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPL3;md5=e6a600fd5e1d9cbde2d983680233ad02 \
 "
 
-# Patches from https://github.com/meta-qt5/qtscript/commits/b5.11
-# 5.11.meta-qt5.1
+# Patches from https://github.com/meta-qt5/qtscript/commits/b5.12
+# 5.12.meta-qt5.1
 SRC_URI += " \
-    file://0002-Include-asm-sgidefs.h-on-non-glibc-systems.patch \
+    file://0001-Include-asm-sgidefs.h-on-non-glibc-systems.patch \
 "
 
 # qemuarm build fails with:
