@@ -42,6 +42,7 @@ SRC_URI += "\
     file://0015-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0016-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0017-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
+    file://0018-qmake-use-default-libdirs-to-search-for-prl-libs.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
@@ -193,4 +194,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "af821f79cacbac0be9995a7eb4a0448a9a2958bf"
+SRCREV = "8c47c2a08ec69fe45a14f6c2334befcb2e074790"

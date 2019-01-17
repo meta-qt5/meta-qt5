@@ -1,0 +1,32 @@
+From d26359039f488f1569a581f3e266b1ff236600fc Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Mon, 7 Jan 2019 10:29:53 +0200
+Subject: [PATCH] qmake: use default libdirs to search for prl libs
+
+Default libdirs are never added to the modules' LIBS and if
+Qt was configured to use one of the default libdirs, module
+might end up without any path to search for its prl files.
+
+Add default libdirs to the search path similar as it's done
+in unix/makefile generator.
+
+Fixes: QTBUG-72855
+Change-Id: I43c5bae0d54ba9427ab0ad3eab61ba0c4e2cbde8
+Reviewed-by: Joerg Bornemann <joerg.bornemann@qt.io>
+---
+ qmake/generators/win32/winmakefile.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/qmake/generators/win32/winmakefile.cpp b/qmake/generators/win32/winmakefile.cpp
+index 6e4b9a1eb5..a855fcd0a5 100644
+--- a/qmake/generators/win32/winmakefile.cpp
++++ b/qmake/generators/win32/winmakefile.cpp
+@@ -84,6 +84,8 @@ Win32MakefileGenerator::findLibraries(bool linkPrl, bool mergeLflags)
+     if (impexts.isEmpty())
+         impexts = project->values("QMAKE_EXTENSION_STATICLIB");
+     QList<QMakeLocalFileName> dirs;
++    for (const ProString &dlib : project->values("QMAKE_DEFAULT_LIBDIRS"))
++        dirs.append(QMakeLocalFileName(dlib.toQString()));
+   static const char * const lflags[] = { "LIBS", "LIBS_PRIVATE",
+                                          "QMAKE_LIBS", "QMAKE_LIBS_PRIVATE", nullptr };
+   for (int i = 0; lflags[i]; i++) {

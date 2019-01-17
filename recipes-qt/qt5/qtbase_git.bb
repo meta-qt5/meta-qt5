@@ -33,6 +33,7 @@ SRC_URI += "\
     file://0015-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0016-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0017-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
+    file://0018-qmake-use-default-libdirs-to-search-for-prl-libs.patch \
 "
 
 # for syncqt
@@ -253,4 +254,4 @@ INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "af821f79cacbac0be9995a7eb4a0448a9a2958bf"
+SRCREV = "8c47c2a08ec69fe45a14f6c2334befcb2e074790"
