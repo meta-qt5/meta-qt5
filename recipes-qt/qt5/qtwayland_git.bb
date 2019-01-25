@@ -46,3 +46,20 @@ BBCLASSEXTEND =+ "native nativesdk"
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
 SRC_URI += "file://0001-Revert-use-new-feature-name-xkbcommon_evdev-xkbcommo.patch"
+
+# Since version 5.11.2 some private headers are not installed. Work around
+# until fixed upstream. See https://bugreports.qt.io/browse/QTBUG-71340 for
+# further details
+do_install_append() {
+    if [ -d "${B}/src/client" ]; then
+        upstream_pv=`echo "${PV}" | sed 's:+git.*::g'`
+        for header in `find ${B}/src/client -name '*wayland-*.h'`; do
+            header_base=`basename $header`
+            dest="${D}${includedir}/QtWaylandClient/$upstream_pv/QtWaylandClient/private/$header_base"
+            if [ ! -e "$dest" ]; then
+                echo "Manual install: $header_base to $dest"
+                install -m 644 "$header" "$dest"
+            fi
+        done
+    fi
+}
