@@ -36,6 +36,7 @@ SRC_URI += "\
     file://0018-Fix-compile-issue-with-gcc-9.patch \
     file://0019-Fix-compilation-of-qendian-s-qswap-specializations-o.patch \
     file://0020-Fix-qbswap-calls-for-Big-Endian-targets.patch \
+    file://0023-mkspecs-Force-enable-latomic-for-GCC-builds.patch \
 "
 
 

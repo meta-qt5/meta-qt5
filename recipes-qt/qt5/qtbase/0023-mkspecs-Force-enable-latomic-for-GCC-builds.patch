@@ -1,0 +1,29 @@
+From cc399ea6fee87093bf89281575e3230fcfa72183 Mon Sep 17 00:00:00 2001
+From: Alistair Francis <alistair.francis@wdc.com>
+Date: Thu, 3 Jan 2019 15:13:28 -0800
+Subject: [PATCH] mkspecs: Force enable -latomic for GCC builds
+
+This fixes the undefined references to `__atomic_*' errors when cross
+compiling for RISC-V.
+
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ mkspecs/common/g++-base.conf | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/mkspecs/common/g++-base.conf b/mkspecs/common/g++-base.conf
+index fa0f0c391d..4f0ef54ee3 100644
+--- a/mkspecs/common/g++-base.conf
++++ b/mkspecs/common/g++-base.conf
+@@ -27,6 +27,8 @@ QMAKE_CFLAGS_USE_PRECOMPILE   = -include ${QMAKE_PCH_OUTPUT_BASE}
+ QMAKE_CXXFLAGS_PRECOMPILE     = -x c++-header -c ${QMAKE_PCH_INPUT} -o ${QMAKE_PCH_OUTPUT}
+ QMAKE_CXXFLAGS_USE_PRECOMPILE = $$QMAKE_CFLAGS_USE_PRECOMPILE
+ 
++QMAKE_LIBS              = -latomic
++
+ QMAKE_CFLAGS_GNUC99     = -std=gnu99
+ QMAKE_CFLAGS_GNUC11     = -std=gnu11
+ QMAKE_CXXFLAGS_CXX11    = -std=c++11
+-- 
+2.19.1
+
