@@ -25,7 +25,11 @@ EXTRA_QMAKEVARS_PRE += " \
 "
 
 do_configure_prepend() {
-    sed -i 's:/usr/local/qwt-$$QWT_VERSION:${prefix}:' ${S}/*.pri
+    sed -i \
+        -e 's:/usr/local/qwt-$$QWT_VERSION:${prefix}:' \
+        -e 's:^QWT_INSTALL_LIBS.*:QWT_INSTALL_LIBS = ${libdir}:' \
+        ${S}/*.pri
+    export QWT_INSTALL_LIBS=${libdir}
 }
 
 do_install_append() {
