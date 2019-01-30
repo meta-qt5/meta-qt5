@@ -1,0 +1,26 @@
+From 4c6aa68761d8a85bffe7d545c816522a793e94a9 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 29 Jan 2019 20:29:19 -0800
+Subject: [PATCH] Add missing header for errno
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/bluetooth/bluez/bluetoothmanagement.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/bluetooth/bluez/bluetoothmanagement.cpp b/src/bluetooth/bluez/bluetoothmanagement.cpp
+index 31d3dc02..75d762e5 100644
+--- a/src/bluetooth/bluez/bluetoothmanagement.cpp
++++ b/src/bluetooth/bluez/bluetoothmanagement.cpp
+@@ -45,6 +45,7 @@
+ #include "bluez_data_p.h"
+ #include "../qbluetoothsocketbase_p.h"
+ 
++#include <errno.h>
+ #include <unistd.h>
+ #include <sys/prctl.h>
+ #include <sys/syscall.h>
+-- 
+2.20.1
+
