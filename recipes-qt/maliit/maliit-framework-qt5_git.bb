@@ -10,6 +10,7 @@ SRC_URI = "git://github.com/maliit/framework.git;branch=master \
            file://0001-Fix-MALIIT_INSTALL_PRF-to-allow-the-build-with-opene.patch \
            file://maliit-server.desktop \
            file://0001-config.pri-Use-O1-optimization-in-DEBUG-flags.patch \
+           file://0001-Drop-tr1-namespace-its-not-there-in-c-11-and-newer.patch \
            "
 
 SRCREV = "60b1b10de14f932420313c547ab801daf522d539"
