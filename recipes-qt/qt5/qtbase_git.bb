@@ -171,6 +171,13 @@ QT_CONFIG_FLAGS += " \
     ${PACKAGECONFIG_CONFARGS} \
 "
 
+export CC_host_toolchain-clang = "clang"
+export CXX_host_toolchain-clang = "clang++"
+export LD_host_toolchain-clang = "clang++"
+export CC_host ?= "gcc"
+export CXX_host ?= "g++"
+export LD_host ?= "g++"
+
 # for qtbase configuration we need default settings
 # since we cannot set empty set filename to a not existent file
 deltask generate_qt_config_file
@@ -249,6 +256,9 @@ do_install_append() {
     echo "isEmpty(QMAKE_LINK_C_SHLIB): QMAKE_LINK_C_SHLIB = $OE_QMAKE_LINK_NO_SYSROOT" >> $conf
     echo "isEmpty(QMAKE_LFLAGS): QMAKE_LFLAGS = ${OE_QMAKE_LDFLAGS}" >> $conf
     echo "isEmpty(QMAKE_STRIP): QMAKE_STRIP = ${TARGET_PREFIX}strip" >> $conf
+    echo "isEmpty(CC_host): CC_host = ${CC_host}" >> $conf
+    echo "isEmpty(CXX_host): CXX_host = ${CXX_host}" >> $conf
+    echo "isEmpty(LD_host): LD_host = ${LD_host}" >> $conf
 
     generate_target_qt_config_file ${D}${OE_QMAKE_PATH_BINS}/qt.conf
 
