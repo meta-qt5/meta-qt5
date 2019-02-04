@@ -37,7 +37,6 @@ SRC_URI += "\
     file://0015-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0016-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0017-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
-    file://0018-qmake-use-default-libdirs-to-search-for-prl-libs.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
@@ -140,4 +139,4 @@ do_install() {
     echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
-SRCREV = "8c47c2a08ec69fe45a14f6c2334befcb2e074790"
+SRCREV = "c1f4286a5cbc1794fe7be5bdbbd6a0bf29ef84d4"
