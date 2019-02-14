@@ -7,11 +7,10 @@ LIC_FILES_CHKSUM = "\
     file://LICENSE;md5=d32239bcb673463ab874e80d47fae504 \
 "
 SRC_URI = "\
-    ${SOURCEFORGE_MIRROR}/pyqt/PyQt5_gpl-${PV}.tar.gz \
+    https://www.riverbankcomputing.com/static/Downloads/PyQt5/${PV}/PyQt5_gpl-${PV}.tar.gz \
 "
-SRC_URI[md5sum] = "aac3428e90eca5df68c5764282fd9b98"
-SRC_URI[sha256sum] = "c9b57d15601d436faf35dacf8e0acefa220194829a653e771e80b189b3261073"
-
+SRC_URI[md5sum] = "67508b652098d2e05c4c2b5baeb170cc"
+SRC_URI[sha256sum] = "3718ce847d824090fd5f95ff3f13847ee75c2507368d4cbaeb48338f506e59bf"
 S = "${WORKDIR}/PyQt5_gpl-${PV}"
 
 inherit qmake5
