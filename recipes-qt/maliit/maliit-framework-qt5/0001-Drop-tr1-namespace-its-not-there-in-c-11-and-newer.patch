@@ -1,0 +1,83 @@
+From 60e7464fe2b75bb7187a4be0d6ba944d2b46f93e Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 31 Jan 2019 22:02:32 -0800
+Subject: [PATCH] Drop tr1 namespace its not there in c++11 and newer
+
+compile as C++11 code
+libc++'s tr1 headers don't actually make a tr1 namespace.
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/mimonscreenplugins.cpp                             | 10 +++++-----
+ .../ut_mimpluginmanagerconfig.cpp                      |  2 +-
+ .../ut_mimpluginmanagerconfig.h                        |  2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/src/mimonscreenplugins.cpp b/src/mimonscreenplugins.cpp
+index da6e937e..b830e1bf 100644
+--- a/src/mimonscreenplugins.cpp
++++ b/src/mimonscreenplugins.cpp
+@@ -21,9 +21,9 @@
+ #include <QDebug>
+ 
+ #include <algorithm>
+-#include <tr1/functional>
++#include <functional>
+ 
+-using namespace std::tr1::placeholders;
++using namespace std::placeholders;
+ 
+ namespace
+ {
+@@ -118,10 +118,10 @@ bool MImOnScreenPlugins::isEnabled(const QString &plugin) const
+ 
+     std::remove_copy_if(mEnabledSubViews.begin(), mEnabledSubViews.end(),
+                         std::back_inserter(mEnabledAndAvailableSubViews),
+-                        std::tr1::bind(&MImOnScreenPlugins::isSubViewUnavailable, this, _1));
++                        std::bind(&MImOnScreenPlugins::isSubViewUnavailable, this, _1));
+ 
+     return std::find_if(mEnabledAndAvailableSubViews.begin(), mEnabledAndAvailableSubViews.end(),
+-                        std::tr1::bind(equalPlugin, _1, plugin)) != mEnabledAndAvailableSubViews.end();
++                        std::bind(equalPlugin, _1, plugin)) != mEnabledAndAvailableSubViews.end();
+ }
+ 
+ bool MImOnScreenPlugins::isSubViewEnabled(const SubView &subView) const
+@@ -138,7 +138,7 @@ QList<MImOnScreenPlugins::SubView> MImOnScreenPlugins::enabledSubViews(const QSt
+ {
+     QList<MImOnScreenPlugins::SubView> result;
+     std::remove_copy_if(mEnabledSubViews.begin(), mEnabledSubViews.end(),
+-                        std::back_inserter(result), std::tr1::bind(notEqualPlugin, _1, plugin));
++                        std::back_inserter(result), std::bind(notEqualPlugin, _1, plugin));
+     return result;
+ }
+ 
+diff --git a/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.cpp b/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.cpp
+index dea443e3..677dd689 100644
+--- a/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.cpp
++++ b/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.cpp
+@@ -39,7 +39,7 @@
+ #include "mattributeextensionmanager.h"
+ #include "msharedattributeextensionmanager.h"
+ 
+-using namespace std::tr1;
++using namespace std;
+ 
+ typedef QSet<Maliit::HandlerState> HandlerStates;
+ Q_DECLARE_METATYPE(HandlerStates);
+diff --git a/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.h b/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.h
+index 5b1b691b..3ea18747 100644
+--- a/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.h
++++ b/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.h
+@@ -16,7 +16,7 @@
+ 
+ #include "mimserveroptions.h"
+ #include "mimsettingsqsettings.h"
+-#include <tr1/memory>
++#include <memory>
+ 
+ #include <QtTest/QtTest>
+ #include <QObject>
+-- 
+2.20.1
+

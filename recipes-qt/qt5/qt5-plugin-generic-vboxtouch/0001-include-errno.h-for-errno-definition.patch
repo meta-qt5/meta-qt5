@@ -1,0 +1,38 @@
+From 2486c9ecc1db12132ee8c77ed69b1d301e75786b Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 1 Feb 2019 23:35:24 -0800
+Subject: [PATCH] include errno.h for errno definition
+
+This fixes errors with clang/libc++
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ vboxtouch/setshape.cpp  | 1 +
+ vboxtouch/vboxtouch.cpp | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/vboxtouch/setshape.cpp b/vboxtouch/setshape.cpp
+index 092f888..4dd25a1 100644
+--- a/vboxtouch/setshape.cpp
++++ b/vboxtouch/setshape.cpp
+@@ -24,6 +24,7 @@
+ #include <QByteArray>
+ #include <QDebug>
+ 
++#include <errno.h>
+ #include <stdint.h>
+ #include <string.h>
+ 
+diff --git a/vboxtouch/vboxtouch.cpp b/vboxtouch/vboxtouch.cpp
+index 345fdcb..ffe1d50 100644
+--- a/vboxtouch/vboxtouch.cpp
++++ b/vboxtouch/vboxtouch.cpp
+@@ -32,6 +32,7 @@
+ 
+ #include <qpa/qwindowsysteminterface.h>
+ 
++#include <errno.h>
+ #include <fcntl.h>
+ #include <string.h>
+ #include <unistd.h>

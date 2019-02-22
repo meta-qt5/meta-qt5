@@ -1,0 +1,33 @@
+From f304341d4e0a24469575129e2f2a79a969d8ecaf Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Sat, 2 Feb 2019 22:09:20 -0800
+Subject: [PATCH 1/2] chromium: Check for __ARM_FP & 2 before using __fp16
+
+The __fp16 type denotes half-precision (16-bit) floating-point.
+The recommended way to test for this hardware support is to test bit 1 in __ARM_FP
+and
+If 16-bit floating-point is available, one of __ARM_FP16_FORMAT_IEEE and
+__ARM_FP16_FORMAT_ALTERNATIVE will be defined to indicate the format in use
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h b/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
+index 33d9e7aa39..aaefa5371a 100644
+--- a/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
++++ b/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
+@@ -679,7 +679,7 @@ SI F from_half(U16 h) {
+ }
+ 
+ SI U16 to_half(F f) {
+-#if defined(__ARM_FP16_FORMAT_IEEE)
++#if defined(__ARM_FP16_FORMAT_IEEE) && defined(__ARM_NEON__) && (__ARM_FP & 2)
+     __fp16 fp16 = __fp16(f);
+     U16 u16;
+     memcpy(&u16, &fp16, sizeof(U16));
+-- 
+2.20.1
+
