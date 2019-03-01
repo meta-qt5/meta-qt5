@@ -31,7 +31,7 @@ index 847507f..286286d 100644
 +    SUBDIRS = sub_tools
 +}
 diff --git a/src/3rdparty/assimp/assimp_dependency.pri b/src/3rdparty/assimp/assimp_dependency.pri
-index 8ba2d9a..e973d93 100644
+index 8ba2d9a41..e973d93dd 100644
 --- a/src/3rdparty/assimp/assimp_dependency.pri
 +++ b/src/3rdparty/assimp/assimp_dependency.pri
 @@ -1,5 +1,5 @@

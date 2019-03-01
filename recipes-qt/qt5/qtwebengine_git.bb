@@ -139,7 +139,6 @@ QT_MODULE_BRANCH_CHROMIUM = "71-based"
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
-    file://0002-chromium_overrides.cpp-Fix-build-with-plugins-and-oz.patch \
 "
 SRC_URI_append_libc-musl = "\
     file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
@@ -152,6 +151,8 @@ SRC_URI += " \
     file://chromium/0002-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
     file://chromium/0003-chromium-Fix-build-with-gcc8.patch;patchdir=src/3rdparty \
     file://chromium/0004-chromium-stack-pointer-clobber.patch;patchdir=src/3rdparty \
+    file://chromium/0019-chromium-fix-build-with-clang.patch;patchdir=src/3rdparty \
+    file://chromium/0021-chromium-Exclude-CRC32-for-32bit-arm.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI_append_libc-musl = "\

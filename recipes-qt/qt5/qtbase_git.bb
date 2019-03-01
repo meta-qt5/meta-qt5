@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-shared
-# 5.12.meta-qt5-shared.4
+# 5.12.meta-qt5-shared.5
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -64,7 +64,7 @@ LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -f
 PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gl', '', d)}"
 PACKAGECONFIG_FB ?= "${@bb.utils.contains('DISTRO_FEATURES', 'directfb', 'directfb', '', d)}"
 PACKAGECONFIG_X11 ?= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcb xcb-xinput glib xkb xkbcommon', '', d)}"
-PACKAGECONFIG_KDE ?= "${@bb.utils.contains('DISTRO_FEATURES', 'kde', 'sm cups fontconfig kms gbm libinput', '', d)}"
+PACKAGECONFIG_KDE ?= "${@bb.utils.contains('DISTRO_FEATURES', 'kde', 'sm cups fontconfig kms gbm libinput sql-sqlite accessibility openssl', '', d)}"
 PACKAGECONFIG_FONTS ?= ""
 PACKAGECONFIG_SYSTEM ?= "jpeg libpng zlib"
 PACKAGECONFIG_DISTRO ?= ""
@@ -167,6 +167,13 @@ QT_CONFIG_FLAGS += " \
     ${PACKAGECONFIG_CONFARGS} \
 "
 
+export CC_host_toolchain-clang = "clang"
+export CXX_host_toolchain-clang = "clang++"
+export LD_host_toolchain-clang = "clang++"
+export CC_host ?= "gcc"
+export CXX_host ?= "g++"
+export LD_host ?= "g++"
+
 # for qtbase configuration we need default settings
 # since we cannot set empty set filename to a not existent file
 deltask generate_qt_config_file
@@ -240,6 +247,9 @@ do_install_append() {
     echo "isEmpty(QMAKE_LINK_C_SHLIB): QMAKE_LINK_C_SHLIB = $OE_QMAKE_LINK_NO_SYSROOT" >> $conf
     echo "isEmpty(QMAKE_LFLAGS): QMAKE_LFLAGS = ${OE_QMAKE_LDFLAGS}" >> $conf
     echo "isEmpty(QMAKE_STRIP): QMAKE_STRIP = ${TARGET_PREFIX}strip" >> $conf
+    echo "isEmpty(CC_host): CC_host = ${CC_host}" >> $conf
+    echo "isEmpty(CXX_host): CXX_host = ${CXX_host}" >> $conf
+    echo "isEmpty(LD_host): LD_host = ${LD_host}" >> $conf
 
     generate_target_qt_config_file ${D}${OE_QMAKE_PATH_BINS}/qt.conf
 

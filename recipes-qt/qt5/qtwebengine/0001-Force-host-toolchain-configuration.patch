@@ -1,4 +1,4 @@
-From 376b5b262f2ed936920a66167b76edab781ddcff Mon Sep 17 00:00:00 2001
+From 8a07ea88666132e3ca944d0d5784235420c3d382 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -19,7 +19,7 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  3 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/src/buildtools/configure_host.pro b/src/buildtools/configure_host.pro
-index dd0d3e3..70161c8 100644
+index dd0d3e3..6312c86 100644
 --- a/src/buildtools/configure_host.pro
 +++ b/src/buildtools/configure_host.pro
 @@ -4,7 +4,7 @@ TEMPLATE = aux
@@ -38,9 +38,9 @@ index dd0d3e3..70161c8 100644
 -"  cc = \"$$which($$QMAKE_CC)\" " \
 -"  cxx = \"$$which($$QMAKE_CXX)\" " \
 -"  ld = \"$$which($$QMAKE_LINK)\" " \
-+"  cc = \"$$which(gcc)\" " \
-+"  cxx = \"$$which(g++)\" " \
-+"  ld = \"$$which(g++)\" " \
++"  cc = \"$$which($$CC_host)\" " \
++"  cxx = \"$$which($$CXX_host)\" " \
++"  ld = \"$$which($$CXX_host)\" " \
  "  ar = \"$$which(ar)\" " \
  "  nm = \"$$which(nm)\" " \
  "  extra_cppflags = \"$$GN_HOST_EXTRA_CPPFLAGS\" " \
@@ -51,14 +51,14 @@ index dd0d3e3..70161c8 100644
 -"  cc = \"$$which($$QMAKE_CC)\" " \
 -"  cxx = \"$$which($$QMAKE_CXX)\" " \
 -"  ld = \"$$which($$QMAKE_LINK)\" " \
-+"  cc = \"$$which(gcc)\" " \
-+"  cxx = \"$$which(g++)\" " \
-+"  ld = \"$$which(g++)\" " \
++"  cc = \"$$which($$CC_host)\" " \
++"  cxx = \"$$which($$CXX_host)\" " \
++"  ld = \"$$which($$CXX_host)\" " \
  "  ar = \"$$which(ar)\" " \
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
 diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
-index 7766af0..46defa6 100644
+index 7766af0..9d578c8 100644
 --- a/src/buildtools/gn.pro
 +++ b/src/buildtools/gn.pro
 @@ -19,8 +19,8 @@ build_pass|!debug_and_release {
@@ -67,8 +67,8 @@ index 7766af0..46defa6 100644
              gn_configure = $$system_quote($$gn_bootstrap) --no-last-commit-position --out-path $$out_path \
 -                           --cc \"$$which($$QMAKE_CC)\" --cxx \"$$which($$QMAKE_CXX)\" \
 -                           --ld \"$$which($$QMAKE_LINK)\" --ar \"$$which(ar)\"
-+                           --cc \"$$which(gcc)\" --cxx \"$$which(g++)\" \
-+                           --ld \"$$which(g++)\" --ar \"$$which(ar)\"
++                           --cc \"$$which($$CC_host)\" --cxx \"$$which($$CXX_host)\" \
++                           --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\"
              message($$gn_configure)
              !system("$$pythonPathForSystem() $$gn_configure") {
                  error("GN generation error!")

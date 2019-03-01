@@ -49,6 +49,10 @@ EXTRA_OECMAKE += " \
 
 EXTRA_OECMAKE_append_toolchain-clang = " -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES:PATH='${STAGING_INCDIR}'"
 
+# JIT not supported on MIPS64
+EXTRA_OECMAKE_append_mips64 = " -DENABLE_JIT=OFF "
+EXTRA_OECMAKE_append_mips64el = " -DENABLE_JIT=OFF "
+
 PACKAGECONFIG ??= "qtlocation qtmultimedia qtsensors qtwebchannel \
     ${@bb.utils.filter('DISTRO_FEATURES', 'x11', d)} \
     fontconfig \

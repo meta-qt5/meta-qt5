@@ -1,0 +1,58 @@
+From 19cc10dc4378e9eda15b58f3673f686c4ff845e2 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 31 Jan 2019 22:17:56 -0800
+Subject: [PATCH] Do not use tr1 namespace
+
+This is not a standard in C++11
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ maliit-keyboard/lib/logic/layouthelper.cpp | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/maliit-keyboard/lib/logic/layouthelper.cpp b/maliit-keyboard/lib/logic/layouthelper.cpp
+index a8bd995f..f694e819 100644
+--- a/maliit-keyboard/lib/logic/layouthelper.cpp
++++ b/maliit-keyboard/lib/logic/layouthelper.cpp
+@@ -31,7 +31,7 @@
+  */
+ 
+ #include <algorithm>
+-#include <tr1/functional>
++#include <functional>
+ 
+ #include "layouthelper.h"
+ #include "coreutils.h"
+@@ -76,7 +76,7 @@ struct KeyPredicate
+ 
+ } // namespace
+ 
+-typedef std::tr1::function<void(const KeyArea &, const KeyOverrides &)> EmitFunc;
++typedef std::function<void(const KeyArea &, const KeyOverrides &)> EmitFunc;
+ 
+ class LayoutHelperPrivate
+ {
+@@ -468,13 +468,13 @@ void LayoutHelper::onKeysOverriden(const KeyOverrides &overriden_keys,
+         d->overriden_keys = overriden_keys;
+     }
+ 
+-    using std::tr1::placeholders::_1;
+-    using std::tr1::placeholders::_2;
++    using std::placeholders::_1;
++    using std::placeholders::_2;
+ 
+-    d->overrideCheck(changed_ids, d->left, std::tr1::bind(&LayoutHelper::leftPanelChanged, this, _1, _2));
+-    d->overrideCheck(changed_ids, d->right, std::tr1::bind(&LayoutHelper::rightPanelChanged, this, _1, _2));
+-    d->overrideCheck(changed_ids, d->center, std::tr1::bind(&LayoutHelper::centerPanelChanged, this, _1, _2));
+-    d->overrideCheck(changed_ids, d->extended, std::tr1::bind(&LayoutHelper::extendedPanelChanged, this, _1, _2));
++    d->overrideCheck(changed_ids, d->left, std::bind(&LayoutHelper::leftPanelChanged, this, _1, _2));
++    d->overrideCheck(changed_ids, d->right, std::bind(&LayoutHelper::rightPanelChanged, this, _1, _2));
++    d->overrideCheck(changed_ids, d->center, std::bind(&LayoutHelper::centerPanelChanged, this, _1, _2));
++    d->overrideCheck(changed_ids, d->extended, std::bind(&LayoutHelper::extendedPanelChanged, this, _1, _2));
+ }
+ 
+ }} // namespace Logic, MaliitKeyboard
+-- 
+2.20.1
+
