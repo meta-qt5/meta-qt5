@@ -1,0 +1,48 @@
+From f958dccc8c7c777aaca1f110ed48c71b28fdea92 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 1 Mar 2019 15:11:19 -0800
+Subject: [PATCH] Fix build failure with clang
+
+Complement below commit
+
+commit 1555894dec537cbc422f43fe959b0d0ee0000881
+Author: Thiago Macieira <thiago.macieira@intel.com>
+Date:   Wed Jul 25 19:04:20 2018 -0700
+
+    QCborValue: Disable support for spaceship operator
+
+    __has_include(<compare>) is not the correct way to detect this feature,
+    since that's a library header and may be provided by an implementation
+    (libc++) before the compiler supports the syntax.
+
+    Change-Id: I80aae0d068974d83b6c0fffd1544c8e558e2446b
+    Reviewed-by: Edward Welbourne <edward.welbourne@qt.io>
+
+Fixes
+tst_qcborvalue.cpp:336:17: error: invalid operands to binary expression ('QCborValue' and 'QCborValue')
+    QVERIFY(!(v > other));
+              ~ ^ ~~~~~
+
+Upstream-Status: Pending
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ tests/auto/corelib/serialization/qcborvalue/tst_qcborvalue.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/auto/corelib/serialization/qcborvalue/tst_qcborvalue.cpp b/tests/auto/corelib/serialization/qcborvalue/tst_qcborvalue.cpp
+index 38b26e7de4..4b753eab6b 100644
+--- a/tests/auto/corelib/serialization/qcborvalue/tst_qcborvalue.cpp
++++ b/tests/auto/corelib/serialization/qcborvalue/tst_qcborvalue.cpp
+@@ -330,7 +330,7 @@ void tst_QCborValue::copyCompare()
+     QCOMPARE(v, other);
+     QVERIFY(!(v != other));
+     QVERIFY(!(v < other));
+-#if QT_HAS_INCLUDE(<compare>)
++#if 0 && QT_HAS_INCLUDE(<compare>)
+     QVERIFY(v <= other);
+     QVERIFY(v >= other);
+     QVERIFY(!(v > other));
+-- 
+2.21.0
+
