@@ -16,6 +16,7 @@ LIC_FILES_CHKSUM = " \
 SRC_URI += " \
     file://0001-3rdparty-javascriptcore-Add-RISC-V-support.patch \
     file://0002-Include-asm-sgidefs.h-on-non-glibc-systems.patch \
+    file://0002-Fix-build-with-GCC-8.3.patch \
 "
 
 # qemuarm build fails with:
