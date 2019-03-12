@@ -1,4 +1,4 @@
-From 8a07ea88666132e3ca944d0d5784235420c3d382 Mon Sep 17 00:00:00 2001
+From 4bd5ee8a79729c29795568568a9cd7a01d9c338b Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -58,7 +58,7 @@ index dd0d3e3..6312c86 100644
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
 diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
-index 7766af0..9d578c8 100644
+index 30ada93..afd115c 100644
 --- a/src/buildtools/gn.pro
 +++ b/src/buildtools/gn.pro
 @@ -19,8 +19,8 @@ build_pass|!debug_and_release {
@@ -66,12 +66,12 @@ index 7766af0..9d578c8 100644
  
              gn_configure = $$system_quote($$gn_bootstrap) --no-last-commit-position --out-path $$out_path \
 -                           --cc \"$$which($$QMAKE_CC)\" --cxx \"$$which($$QMAKE_CXX)\" \
--                           --ld \"$$which($$QMAKE_LINK)\" --ar \"$$which(ar)\"
+-                           --ld \"$$which($$QMAKE_LINK)\"
 +                           --cc \"$$which($$CC_host)\" --cxx \"$$which($$CXX_host)\" \
 +                           --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\"
-             message($$gn_configure)
-             !system("$$pythonPathForSystem() $$gn_configure") {
-                 error("GN generation error!")
+             macos {
+                 gn_configure += --isysroot \"$$QMAKE_MAC_SDK_PATH\"
+             }
 diff --git a/src/core/config/linux.pri b/src/core/config/linux.pri
 index 04c9eca..c48fa06 100644
 --- a/src/core/config/linux.pri
