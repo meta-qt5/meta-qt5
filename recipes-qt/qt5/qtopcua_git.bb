@@ -8,6 +8,11 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPLv3;md5=c4fe8c6de4eef597feec6e90ed62e962 \
 "
 
-DEPENDS += "qtbase"
+# src/3rdparty/open62541.pri adds -Wno-format, causing following error
+# because -Wformat-security cannot be used together with -Wno-format
+# cc1: error: -Wformat-security ignored without -Wformat [-Werror=format-security]
+SECURITY_STRINGFORMAT = ""
 
-SRCREV = "fd6f1d80aa501d8d003018359ce9c023e70732d5"
+DEPENDS += "qtbase qtdeclarative"
+
+SRCREV = "72c2ee600f214fccc147a9fb3809087e7064b56b"
