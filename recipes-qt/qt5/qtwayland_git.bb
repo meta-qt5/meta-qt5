@@ -37,7 +37,7 @@ PACKAGECONFIG[wayland-libhybris-egl-server-buffer] = "-feature-wayland-libhybris
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "1dc85b95ab0adc1e805d059e2c35c671ef790011"
+SRCREV = "0d717b0cc9aa3b87821450a2bce0d0bf0f1a6bfb"
 
 BBCLASSEXTEND =+ "native nativesdk"
 
@@ -45,21 +45,3 @@ BBCLASSEXTEND =+ "native nativesdk"
 # http://errors.yoctoproject.org/Errors/Details/152641/
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-SRC_URI += "file://0001-Revert-use-new-feature-name-xkbcommon_evdev-xkbcommo.patch"
-
-# Since version 5.11.2 some private headers are not installed. Work around
-# until fixed upstream. See https://bugreports.qt.io/browse/QTBUG-71340 for
-# further details
-do_install_append() {
-    if [ -d "${B}/src/client" ]; then
-        upstream_pv=`echo "${PV}" | sed 's:+git.*::g'`
-        for header in `find ${B}/src/client -name '*wayland-*.h'`; do
-            header_base=`basename $header`
-            dest="${D}${includedir}/QtWaylandClient/$upstream_pv/QtWaylandClient/private/$header_base"
-            if [ ! -e "$dest" ]; then
-                echo "Manual install: $header_base to $dest"
-                install -m 644 "$header" "$dest"
-            fi
-        done
-    fi
-}

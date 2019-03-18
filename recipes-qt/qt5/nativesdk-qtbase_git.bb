@@ -42,10 +42,6 @@ SRC_URI += "\
     file://0015-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0016-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0017-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
-    file://0018-Fix-compile-issue-with-gcc-9.patch \
-    file://0019-Fix-compilation-of-qendian-s-qswap-specializations-o.patch \
-    file://0020-Fix-qbswap-calls-for-Big-Endian-targets.patch \
-    file://0023-build-failure-with-clang.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
@@ -197,4 +193,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "13ed06640c6cf32ea8c784c896c6bf017053edb3"
+SRCREV = "856fb1ab44722f5165fb6b5dec0bd748006acd10"

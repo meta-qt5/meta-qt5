@@ -15,7 +15,6 @@ LIC_FILES_CHKSUM = " \
 # 5.12.meta-qt5.2
 SRC_URI += " \
     file://0001-Include-asm-sgidefs.h-on-non-glibc-systems.patch \
-    file://0002-Fix-build-with-GCC-8.3.patch \
 "
 
 # qemuarm build fails with:
@@ -37,4 +36,4 @@ DEPENDS += "qtbase"
 # http://errors.yoctoproject.org/Errors/Build/44915/
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-SRCREV = "0be84da60090e9d20ec0066bcd3900ca5572df95"
+SRCREV = "6c0edaf30c5bdfc2739ca646da73dcb697ab1361"
