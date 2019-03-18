@@ -1,25 +1,27 @@
-From d3053e33c76cdb41eeeec3c853fa88c7c7bfb8a5 Mon Sep 17 00:00:00 2001
+From ee6c6dc4183234a6f092d9e5b8d05eaab8ee5382 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Fri, 17 Aug 2018 13:23:58 +0300
 Subject: [PATCH] Allow a tools-only build
 
 ---
- qt3d.pro                                  | 7 ++++++-
+ qt3d.pro                                  | 9 +++++++--
  src/3rdparty/assimp/assimp_dependency.pri | 2 +-
  tools/tools.pro                           | 2 +-
- 3 files changed, 8 insertions(+), 3 deletions(-)
+ 3 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/qt3d.pro b/qt3d.pro
-index 3fc7d1452..7311eff5b 100644
+index 847507f17..286286dd0 100644
 --- a/qt3d.pro
 +++ b/qt3d.pro
-@@ -1,4 +1,4 @@
+@@ -1,5 +1,5 @@
+-requires(qtHaveModule(gui))
 -requires(qtConfig(opengl):!wasm)
++!tools-only:requires(qtHaveModule(gui))
 +!tools-only:requires(qtConfig(opengl):!wasm)
  
  CONFIG += examples_need_tools
  load(qt_parts)
-@@ -14,3 +14,8 @@ load(qt_parts)
+@@ -15,3 +15,8 @@ load(qt_parts)
  
  OTHER_FILES += \
      sync.profile
