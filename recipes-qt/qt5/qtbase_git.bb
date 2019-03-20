@@ -89,6 +89,9 @@ PACKAGECONFIG ?= " \
     ${PACKAGECONFIG_SYSTEM} \
     ${PACKAGECONFIG_DISTRO} \
 "
+# Choose whether to link to OpenSSL library at linking time or run time
+# Leave the variable empty to let the buildsystem decide, or specify -linked or -runtime
+OPENSSL_LINKING_MODE ??= ""
 
 PACKAGECONFIG[static] = "-static,-shared"
 PACKAGECONFIG[release] = "-release,-debug"
@@ -148,7 +151,7 @@ PACKAGECONFIG[kms] = "-kms,-no-kms,drm virtual/egl"
 PACKAGECONFIG[gbm] = "-gbm,-no-gbm,virtual/libgbm"
 PACKAGECONFIG[icu] = "-icu,-no-icu,icu"
 PACKAGECONFIG[udev] = "-libudev,-no-libudev,udev"
-PACKAGECONFIG[openssl] = "-openssl,-no-openssl,openssl,libssl"
+PACKAGECONFIG[openssl] = "-openssl${OPENSSL_LINKING_MODE},-no-openssl,openssl,libssl"
 PACKAGECONFIG[widgets] = "-widgets,-no-widgets"
 PACKAGECONFIG[libproxy] = "-libproxy,-no-libproxy,libproxy"
 PACKAGECONFIG[libinput] = "-libinput,-no-libinput,libinput"
@@ -262,5 +265,23 @@ do_install_append() {
 INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
+
+TARGET_MKSPEC ?= "linux-g++"
+
+# use clean mkspecs on target
+pkg_postinst_${PN}-tools () {
+sed -i \
+    -e 's:HostSpec =.*:HostSpec = ${TARGET_MKSPEC}:g' \
+    -e 's:TargetSpec =.*:TargetSpec = ${TARGET_MKSPEC}:g' \
+    $D${bindir}/qt.conf
+}
+
+pkg_postinst_${PN}-mkspecs () {
+sed -i 's: cross_compile : :g' $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
+sed -i \
+    -e 's: cross_compile : :g' \
+    -e 's:HOST_QT_TOOLS =.*::g' \
+    $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
+}
 
 SRCREV = "856fb1ab44722f5165fb6b5dec0bd748006acd10"
