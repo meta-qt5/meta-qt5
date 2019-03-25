@@ -1,4 +1,4 @@
-From 852a06e11ece7b1a74785bdea2235583d0275007 Mon Sep 17 00:00:00 2001
+From f39cf06f1242fc8391561bbbfb0741fbd58194f1 Mon Sep 17 00:00:00 2001
 From: Max Krummenacher <max.krummenacher@toradex.com>
 Date: Sat, 27 Oct 2018 12:29:31 +0000
 Subject: [PATCH] Qt5GuiConfigExtras.cmake.in: cope with variable path to
@@ -19,7 +19,7 @@ Signed-off-by: Max Krummenacher <max.krummenacher@toradex.com>
  1 file changed, 8 insertions(+), 14 deletions(-)
 
 diff --git a/src/gui/Qt5GuiConfigExtras.cmake.in b/src/gui/Qt5GuiConfigExtras.cmake.in
-index 07869efd7d..671aa82167 100644
+index 84dbbfe..ad6956d 100644
 --- a/src/gui/Qt5GuiConfigExtras.cmake.in
 +++ b/src/gui/Qt5GuiConfigExtras.cmake.in
 @@ -75,21 +75,15 @@ unset(_qt5gui_OPENGL_INCLUDE_DIR CACHE)
@@ -48,9 +48,9 @@ index 07869efd7d..671aa82167 100644
 -!!ENDIF
 +
      foreach(_lib ${Libs})
-         string(REGEX REPLACE "[^_A-Za-z0-9]" "_" _cmake_lib_name ${_lib})
-         if (NOT TARGET Qt5::Gui_${_cmake_lib_name} AND NOT _Qt5Gui_${_cmake_lib_name}_LIBRARY_DONE)
-@@ -158,11 +152,11 @@ endmacro()
+         if (IS_ABSOLUTE ${_lib})
+             get_filename_component(_libFile ${_lib} NAME_WE)
+@@ -171,11 +165,11 @@ endmacro()
  
  
  !!IF !isEmpty(CMAKE_EGL_LIBS)
