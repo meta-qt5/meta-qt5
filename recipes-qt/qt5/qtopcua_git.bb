@@ -8,6 +8,14 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPLv3;md5=c4fe8c6de4eef597feec6e90ed62e962 \
 "
 
+PACKAGECONFIG ?= "qtdeclarative"
+PACKAGECONFIG[qtdeclarative] = ",,qtdeclarative"
+
+# src/3rdparty/open62541.pri adds -Wno-format, causing following error
+# because -Wformat-security cannot be used together with -Wno-format
+# cc1: error: -Wformat-security ignored without -Wformat [-Werror=format-security]
+SECURITY_STRINGFORMAT = ""
+
 DEPENDS += "qtbase"
 
 SRCREV = "9d61cbee4131a8b6774ba242fe6e3f2b2f5e853c"
