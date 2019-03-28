@@ -58,6 +58,7 @@ XPLATFORM ?= "linux-oe-g++"
 
 PACKAGECONFIG_CONFARGS = " \
     -sysroot ${STAGING_DIR_NATIVE} \
+    -L${STAGING_LIBDIR_NATIVE} \
     -no-gcc-sysroot \
     -system-zlib \
     -qt-pcre \
