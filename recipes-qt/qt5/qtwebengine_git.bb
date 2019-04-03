@@ -132,7 +132,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "71-based"
+QT_MODULE_BRANCH_CHROMIUM = "73-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.12
 # 5.12.meta-qt5.2
@@ -149,7 +149,6 @@ SRC_URI_append_libc-musl = "\
 # 69-based.meta-qt5.3
 SRC_URI += " \
     file://chromium/0002-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
-    file://chromium/0003-chromium-Fix-build-with-gcc8.patch;patchdir=src/3rdparty \
     file://chromium/0004-chromium-stack-pointer-clobber.patch;patchdir=src/3rdparty \
     file://chromium/0019-chromium-fix-build-with-clang.patch;patchdir=src/3rdparty \
     file://chromium/0021-chromium-Exclude-CRC32-for-32bit-arm.patch;patchdir=src/3rdparty \
@@ -172,8 +171,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0018-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "f3f3279bec367bf3816377ac31a75c042648068f"
-SRCREV_chromium = "0aae24c2876d19946ce0d28adc38c3dbed2c6549"
+SRCREV_qtwebengine = "2c5ec78fe8860e5bd0447675f715d2798baf89f2"
+SRCREV_chromium = "3d95374cb8de20b3e15538f1ecb5b78bf9d1cdcb"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
