@@ -1,4 +1,4 @@
-From 83d9a275c09352558e69445cb453020861ae3f6e Mon Sep 17 00:00:00 2001
+From 164c79646981537cacc1ad34e4900b36cda7e5d4 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 27 Jul 2017 08:02:51 -0700
 Subject: [PATCH] Replace pthread_yield with sched_yield

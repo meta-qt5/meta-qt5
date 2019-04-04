@@ -1,4 +1,4 @@
-From c190fb457fbe9f1c3adedcdadbda581ac5ed2286 Mon Sep 17 00:00:00 2001
+From 61a447ce03b444337b6c58c8309ab1d11105cb02 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 16:41:23 -0700
 Subject: [PATCH] chromium: musl: Adjust default pthread stack size
@@ -10,7 +10,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/base/threading/platform_thread_linux.cc b/chromium/base/threading/platform_thread_linux.cc
-index 92fbda5ee1..c41579d4ed 100644
+index 92fbda5ee1d..c41579d4ed5 100644
 --- a/chromium/base/threading/platform_thread_linux.cc
 +++ b/chromium/base/threading/platform_thread_linux.cc
 @@ -175,7 +175,8 @@ void TerminateOnThread() {}
@@ -24,7 +24,7 @@ index 92fbda5ee1..c41579d4ed 100644
    // ThreadSanitizer bloats the stack heavily. Evidence has been that the
    // default stack size isn't enough for some browser tests.
 diff --git a/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp b/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
-index 1d164f510a..3358deb256 100644
+index 1d164f510a3..3358deb256c 100644
 --- a/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
 +++ b/chromium/third_party/WebKit/Source/platform/heap/StackFrameDepth.cpp
 @@ -68,7 +68,7 @@ size_t StackFrameDepth::getUnderestimatedStackSize() {

@@ -1,4 +1,4 @@
-From b5ca1e638adfc1241435cf27279b8e7ec05c18af Mon Sep 17 00:00:00 2001
+From c5675d4fd7116dac65e0949aa3a165e38d3dc77e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:09:02 -0700
 Subject: [PATCH] chromium: musl: allocator: Do not include glibc_weak_symbols
@@ -10,7 +10,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/chromium/base/allocator/allocator_shim.cc b/chromium/base/allocator/allocator_shim.cc
-index 95480ea4b6..1de3d1a532 100644
+index 95480ea4b6b..1de3d1a5321 100644
 --- a/chromium/base/allocator/allocator_shim.cc
 +++ b/chromium/base/allocator/allocator_shim.cc
 @@ -266,7 +266,7 @@ void ShimFree(void* address) {

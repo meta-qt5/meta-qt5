@@ -1,4 +1,4 @@
-From 4fce1a91096c8a2180f2126e176904b2a1e3275e Mon Sep 17 00:00:00 2001
+From 70a552d2b1c8c58ecf842094643ca09aec69ace2 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:09:06 -0700
 Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
@@ -10,7 +10,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/chromium/base/trace_event/malloc_dump_provider.cc b/chromium/base/trace_event/malloc_dump_provider.cc
-index 7d0cb57931..10be59ebad 100644
+index 7d0cb579315..10be59ebad8 100644
 --- a/chromium/base/trace_event/malloc_dump_provider.cc
 +++ b/chromium/base/trace_event/malloc_dump_provider.cc
 @@ -210,6 +210,7 @@ MallocDumpProvider::~MallocDumpProvider() {}
@@ -31,7 +31,7 @@ index 7d0cb57931..10be59ebad 100644
  }
  
 diff --git a/chromium/content/child/content_child_helpers.cc b/chromium/content/child/content_child_helpers.cc
-index 7ddeb4d16a..b8c73b09c5 100644
+index 7ddeb4d16a9..b8c73b09c5a 100644
 --- a/chromium/content/child/content_child_helpers.cc
 +++ b/chromium/content/child/content_child_helpers.cc
 @@ -25,7 +25,7 @@ namespace content {

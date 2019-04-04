@@ -1,4 +1,4 @@
-From 237d370278dd68fbb16308e2fad044cbcba9797a Mon Sep 17 00:00:00 2001
+From e503324502c98080a5d97f597c3c2acc164044c3 Mon Sep 17 00:00:00 2001
 From: Raphael Freudiger <laser_b@gmx.ch>
 Date: Tue, 10 Jan 2017 15:49:55 +0100
 Subject: [PATCH] fix build without xkbcommon-evdev
