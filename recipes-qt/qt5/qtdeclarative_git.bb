@@ -12,6 +12,8 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
+# Patches from https://github.com/meta-qt5/qtdeclarative/commits/b5.11
+# 5.11.meta-qt5.4
 SRC_URI += "file://0001-Always-use-commit-sha1-for-QML_COMPILE_HASH.patch"
 
 DEPENDS += "qtbase"
