@@ -1,4 +1,4 @@
-From 7af04e47ddfb4d285aab6bbb7efb46eb06252ba2 Mon Sep 17 00:00:00 2001
+From cd331cf6aca8aef21d202cd0c541757e10f070e4 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 16 Nov 2013 00:32:30 +0100
 Subject: [PATCH] Always build uic and qvkgen

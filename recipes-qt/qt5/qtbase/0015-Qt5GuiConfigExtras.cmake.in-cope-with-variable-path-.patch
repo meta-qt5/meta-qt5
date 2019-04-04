@@ -1,4 +1,4 @@
-From 852a06e11ece7b1a74785bdea2235583d0275007 Mon Sep 17 00:00:00 2001
+From 21bcae84788d1b14a754bc56a1adc43abf888e84 Mon Sep 17 00:00:00 2001
 From: Max Krummenacher <max.krummenacher@toradex.com>
 Date: Sat, 27 Oct 2018 12:29:31 +0000
 Subject: [PATCH] Qt5GuiConfigExtras.cmake.in: cope with variable path to
