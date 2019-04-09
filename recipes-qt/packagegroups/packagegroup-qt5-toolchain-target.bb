@@ -26,6 +26,13 @@ USE_X11 = " \
     qtx11extras-mkspecs \
 "
 
+# Requires Widgets to work
+USE_WIDGETS = " \
+    qtcharts-dev \
+    qtcharts-mkspecs \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtcharts-qmlplugins', '', d)} \
+"
+
 RDEPENDS_${PN} += " \
     packagegroup-core-standalone-sdk-target \
     libsqlite3-dev \
@@ -39,9 +46,7 @@ RDEPENDS_${PN} += " \
     qtbase-tools \
     qttranslations-qtbase \
     qttranslations-qthelp \
-    qtcharts-dev \
-    qtcharts-mkspecs \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtcharts-qmlplugins', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'widgets', '${USE_WIDGETS}', '', d)} \
     qtconnectivity-dev \
     qtconnectivity-mkspecs \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtconnectivity-qmlplugins', '', d)} \
