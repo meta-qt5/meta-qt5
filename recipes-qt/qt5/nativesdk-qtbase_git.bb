@@ -157,8 +157,10 @@ do_install() {
     install -m 644 ${WORKDIR}/OEQt5Toolchain.cmake ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
 
     # Fix up absolute paths in scripts
-    sed -i -e '1s,#!/usr/bin/python,#! ${USRBINPATH}/env python,' \
-        ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
+    if [ -e ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py ]; then
+        sed -i -e '1s,#!/usr/bin/python,#! ${USRBINPATH}/env python,' \
+            ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
+    fi
 }
 
 fakeroot do_generate_qt_environment_file() {
