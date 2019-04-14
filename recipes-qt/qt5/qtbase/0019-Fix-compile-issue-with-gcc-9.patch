@@ -1,4 +1,4 @@
-From eb68b9fa27d94bc90db5b0023b224ac0e60b8243 Mon Sep 17 00:00:00 2001
+From 4364a8fcbcc32e37b9ccbfa833e872098f038690 Mon Sep 17 00:00:00 2001
 From: Allan Sandfeld Jensen <allan.jensen@qt.io>
 Date: Tue, 13 Nov 2018 16:00:23 +0100
 Subject: [PATCH] Fix compile issue with gcc 9
