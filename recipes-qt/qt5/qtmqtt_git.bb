@@ -9,4 +9,5 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-SRCREV = "a4d673f9a75c7dbbcedcaa076542a71acc832fc4"
+# v5.12.3 tag wasn't created yet
+SRCREV = "acff2f2611e271b83c9190b060d42c88bb292fa5"

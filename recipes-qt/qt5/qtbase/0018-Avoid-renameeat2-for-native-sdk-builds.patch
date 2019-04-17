@@ -1,4 +1,4 @@
-From 6bd6e1b5dea4364c9b4b42fd198b289c095b364b Mon Sep 17 00:00:00 2001
+From 69aeac9c7233e0d76a8a00b1a45c53c1670c9b49 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Sun, 14 Apr 2019 13:27:58 +0200
 Subject: [PATCH] Avoid renameeat2 for native(sdk) builds
@@ -65,6 +65,3 @@ index b2d81066db..d1783ebdf3 100644
  #if defined(Q_OS_DARWIN) && defined(RENAME_EXCL)
      if (renameatx_np(AT_FDCWD, srcPath, AT_FDCWD, tgtPath, RENAME_EXCL) == 0)
          return true;
--- 
-2.20.1
-

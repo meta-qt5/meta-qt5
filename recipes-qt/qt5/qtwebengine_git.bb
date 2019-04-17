@@ -135,18 +135,18 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "69-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.12
-# 5.12.meta-qt5.2
+# 5.12.meta-qt5.3
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
 "
 SRC_URI_append_libc-musl = "\
-    file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
-    file://0004-musl-link-against-libexecinfo.patch \
+    file://0002-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
+    file://0003-musl-link-against-libexecinfo.patch \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/69-based
-# 69-based.meta-qt5.3
+# 69-based.meta-qt5.4
 SRC_URI += " \
     file://chromium/0001-chromium-Force-host-toolchain-configuration.patch;patchdir=src/3rdparty \
     file://chromium/0002-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
@@ -174,8 +174,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0018-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "92b078a534390dba64a0dcebcffdab4ce24581b6"
-SRCREV_chromium = "43316b156e65f867a76ed2afd96bf30696c5f4f6"
+SRCREV_qtwebengine = "c7b8d6d87809253241913c595902a11ea506b2b7"
+SRCREV_chromium = "4c7ecce30045daf172dceaeeb86351f60cc91990"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

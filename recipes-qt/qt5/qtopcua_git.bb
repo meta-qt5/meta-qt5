@@ -15,4 +15,5 @@ SECURITY_STRINGFORMAT = ""
 
 DEPENDS += "qtbase qtdeclarative"
 
-SRCREV = "72c2ee600f214fccc147a9fb3809087e7064b56b"
+# v5.12.3 tag wasn't created yet
+SRCREV = "e42d517e350c18d6e6c5c3081e3005f10a5c20ab"

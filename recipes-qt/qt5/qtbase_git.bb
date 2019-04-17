@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-shared
-# 5.12.meta-qt5-shared.6
+# 5.12.meta-qt5-shared.7
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -293,4 +293,4 @@ sed -i \
     $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
 }
 
-SRCREV = "856fb1ab44722f5165fb6b5dec0bd748006acd10"
+SRCREV = "b527725766df850fcad6b9078fea5e8da8085560"
