@@ -56,7 +56,7 @@ CLEANBROKEN = "1"
 XPLATFORM_toolchain-clang = "linux-oe-clang"
 XPLATFORM ?= "linux-oe-g++"
 
-PACKAGECONFIG_CONFARGS = " \
+QT_CONFIG_FLAGS = " \
     -sysroot ${STAGING_DIR_NATIVE} \
     -L${STAGING_LIBDIR_NATIVE} \
     -no-gcc-sysroot \
@@ -97,6 +97,7 @@ PACKAGECONFIG_CONFARGS = " \
     -no-rpath \
     -no-feature-linkat \
     -platform ${XPLATFORM} \
+    ${PACKAGECONFIG_CONFARGS} \
 "
 
 # for qtbase configuration we need default settings
@@ -112,7 +113,7 @@ do_configure_prepend() {
     # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory"
     touch ${S}/mkspecs/oe-device-extra.pri
 
-    MAKEFLAGS="${PARALLEL_MAKE}" ${S}/configure -${QT_EDITION} -confirm-license ${PACKAGECONFIG_CONFARGS} || die "Configuring qt failed. PACKAGECONFIG_CONFARGS was ${PACKAGECONFIG_CONFARGS}"
+    MAKEFLAGS="${PARALLEL_MAKE}" ${S}/configure -${QT_EDITION} -confirm-license ${QT_CONFIG_FLAGS} || die "Configuring qt failed. QT_CONFIG_FLAGS was ${QT_CONFIG_FLAGS}"
 }
 
 do_install() {
