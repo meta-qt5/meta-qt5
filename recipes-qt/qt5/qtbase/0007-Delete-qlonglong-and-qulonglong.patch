@@ -1,4 +1,4 @@
-From e9c6d679909ee9e1c88fe8b32f925fdd297e9d2c Mon Sep 17 00:00:00 2001
+From 30e17f2c0bc42134e89664993cf2972aefdb5795 Mon Sep 17 00:00:00 2001
 From: Huang Qiyu <huangqy.fnst@cn.fujitsu.com>
 Date: Wed, 7 Jun 2017 21:00:49 +0900
 Subject: [PATCH] Delete qlonglong and qulonglong

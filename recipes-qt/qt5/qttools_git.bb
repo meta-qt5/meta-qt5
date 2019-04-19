@@ -15,7 +15,7 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
 # Patches from https://github.com/meta-qt5/qttools/commits/b5.9
-# 5.9.meta-qt5.7
+# 5.9.meta-qt5.8
 SRC_URI += " \
     file://0001-add-noqtwebkit-configuration.patch \
     file://0002-linguist-tools-cmake-allow-overriding-the-location-f.patch \
@@ -29,7 +29,10 @@ PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
 
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)}"
 
-SRCREV = "961d99bb82f042c410ed826bfd39f8edb5d79bf0"
+# Use e8d9ac8ab166d2e740a0df480277397d3b8a1283
+# instead of cb4fb7bdd59bb57324893cf1b226f380d03b574f because
+# v5.9.8 tag wasn't merged to 5.9 branch yet
+SRCREV = "e8d9ac8ab166d2e740a0df480277397d3b8a1283"
 
 BBCLASSEXTEND = "native nativesdk"
 

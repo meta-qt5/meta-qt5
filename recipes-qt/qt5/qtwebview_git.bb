@@ -19,4 +19,7 @@ COMPATIBLE_MACHINE_armv7a = "(.*)"
 COMPATIBLE_MACHINE_armv7ve = "(.*)"
 COMPATIBLE_MACHINE_aarch64 = "(.*)"
 
-SRCREV = "913221453dfbf35d69030819b099c109e078116f"
+# Use a3b5e85c924008e1968975825a0e61b040d6d88b
+# instead of 6ea20e8930b02928a20173c1718ba5efd7b24dec because
+# v5.9.8 tag wasn't merged to 5.9 branch yet
+SRCREV = "a3b5e85c924008e1968975825a0e61b040d6d88b"

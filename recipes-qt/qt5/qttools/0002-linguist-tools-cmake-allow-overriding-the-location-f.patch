@@ -1,4 +1,4 @@
-From fa25039d01341d9cf18e50631282d48640e679d6 Mon Sep 17 00:00:00 2001
+From ae7453d30a8b1da362db035861b254f77b5764ea Mon Sep 17 00:00:00 2001
 From: Cody P Schafer <dev@codyps.com>
 Date: Thu, 9 Jul 2015 11:28:19 -0400
 Subject: [PATCH] linguist-tools cmake: allow overriding the location for

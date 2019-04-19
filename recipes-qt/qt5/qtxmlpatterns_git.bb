@@ -15,6 +15,9 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-SRCREV = "f00a23160e9795615912aa14cf412c7ed278fe50"
+# Use 2756d99c14c098a6732635843221550ba68b8840
+# instead of 03d89c93e98af5fe3341c4d634dfe675c2fefefa because
+# v5.9.8 tag wasn't merged to 5.9 branch yet
+SRCREV = "2756d99c14c098a6732635843221550ba68b8840"
 
 BBCLASSEXTEND =+ "native nativesdk"

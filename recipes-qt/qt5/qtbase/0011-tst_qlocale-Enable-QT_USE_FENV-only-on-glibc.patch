@@ -1,4 +1,4 @@
-From e557afa2241d5a05a45d78693edf61aa036985cd Mon Sep 17 00:00:00 2001
+From 7e529b918f4189bea404016b5263e41794710472 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 3 Sep 2017 10:11:50 -0700
 Subject: [PATCH] tst_qlocale: Enable QT_USE_FENV only on glibc

@@ -1,4 +1,4 @@
-From e035ecd3a54104b61952f98335043a08c75878cc Mon Sep 17 00:00:00 2001
+From 16d8052c5262e9e81055d4a626ba71c2f7277feb Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:12:39 -0700
 Subject: [PATCH] chromium: musl: Use correct member name __si_fields from

@@ -19,4 +19,7 @@ FILES_${PN}-qmlplugins += " \
   ${OE_QMAKE_PATH_QML}/QtQuick/Dialogs/qml/icons.ttf \
 "
 
-SRCREV = "1afae24d7f3a67b2727ec6283c44275935de55e1"
+# Use 6bca42077ed4c50582d5f6b8d4e6f1a989a2081f
+# instead of 8c3b97959cb2c157102994082dd2ba0e1985ced7 because
+# v5.9.8 tag wasn't merged to 5.9 branch yet
+SRCREV = "6bca42077ed4c50582d5f6b8d4e6f1a989a2081f"

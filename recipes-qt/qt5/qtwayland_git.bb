@@ -37,10 +37,13 @@ PACKAGECONFIG[libhybris-egl-server] = "-feature-libhybris-egl-server,-no-feature
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "44a28bb06d66be1b7ccdc94e36e931002df8d21c"
+# Use 7ed01d849a6813b06e2ce5660fa494879f86e694
+# instead of 79ec94d0efbeabe485275e5c79c828aa64641afa because
+# v5.9.8 tag wasn't merged to 5.9 branch yet
+SRCREV = "7ed01d849a6813b06e2ce5660fa494879f86e694"
 
 # Patches from https://github.com/meta-qt5/qtwayland/commits/b5.9
-# 5.9.meta-qt5.7
+# 5.9.meta-qt5.8
 # From https://bugreports.qt.io/browse/QTBUG-57767
 SRC_URI += " \
     file://0001-fix-build-without-xkbcommon-evdev.patch \

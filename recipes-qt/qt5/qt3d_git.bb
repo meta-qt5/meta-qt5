@@ -12,7 +12,7 @@ DEPENDS += "qtbase"
 DEPENDS_class-target += "qtdeclarative qt3d-native"
 
 # Patches from https://github.com/meta-qt5/qt3d/commits/b5.9
-# 5.9.meta-qt5.7
+# 5.9.meta-qt5.8
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
     file://0002-Fix-BlenderDNA-for-clang-cross-compiler.patch \
@@ -37,6 +37,9 @@ do_configure_prepend() {
          ${S}/src/quick3d/imports/input/importsinput.pro
 }
 
-SRCREV = "de5e7839d638a2cf27703a337d004e3e5a557c82"
+# Use 9e05583a8e95d578656fe32c83303f11b651e029
+# instead of 0d923f9fc31fe55006b5e72539bd20ec016ca856
+# because v5.9.8 wasn't merged to 5.9 branch yet
+SRCREV = "9e05583a8e95d578656fe32c83303f11b651e029"
 
 BBCLASSEXTEND += "native nativesdk"

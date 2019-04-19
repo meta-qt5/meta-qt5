@@ -12,4 +12,7 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtdeclarative qtwebsockets"
 
-SRCREV = "cd32de3a030fb956e6a6e045b084719a5cb2f8dc"
+# Use 625a73dcbb50bf927c9559556d5db9d7996b92d0
+# instead of e23e37189fb78cb090c67fd01b187b7a59aa8c77 because
+# v5.9.8 tag wasn't merged to 5.9 branch yet
+SRCREV = "625a73dcbb50bf927c9559556d5db9d7996b92d0"

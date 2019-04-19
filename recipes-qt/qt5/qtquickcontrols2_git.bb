@@ -10,4 +10,7 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtdeclarative"
 
-SRCREV = "f4af8a1987cc3fed8120062fbeb5659c7b2b77df"
+# Use 8b45a73ecac779969d491a19bbe0393f6328a3a6
+# instead of 1ef144bf3a324ac4bdea092a0b845cb483ec9a1d because
+# v5.9.8 tag wasn't merged to 5.9 branch yet
+SRCREV = "8b45a73ecac779969d491a19bbe0393f6328a3a6"

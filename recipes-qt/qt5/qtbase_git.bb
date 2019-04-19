@@ -17,7 +17,7 @@ LIC_FILES_CHKSUM = " \
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.9-shared
-# 5.9.meta-qt5-shared.7
+# 5.9.meta-qt5-shared.8
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -220,4 +220,7 @@ INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "81b29a44d248b5037a2f05dd8815e000d9472f0e"
+# Use 159f7e9c39c57177d25f524ae3cad4e533b89da8
+# instead of 82eb6aa08e5dc8a57402b69b4e55ce7d2371e84b because
+# v5.9.8 tag wasn't merged to 5.9 branch yet
+SRCREV = "159f7e9c39c57177d25f524ae3cad4e533b89da8"
