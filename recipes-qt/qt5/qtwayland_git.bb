@@ -48,12 +48,24 @@ LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -f
 # Since version 5.11.2 some private headers are not installed. Work around
 # until fixed upstream. See https://bugreports.qt.io/browse/QTBUG-71340 for
 # further details
+QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY ?= "1"
+# First 6 characters before first + (e.g. 5.11.3-+git) or - (e.g. 5.11.3-2)
+SHRT_VER ?= "${@d.getVar('PV').split('+')[0].split('-')[0]}"
 do_install_append() {
-    if [ -d "${B}/src/client" ]; then
-        upstream_pv=`echo "${PV}" | sed 's:+git.*::g'`
+    if [ -d "${B}/src/client" -a "${QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY}" = "1" ]; then
         for header in `find ${B}/src/client -name '*wayland-*.h'`; do
             header_base=`basename $header`
-            dest="${D}${includedir}/QtWaylandClient/$upstream_pv/QtWaylandClient/private/$header_base"
+            dest="${D}${includedir}/QtWaylandClient/${SHRT_VER}/QtWaylandClient/private/$header_base"
+            if [ ! -e "$dest" ]; then
+                echo "Manual install: $header_base to $dest"
+                install -m 644 "$header" "$dest"
+            fi
+        done
+    fi
+    if [ -d "${B}/src/compositor" -a "${QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY}" = "1" ]; then
+        for header in `find ${B}/src/compositor -name '*wayland-*.h'`; do
+            header_base=`basename $header`
+            dest="${D}${includedir}/QtCompositor/${SHRT_VER}/QtCompositor/private/$header_base"
             if [ ! -e "$dest" ]; then
                 echo "Manual install: $header_base to $dest"
                 install -m 644 "$header" "$dest"
