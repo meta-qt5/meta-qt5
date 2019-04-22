@@ -52,7 +52,7 @@ QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY ?= "1"
 # First 6 characters before first + (e.g. 5.11.3-+git) or - (e.g. 5.11.3-2)
 SHRT_VER ?= "${@d.getVar('PV').split('+')[0].split('-')[0]}"
 do_install_append() {
-    if [ -d "${B}/src/client" -a "${QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY}" = "1" ]; then
+    if [ -d "${B}/src/client" -a "${QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY}" = "1" -a -d "${D}${includedir}/QtWaylandClient/${SHRT_VER}/QtWaylandClient/private/" ]; then
         for header in `find ${B}/src/client -name '*wayland-*.h'`; do
             header_base=`basename $header`
             dest="${D}${includedir}/QtWaylandClient/${SHRT_VER}/QtWaylandClient/private/$header_base"
@@ -62,7 +62,7 @@ do_install_append() {
             fi
         done
     fi
-    if [ -d "${B}/src/compositor" -a "${QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY}" = "1" ]; then
+    if [ -d "${B}/src/compositor" -a "${QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY}" = "1" -a -d "${D}${includedir}/QtCompositor/${SHRT_VER}/QtCompositor/private/" ]; then
         for header in `find ${B}/src/compositor -name '*wayland-*.h'`; do
             header_base=`basename $header`
             dest="${D}${includedir}/QtCompositor/${SHRT_VER}/QtCompositor/private/$header_base"
