@@ -24,9 +24,6 @@ PACKAGECONFIG[tools-only] = "CONFIG+=tools-only"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
-# Use 119b222dd5ee8f4410f87c5854e6e9ee65436309 instead of
-# db1e447c46062946e57d7de9c0e0ea5fddc997f6 because the v5.12.3 tag wasn't
-# merged to 5.12 branch yet
-SRCREV = "119b222dd5ee8f4410f87c5854e6e9ee65436309"
+SRCREV = "db1e447c46062946e57d7de9c0e0ea5fddc997f6"
 
 BBCLASSEXTEND += "native nativesdk"

@@ -36,9 +36,6 @@ do_configure_prepend() {
          ${S}/src/quick3d/imports/input/importsinput.pro
 }
 
-# Use e84d8d2a81eb81f9b1ea9f40d4da36d09a97b246 instead of
-# 7da5c4c35a657ea43663b4ed0d65e896b8db5c69 because the v5.12.3 tag wasn't
-# merged to 5.12 branch yet
-SRCREV = "e84d8d2a81eb81f9b1ea9f40d4da36d09a97b246"
+SRCREV = "7da5c4c35a657ea43663b4ed0d65e896b8db5c69"
 
 BBCLASSEXTEND += "native nativesdk"

@@ -32,10 +32,7 @@ EXTRA_QMAKEVARS_PRE += " \
     ${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)} \
 "
 
-# Use 50335cb26bb88930f5e2a204642439cc9a4d2282 instead of
-# 1f8d498752fed0b2b92d6a619aa11524dd771998 because the v5.12.3 tag wasn't
-# merged to 5.12 branch yet
-SRCREV = "50335cb26bb88930f5e2a204642439cc9a4d2282"
+SRCREV = "1f8d498752fed0b2b92d6a619aa11524dd771998"
 
 BBCLASSEXTEND = "native nativesdk"
 
