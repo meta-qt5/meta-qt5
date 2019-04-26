@@ -8,10 +8,7 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative qtmultimedia"
 
-# Use f7fb6e5b3c321c824d597363504cae6cf7d37c43
-# instead of ff7e0b5106a847541e13decfd8cbc57985d001b7 because
-# v5.9.8 tag wasn't merged to 5.9 branch yet
-SRCREV = "f7fb6e5b3c321c824d597363504cae6cf7d37c43"
+SRCREV = "ff7e0b5106a847541e13decfd8cbc57985d001b7"
 
 # The same issue as in qtbase:
 # http://errors.yoctoproject.org/Errors/Details/152641/

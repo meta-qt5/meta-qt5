@@ -220,7 +220,4 @@ INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-# Use 159f7e9c39c57177d25f524ae3cad4e533b89da8
-# instead of 82eb6aa08e5dc8a57402b69b4e55ce7d2371e84b because
-# v5.9.8 tag wasn't merged to 5.9 branch yet
-SRCREV = "159f7e9c39c57177d25f524ae3cad4e533b89da8"
+SRCREV = "82eb6aa08e5dc8a57402b69b4e55ce7d2371e84b"

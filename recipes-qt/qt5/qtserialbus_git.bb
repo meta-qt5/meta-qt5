@@ -11,7 +11,4 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtserialport"
 
-# Use d0cb148f1abb570ddbd3fb5360784e0287938f69
-# instead of fdc716e10ac630416c04275640daaa65d6c92dd8 because
-# v5.9.8 tag wasn't merged to 5.9 branch yet
-SRCREV = "d0cb148f1abb570ddbd3fb5360784e0287938f69"
+SRCREV = "fdc716e10ac630416c04275640daaa65d6c92dd8"

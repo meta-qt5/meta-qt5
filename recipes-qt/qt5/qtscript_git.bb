@@ -29,7 +29,4 @@ DEPENDS += "qtbase"
 # http://errors.yoctoproject.org/Errors/Build/44915/
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-# Use 8fa8656baa5ca3a9b7c170ef473d5b06d3e18ff8
-# instead of 4fe24b5f0d104976f361fd03e5398730bccc4c98 because
-# v5.9.8 tag wasn't merged to 5.9 branch yet
-SRCREV = "8fa8656baa5ca3a9b7c170ef473d5b06d3e18ff8"
+SRCREV = "4fe24b5f0d104976f361fd03e5398730bccc4c98"
