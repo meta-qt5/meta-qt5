@@ -1,4 +1,4 @@
-From 25fe85b199ab52bfa0a2e4c1da41fee1f4a26fbe Mon Sep 17 00:00:00 2001
+From 6b0dfb84eca369a791a0c038b9294d2f9c78bab5 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 14 Feb 2018 17:08:43 -0800
 Subject: [PATCH] mkspecs/common/gcc-base.conf: Use -I instead of -isystem
@@ -22,20 +22,20 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/mkspecs/common/clang.conf b/mkspecs/common/clang.conf
-index 5800aaa5b4..7b4901ce46 100644
+index aead581478..8e06a069b4 100644
 --- a/mkspecs/common/clang.conf
 +++ b/mkspecs/common/clang.conf
-@@ -16,7 +16,7 @@ QMAKE_LINK_SHLIB        = $$QMAKE_CXX
- CONFIG                 += clang_pch_style
- QMAKE_PCH_OUTPUT_EXT    = .pch
+@@ -18,7 +18,7 @@ QMAKE_PCH_OUTPUT_EXT    = .pch
+ 
+ QMAKE_CFLAGS_OPTIMIZE_SIZE = -Oz
  
 -QMAKE_CFLAGS_ISYSTEM             = -isystem
 +QMAKE_CFLAGS_ISYSTEM             =
  QMAKE_CFLAGS_PRECOMPILE          = -x c-header -c ${QMAKE_PCH_INPUT} -o ${QMAKE_PCH_OUTPUT}
  QMAKE_CFLAGS_USE_PRECOMPILE      = -Xclang -include-pch -Xclang ${QMAKE_PCH_OUTPUT}
- QMAKE_CFLAGS_LTCG                = -flto
+ QMAKE_CFLAGS_LTCG                = -flto=thin
 diff --git a/mkspecs/common/gcc-base.conf b/mkspecs/common/gcc-base.conf
-index c2669e4833..3fde8dc85f 100644
+index 44b4267207..9756a02014 100644
 --- a/mkspecs/common/gcc-base.conf
 +++ b/mkspecs/common/gcc-base.conf
 @@ -46,7 +46,7 @@ QMAKE_CFLAGS_DEBUG         += -g
