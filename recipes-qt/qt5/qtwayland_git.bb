@@ -43,5 +43,33 @@ BBCLASSEXTEND =+ "native nativesdk"
 
 # The same issue as in qtbase:
 # http://errors.yoctoproject.org/Errors/Details/152641/
-LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
+LDFLAGS_append = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
+# Since version 5.11.2 some private headers are not installed. Work around
+# until fixed upstream. See https://bugreports.qt.io/browse/QTBUG-71340 for
+# further details
+QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY ?= "1"
+# First 6 characters before first + (e.g. 5.11.3-+git) or - (e.g. 5.11.3-2)
+SHRT_VER ?= "${@d.getVar('PV').split('+')[0].split('-')[0]}"
+do_install_append() {
+    if [ -d "${B}/src/client" -a "${QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY}" = "1" -a -d "${D}${includedir}/QtWaylandClient/${SHRT_VER}/QtWaylandClient/private/" ]; then
+        for header in `find ${B}/src/client -name '*wayland-*.h'`; do
+            header_base=`basename $header`
+            dest="${D}${includedir}/QtWaylandClient/${SHRT_VER}/QtWaylandClient/private/$header_base"
+            if [ ! -e "$dest" ]; then
+                echo "Manual install: $header_base to $dest"
+                install -m 644 "$header" "$dest"
+            fi
+        done
+    fi
+    if [ -d "${B}/src/compositor" -a "${QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY}" = "1" -a -d "${D}${includedir}/QtCompositor/${SHRT_VER}/QtCompositor/private/" ]; then
+        for header in `find ${B}/src/compositor -name '*wayland-*.h'`; do
+            header_base=`basename $header`
+            dest="${D}${includedir}/QtCompositor/${SHRT_VER}/QtCompositor/private/$header_base"
+            if [ ! -e "$dest" ]; then
+                echo "Manual install: $header_base to $dest"
+                install -m 644 "$header" "$dest"
+            fi
+        done
+    fi
+}

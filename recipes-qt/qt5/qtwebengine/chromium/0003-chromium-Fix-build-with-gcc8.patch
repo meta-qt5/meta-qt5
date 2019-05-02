@@ -1,4 +1,4 @@
-From 5945b54c4095cd52eef8ab43c47a5c8c24a1aa0a Mon Sep 17 00:00:00 2001
+From 53b101c4d3d419920d8a9f96d8afe10716c137c5 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Tue, 5 Jun 2018 13:58:16 +0000
 Subject: [PATCH] chromium: Fix build with gcc8

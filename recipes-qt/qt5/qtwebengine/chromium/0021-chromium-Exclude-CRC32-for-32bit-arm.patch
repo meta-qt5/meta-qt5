@@ -1,4 +1,4 @@
-From 432514e835f5bfefc2bb88adbb2ba468e9c07beb Mon Sep 17 00:00:00 2001
+From b882013421036a05ea8c909292cc38d05fc29c89 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 5 Feb 2019 14:32:20 -0800
 Subject: [PATCH] chromium: Exclude CRC32 for 32bit arm
@@ -11,9 +11,11 @@ src/3rdparty/chromium/third_party/zlib/crc32_simd.c:184: undefined reference to 
 Upstream-Status: Pending
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- chromium/third_party/zlib/BUILD.gn | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ chromium/third_party/zlib/BUILD.gn | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
+diff --git a/chromium/third_party/zlib/BUILD.gn b/chromium/third_party/zlib/BUILD.gn
+index 05907b481ac..dbc4be143cd 100644
 --- a/chromium/third_party/zlib/BUILD.gn
 +++ b/chromium/third_party/zlib/BUILD.gn
 @@ -70,8 +70,11 @@ config("zlib_arm_crc32_config") {
