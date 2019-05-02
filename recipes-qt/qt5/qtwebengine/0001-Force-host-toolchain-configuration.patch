@@ -1,4 +1,4 @@
-From bf92c8a03189d7a559aff7d62c2d9fc6047d2659 Mon Sep 17 00:00:00 2001
+From eb0b90b8809a8d8bd76999056d74d433a6c23184 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -18,7 +18,7 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  2 files changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/src/buildtools/configure_host.pro b/src/buildtools/configure_host.pro
-index dd0d3e32..70161c82 100644
+index dd0d3e32..6312c867 100644
 --- a/src/buildtools/configure_host.pro
 +++ b/src/buildtools/configure_host.pro
 @@ -4,7 +4,7 @@ TEMPLATE = aux
@@ -37,9 +37,9 @@ index dd0d3e32..70161c82 100644
 -"  cc = \"$$which($$QMAKE_CC)\" " \
 -"  cxx = \"$$which($$QMAKE_CXX)\" " \
 -"  ld = \"$$which($$QMAKE_LINK)\" " \
-+"  cc = \"$$which(gcc)\" " \
-+"  cxx = \"$$which(g++)\" " \
-+"  ld = \"$$which(g++)\" " \
++"  cc = \"$$which($$CC_host)\" " \
++"  cxx = \"$$which($$CXX_host)\" " \
++"  ld = \"$$which($$CXX_host)\" " \
  "  ar = \"$$which(ar)\" " \
  "  nm = \"$$which(nm)\" " \
  "  extra_cppflags = \"$$GN_HOST_EXTRA_CPPFLAGS\" " \
@@ -50,9 +50,9 @@ index dd0d3e32..70161c82 100644
 -"  cc = \"$$which($$QMAKE_CC)\" " \
 -"  cxx = \"$$which($$QMAKE_CXX)\" " \
 -"  ld = \"$$which($$QMAKE_LINK)\" " \
-+"  cc = \"$$which(gcc)\" " \
-+"  cxx = \"$$which(g++)\" " \
-+"  ld = \"$$which(g++)\" " \
++"  cc = \"$$which($$CC_host)\" " \
++"  cxx = \"$$which($$CXX_host)\" " \
++"  ld = \"$$which($$CXX_host)\" " \
  "  ar = \"$$which(ar)\" " \
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
