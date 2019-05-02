@@ -282,7 +282,7 @@ pkg_postinst_${PN}-tools () {
 sed -i \
     -e 's:HostSpec =.*:HostSpec = ${TARGET_MKSPEC}:g' \
     -e 's:TargetSpec =.*:TargetSpec = ${TARGET_MKSPEC}:g' \
-    $D${bindir}/qt.conf
+    $D${OE_QMAKE_PATH_BINS}/qt.conf
 }
 
 pkg_postinst_${PN}-mkspecs () {
