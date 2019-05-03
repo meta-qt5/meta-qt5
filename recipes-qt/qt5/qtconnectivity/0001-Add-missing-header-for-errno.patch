@@ -1,4 +1,4 @@
-From 4c6aa68761d8a85bffe7d545c816522a793e94a9 Mon Sep 17 00:00:00 2001
+From 8f79162cdbf6e9df3aea6762124ba1a6b25f5c0a Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 29 Jan 2019 20:29:19 -0800
 Subject: [PATCH] Add missing header for errno
@@ -21,6 +21,3 @@ index 31d3dc02..75d762e5 100644
  #include <unistd.h>
  #include <sys/prctl.h>
  #include <sys/syscall.h>
--- 
-2.20.1
-

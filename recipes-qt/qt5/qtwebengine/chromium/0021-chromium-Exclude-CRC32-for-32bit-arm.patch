@@ -1,4 +1,4 @@
-From 99660440fb4e876fe6c008f37fb70fce9cb61b9b Mon Sep 17 00:00:00 2001
+From b882013421036a05ea8c909292cc38d05fc29c89 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 5 Feb 2019 14:32:20 -0800
 Subject: [PATCH] chromium: Exclude CRC32 for 32bit arm
@@ -15,7 +15,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/chromium/third_party/zlib/BUILD.gn b/chromium/third_party/zlib/BUILD.gn
-index 458f428..18b4f23 100644
+index 05907b481ac..dbc4be143cd 100644
 --- a/chromium/third_party/zlib/BUILD.gn
 +++ b/chromium/third_party/zlib/BUILD.gn
 @@ -74,8 +74,11 @@ if (use_arm_neon_optimizations) {

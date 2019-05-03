@@ -1,4 +1,4 @@
-From f39cf06f1242fc8391561bbbfb0741fbd58194f1 Mon Sep 17 00:00:00 2001
+From f5c88622ac10601e48a14f31d9299692a9ac62e2 Mon Sep 17 00:00:00 2001
 From: Max Krummenacher <max.krummenacher@toradex.com>
 Date: Sat, 27 Oct 2018 12:29:31 +0000
 Subject: [PATCH] Qt5GuiConfigExtras.cmake.in: cope with variable path to
@@ -19,7 +19,7 @@ Signed-off-by: Max Krummenacher <max.krummenacher@toradex.com>
  1 file changed, 8 insertions(+), 14 deletions(-)
 
 diff --git a/src/gui/Qt5GuiConfigExtras.cmake.in b/src/gui/Qt5GuiConfigExtras.cmake.in
-index 84dbbfe..ad6956d 100644
+index 84dbbfebd4..ad6956d814 100644
 --- a/src/gui/Qt5GuiConfigExtras.cmake.in
 +++ b/src/gui/Qt5GuiConfigExtras.cmake.in
 @@ -75,21 +75,15 @@ unset(_qt5gui_OPENGL_INCLUDE_DIR CACHE)

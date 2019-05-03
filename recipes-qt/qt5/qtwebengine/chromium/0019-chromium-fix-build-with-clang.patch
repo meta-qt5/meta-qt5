@@ -1,4 +1,4 @@
-From 70292f3f8db60557b00a5ef550ef8c6a4a726f56 Mon Sep 17 00:00:00 2001
+From 249b99b4b54468b428a156f33e2a72066c82e9c2 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 2 Feb 2019 19:28:59 -0800
 Subject: [PATCH] chromium: fix build with clang
@@ -10,7 +10,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 2 insertions(+), 25 deletions(-)
 
 diff --git a/chromium/build/config/compiler/BUILD.gn b/chromium/build/config/compiler/BUILD.gn
-index 1fb0a84..05e2208 100644
+index d223a4f6fd4..1c42c49ea4a 100644
 --- a/chromium/build/config/compiler/BUILD.gn
 +++ b/chromium/build/config/compiler/BUILD.gn
 @@ -561,13 +561,6 @@ config("compiler") {
