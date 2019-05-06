@@ -155,6 +155,7 @@ SRC_URI += " \
     file://chromium/0019-chromium-fix-build-with-clang.patch;patchdir=src/3rdparty \
     file://chromium/0020-chromium-Check-for-__ARM_FP-2-before-using-__fp16.patch;patchdir=src/3rdparty \
     file://chromium/0021-chromium-Exclude-CRC32-for-32bit-arm.patch;patchdir=src/3rdparty \
+    file://chromium/0022-chromium-Do-not-try-to-set-the-guessed-values-for-ma.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI_append_libc-musl = "\
