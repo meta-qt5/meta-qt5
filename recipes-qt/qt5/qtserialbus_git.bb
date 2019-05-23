@@ -11,6 +11,4 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtserialport"
 
-SRC_URI += "file://0001-SocketCAN-Fix-compiler-error-SIOCGSTAMP-was-not-decl.patch"
-
-SRCREV = "64199169df6bd5b1e31d934c0a64c13d57d0f5c4"
+SRCREV = "c8645af35accdfadfa2b29cd897f77b6e15704c8"
