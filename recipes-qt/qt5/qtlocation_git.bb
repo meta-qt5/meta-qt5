@@ -17,6 +17,11 @@ PACKAGECONFIG ??= ""
 # older geoclue 0.12.99 is needed
 PACKAGECONFIG[geoclue] = ",,geoclue"
 PACKAGECONFIG[gypsy] = "-feature-gypsy,-no-feature-gypsy,gconf gypsy"
+PACKAGECONFIG[geoservices_here] = "-feature-geoservices_here,-no-feature-geoservices_here"
+PACKAGECONFIG[geoservices_mapbox] = "-feature-geoservices_mapbox,-no-feature-geoservices_mapbox"
+PACKAGECONFIG[geoservices_esri] = "-feature-geoservices_esri,-no-feature-geoservices_esri"
+PACKAGECONFIG[geoservices_itemsoverlay] = "-feature-geoservices_itemsoverlay,-no-feature-geoservices_itemsoverlay"
+PACKAGECONFIG[geoservices_osm] = "-feature-geoservices_osm,-no-feature-geoservices_osm"
 PACKAGECONFIG[geoservices_mapboxgl] = "-feature-geoservices_mapboxgl,-no-feature-geoservices_mapboxgl"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
