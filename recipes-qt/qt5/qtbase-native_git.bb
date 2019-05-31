@@ -57,18 +57,18 @@ CLEANBROKEN = "1"
 XPLATFORM_toolchain-clang = "linux-oe-clang"
 XPLATFORM ?= "linux-oe-g++"
 
+PACKAGECONFIG ?= ""
+PACKAGECONFIG[gui] = "-gui -qpa minimal,-no-gui,"
+PACKAGECONFIG[imageformats] = "-qt-libpng -qt-libjpeg -gif -ico, -no-libpng -no-libjpeg -no-ico -no-gif,"
+
 QT_CONFIG_FLAGS = " \
     -sysroot ${STAGING_DIR_NATIVE} \
     -L${STAGING_LIBDIR_NATIVE} \
     -no-gcc-sysroot \
     -system-zlib \
     -qt-pcre \
-    -no-libjpeg \
-    -no-libpng \
-    -no-gif \
     -no-accessibility \
     -no-cups \
-    -no-gui \
     -no-sql-mysql \
     -no-sql-sqlite \
     -no-sql-psql \
