@@ -1,4 +1,4 @@
-From 4bd5ee8a79729c29795568568a9cd7a01d9c338b Mon Sep 17 00:00:00 2001
+From eb0b90b8809a8d8bd76999056d74d433a6c23184 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -19,7 +19,7 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  3 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/src/buildtools/configure_host.pro b/src/buildtools/configure_host.pro
-index dd0d3e3..6312c86 100644
+index dd0d3e32..6312c867 100644
 --- a/src/buildtools/configure_host.pro
 +++ b/src/buildtools/configure_host.pro
 @@ -4,7 +4,7 @@ TEMPLATE = aux
@@ -58,25 +58,25 @@ index dd0d3e3..6312c86 100644
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
 diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
-index 30ada93..afd115c 100644
+index b6bf9cf..ae419b1 100644
 --- a/src/buildtools/gn.pro
 +++ b/src/buildtools/gn.pro
 @@ -19,8 +19,8 @@ build_pass|!debug_and_release {
              gn_bootstrap = $$system_path($$absolute_path(gn/build/gen.py, $$src_3rd_party_dir))
  
-             gn_configure = $$system_quote($$gn_bootstrap) --no-last-commit-position --out-path $$out_path \
--                           --cc \"$$which($$QMAKE_CC)\" --cxx \"$$which($$QMAKE_CXX)\" \
--                           --ld \"$$which($$QMAKE_LINK)\"
-+                           --cc \"$$which($$CC_host)\" --cxx \"$$which($$CXX_host)\" \
-+                           --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\"
-             macos {
-                 gn_configure += --isysroot \"$$QMAKE_MAC_SDK_PATH\"
-             }
+             gn_gen_args = --no-last-commit-position --out-path $$out_path \
+-                          --cc \"$$which($$QMAKE_CC)\" --cxx \"$$which($$QMAKE_CXX)\" \
+-                          --ld \"$$which($$QMAKE_LINK)\"
++                          --cc \"$$which($$CC_host)\" --cxx \"$$which($$CXX_host)\" \
++                          --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\"
+ 
+             msvc:!clang_cl: gn_gen_args += --use-lto
+ 
 diff --git a/src/core/config/linux.pri b/src/core/config/linux.pri
-index 04c9eca..c48fa06 100644
+index 95b7a4b..db0658e 100644
 --- a/src/core/config/linux.pri
 +++ b/src/core/config/linux.pri
-@@ -115,7 +115,7 @@ contains(QT_ARCH, "mips") {
+@@ -116,7 +116,7 @@ contains(QT_ARCH, "mips") {
  
  host_build {
      gn_args += custom_toolchain=\"$$QTWEBENGINE_OUT_ROOT/src/toolchain:host\"

@@ -27,7 +27,6 @@ SRC_URI = " \
     git://code.qt.io/qt-creator/qt-creator.git;branch=4.7 \
     file://0002-botan.pro-pass-QMAKE_AR.patch \
     file://0001-botan-Always-define-BOTAN_ARCH_SWITCH-when-cross-bui.patch \
-    file://qtcreator.desktop.in \
 "
 SRC_URI_append_libc-musl = " file://0003-Link-with-libexecinfo-on-musl.patch"
 
@@ -50,10 +49,6 @@ do_configure_append() {
 
 do_install() {
     oe_runmake install INSTALL_ROOT=${D}${prefix}
-    # install desktop and ensure that qt-creator finds qmake
-    install -d ${D}${datadir}/applications
-    install -m 0644 ${WORKDIR}/qtcreator.desktop.in ${D}${datadir}/applications/qtcreator.desktop
-    sed -i 's:@QT5_QMAKE@:${OE_QMAKE_PATH_QT_BINS}:g' ${D}${datadir}/applications/qtcreator.desktop
 }
 do_install_append_toolchain-clang () {
     # Remove RPATHs embedded in bins

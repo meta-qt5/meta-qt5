@@ -135,23 +135,24 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "73-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.12
-# 5.12.meta-qt5.2
+# 5.12.meta-qt5.4
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
 "
 SRC_URI_append_libc-musl = "\
-    file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
-    file://0004-musl-link-against-libexecinfo.patch \
+    file://0002-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
+    file://0003-musl-link-against-libexecinfo.patch \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/69-based
-# 69-based.meta-qt5.3
+# 69-based.meta-qt5.4
 SRC_URI += " \
     file://chromium/0002-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
     file://chromium/0004-chromium-stack-pointer-clobber.patch;patchdir=src/3rdparty \
     file://chromium/0019-chromium-fix-build-with-clang.patch;patchdir=src/3rdparty \
     file://chromium/0021-chromium-Exclude-CRC32-for-32bit-arm.patch;patchdir=src/3rdparty \
+    file://chromium/0022-chromium-Do-not-try-to-set-the-guessed-values-for-ma.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI_append_libc-musl = "\

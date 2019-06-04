@@ -7,11 +7,10 @@ LIC_FILES_CHKSUM = "\
     file://LICENSE;md5=d32239bcb673463ab874e80d47fae504 \
 "
 SRC_URI = "\
-    ${SOURCEFORGE_MIRROR}/pyqt/PyQt5_gpl-${PV}.tar.gz \
+    https://www.riverbankcomputing.com/static/Downloads/PyQt5/${PV}/PyQt5_gpl-${PV}.tar.gz \
 "
-SRC_URI[md5sum] = "aac3428e90eca5df68c5764282fd9b98"
-SRC_URI[sha256sum] = "c9b57d15601d436faf35dacf8e0acefa220194829a653e771e80b189b3261073"
-
+SRC_URI[md5sum] = "67508b652098d2e05c4c2b5baeb170cc"
+SRC_URI[sha256sum] = "3718ce847d824090fd5f95ff3f13847ee75c2507368d4cbaeb48338f506e59bf"
 S = "${WORKDIR}/PyQt5_gpl-${PV}"
 
 inherit qmake5
@@ -34,13 +33,13 @@ PYQT_MODULES_aarch64 = "QtCore QtGui QtNetwork QtWidgets"
 do_configure_prepend() {
     cd ${S}
     echo "py_platform = linux" > pyqt.cfg
-    echo "py_inc_dir = %(sysroot)/$includedir/python${PYTHON_BASEVERSION}${PYTHON_ABI}" >> pyqt.cfg
-    echo "py_pylib_dir = %(sysroot)/${libdir}/python${PYTHON_BASEVERSION}${PYTHON_ABI}" >> pyqt.cfg
-    echo "py_pylib_lib = python${PYTHON_BASEVERSION}${PYTHON_ABI}" >> pyqt.cfg
-    echo "pyqt_module_dir = ${D}/${libdir}/python${PYTHON_BASEVERSION}${PYTHON_ABI}/site-packages" >> pyqt.cfg
+    echo "py_inc_dir = %(sysroot)/$includedir/python%(py_major).%(py_minor)${PYTHON_ABI}" >> pyqt.cfg
+    echo "py_pylib_dir = %(sysroot)/${libdir}/python%(py_major).%(py_minor)" >> pyqt.cfg
+    echo "py_pylib_lib = python$%(py_major).%(py_minor)" >> pyqt.cfg
+    echo "pyqt_module_dir = ${D}/${libdir}/python%(py_major).%(py_minor)/site-packages" >> pyqt.cfg
     echo "pyqt_bin_dir = ${D}/${bindir}" >> pyqt.cfg
     echo "pyqt_sip_dir = ${D}/${datadir}/sip/PyQt5" >> pyqt.cfg
-    echo "pyuic_interpreter = ${D}/${bindir}/python${PYTHON_BASEVERSION}${PYTHON_ABI}" >> pyqt.cfg
+    echo "pyuic_interpreter = ${D}/${bindir}/python%(py_major).%(py_minor)" >> pyqt.cfg
     echo "pyqt_disabled_features = ${DISABLED_FEATURES}" >> pyqt.cfg
     echo "qt_shared = True" >> pyqt.cfg
     QT_VERSION=`${OE_QMAKE_QMAKE} -query QT_VERSION`
@@ -59,6 +58,6 @@ do_install() {
     oe_runmake MAKEFLAGS='-j 1' install
 }
 
-FILES_${PN} += "${libdir}/${PYTHON_DIR}${PYTHON_ABI}/site-packages ${datadir}/sip/PyQt5/"
+FILES_${PN} += "${libdir}/${PYTHON_DIR}/site-packages ${datadir}/sip/PyQt5/"
 
 RDEPENDS_${PN} = "qtbase"
