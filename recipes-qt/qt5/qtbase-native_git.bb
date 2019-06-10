@@ -58,7 +58,7 @@ XPLATFORM ?= "linux-oe-g++"
 
 PACKAGECONFIG ?= ""
 PACKAGECONFIG[gui] = "-gui -qpa minimal,-no-gui,"
-PACKAGECONFIG[imageformats] = "-qt-libpng -qt-libjpeg -gif -ico, -no-libpng -no-libjpg -no-ico -no-gif,"
+PACKAGECONFIG[imageformats] = "-qt-libpng -qt-libjpeg -gif -ico, -no-libpng -no-libjpeg -no-ico -no-gif,"
 
 QT_CONFIG_FLAGS = " \
     -sysroot ${STAGING_DIR_NATIVE} \
