@@ -1,0 +1,62 @@
+From 4fa69c1c5396bded20edccb2a1dd9b61f0b1140d Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Fri, 2 Aug 2019 12:39:50 +0300
+Subject: [PATCH] Fix examples build error
+
+Add workaround for QTBUG-77288 which causes examples to fail to build
+
+Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+---
+ examples/studio3d/cppdatainput/cppdatainput.pro     | 1 +
+ examples/studio3d/dynamicelement/dynamicelement.pro | 1 +
+ examples/studio3d/qmldatainput/qmldatainput.pro     | 1 +
+ examples/studio3d/simpleqml/simpleqml.pro           | 1 +
+ 4 files changed, 4 insertions(+)
+
+diff --git a/examples/studio3d/cppdatainput/cppdatainput.pro b/examples/studio3d/cppdatainput/cppdatainput.pro
+index 20b5c68..bbb403a 100644
+--- a/examples/studio3d/cppdatainput/cppdatainput.pro
++++ b/examples/studio3d/cppdatainput/cppdatainput.pro
+@@ -1,5 +1,6 @@
+ CONFIG += c++11
+ QT += widgets qml quick studio3d
++QMAKE_LIBS += $$QMAKE_LIBS_3DSQMLSTREAMER $$QMAKE_LIBS_3DSOPENGL
+ 
+ target.path = $$[QT_INSTALL_EXAMPLES]/studio3d/$$TARGET
+ INSTALLS += target
+diff --git a/examples/studio3d/dynamicelement/dynamicelement.pro b/examples/studio3d/dynamicelement/dynamicelement.pro
+index 1b804fd..ae3c005 100644
+--- a/examples/studio3d/dynamicelement/dynamicelement.pro
++++ b/examples/studio3d/dynamicelement/dynamicelement.pro
+@@ -1,6 +1,7 @@
+ TEMPLATE = app
+ 
+ QT += qml quick studio3d
++QMAKE_LIBS += $$QMAKE_LIBS_3DSQMLSTREAMER $$QMAKE_LIBS_3DSOPENGL
+ 
+ SOURCES += \
+         demo.cpp \
+diff --git a/examples/studio3d/qmldatainput/qmldatainput.pro b/examples/studio3d/qmldatainput/qmldatainput.pro
+index 9bafed5..496c2c1 100644
+--- a/examples/studio3d/qmldatainput/qmldatainput.pro
++++ b/examples/studio3d/qmldatainput/qmldatainput.pro
+@@ -1,6 +1,7 @@
+ TEMPLATE = app
+ 
+ QT += widgets qml quick studio3d
++QMAKE_LIBS += $$QMAKE_LIBS_3DSQMLSTREAMER $$QMAKE_LIBS_3DSOPENGL
+ 
+ integrity: DEFINES += USE_EMBEDDED_FONTS
+ 
+diff --git a/examples/studio3d/simpleqml/simpleqml.pro b/examples/studio3d/simpleqml/simpleqml.pro
+index 62afa78..1a0784b 100644
+--- a/examples/studio3d/simpleqml/simpleqml.pro
++++ b/examples/studio3d/simpleqml/simpleqml.pro
+@@ -1,6 +1,7 @@
+ TEMPLATE = app
+ 
+ QT += widgets qml quick studio3d
++QMAKE_LIBS += $$QMAKE_LIBS_3DSQMLSTREAMER $$QMAKE_LIBS_3DSOPENGL
+ 
+ SOURCES += \
+     main.cpp
