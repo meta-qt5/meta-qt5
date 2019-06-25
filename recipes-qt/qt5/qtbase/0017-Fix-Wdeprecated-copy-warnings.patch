@@ -1,0 +1,371 @@
+From 3b92a70c05eebc645d83c5570dac0285f612c039 Mon Sep 17 00:00:00 2001
+From: Allan Sandfeld Jensen <allan.jensen@qt.io>
+Date: Tue, 13 Nov 2018 17:14:43 +0100
+Subject: [PATCH] Fix -Wdeprecated-copy warnings
+
+Implicit copy constructors or methods are considered deprecated for
+classes that has one of the two or a destructor.
+
+The warning is enabled with -Wextra in gcc 9
+
+Change-Id: Ic9be654f2a142fb186a4d5a7d6b4f7d6f4e611d8
+Reviewed-by: Thiago Macieira <thiago.macieira@intel.com>
+
+Upstream-Status: Backport from 5.13
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ mkspecs/features/qt_common.prf     | 19 ++++++-------------
+ src/corelib/io/qprocess_p.h        |  3 +--
+ src/corelib/kernel/qvariant.h      |  5 ++++-
+ src/corelib/tools/qbytearraylist.h |  2 +-
+ src/corelib/tools/qlist.h          |  6 +++++-
+ src/corelib/tools/qstringlist.h    |  2 +-
+ src/gui/painting/qtriangulator_p.h |  2 ++
+ src/gui/text/qtextobject.h         |  1 +
+ src/widgets/styles/qstyleoption.h  | 23 +++++++++++++++++++++++
+ 9 files changed, 44 insertions(+), 19 deletions(-)
+
+diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
+index 6cb2e78c1c..1cf2d45168 100644
+--- a/mkspecs/features/qt_common.prf
++++ b/mkspecs/features/qt_common.prf
+@@ -89,14 +89,8 @@ clang {
+     greaterThan(QT_GCC_MAJOR_VERSION, 5): QMAKE_CXXFLAGS_WARN_ON += -Wshift-overflow=2 -Wduplicated-cond
+     # GCC 7 has a lot of false positives relating to this, so disable completely
+     greaterThan(QT_GCC_MAJOR_VERSION, 6): QMAKE_CXXFLAGS_WARN_ON += -Wno-stringop-overflow
+-    # GCC 9 has a lot of false positives relating to this, so disable completely
+-    greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-deprecated-copy
+-    # GCC 9 introduced this
+-    greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-redundant-move
+-    # GCC 9 introduced this
++    # GCC 9 introduced -Wformat-overflow in -Wall, but it is buggy:
+     greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-format-overflow
+-    # GCC 9 introduced this
+-    greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-init-list-lifetime
+ }
+ 
+ warnings_are_errors:warning_clean {
+@@ -136,14 +130,13 @@ warnings_are_errors:warning_clean {
+ 
+             # GCC 7 includes -Wimplicit-fallthrough in -Wextra, but Qt is not yet free of implicit fallthroughs.
+             greaterThan(QT_GCC_MAJOR_VERSION, 6): QMAKE_CXXFLAGS_WARN_ON += -Wno-error=implicit-fallthrough
+-            # GCC 9 has a lot of false positives relating to this, so disable completely
+-            greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-deprecated-copy
++            # GCC 9 introduced -Wdeprecated-copy in -Wextra, but we are not clean for it.
++            greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-error=deprecated-copy
+             # GCC 9 introduced this
+-            greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-redundant-move
++            greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-error=redundant-move
+             # GCC 9 introduced this
+-            greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-format-overflow
+-            # GCC 9 introduced this
+-            greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-init-list-lifetime
++            greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-error=init-list-lifetime
++
+             # Work-around for bug https://code.google.com/p/android/issues/detail?id=58135
+             android: QMAKE_CXXFLAGS_WARN_ON += -Wno-error=literal-suffix
+         }
+diff --git a/src/corelib/io/qprocess_p.h b/src/corelib/io/qprocess_p.h
+index aa7ecbe91d..eb2d1ed048 100644
+--- a/src/corelib/io/qprocess_p.h
++++ b/src/corelib/io/qprocess_p.h
+@@ -108,8 +108,7 @@ using QProcEnvKey = QByteArray;
+ class QProcEnvValue
+ {
+ public:
+-    QProcEnvValue() {}
+-    QProcEnvValue(const QProcEnvValue &other) { *this = other; }
++    QProcEnvValue() = default;
+     explicit QProcEnvValue(const QString &value) : stringValue(value) {}
+     explicit QProcEnvValue(const QByteArray &value) : byteValue(value) {}
+     bool operator==(const QProcEnvValue &other) const
+diff --git a/src/corelib/kernel/qvariant.h b/src/corelib/kernel/qvariant.h
+index ff73c27b6e..2394dc58f8 100644
+--- a/src/corelib/kernel/qvariant.h
++++ b/src/corelib/kernel/qvariant.h
+@@ -396,10 +396,13 @@ class Q_CORE_EXPORT QVariant
+             : type(variantType), is_shared(false), is_null(false)
+         {}
+ 
+-        inline Private(const Private &other) Q_DECL_NOTHROW
++#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
++        Private(const Private &other) Q_DECL_NOTHROW
+             : data(other.data), type(other.type),
+               is_shared(other.is_shared), is_null(other.is_null)
+         {}
++        Private &operator=(const Private &other) Q_DECL_NOTHROW = default;
++#endif
+         union Data
+         {
+             char c;
+diff --git a/src/corelib/tools/qbytearraylist.h b/src/corelib/tools/qbytearraylist.h
+index ed014dd157..3b5266492f 100644
+--- a/src/corelib/tools/qbytearraylist.h
++++ b/src/corelib/tools/qbytearraylist.h
+@@ -66,7 +66,7 @@ template <> struct QListSpecialMethods<QByteArray>
+ {
+ #ifndef Q_QDOC
+ protected:
+-    ~QListSpecialMethods() {}
++    ~QListSpecialMethods() = default;
+ #endif
+ public:
+     inline QByteArray join() const
+diff --git a/src/corelib/tools/qlist.h b/src/corelib/tools/qlist.h
+index 49ccbc9c9f..1e77b08a15 100644
+--- a/src/corelib/tools/qlist.h
++++ b/src/corelib/tools/qlist.h
+@@ -72,7 +72,7 @@ template <typename T> class QSet;
+ template <typename T> struct QListSpecialMethods
+ {
+ protected:
+-    ~QListSpecialMethods() {}
++    ~QListSpecialMethods() = default;
+ };
+ template <> struct QListSpecialMethods<QByteArray>;
+ template <> struct QListSpecialMethods<QString>;
+@@ -237,6 +237,8 @@ public:
+         // can't remove it in Qt 5, since doing so would make the type trivial,
+         // which changes the way it's passed to functions by value.
+         inline iterator(const iterator &o) Q_DECL_NOTHROW : i(o.i){}
++        inline iterator &operator=(const iterator &o) Q_DECL_NOTHROW
++        { i = o.i; return *this; }
+ #endif
+         inline T &operator*() const { return i->t(); }
+         inline T *operator->() const { return &i->t(); }
+@@ -290,6 +292,8 @@ public:
+         // can't remove it in Qt 5, since doing so would make the type trivial,
+         // which changes the way it's passed to functions by value.
+         inline const_iterator(const const_iterator &o) Q_DECL_NOTHROW : i(o.i) {}
++        inline const_iterator &operator=(const const_iterator &o) Q_DECL_NOTHROW
++        { i = o.i; return *this; }
+ #endif
+ #ifdef QT_STRICT_ITERATORS
+         inline explicit const_iterator(const iterator &o) Q_DECL_NOTHROW : i(o.i) {}
+diff --git a/src/corelib/tools/qstringlist.h b/src/corelib/tools/qstringlist.h
+index 10cbad04d6..693cfe30c4 100644
+--- a/src/corelib/tools/qstringlist.h
++++ b/src/corelib/tools/qstringlist.h
+@@ -66,7 +66,7 @@ template <> struct QListSpecialMethods<QString>
+ {
+ #ifndef Q_QDOC
+ protected:
+-    ~QListSpecialMethods() {}
++    ~QListSpecialMethods() = default;
+ #endif
+ public:
+     inline void sort(Qt::CaseSensitivity cs = Qt::CaseSensitive);
+diff --git a/src/gui/painting/qtriangulator_p.h b/src/gui/painting/qtriangulator_p.h
+index 8f043fc925..c9ae2571f4 100644
+--- a/src/gui/painting/qtriangulator_p.h
++++ b/src/gui/painting/qtriangulator_p.h
+@@ -93,6 +93,8 @@ public:
+         return indices16.size();
+     }
+ 
++    QVertexIndexVector() = default;
++    QVertexIndexVector(const QVertexIndexVector &other) = default;
+     inline QVertexIndexVector &operator = (const QVertexIndexVector &other)
+     {
+         if (t == UnsignedInt)
+diff --git a/src/gui/text/qtextobject.h b/src/gui/text/qtextobject.h
+index 067f8473ea..694eb729d5 100644
+--- a/src/gui/text/qtextobject.h
++++ b/src/gui/text/qtextobject.h
+@@ -263,6 +263,7 @@ public:
+         iterator() : p(nullptr), b(0), e(0), n(0) {}
+ #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+         iterator(const iterator &o) : p(o.p), b(o.b), e(o.e), n(o.n) {}
++        iterator &operator=(const iterator &o) = default;
+ #endif
+ 
+         QTextFragment fragment() const;
+diff --git a/src/widgets/styles/qstyleoption.h b/src/widgets/styles/qstyleoption.h
+index 8ae07efc81..763575ff5b 100644
+--- a/src/widgets/styles/qstyleoption.h
++++ b/src/widgets/styles/qstyleoption.h
+@@ -118,6 +118,7 @@ public:
+ 
+     QStyleOptionFocusRect();
+     QStyleOptionFocusRect(const QStyleOptionFocusRect &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionFocusRect &operator=(const QStyleOptionFocusRect &other) = default;
+ 
+ protected:
+     QStyleOptionFocusRect(int version);
+@@ -142,6 +143,7 @@ public:
+ 
+     QStyleOptionFrame();
+     QStyleOptionFrame(const QStyleOptionFrame &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionFrame &operator=(const QStyleOptionFrame &other) = default;
+ 
+ protected:
+     QStyleOptionFrame(int version);
+@@ -171,6 +173,7 @@ public:
+     QStyleOptionTabWidgetFrame();
+     inline QStyleOptionTabWidgetFrame(const QStyleOptionTabWidgetFrame &other)
+         : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionTabWidgetFrame &operator=(const QStyleOptionTabWidgetFrame &other) = default;
+ 
+ protected:
+     QStyleOptionTabWidgetFrame(int version);
+@@ -194,6 +197,7 @@ public:
+ 
+     QStyleOptionTabBarBase();
+     QStyleOptionTabBarBase(const QStyleOptionTabBarBase &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionTabBarBase &operator=(const QStyleOptionTabBarBase &other) = default;
+ 
+ protected:
+     QStyleOptionTabBarBase(int version);
+@@ -225,6 +229,7 @@ public:
+ 
+     QStyleOptionHeader();
+     QStyleOptionHeader(const QStyleOptionHeader &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionHeader &operator=(const QStyleOptionHeader &other) = default;
+ 
+ protected:
+     QStyleOptionHeader(int version);
+@@ -247,6 +252,7 @@ public:
+ 
+     QStyleOptionButton();
+     QStyleOptionButton(const QStyleOptionButton &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionButton &operator=(const QStyleOptionButton &other) = default;
+ 
+ protected:
+     QStyleOptionButton(int version);
+@@ -284,6 +290,7 @@ public:
+ 
+     QStyleOptionTab();
+     QStyleOptionTab(const QStyleOptionTab &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionTab &operator=(const QStyleOptionTab &other) = default;
+ 
+ protected:
+     QStyleOptionTab(int version);
+@@ -314,6 +321,7 @@ public:
+     int midLineWidth;
+     QStyleOptionToolBar();
+     QStyleOptionToolBar(const QStyleOptionToolBar &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionToolBar &operator=(const QStyleOptionToolBar &other) = default;
+ 
+ protected:
+     QStyleOptionToolBar(int version);
+@@ -341,6 +349,7 @@ public:
+ 
+     QStyleOptionProgressBar();
+     QStyleOptionProgressBar(const QStyleOptionProgressBar &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionProgressBar &operator=(const QStyleOptionProgressBar &other) = default;
+ 
+ protected:
+     QStyleOptionProgressBar(int version);
+@@ -371,6 +380,7 @@ public:
+ 
+     QStyleOptionMenuItem();
+     QStyleOptionMenuItem(const QStyleOptionMenuItem &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionMenuItem &operator=(const QStyleOptionMenuItem &other) = default;
+ 
+ protected:
+     QStyleOptionMenuItem(int version);
+@@ -390,6 +400,7 @@ public:
+ 
+     QStyleOptionDockWidget();
+     QStyleOptionDockWidget(const QStyleOptionDockWidget &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionDockWidget &operator=(const QStyleOptionDockWidget &other) = default;
+ 
+ protected:
+     QStyleOptionDockWidget(int version);
+@@ -441,6 +452,7 @@ public:
+ 
+     QStyleOptionViewItem();
+     QStyleOptionViewItem(const QStyleOptionViewItem &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionViewItem &operator=(const QStyleOptionViewItem &other) = default;
+ 
+ protected:
+     QStyleOptionViewItem(int version);
+@@ -471,6 +483,7 @@ public:
+ 
+     QStyleOptionToolBox();
+     QStyleOptionToolBox(const QStyleOptionToolBox &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionToolBox &operator=(const QStyleOptionToolBox &other) = default;
+ 
+ protected:
+     QStyleOptionToolBox(int version);
+@@ -490,6 +503,7 @@ public:
+ 
+     QStyleOptionRubberBand();
+     QStyleOptionRubberBand(const QStyleOptionRubberBand &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionRubberBand &operator=(const QStyleOptionRubberBand &other) = default;
+ 
+ protected:
+     QStyleOptionRubberBand(int version);
+@@ -508,6 +522,7 @@ public:
+ 
+     QStyleOptionComplex(int version = QStyleOptionComplex::Version, int type = SO_Complex);
+     QStyleOptionComplex(const QStyleOptionComplex &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionComplex &operator=(const QStyleOptionComplex &other) = default;
+ };
+ 
+ #if QT_CONFIG(slider)
+@@ -532,6 +547,7 @@ public:
+ 
+     QStyleOptionSlider();
+     QStyleOptionSlider(const QStyleOptionSlider &other) : QStyleOptionComplex(Version, Type) { *this = other; }
++    QStyleOptionSlider &operator=(const QStyleOptionSlider &other) = default;
+ 
+ protected:
+     QStyleOptionSlider(int version);
+@@ -551,6 +567,7 @@ public:
+ 
+     QStyleOptionSpinBox();
+     QStyleOptionSpinBox(const QStyleOptionSpinBox &other) : QStyleOptionComplex(Version, Type) { *this = other; }
++    QStyleOptionSpinBox &operator=(const QStyleOptionSpinBox &other) = default;
+ 
+ protected:
+     QStyleOptionSpinBox(int version);
+@@ -578,6 +595,7 @@ public:
+ 
+     QStyleOptionToolButton();
+     QStyleOptionToolButton(const QStyleOptionToolButton &other) : QStyleOptionComplex(Version, Type) { *this = other; }
++    QStyleOptionToolButton &operator=(const QStyleOptionToolButton &other) = default;
+ 
+ protected:
+     QStyleOptionToolButton(int version);
+@@ -600,6 +618,7 @@ public:
+ 
+     QStyleOptionComboBox();
+     QStyleOptionComboBox(const QStyleOptionComboBox &other) : QStyleOptionComplex(Version, Type) { *this = other; }
++    QStyleOptionComboBox &operator=(const QStyleOptionComboBox &other) = default;
+ 
+ protected:
+     QStyleOptionComboBox(int version);
+@@ -618,6 +637,7 @@ public:
+ 
+     QStyleOptionTitleBar();
+     QStyleOptionTitleBar(const QStyleOptionTitleBar &other) : QStyleOptionComplex(Version, Type) { *this = other; }
++    QStyleOptionTitleBar &operator=(const QStyleOptionTitleBar &other) = default;
+ 
+ protected:
+     QStyleOptionTitleBar(int version);
+@@ -638,6 +658,7 @@ public:
+ 
+     QStyleOptionGroupBox();
+     QStyleOptionGroupBox(const QStyleOptionGroupBox &other) : QStyleOptionComplex(Version, Type) { *this = other; }
++    QStyleOptionGroupBox &operator=(const QStyleOptionGroupBox &other) = default;
+ protected:
+     QStyleOptionGroupBox(int version);
+ };
+@@ -652,6 +673,7 @@ public:
+ 
+     QStyleOptionSizeGrip();
+     QStyleOptionSizeGrip(const QStyleOptionSizeGrip &other) : QStyleOptionComplex(Version, Type) { *this = other; }
++    QStyleOptionSizeGrip &operator=(const QStyleOptionSizeGrip &other) = default;
+ protected:
+     QStyleOptionSizeGrip(int version);
+ };
+@@ -668,6 +690,7 @@ public:
+ 
+     QStyleOptionGraphicsItem();
+     QStyleOptionGraphicsItem(const QStyleOptionGraphicsItem &other) : QStyleOption(Version, Type) { *this = other; }
++    QStyleOptionGraphicsItem &operator=(const QStyleOptionGraphicsItem &other) = default;
+     static qreal levelOfDetailFromTransform(const QTransform &worldTransform);
+ protected:
+     QStyleOptionGraphicsItem(int version);
