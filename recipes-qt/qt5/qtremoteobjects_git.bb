@@ -15,6 +15,7 @@ DEPENDS += "qtbase qtdeclarative qtremoteobjects-native"
 # 5.12.meta-qt5.2
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
+    file://0001-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
 "
 
 PACKAGECONFIG ??= ""
