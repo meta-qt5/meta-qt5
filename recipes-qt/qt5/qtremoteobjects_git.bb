@@ -13,9 +13,10 @@ DEPENDS += "qtbase qtdeclarative qtremoteobjects-native"
 
 # Patches from https://github.com/meta-qt5/qtremoteobjects/commits/b5.12
 # 5.12.meta-qt5.2
-SRC_URI += " \
-    file://0001-Allow-a-tools-only-build.patch \
-"
+SRC_URI = "${QT_GIT}/${QT_MODULE}.git;name=${QT_MODULE};${QT_MODULE_BRANCH_PARAM};protocol=${QT_GIT_PROTOCOL} \
+           file://0001-Allow-a-tools-only-build.patch \
+           file://0001-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-allow-cmake-.patch \
+           "
 
 PACKAGECONFIG ??= ""
 PACKAGECONFIG_class-native ??= "tools-only"
