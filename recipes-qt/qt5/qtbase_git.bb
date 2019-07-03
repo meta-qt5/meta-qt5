@@ -32,7 +32,6 @@ SRC_URI += "\
     file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
-    file://0017-Fix-Wdeprecated-copy-warnings.patch \
 "
 
 # for syncqt
@@ -294,4 +293,4 @@ sed -i \
     $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
 }
 
-SRCREV = "b527725766df850fcad6b9078fea5e8da8085560"
+SRCREV = "fc9ae22c88dd085c7c31599037132fc756feeb04"

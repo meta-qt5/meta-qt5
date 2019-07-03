@@ -7,6 +7,6 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
 "
 
-DEPENDS += "qtbase"
+DEPENDS += "qtbase qtdeclarative"
 
-SRCREV = "4443f12461fc9cab42f4229454a390bd9e1ec4a4"
+SRCREV = "553ec1bc799f344a12e34c91720e13a469d85365"

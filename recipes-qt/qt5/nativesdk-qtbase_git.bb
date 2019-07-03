@@ -41,7 +41,6 @@ SRC_URI += "\
     file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
-    file://0017-Fix-Wdeprecated-copy-warnings.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
@@ -194,4 +193,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "b527725766df850fcad6b9078fea5e8da8085560"
+SRCREV = "fc9ae22c88dd085c7c31599037132fc756feeb04"

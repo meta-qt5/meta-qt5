@@ -132,7 +132,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "69-based"
+QT_MODULE_BRANCH_CHROMIUM = "73-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.12
 # 5.12.meta-qt5.4
@@ -148,12 +148,9 @@ SRC_URI_append_libc-musl = "\
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/69-based
 # 69-based.meta-qt5.4
 SRC_URI += " \
-    file://chromium/0001-chromium-Force-host-toolchain-configuration.patch;patchdir=src/3rdparty \
     file://chromium/0002-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
-    file://chromium/0003-chromium-Fix-build-with-gcc8.patch;patchdir=src/3rdparty \
     file://chromium/0004-chromium-stack-pointer-clobber.patch;patchdir=src/3rdparty \
     file://chromium/0019-chromium-fix-build-with-clang.patch;patchdir=src/3rdparty \
-    file://chromium/0020-chromium-Check-for-__ARM_FP-2-before-using-__fp16.patch;patchdir=src/3rdparty \
     file://chromium/0021-chromium-Exclude-CRC32-for-32bit-arm.patch;patchdir=src/3rdparty \
     file://chromium/0022-chromium-Do-not-try-to-set-the-guessed-values-for-ma.patch;patchdir=src/3rdparty \
 "
@@ -175,8 +172,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0018-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "c7b8d6d87809253241913c595902a11ea506b2b7"
-SRCREV_chromium = "4c7ecce30045daf172dceaeeb86351f60cc91990"
+SRCREV_qtwebengine = "5d4bac57a0191287a2fc345f6b398fb1f5d08517"
+SRCREV_chromium = "8a28c0bb19fc8627812cb7c3154408b71ff2bf5e"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
