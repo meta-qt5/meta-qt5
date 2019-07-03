@@ -8,4 +8,4 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative qtmultimedia qtxmlpatterns"
 
-SRCREV = "4672b6d2c725a74d482a76d6624671ae3a2ba2a1"
+SRCREV = "cc7f4769a02421575c9f5a61d9b3687af79201dd"
