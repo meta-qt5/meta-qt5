@@ -1,4 +1,4 @@
-From d32ababfc7cfe3783c7600474487fba1ba4b805e Mon Sep 17 00:00:00 2001
+From f446867c2a65d20a62caf69248b48465b58d4046 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 23 Dec 2018 16:58:04 -0800
 Subject: [PATCH] chromium: musl: pread pwrite
