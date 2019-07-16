@@ -1,4 +1,4 @@
-From f236c935f90cc338c8c8db68c08aa8fc2ca13406 Mon Sep 17 00:00:00 2001
+From 319b50c1cb9ab3beaf52d5119feb9ba2283aaa13 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:27:50 -0700
 Subject: [PATCH] chromium: musl: Define res_ninit and res_nclose for non-glibc
