@@ -18,15 +18,13 @@ DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qtto
 DEPENDS_append_toolchain-clang = " clang llvm-common"
 DEPENDS_append_libc-musl = " libexecinfo"
 
-SRCREV = "8768e39d3c8e74e583eca3897cc6de53a99c3dde"
-PV = "4.7.1+git${SRCPV}"
+SRCREV = "8181363fa90eb651591bf71e1a840e1c998429f4"
+PV = "4.9.2+git${SRCPV}"
 
 # Patches from https://github.com/meta-qt5/qtcreator/commits/b4.7.1
 # 4.7.1.meta-qt5.1
 SRC_URI = " \
-    git://code.qt.io/qt-creator/qt-creator.git;branch=4.7 \
-    file://0002-botan.pro-pass-QMAKE_AR.patch \
-    file://0001-botan-Always-define-BOTAN_ARCH_SWITCH-when-cross-bui.patch \
+    git://code.qt.io/qt-creator/qt-creator.git;branch=4.9 \
 "
 SRC_URI_append_libc-musl = " file://0003-Link-with-libexecinfo-on-musl.patch"
 
