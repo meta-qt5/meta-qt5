@@ -12,8 +12,8 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
-
+DEPENDS += "qtbase qtdeclarative qtxmlpatterns chrpath-replacement-native"
+EXTRANATIVEPATH += "chrpath-native"
 # Patches from https://github.com/meta-qt5/qttools/commits/b5.12
 # 5.12.meta-qt5.2
 SRC_URI += " \
@@ -25,11 +25,18 @@ FILES_${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
 FILES_${PN}-examples = "${datadir}${QT_DIR_NAME}/examples"
 
 PACKAGECONFIG ??= ""
+PACKAGECONFIG_append_toolchain-clang = " clang"
+
 PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
+PACKAGECONFIG[clang] = ",,clang"
 
 EXTRA_QMAKEVARS_PRE += " \
-    CONFIG-=config_clang \
     ${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)} \
+"
+EXTRA_QMAKEVARS_PRE_append_class-native = " CONFIG-=config_clang"
+EXTRA_QMAKEVARS_PRE_append_class-nativesdk = " CONFIG-=config_clang"
+EXTRA_QMAKEVARS_PRE_append_class-target = "\
+    ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=config_clang', 'CONFIG-=config_clang', d)} \
 "
 
 SRCREV = "cc9250477eaa71a3f3ffd050591d4a9d835288ca"
@@ -41,4 +48,7 @@ do_install_ptest() {
     t=${D}${PTEST_PATH}
     cp ${B}/tests/auto/qtdiag/tst_tdiag $t
     cp ${B}/tests/auto/qtattributionsscanner/tst_qtattributionsscanner $t
+}
+do_install_append_toolchain-clang() {
+    chrpath --delete ${D}${bindir}/qdoc
 }
