@@ -63,6 +63,7 @@ QT_CONFIG_FLAGS = " \
     -no-gcc-sysroot \
     -system-zlib \
     -qt-pcre \
+    -qt-doubleconversion \
     -no-libjpeg \
     -no-libpng \
     -no-gif \
