@@ -14,6 +14,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
+SRC_URI += "file://0001-Revert-Yield-error-if-qtquickcompiler-is-used-in-non.patch"
+
 PACKAGECONFIG ??= "qml-debug qml-network ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)}"
 PACKAGECONFIG[qml-debug] = "-qml-debug,-no-qml-debug"
 PACKAGECONFIG[qml-network] = "-qml-network, -no-qml-network"
@@ -24,6 +26,6 @@ do_install_append_class-nativesdk() {
     rm -rf ${D}${OE_QMAKE_PATH_QML}
 }
 
-SRCREV = "ecc092fa5519e77a47ef560f0137b4cd5f417c5e"
+SRCREV = "aeec2f94c376c9a0e84bbbb3be4652384c7da113"
 
 BBCLASSEXTEND =+ "native nativesdk"
