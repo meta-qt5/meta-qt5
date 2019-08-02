@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
 "
 
-DEPENDS += "qtbase qtdeclarative"
+DEPENDS += "qtbase qtdeclarative qtquickcontrols2"
 
 QT_MODULE_BRANCH = "2.4"
 QT_MODULE_BRANCH_EASTL = "master"
@@ -16,6 +16,7 @@ PV = "2.4+git${SRCPV}"
 
 SRC_URI += " \
     ${QT_GIT}/qt3dstudio-eastl.git;name=EASTL;branch=${QT_MODULE_BRANCH_EASTL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/EASTL \
+    file://0001-Fix-examples-build-error.patch \
 "
 
 SRCREV_ogl-runtime = "a41270dced230d90e0e07f2ebb880e4f97317a7f"
