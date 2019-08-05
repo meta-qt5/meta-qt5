@@ -17,6 +17,7 @@ PV = "2.4+git${SRCPV}"
 SRC_URI += " \
     ${QT_GIT}/qt3dstudio-eastl.git;name=EASTL;branch=${QT_MODULE_BRANCH_EASTL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/EASTL \
     file://0001-Fix-examples-build-error.patch \
+    file://0002-Fix-format-security-issues.patch \
 "
 
 SRCREV_ogl-runtime = "a41270dced230d90e0e07f2ebb880e4f97317a7f"
