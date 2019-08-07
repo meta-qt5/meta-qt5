@@ -14,6 +14,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
+SRC_URI += "file://0001-Revert-Yield-error-if-qtquickcompiler-is-used-in-non.patch"
+
 PACKAGECONFIG ??= "qml-debug qml-network ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)}"
 PACKAGECONFIG[qml-debug] = "-qml-debug,-no-qml-debug"
 PACKAGECONFIG[qml-network] = "-qml-network, -no-qml-network"

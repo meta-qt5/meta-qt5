@@ -23,7 +23,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-shared
-# 5.12.meta-qt5-shared.7
+# 5.12.meta-qt5-shared.8
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -45,10 +45,10 @@ SRC_URI += "\
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-native
-# 5.12.meta-qt5-native.7
+# 5.12.meta-qt5-native.8
 SRC_URI += " \
-    file://0017-Always-build-uic-and-qvkgen.patch \
-    file://0018-Avoid-renameeat2-for-native-sdk-builds.patch \
+    file://0018-Always-build-uic-and-qvkgen.patch \
+    file://0019-Avoid-renameeat2-for-native-sdk-builds.patch \
 "
 
 # CMake's toolchain configuration of nativesdk-qtbase
@@ -65,6 +65,7 @@ FILES_${PN}-dev += " \
 
 FILES_${PN} += " \
     ${SDKPATHNATIVE}/environment-setup.d \
+    ${OE_QMAKE_PATH_PLUGINS} \
 "
 
 # qttools binaries are placed in a subdir of bin in order to avoid
@@ -72,6 +73,10 @@ FILES_${PN} += " \
 # package, since it doesn't detect binaries in subdirs. Explicitly
 # disable package auto-renaming for the tools-package.
 DEBIAN_NOAUTONAME_${PN} = "1"
+
+PACKAGECONFIG ?= ""
+PACKAGECONFIG[gui] = "-gui -qpa minimal,-no-gui,"
+PACKAGECONFIG[imageformats] = "-qt-libpng -qt-libjpeg -gif -ico, -no-libpng -no-libjpeg -no-ico -no-gif,"
 
 QT_CONFIG_FLAGS += " \
     -shared \
@@ -101,12 +106,8 @@ do_configure() {
         -no-gcc-sysroot \
         -system-zlib \
         -dbus-runtime \
-        -no-libjpeg \
-        -no-libpng \
-        -no-gif \
         -no-accessibility \
         -no-cups \
-        -no-gui \
         -no-sql-mysql \
         -no-sql-sqlite \
         -no-opengl \
@@ -148,7 +149,6 @@ do_install() {
 
     # remove things unused in nativesdk, we need the headers and libs
     rm -rf ${D}${datadir} \
-           ${D}/${OE_QMAKE_PATH_PLUGINS} \
            ${D}${libdir}/cmake \
            ${D}${libdir}/pkgconfig
 

@@ -6,6 +6,9 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
 "
 
+PACKAGECONFIG ?= "qtdeclarative"
+PACKAGECONFIG[qtdeclarative] = ",,qtdeclarative"
+
 DEPENDS += "qtbase"
 
 SRCREV = "838cfa5aec4c02f5e865fc470c10cc50eb42f2c8"
