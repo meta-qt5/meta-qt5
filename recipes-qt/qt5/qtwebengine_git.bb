@@ -132,15 +132,13 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "73-based"
+QT_MODULE_BRANCH_CHROMIUM = "75-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.12
 # 5.12.meta-qt5.4
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
-    file://0004-Fix-linker-too-long-argument-list.patch \
-    file://0005-Make-linker-call-look-great-again.patch \
 "
 SRC_URI_append_libc-musl = "\
     file://0002-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
@@ -174,8 +172,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0018-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "a69029cf9fcfd0c1fcdaafe5cbcbff2d5dd6b5c5"
-SRCREV_chromium = "82d848eb4fe3aae8c72a91b2d30c91b407ac5593"
+SRCREV_qtwebengine = "33a2c9aed3ee621c91853570087b500c830792e0"
+SRCREV_chromium = "f5613a4bc321972b8f72654d4c4bc9ba0c36ffbe"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

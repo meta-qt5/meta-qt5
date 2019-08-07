@@ -31,4 +31,4 @@ do_install_append() {
 
 QT_MODULE_BRANCH = "dev"
 
-SRCREV = "e3332ee38d27a134cef6621fdaf36687af1b6f4a"
+SRCREV = "434af789f0d56ca7a521ca2d9ec8cf3b1057fd37"

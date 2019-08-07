@@ -134,11 +134,9 @@ do_install() {
         done
     fi
 
-    install -m 755 ${B}/bin/qfloat16-tables ${D}${OE_QMAKE_PATH_BINS}
-
     # since 5.9.2 something sets a very strange path to mkspec ("${_qt5Core_install_prefix}/../../../../../../../../../../usr/lib/qt5//mkspecs/linux-oe-g++")
     # override this until somebody finds a better way
     echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
-SRCREV = "a0c4b6f34546bdd22167a76a0540d37e9a37c0cf"
+SRCREV = "76be819345228d589cbc4f5129617151ea604750"

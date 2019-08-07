@@ -14,7 +14,10 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-SRC_URI += "file://0001-Revert-Yield-error-if-qtquickcompiler-is-used-in-non.patch"
+SRC_URI += "\
+    file://0001-Revert-Yield-error-if-qtquickcompiler-is-used-in-non.patch \
+    file://0002-scenegraph-fix-error-QOffscreenSurface-does-not-name.patch \
+"
 
 PACKAGECONFIG ??= "qml-debug qml-network ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)}"
 PACKAGECONFIG[qml-debug] = "-qml-debug,-no-qml-debug"
@@ -26,6 +29,6 @@ do_install_append_class-nativesdk() {
     rm -rf ${D}${OE_QMAKE_PATH_QML}
 }
 
-SRCREV = "9d61684d70c8691d81536b7b519388586e2cbbb8"
+SRCREV = "d1b72c98b4e617530bfb23c3a5b7ebc68c15c089"
 
 BBCLASSEXTEND =+ "native nativesdk"
