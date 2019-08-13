@@ -17,10 +17,10 @@ environment: &environment
   instructions:
     - type: EnvironmentVariable
       variableName: POKY_SHA1
-      variableValue: 38d5c8ea98cfa49825c473eba8984c12edf062be
+      variableValue: 835f7eac0610325e906591cd81890bebe8627580
     - type: EnvironmentVariable
       variableName: OE_SHA1
-      variableValue: 8d5dcd6522e9d15e68637b6d7dda0401f9bb91d0
+      variableValue: 4e0538516b1e0ef42dc79bd08f7895f0052063ac
     - type: EnvironmentVariable
       variableName: MACHINE
       variableValue: qemuarm64
