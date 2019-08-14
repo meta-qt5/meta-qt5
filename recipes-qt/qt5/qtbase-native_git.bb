@@ -57,7 +57,7 @@ XPLATFORM_toolchain-clang = "linux-oe-clang"
 XPLATFORM ?= "linux-oe-g++"
 
 PACKAGECONFIG ?= ""
-PACKAGECONFIG[gui] = "-gui -qpa minimal,-no-gui,"
+PACKAGECONFIG[gui] = "-gui -qpa offscreen,-no-gui,"
 PACKAGECONFIG[imageformats] = "-qt-libpng -qt-libjpeg -gif -ico, -no-libpng -no-libjpeg -no-ico -no-gif,"
 
 QT_CONFIG_FLAGS = " \
