@@ -1,4 +1,4 @@
-From 80cf8eb756140011f358522378d640587600976a Mon Sep 17 00:00:00 2001
+From 6eec3f3105b0f6b37fdb52efbb4b3820e1d25846 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:09:06 -0700
 Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
@@ -31,7 +31,7 @@ index a09bbf2c56e..b309f6b694e 100644
    return 0;
  #endif
 diff --git a/chromium/base/trace_event/malloc_dump_provider.cc b/chromium/base/trace_event/malloc_dump_provider.cc
-index 46fdb3e2146..27936e6b200 100644
+index 0077d8b0aec..c69f893f4e9 100644
 --- a/chromium/base/trace_event/malloc_dump_provider.cc
 +++ b/chromium/base/trace_event/malloc_dump_provider.cc
 @@ -77,6 +77,7 @@ MallocDumpProvider::~MallocDumpProvider() = default;

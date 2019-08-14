@@ -66,6 +66,7 @@ QT_CONFIG_FLAGS = " \
     -no-gcc-sysroot \
     -system-zlib \
     -qt-pcre \
+    -qt-doubleconversion \
     -no-accessibility \
     -no-cups \
     -no-sql-mysql \
