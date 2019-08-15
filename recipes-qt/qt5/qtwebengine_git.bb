@@ -143,6 +143,7 @@ SRC_URI += " \
 SRC_URI_append_libc-musl = "\
     file://0002-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
     file://0003-musl-link-against-libexecinfo.patch \
+    file://0004-musl-allow-build-without-glibc.patch \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/73-based
