@@ -15,6 +15,7 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase"
 
 SRC_URI += "\
+    file://0001-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-locate-qmlca.patch \
     file://0001-Revert-Yield-error-if-qtquickcompiler-is-used-in-non.patch \
     file://0002-scenegraph-fix-error-QOffscreenSurface-does-not-name.patch \
 "

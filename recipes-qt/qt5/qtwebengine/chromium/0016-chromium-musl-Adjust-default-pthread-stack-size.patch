@@ -1,4 +1,4 @@
-From 51a9cff6d78c2a744b6cbf77678aebb8dde7540c Mon Sep 17 00:00:00 2001
+From 22793b4cab2ceaf7301136fa2df06947c9cb424c Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 16:41:23 -0700
 Subject: [PATCH] chromium: musl: Adjust default pthread stack size
@@ -10,10 +10,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/base/threading/platform_thread_linux.cc b/chromium/base/threading/platform_thread_linux.cc
-index 190acedf7c5..343e1a8c61d 100644
+index 095c49b8dc0..d1479b54d48 100644
 --- a/chromium/base/threading/platform_thread_linux.cc
 +++ b/chromium/base/threading/platform_thread_linux.cc
-@@ -173,7 +173,8 @@ void TerminateOnThread() {}
+@@ -186,7 +186,8 @@ void TerminateOnThread() {}
  
  size_t GetDefaultThreadStackSize(const pthread_attr_t& attributes) {
  #if !defined(THREAD_SANITIZER)
@@ -24,10 +24,10 @@ index 190acedf7c5..343e1a8c61d 100644
    // ThreadSanitizer bloats the stack heavily. Evidence has been that the
    // default stack size isn't enough for some browser tests.
 diff --git a/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc b/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
-index 10f1c0df11f..8e86a2eb1e9 100644
+index b2421649ff3..a31b96e90e6 100644
 --- a/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
 +++ b/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
-@@ -28,7 +28,7 @@ size_t GetUnderestimatedStackSize() {
+@@ -29,7 +29,7 @@ size_t GetUnderestimatedStackSize() {
  // FIXME: On Mac OSX and Linux, this method cannot estimate stack size
  // correctly for the main thread.
  
@@ -35,8 +35,8 @@ index 10f1c0df11f..8e86a2eb1e9 100644
 +#if defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_FREEBSD) || \
      defined(OS_FUCHSIA)
    // pthread_getattr_np() can fail if the thread is not invoked by
-   // pthread_create() (e.g., the main thread of webkit_unit_tests).
-@@ -96,7 +96,7 @@ size_t GetUnderestimatedStackSize() {
+   // pthread_create() (e.g., the main thread of blink_unittests).
+@@ -97,7 +97,7 @@ return Threading::ThreadStackSize();
  }
  
  void* GetStackStart() {

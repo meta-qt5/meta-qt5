@@ -1,2 +1,3 @@
+/coin export-ignore
 # linguist overrides
 recipes-*/**/*.inc linguist-language=BitBake
