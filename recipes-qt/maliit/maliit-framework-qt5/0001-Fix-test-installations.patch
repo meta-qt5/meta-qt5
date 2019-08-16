@@ -1,0 +1,62 @@
+From 78a4b12b64c26f29e64fe56801e92d1e76f362b0 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Fri, 16 Aug 2019 15:08:41 +0300
+Subject: [PATCH] Fix test installations
+
+Qmake won't ignore install errors anymore.
+
+Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+---
+ .../ut_mattributeextensionmanager.pro                      | 7 ++++---
+ tests/ut_mimpluginmanager/ut_mimpluginmanager.pro          | 7 ++++---
+ .../ut_mimpluginmanagerconfig.pro                          | 3 ---
+ 3 files changed, 8 insertions(+), 9 deletions(-)
+
+diff --git a/tests/ut_mattributeextensionmanager/ut_mattributeextensionmanager.pro b/tests/ut_mattributeextensionmanager/ut_mattributeextensionmanager.pro
+index 22280882..d0c390ef 100644
+--- a/tests/ut_mattributeextensionmanager/ut_mattributeextensionmanager.pro
++++ b/tests/ut_mattributeextensionmanager/ut_mattributeextensionmanager.pro
+@@ -13,9 +13,10 @@ CONFIG += plugin
+ include($$TOP_DIR/src/libmaliit-plugins.pri)
+ include($$TOP_DIR/connection/libmaliit-connection.pri)
+ 
+-target.files += \
+-    $$TARGET \
++extra.files += \
+     toolbar1.xml \
+-    toolbar2.xml \
++    toolbar2.xml
++extra.path = $$target.path
++INSTALLS += extra
+ 
+ include(../common_check.pri)
+diff --git a/tests/ut_mimpluginmanager/ut_mimpluginmanager.pro b/tests/ut_mimpluginmanager/ut_mimpluginmanager.pro
+index 19e68e6a..44e0fa0f 100644
+--- a/tests/ut_mimpluginmanager/ut_mimpluginmanager.pro
++++ b/tests/ut_mimpluginmanager/ut_mimpluginmanager.pro
+@@ -17,9 +17,10 @@ include($$TOP_DIR/src/libmaliit-plugins.pri)
+ # For MImInputContextConnection pulled in by TestInputMethodHost
+ include($$TOP_DIR/connection/libmaliit-connection.pri)
+ 
+-target.files += \
+-    $$TARGET \
++extra.files += \
+     toolbar1.xml \
+-    toolbar2.xml \
++    toolbar2.xml
++extra.path = $$target.path
++INSTALLS += extra
+ 
+ include(../common_check.pri)
+diff --git a/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.pro b/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.pro
+index 739ceef6..e0b363c8 100644
+--- a/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.pro
++++ b/tests/ut_mimpluginmanagerconfig/ut_mimpluginmanagerconfig.pro
+@@ -17,7 +17,4 @@ include($$TOP_DIR/src/libmaliit-plugins.pri)
+ # For MImInputContextConnection pulled in by TestInputMethodHost
+ include($$TOP_DIR/connection/libmaliit-connection.pri)
+ 
+-target.files += \
+-    $$TARGET \
+-
+ include(../common_check.pri)
