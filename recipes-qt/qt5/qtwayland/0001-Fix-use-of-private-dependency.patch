@@ -1,0 +1,36 @@
+From f4636b934f90b2a07b09f1925a86440cf1944d08 Mon Sep 17 00:00:00 2001
+From: Pier Luigi Fiorini <pierluigi.fiorini@liri.io>
+Date: Wed, 24 Jul 2019 23:40:55 +0200
+Subject: [PATCH] Fix use of private dependency
+
+With 0761173a, Linux SPI Accessibility bridge was added to
+the Wayland QPA plugin, but this had a bad side-effect to
+QtWaylandClient.
+
+Linux Accessibility support is a private module, this means we have
+to link to it with QT_PRIVATE not QT, otherwise CMake and pkg-config
+files for Qt5WaylandClient will depend on it.
+
+Change-Id: I6182267f97adc2cd5bd66895df148a6a45614f45
+Fixes: QTBUG-76042
+Reviewed-by: Frederik Gladhorn <frederik.gladhorn@qt.io>
+---
+ src/client/client.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/client/client.pro b/src/client/client.pro
+index db91bd69..4233ac95 100644
+--- a/src/client/client.pro
++++ b/src/client/client.pro
+@@ -20,7 +20,7 @@ qtConfig(xkbcommon) {
+ }
+ 
+ qtHaveModule(linuxaccessibility_support_private): \
+-    QT += linuxaccessibility_support_private
++    QT_PRIVATE += linuxaccessibility_support_private
+ 
+ QMAKE_USE += wayland-client
+ 
+-- 
+2.21.0
+
