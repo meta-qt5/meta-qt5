@@ -14,7 +14,10 @@ SRCREV = "279d63c4f6632237e6a0d9c4be91b466876c260a"
 
 # Patches from https://github.com/meta-qt5/qtscxml/commits/b5.12
 # 5.12.meta-qt5.2
-SRC_URI += "file://0001-Use-external-host-bin-path-for-cmake-file.patch"
+SRC_URI += "\
+    file://0001-Use-external-host-bin-path-for-cmake-file.patch \
+    file://0001-Fix-shadow-build.patch \
+"
 
 do_install_append_class-nativesdk() {
     # qml files not needed in nativesdk
