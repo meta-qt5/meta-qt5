@@ -37,7 +37,7 @@ PACKAGECONFIG[wayland-libhybris-egl-server-buffer] = "-feature-wayland-libhybris
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "ae43ed466e62cc198b7ab85c7f40faaada39c968"
+SRCREV = "52b6560708ebcfeeaebdf2b43f368c610aa905a4"
 
 BBCLASSEXTEND =+ "native nativesdk"
 
