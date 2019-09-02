@@ -16,8 +16,6 @@ DEPENDS += "qtbase"
 
 SRC_URI += "\
     file://0001-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-locate-qmlca.patch \
-    file://0001-Revert-Yield-error-if-qtquickcompiler-is-used-in-non.patch \
-    file://0002-scenegraph-fix-error-QOffscreenSurface-does-not-name.patch \
 "
 
 PACKAGECONFIG ??= "qml-debug qml-network ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)}"
@@ -30,6 +28,6 @@ do_install_append_class-nativesdk() {
     rm -rf ${D}${OE_QMAKE_PATH_QML}
 }
 
-SRCREV = "d4e1f5395c896dc5bda9a2e122e2ed0f45be6c18"
+SRCREV = "90a706dffb944e7d18b8b199b1cea68633e2b172"
 
 BBCLASSEXTEND =+ "native nativesdk"
