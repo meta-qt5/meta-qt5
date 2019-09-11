@@ -12,6 +12,8 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
+SRC_URI += "file://0001-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-locate-qmlca.patch"
+
 DEPENDS += "qtbase"
 
 PACKAGECONFIG ??= "qml-debug qml-network ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)}"
@@ -24,6 +26,6 @@ do_install_append_class-nativesdk() {
     rm -rf ${D}${OE_QMAKE_PATH_QML}
 }
 
-SRCREV = "cd7ce85ff0b8f9a5163c7dc276dc7751c3f51f0f"
+SRCREV = "ecc092fa5519e77a47ef560f0137b4cd5f417c5e"
 
 BBCLASSEXTEND =+ "native nativesdk"

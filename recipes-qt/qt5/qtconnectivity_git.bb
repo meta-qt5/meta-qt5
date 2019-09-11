@@ -14,11 +14,9 @@ SRC_URI += "file://0001-Add-missing-header-for-errno.patch"
 
 DEPENDS += "qtbase qtdeclarative"
 
-inherit bluetooth
-
 PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez', '', d)}"
-PACKAGECONFIG[bluez] = "-feature-bluez,-no-feature-bluez,${BLUEZ}"
+PACKAGECONFIG[bluez] = "-feature-bluez,-no-feature-bluez,bluez5"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "eec8fed760a572eb9187f79b43d87986f2b4f404"
+SRCREV = "8f2d6640f959e35a8fd033a50aa57cb13b673cbb"

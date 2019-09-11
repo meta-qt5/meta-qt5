@@ -17,6 +17,11 @@ PACKAGECONFIG ??= ""
 # older geoclue 0.12.99 is needed
 PACKAGECONFIG[geoclue] = ",,geoclue"
 PACKAGECONFIG[gypsy] = "-feature-gypsy,-no-feature-gypsy,gconf gypsy"
+PACKAGECONFIG[geoservices_here] = "-feature-geoservices_here,-no-feature-geoservices_here"
+PACKAGECONFIG[geoservices_mapbox] = "-feature-geoservices_mapbox,-no-feature-geoservices_mapbox"
+PACKAGECONFIG[geoservices_esri] = "-feature-geoservices_esri,-no-feature-geoservices_esri"
+PACKAGECONFIG[geoservices_itemsoverlay] = "-feature-geoservices_itemsoverlay,-no-feature-geoservices_itemsoverlay"
+PACKAGECONFIG[geoservices_osm] = "-feature-geoservices_osm,-no-feature-geoservices_osm"
 PACKAGECONFIG[geoservices_mapboxgl] = "-feature-geoservices_mapboxgl,-no-feature-geoservices_mapboxgl"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
@@ -31,7 +36,7 @@ SRC_URI += " \
     ${QT_GIT}/qtlocation-mapboxgl.git;name=qtlocation-mapboxgl;branch=${QT_MODULE_BRANCH_MAPBOXGL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/mapbox-gl-native \
 "
 
-SRCREV_qtlocation = "a00c5e40a2df03713d29da83a5692f2d7c15326d"
+SRCREV_qtlocation = "667af08a388ffc3441adc5b8e73f2f8797b274c5"
 SRCREV_qtlocation-mapboxgl = "4b85252fbe811a786c6ee9eabedb7639b031dc53"
 
 SRCREV_FORMAT = "qtlocation_qtlocation-mapboxgl"

@@ -13,6 +13,8 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
+SRC_URI += "file://0001-Fix-use-of-private-dependency.patch"
+
 PACKAGECONFIG ?= " \
     wayland-client \
     wayland-server \
@@ -37,11 +39,10 @@ PACKAGECONFIG[wayland-libhybris-egl-server-buffer] = "-feature-wayland-libhybris
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "0d717b0cc9aa3b87821450a2bce0d0bf0f1a6bfb"
+SRCREV = "79037e46eeb00e20c5f3bbe7d0de4b702af86884"
 
 BBCLASSEXTEND =+ "native nativesdk"
 
 # The same issue as in qtbase:
 # http://errors.yoctoproject.org/Errors/Details/152641/
-LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
-
+LDFLAGS_append = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"

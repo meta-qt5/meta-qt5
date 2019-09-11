@@ -1,4 +1,4 @@
-From e60c7bff6556d9c36952de525a85c479a30f0030 Mon Sep 17 00:00:00 2001
+From 9f06841c9ff8e50c604fbd0f100e2e3ea4242309 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 23 Aug 2018 02:58:14 +0000
 Subject: [PATCH] Include asm/sgidefs.h on non-glibc systems
@@ -19,7 +19,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h b/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h
-index 96942c7..f828f04 100644
+index a4695a2..4b7a45b 100644
 --- a/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h
 +++ b/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h
 @@ -377,7 +377,11 @@

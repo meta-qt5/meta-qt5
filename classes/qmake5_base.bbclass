@@ -110,6 +110,7 @@ generate_qt_config_file_effective_paths() {
     cat >> ${OE_QMAKE_QTCONF_PATH} <<EOF
 [EffectivePaths]
 HostBinaries = ${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}
+HostLibraries = ${STAGING_LIBDIR_NATIVE}
 HostData = ${OE_QMAKE_PATH_HOST_DATA}
 HostPrefix = ${STAGING_DIR_NATIVE}
 EOF
@@ -241,17 +242,17 @@ qmake5_base_do_install() {
     qmake5_base_fix_install ${STAGING_DIR_NATIVE}
 
     # Replace host paths with qmake built-in properties
-    find ${D} \( -name *.pri -or -name *.prl \) -exec \
+    find ${D} \( -name "*.pri" -or -name "*.prl" \) -exec \
         sed -i -e 's|${STAGING_DIR_NATIVE}|$$[QT_HOST_PREFIX/get]|g' \
             -e 's|${STAGING_DIR_HOST}|$$[QT_SYSROOT]|g' {} \;
 
     # Replace host paths with pkg-config built-in variable
-    find ${D} -name *.pc -exec \
+    find ${D} -name "*.pc" -exec \
         sed -i -e 's|prefix=${STAGING_DIR_HOST}|prefix=|g' \
             -e 's|${STAGING_DIR_HOST}|${pc_sysrootdir}|g' {} \;
 
     # Replace resolved lib path with the lib name
-    find ${D} -name *.cmake -exec \
+    find ${D} -name "*.cmake" -exec \
         sed -i -e 's@/[^;]*/lib\([^;]*\)\.\(so\|a\)@\1@g' {} \;
 
 }

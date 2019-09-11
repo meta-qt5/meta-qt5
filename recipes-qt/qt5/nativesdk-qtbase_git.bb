@@ -23,7 +23,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-shared
-# 5.12.meta-qt5-shared.5
+# 5.12.meta-qt5-shared.8
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -37,18 +37,18 @@ SRC_URI += "\
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
     file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
-    file://0013-Check-glibc-version-for-renameat2-statx-on-non-boots.patch \
-    file://0014-Disable-ltcg-for-host_build.patch \
-    file://0015-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
-    file://0016-corelib-Include-sys-types.h-for-uint32_t.patch \
-    file://0017-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
+    file://0013-Disable-ltcg-for-host_build.patch \
+    file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
+    file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
+    file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-native
-# 5.12.meta-qt5-native.5
+# 5.12.meta-qt5-native.8
 SRC_URI += " \
-    file://0021-Always-build-uic-and-qvkgen.patch \
+    file://0018-Always-build-uic-and-qvkgen.patch \
+    file://0019-Avoid-renameeat2-for-native-sdk-builds.patch \
 "
 
 # CMake's toolchain configuration of nativesdk-qtbase
@@ -65,6 +65,7 @@ FILES_${PN}-dev += " \
 
 FILES_${PN} += " \
     ${SDKPATHNATIVE}/environment-setup.d \
+    ${OE_QMAKE_PATH_PLUGINS} \
 "
 
 # qttools binaries are placed in a subdir of bin in order to avoid
@@ -72,6 +73,10 @@ FILES_${PN} += " \
 # package, since it doesn't detect binaries in subdirs. Explicitly
 # disable package auto-renaming for the tools-package.
 DEBIAN_NOAUTONAME_${PN} = "1"
+
+PACKAGECONFIG ?= ""
+PACKAGECONFIG[gui] = "-gui -qpa minimal,-no-gui,"
+PACKAGECONFIG[imageformats] = "-qt-libpng -qt-libjpeg -gif -ico, -no-libpng -no-libjpeg -no-ico -no-gif,"
 
 QT_CONFIG_FLAGS += " \
     -shared \
@@ -101,12 +106,8 @@ do_configure() {
         -no-gcc-sysroot \
         -system-zlib \
         -dbus-runtime \
-        -no-libjpeg \
-        -no-libpng \
-        -no-gif \
         -no-accessibility \
         -no-cups \
-        -no-gui \
         -no-sql-mysql \
         -no-sql-sqlite \
         -no-opengl \
@@ -148,7 +149,6 @@ do_install() {
 
     # remove things unused in nativesdk, we need the headers and libs
     rm -rf ${D}${datadir} \
-           ${D}/${OE_QMAKE_PATH_PLUGINS} \
            ${D}${libdir}/cmake \
            ${D}${libdir}/pkgconfig
 
@@ -193,4 +193,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "856fb1ab44722f5165fb6b5dec0bd748006acd10"
+SRCREV = "fc9ae22c88dd085c7c31599037132fc756feeb04"

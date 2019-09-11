@@ -1,0 +1,66 @@
+From f5c88622ac10601e48a14f31d9299692a9ac62e2 Mon Sep 17 00:00:00 2001
+From: Max Krummenacher <max.krummenacher@toradex.com>
+Date: Sat, 27 Oct 2018 12:29:31 +0000
+Subject: [PATCH] Qt5GuiConfigExtras.cmake.in: cope with variable path to
+ sysroot
+
+EGL is configured to need an include path into the recipe-specific sysroot.
+However users of the cmake file will have a different absolute path than that
+used when creating the cmake file from cmake.in in qtbase.
+
+Change to store the relative path within the sysroot and then prepend the
+currently used sysroot in the _qt5gui_find_extra_libs macro.
+
+Upstream-Status: Inappropriate [OE specific]
+
+Signed-off-by: Max Krummenacher <max.krummenacher@toradex.com>
+---
+ src/gui/Qt5GuiConfigExtras.cmake.in | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
+
+diff --git a/src/gui/Qt5GuiConfigExtras.cmake.in b/src/gui/Qt5GuiConfigExtras.cmake.in
+index 84dbbfebd4..ad6956d814 100644
+--- a/src/gui/Qt5GuiConfigExtras.cmake.in
++++ b/src/gui/Qt5GuiConfigExtras.cmake.in
+@@ -75,21 +75,15 @@ unset(_qt5gui_OPENGL_INCLUDE_DIR CACHE)
+ 
+ macro(_qt5gui_find_extra_libs Name Libs LibDir IncDirs)
+     set(Qt5Gui_${Name}_LIBRARIES)
+-!!IF !mac
+-    set(Qt5Gui_${Name}_INCLUDE_DIRS ${IncDirs})
+-!!ELSE
++
+     foreach(_dir ${IncDirs})
+-      if (EXISTS ${_dir})
+-        list(APPEND Qt5Gui_${Name}_INCLUDE_DIRS ${_dir})
+-      else()
+-        find_path(_actual_dir ${_dir}) # Look in sdk directories
+-        if (_actual_dir)
+-          list(APPEND Qt5Gui_${Name}_INCLUDE_DIRS ${_actual_dir})
+-        endif()
+-        unset(_actual_dir CACHE)
++      find_path(_actual_dir ${_dir})
++      if (_actual_dir)
++        list(APPEND Qt5Gui_${Name}_INCLUDE_DIRS ${_actual_dir})
+       endif()
++      unset(_actual_dir CACHE)
+     endforeach()
+-!!ENDIF
++
+     foreach(_lib ${Libs})
+         if (IS_ABSOLUTE ${_lib})
+             get_filename_component(_libFile ${_lib} NAME_WE)
+@@ -171,11 +165,11 @@ endmacro()
+ 
+ 
+ !!IF !isEmpty(CMAKE_EGL_LIBS)
+-_qt5gui_find_extra_libs(EGL \"$$CMAKE_EGL_LIBS\" \"$$CMAKE_EGL_LIBDIR\" \"$$CMAKE_EGL_INCDIRS\")
++_qt5gui_find_extra_libs(EGL \"$$CMAKE_EGL_LIBS\" \"$$CMAKE_EGL_LIBDIR\" \"$$replace(CMAKE_EGL_INCDIRS,$$re_escape($$PKG_CONFIG_SYSROOT_DIR),)\")
+ !!ENDIF
+ 
+ !!IF !isEmpty(CMAKE_OPENGL_LIBS)
+-_qt5gui_find_extra_libs(OPENGL \"$$CMAKE_OPENGL_LIBS\" \"$$CMAKE_OPENGL_LIBDIR\" \"$$CMAKE_OPENGL_INCDIRS\")
++_qt5gui_find_extra_libs(OPENGL \"$$CMAKE_OPENGL_LIBS\" \"$$CMAKE_OPENGL_LIBDIR\" \"$$replace(CMAKE_OPENGL_INCDIRS,$$re_escape($$PKG_CONFIG_SYSROOT_DIR),)\")
+ 
+ !!ENDIF
+ 

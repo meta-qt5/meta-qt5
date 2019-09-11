@@ -1,0 +1,41 @@
+From 59c5c149ad1fa3015f1fee34e87e9f8ab89f5de1 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 6 Dec 2018 15:06:20 -0800
+Subject: [PATCH] Define QMAKE_CXX.COMPILER_MACROS for clang on linux
+
+This is required when using clang for compiler, fixes
+mkspecs/features/toolchain.prf:215: Variable QMAKE_CXX.COMPILER_MACROS is not defined.
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ mkspecs/features/toolchain.prf | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/mkspecs/features/toolchain.prf b/mkspecs/features/toolchain.prf
+index 9c3a64aa8b..d0758ab778 100644
+--- a/mkspecs/features/toolchain.prf
++++ b/mkspecs/features/toolchain.prf
+@@ -41,6 +41,13 @@ defineReplace(qtVariablesFromGCC) {
+     return($$ret)
+ }
+ 
++defineReplace(qtVariablesFromCLANG) {
++    ret = $$system("$$1 $$2 -E $$system_quote($$PWD/data/macros.cpp) \
++        <$$QMAKE_SYSTEM_NULL_DEVICE 2>$$QMAKE_SYSTEM_NULL_DEVICE", lines, ec)
++    !equals(ec, 0): qtCompilerErrror($$1, $$ret)
++    return($$ret)
++}
++
+ isEmpty($${target_prefix}.COMPILER_MACROS) {
+     msvc {
+         clang_cl {
+@@ -60,6 +67,8 @@ isEmpty($${target_prefix}.COMPILER_MACROS) {
+         } else {
+             vars = $$qtVariablesFromMSVC($$QMAKE_CXX)
+         }
++    } else: clang {
++        vars = $$qtVariablesFromCLANG($$QMAKE_CXX, $$QMAKE_CXXFLAGS)
+     } else: gcc|ghs {
+         vars = $$qtVariablesFromGCC($$QMAKE_CXX)
+     }
