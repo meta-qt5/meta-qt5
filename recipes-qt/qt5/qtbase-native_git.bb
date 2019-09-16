@@ -75,6 +75,7 @@ QT_CONFIG_FLAGS = " \
     -no-sql-sqlite \
     -no-sql-psql \
     -no-opengl \
+    -no-vulkan \
     -no-openssl \
     -no-xcb \
     -no-icu \
