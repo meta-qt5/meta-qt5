@@ -17,10 +17,9 @@ PV = "2.5+git${SRCPV}"
 SRC_URI += " \
     ${QT_GIT}/qt3dstudio-eastl.git;name=EASTL;branch=${QT_MODULE_BRANCH_EASTL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/EASTL \
     file://0001-Fix-examples-build-error.patch \
-    file://0002-Adapt-distance-field-cache-to-5.14.patch \
 "
 
-SRCREV_ogl-runtime = "bd488ea03ec4a969e86c55909c60deecdc9f9af2"
+SRCREV_ogl-runtime = "0ab6e1fb491cbc9aa821e11a1ee78915f61ee499"
 SRCREV_EASTL = "31697c758f2ed19bd7c6bbe61f1b91f9e12035b5"
 SRCREV = "${SRCREV_ogl-runtime}"
 
