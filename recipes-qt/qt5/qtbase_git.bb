@@ -275,4 +275,4 @@ INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "bc35941dbbf6cbd09805a2217ecb062c565855ad"
+SRCREV = "dc042c6deea7e90b4a9dfcffdc33cbe61df421bd"
