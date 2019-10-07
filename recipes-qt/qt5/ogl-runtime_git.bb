@@ -19,6 +19,7 @@ SRC_URI += " \
     file://0001-Fix-examples-build-error.patch \
     file://0002-Fix-format-security-issues.patch \
     file://0003-Fix-build-on-musl-libc.patch \
+    file://0001-Qt3DSSimpleTypes-make-QT3DSU64-as-unsigned-long-on-l.patch \
 "
 
 SRCREV_ogl-runtime = "a41270dced230d90e0e07f2ebb880e4f97317a7f"
