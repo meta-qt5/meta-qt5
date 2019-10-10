@@ -23,7 +23,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-shared
-# 5.12.meta-qt5-shared.8
+# 5.12.meta-qt5-shared.9
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -46,7 +46,7 @@ SRC_URI += "\
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-native
-# 5.12.meta-qt5-native.8
+# 5.12.meta-qt5-native.9
 SRC_URI += " \
     file://0018-Always-build-uic-and-qvkgen.patch \
     file://0019-Avoid-renameeat2-for-native-sdk-builds.patch \
