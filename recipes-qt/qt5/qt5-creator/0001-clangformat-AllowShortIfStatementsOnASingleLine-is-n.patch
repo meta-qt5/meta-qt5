@@ -1,0 +1,36 @@
+From 453c075b67b9d9254bf7331e1e3be287f240a9e0 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 3 Sep 2019 13:31:12 -0700
+Subject: [PATCH] clangformat: AllowShortIfStatementsOnASingleLine is not
+ boolean anymore
+
+https://reviews.llvm.org/D59087 has implemented multiple states for AllowShortIfStatementsOnASingleLine
+
+Fixes
+../../../../git/src/plugins/clangformat/clangformatutils.cpp:63:49: error: assigning to 'clang::format::FormatStyle::ShortIfStyle' from incompatible type 'bool'
+    style.AllowShortIfStatementsOnASingleLine = false;
+                                                ^~~~~
+
+Upstream-Status: Pending
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/plugins/clangformat/clangformatutils.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/plugins/clangformat/clangformatutils.cpp b/src/plugins/clangformat/clangformatutils.cpp
+index 09a3150c89..7d8a95ae18 100644
+--- a/src/plugins/clangformat/clangformatutils.cpp
++++ b/src/plugins/clangformat/clangformatutils.cpp
+@@ -60,7 +60,7 @@ static clang::format::FormatStyle qtcStyle()
+     style.AllowShortBlocksOnASingleLine = false;
+     style.AllowShortCaseLabelsOnASingleLine = false;
+     style.AllowShortFunctionsOnASingleLine = FormatStyle::SFS_Inline;
+-    style.AllowShortIfStatementsOnASingleLine = false;
++    style.AllowShortIfStatementsOnASingleLine = FormatStyle::SIS_Never;
+     style.AllowShortLoopsOnASingleLine = false;
+     style.AlwaysBreakAfterReturnType = FormatStyle::RTBS_None;
+     style.AlwaysBreakBeforeMultilineStrings = false;
+-- 
+2.23.0
+
