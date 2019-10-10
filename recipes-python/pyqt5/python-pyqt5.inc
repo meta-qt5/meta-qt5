@@ -27,8 +27,8 @@ DISABLED_FEATURES = "PyQt_Desktop_OpenGL PyQt_Accessibility PyQt_SessionManager"
 
 DISABLED_FEATURES_append_arm = " PyQt_qreal_double"
 
-PYQT_MODULES = "QtCore QtGui QtNetwork QtWidgets"
-PYQT_MODULES_aarch64 = "QtCore QtGui QtNetwork QtWidgets"
+PYQT_MODULES = "QtCore QtGui QtNetwork QtWidgets QtXml QtNetwork QtQml QtQuick QtQuickWidgets "
+PYQT_MODULES_aarch64 = "QtCore QtGui QtNetwork QtWidgets QtXml QtNetwork QtQml QtQuick QtQuickWidgets "
 
 do_configure_prepend() {
     cd ${S}
