@@ -1,4 +1,4 @@
-From 079403c8f4e9fc5e1ea81dcd7fa126b351c91094 Mon Sep 17 00:00:00 2001
+From 6af8909f46f0934cee50a641401a845c709a9db2 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 23 Dec 2018 16:58:04 -0800
 Subject: [PATCH] chromium: stack pointer clobber
@@ -13,22 +13,13 @@ of flagging this silent ignoring via [1]
 Upstream-Status: Submitted [https://chromium-review.googlesource.com/c/linux-syscall-support/+/1390160]
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- chromium/third_party/lss/linux_syscall_support.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ chromium/third_party/lss/linux_syscall_support.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/third_party/lss/linux_syscall_support.h b/chromium/third_party/lss/linux_syscall_support.h
-index 5d9c2e8582f..e19e51dd304 100644
+index 9276f56..622cc1f 100644
 --- a/chromium/third_party/lss/linux_syscall_support.h
 +++ b/chromium/third_party/lss/linux_syscall_support.h
-@@ -1964,7 +1964,7 @@ struct kernel_statfs {
-         __asm__ volatile(LSS_ENTRYPOINT                                       \
-                          : "=a" (__res)                                       \
-                          : "0" (__NR_##name)                                  \
--                         : "esp", "memory");                                  \
-+                         : "memory");                                         \
-         LSS_RETURN(type,__res);                                               \
-       }
-     #undef  _syscall1
 @@ -2012,7 +2012,7 @@ struct kernel_statfs {
                               : "i" (__NR_##name), "ri" ((long)(arg1)),        \
                                 "c" ((long)(arg2)), "d" ((long)(arg3)),        \
@@ -56,12 +47,3 @@ index 5d9c2e8582f..e19e51dd304 100644
        LSS_RETURN(int, __res);
      }
  
-@@ -2405,7 +2405,7 @@ struct kernel_statfs {
-                                "d"(LSS_SYSCALL_ARG(parent_tidptr)),
-                                "r"(LSS_SYSCALL_ARG(newtls)),
-                                "r"(LSS_SYSCALL_ARG(child_tidptr))
--                             : "rsp", "memory", "r8", "r10", "r11", "rcx");
-+                             : "memory", "r8", "r10", "r11", "rcx");
-       }
-       LSS_RETURN(int, __res);
-     }
