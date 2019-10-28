@@ -43,7 +43,9 @@ SECURITY_STRINGFORMAT = ""
 
 # To use system ffmpeg you need to enable also libwebp, opus, vpx
 # Only depenedencies available in oe-core are enabled by default
-PACKAGECONFIG ??= "libwebp libevent libpng"
+PACKAGECONFIG ??= "libwebp libevent libpng \
+                   ${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)}"
+
 PACKAGECONFIG[icu] = "-feature-webengine-system-icu,-no-feature-webengine-system-icu,icu"
 PACKAGECONFIG[ffmpeg] = "-feature-webengine-system-ffmpeg,-no-feature-webengine-system-ffmpeg,libav"
 PACKAGECONFIG[webrtc] = "-feature-webengine-webrtc,-no-feature-webengine-webrtc,libvpx"
@@ -56,13 +58,14 @@ PACKAGECONFIG[harfbuzz] = "-feature-webengine-system-harfbuzz,-no-feature-webeng
 PACKAGECONFIG[glib] = "-feature-webengine-system-glib,-no-feature-webengine-system-glib,glib-2.0"
 PACKAGECONFIG[zlib] = "-feature-webengine-system-zlib,-no-feature-webengine-system-zlib,zlib"
 PACKAGECONFIG[protobuf] = "-feature-webengine-system-protobuf,-no-feature-webengine-system-protobuf,protobuf"
-PACKAGECONFIG[jasoncpp] = "-feature-webengine-system-jsoncpp,-no-feature-webengine-system-jsoncpp,jasoncpp"
+PACKAGECONFIG[jsoncpp] = "-feature-webengine-system-jsoncpp,-no-feature-webengine-system-jsoncpp,jsoncpp"
 PACKAGECONFIG[libxml2] = "-feature-webengine-system-libxml2,-no-feature-webengine-system-libxml2,libxml2"
 PACKAGECONFIG[minizip] = "-feature-webengine-system-minizip,-no-feature-webengine-system-minizip,minizip"
 PACKAGECONFIG[proprietary-codecs] = "-feature-webengine-proprietary-codecs,-no-feature-webengine-proprietary-codecs"
 PACKAGECONFIG[pepper-plugins] = "-feature-webengine-pepper-plugins,-no-feature-webengine-pepper-plugins"
 PACKAGECONFIG[printing-and-pdf] = "-feature-webengine-printing-and-pdf,-no-feature-webengine-printing-and-pdf"
 PACKAGECONFIG[spellchecker] = "-feature-webengine-spellchecker,-no-feature-webengine-spellchecker"
+PACKAGECONFIG[pulseaudio] = "-feature-webengine-pulseaudio,-no-feature-webengine-pulseaudio,pulseaudio"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
@@ -154,6 +157,7 @@ SRC_URI += " \
     file://chromium/0004-chromium-Exclude-CRC32-for-32bit-arm.patch;patchdir=src/3rdparty \
     file://chromium/0005-chromium-Do-not-try-to-set-the-guessed-values-for-ma.patch;patchdir=src/3rdparty \
     file://chromium/0006-chromium-aarch64-skia-build-fix.patch;patchdir=src/3rdparty \
+    file://chromium/0007-chromium-fix-build-after-y2038-changes-in-glibc.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI_append_libc-musl = "\

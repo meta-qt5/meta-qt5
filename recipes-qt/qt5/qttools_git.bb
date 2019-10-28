@@ -30,13 +30,15 @@ PACKAGECONFIG_append_toolchain-clang = " clang"
 PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
 PACKAGECONFIG[clang] = ",,clang"
 
+export YOCTO_ALTERNATE_EXE_PATH = "${STAGING_BINDIR}/llvm-config"
+
 EXTRA_QMAKEVARS_PRE += " \
     ${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)} \
 "
-EXTRA_QMAKEVARS_PRE_append_class-native = " CONFIG-=config_clang"
-EXTRA_QMAKEVARS_PRE_append_class-nativesdk = " CONFIG-=config_clang"
+EXTRA_QMAKEVARS_PRE_append_class-native = " CONFIG+=config_clang_done CONFIG-=config_clang"
+EXTRA_QMAKEVARS_PRE_append_class-nativesdk = " CONFIG+=config_clang_done CONFIG-=config_clang"
 EXTRA_QMAKEVARS_PRE_append_class-target = "\
-    ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=config_clang', 'CONFIG-=config_clang', d)} \
+    ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=config_clang', 'CONFIG+=config_clang_done CONFIG-=config_clang', d)} \
 "
 
 SRCREV = "bb57fe7440e59008851a95ee63ee4d16fde080ed"
