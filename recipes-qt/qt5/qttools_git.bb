@@ -1,6 +1,5 @@
 require qt5.inc
 require qt5-git.inc
-require qt5-ptest.inc
 
 HOMEPAGE = "http://www.qt.io"
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
@@ -41,15 +40,10 @@ EXTRA_QMAKEVARS_PRE_append_class-target = "\
     ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=config_clang', 'CONFIG+=config_clang_done CONFIG-=config_clang', d)} \
 "
 
-SRCREV = "bb57fe7440e59008851a95ee63ee4d16fde080ed"
+SRCREV = "a339e4a1e3b53d852c1e6a445e3159dbd8bc0e80"
 
 BBCLASSEXTEND = "native nativesdk"
 
-do_install_ptest() {
-    mkdir -p ${D}${PTEST_PATH}
-    t=${D}${PTEST_PATH}
-    cp ${B}/tests/auto/qtdiag/tst_tdiag $t
-}
 do_install_append_toolchain-clang() {
     chrpath --delete ${D}${bindir}/qdoc
 }

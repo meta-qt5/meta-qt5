@@ -1,4 +1,4 @@
-From 33edd09ffb4acaf9b829a31a567508ea251db7ab Mon Sep 17 00:00:00 2001
+From 6f421e75a67f582045325d5408719d805c59a14e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Sun, 14 Apr 2019 13:27:58 +0200
 Subject: [PATCH] Avoid renameeat2 for native(sdk) builds
@@ -46,12 +46,12 @@ index e6ad805..283ce1c 100644
  # define QT_FEATURE_statx -1
  #endif
 diff --git a/src/corelib/io/qfilesystemengine_unix.cpp b/src/corelib/io/qfilesystemengine_unix.cpp
-index 74865fe..2b787ee 100644
+index c3abec8..6229c61 100644
 --- a/src/corelib/io/qfilesystemengine_unix.cpp
 +++ b/src/corelib/io/qfilesystemengine_unix.cpp
-@@ -1236,16 +1236,6 @@ bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSy
-     if (Q_UNLIKELY(srcPath.isEmpty() || tgtPath.isEmpty()))
-         return emptyFileEntryWarning(), false;
+@@ -1223,16 +1223,6 @@ bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSy
+     Q_CHECK_FILE_NAME(srcPath, false);
+     Q_CHECK_FILE_NAME(tgtPath, false);
  
 -#if defined(RENAME_NOREPLACE) && QT_CONFIG(renameat2)
 -    if (renameat2(AT_FDCWD, srcPath, AT_FDCWD, tgtPath, RENAME_NOREPLACE) == 0)
