@@ -12,7 +12,9 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative udev gconf"
 
-inherit bluetooth
+# for zeus: bluetooth.bbclass is gone so do what it did in warrior here [1]
+# http://cgit.openembedded.org/openembedded-core/tree/meta/classes/bluetooth.bbclass?h=warrior
+BLUEZ ?= "${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', bb.utils.contains('DISTRO_FEATURES', 'bluez5', 'bluez5', 'bluez4', d), '', d)}"
 
 PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez', '', d)}"
 PACKAGECONFIG[bluez] = "CONFIG+=OE_BLUEZ_ENABLED,,${BLUEZ}"
