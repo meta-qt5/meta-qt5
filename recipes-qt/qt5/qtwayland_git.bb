@@ -13,9 +13,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-SRC_URI += "file://0001-Fix-use-of-private-dependency.patch \
-            file://0001-tst_seatv4-Include-array.patch \
-"
+SRC_URI += "file://0001-tst_seatv4-Include-array.patch"
 
 PACKAGECONFIG ?= " \
     wayland-client \
@@ -41,7 +39,7 @@ PACKAGECONFIG[wayland-libhybris-egl-server-buffer] = "-feature-wayland-libhybris
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "79037e46eeb00e20c5f3bbe7d0de4b702af86884"
+SRCREV = "615aa208d131ab99e967725504fcb16fdda4ea83"
 
 BBCLASSEXTEND =+ "native nativesdk"
 

@@ -14,8 +14,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns chrpath-replacement-native"
 EXTRANATIVEPATH += "chrpath-native"
-# Patches from https://github.com/meta-qt5/qttools/commits/b5.12
-# 5.12.meta-qt5.2
+# Patches from https://github.com/meta-qt5/qttools/commits/b5.13
+# 5.13.meta-qt5.1
 SRC_URI += " \
     file://0001-add-noqtwebkit-configuration.patch \
     file://0002-linguist-tools-cmake-allow-overriding-the-location-f.patch \
@@ -41,7 +41,7 @@ EXTRA_QMAKEVARS_PRE_append_class-target = "\
     ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=config_clang', 'CONFIG+=config_clang_done CONFIG-=config_clang', d)} \
 "
 
-SRCREV = "cc9250477eaa71a3f3ffd050591d4a9d835288ca"
+SRCREV = "78f52a4027da110bf14468b575c7262b4d28d65e"
 
 BBCLASSEXTEND = "native nativesdk"
 

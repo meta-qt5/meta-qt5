@@ -17,8 +17,8 @@ require qt5-native.inc
 require qt5-git.inc
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-shared
-# 5.12.meta-qt5-shared.8
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.13-shared
+# 5.13.meta-qt5-shared.1
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -36,12 +36,12 @@ SRC_URI += "\
     file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
-    file://0001-qfloat16-check-for-__ARM_FP-2.patch \
+    file://0017-qfloat16-check-for-__ARM_FP-2.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-native
-# 5.12.meta-qt5-native.8
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.13-native
+# 5.13.meta-qt5-native.1
 SRC_URI += " \
     file://0018-Always-build-uic-and-qvkgen.patch \
     file://0019-Avoid-renameeat2-for-native-sdk-builds.patch \
@@ -143,4 +143,4 @@ do_install() {
     echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
-SRCREV = "fc9ae22c88dd085c7c31599037132fc756feeb04"
+SRCREV = "a7a24784eeba6747d319eb911583bdd99ef38cdb"

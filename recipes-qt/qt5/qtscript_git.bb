@@ -11,8 +11,8 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPL3;md5=e6a600fd5e1d9cbde2d983680233ad02 \
 "
 
-# Patches from https://github.com/meta-qt5/qtscript/commits/b5.12
-# 5.12.meta-qt5.3
+# Patches from https://github.com/meta-qt5/qtscript/commits/b5.13
+# 5.13.meta-qt5.1
 SRC_URI += " \
     file://0001-Include-asm-sgidefs.h-on-non-glibc-systems.patch \
 "
@@ -36,4 +36,4 @@ DEPENDS += "qtbase"
 # http://errors.yoctoproject.org/Errors/Build/44915/
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-SRCREV = "9401306e2db3a1756aab958d0939d12c8d5f46e0"
+SRCREV = "18bade63bdcd1d8fcba013f788e114774efa0e4f"
