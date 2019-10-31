@@ -9,6 +9,13 @@ When building stuff like `qtdeclarative`, `qtquick`, `qtwebkit`, make
 sure that you have required `PACKAGECONFIG` options enabled in qtbase
 build, see `qtbase` recipe for detail.
 
+Some recipes like qtwebengine would need 32bit multilib compiler on build
+host, especially when target to be built is 32bit, e.g. arm since it builds
+v8 engine which requires `$CC -m32` to work, so ensure that host compiler
+can generate 32bit code, on archlinux distributions this would be
+```
+pacman -S lib32-gcc-libs lib32-glibc
+```
 
 Contributing
 ------------

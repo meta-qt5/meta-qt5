@@ -41,6 +41,7 @@ SRC_URI += "\
     file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
+    file://0001-qfloat16-check-for-__ARM_FP-2.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
