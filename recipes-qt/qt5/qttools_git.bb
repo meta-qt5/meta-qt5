@@ -49,7 +49,6 @@ do_install_ptest() {
     mkdir -p ${D}${PTEST_PATH}
     t=${D}${PTEST_PATH}
     cp ${B}/tests/auto/qtdiag/tst_tdiag $t
-    cp ${B}/tests/auto/qtattributionsscanner/tst_qtattributionsscanner $t
 }
 do_install_append_toolchain-clang() {
     chrpath --delete ${D}${bindir}/qdoc
