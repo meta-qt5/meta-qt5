@@ -77,6 +77,7 @@ DEBIAN_NOAUTONAME_${PN} = "1"
 PACKAGECONFIG ?= ""
 PACKAGECONFIG[gui] = "-gui -qpa offscreen,-no-gui,"
 PACKAGECONFIG[imageformats] = "-qt-libpng -qt-libjpeg -gif -ico, -no-libpng -no-libjpeg -no-ico -no-gif,"
+PACKAGECONFIG[openssl] = "-openssl,-no-openssl,openssl,libssl"
 
 QT_CONFIG_FLAGS += " \
     -shared \
@@ -111,7 +112,6 @@ do_configure() {
         -no-sql-mysql \
         -no-sql-sqlite \
         -no-opengl \
-        -no-openssl \
         -no-xcb \
         -no-feature-bearermanagement \
         -no-icu \
@@ -193,4 +193,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "11acbc2c9928603dae6b4e2f1ca8b745e766f92b"
+SRCREV = "41226c4c483aaad628cd1ae9733959d2a9389c05"
