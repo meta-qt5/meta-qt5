@@ -77,6 +77,7 @@ DEBIAN_NOAUTONAME_${PN} = "1"
 PACKAGECONFIG ?= ""
 PACKAGECONFIG[gui] = "-gui -qpa offscreen,-no-gui,"
 PACKAGECONFIG[imageformats] = "-qt-libpng -qt-libjpeg -gif -ico, -no-libpng -no-libjpeg -no-ico -no-gif,"
+PACKAGECONFIG[openssl] = "-openssl,-no-openssl,openssl,libssl"
 
 QT_CONFIG_FLAGS += " \
     -shared \
@@ -111,7 +112,6 @@ do_configure() {
         -no-sql-mysql \
         -no-sql-sqlite \
         -no-opengl \
-        -no-openssl \
         -no-xcb \
         -no-feature-bearermanagement \
         -no-icu \

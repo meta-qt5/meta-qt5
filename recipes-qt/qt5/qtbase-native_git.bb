@@ -59,6 +59,7 @@ XPLATFORM ?= "linux-oe-g++"
 PACKAGECONFIG ?= ""
 PACKAGECONFIG[gui] = "-gui -qpa offscreen,-no-gui,"
 PACKAGECONFIG[imageformats] = "-qt-libpng -qt-libjpeg -gif -ico, -no-libpng -no-libjpeg -no-ico -no-gif,"
+PACKAGECONFIG[openssl] = "-openssl,-no-openssl,openssl"
 
 QT_CONFIG_FLAGS = " \
     -sysroot ${STAGING_DIR_NATIVE} \
@@ -74,7 +75,6 @@ QT_CONFIG_FLAGS = " \
     -no-sql-psql \
     -no-opengl \
     -no-vulkan \
-    -no-openssl \
     -no-xcb \
     -no-icu \
     -verbose \
