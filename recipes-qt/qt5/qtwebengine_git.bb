@@ -176,8 +176,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0018-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "dbc0d09be2bbc3dce01ace956f534c4012402fba"
-SRCREV_chromium = "7a779d0160771dcf6b4a644bc11137753c25982c"
+SRCREV_qtwebengine = "636b32c7f22c96e9562270219cedca52d5203737"
+SRCREV_chromium = "89644ad92fee38706430c1adb1e29b9756193b4f"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
