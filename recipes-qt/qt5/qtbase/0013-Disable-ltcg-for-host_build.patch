@@ -1,4 +1,4 @@
-From a080cb3ac2ad24aeb73407c772ed560dc4cb7ef5 Mon Sep 17 00:00:00 2001
+From 0a8e9268aa5e0235eb577e43c19a76ff00b9fb32 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Tue, 23 Oct 2018 09:54:57 +0300
 Subject: [PATCH] Disable ltcg for host_build
@@ -15,7 +15,7 @@ Upstream-Status: Inappropriate [embedded specific]
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mkspecs/features/ltcg.prf b/mkspecs/features/ltcg.prf
-index a94f6d0eeb..3cb01c334d 100644
+index d81f340..dc1d196 100644
 --- a/mkspecs/features/ltcg.prf
 +++ b/mkspecs/features/ltcg.prf
 @@ -1,6 +1,6 @@
@@ -23,6 +23,6 @@ index a94f6d0eeb..3cb01c334d 100644
      # Static library but no-static-ltcg enabled: skip LTCG
 -} else: CONFIG(release, debug|release) {
 +} else: CONFIG(release, debug|release):!host_build {
-     # We need fat object files when creating static libraries on some platforms
-     # so the linker will know to load a particular object from the library
-     # in the first place. On others, we have special ar and nm to create the symbol
+     separate_debug_info {
+         # Evaluate single-$ variable references that have no valid value at mkspec loading time
+         QMAKE_LFLAGS_LTCG_SEPARATE_DEBUG_INFO ~= s/\\$\\{/\$\$\{/
