@@ -14,7 +14,7 @@ SRC_URI[sha256sum] = "3718ce847d824090fd5f95ff3f13847ee75c2507368d4cbaeb48338f50
 S = "${WORKDIR}/PyQt5_gpl-${PV}"
 
 inherit qmake5
-DEPENDS = "qtbase"
+DEPENDS = "qtbase qtdeclarative qtquickcontrols2"
 
 export BUILD_SYS
 export HOST_SYS
@@ -27,8 +27,7 @@ DISABLED_FEATURES = "PyQt_Desktop_OpenGL PyQt_Accessibility PyQt_SessionManager"
 
 DISABLED_FEATURES_append_arm = " PyQt_qreal_double"
 
-PYQT_MODULES = "QtCore QtGui QtNetwork QtWidgets"
-PYQT_MODULES_aarch64 = "QtCore QtGui QtNetwork QtWidgets"
+PYQT_MODULES = "QtCore QtGui QtNetwork QtWidgets QtXml QtNetwork QtQml QtQuick QtQuickWidgets"
 
 do_configure_prepend() {
     cd ${S}
@@ -60,4 +59,4 @@ do_install() {
 
 FILES_${PN} += "${libdir}/${PYTHON_DIR}/site-packages ${datadir}/sip/PyQt5/"
 
-RDEPENDS_${PN} = "qtbase"
+RDEPENDS_${PN} = "qtbase qtdeclarative qtquickcontrols2 qtquickcontrols2-mkspecs"

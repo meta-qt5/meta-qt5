@@ -1,4 +1,4 @@
-From 079403c8f4e9fc5e1ea81dcd7fa126b351c91094 Mon Sep 17 00:00:00 2001
+From 90881e8b608658e766bcf96fc62d97b39e005f01 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 23 Dec 2018 16:58:04 -0800
 Subject: [PATCH] chromium: stack pointer clobber

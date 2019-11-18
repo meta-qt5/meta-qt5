@@ -1,4 +1,4 @@
-From 0c79a6761e75441f433fd397bc3b79e78b6c5ef8 Mon Sep 17 00:00:00 2001
+From 0ee2fc2de566efc5ad579dec693534105199f33d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Sun, 14 Apr 2019 13:27:58 +0200
 Subject: [PATCH] Avoid renameeat2 for native(sdk) builds
@@ -24,7 +24,7 @@ Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
  2 files changed, 2 insertions(+), 12 deletions(-)
 
 diff --git a/src/corelib/global/qconfig-bootstrapped.h b/src/corelib/global/qconfig-bootstrapped.h
-index dfcc3c9c7f..30166fe41c 100644
+index 10458e41d7..8cfa40e461 100644
 --- a/src/corelib/global/qconfig-bootstrapped.h
 +++ b/src/corelib/global/qconfig-bootstrapped.h
 @@ -100,14 +100,14 @@
@@ -45,10 +45,10 @@ index dfcc3c9c7f..30166fe41c 100644
  # define QT_FEATURE_statx -1
  #endif
 diff --git a/src/corelib/io/qfilesystemengine_unix.cpp b/src/corelib/io/qfilesystemengine_unix.cpp
-index b2d81066db..d1783ebdf3 100644
+index b78e037865..9574d1a044 100644
 --- a/src/corelib/io/qfilesystemengine_unix.cpp
 +++ b/src/corelib/io/qfilesystemengine_unix.cpp
-@@ -1248,16 +1248,6 @@ bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSy
+@@ -1232,16 +1232,6 @@ bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSy
      if (Q_UNLIKELY(srcPath.isEmpty() || tgtPath.isEmpty()))
          return emptyFileEntryWarning(), false;
  

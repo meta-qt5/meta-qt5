@@ -1,4 +1,4 @@
-From 5aa039af074c20bea1398f7f18712dc494a5f138 Mon Sep 17 00:00:00 2001
+From f6576377f8bf2c854d8079b7f309f570b3d2bde4 Mon Sep 17 00:00:00 2001
 From: Lei Maohui <leimaohui@cn.fujitsu.com>
 Date: Fri, 31 Aug 2018 15:42:48 +0900
 Subject: [PATCH] Fix build bug for armv32 BE.

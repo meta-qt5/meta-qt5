@@ -1,22 +1,24 @@
+From 5408581e2ac5225ba2c6d6b0d88636751930577d Mon Sep 17 00:00:00 2001
 From: Jiri Slaby <jslaby@suse.cz>
 Date: Thu, 11 Jul 2019 09:35:13 +0200
-Subject: fix build after y2038 changes in glibc
-Patch-mainline: submitted on 2019/07/11
-References: QTBUG-76963
+Subject: [PATCH] chromium: fix build after y2038 changes in glibc
 
 SIOCGSTAMP is defined in linux/sockios.h since kernel 5.2. Include that
 file wherever needed.
 
 Signed-off-by: Jiri Slaby <jslaby@suse.cz>
----
-Upstream-Status: Pending
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 
+Upstream-Status: Pending
+---
  chromium/third_party/webrtc/rtc_base/physical_socket_server.cc | 1 +
  1 file changed, 1 insertion(+)
 
+diff --git a/chromium/third_party/webrtc/rtc_base/physical_socket_server.cc b/chromium/third_party/webrtc/rtc_base/physical_socket_server.cc
+index c38d7fdfac9..575e0001ca1 100644
 --- a/chromium/third_party/webrtc/rtc_base/physical_socket_server.cc
 +++ b/chromium/third_party/webrtc/rtc_base/physical_socket_server.cc
-@@ -67,6 +67,7 @@ typedef void* SockOptArg;
+@@ -71,6 +71,7 @@ typedef void* SockOptArg;
  #endif  // WEBRTC_POSIX
  
  #if defined(WEBRTC_POSIX) && !defined(WEBRTC_MAC) && !defined(__native_client__)
@@ -24,6 +26,3 @@ Upstream-Status: Pending
  
  int64_t GetSocketRecvTimestamp(int socket) {
    struct timeval tv_ioctl;
--- 
-2.21.0
-
