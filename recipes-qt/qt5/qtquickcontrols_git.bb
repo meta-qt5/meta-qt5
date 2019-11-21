@@ -12,11 +12,9 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtdeclarative"
 
-RDEPENDS_${PN}-dev = ""
-
 FILES_${PN}-qmlplugins += " \
   ${OE_QMAKE_PATH_QML}/QtQuick/Controls/Shaders \
   ${OE_QMAKE_PATH_QML}/QtQuick/Dialogs/qml/icons.ttf \
 "
 
-SRCREV = "8c3b97959cb2c157102994082dd2ba0e1985ced7"
+SRCREV = "7f3dddae7a5be9e4c80c0683ff49c2b19a9c3f30"

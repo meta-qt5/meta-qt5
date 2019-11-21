@@ -25,7 +25,6 @@ DEPENDS += " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa-lib', '', d)} \
 "
 
-DEPENDS += "yasm-native"
 DEPENDS_append_libc-musl = " libexecinfo"
 
 EXTRA_QMAKEVARS_PRE += "GYP_CONFIG+=use_system_yasm \
@@ -164,8 +163,8 @@ SRC_URI_append_libc-musl = "\
     file://0016-chromium-musl-tcmalloc-Use-off64_t-insread-of-__off6.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "86f8a0dfa47fea0ba41c386a9753db94d8de3b54"
-SRCREV_chromium = "45ed09101724148401a193e20e3545c8f3de4df2"
+SRCREV_qtwebengine = "745ad675fdd434cd34346909ebe9172881750c60"
+SRCREV_chromium = "0ee076e7a6507637efad493edc367fd63b7e7fb1"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
