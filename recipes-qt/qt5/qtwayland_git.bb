@@ -37,14 +37,7 @@ PACKAGECONFIG[libhybris-egl-server] = "-feature-libhybris-egl-server,-no-feature
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "79ec94d0efbeabe485275e5c79c828aa64641afa"
-
-# Patches from https://github.com/meta-qt5/qtwayland/commits/b5.9
-# 5.9.meta-qt5.8
-# From https://bugreports.qt.io/browse/QTBUG-57767
-SRC_URI += " \
-    file://0001-fix-build-without-xkbcommon-evdev.patch \
-"
+SRCREV = "5e689968cefeb78f9b55719ec3ef83ba705b348a"
 
 BBCLASSEXTEND =+ "native nativesdk"
 
