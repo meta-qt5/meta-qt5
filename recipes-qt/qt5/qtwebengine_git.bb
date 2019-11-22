@@ -154,6 +154,7 @@ SRC_URI_append_libc-musl = "\
 SRC_URI += " \
     file://chromium/0001-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
     file://chromium/0002-chromium-stack-pointer-clobber.patch;patchdir=src/3rdparty \
+    file://chromium/0003-chromium-fix-build-with-clang.patch;patchdir=src/3rdparty \
     file://chromium/0004-chromium-Exclude-CRC32-for-32bit-arm.patch;patchdir=src/3rdparty \
     file://chromium/0005-chromium-Do-not-try-to-set-the-guessed-values-for-ma.patch;patchdir=src/3rdparty \
     file://chromium/0006-chromium-aarch64-skia-build-fix.patch;patchdir=src/3rdparty \
