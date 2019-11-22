@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = " \
     file://Source/JavaScriptCore/parser/Parser.h;endline=21;md5=bd69f72183a7af673863f057576e21ee \
 "
 
-DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-native bison-native"
+DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-native bison-native flex-native"
 
 # Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.13
 # 5.13.meta-qt5.1
