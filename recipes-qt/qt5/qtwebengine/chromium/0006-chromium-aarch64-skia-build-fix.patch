@@ -1,4 +1,4 @@
-From d9ff98eec574e87bf320fabc360c582f49c5d40a Mon Sep 17 00:00:00 2001
+From 89338139ee40ab93065a915dcde9af79ba52b381 Mon Sep 17 00:00:00 2001
 From: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
 Date: Thu, 8 Mar 2018 15:39:55 +0100
 Subject: [PATCH] chromium: aarch64 skia build fix

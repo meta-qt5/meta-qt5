@@ -1,0 +1,34 @@
+From b938d809624660a2998ea7f844aba715e40acfc6 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Sat, 5 Oct 2019 16:21:08 -0700
+Subject: [PATCH] qfloat16: check for __ARM_FP & 2
+
+Clang hides vcvt_f16_f32() and vcvt_f32_f16() behind (__ARM_FP & 2) where 2 refers to -mfpu=fp-armv8.
+However, GCC would only build this code if -march=armv8.2-a+fp16 is passed as well.
+
+global/qfloat16.cpp:149:31: error: use of undeclared identifier 'vcvt_f16_f32'
+        vst1_f16(out_f16 + i, vcvt_f16_f32(vld1q_f32(in + i)));
+                              ^
+global/qfloat16.cpp:159:28: error: use of undeclared identifier 'vcvt_f32_f16'
+        vst1q_f32(out + i, vcvt_f32_f16(vld1_f16(in_f16 + i)));
+                           ^
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/corelib/global/qfloat16.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/corelib/global/qfloat16.cpp b/src/corelib/global/qfloat16.cpp
+index 87ff796368..37dec371a6 100644
+--- a/src/corelib/global/qfloat16.cpp
++++ b/src/corelib/global/qfloat16.cpp
+@@ -148,7 +148,7 @@ f16cextern void qFloatFromFloat16_fast(float *out, const quint16 *in, qsizetype
+ #undef f16cextern
+ }
+ 
+-#elif defined(__ARM_FP16_FORMAT_IEEE) && defined(__ARM_NEON__)
++#elif defined(__ARM_FP16_FORMAT_IEEE) && defined(__ARM_NEON__) && (__ARM_FP & 2)
+ static inline bool hasFastF16()
+ {
+     return true;

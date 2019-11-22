@@ -17,6 +17,7 @@ PV = "2.5.0+git${SRCPV}"
 SRC_URI += " \
     ${QT_GIT}/qt3dstudio-eastl.git;name=EASTL;branch=${QT_MODULE_BRANCH_EASTL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/EASTL \
     file://0001-Fix-examples-build-error.patch \
+    file://0001-Qt3DSSimpleTypes-make-QT3DSU64-as-unsigned-long-on-l.patch \
 "
 
 SRCREV_ogl-runtime = "25236c672d81a73ee8754dbd764eb8a2a26d866e"

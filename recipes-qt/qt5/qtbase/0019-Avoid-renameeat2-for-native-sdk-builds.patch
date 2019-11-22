@@ -1,4 +1,4 @@
-From 6f421e75a67f582045325d5408719d805c59a14e Mon Sep 17 00:00:00 2001
+From 0ee2fc2de566efc5ad579dec693534105199f33d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Sun, 14 Apr 2019 13:27:58 +0200
 Subject: [PATCH] Avoid renameeat2 for native(sdk) builds
@@ -24,7 +24,7 @@ Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
  2 files changed, 2 insertions(+), 12 deletions(-)
 
 diff --git a/src/corelib/global/qconfig-bootstrapped.h b/src/corelib/global/qconfig-bootstrapped.h
-index e6ad805..283ce1c 100644
+index 10458e41d7..8cfa40e461 100644
 --- a/src/corelib/global/qconfig-bootstrapped.h
 +++ b/src/corelib/global/qconfig-bootstrapped.h
 @@ -104,7 +104,7 @@
