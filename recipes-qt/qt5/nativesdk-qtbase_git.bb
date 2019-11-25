@@ -42,6 +42,7 @@ SRC_URI += "\
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
     file://0017-qfloat16-check-for-__ARM_FP-2.patch \
+    file://0018-input-Make-use-of-timeval-portable-for-64bit-time_t.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
