@@ -8,8 +8,8 @@ PACKAGECONFIG_OPENSSL ?= "openssl"
 PACKAGECONFIG[examples] = ""
 PACKAGECONFIG[tests] = ""
 PACKAGECONFIG[qtquickcompiler] = ",,qtdeclarative-native"
-EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'examples', 'QT_BUILD_PARTS+=examples', '', d)}"
-EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'tests', 'QT_BUILD_PARTS+=tests', '', d)}"
+EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'examples', 'QT_BUILD_PARTS+=examples', 'QT_BUILD_PARTS-=examples', d)}"
+EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'tests', 'QT_BUILD_PARTS+=tests', 'QT_BUILD_PARTS-=tests', d)}"
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtquickcompiler', 'CONFIG+=qtquickcompiler', '', d)}"
 
 # we don't want conflicts with qt4

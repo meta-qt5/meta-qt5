@@ -1,6 +1,5 @@
 require qt5.inc
 require qt5-git.inc
-require qt5-ptest.inc
 
 HOMEPAGE = "http://www.qt.io"
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
@@ -14,8 +13,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns chrpath-replacement-native"
 EXTRANATIVEPATH += "chrpath-native"
-# Patches from https://github.com/meta-qt5/qttools/commits/b5.12
-# 5.12.meta-qt5.2
+# Patches from https://github.com/meta-qt5/qttools/commits/b5.13
+# 5.13.meta-qt5.1
 SRC_URI += " \
     file://0001-add-noqtwebkit-configuration.patch \
     file://0002-linguist-tools-cmake-allow-overriding-the-location-f.patch \
@@ -45,11 +44,6 @@ SRCREV = "b6118a469f127182c034ae57bbc4c7d3db557850"
 
 BBCLASSEXTEND = "native nativesdk"
 
-do_install_ptest() {
-    mkdir -p ${D}${PTEST_PATH}
-    t=${D}${PTEST_PATH}
-    cp ${B}/tests/auto/qtdiag/tst_tdiag $t
-}
 do_install_append_toolchain-clang() {
     chrpath --delete ${D}${bindir}/qdoc
 }

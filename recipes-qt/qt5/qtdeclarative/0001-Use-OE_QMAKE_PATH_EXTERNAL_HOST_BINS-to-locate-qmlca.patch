@@ -1,4 +1,4 @@
-From 793ddd0d9fc0d86425a0aa43709445c5ff12a464 Mon Sep 17 00:00:00 2001
+From 2ca54b2296463f626f8438825907610cb22169fc Mon Sep 17 00:00:00 2001
 From: Piotr Tworek <tworaz@tworaz.net>
 Date: Wed, 3 Jul 2019 01:13:40 +0200
 Subject: [PATCH] Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS to locate qmlcachegen
@@ -30,6 +30,3 @@ index 75fbb0fcf3..1e949cd40c 100644
      if(NOT EXISTS \"${compiler_path}\" )
          message(FATAL_ERROR \"The package \\\"Qt5QuickCompilerConfig\\\" references the file
     \\\"${compiler_path}\\\"
--- 
-2.21.0
-
