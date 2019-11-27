@@ -268,8 +268,8 @@ do_install_append() {
 
     generate_target_qt_config_file ${D}${OE_QMAKE_PATH_BINS}/qt.conf
 
-    # Fix up absolute paths in scripts
-    sed -i -e '1s,#!/usr/bin/python,#! ${USRBINPATH}/env python,' \
+    # Fix up absolute paths in scripts and use python3 instead of python
+    sed -i -e '1s,#!/usr/bin/python$,#! ${USRBINPATH}/env python3,' \
         ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
 }
 
