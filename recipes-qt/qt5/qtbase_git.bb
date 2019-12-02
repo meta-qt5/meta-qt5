@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
-    file://LICENSE.QT-LICENSE-AGREEMENT-4.0;md5=948f8877345cd66106f11031977a4625 \
+    file://LICENSE.QT-LICENSE-AGREEMENT;md5=994e4301576163cfe0bc3f4f5462bf09 \
 "
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
@@ -277,4 +277,4 @@ INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
-SRCREV = "a131d6100ca13b00721ea30e6ef0d5225002867e"
+SRCREV = "a5cbff60f063d271500e31eba5bd236741d2367b"
