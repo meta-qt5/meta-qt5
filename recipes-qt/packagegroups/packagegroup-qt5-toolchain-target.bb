@@ -3,6 +3,7 @@
 DESCRIPTION = "Target packages for Qt5 SDK"
 LICENSE = "MIT"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit packagegroup
 
 PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
