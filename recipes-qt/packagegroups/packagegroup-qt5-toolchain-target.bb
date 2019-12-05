@@ -108,8 +108,13 @@ RDEPENDS_${PN} += " \
     qtquickcontrols2-dev \
     qtquickcontrols2-mkspecs \
 "
+RDEPENDS_${PN}_remove_toolchain-clang_riscv32 = "qttools-dev qttools-mkspecs qttools-staticdev qttools-tools"
+RDEPENDS_${PN}_remove_toolchain-clang_riscv64 = "qttools-dev qttools-mkspecs qttools-staticdev qttools-tools"
 
 RRECOMMENDS_${PN} += " \
     qtquickcontrols-qmlplugins \
     qttools-plugins \
 "
+
+RRECOMMENDS_${PN}_remove_toolchain-clang_riscv32 = "qttools-plugins"
+RRECOMMENDS_${PN}_remove_toolchain-clang_riscv64 = "qttools-plugins"

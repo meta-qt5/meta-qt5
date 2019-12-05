@@ -30,6 +30,9 @@ PACKAGECONFIG_append_toolchain-clang = " clang"
 PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
 PACKAGECONFIG[clang] = ",,clang"
 
+COMPATIBLE_HOST_toolchain-clang_riscv32 = "null"
+COMPATIBLE_HOST_toolchain-clang_riscv64 = "null"
+
 export YOCTO_ALTERNATE_EXE_PATH = "${STAGING_BINDIR}/llvm-config"
 
 EXTRA_QMAKEVARS_PRE += " \
