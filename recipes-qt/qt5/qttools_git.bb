@@ -12,8 +12,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-DEPENDS += "qtbase qtdeclarative qtxmlpatterns chrpath-replacement-native"
-EXTRANATIVEPATH += "chrpath-native"
+DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 # Patches from https://github.com/meta-qt5/qttools/commits/b5.13
 # 5.13.meta-qt5.1
 SRC_URI += " \
@@ -37,6 +36,7 @@ export YOCTO_ALTERNATE_EXE_PATH = "${STAGING_BINDIR}/llvm-config"
 
 EXTRA_QMAKEVARS_PRE += " \
     ${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)} \
+    CONFIG+=disable_external_rpath \
 "
 EXTRA_QMAKEVARS_PRE_append_class-native = " CONFIG+=config_clang_done CONFIG-=config_clang"
 EXTRA_QMAKEVARS_PRE_append_class-nativesdk = " CONFIG+=config_clang_done CONFIG-=config_clang"
@@ -52,7 +52,4 @@ do_install_ptest() {
     mkdir -p ${D}${PTEST_PATH}
     t=${D}${PTEST_PATH}
     cp ${B}/tests/auto/qtdiag/tst_tdiag $t
-}
-do_install_append_toolchain-clang() {
-    chrpath --delete ${D}${bindir}/qdoc
 }
