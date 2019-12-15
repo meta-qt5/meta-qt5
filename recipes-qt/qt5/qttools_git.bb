@@ -18,6 +18,7 @@ DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 SRC_URI += " \
     file://0001-add-noqtwebkit-configuration.patch \
     file://0002-linguist-tools-cmake-allow-overriding-the-location-f.patch \
+    file://0003-src.pro-Add-option-noqdoc-to-disable-qdoc-builds.patch \
 "
 
 FILES_${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
@@ -34,9 +35,14 @@ COMPATIBLE_HOST_toolchain-clang_riscv64 = "null"
 
 export YOCTO_ALTERNATE_EXE_PATH = "${STAGING_BINDIR}/llvm-config"
 
+TOOLSTOBUILD += "linguist/lconvert linguist/lrelease linguist/lupdate pixeltool qtdiag qtpaths qtplugininfo"
+TOOLSTOBUILD += "${@bb.utils.contains('PACKAGECONFIG', 'clang', 'qdoc', '', d)}"
+TOOLSFORTARGET = "pixeltool qtdiag qtpaths qtplugininfo"
+TOOLSFORHOST = "linguist ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'qdoc', '', d)}"
+
 EXTRA_QMAKEVARS_PRE += " \
     ${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)} \
-    CONFIG+=disable_external_rpath \
+    ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=disable_external_rpath', 'CONFIG+=noqdoc', d)} \
 "
 EXTRA_QMAKEVARS_PRE_append_class-native = " CONFIG+=config_clang_done CONFIG-=config_clang"
 EXTRA_QMAKEVARS_PRE_append_class-nativesdk = " CONFIG+=config_clang_done CONFIG-=config_clang"
