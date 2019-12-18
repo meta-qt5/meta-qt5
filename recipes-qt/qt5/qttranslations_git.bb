@@ -98,4 +98,4 @@ FILES_${PN}-qthelp = " \
     ${OE_QMAKE_PATH_TRANSLATIONS}/qt_help_*.qm \
 "
 
-SRCREV = "fbdeaab046d623f3238fbf0da9c8bdb0009c01a9"
+SRCREV = "8b7c8801f2317bef8e21e9080ce242cbb7818a98"
