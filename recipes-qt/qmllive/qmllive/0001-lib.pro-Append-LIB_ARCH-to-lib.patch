@@ -1,0 +1,39 @@
+From 647b1da38d8c741681de9c89f2090f0edcf25a47 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 19 Dec 2019 13:40:34 -0800
+Subject: [PATCH] lib.pro: Append LIB_ARCH to lib
+
+appending to lib so it becomes lib64 when needed and LIB_ARCH can be set
+in evnironment
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/lib.pro | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/lib.pro b/src/lib.pro
+index b5f8ab6..0731d01 100755
+--- a/src/lib.pro
++++ b/src/lib.pro
+@@ -18,7 +18,7 @@ public_headers += \
+ include(src.pri)
+ 
+ win32: target.path = $${PREFIX}/bin
+-else: target.path = $${PREFIX}/lib
++else: target.path = $${PREFIX}/lib$${LIB_ARCH}
+ INSTALLS += target
+ 
+ headers.files = $$public_headers
+@@ -30,7 +30,7 @@ INSTALLS += headers
+     QMAKE_PKGCONFIG_NAME = qmllive
+     QMAKE_PKGCONFIG_DESCRIPTION = Qt QmlLive Library
+     QMAKE_PKGCONFIG_PREFIX = $$PREFIX
+-    QMAKE_PKGCONFIG_LIBDIR = ${prefix}/lib
++    QMAKE_PKGCONFIG_LIBDIR = ${prefix}/lib$${LIB_ARCH}
+     QMAKE_PKGCONFIG_INCDIR = ${prefix}/include/qmllive
+     QMAKE_PKGCONFIG_DESTDIR = pkgconfig
+ }
+-- 
+2.24.1
+
