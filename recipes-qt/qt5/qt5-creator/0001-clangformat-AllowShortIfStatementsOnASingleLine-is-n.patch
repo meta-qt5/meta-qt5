@@ -18,19 +18,36 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  src/plugins/clangformat/clangformatutils.cpp | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/src/plugins/clangformat/clangformatutils.cpp b/src/plugins/clangformat/clangformatutils.cpp
-index 09a3150c89..7d8a95ae18 100644
 --- a/src/plugins/clangformat/clangformatutils.cpp
 +++ b/src/plugins/clangformat/clangformatutils.cpp
-@@ -60,7 +60,7 @@ static clang::format::FormatStyle qtcStyle()
+@@ -57,10 +57,18 @@ static clang::format::FormatStyle qtcSty
+     style.AlignOperands = true;
+     style.AlignTrailingComments = true;
+     style.AllowAllParametersOfDeclarationOnNextLine = true;
++#if Q_CC_CLANG < 1000
      style.AllowShortBlocksOnASingleLine = false;
++#else
++    style.AllowShortBlocksOnASingleLine = FormatStyle::SBS_Never;
++#endif
      style.AllowShortCaseLabelsOnASingleLine = false;
      style.AllowShortFunctionsOnASingleLine = FormatStyle::SFS_Inline;
--    style.AllowShortIfStatementsOnASingleLine = false;
++#if Q_CC_CLANG < 900
+     style.AllowShortIfStatementsOnASingleLine = false;
++#else
 +    style.AllowShortIfStatementsOnASingleLine = FormatStyle::SIS_Never;
++#endif
      style.AllowShortLoopsOnASingleLine = false;
      style.AlwaysBreakAfterReturnType = FormatStyle::RTBS_None;
      style.AlwaysBreakBeforeMultilineStrings = false;
--- 
-2.23.0
-
+@@ -68,7 +76,11 @@ static clang::format::FormatStyle qtcSty
+     style.BinPackArguments = false;
+     style.BinPackParameters = false;
+     style.BraceWrapping.AfterClass = true;
++#if Q_CC_CLANG < 1000
+     style.BraceWrapping.AfterControlStatement = false;
++#else
++    style.BraceWrapping.AfterControlStatement = FormatStyle::BWACS_Never;
++#endif
+     style.BraceWrapping.AfterEnum = false;
+     style.BraceWrapping.AfterFunction = true;
+     style.BraceWrapping.AfterNamespace = false;
