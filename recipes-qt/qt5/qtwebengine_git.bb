@@ -161,6 +161,7 @@ SRC_URI += " \
     file://chromium/0007-chromium-fix-build-after-y2038-changes-in-glibc.patch;patchdir=src/3rdparty \
     file://chromium/0021-chromium-Fix-build-on-32bit-arches-with-64bit-time_t.patch;patchdir=src/3rdparty \
     file://chromium/0022-chromium-Include-cstddef-for-size_t-definition.patch;patchdir=src/3rdparty \
+    file://chromium/0023-chromium-Move-CharAllocator-definition-to-a-header-f.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI_append_libc-musl = "\
