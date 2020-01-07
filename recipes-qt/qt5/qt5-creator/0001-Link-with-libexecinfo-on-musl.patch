@@ -9,8 +9,6 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  src/plugins/debugger/debugger.pro | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/src/plugins/debugger/debugger.pro b/src/plugins/debugger/debugger.pro
-index acbf5136b9..159139eb2b 100644
 --- a/src/plugins/debugger/debugger.pro
 +++ b/src/plugins/debugger/debugger.pro
 @@ -139,3 +139,4 @@ include(console/console.pri)
@@ -18,3 +16,14 @@ index acbf5136b9..159139eb2b 100644
  
  include(shared/shared.pri)
 +LIBS  *= -lexecinfo
+--- a/src/plugins/qmldesigner/qmldesignerplugin.pro
++++ b/src/plugins/qmldesigner/qmldesignerplugin.pro
+@@ -3,7 +3,7 @@ CONFIG += exceptions
+ 
+ INCLUDEPATH += $$PWD
+ 
+-unix:!openbsd:!osx: LIBS += -lrt # posix shared memory
++unix:!openbsd:!osx: LIBS += -lexecinfo -lrt # posix shared memory
+ 
+ include(../../qtcreatorplugin.pri)
+ 
