@@ -277,4 +277,22 @@ INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
+TARGET_MKSPEC ?= "linux-g++"
+
+# use clean mkspecs on target
+pkg_postinst_${PN}-tools () {
+sed -i \
+    -e 's:HostSpec =.*:HostSpec = ${TARGET_MKSPEC}:g' \
+    -e 's:TargetSpec =.*:TargetSpec = ${TARGET_MKSPEC}:g' \
+    $D${OE_QMAKE_PATH_BINS}/qt.conf
+}
+
+pkg_postinst_${PN}-mkspecs () {
+sed -i 's: cross_compile : :g' $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
+sed -i \
+    -e 's: cross_compile : :g' \
+    -e 's:HOST_QT_TOOLS =.*::g' \
+    $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
+}
+
 SRCREV = "411c2e3e4f32ab98bab65bcd53faf11da3c4efd0"
