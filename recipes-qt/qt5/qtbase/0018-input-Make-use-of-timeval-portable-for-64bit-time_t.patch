@@ -29,8 +29,8 @@ index 3555763..e7dc57c 100644
  QT_BEGIN_NAMESPACE
  
  Q_LOGGING_CATEGORY(qLcEvdevKey, "qt.qpa.input")
-@@ -149,7 +154,10 @@ void QEvdevKeyboardHandler::switchLed(in
-     qCDebug(qLcEvdevKey) << "switchLed" << led << state;
+@@ -150,7 +155,10 @@
+     qCDebug(qLcEvdevKey, "switchLed %d %d", led, int(state));
  
      struct ::input_event led_ie;
 -    ::gettimeofday(&led_ie.time, 0);
@@ -45,7 +45,7 @@ diff --git a/src/platformsupport/input/evdevtouch/qevdevtouchhandler.cpp b/src/p
 index 78728ef..1d65f9b 100644
 --- a/src/platformsupport/input/evdevtouch/qevdevtouchhandler.cpp
 +++ b/src/platformsupport/input/evdevtouch/qevdevtouchhandler.cpp
-@@ -55,6 +55,11 @@
+@@ -58,6 +58,11 @@
  #include <linux/input.h>
  #endif
  
@@ -57,7 +57,7 @@ index 78728ef..1d65f9b 100644
  #include <math.h>
  
  #if QT_CONFIG(mtdev)
-@@ -568,7 +573,7 @@ void QEvdevTouchScreenData::processInput
+@@ -573,7 +578,7 @@
  
          // update timestamps
          m_lastTimeStamp = m_timeStamp;

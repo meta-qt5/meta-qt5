@@ -1,6 +1,5 @@
 require qt5.inc
 require qt5-git.inc
-require qt5-ptest.inc
 
 HOMEPAGE = "http://www.qt.io"
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
@@ -50,7 +49,7 @@ EXTRA_QMAKEVARS_PRE_append_class-target = "\
     ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=config_clang', 'CONFIG+=config_clang_done CONFIG-=config_clang', d)} \
 "
 
-SRCREV = "78f52a4027da110bf14468b575c7262b4d28d65e"
+SRCREV = "1682033b1bdadefeb9b953f7d9d096d884f797e2"
 
 BBCLASSEXTEND = "native nativesdk"
 
