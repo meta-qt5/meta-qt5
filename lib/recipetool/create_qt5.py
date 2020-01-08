@@ -47,7 +47,6 @@ class Qt5CmakeHandler(CmakeExtensionHandler):
                             'qtsystems': 'Qt5PublishSubscribe Qt5ServiceFramework Qt5SystemInfo',
                             'qtscript': 'Qt5Script Qt5ScriptTools',
                             'qttools': 'Qt5Designer Qt5Help Qt5LinguistTools Qt5UiPlugin Qt5UiTools',
-                            'qtenginio': 'Qt5Enginio',
                             'qtsensors': 'Qt5Sensors',
                             'qtmultimedia': 'Qt5Multimedia Qt5MultimediaWidgets',
                             'qtwebchannel': 'Qt5WebChannel',
