@@ -7,13 +7,13 @@ musl does not have feenableexcept function
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- tests/auto/corelib/tools/qlocale/tst_qlocale.cpp | 2 +-
+ tests/auto/corelib/text/qlocale/tst_qlocale.cpp | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/auto/corelib/tools/qlocale/tst_qlocale.cpp b/tests/auto/corelib/tools/qlocale/tst_qlocale.cpp
-index be2e2a2e08..68aa8369a5 100644
---- a/tests/auto/corelib/tools/qlocale/tst_qlocale.cpp
-+++ b/tests/auto/corelib/tools/qlocale/tst_qlocale.cpp
+diff --git a/tests/auto/corelib/text/qlocale/tst_qlocale.cpp b/tests/auto/corelib/text/qlocale/tst_qlocale.cpp
+index 676c66d..ba05aad 100644
+--- a/tests/auto/corelib/text/qlocale/tst_qlocale.cpp
++++ b/tests/auto/corelib/text/qlocale/tst_qlocale.cpp
 @@ -46,7 +46,7 @@
  #include <private/qlocale_tools_p.h>
  #include <qnumeric.h>
