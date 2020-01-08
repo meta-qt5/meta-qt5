@@ -53,9 +53,6 @@ RDEPENDS_${PN} += " \
     qtdeclarative-tools \
     qtdeclarative-staticdev \
     qttranslations-qtdeclarative \
-    qtenginio-dev \
-    qtenginio-mkspecs \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtenginio-qmlplugins', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtgraphicaleffects-qmlplugins', '', d)} \
     qtimageformats-dev \
     qtimageformats-plugins \
