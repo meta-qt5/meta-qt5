@@ -1,0 +1,23 @@
+From f8e556db0c49f31881ebefdb2ab28d2b22fccd5c Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Thu, 15 Aug 2019 07:52:53 +0300
+Subject: [PATCH] musl: allow build without glibc
+
+Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+---
+ src/buildtools/config/support.pri | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/buildtools/config/support.pri b/src/buildtools/config/support.pri
+index 5bdd808..eda498f 100644
+--- a/src/buildtools/config/support.pri
++++ b/src/buildtools/config/support.pri
+@@ -89,7 +89,7 @@ defineTest(qtwebengine_checkErrorForLinux) {
+         return(false)
+     }
+ 
+-    !qtConfig(webengine-system-glibc) {
++    false:!qtConfig(webengine-system-glibc) {
+         qtwebengine_skipBuild("A suitable version >= 2.27 of libc required to build QtWebEngine could not be found.")
+         return(false)
+     }

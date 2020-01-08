@@ -135,7 +135,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "73-based"
+QT_MODULE_BRANCH_CHROMIUM = "77-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.13
 # 5.13.meta-qt5.2
@@ -146,7 +146,7 @@ SRC_URI += " \
 SRC_URI_append_libc-musl = "\
     file://0002-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
     file://0003-musl-link-against-libexecinfo.patch \
-    file://0004-mkspecs-Allow-builds-with-libc-glibc.patch \
+    file://0004-musl-allow-build-without-glibc.patch \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/73-based
@@ -178,8 +178,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0020-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "556576b55f6b4404c71c74a5ef8e21f87ed09854"
-SRCREV_chromium = "843d70ac87de7482c1c1195aa73899bc05efc8f3"
+SRCREV_qtwebengine = "d366f1d5d37ce6f1833ac67c7ebda540b16690f2"
+SRCREV_chromium = "939daf833fff3a9901afb6fd65d02e0f057a494a"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

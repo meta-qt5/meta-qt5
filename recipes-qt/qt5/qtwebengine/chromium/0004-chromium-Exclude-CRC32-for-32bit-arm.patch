@@ -15,15 +15,15 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/chromium/third_party/zlib/BUILD.gn b/chromium/third_party/zlib/BUILD.gn
-index 458f428b7ce..18b4f23f769 100644
+index 29dda54..6870dbb 100644
 --- a/chromium/third_party/zlib/BUILD.gn
 +++ b/chromium/third_party/zlib/BUILD.gn
-@@ -74,8 +74,11 @@ if (use_arm_neon_optimizations) {
-     #      implement the CRC32* instructions. These are optional in ARMv8.0."
-     #  - Fuchsia just added a syscall for feature detection.
-     # TODO(cavalcantii): crbug.com/810125.
+@@ -78,8 +78,11 @@ if (use_arm_neon_optimizations) {
+     # Disabled for iPhone, as described in DDI0487C_a_armv8_arm:
+     #  "All implementations of the ARMv8.1 architecture are required to
+     #   implement the CRC32* instructions. These are optional in ARMv8.0."
 +    defines = []
-     if (is_clang && (!is_ios && !is_fuchsia)) {
+     if (!is_ios) {
 -      defines = [ "CRC32_ARMV8_CRC32" ]
 +      if (current_cpu == "arm64") {
 +        defines += [ "CRC32_ARMV8_CRC32" ]
