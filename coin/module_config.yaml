@@ -17,10 +17,10 @@ environment: &environment
   instructions:
     - type: EnvironmentVariable
       variableName: POKY_SHA1
-      variableValue: 835f7eac0610325e906591cd81890bebe8627580
+      variableValue: 1abffc542a0571f0d1512b92c1a59d138cf3ea6a
     - type: EnvironmentVariable
       variableName: OE_SHA1
-      variableValue: 4e0538516b1e0ef42dc79bd08f7895f0052063ac
+      variableValue: b2baaae2711d098c06423858662e29a8375fe6b8
     - type: EnvironmentVariable
       variableName: MACHINE
       variableValue: qemuarm64
@@ -155,6 +155,7 @@ build_instructions:
 
       # EXCLUDE_FROM_WORLD
       rm -f ${SOURCE_DIR}/recipes-qt/examples/qt5-opengles2-test_git.bb
+      rm -r ${SOURCE_DIR}/recipes-python/pyqt5/python-pyqt5_5.13.2.bb
 
       bitbake $(find ${SOURCE_DIR} -name *.bb | xargs -n1 basename | sed -e 's/\([^._]*\).*/\1/')
     filename: "{{.BuildDir}}/start-build"
