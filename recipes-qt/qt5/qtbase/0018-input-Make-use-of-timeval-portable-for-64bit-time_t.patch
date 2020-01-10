@@ -13,11 +13,11 @@ Upstream-Status: Submitted [https://codereview.qt-project.org/c/qt/qtbase/+/2826
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
  .../input/evdevkeyboard/qevdevkeyboardhandler.cpp      | 10 +++++++++-
- .../input/evdevtouch/qevdevtouchhandler.cpp            |  2 +-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ .../input/evdevtouch/qevdevtouchhandler.cpp            |  7 ++++++-
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/src/platformsupport/input/evdevkeyboard/qevdevkeyboardhandler.cpp b/src/platformsupport/input/evdevkeyboard/qevdevkeyboardhandler.cpp
-index 666613f09d..0e3e0ea0de 100644
+index 3555763b89..e7dc57c027 100644
 --- a/src/platformsupport/input/evdevkeyboard/qevdevkeyboardhandler.cpp
 +++ b/src/platformsupport/input/evdevkeyboard/qevdevkeyboardhandler.cpp
 @@ -58,6 +58,11 @@
@@ -32,8 +32,8 @@ index 666613f09d..0e3e0ea0de 100644
  QT_BEGIN_NAMESPACE
  
  Q_LOGGING_CATEGORY(qLcEvdevKey, "qt.qpa.input")
-@@ -149,7 +154,10 @@ void QEvdevKeyboardHandler::switchLed(int led, bool state)
-     qCDebug(qLcEvdevKey) << "switchLed" << led << state;
+@@ -150,7 +155,10 @@ void QEvdevKeyboardHandler::switchLed(int led, bool state)
+     qCDebug(qLcEvdevKey, "switchLed %d %d", led, int(state));
  
      struct ::input_event led_ie;
 -    ::gettimeofday(&led_ie.time, 0);
@@ -45,10 +45,22 @@ index 666613f09d..0e3e0ea0de 100644
      led_ie.code = led;
      led_ie.value = state;
 diff --git a/src/platformsupport/input/evdevtouch/qevdevtouchhandler.cpp b/src/platformsupport/input/evdevtouch/qevdevtouchhandler.cpp
-index f86f80785e..3914698f2a 100644
+index c51db59e1f..1f3726e291 100644
 --- a/src/platformsupport/input/evdevtouch/qevdevtouchhandler.cpp
 +++ b/src/platformsupport/input/evdevtouch/qevdevtouchhandler.cpp
-@@ -568,7 +568,7 @@ void QEvdevTouchScreenData::processInputEvent(input_event *data)
+@@ -58,6 +58,11 @@
+ #include <linux/input.h>
+ #endif
+ 
++#ifndef input_event_sec
++#define input_event_sec time.tv_sec
++#define input_event_usec time.tv_usec
++#endif
++
+ #include <math.h>
+ 
+ #if QT_CONFIG(mtdev)
+@@ -576,7 +581,7 @@ void QEvdevTouchScreenData::processInputEvent(input_event *data)
  
          // update timestamps
          m_lastTimeStamp = m_timeStamp;
@@ -57,6 +69,3 @@ index f86f80785e..3914698f2a 100644
  
          m_lastTouchPoints = m_touchPoints;
          m_touchPoints.clear();
--- 
-2.24.0
-
