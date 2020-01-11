@@ -1,4 +1,4 @@
-From 51795812310685d2a392e3592b238a6fb92b75d3 Mon Sep 17 00:00:00 2001
+From 4b16ad982ff10945a37a7dd90735a5a1be3d6a8b Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:09:06 -0700
 Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
@@ -10,10 +10,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/chromium/base/process/process_metrics_posix.cc b/chromium/base/process/process_metrics_posix.cc
-index a09bbf2c56e..b309f6b694e 100644
+index 5763432aa4f..ff00b7307c0 100644
 --- a/chromium/base/process/process_metrics_posix.cc
 +++ b/chromium/base/process/process_metrics_posix.cc
-@@ -100,14 +100,14 @@ size_t ProcessMetrics::GetMallocUsage() {
+@@ -109,14 +109,14 @@ size_t ProcessMetrics::GetMallocUsage() {
    malloc_statistics_t stats = {0};
    malloc_zone_statistics(nullptr, &stats);
    return stats.size_in_use;

@@ -1,4 +1,4 @@
-From 3324558fb02b720cd394e0cc270d10dc6db0c915 Mon Sep 17 00:00:00 2001
+From d47414a793f9c1bf1eb01fd3a723b2bc871037de Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 2 Jan 2020 17:13:55 -0800
 Subject: [PATCH] chromium: Move CharAllocator definition to a header file
@@ -8,16 +8,16 @@ error: invalid application of 'sizeof' to an incomplete type 'cc::ListContainerH
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- chromium/cc/base/list_container_helper.cc | 245 ---------------------
- chromium/cc/base/list_container_helper.h  | 250 ++++++++++++++++++++++
- 2 files changed, 250 insertions(+), 245 deletions(-)
+ chromium/cc/base/list_container_helper.cc | 251 ---------------------
+ chromium/cc/base/list_container_helper.h  | 255 ++++++++++++++++++++++
+ 2 files changed, 255 insertions(+), 251 deletions(-)
 
 diff --git a/chromium/cc/base/list_container_helper.cc b/chromium/cc/base/list_container_helper.cc
-index 380ad3dd187..1a029f959f3 100644
+index 3a4c0b6a2f9..89df57a7b8e 100644
 --- a/chromium/cc/base/list_container_helper.cc
 +++ b/chromium/cc/base/list_container_helper.cc
-@@ -13,257 +13,12 @@
- #include "base/macros.h"
+@@ -12,259 +12,8 @@
+ #include "base/logging.h"
  #include "base/memory/aligned_memory.h"
  
 -namespace {
@@ -26,10 +26,10 @@ index 380ad3dd187..1a029f959f3 100644
 -
  namespace cc {
  
- // CharAllocator
- ////////////////////////////////////////////////////
- // This class deals only with char* and void*. It does allocation and passing
- // out raw pointers, as well as memory deallocation when being destroyed.
+-// CharAllocator
+-////////////////////////////////////////////////////
+-// This class deals only with char* and void*. It does allocation and passing
+-// out raw pointers, as well as memory deallocation when being destroyed.
 -class ListContainerHelper::CharAllocator {
 - public:
 -  // CharAllocator::InnerList
@@ -37,6 +37,9 @@ index 380ad3dd187..1a029f959f3 100644
 -  // This class holds the raw memory chunk, as well as information about its
 -  // size and availability.
 -  struct InnerList {
+-    InnerList(const InnerList&) = delete;
+-    InnerList& operator=(const InnerList&) = delete;
+-
 -    std::unique_ptr<char[], base::AlignedFreeDeleter> data;
 -    // The number of elements in total the memory can hold. The difference
 -    // between capacity and size is the how many more elements this list can
@@ -106,9 +109,6 @@ index 380ad3dd187..1a029f959f3 100644
 -    char* End() const { return data.get() + size * step; }
 -    char* LastElement() const { return data.get() + (size - 1) * step; }
 -    char* ElementAt(size_t index) const { return data.get() + index * step; }
--
--   private:
--    DISALLOW_COPY_AND_ASSIGN(InnerList);
 -  };
 -
 -  CharAllocator(size_t alignment, size_t element_size, size_t element_count)
@@ -126,7 +126,10 @@ index 380ad3dd187..1a029f959f3 100644
 -    last_list_ = storage_[last_list_index_].get();
 -  }
 -
+-  CharAllocator(const CharAllocator&) = delete;
 -  ~CharAllocator() = default;
+-
+-  CharAllocator& operator=(const CharAllocator&) = delete;
 -
 -  void* Allocate() {
 -    if (last_list_->IsFull()) {
@@ -268,25 +271,22 @@ index 380ad3dd187..1a029f959f3 100644
 -
 -  // This is equivalent to |storage_[last_list_index_]|.
 -  InnerList* last_list_;
--
--  DISALLOW_COPY_AND_ASSIGN(CharAllocator);
 -};
- 
+-
  // PositionInCharAllocator
  //////////////////////////////////////////////////////
+ ListContainerHelper::PositionInCharAllocator::PositionInCharAllocator(
 diff --git a/chromium/cc/base/list_container_helper.h b/chromium/cc/base/list_container_helper.h
-index c79cf1f1884..91450e5c116 100644
+index 31658bc8486..9e65013cbdb 100644
 --- a/chromium/cc/base/list_container_helper.h
 +++ b/chromium/cc/base/list_container_helper.h
-@@ -8,10 +8,19 @@
+@@ -8,9 +8,17 @@
  #include <stddef.h>
  
  #include <memory>
 +#include <algorithm>
 +#include <vector>
  
- #include "base/macros.h"
-+
 +#include "base/logging.h"
 +#include "base/memory/aligned_memory.h"
  #include "cc/base/base_export.h"
@@ -298,10 +298,14 @@ index c79cf1f1884..91450e5c116 100644
  namespace cc {
  
  // Helper class for ListContainer non-templated logic. All methods are private,
-@@ -174,6 +183,247 @@ class CC_BASE_EXPORT ListContainerHelper final {
-   DISALLOW_COPY_AND_ASSIGN(ListContainerHelper);
+@@ -174,6 +182,253 @@ class CC_BASE_EXPORT ListContainerHelper final {
+   std::unique_ptr<CharAllocator> data_;
  };
  
++// CharAllocator
++////////////////////////////////////////////////////
++// This class deals only with char* and void*. It does allocation and passing
++// out raw pointers, as well as memory deallocation when being destroyed.
 +class ListContainerHelper::CharAllocator {
 + public:
 +  // CharAllocator::InnerList
@@ -309,6 +313,9 @@ index c79cf1f1884..91450e5c116 100644
 +  // This class holds the raw memory chunk, as well as information about its
 +  // size and availability.
 +  struct InnerList {
++    InnerList(const InnerList&) = delete;
++    InnerList& operator=(const InnerList&) = delete;
++
 +    std::unique_ptr<char[], base::AlignedFreeDeleter> data;
 +    // The number of elements in total the memory can hold. The difference
 +    // between capacity and size is the how many more elements this list can
@@ -378,9 +385,6 @@ index c79cf1f1884..91450e5c116 100644
 +    char* End() const { return data.get() + size * step; }
 +    char* LastElement() const { return data.get() + (size - 1) * step; }
 +    char* ElementAt(size_t index) const { return data.get() + index * step; }
-+
-+   private:
-+    DISALLOW_COPY_AND_ASSIGN(InnerList);
 +  };
 +
 +  CharAllocator(size_t alignment, size_t element_size, size_t element_count)
@@ -398,7 +402,10 @@ index c79cf1f1884..91450e5c116 100644
 +    last_list_ = storage_[last_list_index_].get();
 +  }
 +
++  CharAllocator(const CharAllocator&) = delete;
 +  ~CharAllocator() = default;
++
++  CharAllocator& operator=(const CharAllocator&) = delete;
 +
 +  void* Allocate() {
 +    if (last_list_->IsFull()) {
@@ -540,12 +547,8 @@ index c79cf1f1884..91450e5c116 100644
 +
 +  // This is equivalent to |storage_[last_list_index_]|.
 +  InnerList* last_list_;
-+
-+  DISALLOW_COPY_AND_ASSIGN(CharAllocator);
 +};
++
  }  // namespace cc
  
  #endif  // CC_BASE_LIST_CONTAINER_HELPER_H_
--- 
-2.24.1
-

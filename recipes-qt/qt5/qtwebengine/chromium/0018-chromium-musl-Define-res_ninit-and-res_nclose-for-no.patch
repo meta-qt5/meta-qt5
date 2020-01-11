@@ -1,4 +1,4 @@
-From 106c8aa7bc2dab7f7b04014d85d93082fae20632 Mon Sep 17 00:00:00 2001
+From 09c0c63a65770465ef2ec0a3b028e22a9a0164f6 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:27:50 -0700
 Subject: [PATCH] chromium: musl: Define res_ninit and res_nclose for non-glibc
@@ -13,7 +13,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  create mode 100644 chromium/net/dns/resolv_compat.h
 
 diff --git a/chromium/net/dns/dns_config_service_posix.cc b/chromium/net/dns/dns_config_service_posix.cc
-index 31c564faeee..222ff65b6e1 100644
+index ee2d5721425..bcb83b07f6e 100644
 --- a/chromium/net/dns/dns_config_service_posix.cc
 +++ b/chromium/net/dns/dns_config_service_posix.cc
 @@ -29,6 +29,10 @@

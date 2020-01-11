@@ -1,4 +1,4 @@
-From 85a1cd44983263b59942d83bd7626ed4700b29fe Mon Sep 17 00:00:00 2001
+From 998a4037e9c057c9735d8b0df57c2eca5b452d0b Mon Sep 17 00:00:00 2001
 From: Johannes Pointner <johannes.pointner@br-automation.com>
 Date: Fri, 3 May 2019 09:12:38 +0200
 Subject: [PATCH] chromium: Do not try to set the guessed values for
@@ -17,7 +17,7 @@ Signed-off-by: Johannes Pointner <johannes.pointner@br-automation.com>
  1 file changed, 9 deletions(-)
 
 diff --git a/chromium/build/config/compiler/BUILD.gn b/chromium/build/config/compiler/BUILD.gn
-index 06c93e5b3cf..8ba0f8a3109 100644
+index 7179df05451..884c9714bbb 100644
 --- a/chromium/build/config/compiler/BUILD.gn
 +++ b/chromium/build/config/compiler/BUILD.gn
 @@ -774,15 +774,6 @@ config("compiler_cpu_abi") {
