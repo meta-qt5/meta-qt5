@@ -1,4 +1,4 @@
-From a12d09f70178952f5be68110714386a0be00b017 Mon Sep 17 00:00:00 2001
+From 98fbf9fcbe29886dbc84a7e95a9f58a588a8e8ea Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 27 Jul 2017 08:02:51 -0700
 Subject: [PATCH] Replace pthread_yield with sched_yield
@@ -14,7 +14,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp b/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
-index e2bb7dab2a..683c7bafcd 100644
+index 12c29a6e13..7d31799da6 100644
 --- a/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
 +++ b/tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp
 @@ -35,7 +35,7 @@
@@ -36,7 +36,7 @@ index e2bb7dab2a..683c7bafcd 100644
              QMetaType info(tp);
              if (!info.isValid()) {
 diff --git a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
-index 10b09629bc..858fc5fc99 100644
+index 75b9b23259..77b5bf1525 100644
 --- a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
 +++ b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
 @@ -78,6 +78,7 @@
@@ -47,7 +47,7 @@ index 10b09629bc..858fc5fc99 100644
  #endif
  
  #include "private/qhostinfo_p.h"
-@@ -2151,8 +2152,8 @@ public slots:
+@@ -2177,8 +2178,8 @@ public slots:
  
  #if defined(Q_OS_MAC)
          pthread_yield_np();

@@ -1,4 +1,4 @@
-From 4310d415fd53a1c41b838dafc3913b61087bd799 Mon Sep 17 00:00:00 2001
+From 5668523aa073c1ef430b1662c735ead8fd64c83b Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -31,10 +31,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index ef7bad1bfc..dcca0f9135 100755
+index 6657870e4b..2f5d9a21ef 100755
 --- a/configure
 +++ b/configure
-@@ -712,7 +712,7 @@ fi
+@@ -711,7 +711,7 @@ fi
  # is where the resulting variable is written to
  setBootstrapVariable()
  {
@@ -89,10 +89,10 @@ index 3a71376029..dd6020f1fe 100644
      # run qmlimportscanner
      qtPrepareTool(QMLIMPORTSCANNER, qmlimportscanner, , system)
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 1903e509c8..c093dd4592 100644
+index 661b7dd961..3bc73ab0c6 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -69,7 +69,7 @@ defineTest(qtHaveModule) {
+@@ -76,7 +76,7 @@ defineTest(qtHaveModule) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
      isEmpty(cmd) {
