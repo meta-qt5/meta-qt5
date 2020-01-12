@@ -33,6 +33,7 @@ SRC_URI += "\
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
     file://0017-qfloat16-check-for-__ARM_FP-2.patch \
+    file://0018-input-Make-use-of-timeval-portable-for-64bit-time_t.patch \
 "
 
 # for syncqt
@@ -267,8 +268,8 @@ do_install_append() {
 
     generate_target_qt_config_file ${D}${OE_QMAKE_PATH_BINS}/qt.conf
 
-    # Fix up absolute paths in scripts
-    sed -i -e '1s,#!/usr/bin/python,#! ${USRBINPATH}/env python,' \
+    # Fix up absolute paths in scripts and use python3 instead of python
+    sed -i -e '1s,#!/usr/bin/python$,#! ${USRBINPATH}/env python3,' \
         ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
 }
 

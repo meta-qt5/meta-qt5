@@ -12,11 +12,12 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-DEPENDS += "qtbase"
-
 SRC_URI += "\
     file://0001-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-locate-qmlca.patch \
+    file://0001-Use-python3-explicitly.patch \
 "
+
+DEPENDS += "qtbase"
 
 PACKAGECONFIG ??= "qml-debug qml-network ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)}"
 PACKAGECONFIG[qml-debug] = "-qml-debug,-no-qml-debug"
