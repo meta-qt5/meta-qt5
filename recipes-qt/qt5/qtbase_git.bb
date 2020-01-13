@@ -293,4 +293,4 @@ sed -i \
     $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
 }
 
-SRCREV = "3c7df4a0ff91a833cf77e38ab8ccd65e289242e9"
+SRCREV = "663d00c71697a3383d9b3f3bb42b72c3d8eeaa05"

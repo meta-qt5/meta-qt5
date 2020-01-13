@@ -152,7 +152,8 @@ do_install() {
     # remove things unused in nativesdk, we need the headers and libs
     rm -rf ${D}${datadir} \
            ${D}${libdir}/cmake \
-           ${D}${libdir}/pkgconfig
+           ${D}${libdir}/pkgconfig \
+           ${D}${libdir}/metatypes \
 
     # Install CMake's toolchain configuration
     mkdir -p ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
@@ -195,4 +196,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "3c7df4a0ff91a833cf77e38ab8ccd65e289242e9"
+SRCREV = "663d00c71697a3383d9b3f3bb42b72c3d8eeaa05"

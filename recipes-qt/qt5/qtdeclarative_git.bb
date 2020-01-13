@@ -29,6 +29,6 @@ do_install_append_class-nativesdk() {
     rm -rf ${D}${OE_QMAKE_PATH_QML}
 }
 
-SRCREV = "a428a2199f4ce75d68585cabe3471356933fa404"
+SRCREV = "289c0fdc2cafd79e3178a9cd3cfc6c5bd53c8336"
 
 BBCLASSEXTEND =+ "native nativesdk"
