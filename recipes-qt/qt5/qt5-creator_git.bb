@@ -66,7 +66,7 @@ FILES_${PN}-dev += " \
     ${libdir}${QT_DIR_NAME}/qtcreator/*${SOLIBSDEV} \
 "
 
-RDEPENDS_${PN} += "perl python"
+RDEPENDS_${PN} += "perl python3"
 RCONFLICTS_${PN} = "qt-creator"
 
 # To give best user experience out of the box..

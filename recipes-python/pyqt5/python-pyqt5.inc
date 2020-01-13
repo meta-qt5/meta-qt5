@@ -7,11 +7,12 @@ LIC_FILES_CHKSUM = "\
     file://LICENSE;md5=d32239bcb673463ab874e80d47fae504 \
 "
 SRC_URI = "\
-    https://www.riverbankcomputing.com/static/Downloads/PyQt5/${PV}/PyQt5_gpl-${PV}.tar.gz \
+    https://www.riverbankcomputing.com/static/Downloads/PyQt5/${PV}/PyQt5-${PV}.tar.gz \
 "
-SRC_URI[md5sum] = "67508b652098d2e05c4c2b5baeb170cc"
-SRC_URI[sha256sum] = "3718ce847d824090fd5f95ff3f13847ee75c2507368d4cbaeb48338f506e59bf"
-S = "${WORKDIR}/PyQt5_gpl-${PV}"
+SRC_URI[md5sum] = "c1023cb9c3d29a89fc109b163a0175c0"
+SRC_URI[sha256sum] = "adc17c077bf233987b8e43ada87d1e0deca9bd71a13e5fd5fc377482ed69c827"
+
+S = "${WORKDIR}/PyQt5-${PV}"
 
 inherit qmake5
 DEPENDS = "qtbase qtdeclarative qtquickcontrols2"

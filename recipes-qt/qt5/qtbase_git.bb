@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
-    file://LICENSE.QT-LICENSE-AGREEMENT-4.0;md5=948f8877345cd66106f11031977a4625 \
+    file://LICENSE.QT-LICENSE-AGREEMENT;md5=c8b6dd132d52c6e5a545df07a4e3e283 \
 "
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
@@ -33,6 +33,7 @@ SRC_URI += "\
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
     file://0017-qfloat16-check-for-__ARM_FP-2.patch \
+    file://0018-input-Make-use-of-timeval-portable-for-64bit-time_t.patch \
 "
 
 # for syncqt
@@ -264,8 +265,8 @@ do_install_append() {
 
     generate_target_qt_config_file ${D}${OE_QMAKE_PATH_BINS}/qt.conf
 
-    # Fix up absolute paths in scripts
-    sed -i -e '1s,#!/usr/bin/python,#! ${USRBINPATH}/env python,' \
+    # Fix up absolute paths in scripts and use python3 instead of python
+    sed -i -e '1s,#!/usr/bin/python$,#! ${USRBINPATH}/env python3,' \
         ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
 }
 
@@ -273,5 +274,23 @@ do_install_append() {
 INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
 
 RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
+
+TARGET_MKSPEC ?= "linux-g++"
+
+# use clean mkspecs on target
+pkg_postinst_${PN}-tools () {
+sed -i \
+    -e 's:HostSpec =.*:HostSpec = ${TARGET_MKSPEC}:g' \
+    -e 's:TargetSpec =.*:TargetSpec = ${TARGET_MKSPEC}:g' \
+    $D${OE_QMAKE_PATH_BINS}/qt.conf
+}
+
+pkg_postinst_${PN}-mkspecs () {
+sed -i 's: cross_compile : :g' $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
+sed -i \
+    -e 's: cross_compile : :g' \
+    -e 's:HOST_QT_TOOLS =.*::g' \
+    $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
+}
 
 SRCREV = "3c7df4a0ff91a833cf77e38ab8ccd65e289242e9"
