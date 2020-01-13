@@ -7,12 +7,15 @@ DEPENDS = "qtbase qtdeclarative"
 PV = "5.12+git${SRCPV}"
 
 QT_GIT_PROJECT = "qt-apps"
-SRC_URI = "${QT_GIT}/qmllive.git;branch=dev"
+SRC_URI = "${QT_GIT}/qmllive.git;branch=dev \
+           file://0001-lib.pro-Append-LIB_ARCH-to-lib.patch \
+          "
 SRCREV = "0c7bf141b08aa9e757e91a4a05769257d043eab2"
 S = "${WORKDIR}/git"
 
 inherit pkgconfig qmake5
 
+EXTRA_QMAKEVARS_PRE += "LIB_ARCH=${@d.getVar('baselib').replace('lib', '')}"
 EXTRA_QMAKEVARS_POST = "QMAKE_RPATHDIR="
 
 FILES_${PN}-dev += "${datadir}"

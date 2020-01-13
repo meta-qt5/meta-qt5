@@ -14,6 +14,8 @@ QT_MODULE_BRANCH_EASTL = "master"
 QT_GIT_PROJECT = "qt3dstudio"
 PV = "2.5.0+git${SRCPV}"
 
+COMPATIBLE_HOST = "(i.86|x86_64|aarch64|arm|powerpc64).*-linux"
+
 SRC_URI += " \
     ${QT_GIT}/qt3dstudio-eastl.git;name=EASTL;branch=${QT_MODULE_BRANCH_EASTL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/EASTL \
     file://0001-Fix-examples-build-error.patch \

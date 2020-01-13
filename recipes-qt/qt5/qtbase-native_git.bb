@@ -17,8 +17,8 @@ require qt5-native.inc
 require qt5-git.inc
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.13-shared
-# 5.13.meta-qt5-shared.1
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.14-shared
+# 5.14.meta-qt5-shared.1
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -41,16 +41,16 @@ SRC_URI += "\
 "
 
 # common for qtbase-native and nativesdk-qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.13-native
-# 5.13.meta-qt5-native.1
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.14-native
+# 5.14.meta-qt5-native.1
 SRC_URI += " \
-    file://0018-Always-build-uic-and-qvkgen.patch \
-    file://0019-Avoid-renameeat2-for-native-sdk-builds.patch \
+    file://0019-Always-build-uic-and-qvkgen.patch \
+    file://0020-Avoid-renameeat2-for-native-sdk-builds.patch \
 "
 
 # only for qtbase-native
 SRC_URI += " \
-    file://0020-Bootstrap-without-linkat-feature.patch \
+    file://0021-Bootstrap-without-linkat-feature.patch \
 "
 
 CLEANBROKEN = "1"

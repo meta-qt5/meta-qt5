@@ -1,7 +1,7 @@
-From 6ae9112ffea9a5b7d41a06c3d33e55e4f32d8b5a Mon Sep 17 00:00:00 2001
+From b0d3cfec7837dcf818c08454a16eb44d78337a9f Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 30 Nov 2019 10:07:43 -0800
-Subject: [PATCH] Fix build on 32bit arches with 64bit time_t
+Subject: [PATCH] chromium: Fix build on 32bit arches with 64bit time_t
 
 time element is deprecated on new input_event structure in kernel's
 input.h [1]
@@ -9,6 +9,7 @@ input.h [1]
 [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit?id=152194fe9c3f
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  chromium/ui/events/ozone/evdev/event_converter_evdev.cc    | 4 ++--
  chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc | 6 +++---
@@ -16,10 +17,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  3 files changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/chromium/ui/events/ozone/evdev/event_converter_evdev.cc b/chromium/ui/events/ozone/evdev/event_converter_evdev.cc
-index 684514ff011..e2f2ae0b633 100644
+index 5684f4121be..10f6357e6b5 100644
 --- a/chromium/ui/events/ozone/evdev/event_converter_evdev.cc
 +++ b/chromium/ui/events/ozone/evdev/event_converter_evdev.cc
-@@ -168,8 +168,8 @@ void EventConverterEvdev::SetPalmSuppressionCallback(
+@@ -176,8 +176,8 @@ void EventConverterEvdev::SetPalmSuppressionCallback(
  base::TimeTicks EventConverterEvdev::TimeTicksFromInputEvent(
      const input_event& event) {
    base::TimeTicks timestamp =
@@ -65,6 +66,3 @@ index ccd3a499a38..5a2da89d09a 100644
  namespace ui {
  
  class EventDeviceInfo;
--- 
-2.24.0
-

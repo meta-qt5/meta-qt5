@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 inherit qmake5
 
-DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native"
+DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native zlib"
 DEPENDS_append_toolchain-clang = " clang llvm-common"
 DEPENDS_append_libc-musl = " libexecinfo"
 
@@ -34,6 +34,9 @@ S = "${WORKDIR}/git"
 EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 
 EXTRANATIVEPATH += "chrpath-native"
+
+COMPATIBLE_HOST_toolchain-clang_riscv32 = "null"
+COMPATIBLE_HOST_toolchain-clang_riscv64 = "null"
 
 do_configure_append() {
     # Find native tools
