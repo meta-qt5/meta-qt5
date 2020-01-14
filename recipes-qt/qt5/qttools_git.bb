@@ -52,9 +52,3 @@ EXTRA_QMAKEVARS_PRE_append_class-target = "\
 SRCREV = "1682033b1bdadefeb9b953f7d9d096d884f797e2"
 
 BBCLASSEXTEND = "native nativesdk"
-
-do_install_ptest() {
-    mkdir -p ${D}${PTEST_PATH}
-    t=${D}${PTEST_PATH}
-    cp ${B}/tests/auto/qtdiag/tst_tdiag $t
-}
