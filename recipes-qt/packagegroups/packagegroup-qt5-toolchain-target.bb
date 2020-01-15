@@ -3,6 +3,7 @@
 DESCRIPTION = "Target packages for Qt5 SDK"
 LICENSE = "MIT"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit packagegroup
 
 PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
@@ -105,8 +106,13 @@ RDEPENDS_${PN} += " \
     qtquickcontrols2-dev \
     qtquickcontrols2-mkspecs \
 "
+RDEPENDS_${PN}_remove_toolchain-clang_riscv32 = "qttools-dev qttools-mkspecs qttools-staticdev qttools-tools"
+RDEPENDS_${PN}_remove_toolchain-clang_riscv64 = "qttools-dev qttools-mkspecs qttools-staticdev qttools-tools"
 
 RRECOMMENDS_${PN} += " \
     qtquickcontrols-qmlplugins \
     qttools-plugins \
 "
+
+RRECOMMENDS_${PN}_remove_toolchain-clang_riscv32 = "qttools-plugins"
+RRECOMMENDS_${PN}_remove_toolchain-clang_riscv64 = "qttools-plugins"

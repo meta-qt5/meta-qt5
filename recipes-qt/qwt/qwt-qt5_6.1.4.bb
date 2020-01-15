@@ -8,6 +8,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=dac2743472b0462ff3cfb4af42051c88"
 
 DEPENDS = "qtbase qtsvg qttools"
 
+COMPATIBLE_HOST_toolchain-clang_riscv32 = "null"
+COMPATIBLE_HOST_toolchain-clang_riscv64 = "null"
+
 inherit qmake5
 
 SRC_URI = " \

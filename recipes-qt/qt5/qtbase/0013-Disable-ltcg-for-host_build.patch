@@ -1,4 +1,4 @@
-From 35c83da2aadb100be6b4474bbf02d32b78d9ad04 Mon Sep 17 00:00:00 2001
+From 63cf72b8519dd58a5fb6eeeef67b19842806cddc Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Tue, 23 Oct 2018 09:54:57 +0300
 Subject: [PATCH] Disable ltcg for host_build

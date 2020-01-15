@@ -1,4 +1,4 @@
-From ec7aec2f6c56889c96dc12af46059a7f3d4c3a37 Mon Sep 17 00:00:00 2001
+From 33299724b8719d53b26c9055a76a61c358270110 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 16 Jan 2018 13:26:57 +0000
 Subject: [PATCH] Link with libexecinfo on musl
@@ -6,29 +6,24 @@ Subject: [PATCH] Link with libexecinfo on musl
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- src/plugins/debugger/debugger.pro                         | 1 +
- src/plugins/qmldesigner/designercore/designercore-lib.pri | 2 ++
- 2 files changed, 3 insertions(+)
+ src/plugins/debugger/debugger.pro | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/src/plugins/debugger/debugger.pro b/src/plugins/debugger/debugger.pro
-index f5a34aa0d5..4a1359dd5c 100644
 --- a/src/plugins/debugger/debugger.pro
 +++ b/src/plugins/debugger/debugger.pro
-@@ -141,3 +141,4 @@ include(console/console.pri)
+@@ -139,3 +139,4 @@ include(console/console.pri)
  include(analyzer/analyzer.pri)
  
  include(shared/shared.pri)
 +LIBS  *= -lexecinfo
-diff --git a/src/plugins/qmldesigner/designercore/designercore-lib.pri b/src/plugins/qmldesigner/designercore/designercore-lib.pri
-index 935b29728e..31527267fd 100644
---- a/src/plugins/qmldesigner/designercore/designercore-lib.pri
-+++ b/src/plugins/qmldesigner/designercore/designercore-lib.pri
-@@ -2,6 +2,8 @@ include($$PWD/filemanager/filemanager.pri)
+--- a/src/plugins/qmldesigner/qmldesignerplugin.pro
++++ b/src/plugins/qmldesigner/qmldesignerplugin.pro
+@@ -3,7 +3,7 @@ CONFIG += exceptions
  
- QT += network
+ INCLUDEPATH += $$PWD
  
-+LIBS *= -lexecinfo
-+
- DEFINES += TEST_EXPORTS
- DEFINES += DESIGNER_CORE_LIBRARY
- INCLUDEPATH += $$PWD \
+-unix:!openbsd:!osx: LIBS += -lrt # posix shared memory
++unix:!openbsd:!osx: LIBS += -lexecinfo -lrt # posix shared memory
+ 
+ include(../../qtcreatorplugin.pri)
+ 

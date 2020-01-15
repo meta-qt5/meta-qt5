@@ -1,4 +1,4 @@
-From 90881e8b608658e766bcf96fc62d97b39e005f01 Mon Sep 17 00:00:00 2001
+From dcc7962a9e9eb8fc10728df0b72e91794d1ee9d9 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 23 Dec 2018 16:58:04 -0800
 Subject: [PATCH] chromium: stack pointer clobber
@@ -17,7 +17,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/third_party/lss/linux_syscall_support.h b/chromium/third_party/lss/linux_syscall_support.h
-index 9276f56..622cc1f 100644
+index 9276f5627af..622cc1fbf7e 100644
 --- a/chromium/third_party/lss/linux_syscall_support.h
 +++ b/chromium/third_party/lss/linux_syscall_support.h
 @@ -2012,7 +2012,7 @@ struct kernel_statfs {

@@ -1,4 +1,4 @@
-From b938d809624660a2998ea7f844aba715e40acfc6 Mon Sep 17 00:00:00 2001
+From a0f5ac48354dd86aaa53c07e08e30098c62f5097 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 5 Oct 2019 16:21:08 -0700
 Subject: [PATCH] qfloat16: check for __ARM_FP & 2
@@ -20,10 +20,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/corelib/global/qfloat16.cpp b/src/corelib/global/qfloat16.cpp
-index 87ff796368..37dec371a6 100644
+index 6c21b7de5a..98d34a96a5 100644
 --- a/src/corelib/global/qfloat16.cpp
 +++ b/src/corelib/global/qfloat16.cpp
-@@ -148,7 +148,7 @@ f16cextern void qFloatFromFloat16_fast(float *out, const quint16 *in, qsizetype
+@@ -205,7 +205,7 @@ f16cextern void qFloatFromFloat16_fast(float *out, const quint16 *in, qsizetype
  #undef f16cextern
  }
  
