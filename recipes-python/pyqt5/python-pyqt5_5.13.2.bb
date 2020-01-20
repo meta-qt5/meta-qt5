@@ -1,6 +1,6 @@
 require python-pyqt5.inc
 
-inherit pythonnative python-dir
+inherit python3native python3-dir
 
 DEPENDS += "sip sip-native python"
 

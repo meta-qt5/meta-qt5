@@ -18,7 +18,7 @@ SRC_URI += "\
     file://0004-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
 "
 
-inherit cmake_qt5 perlnative pythonnative
+inherit cmake_qt5 perlnative python3native
 
 # qemuarm build fails with:
 # | {standard input}: Assembler messages:
