@@ -24,6 +24,7 @@ DEPENDS += " \
     libdrm fontconfig pixman openssl pango cairo icu pciutils nss \
     libcap \
     gperf-native \
+    python3-urllib3-native \
     ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa-lib', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libxcomposite libxcursor libxi libxrandr libxtst', '', d)} \
 "
@@ -149,6 +150,7 @@ QT_MODULE_BRANCH_CHROMIUM = "77-based"
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
+    file://0001-Allow-to-build-with-python3.patch \
 "
 SRC_URI_append_libc-musl = "\
     file://0002-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
@@ -170,6 +172,7 @@ SRC_URI += " \
     file://chromium/0009-chromium-Include-cstddef-for-size_t-definition.patch;patchdir=src/3rdparty \
     file://chromium/0010-chromium-Move-CharAllocator-definition-to-a-header-f.patch;patchdir=src/3rdparty \
     file://chromium/0011-chromium-Include-cstddef-and-cstdint.patch;patchdir=src/3rdparty \
+    file://chromium/0001-chromium-Allow-to-build-with-python3.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI_append_libc-musl = "\

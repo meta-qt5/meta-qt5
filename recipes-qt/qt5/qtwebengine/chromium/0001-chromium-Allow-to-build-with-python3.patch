@@ -1,0 +1,229 @@
+From db207d9e3a0c0354f91ab753246916623312c06b Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Thu, 23 Jan 2020 18:04:09 +0100
+Subject: [PATCH] chromium: Allow to build with python3
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ chromium/build/config/linux/pkg-config.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/chromium/build/config/linux/pkg-config.py b/chromium/build/config/linux/pkg-config.py
+index 930810b008a..ea9bf155409 100755
+--- a/chromium/build/config/linux/pkg-config.py
++++ b/chromium/build/config/linux/pkg-config.py
+@@ -195,7 +195,7 @@ def main():
+     sys.stderr.write('Running: %s\n' % ' '.join(cmd))
+ 
+   try:
+-    flag_string = subprocess.check_output(cmd)
++    flag_string = subprocess.check_output(cmd).decode('utf8')
+   except:
+     sys.stderr.write('Could not run pkg-config.\n')
+     return 1
+diff --git a/chromium/build/config/posix/sysroot_ld_path.py b/chromium/build/config/posix/sysroot_ld_path.py
+index 5fe5623711c..39d019482fe 100644
+--- a/chromium/build/config/posix/sysroot_ld_path.py
++++ b/chromium/build/config/posix/sysroot_ld_path.py
+@@ -17,7 +17,7 @@ if len(sys.argv) != 3:
+   print("Need two arguments")
+   sys.exit(1)
+ 
+-result = subprocess.check_output([sys.argv[1], sys.argv[2]]).strip()
++result = subprocess.check_output([sys.argv[1], sys.argv[2]]).strip().decode('utf8')
+ result = result.replace(" ", "\n")
+ if result != "":
+   print(result)
+diff --git a/chromium/mojo/public/tools/bindings/mojom_bindings_generator.py b/chromium/mojo/public/tools/bindings/mojom_bindings_generator.py
+index f28fb90a1d6..c5a959b2936 100755
+--- a/chromium/mojo/public/tools/bindings/mojom_bindings_generator.py
++++ b/chromium/mojo/public/tools/bindings/mojom_bindings_generator.py
+@@ -139,7 +139,7 @@ def ScrambleMethodOrdinals(interfaces, salt):
+ 
+ 
+ def ReadFileContents(filename):
+-  with open(filename, 'rb') as f:
++  with open(filename, 'r') as f:
+     return f.read()
+ 
+ 
+diff --git a/chromium/third_party/blink/renderer/bindings/scripts/utilities.py b/chromium/third_party/blink/renderer/bindings/scripts/utilities.py
+index ff1bab337ea..4df72b72a92 100644
+--- a/chromium/third_party/blink/renderer/bindings/scripts/utilities.py
++++ b/chromium/third_party/blink/renderer/bindings/scripts/utilities.py
+@@ -8,7 +8,10 @@ Design doc: http://www.chromium.org/developers/design-documents/idl-build
+ """
+ 
+ import os
+-import cPickle as pickle
++try:
++  import cPickle as pickle
++except ImportError:
++  import pickle
+ import re
+ import shlex
+ import string
+diff --git a/chromium/third_party/blink/renderer/build/scripts/json5_generator.py b/chromium/third_party/blink/renderer/build/scripts/json5_generator.py
+index 8bd0c7ab8f9..014b08e330c 100644
+--- a/chromium/third_party/blink/renderer/build/scripts/json5_generator.py
++++ b/chromium/third_party/blink/renderer/build/scripts/json5_generator.py
+@@ -103,7 +103,7 @@ def _is_valid(valid_values, value, valid_keys=None):
+         assert valid_keys, "'valid_keys' must be declared when using a dict value"
+         return all([(key in valid_keys or key == "default")
+                     and (val in valid_values or val == "")
+-                    for key, val in value.iteritems()])
++                    for key, val in value.items()])
+     else:
+         return value in valid_values
+ 
+diff --git a/chromium/third_party/blink/renderer/build/scripts/make_runtime_features.py b/chromium/third_party/blink/renderer/build/scripts/make_runtime_features.py
+index b5fb70f72e2..e74aa7ef4a4 100755
+--- a/chromium/third_party/blink/renderer/build/scripts/make_runtime_features.py
++++ b/chromium/third_party/blink/renderer/build/scripts/make_runtime_features.py
+@@ -28,7 +28,10 @@
+ # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+ import copy
+-import cPickle as pickle
++try:
++  import cPickle as pickle
++except ImportError:
++  import pickle
+ import os
+ import sys
+ 
+diff --git a/chromium/third_party/blink/renderer/build/scripts/template_expander.py b/chromium/third_party/blink/renderer/build/scripts/template_expander.py
+index 2cf3ad6a098..722d3dfe96e 100644
+--- a/chromium/third_party/blink/renderer/build/scripts/template_expander.py
++++ b/chromium/third_party/blink/renderer/build/scripts/template_expander.py
+@@ -64,6 +64,6 @@ def use_jinja(template_path, filters=None, tests=None, template_cache=None):
+             parameters = generator(*args, **kwargs)
+             return apply_template(template_path, parameters, filters=filters,
+                                   tests=tests, template_cache=template_cache)
+-        generator_internal.func_name = generator.func_name
++        generator_internal.__name__ = generator.__name__
+         return generator_internal
+     return real_decorator
+diff --git a/chromium/third_party/blink/tools/blinkpy/common/message_pool.py b/chromium/third_party/blink/tools/blinkpy/common/message_pool.py
+index 15ba177b7f9..ff709af50f7 100644
+--- a/chromium/third_party/blink/tools/blinkpy/common/message_pool.py
++++ b/chromium/third_party/blink/tools/blinkpy/common/message_pool.py
+@@ -40,7 +40,10 @@ If you don't need these features, use multiprocessing.Pool or concurrency.future
+ instead.
+ """
+ 
+-import cPickle
++try:
++  import cPickle as pickle
++except ImportError:
++  import pickle
+ import logging
+ import multiprocessing
+ import Queue
+@@ -160,7 +163,7 @@ class _MessagePool(object):
+ 
+     def _can_pickle(self, host):
+         try:
+-            cPickle.dumps(host)
++            pickle.dumps(host)
+             return True
+         except TypeError:
+             return False
+diff --git a/chromium/third_party/blink/tools/blinkpy/web_tests/models/test_failures.py b/chromium/third_party/blink/tools/blinkpy/web_tests/models/test_failures.py
+index ade2f8ec5d2..bd3b4c84a26 100644
+--- a/chromium/third_party/blink/tools/blinkpy/web_tests/models/test_failures.py
++++ b/chromium/third_party/blink/tools/blinkpy/web_tests/models/test_failures.py
+@@ -26,7 +26,10 @@
+ # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+-import cPickle
++try:
++  import cPickle as pickle
++except ImportError:
++  import pickle
+ 
+ from blinkpy.web_tests.models import test_expectations
+ 
+@@ -102,7 +105,7 @@ class TestFailure(object):
+     @staticmethod
+     def loads(s):
+         """Creates a TestFailure object from the specified string."""
+-        return cPickle.loads(s)
++        return pickle.loads(s)
+ 
+     def message(self):
+         """Returns a string describing the failure in more detail."""
+@@ -119,7 +122,7 @@ class TestFailure(object):
+ 
+     def dumps(self):
+         """Returns the string/JSON representation of a TestFailure."""
+-        return cPickle.dumps(self)
++        return pickle.dumps(self)
+ 
+     def driver_needs_restart(self):
+         """Returns True if we should kill the driver before the next test."""
+diff --git a/chromium/third_party/blink/tools/blinkpy/web_tests/models/test_results.py b/chromium/third_party/blink/tools/blinkpy/web_tests/models/test_results.py
+index 8c83576888e..ad6cfc86ac3 100644
+--- a/chromium/third_party/blink/tools/blinkpy/web_tests/models/test_results.py
++++ b/chromium/third_party/blink/tools/blinkpy/web_tests/models/test_results.py
+@@ -26,7 +26,10 @@
+ # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+-import cPickle
++try:
++  import cPickle as pickle
++except ImportError:
++  import pickle
+ 
+ from blinkpy.web_tests.models import test_failures
+ 
+@@ -36,7 +39,7 @@ class TestResult(object):
+ 
+     @staticmethod
+     def loads(string):
+-        return cPickle.loads(string)
++        return pickle.loads(string)
+ 
+     def __init__(self, test_name, failures=None, test_run_time=None, has_stderr=False, reftest_type=None,
+                  pid=None, references=None, device_failed=False, has_repaint_overlay=False, crash_site=None):
+@@ -69,4 +72,4 @@ class TestResult(object):
+         return not (self == other)
+ 
+     def dumps(self):
+-        return cPickle.dumps(self)
++        return pickle.dumps(self)
+diff --git a/chromium/third_party/jinja2/_compat.py b/chromium/third_party/jinja2/_compat.py
+index 61d85301a4a..4e8aebf380f 100644
+--- a/chromium/third_party/jinja2/_compat.py
++++ b/chromium/third_party/jinja2/_compat.py
+@@ -57,7 +57,10 @@ else:
+     itervalues = lambda d: d.itervalues()
+     iteritems = lambda d: d.iteritems()
+ 
+-    import cPickle as pickle
++    try:
++        import cPickle as pickle
++    except ImportError:
++        import pickle
+     from cStringIO import StringIO as BytesIO, StringIO
+     NativeStringIO = BytesIO
+ 
+diff --git a/chromium/third_party/yasm/source/patched-yasm/tools/python-yasm/pyxelator/ir.py b/chromium/third_party/yasm/source/patched-yasm/tools/python-yasm/pyxelator/ir.py
+index cfa9c02ead1..df088214b48 100755
+--- a/chromium/third_party/yasm/source/patched-yasm/tools/python-yasm/pyxelator/ir.py
++++ b/chromium/third_party/yasm/source/patched-yasm/tools/python-yasm/pyxelator/ir.py
+@@ -9,8 +9,10 @@ version 0.xx
+ """
+ 
+ import sys
+-#import cPickle as pickle
+-import pickle
++try:
++  import cPickle as pickle
++except ImportError:
++  import pickle
+ 
+ #from lexer import Lexer
+ from parse_core import Symbols #, Parser

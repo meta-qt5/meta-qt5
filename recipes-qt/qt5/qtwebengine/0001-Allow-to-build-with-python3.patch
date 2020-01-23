@@ -1,0 +1,102 @@
+From 717fbe35574a2409f1be28cdb3b1504133560b90 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Thu, 23 Jan 2020 17:48:46 +0100
+Subject: [PATCH] Allow to build with python3
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ mkspecs/features/functions.prf    |  6 +-----
+ src/buildtools/config/support.pri |  5 -----
+ src/buildtools/configure.json     | 14 --------------
+ tools/scripts/gn_find_mocables.py |  4 ++--
+ 4 files changed, 3 insertions(+), 26 deletions(-)
+
+diff --git a/mkspecs/features/functions.prf b/mkspecs/features/functions.prf
+index 512e2523..38bf76cd 100644
+--- a/mkspecs/features/functions.prf
++++ b/mkspecs/features/functions.prf
+@@ -39,11 +39,7 @@ defineReplace(which) {
+ 
+ # Returns the unquoted path to the python executable.
+ defineReplace(pythonPath) {
+-    isEmpty(QMAKE_PYTHON2) {
+-        # Fallback for building QtWebEngine with Qt < 5.8
+-        QMAKE_PYTHON2 = python
+-    }
+-    return($$QMAKE_PYTHON2)
++    return("python3")
+ }
+ 
+ # Returns the python executable for use with shell / make targets.
+diff --git a/src/buildtools/config/support.pri b/src/buildtools/config/support.pri
+index 5bdd808d..a942d3dc 100644
+--- a/src/buildtools/config/support.pri
++++ b/src/buildtools/config/support.pri
+@@ -61,11 +61,6 @@ defineReplace(qtwebengine_checkError) {
+         return(false)
+     }
+ 
+-    !qtConfig(webengine-python2) {
+-        qtwebengine_skipBuild("Python version 2 (2.7.5 or later) is required to build QtWebEngine.")
+-        return(false)
+-    }
+-
+     linux:!qtwebengine_checkErrorForLinux():return(false)
+     win:!qtwebengine_checkErrorForWindows():return(false)
+ 
+diff --git a/src/buildtools/configure.json b/src/buildtools/configure.json
+index a36d0532..24387fe7 100644
+--- a/src/buildtools/configure.json
++++ b/src/buildtools/configure.json
+@@ -318,11 +318,6 @@
+             "label": "system ninja",
+             "type": "detectNinja"
+         },
+-        "webengine-python2": {
+-            "label": "python2",
+-            "type": "detectPython2",
+-            "log": "location"
+-        },
+         "webengine-winversion": {
+             "label": "winversion",
+             "type": "compile",
+@@ -374,7 +369,6 @@
+         "webengine-core-support": {
+             "label": "Support Qt WebEngine Core",
+             "condition": "module.gui
+-                         && features.webengine-python2
+                          && features.webengine-gperf
+                          && features.webengine-bison
+                          && features.webengine-flex
+@@ -404,14 +398,6 @@
+             "autoDetect": "features.private_tests",
+             "output": [ "privateFeature" ]
+         },
+-        "webengine-python2": {
+-            "label": "python2",
+-            "condition": "tests.webengine-python2",
+-            "output": [
+-                "privateFeature",
+-                { "type": "varAssign", "name": "QMAKE_PYTHON2", "value": "tests.webengine-python2.location" }
+-            ]
+-        },
+         "webengine-gperf": {
+             "label": "gperf",
+             "condition": "tests.webengine-gperf",
+diff --git a/tools/scripts/gn_find_mocables.py b/tools/scripts/gn_find_mocables.py
+index d1f68245..4dc2576e 100644
+--- a/tools/scripts/gn_find_mocables.py
++++ b/tools/scripts/gn_find_mocables.py
+@@ -58,10 +58,10 @@ for f in filter(os.path.isfile, files):
+             includedMocs.add(im.group(1))
+ 
+ for mocable in includedMocs:
+-    print "Found included moc: " + mocable
++    print("Found included moc: " + mocable)
+ 
+ assert len(includedMocs) == 0 , "Included mocs are not supported !"
+ 
+ for mocable in mocables:
+-    print mocable
++    print(mocable)
+ sys.exit(0)
