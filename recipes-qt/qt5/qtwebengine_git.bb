@@ -79,7 +79,7 @@ COMPATIBLE_MACHINE_aarch64 = "(.*)"
 
 inherit qmake5
 inherit gettext
-inherit python3native
+inherit pythonnative
 inherit perlnative
 inherit features_check
 
