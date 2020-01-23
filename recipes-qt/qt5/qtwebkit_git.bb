@@ -18,7 +18,14 @@ SRC_URI += "\
     file://0004-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
 "
 
-inherit cmake_qt5 perlnative pythonnative
+inherit cmake_qt5 perlnative
+
+inherit ${@bb.utils.contains("BBFILE_COLLECTIONS", "meta-python2", "pythonnative", "", d)}
+
+python() {
+    if 'meta-python2' not in d.getVar('BBFILE_COLLECTIONS').split():
+        raise bb.parse.SkipRecipe('Requires meta-python2 to be present.')
+}
 
 # qemuarm build fails with:
 # | {standard input}: Assembler messages:
