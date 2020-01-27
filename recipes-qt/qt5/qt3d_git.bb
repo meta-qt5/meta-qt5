@@ -39,3 +39,5 @@ do_configure_prepend() {
 SRCREV = "5aedae5aa9251e1216d7bc1652cb1f451dd047c1"
 
 BBCLASSEXTEND += "native nativesdk"
+
+QT_MODULE_BRANCH_PARAM = "nobranch=1"

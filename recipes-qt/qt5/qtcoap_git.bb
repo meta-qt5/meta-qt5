@@ -12,3 +12,5 @@ PACKAGECONFIG[qtdeclarative] = ",,qtdeclarative"
 DEPENDS += "qtbase"
 
 SRCREV = "7dc2630196197363f1861e23bb8eef6f53074eff"
+
+QT_MODULE_BRANCH_PARAM = "nobranch=1"

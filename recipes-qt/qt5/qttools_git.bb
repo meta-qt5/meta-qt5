@@ -52,3 +52,5 @@ EXTRA_QMAKEVARS_PRE_append_class-target = "\
 SRCREV = "3300714730761ac23f5c9753071a46685eb87d0e"
 
 BBCLASSEXTEND = "native nativesdk"
+
+QT_MODULE_BRANCH_PARAM = "nobranch=1"

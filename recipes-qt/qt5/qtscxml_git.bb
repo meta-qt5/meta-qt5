@@ -22,3 +22,5 @@ do_install_append_class-nativesdk() {
 }
 
 BBCLASSEXTEND =+ "native nativesdk"
+
+QT_MODULE_BRANCH_PARAM = "nobranch=1"

@@ -34,3 +34,5 @@ do_install_append_class-nativesdk() {
 SRCREV = "51a158929b55dffbdfb757da8bd6a2cd181906c6"
 
 BBCLASSEXTEND =+ "native nativesdk"
+
+QT_MODULE_BRANCH_PARAM = "nobranch=1"

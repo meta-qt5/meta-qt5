@@ -18,3 +18,5 @@ FILES_${PN}-qmlplugins += " \
 "
 
 SRCREV = "c8a2a74b2839d9d6c5f8f6f9034470dafc8bcc40"
+
+QT_MODULE_BRANCH_PARAM = "nobranch=1"

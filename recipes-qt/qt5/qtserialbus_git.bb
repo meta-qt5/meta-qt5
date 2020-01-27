@@ -12,3 +12,5 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase qtserialport"
 
 SRCREV = "948edd56ece2f2b5fdcd9fc050efd72e27adcc13"
+
+QT_MODULE_BRANCH_PARAM = "nobranch=1"

@@ -196,3 +196,5 @@ do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
 SRCREV = "0ab53fbdda2fd7f24f45dcd52fbd195e282554da"
+
+QT_MODULE_BRANCH_PARAM = "nobranch=1"

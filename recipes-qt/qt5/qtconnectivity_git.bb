@@ -20,3 +20,5 @@ PACKAGECONFIG[bluez] = "-feature-bluez,-no-feature-bluez,bluez5"
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
 SRCREV = "a9b5b10ce113db1c1bb3d42d058caa7b8e1a964a"
+
+QT_MODULE_BRANCH_PARAM = "nobranch=1"
