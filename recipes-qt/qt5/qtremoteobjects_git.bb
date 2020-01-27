@@ -11,8 +11,8 @@ require qt5-git.inc
 
 DEPENDS += "qtbase qtdeclarative qtremoteobjects-native"
 
-# Patches from https://github.com/meta-qt5/qtremoteobjects/commits/b5.13
-# 5.13.meta-qt5.1
+# Patches from https://github.com/meta-qt5/qtremoteobjects/commits/b5.14
+# 5.14.meta-qt5.1
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -25,6 +25,6 @@ PACKAGECONFIG[tools-only] = "CONFIG+=tools-only"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "2f00e14a46292afbf036e196aa72dc2f1639bf50"
+SRCREV = "0cb1384479a2ebcbc72a3941462fb3e67aaa884d"
 
 BBCLASSEXTEND += "native nativesdk"

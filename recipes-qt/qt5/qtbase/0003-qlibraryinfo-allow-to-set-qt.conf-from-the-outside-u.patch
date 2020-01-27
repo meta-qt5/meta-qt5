@@ -1,4 +1,4 @@
-From db95ec35c5e2a1604f82803fc5c09dc82b594175 Mon Sep 17 00:00:00 2001
+From 73c6762cc7d4c3449fc152f706c8d0efa2f7e65e Mon Sep 17 00:00:00 2001
 From: Holger Freyther <zecke@selfish.org>
 Date: Wed, 26 Sep 2012 17:22:30 +0200
 Subject: [PATCH] qlibraryinfo: allow to set qt.conf from the outside using the

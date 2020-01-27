@@ -145,7 +145,7 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "77-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.14
-# 5.14.meta-qt5.1
+# 5.14.meta-qt5.2
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
@@ -157,7 +157,7 @@ SRC_URI_append_libc-musl = "\
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/77-based
-# 77-based.meta-qt5.1
+# 77-based.meta-qt5.2
 SRC_URI += " \
     file://chromium/0001-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
     file://chromium/0002-chromium-stack-pointer-clobber.patch;patchdir=src/3rdparty \
@@ -188,8 +188,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0023-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "d366f1d5d37ce6f1833ac67c7ebda540b16690f2"
-SRCREV_chromium = "939daf833fff3a9901afb6fd65d02e0f057a494a"
+SRCREV_qtwebengine = "73d457481caff493066d9cce50087b56ee506f6a"
+SRCREV_chromium = "a9a20127e8adeb3f3cd7921b0bec32083103cc5c"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

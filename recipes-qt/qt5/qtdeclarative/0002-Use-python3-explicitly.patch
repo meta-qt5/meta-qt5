@@ -1,4 +1,4 @@
-From dc94032e6132b41bd6927357e4a57c31436294eb Mon Sep 17 00:00:00 2001
+From 838fb4676f78d169dc88f87544cf1a4003302aea Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 26 Nov 2019 21:10:03 -0800
 Subject: [PATCH] Use python3 explicitly
@@ -11,7 +11,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  3 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/qtdeclarative.pro b/qtdeclarative.pro
-index 5b94da9b6..0e3496ce8 100644
+index 5b94da9b69..0e3496ce80 100644
 --- a/qtdeclarative.pro
 +++ b/qtdeclarative.pro
 @@ -2,7 +2,7 @@ CONFIG += tests_need_tools examples_need_tools
@@ -24,7 +24,7 @@ index 5b94da9b6..0e3496ce8 100644
      tmp = python_available
      CONFIG += $$tmp
 diff --git a/src/3rdparty/masm/masm.pri b/src/3rdparty/masm/masm.pri
-index 0e63ac2ce..7a30ab64e 100644
+index 1df4585aae..00038104ec 100644
 --- a/src/3rdparty/masm/masm.pri
 +++ b/src/3rdparty/masm/masm.pri
 @@ -58,7 +58,7 @@ contains(DEFINES, WTF_USE_UDIS86=1) {
@@ -36,7 +36,7 @@ index 0e63ac2ce..7a30ab64e 100644
      QMAKE_EXTRA_COMPILERS += udis86
  
      udis86_tab_cfile.target = $$OUT_PWD/udis86_itab.c
-@@ -113,7 +113,7 @@ retgen.output = $$GENERATEDDIR/RegExpJitTables.h
+@@ -111,7 +111,7 @@ retgen.output = $$GENERATEDDIR/RegExpJitTables.h
  retgen.script = $$PWD/yarr/create_regex_tables
  retgen.input = retgen.script
  retgen.CONFIG += no_link
@@ -46,7 +46,7 @@ index 0e63ac2ce..7a30ab64e 100644
  
  # Taken from WebKit/Tools/qmake/mkspecs/features/unix/default_post.prf
 diff --git a/tests/auto/qml/ecmascripttests/test262.py b/tests/auto/qml/ecmascripttests/test262.py
-index 19551e3ba..bf3f79a45 100755
+index 19551e3ba2..bf3f79a45f 100755
 --- a/tests/auto/qml/ecmascripttests/test262.py
 +++ b/tests/auto/qml/ecmascripttests/test262.py
 @@ -1,4 +1,4 @@
@@ -55,6 +55,3 @@ index 19551e3ba..bf3f79a45 100755
  #############################################################################
  ##
  ## Copyright (C) 2017 The Qt Company Ltd.
--- 
-2.24.0
-
