@@ -128,6 +128,7 @@ FILES_${PN}-mkspecs = "\
 
 # modifications to normal packages
 FILES_${PN} += " \
+    ${OE_QMAKE_PATH_LIBS}/metatypes \
     ${OE_QMAKE_PATH_LIBS}/lib*${SOLIBS} \
     ${OE_QMAKE_PATH_LIBEXECS} \
 "
