@@ -16,7 +16,7 @@ SRC_URI += "file://0001-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-locate-qmlca.pat
             file://0001-Use-python3-explicitly.patch \
            "
 
-DEPENDS += "qtbase"
+DEPENDS += "qtbase qtdeclarative-native"
 
 PACKAGECONFIG ??= "qml-debug qml-network ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)}"
 PACKAGECONFIG[qml-debug] = "-qml-debug,-no-qml-debug"
@@ -28,6 +28,6 @@ do_install_append_class-nativesdk() {
     rm -rf ${D}${OE_QMAKE_PATH_QML}
 }
 
-SRCREV = "289c0fdc2cafd79e3178a9cd3cfc6c5bd53c8336"
+SRCREV = "b6143c08077c7d692fad9daa628f3ded8fa97f68"
 
 BBCLASSEXTEND =+ "native nativesdk"

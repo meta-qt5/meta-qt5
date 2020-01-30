@@ -92,6 +92,8 @@ build_instructions:
       RDEPENDS_${PN}-dbg_pn-x11-common = ""
       # to fix apm, fso-apm conflict in shr-image-all
       VIRTUAL-RUNTIME_apm = "fso-apm"
+      # remove qtwebkit-dev
+      USE_RUBY = ""
       # require conf/distro/include/qt5-versions.inc
       # QT5_VERSION = "5.4.0+git%"
       # for qtwebkit etc
@@ -156,6 +158,7 @@ build_instructions:
       # EXCLUDE_FROM_WORLD
       rm -f ${SOURCE_DIR}/recipes-qt/examples/qt5-opengles2-test_git.bb
       rm -r ${SOURCE_DIR}/recipes-python/pyqt5/python-pyqt5_5.13.2.bb
+      rm -r ${SOURCE_DIR}/recipes-qt/qt5/qtwebkit_git.bb
 
       bitbake $(find ${SOURCE_DIR} -name *.bb | xargs -n1 basename | sed -e 's/\([^._]*\).*/\1/')
     filename: "{{.BuildDir}}/start-build"

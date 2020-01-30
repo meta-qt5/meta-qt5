@@ -9,7 +9,7 @@ inherit packagegroup
 PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
 
 # Requires Ruby to work
-USE_RUBY = " \
+USE_RUBY ?= " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtwebkit-dev', '', d)} \
 "
 
