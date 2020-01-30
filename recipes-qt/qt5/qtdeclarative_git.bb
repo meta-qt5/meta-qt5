@@ -19,7 +19,7 @@ SRC_URI += " \
     file://0002-Use-python3-explicitly.patch \
 "
 
-DEPENDS += "qtbase"
+DEPENDS += "qtbase qtdeclarative-native"
 
 PACKAGECONFIG ??= "qml-debug qml-network ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)}"
 PACKAGECONFIG[qml-debug] = "-qml-debug,-no-qml-debug"
