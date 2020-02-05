@@ -34,6 +34,7 @@ SRC_URI += "\
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
     file://0017-qfloat16-check-for-__ARM_FP-2.patch \
     file://0018-input-Make-use-of-timeval-portable-for-64bit-time_t.patch \
+    file://0022-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
 "
 
 # for syncqt
