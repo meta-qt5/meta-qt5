@@ -1,0 +1,3845 @@
+From a8bbd89d7a1d3e8ca381c025bc8dd1275c59356a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Tue, 4 Feb 2020 22:41:00 +0100
+Subject: [PATCH] Port build to python3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Procdure:
+
+* send all py-files through 2to3
+* find inspiration at / steel from (jsmin.py) webkitgtk
+* manual fixes e.g rename builtins to mybuiltins - 'import builtins' does
+  not load what's defined here
+
+Upstream-Status: Pending
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ Source/JavaScriptCore/CMakeLists.txt          |  18 +--
+ Source/JavaScriptCore/DerivedSources.make     |  18 +--
+ .../JavaScriptCore/KeywordLookupGenerator.py  |  28 ++--
+ .../Scripts/builtins/builtins.py              |  11 --
+ .../generate-combined-inspector-json.py       |   4 +-
+ .../Scripts/generate-js-builtins.py           |  12 +-
+ ...line-and-minify-stylesheets-and-scripts.py |   2 +-
+ Source/JavaScriptCore/Scripts/jsmin.py        |  23 +--
+ .../Scripts/make-js-file-arrays.py            |  59 +++++---
+ .../{builtins => mybuiltins}/__init__.py      |   2 +-
+ .../Scripts/mybuiltins/mybuiltins.py          |  11 ++
+ .../mybuiltins_generate_combined_header.py}   |   4 +-
+ ...ltins_generate_combined_implementation.py} |   6 +-
+ .../mybuiltins_generate_separate_header.py}   |   6 +-
+ ...ltins_generate_separate_implementation.py} |   6 +-
+ .../mybuiltins_generator.py}                  |   4 +-
+ .../mybuiltins_model.py}                      |   7 +-
+ .../mybuiltins_templates.py}                  |   0
+ .../disassembler/udis86/ud_itab.py            |  10 +-
+ .../disassembler/udis86/ud_opcode.py          |  12 +-
+ Source/JavaScriptCore/generate-bytecode-files |  16 +--
+ .../inspector/scripts/codegen/__init__.py     |  42 +++---
+ .../scripts/codegen/cpp_generator.py          |  20 +--
+ ...cpp_alternate_backend_dispatcher_header.py |   8 +-
+ .../generate_cpp_backend_dispatcher_header.py |  16 +--
+ ...e_cpp_backend_dispatcher_implementation.py |  12 +-
+ ...generate_cpp_frontend_dispatcher_header.py |  12 +-
+ ..._cpp_frontend_dispatcher_implementation.py |  12 +-
+ .../generate_cpp_protocol_types_header.py     |  38 ++---
+ ...erate_cpp_protocol_types_implementation.py |  20 +--
+ .../codegen/generate_js_backend_commands.py   |  14 +-
+ ...generate_objc_backend_dispatcher_header.py |  14 +-
+ ..._objc_backend_dispatcher_implementation.py |  18 +--
+ .../generate_objc_configuration_header.py     |   6 +-
+ ...erate_objc_configuration_implementation.py |   6 +-
+ .../generate_objc_conversion_helpers.py       |  12 +-
+ ...objc_frontend_dispatcher_implementation.py |  16 +--
+ .../scripts/codegen/generate_objc_header.py   |  28 ++--
+ .../codegen/generate_objc_internal_header.py  |  10 +-
+ ...rate_objc_protocol_types_implementation.py |  16 +--
+ .../inspector/scripts/codegen/generator.py    |  12 +-
+ .../inspector/scripts/codegen/models.py       |   2 +-
+ .../scripts/codegen/objc_generator.py         |  74 +++++-----
+ .../generate-inspector-protocol-bindings.py   |   2 +-
+ .../scripts/CodeGeneratorReplayInputs.py      |  26 ++--
+ .../ANGLE/generate_winrt_projects.py          |   4 +-
+ .../ANGLE/src/libANGLE/Float16ToFloat32.py    |  26 ++--
+ .../renderer/generate_new_renderer.py         |   2 +-
+ .../gtest/scripts/fuse_gtest_files.py         |  12 +-
+ .../gtest/scripts/gen_gtest_pred_impl.py      |  12 +-
+ Source/ThirdParty/gtest/scripts/pump.py       |  30 ++--
+ Source/ThirdParty/gtest/scripts/upload.py     | 134 +++++++++---------
+ .../test/gtest_break_on_failure_unittest.py   |   2 +-
+ .../ThirdParty/gtest/test/gtest_color_test.py |  66 ++++-----
+ .../gtest/test/gtest_env_var_test.py          |   4 +-
+ .../gtest/test/gtest_filter_unittest.py       |  14 +-
+ .../ThirdParty/gtest/test/gtest_help_test.py  |  16 +--
+ .../gtest/test/gtest_list_tests_unittest.py   |   4 +-
+ .../gtest/test/gtest_shuffle_test.py          |  40 +++---
+ .../ThirdParty/gtest/test/gtest_test_utils.py |   2 +-
+ .../gtest/test/gtest_throw_on_failure_test.py |   4 +-
+ .../gtest/test/gtest_uninitialized_test.py    |   4 +-
+ .../gtest/test/gtest_xml_outfiles_test.py     |   6 +-
+ .../gtest/test/gtest_xml_output_unittest.py   |  22 +--
+ .../gtest/test/gtest_xml_test_utils.py        |  26 ++--
+ .../ThirdParty/gtest/test/run_tests_util.py   |  26 ++--
+ .../gtest/test/run_tests_util_test.py         |  16 +--
+ .../gtest/xcode/Scripts/versiongenerate.py    |   2 +-
+ Source/WebCore/AVFoundationSupport.py         |  14 +-
+ Source/WebCore/CMakeLists.txt                 |  16 +--
+ Source/WebCore/DerivedSources.make            |  16 +--
+ .../network/create-http-header-name-table     |   2 +-
+ Source/WebInspectorUI/Scripts/jsmin.py        |  23 +--
+ .../Scripts/generate-message-receiver.py      |   2 +-
+ .../Scripts/generate-messages-header.py       |   2 +-
+ .../Scripts/webkit/messages_unittest.py       |  46 +++---
+ Source/cmake/WebKitCommon.cmake               |   3 -
+ Tools/jhbuild/jhbuildutils.py                 |  10 +-
+ 78 files changed, 665 insertions(+), 638 deletions(-)
+ delete mode 100644 Source/JavaScriptCore/Scripts/builtins/builtins.py
+ rename Source/JavaScriptCore/Scripts/{builtins => mybuiltins}/__init__.py (72%)
+ create mode 100644 Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins.py
+ rename Source/JavaScriptCore/Scripts/{builtins/builtins_generate_combined_header.py => mybuiltins/mybuiltins_generate_combined_header.py} (98%)
+ rename Source/JavaScriptCore/Scripts/{builtins/builtins_generate_combined_implementation.py => mybuiltins/mybuiltins_generate_combined_implementation.py} (95%)
+ rename Source/JavaScriptCore/Scripts/{builtins/builtins_generate_separate_header.py => mybuiltins/mybuiltins_generate_separate_header.py} (97%)
+ rename Source/JavaScriptCore/Scripts/{builtins/builtins_generate_separate_implementation.py => mybuiltins/mybuiltins_generate_separate_implementation.py} (95%)
+ rename Source/JavaScriptCore/Scripts/{builtins/builtins_generator.py => mybuiltins/mybuiltins_generator.py} (97%)
+ rename Source/JavaScriptCore/Scripts/{builtins/builtins_model.py => mybuiltins/mybuiltins_model.py} (97%)
+ rename Source/JavaScriptCore/Scripts/{builtins/builtins_templates.py => mybuiltins/mybuiltins_templates.py} (100%)
+
+diff --git a/Source/JavaScriptCore/CMakeLists.txt b/Source/JavaScriptCore/CMakeLists.txt
+index 937b3ed00..a4b5fd432 100644
+--- a/Source/JavaScriptCore/CMakeLists.txt
++++ b/Source/JavaScriptCore/CMakeLists.txt
+@@ -883,7 +883,7 @@ set(JavaScriptCore_SCRIPTS_SOURCES_DIR "${JAVASCRIPTCORE_DIR}/Scripts")
+ set(JavaScriptCore_SCRIPTS_SOURCES_PATHS
+     ${JavaScriptCore_SCRIPTS_SOURCES_DIR}/*.pl
+     ${JavaScriptCore_SCRIPTS_SOURCES_DIR}/*.py
+-    ${JavaScriptCore_SCRIPTS_SOURCES_DIR}/builtins/builtins*.py
++    ${JavaScriptCore_SCRIPTS_SOURCES_DIR}/mybuiltins/mybuiltins*.py
+ )
+ 
+ # Force JavaScriptCore to run scripts from the same staging path as WebCore.
+@@ -1174,14 +1174,14 @@ add_custom_command(
+ # JSCBuiltins
+ 
+ set(BUILTINS_GENERATOR_SCRIPTS
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_generator.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_model.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_templates.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_generate_combined_header.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_generate_combined_implementation.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_generate_separate_header.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_generate_separate_implementation.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_generator.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_model.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_templates.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_generate_combined_header.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_generate_combined_implementation.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_generate_separate_header.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_generate_separate_implementation.py
+     ${JavaScriptCore_SCRIPTS_DIR}/generate-js-builtins.py
+     ${JavaScriptCore_SCRIPTS_DIR}/lazywriter.py
+ )
+diff --git a/Source/JavaScriptCore/DerivedSources.make b/Source/JavaScriptCore/DerivedSources.make
+index d5a3fc159..7ef28eff3 100644
+--- a/Source/JavaScriptCore/DerivedSources.make
++++ b/Source/JavaScriptCore/DerivedSources.make
+@@ -66,15 +66,15 @@ all : \
+ # JavaScript builtins.
+ 
+ BUILTINS_GENERATOR_SCRIPTS = \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins/__init__.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins/builtins.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins/builtins_generator.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins/builtins_model.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins/builtins_templates.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins/builtins_generate_combined_header.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins/builtins_generate_combined_implementation.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins/builtins_generate_separate_header.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins/builtins_generate_separate_implementation.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins/__init__.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins/mybuiltins.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins/mybuiltins_generator.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins/mybuiltins_model.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins/mybuiltins_templates.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins/mybuiltins_generate_combined_header.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins/mybuiltins_generate_combined_implementation.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins/mybuiltins_generate_separate_header.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins/mybuiltins_generate_separate_implementation.py \
+     $(JavaScriptCore_SCRIPTS_DIR)/generate-js-builtins.py \
+     $(JavaScriptCore_SCRIPTS_DIR)/lazywriter.py \
+ #
+diff --git a/Source/JavaScriptCore/KeywordLookupGenerator.py b/Source/JavaScriptCore/KeywordLookupGenerator.py
+index d13daba61..938d5d6e7 100644
+--- a/Source/JavaScriptCore/KeywordLookupGenerator.py
++++ b/Source/JavaScriptCore/KeywordLookupGenerator.py
+@@ -110,7 +110,7 @@ class Trie:
+ 
+     def coalesce(self):
+         keys = {}
+-        for k, v in self.keys.items():
++        for k, v in list(self.keys.items()):
+             t = v.coalesce()
+             keys[t.prefix] = t
+         self.keys = keys
+@@ -119,7 +119,7 @@ class Trie:
+         if len(self.keys) != 1:
+             return self
+         # Python 3: for() loop for compatibility. Use next() when Python 2.6 is the baseline.
+-        for (prefix, suffix) in self.keys.items():
++        for (prefix, suffix) in list(self.keys.items()):
+             res = Trie(self.prefix + prefix)
+             res.value = suffix.value
+             res.keys = suffix.keys
+@@ -131,22 +131,22 @@ class Trie:
+         if self.fullPrefix in keyWordWeights:
+             weight = weight + keyWordWeights[self.fullPrefix]
+         self.selfWeight = weight
+-        for trie in self.keys.values():
++        for trie in list(self.keys.values()):
+             trie.fillOut(self.fullPrefix)
+             weight = weight + trie.weight
+-        self.keys = [(trie.prefix, trie) for trie in sorted(self.keys.values(), key=operator.attrgetter('weight'), reverse=True)]
++        self.keys = [(trie.prefix, trie) for trie in sorted(list(self.keys.values()), key=operator.attrgetter('weight'), reverse=True)]
+         self.weight = weight
+ 
+     def printSubTreeAsC(self, typeName, indent):
+         str = makePadding(indent)
+ 
+         if self.value != None:
+-            print(str + "if (!isIdentPartIncludingEscape(code+%d, m_codeEnd)) {" % (len(self.fullPrefix)))
+-            print(str + "    internalShift<%d>();" % len(self.fullPrefix))
+-            print(str + "    if (shouldCreateIdentifier)")
+-            print(str + ("        data->ident = &m_vm->propertyNames->%sKeyword;" % self.fullPrefix))
+-            print(str + "    return " + self.value + ";")
+-            print(str + "}")
++            print((str + "if (!isIdentPartIncludingEscape(code+%d, m_codeEnd)) {" % (len(self.fullPrefix))))
++            print((str + "    internalShift<%d>();" % len(self.fullPrefix)))
++            print((str + "    if (shouldCreateIdentifier)"))
++            print((str + ("        data->ident = &m_vm->propertyNames->%sKeyword;" % self.fullPrefix)))
++            print((str + "    return " + self.value + ";"))
++            print((str + "}"))
+         rootIndex = len(self.fullPrefix)
+         itemCount = 0
+         for k, trie in self.keys:
+@@ -163,15 +163,15 @@ class Trie:
+                     base = "code + %d" % baseIndex
+                 comparison = ("COMPARE_%d%sS(%s, " % (len(test), typeName, base)) + ", ".join(test) + ")"
+             if itemCount == 0:
+-                print(str + "if (" + comparison + ") {")
++                print((str + "if (" + comparison + ") {"))
+             else:
+-                print(str + "} else if (" + comparison + ") {")
++                print((str + "} else if (" + comparison + ") {"))
+ 
+             trie.printSubTreeAsC(typeName, indent + 4)
+             itemCount = itemCount + 1
+ 
+             if itemCount == len(self.keys):
+-                print(str + "}")
++                print((str + "}"))
+ 
+     def maxLength(self):
+         max = len(self.fullPrefix)
+@@ -187,7 +187,7 @@ class Trie:
+         print("static ALWAYS_INLINE bool isIdentPartIncludingEscape(const LChar* code, const LChar* codeEnd);")
+         print("static ALWAYS_INLINE bool isIdentPartIncludingEscape(const UChar* code, const UChar* codeEnd);")
+         # max length + 1 so we don't need to do any bounds checking at all
+-        print("static const int maxTokenLength = %d;" % (self.maxLength() + 1))
++        print(("static const int maxTokenLength = %d;" % (self.maxLength() + 1)))
+         print("")
+         print("template <>")
+         print("template <bool shouldCreateIdentifier> ALWAYS_INLINE JSTokenType Lexer<UChar>::parseKeyword(JSTokenData* data)")
+diff --git a/Source/JavaScriptCore/Scripts/builtins/builtins.py b/Source/JavaScriptCore/Scripts/builtins/builtins.py
+deleted file mode 100644
+index 9349eeef6..000000000
+--- a/Source/JavaScriptCore/Scripts/builtins/builtins.py
++++ /dev/null
+@@ -1,11 +0,0 @@
+-# This file is used to simulate the builtins/ directory when generate-js-builtins.py
+-# is run from JavaScriptCore framework's private headers directory, which is flattened.
+-
+-from builtins_model import *
+-from builtins_templates import *
+-
+-from builtins_generator import *
+-from builtins_generate_combined_header import *
+-from builtins_generate_combined_implementation import *
+-from builtins_generate_separate_header import *
+-from builtins_generate_separate_implementation import *
+diff --git a/Source/JavaScriptCore/Scripts/generate-combined-inspector-json.py b/Source/JavaScriptCore/Scripts/generate-combined-inspector-json.py
+index 53660318d..6b0e95dc9 100755
+--- a/Source/JavaScriptCore/Scripts/generate-combined-inspector-json.py
++++ b/Source/JavaScriptCore/Scripts/generate-combined-inspector-json.py
+@@ -29,7 +29,7 @@ import os
+ import sys
+ 
+ if len(sys.argv) < 2:
+-    print("usage: %s [json files or directory of json files ...]" % os.path.basename(sys.argv[0]))
++    print(("usage: %s [json files or directory of json files ...]" % os.path.basename(sys.argv[0])))
+     sys.exit(1)
+ 
+ files = []
+@@ -64,6 +64,6 @@ for file in files:
+         sys.stderr.write("File \"%s\" does not contain valid JSON:\n" % file)
+         raise
+ 
+-    print(string.rstrip())
++    print((string.rstrip()))
+ print("]}")
+ 
+diff --git a/Source/JavaScriptCore/Scripts/generate-js-builtins.py b/Source/JavaScriptCore/Scripts/generate-js-builtins.py
+index 554a72ccc..3dce94c5c 100644
+--- a/Source/JavaScriptCore/Scripts/generate-js-builtins.py
++++ b/Source/JavaScriptCore/Scripts/generate-js-builtins.py
+@@ -25,7 +25,7 @@
+ # THE POSSIBILITY OF SUCH DAMAGE.
+ 
+ # This script generates C++ bindings for JavaScript builtins.
+-# Generators for individual files are located in the builtins/ directory.
++# Generators for individual files are located in the mybuiltins/ directory.
+ 
+ import fnmatch
+ import logging
+@@ -37,8 +37,8 @@ log = logging.getLogger('global')
+ 
+ from lazywriter import LazyFileWriter
+ 
+-import builtins
+-from builtins import *
++#import mybuiltins
++from mybuiltins import *
+ 
+ 
+ def generate_bindings_for_builtins_files(builtins_files=[],
+@@ -118,7 +118,7 @@ if __name__ == '__main__':
+     cli_parser.add_option("-t", "--test", action="store_true", help="Enable test mode.")
+ 
+     arg_options, arg_values = cli_parser.parse_args()
+-    if len(arg_values) is 0 and not arg_options.input_directory:
++    if len(arg_values) == 0 and not arg_options.input_directory:
+         raise ParseException("At least one input file or directory expected.")
+ 
+     if not arg_options.output_directory:
+@@ -132,7 +132,7 @@ if __name__ == '__main__':
+         for filepath in os.listdir(arg_options.input_directory):
+             input_filepaths.append(os.path.join(arg_options.input_directory, filepath))
+ 
+-    input_filepaths = filter(lambda name: fnmatch.fnmatch(name, '*.js'), input_filepaths)
++    input_filepaths = [name for name in input_filepaths if fnmatch.fnmatch(name, '*.js')]
+ 
+     options = {
+         'output_path': arg_options.output_directory,
+@@ -144,7 +144,7 @@ if __name__ == '__main__':
+ 
+     log.debug("Generating code for builtins.")
+     log.debug("Parsed options:")
+-    for option, value in options.items():
++    for option, value in list(options.items()):
+         log.debug("    %s: %s" % (option, value))
+     log.debug("")
+     log.debug("Input files:")
+diff --git a/Source/JavaScriptCore/Scripts/inline-and-minify-stylesheets-and-scripts.py b/Source/JavaScriptCore/Scripts/inline-and-minify-stylesheets-and-scripts.py
+index 89200c84e..a4a26c2b4 100755
+--- a/Source/JavaScriptCore/Scripts/inline-and-minify-stylesheets-and-scripts.py
++++ b/Source/JavaScriptCore/Scripts/inline-and-minify-stylesheets-and-scripts.py
+@@ -37,7 +37,7 @@ import sys
+ def main(argv):
+ 
+     if len(argv) < 2:
+-        print('usage: %s inputFile outputFile' % argv[0])
++        print(('usage: %s inputFile outputFile' % argv[0]))
+         return 1
+ 
+     inputFileName = argv[1]
+diff --git a/Source/JavaScriptCore/Scripts/jsmin.py b/Source/JavaScriptCore/Scripts/jsmin.py
+index 372418b4d..2f9fddfce 100644
+--- a/Source/JavaScriptCore/Scripts/jsmin.py
++++ b/Source/JavaScriptCore/Scripts/jsmin.py
+@@ -23,17 +23,20 @@
+ # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ # THE SOFTWARE.
+ 
++# stolen from webkitgtk 2.26.2
+ 
+ import sys
+ is_3 = sys.version_info >= (3, 0)
+ if is_3:
+     import io
++    python_text_type = str
+ else:
+     import StringIO
+     try:
+         import cStringIO
+     except ImportError:
+         cStringIO = None
++    python_text_type = basestring
+ 
+ 
+ __all__ = ['jsmin', 'JavascriptMinify']
+@@ -79,14 +82,18 @@ class JavascriptMinify(object):
+         def write(char):
+             # all of this is to support literal regular expressions.
+             # sigh
+-            if char in 'return':
++            if str(char) in 'return':
+                 self.return_buf += char
+                 self.is_return = self.return_buf == 'return'
+             self.outs.write(char)
+             if self.is_return:
+                 self.return_buf = ''
+ 
+-        read = self.ins.read
++        def read(n):
++            char = self.ins.read(n)
++            if not isinstance(char, python_text_type):
++                raise ValueError("ERROR: The script jsmin.py can only handle text input, but it received input of type %s" % type(char))
++            return char
+ 
+         space_strings = "abcdefghijklmnopqrstuvwxyz"\
+         "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$\\"
+@@ -118,8 +125,8 @@ class JavascriptMinify(object):
+                 write(previous)
+         elif not previous:
+             return
+-        elif previous >= '!':
+-            if previous in "'\"":
++        elif str(previous) >= "!":
++            if str(previous) in "'\"":
+                 in_quote = previous
+             write(previous)
+             previous_non_space = previous
+@@ -166,7 +173,7 @@ class JavascriptMinify(object):
+                     if numslashes % 2 == 0:
+                         in_quote = ''
+                         write(''.join(quote_buf))
+-            elif next1 in '\r\n':
++            elif str(next1) in '\r\n':
+                 if previous_non_space in newlineend_strings \
+                     or previous_non_space > '~':
+                     while 1:
+@@ -179,7 +186,7 @@ class JavascriptMinify(object):
+                                 or next2 > '~' or next2 == '/':
+                                 do_newline = True
+                             break
+-            elif next1 < '!' and not in_re:
++            elif str(next1) < '!' and not in_re:
+                 if (previous_non_space in space_strings \
+                     or previous_non_space > '~') \
+                     and (next2 in space_strings or next2 > '~'):
+@@ -217,14 +224,14 @@ class JavascriptMinify(object):
+                     do_newline = False
+ 
+                 write(next1)
+-                if not in_re and next1 in "'\"`":
++                if not in_re and str(next1) in "'\"`":
+                     in_quote = next1
+                     quote_buf = []
+ 
+             previous = next1
+             next1 = next2
+ 
+-            if previous >= '!':
++            if str(previous) >= '!':
+                 previous_non_space = previous
+ 
+             if previous == '\\':
+diff --git a/Source/JavaScriptCore/Scripts/make-js-file-arrays.py b/Source/JavaScriptCore/Scripts/make-js-file-arrays.py
+index 65056646a..4bb2bfe66 100755
+--- a/Source/JavaScriptCore/Scripts/make-js-file-arrays.py
++++ b/Source/JavaScriptCore/Scripts/make-js-file-arrays.py
+@@ -21,11 +21,15 @@
+ # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
++# stolen from webkitgtk 2.26.2
++
++from __future__ import print_function
+ import io
+ import os
+ from optparse import OptionParser
+-from StringIO import StringIO
+-from jsmin import JavascriptMinify
++import sys
++from jsmin import jsmin
++is_3 = sys.version_info >= (3, 0)
+ 
+ 
+ def stringifyCodepoint(code):
+@@ -36,7 +40,7 @@ def stringifyCodepoint(code):
+ 
+ 
+ def chunk(list, chunkSize):
+-    for i in xrange(0, len(list), chunkSize):
++    for i in range(0, len(list), chunkSize):
+         yield list[i:i + chunkSize]
+ 
+ 
+@@ -46,11 +50,11 @@ def main():
+     parser.add_option('-n', '--namespace', help='Namespace to use')
+     (options, arguments) = parser.parse_args()
+     if not options.namespace:
+-        print 'Error: must provide a namespace'
++        print('Error: must provide a namespace')
+         parser.print_usage()
+         exit(-1)
+     if len(arguments) < 3:
+-        print 'Error: must provide at least 3 arguments'
++        print('Error: must provide at least 3 arguments')
+         parser.print_usage()
+         exit(-1)
+ 
+@@ -60,38 +64,47 @@ def main():
+     inputPaths = arguments[2:]
+ 
+     headerFile = open(headerPath, 'w')
+-    print >> headerFile, 'namespace {0:s} {{'.format(namespace)
++    print('namespace {0:s} {{'.format(namespace), file=headerFile)
+ 
+     sourceFile = open(sourcePath, 'w')
+-    print >> sourceFile, '#include "{0:s}"'.format(os.path.basename(headerPath))
+-    print >> sourceFile, 'namespace {0:s} {{'.format(namespace)
+-
+-    jsm = JavascriptMinify()
++    print('#include "{0:s}"'.format(os.path.basename(headerPath)), file=sourceFile)
++    print('namespace {0:s} {{'.format(namespace), file=sourceFile)
+ 
+     for inputFileName in inputPaths:
+-        inputStream = io.FileIO(inputFileName)
+-        outputStream = StringIO()
++
++        if is_3:
++            inputStream = io.open(inputFileName, encoding='utf-8')
++        else:
++            inputStream = io.FileIO(inputFileName)
++
++        data = inputStream.read()
+ 
+         if not options.no_minify:
+-            jsm.minify(inputStream, outputStream)
+-            characters = outputStream.getvalue()
++            characters = jsmin(data)
++        else:
++            characters = data
++
++        if is_3:
++            codepoints = bytearray(characters, encoding='utf-8')
+         else:
+-            characters = inputStream.read()
++            codepoints = list(map(ord, characters))
++
++        # Use the size of codepoints instead of the characters
++        # because UTF-8 characters may need more than one byte.
++        size = len(codepoints)
+ 
+-        size = len(characters)
+         variableName = os.path.splitext(os.path.basename(inputFileName))[0]
+ 
+-        print >> headerFile, 'extern const char {0:s}JavaScript[{1:d}];'.format(variableName, size)
+-        print >> sourceFile, 'const char {0:s}JavaScript[{1:d}] = {{'.format(variableName, size)
++        print('extern const char {0:s}JavaScript[{1:d}];'.format(variableName, size), file=headerFile)
++        print('const char {0:s}JavaScript[{1:d}] = {{'.format(variableName, size), file=sourceFile)
+ 
+-        codepoints = map(ord, characters)
+         for codepointChunk in chunk(codepoints, 16):
+-            print >> sourceFile, '    {0:s},'.format(','.join(map(stringifyCodepoint, codepointChunk)))
++            print('    {0:s},'.format(','.join(map(stringifyCodepoint, codepointChunk))), file=sourceFile)
+ 
+-        print >> sourceFile, '};'
++        print('};', file=sourceFile)
+ 
+-    print >> headerFile, '}} // namespace {0:s}'.format(namespace)
+-    print >> sourceFile, '}} // namespace {0:s}'.format(namespace)
++    print('}} // namespace {0:s}'.format(namespace), file=headerFile)
++    print('}} // namespace {0:s}'.format(namespace), file=sourceFile)
+ 
+ if __name__ == '__main__':
+     main()
+diff --git a/Source/JavaScriptCore/Scripts/builtins/__init__.py b/Source/JavaScriptCore/Scripts/mybuiltins/__init__.py
+similarity index 72%
+rename from Source/JavaScriptCore/Scripts/builtins/__init__.py
+rename to Source/JavaScriptCore/Scripts/mybuiltins/__init__.py
+index fdfcba981..1b9668023 100644
+--- a/Source/JavaScriptCore/Scripts/builtins/__init__.py
++++ b/Source/JavaScriptCore/Scripts/mybuiltins/__init__.py
+@@ -1,3 +1,3 @@
+ # Required for Python to search this directory for module files
+ 
+-from builtins import *
++from mybuiltins import *
+diff --git a/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins.py b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins.py
+new file mode 100644
+index 000000000..1bea3da5c
+--- /dev/null
++++ b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins.py
+@@ -0,0 +1,11 @@
++# This file is used to simulate the builtins/ directory when generate-js-builtins.py
++# is run from JavaScriptCore framework's private headers directory, which is flattened.
++
++from mybuiltins_model import *
++from mybuiltins_templates import *
++
++from mybuiltins_generator import *
++from mybuiltins_generate_combined_header import *
++from mybuiltins_generate_combined_implementation import *
++from mybuiltins_generate_separate_header import *
++from mybuiltins_generate_separate_implementation import *
+diff --git a/Source/JavaScriptCore/Scripts/builtins/builtins_generate_combined_header.py b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_combined_header.py
+similarity index 98%
+rename from Source/JavaScriptCore/Scripts/builtins/builtins_generate_combined_header.py
+rename to Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_combined_header.py
+index 891bd3cb4..6520a5f16 100644
+--- a/Source/JavaScriptCore/Scripts/builtins/builtins_generate_combined_header.py
++++ b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_combined_header.py
+@@ -30,8 +30,8 @@ import re
+ import string
+ from string import Template
+ 
+-from builtins_generator import BuiltinsGenerator
+-from builtins_templates import BuiltinsGeneratorTemplates as Templates
++from mybuiltins_generator import BuiltinsGenerator
++from mybuiltins_templates import BuiltinsGeneratorTemplates as Templates
+ 
+ log = logging.getLogger('global')
+ 
+diff --git a/Source/JavaScriptCore/Scripts/builtins/builtins_generate_combined_implementation.py b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_combined_implementation.py
+similarity index 95%
+rename from Source/JavaScriptCore/Scripts/builtins/builtins_generate_combined_implementation.py
+rename to Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_combined_implementation.py
+index 094434b64..76eed7665 100644
+--- a/Source/JavaScriptCore/Scripts/builtins/builtins_generate_combined_implementation.py
++++ b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_combined_implementation.py
+@@ -30,9 +30,9 @@ import re
+ import string
+ from string import Template
+ 
+-from builtins_generator import BuiltinsGenerator
+-from builtins_model import Framework, Frameworks
+-from builtins_templates import BuiltinsGeneratorTemplates as Templates
++from mybuiltins_generator import BuiltinsGenerator
++from mybuiltins_model import Framework, Frameworks
++from mybuiltins_templates import BuiltinsGeneratorTemplates as Templates
+ 
+ log = logging.getLogger('global')
+ 
+diff --git a/Source/JavaScriptCore/Scripts/builtins/builtins_generate_separate_header.py b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_separate_header.py
+similarity index 97%
+rename from Source/JavaScriptCore/Scripts/builtins/builtins_generate_separate_header.py
+rename to Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_separate_header.py
+index b72a94bfe..6cbfbdca1 100644
+--- a/Source/JavaScriptCore/Scripts/builtins/builtins_generate_separate_header.py
++++ b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_separate_header.py
+@@ -30,9 +30,9 @@ import re
+ import string
+ from string import Template
+ 
+-from builtins_generator import BuiltinsGenerator
+-from builtins_model import Frameworks
+-from builtins_templates import BuiltinsGeneratorTemplates as Templates
++from mybuiltins_generator import BuiltinsGenerator
++from mybuiltins_model import Frameworks
++from mybuiltins_templates import BuiltinsGeneratorTemplates as Templates
+ 
+ log = logging.getLogger('global')
+ 
+diff --git a/Source/JavaScriptCore/Scripts/builtins/builtins_generate_separate_implementation.py b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_separate_implementation.py
+similarity index 95%
+rename from Source/JavaScriptCore/Scripts/builtins/builtins_generate_separate_implementation.py
+rename to Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_separate_implementation.py
+index 0443975da..9f811df6a 100644
+--- a/Source/JavaScriptCore/Scripts/builtins/builtins_generate_separate_implementation.py
++++ b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generate_separate_implementation.py
+@@ -30,9 +30,9 @@ import re
+ import string
+ from string import Template
+ 
+-from builtins_generator import BuiltinsGenerator, WK_lcfirst
+-from builtins_model import Framework, Frameworks
+-from builtins_templates import BuiltinsGeneratorTemplates as Templates
++from mybuiltins_generator import BuiltinsGenerator, WK_lcfirst
++from mybuiltins_model import Framework, Frameworks
++from mybuiltins_templates import BuiltinsGeneratorTemplates as Templates
+ 
+ log = logging.getLogger('global')
+ 
+diff --git a/Source/JavaScriptCore/Scripts/builtins/builtins_generator.py b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generator.py
+similarity index 97%
+rename from Source/JavaScriptCore/Scripts/builtins/builtins_generator.py
+rename to Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generator.py
+index 21ac4c1d9..546eb2e07 100644
+--- a/Source/JavaScriptCore/Scripts/builtins/builtins_generator.py
++++ b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_generator.py
+@@ -30,8 +30,8 @@ import re
+ from string import Template
+ import json
+ 
+-from builtins_model import BuiltinFunction, BuiltinObject
+-from builtins_templates import BuiltinsGeneratorTemplates as Templates
++from mybuiltins_model import BuiltinFunction, BuiltinObject
++from mybuiltins_templates import BuiltinsGeneratorTemplates as Templates
+ 
+ log = logging.getLogger('global')
+ 
+diff --git a/Source/JavaScriptCore/Scripts/builtins/builtins_model.py b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_model.py
+similarity index 97%
+rename from Source/JavaScriptCore/Scripts/builtins/builtins_model.py
+rename to Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_model.py
+index cdd5f9003..68d7aed06 100755
+--- a/Source/JavaScriptCore/Scripts/builtins/builtins_model.py
++++ b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_model.py
+@@ -122,7 +122,8 @@ class BuiltinFunction:
+             interface = interface + " [Constructor]"
+ 
+         return interface
+-
++    def __lt__(self, other):
++        return self.function_name < other.function_name
+ 
+ class BuiltinsCollection:
+     def __init__(self, framework_name):
+@@ -178,7 +179,7 @@ class BuiltinsCollection:
+ 
+         result = []
+ 
+-        for owner, years in owner_to_years.items():
++        for owner, years in list(owner_to_years.items()):
+             sorted_years = list(years)
+             sorted_years.sort()
+             result.append("%s %s" % (', '.join(sorted_years), owner))
+@@ -271,4 +272,4 @@ class BuiltinsCollection:
+             functionBounds.append((start, end))
+ 
+         functionStrings = [text[start:end].strip() for (start, end) in functionBounds]
+-        return map(BuiltinFunction.fromString, functionStrings)
++        return list(map(BuiltinFunction.fromString, functionStrings))
+diff --git a/Source/JavaScriptCore/Scripts/builtins/builtins_templates.py b/Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_templates.py
+similarity index 100%
+rename from Source/JavaScriptCore/Scripts/builtins/builtins_templates.py
+rename to Source/JavaScriptCore/Scripts/mybuiltins/mybuiltins_templates.py
+diff --git a/Source/JavaScriptCore/disassembler/udis86/ud_itab.py b/Source/JavaScriptCore/disassembler/udis86/ud_itab.py
+index ef011d2ec..205dcb1ae 100644
+--- a/Source/JavaScriptCore/disassembler/udis86/ud_itab.py
++++ b/Source/JavaScriptCore/disassembler/udis86/ud_itab.py
+@@ -266,15 +266,15 @@ class UdItabGenerator:
+             pfx_c = []
+             opr   = insn.operands
+             for i in range(len(opr)): 
+-                if not (opr[i] in self.OperandDict.keys()):
+-                    print("error: invalid operand declaration: %s\n" % opr[i])
++                if not (opr[i] in list(self.OperandDict.keys())):
++                    print(("error: invalid operand declaration: %s\n" % opr[i]))
+                 opr_c[i] = "O_" + opr[i]
+             opr = "%s %s %s %s" % (opr_c[0] + ",", opr_c[1] + ",",
+                                    opr_c[2] + ",", opr_c[3])
+ 
+             for p in insn.prefixes:
+-                if not ( p in self.PrefixDict.keys() ):
+-                    print("error: invalid prefix specification: %s \n" % pfx)
++                if not ( p in list(self.PrefixDict.keys()) ):
++                    print(("error: invalid prefix specification: %s \n" % pfx))
+                 pfx_c.append( self.PrefixDict[p] )
+             if len(insn.prefixes) == 0:
+                 pfx_c.append( "P_none" )
+@@ -346,7 +346,7 @@ class UdItabGenerator:
+         # Macros defining short-names for operands
+         #
+         self.ItabC.write("\n\n/* itab entry operand definitions (for readability) */\n");
+-        operands = self.OperandDict.keys()
++        operands = list(self.OperandDict.keys())
+         operands = sorted(operands)
+         for o in operands:
+             self.ItabC.write("#define O_%-7s { %-12s %-8s }\n" %
+diff --git a/Source/JavaScriptCore/disassembler/udis86/ud_opcode.py b/Source/JavaScriptCore/disassembler/udis86/ud_opcode.py
+index fe1833dc7..00961071c 100644
+--- a/Source/JavaScriptCore/disassembler/udis86/ud_opcode.py
++++ b/Source/JavaScriptCore/disassembler/udis86/ud_opcode.py
+@@ -28,7 +28,7 @@ import os
+ # Some compatibility stuff for supporting python 2.x as well as python 3.x
+ def itemslist(dict):
+     try:
+-        return dict.iteritems() # python 2.x
++        return iter(dict.items()) # python 2.x
+     except AttributeError:
+         return list(dict.items()) # python 3.x
+ 
+@@ -180,7 +180,7 @@ class UdOpcodeTable:
+         return itemslist(self._entries)
+ 
+     def numEntries(self):
+-        return len(self._entries.keys())
++        return len(list(self._entries.keys()))
+ 
+     def label(self):
+         return self._TableInfo[self._typ]['label']
+@@ -248,7 +248,7 @@ class UdOpcodeTable:
+     @classmethod
+     def getLabels(cls):
+         """Returns a list of all labels"""
+-        return [cls._TableInfo[k]['label'] for k in cls._TableInfo.keys()]
++        return [cls._TableInfo[k]['label'] for k in list(cls._TableInfo.keys())]
+ 
+ 
+ class UdOpcodeTables(object):
+@@ -401,7 +401,7 @@ class UdOpcodeTables(object):
+             self.map(self.root, opcodes, insn)
+         except self.CollisionError as e:
+             self.pprint()
+-            print(opcodes, insn, str(e.obj1), str(e.obj2))
++            print((opcodes, insn, str(e.obj1), str(e.obj2)))
+             raise
+         except Exception as e:
+             self.pprint()
+@@ -550,10 +550,10 @@ class UdOpcodeTables(object):
+             entries = tbl.entries()
+             for k, e in entries:
+                 if isinstance(e, UdOpcodeTable):
+-                    self.log("%s    |-<%02x> %s" % (indent, k, e))
++                    self.log("%s    |-<%02x> %s" % (indent, int(k), e))
+                     printWalk(e, indent + "    |")
+                 elif isinstance(e, UdInsnDef):
+-                    self.log("%s    |-<%02x> %s" % (indent, k, e))
++                    self.log("%s    |-<%02x> %s" % (indent, int(k), e))
+         printWalk(self.root)
+ 
+ 
+diff --git a/Source/JavaScriptCore/generate-bytecode-files b/Source/JavaScriptCore/generate-bytecode-files
+index 5666a3f92..371ac5e4e 100644
+--- a/Source/JavaScriptCore/generate-bytecode-files
++++ b/Source/JavaScriptCore/generate-bytecode-files
+@@ -91,14 +91,14 @@ def openOrExit(path, mode):
+     try:
+         return open(path, mode)
+     except IOError as e:
+-        print "I/O error opening {0}, ({1}): {2}".format(path, e.errno, e.strerror)
++        print("I/O error opening {0}, ({1}): {2}".format(path, e.errno, e.strerror))
+         exit(1)
+ 
+ def hashFile(file):
+     sha1 = hashlib.sha1()
+     file.seek(0)
+     for line in file:
+-        sha1.update(line)
++        sha1.update(line.encode('utf-8'))
+ 
+     file.seek(0)
+ 
+@@ -114,7 +114,7 @@ if __name__ == "__main__":
+         parser.error("missing <bytecode-json-file>")
+ 
+     bytecodeJSONFile = args[0]
+-    bytecodeFile = openOrExit(bytecodeJSONFile, "rb")
++    bytecodeFile = openOrExit(bytecodeJSONFile, "r")
+     sha1Hash = hashFile(bytecodeFile)
+ 
+     hFileHashString = "// SHA1Hash: {0}\n".format(sha1Hash)
+@@ -131,7 +131,7 @@ if __name__ == "__main__":
+ 
+     if bytecodeHFilename:
+         try:
+-            bytecodeHReadFile = open(bytecodeHFilename, "rb")
++            bytecodeHReadFile = open(bytecodeHFilename, "r")
+             
+             hashLine = bytecodeHReadFile.readline()
+             if hashLine != hFileHashString:
+@@ -143,7 +143,7 @@ if __name__ == "__main__":
+ 
+     if initASMFileName:
+         try:
+-            initBytecodesReadFile = open(initASMFileName, "rb")
++            initBytecodesReadFile = open(initASMFileName, "r")
+             
+             hashLine = initBytecodesReadFile.readline()
+             if hashLine != asmFileHashString:
+@@ -157,15 +157,15 @@ if __name__ == "__main__":
+         exit(0)
+ 
+     if bytecodeHFilename:
+-        bytecodeHFile = openOrExit(bytecodeHFilename, "wb")
++        bytecodeHFile = openOrExit(bytecodeHFilename, "w")
+ 
+     if initASMFileName:
+-        initBytecodesFile = openOrExit(initASMFileName, "wb")
++        initBytecodesFile = openOrExit(initASMFileName, "w")
+ 
+     try:
+         bytecodeSections = json.load(bytecodeFile, encoding = "utf-8")
+     except:
+-        print "Unexpected error parsing {0}: {1}".format(bytecodeJSONFile, sys.exc_info())
++        print("Unexpected error parsing {0}: {1}".format(bytecodeJSONFile, sys.exc_info()))
+ 
+     if bytecodeHFilename:
+         bytecodeHFile.write(hFileHashString)
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/__init__.py b/Source/JavaScriptCore/inspector/scripts/codegen/__init__.py
+index 6077fa97a..bd30c817c 100644
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/__init__.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/__init__.py
+@@ -1,24 +1,24 @@
+ # Required for Python to search this directory for module files
+ 
+-from models import *
+-from generator import *
+-from cpp_generator import *
+-from objc_generator import *
++from .models import *
++from .generator import *
++from .cpp_generator import *
++from .objc_generator import *
+ 
+-from generate_cpp_alternate_backend_dispatcher_header import *
+-from generate_cpp_backend_dispatcher_header import *
+-from generate_cpp_backend_dispatcher_implementation import *
+-from generate_cpp_frontend_dispatcher_header import *
+-from generate_cpp_frontend_dispatcher_implementation import *
+-from generate_cpp_protocol_types_header import *
+-from generate_cpp_protocol_types_implementation import *
+-from generate_js_backend_commands import *
+-from generate_objc_backend_dispatcher_header import *
+-from generate_objc_backend_dispatcher_implementation import *
+-from generate_objc_configuration_header import *
+-from generate_objc_configuration_implementation import *
+-from generate_objc_conversion_helpers import *
+-from generate_objc_frontend_dispatcher_implementation import *
+-from generate_objc_header import *
+-from generate_objc_internal_header import *
+-from generate_objc_protocol_types_implementation import *
++from .generate_cpp_alternate_backend_dispatcher_header import *
++from .generate_cpp_backend_dispatcher_header import *
++from .generate_cpp_backend_dispatcher_implementation import *
++from .generate_cpp_frontend_dispatcher_header import *
++from .generate_cpp_frontend_dispatcher_implementation import *
++from .generate_cpp_protocol_types_header import *
++from .generate_cpp_protocol_types_implementation import *
++from .generate_js_backend_commands import *
++from .generate_objc_backend_dispatcher_header import *
++from .generate_objc_backend_dispatcher_implementation import *
++from .generate_objc_configuration_header import *
++from .generate_objc_configuration_implementation import *
++from .generate_objc_conversion_helpers import *
++from .generate_objc_frontend_dispatcher_implementation import *
++from .generate_objc_header import *
++from .generate_objc_internal_header import *
++from .generate_objc_protocol_types_implementation import *
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/cpp_generator.py b/Source/JavaScriptCore/inspector/scripts/codegen/cpp_generator.py
+index edd330da4..43c655b05 100644
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/cpp_generator.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/cpp_generator.py
+@@ -28,8 +28,8 @@ import logging
+ import os.path
+ import re
+ 
+-from generator import ucfirst
+-from models import PrimitiveType, ObjectType, ArrayType, EnumType, AliasedType, Frameworks
++from .generator import ucfirst
++from .models import PrimitiveType, ObjectType, ArrayType, EnumType, AliasedType, Frameworks
+ 
+ log = logging.getLogger('global')
+ 
+@@ -56,11 +56,11 @@ class CppGenerator:
+         if isinstance(_type, ArrayType):
+             return 'getArray'
+         if isinstance(_type, PrimitiveType):
+-            if _type.raw_name() is 'integer':
++            if _type.raw_name() == 'integer':
+                 return 'getInteger'
+-            elif _type.raw_name() is 'number':
++            elif _type.raw_name() == 'number':
+                 return 'getDouble'
+-            elif _type.raw_name() is 'any':
++            elif _type.raw_name() == 'any':
+                 return 'getValue'
+             else:
+                 return 'get' + ucfirst(_type.raw_name())
+@@ -76,11 +76,11 @@ class CppGenerator:
+         if isinstance(_type, ArrayType):
+             return 'setArray'
+         if isinstance(_type, PrimitiveType):
+-            if _type.raw_name() is 'integer':
++            if _type.raw_name() == 'integer':
+                 return 'setInteger'
+-            elif _type.raw_name() is 'number':
++            elif _type.raw_name() == 'number':
+                 return 'setDouble'
+-            elif _type.raw_name() is 'any':
++            elif _type.raw_name() == 'any':
+                 return 'setValue'
+             else:
+                 return 'set' + ucfirst(_type.raw_name())
+@@ -95,7 +95,7 @@ class CppGenerator:
+         if isinstance(_type, ObjectType) and len(_type.members) == 0:
+             return 'Inspector::InspectorObject'
+         if isinstance(_type, ArrayType):
+-            if _type.raw_name() is None:  # Otherwise, fall through and use typedef'd name.
++            if _type.raw_name() == None:  # Otherwise, fall through and use typedef'd name.
+                 return 'Inspector::Protocol::Array<%s>' % CppGenerator.cpp_protocol_type_for_type(_type.element_type)
+         if isinstance(_type, (ObjectType, AliasedType, EnumType, ArrayType)):
+             return 'Inspector::Protocol::%s::%s' % (_type.type_domain().domain_name, _type.raw_name())
+@@ -119,7 +119,7 @@ class CppGenerator:
+             _type = _type.primitive_type  # Fall through to primitive.
+ 
+         # This handles the 'any' type and objects with defined properties.
+-        if isinstance(_type, ObjectType) or _type.qualified_name() is 'object':
++        if isinstance(_type, ObjectType) or _type.qualified_name() == 'object':
+             cpp_name = 'Inspector::InspectorObject'
+             if parameter.is_optional:
+                 return 'const %s*' % cpp_name
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_alternate_backend_dispatcher_header.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_alternate_backend_dispatcher_header.py
+index 375ce05ca..916277d31 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_alternate_backend_dispatcher_header.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_alternate_backend_dispatcher_header.py
+@@ -30,9 +30,9 @@ import string
+ import re
+ from string import Template
+ 
+-from cpp_generator import CppGenerator
+-from cpp_generator_templates import CppGeneratorTemplates as CppTemplates
+-from generator import Generator
++from .cpp_generator import CppGenerator
++from .cpp_generator_templates import CppGeneratorTemplates as CppTemplates
++from .generator import Generator
+ 
+ log = logging.getLogger('global')
+ 
+@@ -60,7 +60,7 @@ class CppAlternateBackendDispatcherHeaderGenerator(Generator):
+         sections = []
+         sections.append(self.generate_license())
+         sections.append(Template(CppTemplates.AlternateDispatchersHeaderPrelude).substitute(None, **header_args))
+-        sections.append('\n'.join(filter(None, map(self._generate_handler_declarations_for_domain, domains))))
++        sections.append('\n'.join([_f for _f in map(self._generate_handler_declarations_for_domain, domains) if _f]))
+         sections.append(Template(CppTemplates.AlternateDispatchersHeaderPostlude).substitute(None, **header_args))
+         return '\n\n'.join(sections)
+ 
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_backend_dispatcher_header.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_backend_dispatcher_header.py
+index 2e5ff7a6a..25bec9a22 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_backend_dispatcher_header.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_backend_dispatcher_header.py
+@@ -30,10 +30,10 @@ import re
+ import string
+ from string import Template
+ 
+-from cpp_generator import CppGenerator
+-from cpp_generator_templates import CppGeneratorTemplates as CppTemplates
+-from generator import Generator, ucfirst
+-from models import EnumType
++from .cpp_generator import CppGenerator
++from .cpp_generator_templates import CppGeneratorTemplates as CppTemplates
++from .generator import Generator, ucfirst
++from .models import EnumType
+ 
+ log = logging.getLogger('global')
+ 
+@@ -46,7 +46,7 @@ class CppBackendDispatcherHeaderGenerator(Generator):
+         return "InspectorBackendDispatchers.h"
+ 
+     def domains_to_generate(self):
+-        return filter(lambda domain: len(domain.commands) > 0, Generator.domains_to_generate(self))
++        return [domain for domain in Generator.domains_to_generate(self) if len(domain.commands) > 0]
+ 
+     def generate_output(self):
+         headers = [
+@@ -68,8 +68,8 @@ class CppBackendDispatcherHeaderGenerator(Generator):
+         sections.append(self.generate_license())
+         sections.append(Template(CppTemplates.HeaderPrelude).substitute(None, **header_args))
+         sections.append(self._generate_alternate_handler_forward_declarations_for_domains(domains))
+-        sections.extend(map(self._generate_handler_declarations_for_domain, domains))
+-        sections.extend(map(self._generate_dispatcher_declarations_for_domain, domains))
++        sections.extend(list(map(self._generate_handler_declarations_for_domain, domains)))
++        sections.extend(list(map(self._generate_dispatcher_declarations_for_domain, domains)))
+         sections.append(Template(CppTemplates.HeaderPostlude).substitute(None, **header_args))
+         return "\n\n".join(sections)
+ 
+@@ -194,7 +194,7 @@ class CppBackendDispatcherHeaderGenerator(Generator):
+         declarations = []
+         if len(domain.commands) > 0:
+             declarations.append('private:')
+-        declarations.extend(map(self._generate_dispatcher_declaration_for_command, domain.commands))
++        declarations.extend(list(map(self._generate_dispatcher_declaration_for_command, domain.commands)))
+ 
+         handler_args = {
+             'classAndExportMacro': " ".join(classComponents),
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_backend_dispatcher_implementation.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_backend_dispatcher_implementation.py
+index 8f3df80ee..0c9b30e47 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_backend_dispatcher_implementation.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_backend_dispatcher_implementation.py
+@@ -29,10 +29,10 @@ import logging
+ import string
+ from string import Template
+ 
+-from cpp_generator import CppGenerator
+-from cpp_generator_templates import CppGeneratorTemplates as CppTemplates
+-from generator import Generator, ucfirst
+-from models import ObjectType, ArrayType
++from .cpp_generator import CppGenerator
++from .cpp_generator_templates import CppGeneratorTemplates as CppTemplates
++from .generator import Generator, ucfirst
++from .models import ObjectType, ArrayType
+ 
+ log = logging.getLogger('global')
+ 
+@@ -45,7 +45,7 @@ class CppBackendDispatcherImplementationGenerator(Generator):
+         return "InspectorBackendDispatchers.cpp"
+ 
+     def domains_to_generate(self):
+-        return filter(lambda domain: len(domain.commands) > 0, Generator.domains_to_generate(self))
++        return [domain for domain in Generator.domains_to_generate(self) if len(domain.commands) > 0]
+ 
+     def generate_output(self):
+         secondary_headers = [
+@@ -69,7 +69,7 @@ class CppBackendDispatcherImplementationGenerator(Generator):
+         sections.append(self.generate_license())
+         sections.append(Template(CppTemplates.ImplementationPrelude).substitute(None, **header_args))
+         sections.append("\n".join(map(self._generate_handler_class_destructor_for_domain, self.domains_to_generate())))
+-        sections.extend(map(self._generate_dispatcher_implementations_for_domain, self.domains_to_generate()))
++        sections.extend(list(map(self._generate_dispatcher_implementations_for_domain, self.domains_to_generate())))
+         sections.append(Template(CppTemplates.ImplementationPostlude).substitute(None, **header_args))
+         return "\n\n".join(sections)
+ 
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_frontend_dispatcher_header.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_frontend_dispatcher_header.py
+index 58a3cb925..40905d676 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_frontend_dispatcher_header.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_frontend_dispatcher_header.py
+@@ -30,10 +30,10 @@ import re
+ import string
+ from string import Template
+ 
+-from cpp_generator import CppGenerator
+-from cpp_generator_templates import CppGeneratorTemplates as CppTemplates
+-from generator import Generator, ucfirst
+-from models import EnumType
++from .cpp_generator import CppGenerator
++from .cpp_generator_templates import CppGeneratorTemplates as CppTemplates
++from .generator import Generator, ucfirst
++from .models import EnumType
+ 
+ log = logging.getLogger('global')
+ 
+@@ -46,7 +46,7 @@ class CppFrontendDispatcherHeaderGenerator(Generator):
+         return "InspectorFrontendDispatchers.h"
+ 
+     def domains_to_generate(self):
+-        return filter(lambda domain: len(domain.events) > 0, Generator.domains_to_generate(self))
++        return [domain for domain in Generator.domains_to_generate(self) if len(domain.events) > 0]
+ 
+     def generate_output(self):
+         headers = [
+@@ -63,7 +63,7 @@ class CppFrontendDispatcherHeaderGenerator(Generator):
+         sections = []
+         sections.append(self.generate_license())
+         sections.append(Template(CppTemplates.HeaderPrelude).substitute(None, **header_args))
+-        sections.extend(map(self._generate_dispatcher_declarations_for_domain, self.domains_to_generate()))
++        sections.extend(list(map(self._generate_dispatcher_declarations_for_domain, self.domains_to_generate())))
+         sections.append(Template(CppTemplates.HeaderPostlude).substitute(None, **header_args))
+         return "\n\n".join(sections)
+ 
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_frontend_dispatcher_implementation.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_frontend_dispatcher_implementation.py
+index ea46aaf26..132b1c67c 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_frontend_dispatcher_implementation.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_frontend_dispatcher_implementation.py
+@@ -29,10 +29,10 @@ import logging
+ import string
+ from string import Template
+ 
+-from cpp_generator import CppGenerator
+-from cpp_generator_templates import CppGeneratorTemplates as CppTemplates
+-from generator import Generator, ucfirst
+-from models import ObjectType, ArrayType
++from .cpp_generator import CppGenerator
++from .cpp_generator_templates import CppGeneratorTemplates as CppTemplates
++from .generator import Generator, ucfirst
++from .models import ObjectType, ArrayType
+ 
+ log = logging.getLogger('global')
+ 
+@@ -45,7 +45,7 @@ class CppFrontendDispatcherImplementationGenerator(Generator):
+         return "InspectorFrontendDispatchers.cpp"
+ 
+     def domains_to_generate(self):
+-        return filter(lambda domain: len(domain.events) > 0, Generator.domains_to_generate(self))
++        return [domain for domain in Generator.domains_to_generate(self) if len(domain.events) > 0]
+ 
+     def generate_output(self):
+         secondary_headers = [
+@@ -61,7 +61,7 @@ class CppFrontendDispatcherImplementationGenerator(Generator):
+         sections = []
+         sections.append(self.generate_license())
+         sections.append(Template(CppTemplates.ImplementationPrelude).substitute(None, **header_args))
+-        sections.extend(map(self._generate_dispatcher_implementations_for_domain, self.domains_to_generate()))
++        sections.extend(list(map(self._generate_dispatcher_implementations_for_domain, self.domains_to_generate())))
+         sections.append(Template(CppTemplates.ImplementationPostlude).substitute(None, **header_args))
+         return "\n\n".join(sections)
+ 
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_protocol_types_header.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_protocol_types_header.py
+index 6753e2dcf..7bd4375df 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_protocol_types_header.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_protocol_types_header.py
+@@ -30,10 +30,10 @@ import re
+ import string
+ from string import Template
+ 
+-from cpp_generator import CppGenerator
+-from cpp_generator_templates import CppGeneratorTemplates as CppTemplates
+-from generator import Generator, ucfirst
+-from models import EnumType, ObjectType, PrimitiveType, AliasedType, ArrayType, Frameworks
++from .cpp_generator import CppGenerator
++from .cpp_generator_templates import CppGeneratorTemplates as CppTemplates
++from .generator import Generator, ucfirst
++from .models import EnumType, ObjectType, PrimitiveType, AliasedType, ArrayType, Frameworks
+ 
+ log = logging.getLogger('global')
+ 
+@@ -80,8 +80,8 @@ class CppProtocolTypesHeaderGenerator(Generator):
+             '    return getEnumConstantValue(static_cast<int>(enumValue));',
+             '}']))
+ 
+-        builder_sections = map(self._generate_builders_for_domain, domains)
+-        sections.extend(filter(lambda section: len(section) > 0, builder_sections))
++        builder_sections = list(map(self._generate_builders_for_domain, domains))
++        sections.extend([section for section in builder_sections if len(section) > 0])
+         sections.append(self._generate_forward_declarations_for_binding_traits())
+         sections.append('} // namespace Protocol')
+         sections.append(Template(CppTemplates.HeaderPostlude).substitute(None, **header_args))
+@@ -96,8 +96,8 @@ class CppProtocolTypesHeaderGenerator(Generator):
+ 
+         for domain in domains:
+             declaration_types = [decl.type for decl in domain.type_declarations]
+-            object_types = filter(lambda _type: isinstance(_type, ObjectType), declaration_types)
+-            enum_types = filter(lambda _type: isinstance(_type, EnumType), declaration_types)
++            object_types = [_type for _type in declaration_types if isinstance(_type, ObjectType)]
++            enum_types = [_type for _type in declaration_types if isinstance(_type, EnumType)]
+             if len(object_types) + len(enum_types) == 0:
+                 continue
+ 
+@@ -122,8 +122,8 @@ class CppProtocolTypesHeaderGenerator(Generator):
+ """ % '\n\n'.join(sections)
+ 
+     def _generate_typedefs(self, domains):
+-        sections = map(self._generate_typedefs_for_domain, domains)
+-        sections = filter(lambda text: len(text) > 0, sections)
++        sections = list(map(self._generate_typedefs_for_domain, domains))
++        sections = [text for text in sections if len(text) > 0]
+ 
+         if len(sections) == 0:
+             return ''
+@@ -133,8 +133,8 @@ class CppProtocolTypesHeaderGenerator(Generator):
+ // End of typedefs.""" % '\n\n'.join(sections)
+ 
+     def _generate_typedefs_for_domain(self, domain):
+-        primitive_declarations = filter(lambda decl: isinstance(decl.type, AliasedType), domain.type_declarations)
+-        array_declarations = filter(lambda decl: isinstance(decl.type, ArrayType), domain.type_declarations)
++        primitive_declarations = [decl for decl in domain.type_declarations if isinstance(decl.type, AliasedType)]
++        array_declarations = [decl for decl in domain.type_declarations if isinstance(decl.type, ArrayType)]
+         if len(primitive_declarations) == 0 and len(array_declarations) == 0:
+             return ''
+ 
+@@ -170,7 +170,7 @@ class CppProtocolTypesHeaderGenerator(Generator):
+             elif isinstance(type_declaration.type, ObjectType):
+                 sections.append(self._generate_class_for_object_declaration(type_declaration, domain))
+ 
+-        sections = filter(lambda section: len(section) > 0, sections)
++        sections = [section for section in sections if len(section) > 0]
+         if len(sections) == 0:
+             return ''
+ 
+@@ -184,9 +184,9 @@ class CppProtocolTypesHeaderGenerator(Generator):
+         if len(type_declaration.type_members) == 0:
+             return ''
+ 
+-        enum_members = filter(lambda member: isinstance(member.type, EnumType) and member.type.is_anonymous, type_declaration.type_members)
+-        required_members = filter(lambda member: not member.is_optional, type_declaration.type_members)
+-        optional_members = filter(lambda member: member.is_optional, type_declaration.type_members)
++        enum_members = [member for member in type_declaration.type_members if isinstance(member.type, EnumType) and member.type.is_anonymous]
++        required_members = [member for member in type_declaration.type_members if not member.is_optional]
++        optional_members = [member for member in type_declaration.type_members if member.is_optional]
+         object_name = type_declaration.type_name
+ 
+         lines = []
+@@ -244,7 +244,7 @@ class CppProtocolTypesHeaderGenerator(Generator):
+             else:
+                 return '    ' + line
+ 
+-        indented_lines = map(apply_indentation, self._generate_struct_for_enum_type(enum_member.member_name, enum_member.type))
++        indented_lines = list(map(apply_indentation, self._generate_struct_for_enum_type(enum_member.member_name, enum_member.type)))
+         return '\n'.join(indented_lines)
+ 
+     def _generate_struct_for_enum_type(self, enum_name, enum_type):
+@@ -258,7 +258,7 @@ class CppProtocolTypesHeaderGenerator(Generator):
+ 
+     def _generate_builder_state_enum(self, type_declaration):
+         lines = []
+-        required_members = filter(lambda member: not member.is_optional, type_declaration.type_members)
++        required_members = [member for member in type_declaration.type_members if not member.is_optional]
+         enum_values = []
+ 
+         lines.append('    enum {')
+@@ -323,7 +323,7 @@ class CppProtocolTypesHeaderGenerator(Generator):
+         type_arguments = []
+ 
+         for domain in self.domains_to_generate():
+-            declarations_to_generate = filter(lambda decl: self.type_needs_shape_assertions(decl.type), domain.type_declarations)
++            declarations_to_generate = [decl for decl in domain.type_declarations if self.type_needs_shape_assertions(decl.type)]
+ 
+             for type_declaration in declarations_to_generate:
+                 for type_member in type_declaration.type_members:
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_protocol_types_implementation.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_protocol_types_implementation.py
+index 2c263b504..903278bfb 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_protocol_types_implementation.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_cpp_protocol_types_implementation.py
+@@ -29,10 +29,10 @@ import logging
+ import string
+ from string import Template
+ 
+-from cpp_generator import CppGenerator
+-from cpp_generator_templates import CppGeneratorTemplates as CppTemplates
+-from generator import Generator, ucfirst
+-from models import AliasedType, ArrayType, EnumType, ObjectType
++from .cpp_generator import CppGenerator
++from .cpp_generator_templates import CppGeneratorTemplates as CppTemplates
++from .generator import Generator, ucfirst
++from .models import AliasedType, ArrayType, EnumType, ObjectType
+ 
+ log = logging.getLogger('global')
+ 
+@@ -61,8 +61,8 @@ class CppProtocolTypesImplementationGenerator(Generator):
+         sections.append('namespace Protocol {')
+         sections.append(self._generate_enum_mapping())
+         sections.append(self._generate_open_field_names())
+-        builder_sections = map(self._generate_builders_for_domain, domains)
+-        sections.extend(filter(lambda section: len(section) > 0, builder_sections))
++        builder_sections = list(map(self._generate_builders_for_domain, domains))
++        sections.extend([section for section in builder_sections if len(section) > 0])
+         sections.append('} // namespace Protocol')
+         sections.append(Template(CppTemplates.ImplementationPostlude).substitute(None, **header_args))
+ 
+@@ -84,7 +84,7 @@ class CppProtocolTypesImplementationGenerator(Generator):
+     def _generate_open_field_names(self):
+         lines = []
+         for domain in self.domains_to_generate():
+-            for type_declaration in filter(lambda decl: Generator.type_has_open_fields(decl.type), domain.type_declarations):
++            for type_declaration in [decl for decl in domain.type_declarations if Generator.type_has_open_fields(decl.type)]:
+                 for type_member in sorted(type_declaration.type_members, key=lambda member: member.member_name):
+                     field_name = '::'.join(['Inspector', 'Protocol', domain.domain_name, ucfirst(type_declaration.type_name), ucfirst(type_member.member_name)])
+                     lines.append('const char* %s = "%s";' % (field_name, type_member.member_name))
+@@ -93,7 +93,7 @@ class CppProtocolTypesImplementationGenerator(Generator):
+ 
+     def _generate_builders_for_domain(self, domain):
+         sections = []
+-        declarations_to_generate = filter(lambda decl: self.type_needs_shape_assertions(decl.type), domain.type_declarations)
++        declarations_to_generate = [decl for decl in domain.type_declarations if self.type_needs_shape_assertions(decl.type)]
+ 
+         for type_declaration in declarations_to_generate:
+             for type_member in type_declaration.type_members:
+@@ -114,8 +114,8 @@ class CppProtocolTypesImplementationGenerator(Generator):
+         return Template(CppTemplates.ProtocolObjectRuntimeCast).substitute(None, **args)
+ 
+     def _generate_assertion_for_object_declaration(self, object_declaration):
+-        required_members = filter(lambda member: not member.is_optional, object_declaration.type_members)
+-        optional_members = filter(lambda member: member.is_optional, object_declaration.type_members)
++        required_members = [member for member in object_declaration.type_members if not member.is_optional]
++        optional_members = [member for member in object_declaration.type_members if member.is_optional]
+         should_count_properties = not Generator.type_has_open_fields(object_declaration.type)
+         lines = []
+ 
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_js_backend_commands.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_js_backend_commands.py
+index 3392c7845..bd8f33164 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_js_backend_commands.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_js_backend_commands.py
+@@ -29,9 +29,9 @@ import logging
+ import string
+ from string import Template
+ 
+-from generator import Generator, ucfirst
+-from generator_templates import GeneratorTemplates as Templates
+-from models import EnumType
++from .generator import Generator, ucfirst
++from .generator_templates import GeneratorTemplates as Templates
++from .models import EnumType
+ 
+ log = logging.getLogger('global')
+ 
+@@ -45,15 +45,15 @@ class JSBackendCommandsGenerator(Generator):
+ 
+     def domains_to_generate(self):
+         def should_generate_domain(domain):
+-            domain_enum_types = filter(lambda declaration: isinstance(declaration.type, EnumType), domain.type_declarations)
++            domain_enum_types = [declaration for declaration in domain.type_declarations if isinstance(declaration.type, EnumType)]
+             return len(domain.commands) > 0 or len(domain.events) > 0 or len(domain_enum_types) > 0
+ 
+-        return filter(should_generate_domain, Generator.domains_to_generate(self))
++        return list(filter(should_generate_domain, Generator.domains_to_generate(self)))
+ 
+     def generate_output(self):
+         sections = []
+         sections.append(self.generate_license())
+-        sections.extend(map(self.generate_domain, self.domains_to_generate()))
++        sections.extend(list(map(self.generate_domain, self.domains_to_generate())))
+         return "\n\n".join(sections)
+ 
+     def generate_domain(self, domain):
+@@ -64,7 +64,7 @@ class JSBackendCommandsGenerator(Generator):
+ 
+         lines.append('// %(domain)s.' % args)
+ 
+-        has_async_commands = any(map(lambda command: command.is_async, domain.commands))
++        has_async_commands = any([command.is_async for command in domain.commands])
+         if len(domain.events) > 0 or has_async_commands:
+             lines.append('InspectorBackend.register%(domain)sDispatcher = InspectorBackend.registerDomainDispatcher.bind(InspectorBackend, "%(domain)s");' % args)
+ 
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_backend_dispatcher_header.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_backend_dispatcher_header.py
+index d56a0b178..809641d38 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_backend_dispatcher_header.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_backend_dispatcher_header.py
+@@ -30,11 +30,11 @@ import string
+ import re
+ from string import Template
+ 
+-from cpp_generator import CppGenerator
+-from generator import Generator
+-from models import Frameworks
+-from objc_generator import ObjCGenerator
+-from objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
++from .cpp_generator import CppGenerator
++from .generator import Generator
++from .models import Frameworks
++from .objc_generator import ObjCGenerator
++from .objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
+ 
+ log = logging.getLogger('global')
+ 
+@@ -47,7 +47,7 @@ class ObjCBackendDispatcherHeaderGenerator(Generator):
+         return '%sBackendDispatchers.h' % ObjCGenerator.OBJC_PREFIX
+ 
+     def domains_to_generate(self):
+-        return filter(ObjCGenerator.should_generate_domain_command_handler_filter(self.model()), Generator.domains_to_generate(self))
++        return list(filter(ObjCGenerator.should_generate_domain_command_handler_filter(self.model()), Generator.domains_to_generate(self)))
+ 
+     def generate_output(self):
+         headers = [
+@@ -65,7 +65,7 @@ class ObjCBackendDispatcherHeaderGenerator(Generator):
+         sections = []
+         sections.append(self.generate_license())
+         sections.append(Template(ObjCTemplates.BackendDispatcherHeaderPrelude).substitute(None, **header_args))
+-        sections.extend(map(self._generate_objc_handler_declarations_for_domain, domains))
++        sections.extend(list(map(self._generate_objc_handler_declarations_for_domain, domains)))
+         sections.append(Template(ObjCTemplates.BackendDispatcherHeaderPostlude).substitute(None, **header_args))
+         return '\n\n'.join(sections)
+ 
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_backend_dispatcher_implementation.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_backend_dispatcher_implementation.py
+index 42afd99cf..d35d3f14a 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_backend_dispatcher_implementation.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_backend_dispatcher_implementation.py
+@@ -30,11 +30,11 @@ import string
+ import re
+ from string import Template
+ 
+-from cpp_generator import CppGenerator
+-from generator import Generator
+-from models import PrimitiveType, EnumType, AliasedType, Frameworks
+-from objc_generator import ObjCTypeCategory, ObjCGenerator, join_type_and_name
+-from objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
++from .cpp_generator import CppGenerator
++from .generator import Generator
++from .models import PrimitiveType, EnumType, AliasedType, Frameworks
++from .objc_generator import ObjCTypeCategory, ObjCGenerator, join_type_and_name
++from .objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
+ 
+ log = logging.getLogger('global')
+ 
+@@ -47,7 +47,7 @@ class ObjCConfigurationImplementationGenerator(Generator):
+         return '%sBackendDispatchers.mm' % ObjCGenerator.OBJC_PREFIX
+ 
+     def domains_to_generate(self):
+-        return filter(ObjCGenerator.should_generate_domain_command_handler_filter(self.model()), Generator.domains_to_generate(self))
++        return list(filter(ObjCGenerator.should_generate_domain_command_handler_filter(self.model()), Generator.domains_to_generate(self)))
+ 
+     def generate_output(self):
+         secondary_headers = [
+@@ -65,7 +65,7 @@ class ObjCConfigurationImplementationGenerator(Generator):
+         sections = []
+         sections.append(self.generate_license())
+         sections.append(Template(ObjCTemplates.BackendDispatcherImplementationPrelude).substitute(None, **header_args))
+-        sections.extend(map(self._generate_handler_implementation_for_domain, domains))
++        sections.extend(list(map(self._generate_handler_implementation_for_domain, domains)))
+         sections.append(Template(ObjCTemplates.BackendDispatcherImplementationPostlude).substitute(None, **header_args))
+         return '\n\n'.join(sections)
+ 
+@@ -112,7 +112,7 @@ class ObjCConfigurationImplementationGenerator(Generator):
+         if command.return_parameters:
+             lines.append('        Ref<InspectorObject> resultObject = InspectorObject::create();')
+ 
+-            required_pointer_parameters = filter(lambda parameter: not parameter.is_optional and ObjCGenerator.is_type_objc_pointer_type(parameter.type), command.return_parameters)
++            required_pointer_parameters = [parameter for parameter in command.return_parameters if not parameter.is_optional and ObjCGenerator.is_type_objc_pointer_type(parameter.type)]
+             for parameter in required_pointer_parameters:
+                 var_name = ObjCGenerator.identifier_to_objc_identifier(parameter.parameter_name)
+                 lines.append('        THROW_EXCEPTION_FOR_REQUIRED_PARAMETER(%s, @"%s");' % (var_name, var_name))
+@@ -120,7 +120,7 @@ class ObjCConfigurationImplementationGenerator(Generator):
+                 if objc_array_class and objc_array_class.startswith(ObjCGenerator.OBJC_PREFIX):
+                     lines.append('        THROW_EXCEPTION_FOR_BAD_TYPE_IN_ARRAY(%s, [%s class]);' % (var_name, objc_array_class))
+ 
+-            optional_pointer_parameters = filter(lambda parameter: parameter.is_optional and ObjCGenerator.is_type_objc_pointer_type(parameter.type), command.return_parameters)
++            optional_pointer_parameters = [parameter for parameter in command.return_parameters if parameter.is_optional and ObjCGenerator.is_type_objc_pointer_type(parameter.type)]
+             for parameter in optional_pointer_parameters:
+                 var_name = ObjCGenerator.identifier_to_objc_identifier(parameter.parameter_name)
+                 lines.append('        THROW_EXCEPTION_FOR_BAD_OPTIONAL_PARAMETER(%s, @"%s");' % (var_name, var_name))
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_configuration_header.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_configuration_header.py
+index 9b93f37f6..00f3860c7 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_configuration_header.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_configuration_header.py
+@@ -29,9 +29,9 @@ import logging
+ import string
+ from string import Template
+ 
+-from generator import Generator
+-from objc_generator import ObjCGenerator
+-from objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
++from .generator import Generator
++from .objc_generator import ObjCGenerator
++from .objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
+ 
+ log = logging.getLogger('global')
+ 
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_configuration_implementation.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_configuration_implementation.py
+index 735abbca3..2db503c0b 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_configuration_implementation.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_configuration_implementation.py
+@@ -29,9 +29,9 @@ import logging
+ import string
+ from string import Template
+ 
+-from generator import Generator
+-from objc_generator import ObjCGenerator
+-from objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
++from .generator import Generator
++from .objc_generator import ObjCGenerator
++from .objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
+ 
+ log = logging.getLogger('global')
+ 
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_conversion_helpers.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_conversion_helpers.py
+index c31e991e3..7a23251b1 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_conversion_helpers.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_conversion_helpers.py
+@@ -29,10 +29,10 @@ import logging
+ import string
+ from string import Template
+ 
+-from generator import Generator
+-from models import EnumType
+-from objc_generator import ObjCGenerator
+-from objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
++from .generator import Generator
++from .models import EnumType
++from .objc_generator import ObjCGenerator
++from .objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
+ 
+ log = logging.getLogger('global')
+ 
+@@ -51,7 +51,7 @@ class ObjCConversionHelpersGenerator(Generator):
+         return '%sEnumConversionHelpers.h' % ObjCGenerator.OBJC_PREFIX
+ 
+     def domains_to_generate(self):
+-        return filter(ObjCGenerator.should_generate_domain_types_filter(self.model()), Generator.domains_to_generate(self))
++        return list(filter(ObjCGenerator.should_generate_domain_types_filter(self.model()), Generator.domains_to_generate(self)))
+ 
+     def generate_output(self):
+         headers = [
+@@ -67,7 +67,7 @@ class ObjCConversionHelpersGenerator(Generator):
+         sections.append(self.generate_license())
+         sections.append(Template(ObjCTemplates.ConversionHelpersPrelude).substitute(None, **header_args))
+         sections.append(Template(ObjCTemplates.ConversionHelpersStandard).substitute(None))
+-        sections.extend(map(self._generate_enum_conversion_functions, domains))
++        sections.extend(list(map(self._generate_enum_conversion_functions, domains)))
+         sections.append(Template(ObjCTemplates.ConversionHelpersPostlude).substitute(None, **header_args))
+         return '\n\n'.join(sections)
+ 
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_frontend_dispatcher_implementation.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_frontend_dispatcher_implementation.py
+index 0030ed5ee..101c09e9f 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_frontend_dispatcher_implementation.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_frontend_dispatcher_implementation.py
+@@ -29,10 +29,10 @@ import logging
+ import string
+ from string import Template
+ 
+-from cpp_generator import CppGenerator
+-from generator import Generator, ucfirst
+-from objc_generator import ObjCGenerator
+-from objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
++from .cpp_generator import CppGenerator
++from .generator import Generator, ucfirst
++from .objc_generator import ObjCGenerator
++from .objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
+ 
+ log = logging.getLogger('global')
+ 
+@@ -45,7 +45,7 @@ class ObjCFrontendDispatcherImplementationGenerator(Generator):
+         return '%sEventDispatchers.mm' % ObjCGenerator.OBJC_PREFIX
+ 
+     def domains_to_generate(self):
+-        return filter(ObjCGenerator.should_generate_domain_event_dispatcher_filter(self.model()), Generator.domains_to_generate(self))
++        return list(filter(ObjCGenerator.should_generate_domain_event_dispatcher_filter(self.model()), Generator.domains_to_generate(self)))
+ 
+     def generate_output(self):
+         secondary_headers = [
+@@ -62,7 +62,7 @@ class ObjCFrontendDispatcherImplementationGenerator(Generator):
+         sections = []
+         sections.append(self.generate_license())
+         sections.append(Template(ObjCTemplates.ImplementationPrelude).substitute(None, **header_args))
+-        sections.extend(map(self._generate_event_dispatcher_implementations, domains))
++        sections.extend(list(map(self._generate_event_dispatcher_implementations, domains)))
+         sections.append(Template(ObjCTemplates.ImplementationPostlude).substitute(None, **header_args))
+         return '\n\n'.join(sections)
+ 
+@@ -100,7 +100,7 @@ class ObjCFrontendDispatcherImplementationGenerator(Generator):
+         lines.append('    const FrontendRouter& router = _controller->frontendRouter();')
+         lines.append('')
+ 
+-        required_pointer_parameters = filter(lambda parameter: not parameter.is_optional and ObjCGenerator.is_type_objc_pointer_type(parameter.type), event.event_parameters)
++        required_pointer_parameters = [parameter for parameter in event.event_parameters if not parameter.is_optional and ObjCGenerator.is_type_objc_pointer_type(parameter.type)]
+         for parameter in required_pointer_parameters:
+             var_name = ObjCGenerator.identifier_to_objc_identifier(parameter.parameter_name)
+             lines.append('    THROW_EXCEPTION_FOR_REQUIRED_PARAMETER(%s, @"%s");' % (var_name, var_name))
+@@ -108,7 +108,7 @@ class ObjCFrontendDispatcherImplementationGenerator(Generator):
+             if objc_array_class and objc_array_class.startswith(ObjCGenerator.OBJC_PREFIX):
+                 lines.append('    THROW_EXCEPTION_FOR_BAD_TYPE_IN_ARRAY(%s, [%s class]);' % (var_name, objc_array_class))
+ 
+-        optional_pointer_parameters = filter(lambda parameter: parameter.is_optional and ObjCGenerator.is_type_objc_pointer_type(parameter.type), event.event_parameters)
++        optional_pointer_parameters = [parameter for parameter in event.event_parameters if parameter.is_optional and ObjCGenerator.is_type_objc_pointer_type(parameter.type)]
+         for parameter in optional_pointer_parameters:
+             var_name = ObjCGenerator.identifier_to_objc_identifier(parameter.parameter_name)
+             lines.append('    THROW_EXCEPTION_FOR_BAD_OPTIONAL_PARAMETER(%s, @"%s");' % (var_name, var_name))
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_header.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_header.py
+index 7e8e61030..1b0059a7a 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_header.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_header.py
+@@ -29,10 +29,10 @@ import logging
+ import string
+ from string import Template
+ 
+-from generator import Generator, ucfirst
+-from models import ObjectType, EnumType
+-from objc_generator import ObjCGenerator, join_type_and_name
+-from objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
++from .generator import Generator, ucfirst
++from .models import ObjectType, EnumType
++from .objc_generator import ObjCGenerator, join_type_and_name
++from .objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
+ 
+ log = logging.getLogger('global')
+ 
+@@ -60,9 +60,9 @@ class ObjCHeaderGenerator(Generator):
+         }
+ 
+         domains = self.domains_to_generate()
+-        type_domains = filter(ObjCGenerator.should_generate_domain_types_filter(self.model()), domains)
+-        command_domains = filter(ObjCGenerator.should_generate_domain_command_handler_filter(self.model()), domains)
+-        event_domains = filter(ObjCGenerator.should_generate_domain_event_dispatcher_filter(self.model()), domains)
++        type_domains = list(filter(ObjCGenerator.should_generate_domain_types_filter(self.model()), domains))
++        command_domains = list(filter(ObjCGenerator.should_generate_domain_command_handler_filter(self.model()), domains))
++        event_domains = list(filter(ObjCGenerator.should_generate_domain_event_dispatcher_filter(self.model()), domains))
+ 
+         # FIXME: <https://webkit.org/b/138222> Web Inspector: Reduce unnecessary enums/types generated in ObjC Protocol Interfaces
+         # Currently we generate enums/types for all types in the type_domains. For the built-in
+@@ -72,11 +72,11 @@ class ObjCHeaderGenerator(Generator):
+         sections = []
+         sections.append(self.generate_license())
+         sections.append(Template(ObjCTemplates.HeaderPrelude).substitute(None, **header_args))
+-        sections.append('\n'.join(filter(None, map(self._generate_forward_declarations, type_domains))))
+-        sections.append('\n'.join(filter(None, map(self._generate_enums, type_domains))))
+-        sections.append('\n'.join(filter(None, map(self._generate_types, type_domains))))
+-        sections.append('\n\n'.join(filter(None, map(self._generate_command_protocols, command_domains))))
+-        sections.append('\n\n'.join(filter(None, map(self._generate_event_interfaces, event_domains))))
++        sections.append('\n'.join([_f for _f in map(self._generate_forward_declarations, type_domains) if _f]))
++        sections.append('\n'.join([_f for _f in map(self._generate_enums, type_domains) if _f]))
++        sections.append('\n'.join([_f for _f in map(self._generate_types, type_domains) if _f]))
++        sections.append('\n\n'.join([_f for _f in map(self._generate_command_protocols, command_domains) if _f]))
++        sections.append('\n\n'.join([_f for _f in map(self._generate_event_interfaces, event_domains) if _f]))
+         sections.append(Template(ObjCTemplates.HeaderPostlude).substitute(None))
+         return '\n\n'.join(sections)
+ 
+@@ -156,8 +156,8 @@ class ObjCHeaderGenerator(Generator):
+         objc_name = ObjCGenerator.objc_name_for_type(declaration.type)
+         lines.append('__attribute__((visibility ("default")))')
+         lines.append('@interface %s : %s' % (objc_name, ObjCGenerator.OBJC_JSON_OBJECT_BASE))
+-        required_members = filter(lambda member: not member.is_optional, declaration.type_members)
+-        optional_members = filter(lambda member: member.is_optional, declaration.type_members)
++        required_members = [member for member in declaration.type_members if not member.is_optional]
++        optional_members = [member for member in declaration.type_members if member.is_optional]
+         if required_members:
+             lines.append(self._generate_init_method_for_required_members(domain, declaration, required_members))
+         for member in required_members:
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_internal_header.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_internal_header.py
+index 40802ff17..f21b16222 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_internal_header.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_internal_header.py
+@@ -29,9 +29,9 @@ import logging
+ import string
+ from string import Template
+ 
+-from generator import Generator, ucfirst
+-from objc_generator import ObjCGenerator
+-from objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
++from .generator import Generator, ucfirst
++from .objc_generator import ObjCGenerator
++from .objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
+ 
+ log = logging.getLogger('global')
+ 
+@@ -56,12 +56,12 @@ class ObjCInternalHeaderGenerator(Generator):
+         }
+ 
+         domains = self.domains_to_generate()
+-        event_domains = filter(ObjCGenerator.should_generate_domain_event_dispatcher_filter(self.model()), domains)
++        event_domains = list(filter(ObjCGenerator.should_generate_domain_event_dispatcher_filter(self.model()), domains))
+ 
+         sections = []
+         sections.append(self.generate_license())
+         sections.append(Template(ObjCTemplates.GenericHeaderPrelude).substitute(None, **header_args))
+-        sections.append('\n\n'.join(filter(None, map(self._generate_event_dispatcher_private_interfaces, event_domains))))
++        sections.append('\n\n'.join([_f for _f in map(self._generate_event_dispatcher_private_interfaces, event_domains) if _f]))
+         sections.append(Template(ObjCTemplates.GenericHeaderPostlude).substitute(None, **header_args))
+         return '\n\n'.join(sections)
+ 
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_protocol_types_implementation.py b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_protocol_types_implementation.py
+index 95b57f671..8a6aac035 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_protocol_types_implementation.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generate_objc_protocol_types_implementation.py
+@@ -29,10 +29,10 @@ import logging
+ import string
+ from string import Template
+ 
+-from generator import Generator, ucfirst
+-from models import ObjectType
+-from objc_generator import ObjCGenerator
+-from objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
++from .generator import Generator, ucfirst
++from .models import ObjectType
++from .objc_generator import ObjCGenerator
++from .objc_generator_templates import ObjCGeneratorTemplates as ObjCTemplates
+ 
+ log = logging.getLogger('global')
+ 
+@@ -51,7 +51,7 @@ class ObjCProtocolTypesImplementationGenerator(Generator):
+         return '%sTypes.mm' % ObjCGenerator.OBJC_PREFIX
+ 
+     def domains_to_generate(self):
+-        return filter(ObjCGenerator.should_generate_domain_types_filter(self.model()), Generator.domains_to_generate(self))
++        return list(filter(ObjCGenerator.should_generate_domain_types_filter(self.model()), Generator.domains_to_generate(self)))
+ 
+     def generate_output(self):
+         secondary_headers = [
+@@ -69,7 +69,7 @@ class ObjCProtocolTypesImplementationGenerator(Generator):
+         sections = []
+         sections.append(self.generate_license())
+         sections.append(Template(ObjCTemplates.ImplementationPrelude).substitute(None, **header_args))
+-        sections.extend(map(self.generate_type_implementations, domains))
++        sections.extend(list(map(self.generate_type_implementations, domains)))
+         sections.append(Template(ObjCTemplates.ImplementationPostlude).substitute(None, **header_args))
+         return '\n\n'.join(sections)
+ 
+@@ -84,7 +84,7 @@ class ObjCProtocolTypesImplementationGenerator(Generator):
+     def generate_type_implementation(self, domain, declaration):
+         lines = []
+         lines.append('@implementation %s' % ObjCGenerator.objc_name_for_type(declaration.type))
+-        required_members = filter(lambda member: not member.is_optional, declaration.type_members)
++        required_members = [member for member in declaration.type_members if not member.is_optional]
+         if required_members:
+             lines.append('')
+             lines.append(self._generate_init_method_for_required_members(domain, declaration, required_members))
+@@ -112,7 +112,7 @@ class ObjCProtocolTypesImplementationGenerator(Generator):
+         lines.append('        return nil;')
+         lines.append('')
+ 
+-        required_pointer_members = filter(lambda member: ObjCGenerator.is_type_objc_pointer_type(member.type), required_members)
++        required_pointer_members = [member for member in required_members if ObjCGenerator.is_type_objc_pointer_type(member.type)]
+         if required_pointer_members:
+             for member in required_pointer_members:
+                 var_name = ObjCGenerator.identifier_to_objc_identifier(member.member_name)
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/generator.py b/Source/JavaScriptCore/inspector/scripts/codegen/generator.py
+index 4c8f1998e..0ed011136 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/generator.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/generator.py
+@@ -29,8 +29,8 @@ import os.path
+ import re
+ from string import Template
+ 
+-from generator_templates import GeneratorTemplates as Templates
+-from models import PrimitiveType, ObjectType, ArrayType, EnumType, AliasedType, Frameworks
++from .generator_templates import GeneratorTemplates as Templates
++from .models import PrimitiveType, ObjectType, ArrayType, EnumType, AliasedType, Frameworks
+ 
+ log = logging.getLogger('global')
+ 
+@@ -87,7 +87,7 @@ class Generator:
+ 
+     # These methods are overridden by subclasses.
+     def non_supplemental_domains(self):
+-        return filter(lambda domain: not domain.is_supplemental, self.model().domains)
++        return [domain for domain in self.model().domains if not domain.is_supplemental]
+ 
+     def domains_to_generate(self):
+         return self.non_supplemental_domains()
+@@ -129,7 +129,7 @@ class Generator:
+     # set of types will not be automatically regenerated on subsequent calls to
+     # Generator.types_needing_shape_assertions().
+     def calculate_types_requiring_shape_assertions(self, domains):
+-        domain_names = map(lambda domain: domain.domain_name, domains)
++        domain_names = [domain.domain_name for domain in domains]
+         log.debug("> Calculating types that need shape assertions (eligible domains: %s)" % ", ".join(domain_names))
+ 
+         # Mutates the passed-in set; this simplifies checks to prevent infinite recursion.
+@@ -185,7 +185,7 @@ class Generator:
+         for _type in all_types:
+             if not isinstance(_type, EnumType):
+                 continue
+-            map(self._assign_encoding_for_enum_value, _type.enum_values())
++            list(map(self._assign_encoding_for_enum_value, _type.enum_values()))
+ 
+     def _assign_encoding_for_enum_value(self, enum_value):
+         if enum_value in self._enum_value_encodings:
+@@ -219,7 +219,7 @@ class Generator:
+             return match.group(1).upper()
+ 
+         # Split on hyphen, introduce camelcase, and force uppercasing of acronyms.
+-        subwords = map(ucfirst, enum_value.split('-'))
++        subwords = list(map(ucfirst, enum_value.split('-')))
+         return re.sub(re.compile(regex, re.IGNORECASE), replaceCallback, "".join(subwords))
+ 
+     @staticmethod
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/models.py b/Source/JavaScriptCore/inspector/scripts/codegen/models.py
+index ec16a1291..426ab4b2b 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/models.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/models.py
+@@ -35,7 +35,7 @@ def ucfirst(str):
+ 
+ 
+ def find_duplicates(l):
+-    return [key for key, count in collections.Counter(l).items() if count > 1]
++    return [key for key, count in list(collections.Counter(l).items()) if count > 1]
+ 
+ 
+ _FRAMEWORK_CONFIG_MAP = {
+diff --git a/Source/JavaScriptCore/inspector/scripts/codegen/objc_generator.py b/Source/JavaScriptCore/inspector/scripts/codegen/objc_generator.py
+index f6dd03cb5..00015dc2b 100755
+--- a/Source/JavaScriptCore/inspector/scripts/codegen/objc_generator.py
++++ b/Source/JavaScriptCore/inspector/scripts/codegen/objc_generator.py
+@@ -24,8 +24,8 @@
+ # THE POSSIBILITY OF SUCH DAMAGE.
+ 
+ import logging
+-from generator import Generator, ucfirst
+-from models import PrimitiveType, ObjectType, ArrayType, EnumType, AliasedType, Frameworks
++from .generator import Generator, ucfirst
++from .models import PrimitiveType, ObjectType, ArrayType, EnumType, AliasedType, Frameworks
+ 
+ log = logging.getLogger('global')
+ 
+@@ -50,7 +50,7 @@ _OBJC_IDENTIFIER_RENAME_MAP = {
+     'id': 'identifier',  # Page.Frame.id, Runtime.ExecutionContextDescription.id, Debugger.BreakpointAction.id
+ }
+ 
+-_OBJC_IDENTIFIER_REVERSE_RENAME_MAP = dict((v, k) for k, v in _OBJC_IDENTIFIER_RENAME_MAP.iteritems())
++_OBJC_IDENTIFIER_REVERSE_RENAME_MAP = dict((v, k) for k, v in list(_OBJC_IDENTIFIER_RENAME_MAP.items()))
+ 
+ 
+ class ObjCTypeCategory:
+@@ -62,11 +62,11 @@ class ObjCTypeCategory:
+     @staticmethod
+     def category_for_type(_type):
+         if (isinstance(_type, PrimitiveType)):
+-            if _type.raw_name() is 'string':
++            if _type.raw_name() == 'string':
+                 return ObjCTypeCategory.String
+             if  _type.raw_name() in ['object', 'any']:
+                 return ObjCTypeCategory.Object
+-            if _type.raw_name() is 'array':
++            if _type.raw_name() == 'array':
+                 return ObjCTypeCategory.Array
+             return ObjCTypeCategory.Simple
+         if (isinstance(_type, ObjectType)):
+@@ -192,15 +192,15 @@ class ObjCGenerator:
+ 
+     @staticmethod
+     def objc_type_for_raw_name(raw_name):
+-        if raw_name is 'string':
++        if raw_name == 'string':
+             return 'NSString *'
+-        if raw_name is 'array':
++        if raw_name == 'array':
+             return 'NSArray *'
+-        if raw_name is 'integer':
++        if raw_name == 'integer':
+             return 'int'
+-        if raw_name is 'number':
++        if raw_name == 'number':
+             return 'double'
+-        if raw_name is 'boolean':
++        if raw_name == 'boolean':
+             return 'BOOL'
+         if raw_name in ['any', 'object']:
+             return '%s *' % ObjCGenerator.OBJC_JSON_OBJECT_BASE
+@@ -208,9 +208,9 @@ class ObjCGenerator:
+ 
+     @staticmethod
+     def objc_class_for_raw_name(raw_name):
+-        if raw_name is 'string':
++        if raw_name == 'string':
+             return 'NSString'
+-        if raw_name is 'array':
++        if raw_name == 'array':
+             return 'NSArray'
+         if raw_name in ['integer', 'number', 'boolean']:
+             return 'NSNumber'
+@@ -222,13 +222,13 @@ class ObjCGenerator:
+ 
+     @staticmethod
+     def protocol_type_for_raw_name(raw_name):
+-        if raw_name is 'string':
++        if raw_name == 'string':
+             return 'String'
+-        if raw_name is 'integer':
++        if raw_name == 'integer':
+             return 'int'
+-        if raw_name is 'number':
++        if raw_name == 'number':
+             return 'double'
+-        if raw_name is 'boolean':
++        if raw_name == 'boolean':
+             return 'bool'
+         if raw_name in ['any', 'object']:
+             return 'InspectorObject'
+@@ -370,11 +370,11 @@ class ObjCGenerator:
+             objc_class = ObjCGenerator.objc_class_for_type(var_type.element_type)
+             if protocol_type == 'Inspector::Protocol::Array<String>':
+                 return 'inspectorStringArrayArray(%s)' % var_name
+-            if protocol_type is 'String' and objc_class is 'NSString':
++            if protocol_type == 'String' and objc_class == 'NSString':
+                 return 'inspectorStringArray(%s)' % var_name
+-            if protocol_type is 'int' and objc_class is 'NSNumber':
++            if protocol_type == 'int' and objc_class == 'NSNumber':
+                 return 'inspectorIntegerArray(%s)' % var_name
+-            if protocol_type is 'double' and objc_class is 'NSNumber':
++            if protocol_type == 'double' and objc_class == 'NSNumber':
+                 return 'inspectorDoubleArray(%s)' % var_name
+             return 'inspectorObjectArray(%s)' % var_name
+ 
+@@ -404,9 +404,9 @@ class ObjCGenerator:
+             return '[[[%s alloc] initWithInspectorObject:%s] autorelease]' % (objc_class, var_name)
+         if category is ObjCTypeCategory.Array:
+             objc_class = ObjCGenerator.objc_class_for_type(var_type.element_type)
+-            if objc_class is 'NSString':
++            if objc_class == 'NSString':
+                 return 'objcStringArray(%s)' % var_name
+-            if objc_class is 'NSNumber':  # FIXME: Integer or Double?
++            if objc_class == 'NSNumber':  # FIXME: Integer or Double?
+                 return 'objcIntegerArray(%s)' % var_name
+             return 'objcArray<%s>(%s)' % (objc_class, var_name)
+ 
+@@ -425,11 +425,11 @@ class ObjCGenerator:
+             return sub_expression
+         if category is ObjCTypeCategory.Array:
+             objc_class = ObjCGenerator.objc_class_for_type(member.type.element_type)
+-            if objc_class is 'NSString':
++            if objc_class == 'NSString':
+                 return 'inspectorStringArray(%s)' % sub_expression
+-            if objc_class is 'NSNumber':
++            if objc_class == 'NSNumber':
+                 protocol_type = ObjCGenerator.protocol_type_for_type(member.type.element_type)
+-                if protocol_type is 'double':
++                if protocol_type == 'double':
+                     return 'inspectorDoubleArray(%s)' % sub_expression
+                 return 'inspectorIntegerArray(%s)' % sub_expression
+             return 'inspectorObjectArray(%s)' % sub_expression
+@@ -449,11 +449,11 @@ class ObjCGenerator:
+         if category is ObjCTypeCategory.Array:
+             protocol_type = ObjCGenerator.protocol_type_for_type(member.type.element_type)
+             objc_class = ObjCGenerator.objc_class_for_type(member.type.element_type)
+-            if objc_class is 'NSString':
++            if objc_class == 'NSString':
+                 return 'objcStringArray(%s)' % sub_expression
+-            if objc_class is 'NSNumber':
++            if objc_class == 'NSNumber':
+                 protocol_type = ObjCGenerator.protocol_type_for_type(member.type.element_type)
+-                if protocol_type is 'double':
++                if protocol_type == 'double':
+                     return 'objcDoubleArray(%s)' % sub_expression
+                 return 'objcIntegerArray(%s)' % sub_expression
+             return 'objcArray<%s>(%s)' % (objc_class, sub_expression)
+@@ -470,17 +470,17 @@ class ObjCGenerator:
+             _type = _type.aliased_type
+         if (isinstance(_type, PrimitiveType)):
+             raw_name = _type.raw_name()
+-            if raw_name is 'boolean':
++            if raw_name == 'boolean':
+                 return 'setBool'
+-            if raw_name is 'integer':
++            if raw_name == 'integer':
+                 return 'setInteger'
+-            if raw_name is 'number':
++            if raw_name == 'number':
+                 return 'setDouble'
+-            if raw_name is 'string':
++            if raw_name == 'string':
+                 return 'setString'
+             if raw_name in ['any', 'object']:
+                 return 'setObject'
+-            if raw_name is 'array':
++            if raw_name == 'array':
+                 return 'setInspectorArray'
+             return None
+         if (isinstance(_type, EnumType)):
+@@ -501,17 +501,17 @@ class ObjCGenerator:
+             _type = _type.aliased_type
+         if (isinstance(_type, PrimitiveType)):
+             raw_name = _type.raw_name()
+-            if raw_name is 'boolean':
++            if raw_name == 'boolean':
+                 return 'boolForKey'
+-            if raw_name is 'integer':
++            if raw_name == 'integer':
+                 return 'integerForKey'
+-            if raw_name is 'number':
++            if raw_name == 'number':
+                 return 'doubleForKey'
+-            if raw_name is 'string':
++            if raw_name == 'string':
+                 return 'stringForKey'
+             if raw_name in ['any', 'object']:
+                 return 'objectForKey'
+-            if raw_name is 'array':
++            if raw_name == 'array':
+                 return 'inspectorArrayForKey'
+             return None
+         if (isinstance(_type, EnumType)):
+diff --git a/Source/JavaScriptCore/inspector/scripts/generate-inspector-protocol-bindings.py b/Source/JavaScriptCore/inspector/scripts/generate-inspector-protocol-bindings.py
+index a1987aa90..86cbd4934 100755
+--- a/Source/JavaScriptCore/inspector/scripts/generate-inspector-protocol-bindings.py
++++ b/Source/JavaScriptCore/inspector/scripts/generate-inspector-protocol-bindings.py
+@@ -48,7 +48,7 @@ try:
+ 
+ # When copying generator files to JavaScriptCore's private headers on Mac,
+ # the codegen/ module directory is flattened. So, import directly.
+-except ImportError, e:
++except ImportError as e:
+     # log.error(e) # Uncomment this to debug early import errors.
+     import models
+     from models import *
+diff --git a/Source/JavaScriptCore/replay/scripts/CodeGeneratorReplayInputs.py b/Source/JavaScriptCore/replay/scripts/CodeGeneratorReplayInputs.py
+index de32ef6c4..18fff7167 100644
+--- a/Source/JavaScriptCore/replay/scripts/CodeGeneratorReplayInputs.py
++++ b/Source/JavaScriptCore/replay/scripts/CodeGeneratorReplayInputs.py
+@@ -410,7 +410,7 @@ class InputsModel:
+         self.inputs_by_name = {}
+ 
+     def enum_types(self):
+-        _enums = filter(lambda x: x.is_enum() or x.is_enum_class(), self.types)
++        _enums = [x for x in self.types if x.is_enum() or x.is_enum_class()]
+         return sorted(_enums, key=lambda _enum: _enum.type_name())
+ 
+     def get_type_for_member(self, member):
+@@ -424,7 +424,7 @@ class InputsModel:
+             if not isinstance(json['types'], dict):
+                 raise ParseException("Malformed specification: types is not a dict of framework->type list")
+ 
+-            for framework_name, type_list in json['types'].iteritems():
++            for framework_name, type_list in json['types'].items():
+                 if not isinstance(type_list, list):
+                     raise ParseException("Malformed specification: type list for framework %s is not a list" % framework_name)
+ 
+@@ -436,7 +436,7 @@ class InputsModel:
+             if not isinstance(json['inputs'], dict):
+                 raise ParseException("Malformed specification: inputs is not a dict of framework->input list")
+ 
+-            for framework_name, input_list in json['inputs'].iteritems():
++            for framework_name, input_list in json['inputs'].items():
+                 if not isinstance(input_list, list):
+                     raise ParseException("Malformed specification: input list for framework %s is not a list" % framework_name)
+ 
+@@ -597,8 +597,8 @@ class Generator:
+         implementation_file.close()
+ 
+     def generate_header(self):
+-        enums_to_generate = filter(self.should_generate_item, self._model.enum_types())
+-        inputs_to_generate = filter(self.should_generate_item, self._model.inputs)
++        enums_to_generate = list(filter(self.should_generate_item, self._model.enum_types()))
++        inputs_to_generate = list(filter(self.should_generate_item, self._model.inputs))
+ 
+         template_arguments = {
+             'licenseBlock': self.generate_license(),
+@@ -620,8 +620,8 @@ class Generator:
+         return Template(Templates.HeaderSkeleton).substitute(template_arguments)
+ 
+     def generate_implementation(self):
+-        enums_to_generate = filter(self.should_generate_item, self._model.enum_types())
+-        inputs_to_generate = filter(self.should_generate_item, self._model.inputs)
++        enums_to_generate = list(filter(self.should_generate_item, self._model.enum_types()))
++        inputs_to_generate = list(filter(self.should_generate_item, self._model.inputs))
+ 
+         template_arguments = {
+             'licenseBlock': self.generate_license(),
+@@ -680,7 +680,7 @@ class Generator:
+         lines = []
+ 
+         decls_by_framework = {}
+-        frameworks = [Framework.fromString(s) for s in FRAMEWORK_CONFIG_MAP.keys() if s != Frameworks.Global.name]
++        frameworks = [Framework.fromString(s) for s in list(FRAMEWORK_CONFIG_MAP.keys()) if s != Frameworks.Global.name]
+         for framework in frameworks:
+             decls_by_framework[framework] = []
+ 
+@@ -808,7 +808,7 @@ class Generator:
+         return Template(template).substitute(template_arguments)
+ 
+     def generate_for_each_macro(self):
+-        inputs_to_generate = filter(self.should_generate_item, self._model.inputs)
++        inputs_to_generate = list(filter(self.should_generate_item, self._model.inputs))
+ 
+         macro_name = "%s_REPLAY_INPUT_NAMES_FOR_EACH" % self.setting('prefix').upper()
+         lines = []
+@@ -858,7 +858,7 @@ class Generator:
+             }
+             encodeLines.append(Template(encode_template).substitute(template_arguments))
+ 
+-        for guard, guard_values in _type.guard_values_map.iteritems():
++        for guard, guard_values in _type.guard_values_map.items():
+             guardedLines = []
+             for guard_value in guard_values:
+                 template_arguments = {
+@@ -880,7 +880,7 @@ class Generator:
+             }
+             decodeLines.append(Template(decode_template).substitute(template_arguments))
+ 
+-        for guard, guard_values in _type.guard_values_map.iteritems():
++        for guard, guard_values in _type.guard_values_map.items():
+             guardedLines = []
+             for i, guard_value in enumerate(guard_values):
+                 template_arguments = {
+@@ -999,7 +999,7 @@ def generate_from_specifications(input_filepaths=[], output_prefix="", output_di
+         except ValueError as e:
+             raise Exception("Error parsing valid JSON in file: " + input_filepath)
+ 
+-    specifications = map(parse_json_from_file, input_filepaths)
++    specifications = list(map(parse_json_from_file, input_filepaths))
+ 
+     model = InputsModel()
+     for spec in specifications:
+@@ -1012,7 +1012,7 @@ def generate_from_specifications(input_filepaths=[], output_prefix="", output_di
+ 
+ 
+ if __name__ == '__main__':
+-    allowed_framework_names = FRAMEWORK_CONFIG_MAP.keys()
++    allowed_framework_names = list(FRAMEWORK_CONFIG_MAP.keys())
+ 
+     cli_parser = optparse.OptionParser(usage="usage: %prog [options] <Inputs.json> [, <MoreInputs.json> ]")
+     cli_parser.add_option("-o", "--outputDir", help="Directory where generated files should be written.")
+diff --git a/Source/ThirdParty/ANGLE/generate_winrt_projects.py b/Source/ThirdParty/ANGLE/generate_winrt_projects.py
+index e0e517772..5e18782c1 100644
+--- a/Source/ThirdParty/ANGLE/generate_winrt_projects.py
++++ b/Source/ThirdParty/ANGLE/generate_winrt_projects.py
+@@ -30,8 +30,8 @@ def generateProjects(generation_dir, build_winphone):
+     gyp_cmd += ' -D angle_standalone=1'
+     gyp_cmd += ' ' + os.path.join(script_dir, 'angle.gyp')
+ 
+-    print 'Generating projects to ' + generation_dir + ' from gyp files...'
+-    print gyp_cmd
++    print('Generating projects to ' + generation_dir + ' from gyp files...')
++    print(gyp_cmd)
+     sys.stdout.flush()
+     os.system(gyp_cmd)
+ 
+diff --git a/Source/ThirdParty/ANGLE/src/libANGLE/Float16ToFloat32.py b/Source/ThirdParty/ANGLE/src/libANGLE/Float16ToFloat32.py
+index cf039bfc2..951aa146e 100644
+--- a/Source/ThirdParty/ANGLE/src/libANGLE/Float16ToFloat32.py
++++ b/Source/ThirdParty/ANGLE/src/libANGLE/Float16ToFloat32.py
+@@ -42,7 +42,7 @@ def convertOffset(i):
+     else:
+         return 1024
+ 
+-print """//
++print("""//
+ // Copyright (c) 2012 The ANGLE Project Authors. All rights reserved.
+ // Use of this source code is governed by a BSD-style license that can be
+ // found in the LICENSE file.
+@@ -52,27 +52,27 @@ print """//
+ 
+ namespace gl
+ {
+-"""
++""")
+ 
+-print "const static unsigned g_mantissa[2048] = {"
++print("const static unsigned g_mantissa[2048] = {")
+ for i in range(0, 2048):
+-    print "    %#010x," % convertMantissa(i)
+-print "};\n"
++    print("    %#010x," % convertMantissa(i))
++print("};\n")
+ 
+-print "const static unsigned g_exponent[64] = {"
++print("const static unsigned g_exponent[64] = {")
+ for i in range(0, 64):
+-    print "    %#010x," % convertExponent(i)
+-print "};\n"
++    print("    %#010x," % convertExponent(i))
++print("};\n")
+ 
+-print "const static unsigned g_offset[64] = {"
++print("const static unsigned g_offset[64] = {")
+ for i in range(0, 64):
+-    print "    %#010x," % convertOffset(i)
+-print "};\n"
++    print("    %#010x," % convertOffset(i))
++print("};\n")
+ 
+-print """float float16ToFloat32(unsigned short h)
++print("""float float16ToFloat32(unsigned short h)
+ {
+     unsigned i32 = g_mantissa[g_offset[h >> 10] + (h & 0x3ff)] + g_exponent[h >> 10];
+     return *(float*) &i32;
+ }
+ }
+-"""
++""")
+diff --git a/Source/ThirdParty/ANGLE/src/libANGLE/renderer/generate_new_renderer.py b/Source/ThirdParty/ANGLE/src/libANGLE/renderer/generate_new_renderer.py
+index 5d64fbd23..e0be48b55 100644
+--- a/Source/ThirdParty/ANGLE/src/libANGLE/renderer/generate_new_renderer.py
++++ b/Source/ThirdParty/ANGLE/src/libANGLE/renderer/generate_new_renderer.py
+@@ -21,7 +21,7 @@ import re
+ import string
+ 
+ if len(sys.argv) < 3:
+-    print('Usage: ' + sys.argv[0] + ' <renderer name> <renderer suffix>')
++    print(('Usage: ' + sys.argv[0] + ' <renderer name> <renderer suffix>'))
+ 
+ renderer_name = sys.argv[1]
+ renderer_suffix = sys.argv[2]
+diff --git a/Source/ThirdParty/gtest/scripts/fuse_gtest_files.py b/Source/ThirdParty/gtest/scripts/fuse_gtest_files.py
+index 148444ca7..333d55590 100755
+--- a/Source/ThirdParty/gtest/scripts/fuse_gtest_files.py
++++ b/Source/ThirdParty/gtest/scripts/fuse_gtest_files.py
+@@ -90,8 +90,8 @@ def VerifyFileExists(directory, relative_path):
+   """
+ 
+   if not os.path.isfile(os.path.join(directory, relative_path)):
+-    print 'ERROR: Cannot find %s in directory %s.' % (relative_path,
+-                                                      directory)
++    print('ERROR: Cannot find %s in directory %s.' % (relative_path,
++                                                      directory))
+     print ('Please either specify a valid project root directory '
+            'or omit it on the command line.')
+     sys.exit(1)
+@@ -119,11 +119,11 @@ def VerifyOutputFile(output_dir, relative_path):
+     # TODO(wan@google.com): The following user-interaction doesn't
+     # work with automated processes.  We should provide a way for the
+     # Makefile to force overwriting the files.
+-    print ('%s already exists in directory %s - overwrite it? (y/N) ' %
+-           (relative_path, output_dir))
++    print(('%s already exists in directory %s - overwrite it? (y/N) ' %
++           (relative_path, output_dir)))
+     answer = sys.stdin.readline().strip()
+     if answer not in ['y', 'Y']:
+-      print 'ABORTED.'
++      print('ABORTED.')
+       sys.exit(1)
+ 
+   # Makes sure the directory holding the output file exists; creates
+@@ -242,7 +242,7 @@ def main():
+     # fuse_gtest_files.py GTEST_ROOT_DIR OUTPUT_DIR
+     FuseGTest(sys.argv[1], sys.argv[2])
+   else:
+-    print __doc__
++    print(__doc__)
+     sys.exit(1)
+ 
+ 
+diff --git a/Source/ThirdParty/gtest/scripts/gen_gtest_pred_impl.py b/Source/ThirdParty/gtest/scripts/gen_gtest_pred_impl.py
+index 8307134ad..748bcfeb4 100755
+--- a/Source/ThirdParty/gtest/scripts/gen_gtest_pred_impl.py
++++ b/Source/ThirdParty/gtest/scripts/gen_gtest_pred_impl.py
+@@ -183,7 +183,7 @@ def Title(word):
+ def OneTo(n):
+   """Returns the list [1, 2, 3, ..., n]."""
+ 
+-  return range(1, n + 1)
++  return list(range(1, n + 1))
+ 
+ 
+ def Iter(n, format, sep=''):
+@@ -305,13 +305,13 @@ def GenerateFile(path, content):
+   """Given a file path and a content string, overwrites it with the
+   given content."""
+ 
+-  print 'Updating file %s . . .' % path
++  print('Updating file %s . . .' % path)
+ 
+   f = file(path, 'w+')
+-  print >>f, content,
++  print(content, end=' ', file=f)
+   f.close()
+ 
+-  print 'File %s has been updated.' % path
++  print('File %s has been updated.' % path)
+ 
+ 
+ def GenerateHeader(n):
+@@ -720,8 +720,8 @@ def _Main():
+   unit test."""
+ 
+   if len(sys.argv) != 2:
+-    print __doc__
+-    print 'Author: ' + __author__
++    print(__doc__)
++    print('Author: ' + __author__)
+     sys.exit(1)
+ 
+   n = int(sys.argv[1])
+diff --git a/Source/ThirdParty/gtest/scripts/pump.py b/Source/ThirdParty/gtest/scripts/pump.py
+index f15c1b6ce..92b70ecec 100755
+--- a/Source/ThirdParty/gtest/scripts/pump.py
++++ b/Source/ThirdParty/gtest/scripts/pump.py
+@@ -236,7 +236,7 @@ def ParseToken(lines, pos, regex, token_type):
+   if m and not m.start():
+     return MakeToken(lines, pos, pos + m.end(), token_type)
+   else:
+-    print 'ERROR: %s expected at %s.' % (token_type, pos)
++    print('ERROR: %s expected at %s.' % (token_type, pos))
+     sys.exit(1)
+ 
+ 
+@@ -263,8 +263,8 @@ def SkipUntil(lines, pos, regex, token_type):
+   if m:
+     return pos + m.start()
+   else:
+-    print ('ERROR: %s expected on line %s after column %s.' %
+-           (token_type, pos.line + 1, pos.column))
++    print(('ERROR: %s expected on line %s after column %s.' %
++           (token_type, pos.line + 1, pos.column)))
+     sys.exit(1)
+ 
+ 
+@@ -444,8 +444,8 @@ def PushFront(a_list, elem):
+ def PopToken(a_list, token_type=None):
+   token = PopFront(a_list)
+   if token_type is not None and token.token_type != token_type:
+-    print 'ERROR: %s expected at %s' % (token_type, token.start)
+-    print 'ERROR: %s found instead' % (token,)
++    print('ERROR: %s expected at %s' % (token_type, token.start))
++    print('ERROR: %s found instead' % (token,))
+     sys.exit(1)
+ 
+   return token
+@@ -609,16 +609,16 @@ class Env:
+       if identifier == var:
+         return value
+ 
+-    print 'ERROR: meta variable %s is undefined.' % (identifier,)
++    print('ERROR: meta variable %s is undefined.' % (identifier,))
+     sys.exit(1)
+ 
+   def EvalExp(self, exp):
+     try:
+       result = eval(exp.python_exp)
+-    except Exception, e:
+-      print 'ERROR: caught exception %s: %s' % (e.__class__.__name__, e)
+-      print ('ERROR: failed to evaluate meta expression %s at %s' %
+-             (exp.python_exp, exp.token.start))
++    except Exception as e:
++      print('ERROR: caught exception %s: %s' % (e.__class__.__name__, e))
++      print(('ERROR: failed to evaluate meta expression %s at %s' %
++             (exp.python_exp, exp.token.start)))
+       sys.exit(1)
+     return result
+ 
+@@ -627,7 +627,7 @@ class Env:
+       if identifier == var:
+         return (lower, upper)
+ 
+-    print 'ERROR: range %s is undefined.' % (identifier,)
++    print('ERROR: range %s is undefined.' % (identifier,))
+     sys.exit(1)
+ 
+ 
+@@ -687,8 +687,8 @@ def RunAtomicCode(env, node, output):
+   elif isinstance(node, CodeNode):
+     RunCode(env.Clone(), node, output)
+   else:
+-    print 'BAD'
+-    print node
++    print('BAD')
++    print(node)
+     sys.exit(1)
+ 
+ 
+@@ -807,7 +807,7 @@ def BeautifyCode(string):
+ 
+ def main(argv):
+   if len(argv) == 1:
+-    print __doc__
++    print(__doc__)
+     sys.exit(1)
+ 
+   file_path = argv[-1]
+@@ -820,7 +820,7 @@ def main(argv):
+   else:
+     output_file_path = '-'
+   if output_file_path == '-':
+-    print output_str,
++    print(output_str, end=' ')
+   else:
+     output_file = file(output_file_path, 'w')
+     output_file.write('// This file was GENERATED by command:\n')
+diff --git a/Source/ThirdParty/gtest/scripts/upload.py b/Source/ThirdParty/gtest/scripts/upload.py
+index 6e6f9a147..4890ea16d 100755
+--- a/Source/ThirdParty/gtest/scripts/upload.py
++++ b/Source/ThirdParty/gtest/scripts/upload.py
+@@ -31,7 +31,7 @@ against by using the '--rev' option.
+ # This code is derived from appcfg.py in the App Engine SDK (open source),
+ # and from ASPN recipe #146306.
+ 
+-import cookielib
++import http.cookiejar
+ import getpass
+ import logging
+ import md5
+@@ -42,9 +42,9 @@ import re
+ import socket
+ import subprocess
+ import sys
+-import urllib
+-import urllib2
+-import urlparse
++import urllib.request, urllib.parse, urllib.error
++import urllib.request, urllib.error, urllib.parse
++import urllib.parse
+ 
+ try:
+   import readline
+@@ -79,15 +79,15 @@ def GetEmail(prompt):
+       last_email = last_email_file.readline().strip("\n")
+       last_email_file.close()
+       prompt += " [%s]" % last_email
+-    except IOError, e:
++    except IOError as e:
+       pass
+-  email = raw_input(prompt + ": ").strip()
++  email = input(prompt + ": ").strip()
+   if email:
+     try:
+       last_email_file = open(last_email_file_name, "w")
+       last_email_file.write(email)
+       last_email_file.close()
+-    except IOError, e:
++    except IOError as e:
+       pass
+   else:
+     email = last_email
+@@ -103,20 +103,20 @@ def StatusUpdate(msg):
+     msg: The string to print.
+   """
+   if verbosity > 0:
+-    print msg
++    print(msg)
+ 
+ 
+ def ErrorExit(msg):
+   """Print an error message to stderr and exit."""
+-  print >>sys.stderr, msg
++  print(msg, file=sys.stderr)
+   sys.exit(1)
+ 
+ 
+-class ClientLoginError(urllib2.HTTPError):
++class ClientLoginError(urllib.error.HTTPError):
+   """Raised to indicate there was an error authenticating with ClientLogin."""
+ 
+   def __init__(self, url, code, msg, headers, args):
+-    urllib2.HTTPError.__init__(self, url, code, msg, headers, None)
++    urllib.error.HTTPError.__init__(self, url, code, msg, headers, None)
+     self.args = args
+     self.reason = args["Error"]
+ 
+@@ -162,10 +162,10 @@ class AbstractRpcServer(object):
+   def _CreateRequest(self, url, data=None):
+     """Creates a new urllib request."""
+     logging.debug("Creating request for: '%s' with payload:\n%s", url, data)
+-    req = urllib2.Request(url, data=data)
++    req = urllib.request.Request(url, data=data)
+     if self.host_override:
+       req.add_header("Host", self.host_override)
+-    for key, value in self.extra_headers.iteritems():
++    for key, value in self.extra_headers.items():
+       req.add_header(key, value)
+     return req
+ 
+@@ -189,7 +189,7 @@ class AbstractRpcServer(object):
+       account_type = "HOSTED"
+     req = self._CreateRequest(
+         url="https://www.google.com/accounts/ClientLogin",
+-        data=urllib.urlencode({
++        data=urllib.parse.urlencode({
+             "Email": email,
+             "Passwd": password,
+             "service": "ah",
+@@ -203,7 +203,7 @@ class AbstractRpcServer(object):
+       response_dict = dict(x.split("=")
+                            for x in response_body.split("\n") if x)
+       return response_dict["Auth"]
+-    except urllib2.HTTPError, e:
++    except urllib.error.HTTPError as e:
+       if e.code == 403:
+         body = e.read()
+         response_dict = dict(x.split("=", 1) for x in body.split("\n") if x)
+@@ -225,14 +225,14 @@ class AbstractRpcServer(object):
+     continue_location = "http://localhost/"
+     args = {"continue": continue_location, "auth": auth_token}
+     req = self._CreateRequest("http://%s/_ah/login?%s" %
+-                              (self.host, urllib.urlencode(args)))
++                              (self.host, urllib.parse.urlencode(args)))
+     try:
+       response = self.opener.open(req)
+-    except urllib2.HTTPError, e:
++    except urllib.error.HTTPError as e:
+       response = e
+     if (response.code != 302 or
+         response.info()["location"] != continue_location):
+-      raise urllib2.HTTPError(req.get_full_url(), response.code, response.msg,
++      raise urllib.error.HTTPError(req.get_full_url(), response.code, response.msg,
+                               response.headers, response.fp)
+     self.authenticated = True
+ 
+@@ -255,34 +255,34 @@ class AbstractRpcServer(object):
+       credentials = self.auth_function()
+       try:
+         auth_token = self._GetAuthToken(credentials[0], credentials[1])
+-      except ClientLoginError, e:
++      except ClientLoginError as e:
+         if e.reason == "BadAuthentication":
+-          print >>sys.stderr, "Invalid username or password."
++          print("Invalid username or password.", file=sys.stderr)
+           continue
+         if e.reason == "CaptchaRequired":
+-          print >>sys.stderr, (
++          print((
+               "Please go to\n"
+               "https://www.google.com/accounts/DisplayUnlockCaptcha\n"
+-              "and verify you are a human.  Then try again.")
++              "and verify you are a human.  Then try again."), file=sys.stderr)
+           break
+         if e.reason == "NotVerified":
+-          print >>sys.stderr, "Account not verified."
++          print("Account not verified.", file=sys.stderr)
+           break
+         if e.reason == "TermsNotAgreed":
+-          print >>sys.stderr, "User has not agreed to TOS."
++          print("User has not agreed to TOS.", file=sys.stderr)
+           break
+         if e.reason == "AccountDeleted":
+-          print >>sys.stderr, "The user account has been deleted."
++          print("The user account has been deleted.", file=sys.stderr)
+           break
+         if e.reason == "AccountDisabled":
+-          print >>sys.stderr, "The user account has been disabled."
++          print("The user account has been disabled.", file=sys.stderr)
+           break
+         if e.reason == "ServiceDisabled":
+-          print >>sys.stderr, ("The user's access to the service has been "
+-                               "disabled.")
++          print(("The user's access to the service has been "
++                               "disabled."), file=sys.stderr)
+           break
+         if e.reason == "ServiceUnavailable":
+-          print >>sys.stderr, "The service is not available; try again later."
++          print("The service is not available; try again later.", file=sys.stderr)
+           break
+         raise
+       self._GetAuthCookie(auth_token)
+@@ -319,7 +319,7 @@ class AbstractRpcServer(object):
+         args = dict(kwargs)
+         url = "http://%s%s" % (self.host, request_path)
+         if args:
+-          url += "?" + urllib.urlencode(args)
++          url += "?" + urllib.parse.urlencode(args)
+         req = self._CreateRequest(url=url, data=payload)
+         req.add_header("Content-Type", content_type)
+         try:
+@@ -327,7 +327,7 @@ class AbstractRpcServer(object):
+           response = f.read()
+           f.close()
+           return response
+-        except urllib2.HTTPError, e:
++        except urllib.error.HTTPError as e:
+           if tries > 3:
+             raise
+           elif e.code == 401:
+@@ -357,35 +357,35 @@ class HttpRpcServer(AbstractRpcServer):
+     Returns:
+       A urllib2.OpenerDirector object.
+     """
+-    opener = urllib2.OpenerDirector()
+-    opener.add_handler(urllib2.ProxyHandler())
+-    opener.add_handler(urllib2.UnknownHandler())
+-    opener.add_handler(urllib2.HTTPHandler())
+-    opener.add_handler(urllib2.HTTPDefaultErrorHandler())
+-    opener.add_handler(urllib2.HTTPSHandler())
++    opener = urllib.request.OpenerDirector()
++    opener.add_handler(urllib.request.ProxyHandler())
++    opener.add_handler(urllib.request.UnknownHandler())
++    opener.add_handler(urllib.request.HTTPHandler())
++    opener.add_handler(urllib.request.HTTPDefaultErrorHandler())
++    opener.add_handler(urllib.request.HTTPSHandler())
+     opener.add_handler(urllib2.HTTPErrorProcessor())
+     if self.save_cookies:
+       self.cookie_file = os.path.expanduser("~/.codereview_upload_cookies")
+-      self.cookie_jar = cookielib.MozillaCookieJar(self.cookie_file)
++      self.cookie_jar = http.cookiejar.MozillaCookieJar(self.cookie_file)
+       if os.path.exists(self.cookie_file):
+         try:
+           self.cookie_jar.load()
+           self.authenticated = True
+           StatusUpdate("Loaded authentication cookies from %s" %
+                        self.cookie_file)
+-        except (cookielib.LoadError, IOError):
++        except (http.cookiejar.LoadError, IOError):
+           # Failed to load cookies - just ignore them.
+           pass
+       else:
+         # Create an empty cookie file with mode 600
+-        fd = os.open(self.cookie_file, os.O_CREAT, 0600)
++        fd = os.open(self.cookie_file, os.O_CREAT, 0o600)
+         os.close(fd)
+       # Always chmod the cookie file
+-      os.chmod(self.cookie_file, 0600)
++      os.chmod(self.cookie_file, 0o600)
+     else:
+       # Don't save cookies across runs of update.py.
+-      self.cookie_jar = cookielib.CookieJar()
+-    opener.add_handler(urllib2.HTTPCookieProcessor(self.cookie_jar))
++      self.cookie_jar = http.cookiejar.CookieJar()
++    opener.add_handler(urllib.request.HTTPCookieProcessor(self.cookie_jar))
+     return opener
+ 
+ 
+@@ -560,7 +560,7 @@ def RunShellWithReturnCode(command, print_output=False,
+       line = p.stdout.readline()
+       if not line:
+         break
+-      print line.strip("\n")
++      print(line.strip("\n"))
+       output_array.append(line)
+     output = "".join(output_array)
+   else:
+@@ -568,7 +568,7 @@ def RunShellWithReturnCode(command, print_output=False,
+   p.wait()
+   errout = p.stderr.read()
+   if print_output and errout:
+-    print >>sys.stderr, errout
++    print(errout, file=sys.stderr)
+   p.stdout.close()
+   p.stderr.close()
+   return output, p.returncode
+@@ -614,11 +614,11 @@ class VersionControlSystem(object):
+     """Show an "are you sure?" prompt if there are unknown files."""
+     unknown_files = self.GetUnknownFiles()
+     if unknown_files:
+-      print "The following files are not added to version control:"
++      print("The following files are not added to version control:")
+       for line in unknown_files:
+-        print line
++        print(line)
+       prompt = "Are you sure to continue?(y/N) "
+-      answer = raw_input(prompt).strip()
++      answer = input(prompt).strip()
+       if answer != "y":
+         ErrorExit("User aborted")
+ 
+@@ -670,13 +670,13 @@ class VersionControlSystem(object):
+       else:
+         type = "current"
+       if len(content) > MAX_UPLOAD_SIZE:
+-        print ("Not uploading the %s file for %s because it's too large." %
+-               (type, filename))
++        print(("Not uploading the %s file for %s because it's too large." %
++               (type, filename)))
+         file_too_large = True
+         content = ""
+       checksum = md5.new(content).hexdigest()
+       if options.verbose > 0 and not file_too_large:
+-        print "Uploading %s file for %s" % (type, filename)
++        print("Uploading %s file for %s" % (type, filename))
+       url = "/%d/upload_content/%d/%d" % (int(issue), int(patchset), file_id)
+       form_fields = [("filename", filename),
+                      ("status", status),
+@@ -698,7 +698,7 @@ class VersionControlSystem(object):
+ 
+     patches = dict()
+     [patches.setdefault(v, k) for k, v in patch_list]
+-    for filename in patches.keys():
++    for filename in list(patches.keys()):
+       base_content, new_content, is_binary, status = files[filename]
+       file_id_str = patches.get(filename)
+       if file_id_str.find("nobase") != -1:
+@@ -755,8 +755,8 @@ class SubversionVCS(VersionControlSystem):
+       words = line.split()
+       if len(words) == 2 and words[0] == "URL:":
+         url = words[1]
+-        scheme, netloc, path, params, query, fragment = urlparse.urlparse(url)
+-        username, netloc = urllib.splituser(netloc)
++        scheme, netloc, path, params, query, fragment = urllib.parse.urlparse(url)
++        username, netloc = urllib.parse.splituser(netloc)
+         if username:
+           logging.info("Removed username from base URL")
+         if netloc.endswith("svn.python.org"):
+@@ -774,12 +774,12 @@ class SubversionVCS(VersionControlSystem):
+           logging.info("Guessed CollabNet base = %s", base)
+         elif netloc.endswith(".googlecode.com"):
+           path = path + "/"
+-          base = urlparse.urlunparse(("http", netloc, path, params,
++          base = urllib.parse.urlunparse(("http", netloc, path, params,
+                                       query, fragment))
+           logging.info("Guessed Google Code base = %s", base)
+         else:
+           path = path + "/"
+-          base = urlparse.urlunparse((scheme, netloc, path, params,
++          base = urllib.parse.urlunparse((scheme, netloc, path, params,
+                                       query, fragment))
+           logging.info("Guessed base = %s", base)
+         return base
+@@ -1187,8 +1187,8 @@ def UploadSeparatePatches(issue, rpc_server, patchset, data, options):
+   rv = []
+   for patch in patches:
+     if len(patch[1]) > MAX_UPLOAD_SIZE:
+-      print ("Not uploading the patch for " + patch[0] +
+-             " because the file is too large.")
++      print(("Not uploading the patch for " + patch[0] +
++             " because the file is too large."))
+       continue
+     form_fields = [("filename", patch[0])]
+     if not options.download_base:
+@@ -1196,7 +1196,7 @@ def UploadSeparatePatches(issue, rpc_server, patchset, data, options):
+     files = [("data", "data.diff", patch[1])]
+     ctype, body = EncodeMultipartFormData(form_fields, files)
+     url = "/%d/upload_patch/%d" % (int(issue), int(patchset))
+-    print "Uploading patch for " + patch[0]
++    print("Uploading patch for " + patch[0])
+     response_body = rpc_server.Send(url, body, content_type=ctype)
+     lines = response_body.splitlines()
+     if not lines or lines[0] != "OK":
+@@ -1223,7 +1223,8 @@ def GuessVCS(options):
+     out, returncode = RunShellWithReturnCode(["hg", "root"])
+     if returncode == 0:
+       return MercurialVCS(options, out.strip())
+-  except OSError, (errno, message):
++  except OSError as xxx_todo_changeme:
++    (errno, message) = xxx_todo_changeme.args
+     if errno != 2:  # ENOENT -- they don't have hg installed.
+       raise
+ 
+@@ -1239,7 +1240,8 @@ def GuessVCS(options):
+                                               "--is-inside-work-tree"])
+     if returncode == 0:
+       return GitVCS(options)
+-  except OSError, (errno, message):
++  except OSError as xxx_todo_changeme1:
++    (errno, message) = xxx_todo_changeme1.args
+     if errno != 2:  # ENOENT -- they don't have git installed.
+       raise
+ 
+@@ -1286,12 +1288,12 @@ def RealMain(argv, data=None):
+     data = vcs.GenerateDiff(args)
+   files = vcs.GetBaseFiles(data)
+   if verbosity >= 1:
+-    print "Upload server:", options.server, "(change with -s/--server)"
++    print("Upload server:", options.server, "(change with -s/--server)")
+   if options.issue:
+     prompt = "Message describing this patch set: "
+   else:
+     prompt = "New issue subject: "
+-  message = options.message or raw_input(prompt).strip()
++  message = options.message or input(prompt).strip()
+   if not message:
+     ErrorExit("A non-empty message is required")
+   rpc_server = GetRpcServer(options)
+@@ -1324,7 +1326,7 @@ def RealMain(argv, data=None):
+   # Send a hash of all the base file so the server can determine if a copy
+   # already exists in an earlier patchset.
+   base_hashes = ""
+-  for file, info in files.iteritems():
++  for file, info in files.items():
+     if not info[0] is None:
+       checksum = md5.new(info[0]).hexdigest()
+       if base_hashes:
+@@ -1338,7 +1340,7 @@ def RealMain(argv, data=None):
+   if not options.download_base:
+     form_fields.append(("content_upload", "1"))
+   if len(data) > MAX_UPLOAD_SIZE:
+-    print "Patch is large, so uploading file patches separately."
++    print("Patch is large, so uploading file patches separately.")
+     uploaded_diff_file = []
+     form_fields.append(("separate_patches", "1"))
+   else:
+@@ -1378,7 +1380,7 @@ def main():
+   try:
+     RealMain(sys.argv)
+   except KeyboardInterrupt:
+-    print
++    print()
+     StatusUpdate("Interrupted.")
+     sys.exit(1)
+ 
+diff --git a/Source/ThirdParty/gtest/test/gtest_break_on_failure_unittest.py b/Source/ThirdParty/gtest/test/gtest_break_on_failure_unittest.py
+index c81918331..f36abe338 100755
+--- a/Source/ThirdParty/gtest/test/gtest_break_on_failure_unittest.py
++++ b/Source/ThirdParty/gtest/test/gtest_break_on_failure_unittest.py
+@@ -145,7 +145,7 @@ class GTestBreakOnFailureUnitTest(gtest_test_utils.TestCase):
+     msg = ('when %s%s, an assertion failure in "%s" %s cause a seg-fault.' %
+            (BREAK_ON_FAILURE_ENV_VAR, env_var_value_msg, ' '.join(command),
+             should_or_not))
+-    self.assert_(has_seg_fault == expect_seg_fault, msg)
++    self.assertTrue(has_seg_fault == expect_seg_fault, msg)
+ 
+   def testDefaultBehavior(self):
+     """Tests the behavior of the default mode."""
+diff --git a/Source/ThirdParty/gtest/test/gtest_color_test.py b/Source/ThirdParty/gtest/test/gtest_color_test.py
+index d02a53ed8..b69ab0947 100755
+--- a/Source/ThirdParty/gtest/test/gtest_color_test.py
++++ b/Source/ThirdParty/gtest/test/gtest_color_test.py
+@@ -72,58 +72,58 @@ class GTestColorTest(gtest_test_utils.TestCase):
+     """Tests the case when there's neither GTEST_COLOR nor --gtest_color."""
+ 
+     if not IS_WINDOWS:
+-      self.assert_(not UsesColor('dumb', None, None))
+-      self.assert_(not UsesColor('emacs', None, None))
+-      self.assert_(not UsesColor('xterm-mono', None, None))
+-      self.assert_(not UsesColor('unknown', None, None))
+-      self.assert_(not UsesColor(None, None, None))
+-    self.assert_(UsesColor('linux', None, None))
+-    self.assert_(UsesColor('cygwin', None, None))
+-    self.assert_(UsesColor('xterm', None, None))
+-    self.assert_(UsesColor('xterm-color', None, None))
+-    self.assert_(UsesColor('xterm-256color', None, None))
++      self.assertTrue(not UsesColor('dumb', None, None))
++      self.assertTrue(not UsesColor('emacs', None, None))
++      self.assertTrue(not UsesColor('xterm-mono', None, None))
++      self.assertTrue(not UsesColor('unknown', None, None))
++      self.assertTrue(not UsesColor(None, None, None))
++    self.assertTrue(UsesColor('linux', None, None))
++    self.assertTrue(UsesColor('cygwin', None, None))
++    self.assertTrue(UsesColor('xterm', None, None))
++    self.assertTrue(UsesColor('xterm-color', None, None))
++    self.assertTrue(UsesColor('xterm-256color', None, None))
+ 
+   def testFlagOnly(self):
+     """Tests the case when there's --gtest_color but not GTEST_COLOR."""
+ 
+-    self.assert_(not UsesColor('dumb', None, 'no'))
+-    self.assert_(not UsesColor('xterm-color', None, 'no'))
++    self.assertTrue(not UsesColor('dumb', None, 'no'))
++    self.assertTrue(not UsesColor('xterm-color', None, 'no'))
+     if not IS_WINDOWS:
+-      self.assert_(not UsesColor('emacs', None, 'auto'))
+-    self.assert_(UsesColor('xterm', None, 'auto'))
+-    self.assert_(UsesColor('dumb', None, 'yes'))
+-    self.assert_(UsesColor('xterm', None, 'yes'))
++      self.assertTrue(not UsesColor('emacs', None, 'auto'))
++    self.assertTrue(UsesColor('xterm', None, 'auto'))
++    self.assertTrue(UsesColor('dumb', None, 'yes'))
++    self.assertTrue(UsesColor('xterm', None, 'yes'))
+ 
+   def testEnvVarOnly(self):
+     """Tests the case when there's GTEST_COLOR but not --gtest_color."""
+ 
+-    self.assert_(not UsesColor('dumb', 'no', None))
+-    self.assert_(not UsesColor('xterm-color', 'no', None))
++    self.assertTrue(not UsesColor('dumb', 'no', None))
++    self.assertTrue(not UsesColor('xterm-color', 'no', None))
+     if not IS_WINDOWS:
+-      self.assert_(not UsesColor('dumb', 'auto', None))
+-    self.assert_(UsesColor('xterm-color', 'auto', None))
+-    self.assert_(UsesColor('dumb', 'yes', None))
+-    self.assert_(UsesColor('xterm-color', 'yes', None))
++      self.assertTrue(not UsesColor('dumb', 'auto', None))
++    self.assertTrue(UsesColor('xterm-color', 'auto', None))
++    self.assertTrue(UsesColor('dumb', 'yes', None))
++    self.assertTrue(UsesColor('xterm-color', 'yes', None))
+ 
+   def testEnvVarAndFlag(self):
+     """Tests the case when there are both GTEST_COLOR and --gtest_color."""
+ 
+-    self.assert_(not UsesColor('xterm-color', 'no', 'no'))
+-    self.assert_(UsesColor('dumb', 'no', 'yes'))
+-    self.assert_(UsesColor('xterm-color', 'no', 'auto'))
++    self.assertTrue(not UsesColor('xterm-color', 'no', 'no'))
++    self.assertTrue(UsesColor('dumb', 'no', 'yes'))
++    self.assertTrue(UsesColor('xterm-color', 'no', 'auto'))
+ 
+   def testAliasesOfYesAndNo(self):
+     """Tests using aliases in specifying --gtest_color."""
+ 
+-    self.assert_(UsesColor('dumb', None, 'true'))
+-    self.assert_(UsesColor('dumb', None, 'YES'))
+-    self.assert_(UsesColor('dumb', None, 'T'))
+-    self.assert_(UsesColor('dumb', None, '1'))
++    self.assertTrue(UsesColor('dumb', None, 'true'))
++    self.assertTrue(UsesColor('dumb', None, 'YES'))
++    self.assertTrue(UsesColor('dumb', None, 'T'))
++    self.assertTrue(UsesColor('dumb', None, '1'))
+ 
+-    self.assert_(not UsesColor('xterm', None, 'f'))
+-    self.assert_(not UsesColor('xterm', None, 'false'))
+-    self.assert_(not UsesColor('xterm', None, '0'))
+-    self.assert_(not UsesColor('xterm', None, 'unknown'))
++    self.assertTrue(not UsesColor('xterm', None, 'f'))
++    self.assertTrue(not UsesColor('xterm', None, 'false'))
++    self.assertTrue(not UsesColor('xterm', None, '0'))
++    self.assertTrue(not UsesColor('xterm', None, 'unknown'))
+ 
+ 
+ if __name__ == '__main__':
+diff --git a/Source/ThirdParty/gtest/test/gtest_env_var_test.py b/Source/ThirdParty/gtest/test/gtest_env_var_test.py
+index bcc0bfd55..868896831 100755
+--- a/Source/ThirdParty/gtest/test/gtest_env_var_test.py
++++ b/Source/ThirdParty/gtest/test/gtest_env_var_test.py
+@@ -47,8 +47,8 @@ environ = os.environ.copy()
+ 
+ def AssertEq(expected, actual):
+   if expected != actual:
+-    print 'Expected: %s' % (expected,)
+-    print '  Actual: %s' % (actual,)
++    print('Expected: %s' % (expected,))
++    print('  Actual: %s' % (actual,))
+     raise AssertionError
+ 
+ 
+diff --git a/Source/ThirdParty/gtest/test/gtest_filter_unittest.py b/Source/ThirdParty/gtest/test/gtest_filter_unittest.py
+index 0d1a77005..595b2fa33 100755
+--- a/Source/ThirdParty/gtest/test/gtest_filter_unittest.py
++++ b/Source/ThirdParty/gtest/test/gtest_filter_unittest.py
+@@ -231,10 +231,10 @@ class GTestFilterUnitTest(gtest_test_utils.TestCase):
+     """Asserts that two sets are equal."""
+ 
+     for elem in lhs:
+-      self.assert_(elem in rhs, '%s in %s' % (elem, rhs))
++      self.assertTrue(elem in rhs, '%s in %s' % (elem, rhs))
+ 
+     for elem in rhs:
+-      self.assert_(elem in lhs, '%s in %s' % (elem, lhs))
++      self.assertTrue(elem in lhs, '%s in %s' % (elem, lhs))
+ 
+   def AssertPartitionIsValid(self, set_var, list_of_sets):
+     """Asserts that list_of_sets is a valid partition of set_var."""
+@@ -575,13 +575,13 @@ class GTestFilterUnitTest(gtest_test_utils.TestCase):
+ 
+     shard_status_file = os.path.join(gtest_test_utils.GetTempDir(),
+                                      'shard_status_file')
+-    self.assert_(not os.path.exists(shard_status_file))
++    self.assertTrue(not os.path.exists(shard_status_file))
+ 
+     extra_env = {SHARD_STATUS_FILE_ENV_VAR: shard_status_file}
+     try:
+       InvokeWithModifiedEnv(extra_env, RunAndReturnOutput)
+     finally:
+-      self.assert_(os.path.exists(shard_status_file))
++      self.assertTrue(os.path.exists(shard_status_file))
+       os.remove(shard_status_file)
+ 
+   def testShardStatusFileIsCreatedWithListTests(self):
+@@ -589,7 +589,7 @@ class GTestFilterUnitTest(gtest_test_utils.TestCase):
+ 
+     shard_status_file = os.path.join(gtest_test_utils.GetTempDir(),
+                                      'shard_status_file2')
+-    self.assert_(not os.path.exists(shard_status_file))
++    self.assertTrue(not os.path.exists(shard_status_file))
+ 
+     extra_env = {SHARD_STATUS_FILE_ENV_VAR: shard_status_file}
+     try:
+@@ -599,12 +599,12 @@ class GTestFilterUnitTest(gtest_test_utils.TestCase):
+     finally:
+       # This assertion ensures that Google Test enumerated the tests as
+       # opposed to running them.
+-      self.assert_('[==========]' not in output,
++      self.assertTrue('[==========]' not in output,
+                    'Unexpected output during test enumeration.\n'
+                    'Please ensure that LIST_TESTS_FLAG is assigned the\n'
+                    'correct flag value for listing Google Test tests.')
+ 
+-      self.assert_(os.path.exists(shard_status_file))
++      self.assertTrue(os.path.exists(shard_status_file))
+       os.remove(shard_status_file)
+ 
+   if SUPPORTS_DEATH_TESTS:
+diff --git a/Source/ThirdParty/gtest/test/gtest_help_test.py b/Source/ThirdParty/gtest/test/gtest_help_test.py
+index 3cb4c48e0..8aae487b4 100755
+--- a/Source/ThirdParty/gtest/test/gtest_help_test.py
++++ b/Source/ThirdParty/gtest/test/gtest_help_test.py
+@@ -107,17 +107,17 @@ class GTestHelpTest(gtest_test_utils.TestCase):
+     """
+ 
+     exit_code, output = RunWithFlag(flag)
+-    self.assertEquals(0, exit_code)
+-    self.assert_(HELP_REGEX.search(output), output)
++    self.assertEqual(0, exit_code)
++    self.assertTrue(HELP_REGEX.search(output), output)
+     if IS_WINDOWS:
+-      self.assert_(CATCH_EXCEPTIONS_FLAG in output, output)
++      self.assertTrue(CATCH_EXCEPTIONS_FLAG in output, output)
+     else:
+-      self.assert_(CATCH_EXCEPTIONS_FLAG not in output, output)
++      self.assertTrue(CATCH_EXCEPTIONS_FLAG not in output, output)
+ 
+     if SUPPORTS_DEATH_TESTS and not IS_WINDOWS:
+-      self.assert_(DEATH_TEST_STYLE_FLAG in output, output)
++      self.assertTrue(DEATH_TEST_STYLE_FLAG in output, output)
+     else:
+-      self.assert_(DEATH_TEST_STYLE_FLAG not in output, output)
++      self.assertTrue(DEATH_TEST_STYLE_FLAG not in output, output)
+ 
+   def TestNonHelpFlag(self, flag):
+     """Verifies correct behavior when no help flag is specified.
+@@ -130,8 +130,8 @@ class GTestHelpTest(gtest_test_utils.TestCase):
+     """
+ 
+     exit_code, output = RunWithFlag(flag)
+-    self.assert_(exit_code != 0)
+-    self.assert_(not HELP_REGEX.search(output), output)
++    self.assertTrue(exit_code != 0)
++    self.assertTrue(not HELP_REGEX.search(output), output)
+ 
+   def testPrintsHelpWithFullFlag(self):
+     self.TestHelpFlag('--help')
+diff --git a/Source/ThirdParty/gtest/test/gtest_list_tests_unittest.py b/Source/ThirdParty/gtest/test/gtest_list_tests_unittest.py
+index ce8c3ef05..1d3ce746c 100755
+--- a/Source/ThirdParty/gtest/test/gtest_list_tests_unittest.py
++++ b/Source/ThirdParty/gtest/test/gtest_list_tests_unittest.py
+@@ -136,9 +136,9 @@ class GTestListTestsUnitTest(gtest_test_utils.TestCase):
+            (LIST_TESTS_FLAG, flag_expression, ' '.join(args), output))
+ 
+     if expected_output is not None:
+-      self.assert_(output == expected_output, msg)
++      self.assertTrue(output == expected_output, msg)
+     else:
+-      self.assert_(output != EXPECTED_OUTPUT_NO_FILTER, msg)
++      self.assertTrue(output != EXPECTED_OUTPUT_NO_FILTER, msg)
+ 
+   def testDefaultBehavior(self):
+     """Tests the behavior of the default mode."""
+diff --git a/Source/ThirdParty/gtest/test/gtest_shuffle_test.py b/Source/ThirdParty/gtest/test/gtest_shuffle_test.py
+index 30d0303d1..e4902f09a 100755
+--- a/Source/ThirdParty/gtest/test/gtest_shuffle_test.py
++++ b/Source/ThirdParty/gtest/test/gtest_shuffle_test.py
+@@ -179,23 +179,23 @@ class GTestShuffleUnitTest(gtest_test_utils.TestCase):
+     self.assertEqual(len(SHARDED_TESTS), len(SHUFFLED_SHARDED_TESTS))
+ 
+   def testShuffleChangesTestOrder(self):
+-    self.assert_(SHUFFLED_ALL_TESTS != ALL_TESTS, SHUFFLED_ALL_TESTS)
+-    self.assert_(SHUFFLED_ACTIVE_TESTS != ACTIVE_TESTS, SHUFFLED_ACTIVE_TESTS)
+-    self.assert_(SHUFFLED_FILTERED_TESTS != FILTERED_TESTS,
++    self.assertTrue(SHUFFLED_ALL_TESTS != ALL_TESTS, SHUFFLED_ALL_TESTS)
++    self.assertTrue(SHUFFLED_ACTIVE_TESTS != ACTIVE_TESTS, SHUFFLED_ACTIVE_TESTS)
++    self.assertTrue(SHUFFLED_FILTERED_TESTS != FILTERED_TESTS,
+                  SHUFFLED_FILTERED_TESTS)
+-    self.assert_(SHUFFLED_SHARDED_TESTS != SHARDED_TESTS,
++    self.assertTrue(SHUFFLED_SHARDED_TESTS != SHARDED_TESTS,
+                  SHUFFLED_SHARDED_TESTS)
+ 
+   def testShuffleChangesTestCaseOrder(self):
+-    self.assert_(GetTestCases(SHUFFLED_ALL_TESTS) != GetTestCases(ALL_TESTS),
++    self.assertTrue(GetTestCases(SHUFFLED_ALL_TESTS) != GetTestCases(ALL_TESTS),
+                  GetTestCases(SHUFFLED_ALL_TESTS))
+-    self.assert_(
++    self.assertTrue(
+         GetTestCases(SHUFFLED_ACTIVE_TESTS) != GetTestCases(ACTIVE_TESTS),
+         GetTestCases(SHUFFLED_ACTIVE_TESTS))
+-    self.assert_(
++    self.assertTrue(
+         GetTestCases(SHUFFLED_FILTERED_TESTS) != GetTestCases(FILTERED_TESTS),
+         GetTestCases(SHUFFLED_FILTERED_TESTS))
+-    self.assert_(
++    self.assertTrue(
+         GetTestCases(SHUFFLED_SHARDED_TESTS) != GetTestCases(SHARDED_TESTS),
+         GetTestCases(SHUFFLED_SHARDED_TESTS))
+ 
+@@ -215,29 +215,29 @@ class GTestShuffleUnitTest(gtest_test_utils.TestCase):
+ 
+   def testShuffleDoesNotCreateNewTest(self):
+     for test in SHUFFLED_ALL_TESTS:
+-      self.assert_(test in ALL_TESTS, '%s is an invalid test' % (test,))
++      self.assertTrue(test in ALL_TESTS, '%s is an invalid test' % (test,))
+     for test in SHUFFLED_ACTIVE_TESTS:
+-      self.assert_(test in ACTIVE_TESTS, '%s is an invalid test' % (test,))
++      self.assertTrue(test in ACTIVE_TESTS, '%s is an invalid test' % (test,))
+     for test in SHUFFLED_FILTERED_TESTS:
+-      self.assert_(test in FILTERED_TESTS, '%s is an invalid test' % (test,))
++      self.assertTrue(test in FILTERED_TESTS, '%s is an invalid test' % (test,))
+     for test in SHUFFLED_SHARDED_TESTS:
+-      self.assert_(test in SHARDED_TESTS, '%s is an invalid test' % (test,))
++      self.assertTrue(test in SHARDED_TESTS, '%s is an invalid test' % (test,))
+ 
+   def testShuffleIncludesAllTests(self):
+     for test in ALL_TESTS:
+-      self.assert_(test in SHUFFLED_ALL_TESTS, '%s is missing' % (test,))
++      self.assertTrue(test in SHUFFLED_ALL_TESTS, '%s is missing' % (test,))
+     for test in ACTIVE_TESTS:
+-      self.assert_(test in SHUFFLED_ACTIVE_TESTS, '%s is missing' % (test,))
++      self.assertTrue(test in SHUFFLED_ACTIVE_TESTS, '%s is missing' % (test,))
+     for test in FILTERED_TESTS:
+-      self.assert_(test in SHUFFLED_FILTERED_TESTS, '%s is missing' % (test,))
++      self.assertTrue(test in SHUFFLED_FILTERED_TESTS, '%s is missing' % (test,))
+     for test in SHARDED_TESTS:
+-      self.assert_(test in SHUFFLED_SHARDED_TESTS, '%s is missing' % (test,))
++      self.assertTrue(test in SHUFFLED_SHARDED_TESTS, '%s is missing' % (test,))
+ 
+   def testShuffleLeavesDeathTestsAtFront(self):
+     non_death_test_found = False
+     for test in SHUFFLED_ACTIVE_TESTS:
+       if 'DeathTest.' in test:
+-        self.assert_(not non_death_test_found,
++        self.assertTrue(not non_death_test_found,
+                      '%s appears after a non-death test' % (test,))
+       else:
+         non_death_test_found = True
+@@ -295,11 +295,11 @@ class GTestShuffleUnitTest(gtest_test_utils.TestCase):
+         GetTestsForAllIterations(
+             {}, [ShuffleFlag(), RandomSeedFlag(1), RepeatFlag(3)]))
+ 
+-    self.assert_(tests_in_iteration1 != tests_in_iteration2,
++    self.assertTrue(tests_in_iteration1 != tests_in_iteration2,
+                  tests_in_iteration1)
+-    self.assert_(tests_in_iteration1 != tests_in_iteration3,
++    self.assertTrue(tests_in_iteration1 != tests_in_iteration3,
+                  tests_in_iteration1)
+-    self.assert_(tests_in_iteration2 != tests_in_iteration3,
++    self.assertTrue(tests_in_iteration2 != tests_in_iteration3,
+                  tests_in_iteration2)
+ 
+   def testShuffleShardedTestsPreservesPartition(self):
+diff --git a/Source/ThirdParty/gtest/test/gtest_test_utils.py b/Source/ThirdParty/gtest/test/gtest_test_utils.py
+index e0f5973e7..80a953ea1 100755
+--- a/Source/ThirdParty/gtest/test/gtest_test_utils.py
++++ b/Source/ThirdParty/gtest/test/gtest_test_utils.py
+@@ -167,7 +167,7 @@ def GetTestExecutablePath(executable_name, build_dir=None):
+         # TODO(vladl@google.com): change mk_test.py to test.py after renaming
+         # the file.
+         'Please run mk_test.py -h for help.')
+-    print >> sys.stderr, message
++    print(message, file=sys.stderr)
+     sys.exit(1)
+ 
+   return path
+diff --git a/Source/ThirdParty/gtest/test/gtest_throw_on_failure_test.py b/Source/ThirdParty/gtest/test/gtest_throw_on_failure_test.py
+index 5678ffeaf..318e6306c 100755
+--- a/Source/ThirdParty/gtest/test/gtest_throw_on_failure_test.py
++++ b/Source/ThirdParty/gtest/test/gtest_throw_on_failure_test.py
+@@ -70,7 +70,7 @@ def SetEnvVar(env_var, value):
+ def Run(command):
+   """Runs a command; returns True/False if its exit code is/isn't 0."""
+ 
+-  print 'Running "%s". . .' % ' '.join(command)
++  print('Running "%s". . .' % ' '.join(command))
+   p = gtest_test_utils.Subprocess(command)
+   return p.exited and p.exit_code == 0
+ 
+@@ -123,7 +123,7 @@ class ThrowOnFailureTest(gtest_test_utils.TestCase):
+            'exit code.' %
+            (THROW_ON_FAILURE, env_var_value_msg, ' '.join(command),
+             should_or_not))
+-    self.assert_(failed == should_fail, msg)
++    self.assertTrue(failed == should_fail, msg)
+ 
+   def testDefaultBehavior(self):
+     """Tests the behavior of the default mode."""
+diff --git a/Source/ThirdParty/gtest/test/gtest_uninitialized_test.py b/Source/ThirdParty/gtest/test/gtest_uninitialized_test.py
+index 6ae57eeed..435837009 100755
+--- a/Source/ThirdParty/gtest/test/gtest_uninitialized_test.py
++++ b/Source/ThirdParty/gtest/test/gtest_uninitialized_test.py
+@@ -46,8 +46,8 @@ def Assert(condition):
+ 
+ def AssertEq(expected, actual):
+   if expected != actual:
+-    print 'Expected: %s' % (expected,)
+-    print '  Actual: %s' % (actual,)
++    print('Expected: %s' % (expected,))
++    print('  Actual: %s' % (actual,))
+     raise AssertionError
+ 
+ 
+diff --git a/Source/ThirdParty/gtest/test/gtest_xml_outfiles_test.py b/Source/ThirdParty/gtest/test/gtest_xml_outfiles_test.py
+index 0fe947f08..7281864c5 100755
+--- a/Source/ThirdParty/gtest/test/gtest_xml_outfiles_test.py
++++ b/Source/ThirdParty/gtest/test/gtest_xml_outfiles_test.py
+@@ -100,8 +100,8 @@ class GTestXMLOutFilesTest(gtest_xml_test_utils.GTestXMLTestCase):
+     command = [gtest_prog_path, "--gtest_output=xml:%s" % self.output_dir_]
+     p = gtest_test_utils.Subprocess(command,
+                                     working_dir=gtest_test_utils.GetTempDir())
+-    self.assert_(p.exited)
+-    self.assertEquals(0, p.exit_code)
++    self.assertTrue(p.exited)
++    self.assertEqual(0, p.exit_code)
+ 
+     # TODO(wan@google.com): libtool causes the built test binary to be
+     #   named lt-gtest_xml_outfiles_test_ instead of
+@@ -112,7 +112,7 @@ class GTestXMLOutFilesTest(gtest_xml_test_utils.GTestXMLTestCase):
+     output_file1 = os.path.join(self.output_dir_, output_file_name1)
+     output_file_name2 = 'lt-' + output_file_name1
+     output_file2 = os.path.join(self.output_dir_, output_file_name2)
+-    self.assert_(os.path.isfile(output_file1) or os.path.isfile(output_file2),
++    self.assertTrue(os.path.isfile(output_file1) or os.path.isfile(output_file2),
+                  output_file1)
+ 
+     expected = minidom.parseString(expected_xml)
+diff --git a/Source/ThirdParty/gtest/test/gtest_xml_output_unittest.py b/Source/ThirdParty/gtest/test/gtest_xml_output_unittest.py
+index 6d44929ca..93b67532e 100755
+--- a/Source/ThirdParty/gtest/test/gtest_xml_output_unittest.py
++++ b/Source/ThirdParty/gtest/test/gtest_xml_output_unittest.py
+@@ -145,16 +145,16 @@ class GTestXMLOutputUnitTest(gtest_xml_test_utils.GTestXMLTestCase):
+         "gtest_no_test_unittest")
+     try:
+       os.remove(output_file)
+-    except OSError, e:
++    except OSError as e:
+       if e.errno != errno.ENOENT:
+         raise
+ 
+     p = gtest_test_utils.Subprocess(
+         [gtest_prog_path, "%s=xml" % GTEST_OUTPUT_FLAG],
+         working_dir=gtest_test_utils.GetTempDir())
+-    self.assert_(p.exited)
+-    self.assertEquals(0, p.exit_code)
+-    self.assert_(os.path.isfile(output_file))
++    self.assertTrue(p.exited)
++    self.assertEqual(0, p.exit_code)
++    self.assertTrue(os.path.isfile(output_file))
+ 
+   def testSuppressedXmlOutput(self):
+     """
+@@ -174,16 +174,16 @@ class GTestXMLOutputUnitTest(gtest_xml_test_utils.GTestXMLTestCase):
+                "--shut_down_xml"]
+     p = gtest_test_utils.Subprocess(command)
+     if p.terminated_by_signal:
+-      self.assert_(False,
++      self.assertTrue(False,
+                    "%s was killed by signal %d" % (gtest_prog_name, p.signal))
+     else:
+-      self.assert_(p.exited)
+-      self.assertEquals(1, p.exit_code,
++      self.assertTrue(p.exited)
++      self.assertEqual(1, p.exit_code,
+                         "'%s' exited with code %s, which doesn't match "
+                         "the expected exit code %s."
+                         % (command, p.exit_code, 1))
+ 
+-    self.assert_(not os.path.isfile(xml_path))
++    self.assertTrue(not os.path.isfile(xml_path))
+ 
+ 
+   def _TestXmlOutput(self, gtest_prog_name, expected_xml, expected_exit_code):
+@@ -200,11 +200,11 @@ class GTestXMLOutputUnitTest(gtest_xml_test_utils.GTestXMLTestCase):
+     command = [gtest_prog_path, "%s=xml:%s" % (GTEST_OUTPUT_FLAG, xml_path)]
+     p = gtest_test_utils.Subprocess(command)
+     if p.terminated_by_signal:
+-      self.assert_(False,
++      self.assertTrue(False,
+                    "%s was killed by signal %d" % (gtest_prog_name, p.signal))
+     else:
+-      self.assert_(p.exited)
+-      self.assertEquals(expected_exit_code, p.exit_code,
++      self.assertTrue(p.exited)
++      self.assertEqual(expected_exit_code, p.exit_code,
+                         "'%s' exited with code %s, which doesn't match "
+                         "the expected exit code %s."
+                         % (command, p.exit_code, expected_exit_code))
+diff --git a/Source/ThirdParty/gtest/test/gtest_xml_test_utils.py b/Source/ThirdParty/gtest/test/gtest_xml_test_utils.py
+index c83c3b7ea..2d6afb359 100755
+--- a/Source/ThirdParty/gtest/test/gtest_xml_test_utils.py
++++ b/Source/ThirdParty/gtest/test/gtest_xml_test_utils.py
+@@ -67,37 +67,37 @@ class GTestXMLTestCase(gtest_test_utils.TestCase):
+     """
+ 
+     if expected_node.nodeType == Node.CDATA_SECTION_NODE:
+-      self.assertEquals(Node.CDATA_SECTION_NODE, actual_node.nodeType)
+-      self.assertEquals(expected_node.nodeValue, actual_node.nodeValue)
++      self.assertEqual(Node.CDATA_SECTION_NODE, actual_node.nodeType)
++      self.assertEqual(expected_node.nodeValue, actual_node.nodeValue)
+       return
+ 
+-    self.assertEquals(Node.ELEMENT_NODE, actual_node.nodeType)
+-    self.assertEquals(Node.ELEMENT_NODE, expected_node.nodeType)
+-    self.assertEquals(expected_node.tagName, actual_node.tagName)
++    self.assertEqual(Node.ELEMENT_NODE, actual_node.nodeType)
++    self.assertEqual(Node.ELEMENT_NODE, expected_node.nodeType)
++    self.assertEqual(expected_node.tagName, actual_node.tagName)
+ 
+     expected_attributes = expected_node.attributes
+     actual_attributes   = actual_node  .attributes
+-    self.assertEquals(
++    self.assertEqual(
+         expected_attributes.length, actual_attributes.length,
+         "attribute numbers differ in element " + actual_node.tagName)
+     for i in range(expected_attributes.length):
+       expected_attr = expected_attributes.item(i)
+       actual_attr   = actual_attributes.get(expected_attr.name)
+-      self.assert_(
++      self.assertTrue(
+           actual_attr is not None,
+           "expected attribute %s not found in element %s" %
+           (expected_attr.name, actual_node.tagName))
+-      self.assertEquals(expected_attr.value, actual_attr.value,
++      self.assertEqual(expected_attr.value, actual_attr.value,
+                         " values of attribute %s in element %s differ" %
+                         (expected_attr.name, actual_node.tagName))
+ 
+     expected_children = self._GetChildren(expected_node)
+     actual_children = self._GetChildren(actual_node)
+-    self.assertEquals(
++    self.assertEqual(
+         len(expected_children), len(actual_children),
+         "number of child elements differ in element " + actual_node.tagName)
+-    for child_id, child in expected_children.iteritems():
+-      self.assert_(child_id in actual_children,
++    for child_id, child in expected_children.items():
++      self.assertTrue(child_id in actual_children,
+                    '<%s> is not in <%s> (in element %s)' %
+                    (child_id, actual_children, actual_node.tagName))
+       self.AssertEquivalentNodes(child, actual_children[child_id])
+@@ -125,10 +125,10 @@ class GTestXMLTestCase(gtest_test_utils.TestCase):
+     children = {}
+     for child in element.childNodes:
+       if child.nodeType == Node.ELEMENT_NODE:
+-        self.assert_(child.tagName in self.identifying_attribute,
++        self.assertTrue(child.tagName in self.identifying_attribute,
+                      "Encountered unknown element <%s>" % child.tagName)
+         childID = child.getAttribute(self.identifying_attribute[child.tagName])
+-        self.assert_(childID not in children)
++        self.assertTrue(childID not in children)
+         children[childID] = child
+       elif child.nodeType in [Node.TEXT_NODE, Node.CDATA_SECTION_NODE]:
+         if "detail" not in children:
+diff --git a/Source/ThirdParty/gtest/test/run_tests_util.py b/Source/ThirdParty/gtest/test/run_tests_util.py
+index 9e57931eb..1f4d33af2 100755
+--- a/Source/ThirdParty/gtest/test/run_tests_util.py
++++ b/Source/ThirdParty/gtest/test/run_tests_util.py
+@@ -159,8 +159,8 @@ def _GetConfigFromBuildDir(build_dir):
+   if m:
+     return m.group(1)
+   else:
+-    print >>sys.stderr, ('%s is an invalid build directory that does not '
+-                         'correspond to any configuration.' % (build_dir,))
++    print(('%s is an invalid build directory that does not '
++                         'correspond to any configuration.' % (build_dir,)), file=sys.stderr)
+     return ''
+ 
+ 
+@@ -250,7 +250,7 @@ class TestRunner(object):
+       # If this script is run on a Windows machine that has no association
+       # between the .py extension and a python interpreter, simply passing
+       # the script name into subprocess.Popen/os.spawn will not work.
+-      print 'Running %s . . .' % (test,)
++      print('Running %s . . .' % (test,))
+       return self._Run([sys.executable, test])
+ 
+     finally:
+@@ -308,7 +308,7 @@ class TestRunner(object):
+     # A final list of build directories which will be searched for the test
+     # binaries. First, add directories specified directly on the command
+     # line.
+-    build_dirs = filter(self.os.path.isdir, normalized_args)
++    build_dirs = list(filter(self.os.path.isdir, normalized_args))
+ 
+     # Adds build directories specified via their build configurations using
+     # the -c or -a options.
+@@ -374,8 +374,8 @@ class TestRunner(object):
+         config = _GetConfigFromBuildDir(directory)
+         file_name = os.path.basename(test)
+         if python_tests_to_skip and (config, file_name) in python_tests_to_skip:
+-          print ('NOTE: %s is skipped for configuration %s, as it does not '
+-                 'work there.' % (file_name, config))
++          print(('NOTE: %s is skipped for configuration %s, as it does not '
++                 'work there.' % (file_name, config)))
+         else:
+           python_test_pairs.append((directory, test))
+ 
+@@ -418,17 +418,17 @@ class TestRunner(object):
+       failed = [(directory, test)
+                 for (directory, test, success) in results
+                 if not success]
+-      print
+-      print '%d tests run.' % len(results)
++      print()
++      print('%d tests run.' % len(results))
+       if failed:
+-        print 'The following %d tests failed:' % len(failed)
++        print('The following %d tests failed:' % len(failed))
+         for (directory, test) in failed:
+-          print '%s in %s' % (test, directory)
++          print('%s in %s' % (test, directory))
+         return 1
+       else:
+-        print 'All tests passed!'
++        print('All tests passed!')
+     else:  # No tests defined
+-      print 'Nothing to test - no tests specified!'
++      print('Nothing to test - no tests specified!')
+ 
+     return 0
+ 
+@@ -440,7 +440,7 @@ def ParseArgs(project_name, argv=None, help_callback=None):
+   # required by optparse, even though they are unused.
+   # pylint: disable-msg=W0613
+   def PrintHelp(option, opt, value, parser):
+-    print HELP_MSG % {'proj': project_name}
++    print(HELP_MSG % {'proj': project_name})
+     sys.exit(1)
+ 
+   parser = optparse.OptionParser()
+diff --git a/Source/ThirdParty/gtest/test/run_tests_util_test.py b/Source/ThirdParty/gtest/test/run_tests_util_test.py
+index 9c55726fd..dce27f3ae 100755
+--- a/Source/ThirdParty/gtest/test/run_tests_util_test.py
++++ b/Source/ThirdParty/gtest/test/run_tests_util_test.py
+@@ -144,7 +144,7 @@ class FakeOs(object):
+   # pylint: disable-msg=C6409
+   def listdir(self, path):
+     assert self.path.isdir(path)
+-    return self.path.PathElement(path).iterkeys()
++    return iter(self.path.PathElement(path).keys())
+ 
+   def spawnv(self, wait, executable, *kargs):
+     assert wait == FakeOs.P_WAIT
+@@ -165,7 +165,7 @@ class GetTestsToRunTest(unittest.TestCase):
+     def NormalizeBinaryTestPair(pair):
+       """Normalizes path data in the (directory, binary_executable) pair."""
+ 
+-      directory, executable = map(os.path.normpath, pair)
++      directory, executable = list(map(os.path.normpath, pair))
+ 
+       # On Windows and Cygwin, the test file names have the .exe extension, but
+       # they can be invoked either by name or by name+extension. Our test must
+@@ -174,8 +174,8 @@ class GetTestsToRunTest(unittest.TestCase):
+         executable = re.sub(r'\.exe$', '', executable)
+       return (directory, executable)
+ 
+-    python_tests = sets.Set(map(NormalizePythonTestPair, results[0]))
+-    binary_tests = sets.Set(map(NormalizeBinaryTestPair, results[1]))
++    python_tests = sets.Set(list(map(NormalizePythonTestPair, results[0])))
++    binary_tests = sets.Set(list(map(NormalizeBinaryTestPair, results[1])))
+     return (python_tests, binary_tests)
+ 
+   def AssertResultsEqual(self, results, expected):
+@@ -472,7 +472,7 @@ class GetTestsToRunTest(unittest.TestCase):
+   def testNonTestBinary(self):
+     """Exercises GetTestsToRun with a non-test parameter."""
+ 
+-    self.assert_(
++    self.assertTrue(
+         not self.test_runner.GetTestsToRun(
+             ['gtest_unittest_not_really'],
+             '',
+@@ -482,7 +482,7 @@ class GetTestsToRunTest(unittest.TestCase):
+   def testNonExistingPythonTest(self):
+     """Exercises GetTestsToRun with a non-existent Python test parameter."""
+ 
+-    self.assert_(
++    self.assertTrue(
+         not self.test_runner.GetTestsToRun(
+             ['nonexistent_test.py'],
+             '',
+@@ -619,7 +619,7 @@ class ParseArgsTest(unittest.TestCase):
+   def testNoOptions(self):
+     options, args = run_tests_util.ParseArgs('gtest', argv=['script.py'])
+     self.assertEqual(args, ['script.py'])
+-    self.assert_(options.configurations is None)
++    self.assertTrue(options.configurations is None)
+     self.assertFalse(options.built_configurations)
+ 
+   def testOptionC(self):
+@@ -638,7 +638,7 @@ class ParseArgsTest(unittest.TestCase):
+   def testOptionB(self):
+     options, args = run_tests_util.ParseArgs('gtest', argv=['script.py', '-b'])
+     self.assertEqual(args, ['script.py'])
+-    self.assert_(options.configurations is None)
++    self.assertTrue(options.configurations is None)
+     self.assertTrue(options.built_configurations)
+ 
+   def testOptionCAndOptionB(self):
+diff --git a/Source/ThirdParty/gtest/xcode/Scripts/versiongenerate.py b/Source/ThirdParty/gtest/xcode/Scripts/versiongenerate.py
+index 81de8c96a..ea24f964c 100644
+--- a/Source/ThirdParty/gtest/xcode/Scripts/versiongenerate.py
++++ b/Source/ThirdParty/gtest/xcode/Scripts/versiongenerate.py
+@@ -54,7 +54,7 @@ import re
+ 
+ # Read the command line argument (the output directory for Version.h)
+ if (len(sys.argv) < 3):
+-  print "Usage: versiongenerate.py input_dir output_dir"
++  print("Usage: versiongenerate.py input_dir output_dir")
+   sys.exit(1)
+ else:
+   input_dir = sys.argv[1]
+diff --git a/Source/WebCore/AVFoundationSupport.py b/Source/WebCore/AVFoundationSupport.py
+index 7f13a8742..a3ab479ad 100644
+--- a/Source/WebCore/AVFoundationSupport.py
++++ b/Source/WebCore/AVFoundationSupport.py
+@@ -42,22 +42,22 @@ def fileContains(relativePath, regexp):
+     return False
+ 
+ 
+-print "/* Identifying AVFoundation Support */"
++print("/* Identifying AVFoundation Support */")
+ if lookFor("/include/AVFoundationCF/AVCFBase.h"):
+-    print "#define HAVE_AVCF 1"
++    print("#define HAVE_AVCF 1")
+ if lookFor("/include/AVFoundationCF/AVCFPlayerItemLegibleOutput.h"):
+-    print "#define HAVE_AVCF_LEGIBLE_OUTPUT 1"
++    print("#define HAVE_AVCF_LEGIBLE_OUTPUT 1")
+ if lookFor("/include/AVFoundationCF/AVCFAssetResourceLoader.h"):
+-    print "#define HAVE_AVFOUNDATION_LOADER_DELEGATE 1"
++    print("#define HAVE_AVFOUNDATION_LOADER_DELEGATE 1")
+ if lookFor("/include/AVFoundationCF/AVCFAsset.h"):
+     regexp = re.compile("AVCFURLAssetIsPlayableExtendedMIMEType")
+     if fileContains("/include/AVFoundationCF/AVCFAsset.h", regexp):
+-        print "#define HAVE_AVCFURL_PLAYABLE_MIMETYPE 1"
++        print("#define HAVE_AVCFURL_PLAYABLE_MIMETYPE 1")
+ if lookFor("/include/QuartzCore/CACFLayer.h"):
+     regexp = re.compile("CACFLayerSetContentsScale")
+     if fileContains("/include/QuartzCore/CACFLayer.h", regexp):
+-        print "#define HAVE_CACFLAYER_SETCONTENTSSCALE 1"
++        print("#define HAVE_CACFLAYER_SETCONTENTSSCALE 1")
+ if lookFor("/include/AVFoundationCF/AVCFPlayerItemLegibleOutput.h"):
+     regexp = re.compile("kAVCFPlayerItemLegibleOutput_CallbacksVersion_2")
+     if fileContains("/include/AVFoundationCF/AVCFPlayerItemLegibleOutput.h", regexp):
+-        print "#define HAVE_AVCFPLAYERITEM_CALLBACK_VERSION_2 1"
++        print("#define HAVE_AVCFPLAYERITEM_CALLBACK_VERSION_2 1")
+diff --git a/Source/WebCore/CMakeLists.txt b/Source/WebCore/CMakeLists.txt
+index 56b32563a..feac0dbbb 100644
+--- a/Source/WebCore/CMakeLists.txt
++++ b/Source/WebCore/CMakeLists.txt
+@@ -3671,14 +3671,14 @@ set(WebCore_BUILTINS_SOURCES
+ )
+ 
+ set(BUILTINS_GENERATOR_SCRIPTS
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_generator.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_model.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_templates.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_generate_combined_header.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_generate_combined_implementation.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_generate_separate_header.py
+-    ${JavaScriptCore_SCRIPTS_DIR}/builtins_generate_separate_implementation.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_generator.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_model.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_templates.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_generate_combined_header.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_generate_combined_implementation.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_generate_separate_header.py
++    ${JavaScriptCore_SCRIPTS_DIR}/mybuiltins_generate_separate_implementation.py
+     ${JavaScriptCore_SCRIPTS_DIR}/generate-js-builtins.py
+     ${JavaScriptCore_SCRIPTS_DIR}/lazywriter.py
+ )
+diff --git a/Source/WebCore/DerivedSources.make b/Source/WebCore/DerivedSources.make
+index 0f5a79fa4..83bf5f96a 100644
+--- a/Source/WebCore/DerivedSources.make
++++ b/Source/WebCore/DerivedSources.make
+@@ -1286,14 +1286,14 @@ WebCore_BUILTINS_SOURCES = \
+ #
+ 
+ BUILTINS_GENERATOR_SCRIPTS = \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins_generator.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins_model.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins_templates.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins_generate_combined_header.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins_generate_combined_implementation.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins_generate_separate_header.py \
+-    $(JavaScriptCore_SCRIPTS_DIR)/builtins_generate_separate_implementation.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins_generator.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins_model.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins_templates.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins_generate_combined_header.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins_generate_combined_implementation.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins_generate_separate_header.py \
++    $(JavaScriptCore_SCRIPTS_DIR)/mybuiltins_generate_separate_implementation.py \
+     $(JavaScriptCore_SCRIPTS_DIR)/generate-js-builtins.py \
+     $(JavaScriptCore_SCRIPTS_DIR)/lazywriter.py \
+ #
+diff --git a/Source/WebCore/platform/network/create-http-header-name-table b/Source/WebCore/platform/network/create-http-header-name-table
+index 755d22e94..3dc57a568 100755
+--- a/Source/WebCore/platform/network/create-http-header-name-table
++++ b/Source/WebCore/platform/network/create-http-header-name-table
+@@ -41,7 +41,7 @@ input_file = open(input_path)
+ http_header_name_to_id = { }
+ http_header_names = []
+ 
+-for line in input_file.xreadlines():
++for line in input_file:
+     http_header_name = line.strip()
+     if not http_header_name or http_header_name[:2] == '//':
+         continue
+diff --git a/Source/WebInspectorUI/Scripts/jsmin.py b/Source/WebInspectorUI/Scripts/jsmin.py
+index 372418b4d..2f9fddfce 100644
+--- a/Source/WebInspectorUI/Scripts/jsmin.py
++++ b/Source/WebInspectorUI/Scripts/jsmin.py
+@@ -23,17 +23,20 @@
+ # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ # THE SOFTWARE.
+ 
++# stolen from webkitgtk 2.26.2
+ 
+ import sys
+ is_3 = sys.version_info >= (3, 0)
+ if is_3:
+     import io
++    python_text_type = str
+ else:
+     import StringIO
+     try:
+         import cStringIO
+     except ImportError:
+         cStringIO = None
++    python_text_type = basestring
+ 
+ 
+ __all__ = ['jsmin', 'JavascriptMinify']
+@@ -79,14 +82,18 @@ class JavascriptMinify(object):
+         def write(char):
+             # all of this is to support literal regular expressions.
+             # sigh
+-            if char in 'return':
++            if str(char) in 'return':
+                 self.return_buf += char
+                 self.is_return = self.return_buf == 'return'
+             self.outs.write(char)
+             if self.is_return:
+                 self.return_buf = ''
+ 
+-        read = self.ins.read
++        def read(n):
++            char = self.ins.read(n)
++            if not isinstance(char, python_text_type):
++                raise ValueError("ERROR: The script jsmin.py can only handle text input, but it received input of type %s" % type(char))
++            return char
+ 
+         space_strings = "abcdefghijklmnopqrstuvwxyz"\
+         "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$\\"
+@@ -118,8 +125,8 @@ class JavascriptMinify(object):
+                 write(previous)
+         elif not previous:
+             return
+-        elif previous >= '!':
+-            if previous in "'\"":
++        elif str(previous) >= "!":
++            if str(previous) in "'\"":
+                 in_quote = previous
+             write(previous)
+             previous_non_space = previous
+@@ -166,7 +173,7 @@ class JavascriptMinify(object):
+                     if numslashes % 2 == 0:
+                         in_quote = ''
+                         write(''.join(quote_buf))
+-            elif next1 in '\r\n':
++            elif str(next1) in '\r\n':
+                 if previous_non_space in newlineend_strings \
+                     or previous_non_space > '~':
+                     while 1:
+@@ -179,7 +186,7 @@ class JavascriptMinify(object):
+                                 or next2 > '~' or next2 == '/':
+                                 do_newline = True
+                             break
+-            elif next1 < '!' and not in_re:
++            elif str(next1) < '!' and not in_re:
+                 if (previous_non_space in space_strings \
+                     or previous_non_space > '~') \
+                     and (next2 in space_strings or next2 > '~'):
+@@ -217,14 +224,14 @@ class JavascriptMinify(object):
+                     do_newline = False
+ 
+                 write(next1)
+-                if not in_re and next1 in "'\"`":
++                if not in_re and str(next1) in "'\"`":
+                     in_quote = next1
+                     quote_buf = []
+ 
+             previous = next1
+             next1 = next2
+ 
+-            if previous >= '!':
++            if str(previous) >= '!':
+                 previous_non_space = previous
+ 
+             if previous == '\\':
+diff --git a/Source/WebKit2/Scripts/generate-message-receiver.py b/Source/WebKit2/Scripts/generate-message-receiver.py
+index 6413a8bf3..8702117f0 100644
+--- a/Source/WebKit2/Scripts/generate-message-receiver.py
++++ b/Source/WebKit2/Scripts/generate-message-receiver.py
+@@ -22,7 +22,7 @@
+ # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+-from __future__ import with_statement
++
+ import sys
+ 
+ import webkit.messages
+diff --git a/Source/WebKit2/Scripts/generate-messages-header.py b/Source/WebKit2/Scripts/generate-messages-header.py
+index ad73a5283..b35ee7d51 100644
+--- a/Source/WebKit2/Scripts/generate-messages-header.py
++++ b/Source/WebKit2/Scripts/generate-messages-header.py
+@@ -22,7 +22,7 @@
+ # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ 
+-from __future__ import with_statement
++
+ import sys
+ 
+ import webkit.messages
+diff --git a/Source/WebKit2/Scripts/webkit/messages_unittest.py b/Source/WebKit2/Scripts/webkit/messages_unittest.py
+index 164199fc2..5f58e1919 100644
+--- a/Source/WebKit2/Scripts/webkit/messages_unittest.py
++++ b/Source/WebKit2/Scripts/webkit/messages_unittest.py
+@@ -24,7 +24,7 @@ import os
+ import re
+ import sys
+ import unittest
+-from StringIO import StringIO
++from io import StringIO
+ 
+ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+ from webkit import messages
+@@ -255,43 +255,43 @@ class MessagesTest(unittest.TestCase):
+ 
+ class ParsingTest(MessagesTest):
+     def check_message(self, message, expected_message):
+-        self.assertEquals(message.name, expected_message['name'])
+-        self.assertEquals(len(message.parameters), len(expected_message['parameters']))
++        self.assertEqual(message.name, expected_message['name'])
++        self.assertEqual(len(message.parameters), len(expected_message['parameters']))
+         for index, parameter in enumerate(message.parameters):
+             expected_parameter = expected_message['parameters'][index]
+-            self.assertEquals(parameter.type, expected_parameter[0])
+-            self.assertEquals(parameter.name, expected_parameter[1])
++            self.assertEqual(parameter.type, expected_parameter[0])
++            self.assertEqual(parameter.name, expected_parameter[1])
+             if len(expected_parameter) > 2:
+-                self.assertEquals(parameter.attributes, frozenset(expected_parameter[2]))
++                self.assertEqual(parameter.attributes, frozenset(expected_parameter[2]))
+                 for attribute in expected_parameter[2]:
+                     self.assertTrue(parameter.has_attribute(attribute))
+             else:
+-                self.assertEquals(parameter.attributes, frozenset())
++                self.assertEqual(parameter.attributes, frozenset())
+         if message.reply_parameters is not None:
+             for index, parameter in enumerate(message.reply_parameters):
+-                self.assertEquals(parameter.type, expected_message['reply_parameters'][index][0])
+-                self.assertEquals(parameter.name, expected_message['reply_parameters'][index][1])
++                self.assertEqual(parameter.type, expected_message['reply_parameters'][index][0])
++                self.assertEqual(parameter.name, expected_message['reply_parameters'][index][1])
+         else:
+             self.assertFalse('reply_parameters' in expected_message)
+-        self.assertEquals(message.condition, expected_message['conditions'])
++        self.assertEqual(message.condition, expected_message['conditions'])
+ 
+     def test_receiver(self):
+         """Receiver should be parsed as expected"""
+-        self.assertEquals(self.receiver.name, _expected_results['name'])
+-        self.assertEquals(self.receiver.condition, _expected_results['conditions'])
+-        self.assertEquals(len(self.receiver.messages), len(_expected_results['messages']))
++        self.assertEqual(self.receiver.name, _expected_results['name'])
++        self.assertEqual(self.receiver.condition, _expected_results['conditions'])
++        self.assertEqual(len(self.receiver.messages), len(_expected_results['messages']))
+         for index, message in enumerate(self.receiver.messages):
+             self.check_message(message, _expected_results['messages'][index])
+ 
+-        self.assertEquals(self.legacy_receiver.name, _expected_results['name'])
+-        self.assertEquals(self.legacy_receiver.condition, _expected_results['conditions'])
+-        self.assertEquals(len(self.legacy_receiver.messages), len(_expected_results['messages']))
++        self.assertEqual(self.legacy_receiver.name, _expected_results['name'])
++        self.assertEqual(self.legacy_receiver.condition, _expected_results['conditions'])
++        self.assertEqual(len(self.legacy_receiver.messages), len(_expected_results['messages']))
+         for index, message in enumerate(self.legacy_receiver.messages):
+             self.check_message(message, _expected_results['messages'][index])
+ 
+-        self.assertEquals(self.superclass_receiver.name, _expected_superclass_results['name'])
+-        self.assertEquals(self.superclass_receiver.superclass, _expected_superclass_results['superclass'])
+-        self.assertEquals(len(self.superclass_receiver.messages), len(_expected_superclass_results['messages']))
++        self.assertEqual(self.superclass_receiver.name, _expected_superclass_results['name'])
++        self.assertEqual(self.superclass_receiver.superclass, _expected_superclass_results['superclass'])
++        self.assertEqual(len(self.superclass_receiver.messages), len(_expected_superclass_results['messages']))
+         for index, message in enumerate(self.superclass_receiver.messages):
+             self.check_message(message, _expected_superclass_results['messages'][index])
+ 
+@@ -309,9 +309,9 @@ class GeneratedFileContentsTest(unittest.TestCase):
+         expected_line_list = expected_file_contents.splitlines(False)
+ 
+         for index, actual_line in enumerate(actual_line_list):
+-            self.assertEquals(actual_line, expected_line_list[index])
++            self.assertEqual(actual_line, expected_line_list[index])
+ 
+-        self.assertEquals(len(actual_line_list), len(expected_line_list))
++        self.assertEqual(len(actual_line_list), len(expected_line_list))
+ 
+     def assertHeaderEqual(self, input_messages_file_contents, expected_file_name):
+         actual_file_contents = messages.generate_messages_header(StringIO(input_messages_file_contents))
+@@ -344,11 +344,11 @@ class ReceiverImplementationTest(GeneratedFileContentsTest):
+ 
+ class UnsupportedPrecompilerDirectiveTest(unittest.TestCase):
+     def test_error_at_else(self):
+-        with self.assertRaisesRegexp(Exception, r"ERROR: '#else.*' is not supported in the \*\.in files"):
++        with self.assertRaisesRegex(Exception, r"ERROR: '#else.*' is not supported in the \*\.in files"):
+             messages.generate_message_handler(StringIO("asd\n#else bla\nfoo"))
+ 
+     def test_error_at_elif(self):
+-        with self.assertRaisesRegexp(Exception, r"ERROR: '#elif.*' is not supported in the \*\.in files"):
++        with self.assertRaisesRegex(Exception, r"ERROR: '#elif.*' is not supported in the \*\.in files"):
+             messages.generate_message_handler(StringIO("asd\n#elif bla\nfoo"))
+ 
+ 
+diff --git a/Source/cmake/WebKitCommon.cmake b/Source/cmake/WebKitCommon.cmake
+index de4ac8f65..1ba7b58ea 100644
+--- a/Source/cmake/WebKitCommon.cmake
++++ b/Source/cmake/WebKitCommon.cmake
+@@ -25,9 +25,6 @@ if (NOT HAS_RUN_WEBKIT_COMMON)
+     find_package(Perl 5.10.0 REQUIRED)
+ 
+     find_package(PythonInterp 2.7.0 REQUIRED)
+-    if (PYTHON_VERSION_MAJOR GREATER 2)
+-        message(FATAL_ERROR "Python 2 is required, but Python ${PYTHON_VERSION_MAJOR} was found.")
+-    endif ()
+ 
+     # We cannot check for RUBY_FOUND because it is set only when the full package is installed and
+     # the only thing we need is the interpreter. Unlike Python, cmake does not provide a macro
+diff --git a/Tools/jhbuild/jhbuildutils.py b/Tools/jhbuild/jhbuildutils.py
+index c00160e7e..f4edc29a2 100644
+--- a/Tools/jhbuild/jhbuildutils.py
++++ b/Tools/jhbuild/jhbuildutils.py
+@@ -1,7 +1,7 @@
+ import glob
+ import os.path
+ import sys
+-import __builtin__
++import builtins
+ 
+ top_level_dir = None
+ 
+@@ -35,9 +35,9 @@ def enter_jhbuild_environment_if_available(platform):
+     sys.path.insert(0, source_path)
+ 
+     # When loading jhbuild from the source checkout it fails if the SRCDIR, PKGDATADIR or DATADIR aren't present.
+-    __builtin__.__dict__['SRCDIR'] = source_path
+-    __builtin__.__dict__['PKGDATADIR'] = None
+-    __builtin__.__dict__['DATADIR'] = None
++    builtins.__dict__['SRCDIR'] = source_path
++    builtins.__dict__['PKGDATADIR'] = None
++    builtins.__dict__['DATADIR'] = None
+ 
+     # We don't know the Python version, so we just assume that we can safely take the first one in the list.
+     site_packages_path = glob.glob(os.path.join(get_dependencies_path(platform), "Root", "lib", "*", "site-packages"))
+@@ -49,7 +49,7 @@ def enter_jhbuild_environment_if_available(platform):
+         import jhbuild.config
+         from jhbuild.errors import FatalError
+         config = jhbuild.config.Config(get_config_file_for_platform(platform), [])
+-    except FatalError, exception:
++    except FatalError as exception:
+         sys.stderr.write('Could not load jhbuild config file: %s\n' % exception.args[0])
+         return False
+ 
+-- 
+2.21.0
+
