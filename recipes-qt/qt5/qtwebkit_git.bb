@@ -12,20 +12,16 @@ DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-
 # Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.13
 # 5.13.meta-qt5.1
 SRC_URI += "\
-    file://0001-Do-not-skip-build-for-cross-compile.patch \
-    file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
-    file://0003-Fix-build-bug-for-armv32-BE.patch \
-    file://0004-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
+    file://0001-Port-build-to-python3.patch \
+    file://0002-Do-not-skip-build-for-cross-compile.patch \
+    file://0003-Fix-build-with-non-glibc-libc-on-musl.patch \
+    file://0004-Fix-build-bug-for-armv32-BE.patch \
+    file://0005-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
 "
 
 inherit cmake_qt5 perlnative
 
-inherit ${@bb.utils.contains("BBFILE_COLLECTIONS", "meta-python2", "pythonnative", "", d)}
-
-python() {
-    if 'meta-python2' not in d.getVar('BBFILE_COLLECTIONS').split():
-        raise bb.parse.SkipRecipe('Requires meta-python2 to be present.')
-}
+inherit python3native
 
 # qemuarm build fails with:
 # | {standard input}: Assembler messages:
@@ -52,6 +48,7 @@ EXTRA_OECMAKE += " \
     -DCROSS_COMPILE=ON \
     -DECM_MKSPECS_INSTALL_DIR=${libdir}${QT_DIR_NAME}/mkspecs/modules \
     -DQML_INSTALL_DIR=${OE_QMAKE_PATH_QML} \
+    -DPYTHON_EXECUTABLE=`which python3` \
 "
 
 EXTRA_OECMAKE_append_toolchain-clang = " -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES:PATH='${STAGING_INCDIR}'"
