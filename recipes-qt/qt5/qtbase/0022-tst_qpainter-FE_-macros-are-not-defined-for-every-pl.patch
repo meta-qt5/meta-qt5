@@ -1,0 +1,123 @@
+From 9b192df7e06992b256eb49af5a213c1b0d3e341a Mon Sep 17 00:00:00 2001
+From: Nicola Lunghi <nick83ola@gmail.com>
+Date: Wed, 5 Feb 2020 15:32:25 +0000
+Subject: [PATCH] tst_qpainter: FE_ macros are not defined for every platform
+
+the FE_INEXACT, FE_UNDERFLOW, FE_OVERFLOW, FE_DIVBYZERO, FE_INVALID are defined
+only for platforms with fp engine.
+
+Signed-off-by: Nicola Lunghi <nick83ola@gmail.com>
+Upstream-Status: submitted [https://codereview.qt-project.org/c/qt/qtbase/+/289447]
+---
+ .../gui/painting/qpainter/tst_qpainter.cpp    | 50 ++++++++++++++-----
+ 1 file changed, 37 insertions(+), 13 deletions(-)
+
+diff --git a/tests/auto/gui/painting/qpainter/tst_qpainter.cpp b/tests/auto/gui/painting/qpainter/tst_qpainter.cpp
+index 6e48439944..3566ef24be 100644
+--- a/tests/auto/gui/painting/qpainter/tst_qpainter.cpp
++++ b/tests/auto/gui/painting/qpainter/tst_qpainter.cpp
+@@ -2890,19 +2890,43 @@ void tst_QPainter::monoImages()
+ #if !defined(Q_OS_AIX) && !defined(Q_CC_MSVC) && !defined(Q_OS_SOLARIS) && !defined(__UCLIBC__)
+ #include <fenv.h>
+ 
++#if defined(FE_INEXACT)
++    #define QP_FE_INEXACT (FE_INEXACT)
++#else
++    #define QP_FE_INEXACT 0
++#endif
++#if defined(FE_UNDERFLOW)
++    #define QP_FE_UNDERFLOW (FE_UNDERFLOW)
++#else
++    #define QP_FE_UNDERFLOW 0
++#endif
++#if defined(FE_OVERFLOW)
++    #define QP_FE_OVERFLOW (FE_OVERFLOW)
++#else
++    #define QP_FE_OVERFLOW 0
++#endif
++#if defined(FE_DIVBYZERO)
++    #define QP_FE_DIVBYZERO (FE_DIVBYZERO)
++#else
++    #define QP_FE_DIVBYZERO 0
++#endif
++#if defined(FE_INVALID)
++    #define QP_FE_INVALID (FE_INVALID)
++#else
++    #define QP_FE_INVALID 0
++#endif
++
+ static const QString fpeExceptionString(int exception)
+ {
+-#ifdef FE_INEXACT
+-    if (exception & FE_INEXACT)
++    if (exception & QP_FE_INEXACT)
+         return QLatin1String("Inexact result");
+-#endif
+-    if (exception & FE_UNDERFLOW)
++    if (exception & QP_FE_UNDERFLOW)
+         return QLatin1String("Underflow");
+-    if (exception & FE_OVERFLOW)
++    if (exception & QP_FE_OVERFLOW)
+         return QLatin1String("Overflow");
+-    if (exception & FE_DIVBYZERO)
++    if (exception & QP_FE_DIVBYZERO)
+         return QLatin1String("Divide by zero");
+-    if (exception & FE_INVALID)
++    if (exception & QP_FE_INVALID)
+         return QLatin1String("Invalid operation");
+     return QLatin1String("No exception");
+ }
+@@ -2928,7 +2952,7 @@ private:
+ 
+ void fpe_rasterizeLine_task232012()
+ {
+-    FpExceptionChecker checker(FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID | FE_DIVBYZERO);
++    FpExceptionChecker checker(QP_FE_UNDERFLOW | QP_FE_OVERFLOW | QP_FE_INVALID | QP_FE_DIVBYZERO);
+     QImage img(128, 128, QImage::Format_ARGB32_Premultiplied);
+     img.fill(0x0);
+     QPainter p(&img);
+@@ -2940,7 +2964,7 @@ void fpe_rasterizeLine_task232012()
+ 
+ void fpe_pixmapTransform()
+ {
+-    FpExceptionChecker checker(FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID | FE_DIVBYZERO);
++    FpExceptionChecker checker(QP_FE_UNDERFLOW | QP_FE_OVERFLOW | QP_FE_INVALID | QP_FE_DIVBYZERO);
+ 
+     QImage img(128, 128, QImage::Format_ARGB32_Premultiplied);
+ 
+@@ -2968,7 +2992,7 @@ void fpe_pixmapTransform()
+ 
+ void fpe_zeroLengthLines()
+ {
+-    FpExceptionChecker checker(FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID | FE_DIVBYZERO);
++    FpExceptionChecker checker(QP_FE_UNDERFLOW | QP_FE_OVERFLOW | QP_FE_INVALID | QP_FE_DIVBYZERO);
+ 
+     QImage img(128, 128, QImage::Format_ARGB32_Premultiplied);
+ 
+@@ -2980,7 +3004,7 @@ void fpe_zeroLengthLines()
+ 
+ void fpe_divByZero()
+ {
+-    FpExceptionChecker checker(FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID | FE_DIVBYZERO);
++    FpExceptionChecker checker(QP_FE_UNDERFLOW | QP_FE_OVERFLOW | QP_FE_INVALID | QP_FE_DIVBYZERO);
+ 
+     QImage img(128, 128, QImage::Format_ARGB32_Premultiplied);
+ 
+@@ -3003,7 +3027,7 @@ void fpe_divByZero()
+ 
+ void fpe_steepSlopes()
+ {
+-    FpExceptionChecker checker(FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID | FE_DIVBYZERO);
++    FpExceptionChecker checker(QP_FE_UNDERFLOW | QP_FE_OVERFLOW | QP_FE_INVALID | QP_FE_DIVBYZERO);
+ 
+     QImage img(1024, 1024, QImage::Format_ARGB32_Premultiplied);
+ 
+@@ -3022,7 +3046,7 @@ void fpe_steepSlopes()
+ 
+ void fpe_radialGradients()
+ {
+-    FpExceptionChecker checker(FE_UNDERFLOW | FE_OVERFLOW | FE_INVALID | FE_DIVBYZERO);
++    FpExceptionChecker checker(QP_FE_UNDERFLOW | QP_FE_OVERFLOW | QP_FE_INVALID | QP_FE_DIVBYZERO);
+ 
+     QImage img(21, 21, QImage::Format_ARGB32_Premultiplied);
+     img.fill(0);
