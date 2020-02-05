@@ -7,9 +7,10 @@ LIC_FILES_CHKSUM = " \
 "
 
 DEPENDS += "qtbase qtdeclarative qtquickcontrols2"
+ASSIMP_BRANCH = "assimp_5.0_release"
 
 SRC_URI += " \
-    git://github.com/assimp/assimp.git;name=assimp;branch=master;protocol=https;destsuffix=git/src/3rdparty/assimp/src \
+    git://github.com/assimp/assimp.git;name=assimp;branch=${ASSIMP_BRANCH};protocol=https;destsuffix=git/src/3rdparty/assimp/src \
 "
 
 PACKAGECONFIG ??= ""
@@ -21,7 +22,7 @@ FILES_${PN}-qmlplugins += " \
   ${OE_QMAKE_PATH_QML}/QtQuick3D/Helpers/meshes/*.mesh \
 "
 
-SRCREV_qtquick3d = "a3a9d0dcb721f8b4bdabfc8504679f1e839c1b88"
-SRCREV_assimp = "5c900d689a5db5637b98f665fc1e9e9c9ed416b9"
+SRCREV_qtquick3d = "4005e300d25e18bd0c3fae756ccf34b4b4f560f6"
+SRCREV_assimp = "8f0c6b04b2257a520aaab38421b2e090204b69df"
 
 SRCREV_FORMAT = "qtquick3d_assimp"
