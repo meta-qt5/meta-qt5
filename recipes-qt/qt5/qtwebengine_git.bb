@@ -149,7 +149,6 @@ QT_MODULE_BRANCH_CHROMIUM = "77-based"
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
-    file://0002-Remove-ninja-version-test-for-now-it-fails-for-ninja.patch \
 "
 SRC_URI_append_libc-musl = "\
     file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
@@ -190,8 +189,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0023-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "73d457481caff493066d9cce50087b56ee506f6a"
-SRCREV_chromium = "a9a20127e8adeb3f3cd7921b0bec32083103cc5c"
+SRCREV_qtwebengine = "35aa6c30f0e766b8825519e04242b7a4c93b6e0e"
+SRCREV_chromium = "6c9be50c2d901e66119679155fb3c7c9200448d1"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
