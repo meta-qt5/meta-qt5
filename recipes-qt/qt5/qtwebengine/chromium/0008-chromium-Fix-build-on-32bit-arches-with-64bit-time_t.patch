@@ -12,9 +12,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  chromium/ui/events/ozone/evdev/event_converter_evdev.cc    | 4 ++--
+ chromium/ui/events/ozone/evdev/event_converter_evdev.h     | 5 +++++
  chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc | 6 +++---
  chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.h  | 5 +++++
- 3 files changed, 10 insertions(+), 5 deletions(-)
+ 4 files changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/chromium/ui/events/ozone/evdev/event_converter_evdev.cc b/chromium/ui/events/ozone/evdev/event_converter_evdev.cc
 index 5684f4121be..10f6357e6b5 100644
@@ -31,6 +32,22 @@ index 5684f4121be..10f6357e6b5 100644
    ValidateEventTimeClock(&timestamp);
    return timestamp;
  }
+diff --git a/chromium/ui/events/ozone/evdev/event_converter_evdev.h b/chromium/ui/events/ozone/evdev/event_converter_evdev.h
+index a91807b60e8..74d46cb8608 100644
+--- a/chromium/ui/events/ozone/evdev/event_converter_evdev.h
++++ b/chromium/ui/events/ozone/evdev/event_converter_evdev.h
+@@ -20,6 +20,11 @@
+ #include "ui/events/ozone/evdev/events_ozone_evdev_export.h"
+ #include "ui/gfx/geometry/size.h"
+ 
++#ifndef input_event_sec
++#define input_event_sec time.tv_sec
++#define input_event_usec time.tv_usec
++#endif
++
+ struct input_event;
+ 
+ namespace ui {
 diff --git a/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc b/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc
 index 363c3183e05..4fccfd62f84 100644
 --- a/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc
