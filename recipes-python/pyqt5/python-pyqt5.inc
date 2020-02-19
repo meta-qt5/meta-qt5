@@ -23,11 +23,11 @@ export STAGING_LIBDIR
 
 PARALLEL_MAKEINST = ""
 
-DISABLED_FEATURES = "PyQt_Desktop_OpenGL PyQt_Accessibility PyQt_SessionManager"
+DISABLED_FEATURES = "PyQt_Desktop_OpenGL PyQt_Accessibility PyQt_SessionManager ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', '', 'PyQt_OpenGL', d)}"
 
 DISABLED_FEATURES_append_arm = " PyQt_qreal_double"
 
-PYQT_MODULES = "QtCore QtGui QtNetwork QtWidgets QtXml QtNetwork QtQml QtQuick QtQuickWidgets"
+PYQT_MODULES = "QtCore QtGui QtNetwork QtXml QtNetwork QtQml ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'QtQuick QtWidgets QtQuickWidgets', '', d)}"
 
 do_configure_prepend() {
     cd ${S}
