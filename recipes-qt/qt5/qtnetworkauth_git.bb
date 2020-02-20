@@ -9,4 +9,4 @@ require qt5-git.inc
 
 DEPENDS += "qtbase"
 
-SRCREV = "de3b06752276e33c80d6a897f57f22f658bd5e0c"
+SRCREV = "3e3f047e59db88e806b3c1fd94c4a996f5317b68"
