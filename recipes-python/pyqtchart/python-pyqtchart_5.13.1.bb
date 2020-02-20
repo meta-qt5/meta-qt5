@@ -6,4 +6,4 @@ DEPENDS += "sip sip-native python python-pyqt5"
 
 RDEPENDS_${PN} += "python-core python-sip python-pyqt5"
 
-PNBLACKLIST[python-pyqt5chart] = "Sip fails in do_configure sip: QOpenGLFramebufferObject is undefined"
+PNBLACKLIST[python-pyqtchart] = "Sip fails in do_configure sip: QOpenGLFramebufferObject is undefined"
