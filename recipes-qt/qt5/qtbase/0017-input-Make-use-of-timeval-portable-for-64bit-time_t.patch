@@ -1,4 +1,4 @@
-From 54328b4942eb8cc884bdf41d58f2408a60ea7605 Mon Sep 17 00:00:00 2001
+From b9b6172194de411c2c68e81c427a79b0a1227e3e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Mon, 25 Nov 2019 08:27:39 -0800
 Subject: [PATCH] input: Make use of timeval portable for 64bit time_t
@@ -44,7 +44,7 @@ index 3555763b89..e7dc57c027 100644
      led_ie.code = led;
      led_ie.value = state;
 diff --git a/src/platformsupport/input/evdevtouch/qevdevtouchhandler.cpp b/src/platformsupport/input/evdevtouch/qevdevtouchhandler.cpp
-index c51db59e1f..1f3726e291 100644
+index 78728ef4ce..1d65f9b9f7 100644
 --- a/src/platformsupport/input/evdevtouch/qevdevtouchhandler.cpp
 +++ b/src/platformsupport/input/evdevtouch/qevdevtouchhandler.cpp
 @@ -58,6 +58,11 @@
@@ -59,7 +59,7 @@ index c51db59e1f..1f3726e291 100644
  #include <math.h>
  
  #if QT_CONFIG(mtdev)
-@@ -576,7 +581,7 @@ void QEvdevTouchScreenData::processInputEvent(input_event *data)
+@@ -573,7 +578,7 @@ void QEvdevTouchScreenData::processInputEvent(input_event *data)
  
          // update timestamps
          m_lastTimeStamp = m_timeStamp;
