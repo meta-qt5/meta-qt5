@@ -1,4 +1,4 @@
-From 382e44787d366428892161881fdc3c2481cefc04 Mon Sep 17 00:00:00 2001
+From 3184d1f75e0312826efd1227519b46b5cb464299 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 14 Feb 2018 17:08:43 -0800
 Subject: [PATCH] mkspecs/common/gcc-base.conf: Use -I instead of -isystem
@@ -22,7 +22,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/mkspecs/common/clang.conf b/mkspecs/common/clang.conf
-index aead581478..8e06a069b4 100644
+index 2499c8b6d8..2e79e083cd 100644
 --- a/mkspecs/common/clang.conf
 +++ b/mkspecs/common/clang.conf
 @@ -18,7 +18,7 @@ QMAKE_PCH_OUTPUT_EXT    = .pch
@@ -35,7 +35,7 @@ index aead581478..8e06a069b4 100644
  QMAKE_CFLAGS_USE_PRECOMPILE      = -Xclang -include-pch -Xclang ${QMAKE_PCH_OUTPUT}
  QMAKE_CFLAGS_LTCG                = -flto=thin
 diff --git a/mkspecs/common/gcc-base.conf b/mkspecs/common/gcc-base.conf
-index 4d82321cba..0b03ec99a6 100644
+index 1f919d270a..adf3fead32 100644
 --- a/mkspecs/common/gcc-base.conf
 +++ b/mkspecs/common/gcc-base.conf
 @@ -46,7 +46,7 @@ QMAKE_CFLAGS_DEBUG         += -g

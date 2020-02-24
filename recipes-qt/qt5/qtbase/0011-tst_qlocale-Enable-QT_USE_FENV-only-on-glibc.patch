@@ -1,4 +1,4 @@
-From f3befb762f2e69fa1f8a444ca9b392b4cb48ba5f Mon Sep 17 00:00:00 2001
+From 146fcda8319f17e01af676ee4151d83f302c6d6e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 3 Sep 2017 10:11:50 -0700
 Subject: [PATCH] tst_qlocale: Enable QT_USE_FENV only on glibc
@@ -11,7 +11,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tests/auto/corelib/text/qlocale/tst_qlocale.cpp b/tests/auto/corelib/text/qlocale/tst_qlocale.cpp
-index 8f434acb29..53dc0d9121 100644
+index ec85a6c5c6..15bf7d106f 100644
 --- a/tests/auto/corelib/text/qlocale/tst_qlocale.cpp
 +++ b/tests/auto/corelib/text/qlocale/tst_qlocale.cpp
 @@ -46,7 +46,7 @@
