@@ -49,7 +49,7 @@ EXTRA_QMAKEVARS_PRE_append_class-target = "\
     ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=config_clang', 'CONFIG+=config_clang_done CONFIG-=config_clang', d)} \
 "
 
-SRCREV = "a3d82bec9678fda3d8c8b7766e83267142d1ef4a"
+SRCREV = "698ffa215fd3fd7b8dd67ed9be88ca1a6731df91"
 
 BBCLASSEXTEND = "native nativesdk"
 
