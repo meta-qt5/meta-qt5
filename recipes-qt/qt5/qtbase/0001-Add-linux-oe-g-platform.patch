@@ -1,4 +1,4 @@
-From 5668523aa073c1ef430b1662c735ead8fd64c83b Mon Sep 17 00:00:00 2001
+From 0d13aba5a2ab1794bfea5a3bbf2096da17f0cae1 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -89,10 +89,10 @@ index 3a71376029..dd6020f1fe 100644
      # run qmlimportscanner
      qtPrepareTool(QMLIMPORTSCANNER, qmlimportscanner, , system)
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 661b7dd961..3bc73ab0c6 100644
+index 7777e615bd..8d792fa70a 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -76,7 +76,7 @@ defineTest(qtHaveModule) {
+@@ -87,7 +87,7 @@ defineTest(qtHaveModule) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
      isEmpty(cmd) {

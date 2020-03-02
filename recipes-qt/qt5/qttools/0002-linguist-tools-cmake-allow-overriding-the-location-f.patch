@@ -1,4 +1,4 @@
-From 17e39873d9655339fa32e3b1b29ef2254c52bc2e Mon Sep 17 00:00:00 2001
+From 2d76f5a7770076eccd55dec4a3f1f63b931a566c Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Mon, 18 Feb 2019 10:45:03 +0200
 Subject: [PATCH] linguist-tools cmake: allow overriding the location for

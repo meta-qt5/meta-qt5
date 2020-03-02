@@ -1,4 +1,4 @@
-From 5f311180f7f74fdb3be8efc45a99411f98a1140b Mon Sep 17 00:00:00 2001
+From 9e2ef02c25fedb6faad0d26ba2273297918f6399 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Tue, 10 Jan 2017 15:28:26 +0200
 Subject: [PATCH] Use external host bin path for cmake file

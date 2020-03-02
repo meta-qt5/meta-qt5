@@ -11,8 +11,8 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase"
 DEPENDS_class-target += "qtdeclarative qt3d-native"
 
-# Patches from https://github.com/meta-qt5/qt3d/commits/b5.13
-# 5.13.meta-qt5.1
+# Patches from https://github.com/meta-qt5/qt3d/commits/b5.14
+# 5.14.meta-qt5.1
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
 "

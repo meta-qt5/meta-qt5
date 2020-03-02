@@ -1,4 +1,4 @@
-From 4df2574a86c2ce86c97da0795dec29438b0c0024 Mon Sep 17 00:00:00 2001
+From e1c8cf94727583c666efe3e6852fa60fba9a652b Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 6 Oct 2019 21:44:38 -0700
 Subject: [PATCH] tst_seatv4: Include <array>
@@ -13,7 +13,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tests/auto/client/seatv4/tst_seatv4.cpp b/tests/auto/client/seatv4/tst_seatv4.cpp
-index 1d6fb6b9..4c5732da 100644
+index 2e17bef8..df78ba69 100644
 --- a/tests/auto/client/seatv4/tst_seatv4.cpp
 +++ b/tests/auto/client/seatv4/tst_seatv4.cpp
 @@ -36,7 +36,7 @@

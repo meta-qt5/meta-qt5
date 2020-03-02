@@ -12,8 +12,8 @@ LIC_FILES_CHKSUM = " \
 "
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
-# Patches from https://github.com/meta-qt5/qttools/commits/b5.13
-# 5.13.meta-qt5.1
+# Patches from https://github.com/meta-qt5/qttools/commits/b5.14
+# 5.14.meta-qt5.1
 SRC_URI += " \
     file://0001-add-noqtwebkit-configuration.patch \
     file://0002-linguist-tools-cmake-allow-overriding-the-location-f.patch \
