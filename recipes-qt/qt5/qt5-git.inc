@@ -1,5 +1,5 @@
 # Copyright (C) 2012-2016 O.S. Systems Software LTDA.
-# Copyright (C) 2013-2019 Martin Jansa <martin.jansa@gmail.com>
+# Copyright (C) 2013-2020 Martin Jansa <martin.jansa@gmail.com>
 
 QT_MODULE ?= "${BPN}"
 QT_MODULE_BRANCH ?= "5.14"

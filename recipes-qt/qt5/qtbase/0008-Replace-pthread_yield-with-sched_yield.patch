@@ -1,4 +1,4 @@
-From 98fbf9fcbe29886dbc84a7e95a9f58a588a8e8ea Mon Sep 17 00:00:00 2001
+From 4d8c0a0524ceea0590f15d87a4aa604a488bedc5 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 27 Jul 2017 08:02:51 -0700
 Subject: [PATCH] Replace pthread_yield with sched_yield
@@ -36,7 +36,7 @@ index 12c29a6e13..7d31799da6 100644
              QMetaType info(tp);
              if (!info.isValid()) {
 diff --git a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
-index 75b9b23259..77b5bf1525 100644
+index 0546c6ba7d..f602b035d6 100644
 --- a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
 +++ b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
 @@ -78,6 +78,7 @@
@@ -47,7 +47,7 @@ index 75b9b23259..77b5bf1525 100644
  #endif
  
  #include "private/qhostinfo_p.h"
-@@ -2177,8 +2178,8 @@ public slots:
+@@ -2178,8 +2179,8 @@ public slots:
  
  #if defined(Q_OS_MAC)
          pthread_yield_np();
