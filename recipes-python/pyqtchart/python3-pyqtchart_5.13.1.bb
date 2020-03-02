@@ -28,8 +28,6 @@ PARALLEL_MAKEINST = ""
 
 DISABLED_FEATURES = "PyQt_Desktop_OpenGL PyQt_Accessibility PyQt_SessionManager"
 
-DISABLED_FEATURES_append_arm = " PyQt_qreal_double"
-
 do_configure_prepend() {
     cd ${S}
     echo "[PyQt 5]" > pyqt.cfg
