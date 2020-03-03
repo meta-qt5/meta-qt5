@@ -17,4 +17,4 @@ FILES_${PN}-qmlplugins += " \
   ${OE_QMAKE_PATH_QML}/QtQuick/Dialogs/qml/icons.ttf \
 "
 
-SRCREV = "f11d94e893ca2c696626d9a5785ad017d1d35792"
+SRCREV = "4687a1dbef006cbffe014b50c4bbd0edf912334d"
