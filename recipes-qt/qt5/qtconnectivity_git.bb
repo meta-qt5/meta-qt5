@@ -19,4 +19,4 @@ PACKAGECONFIG[bluez] = "-feature-bluez,-no-feature-bluez,bluez5"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "bdedcf46183552cce796d9aa5149cac6826c49e6"
+SRCREV = "a526644f2f2c7359cbe7d50bea09ded3e6c65e4d"
