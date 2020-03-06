@@ -17,10 +17,10 @@ environment: &environment
   instructions:
     - type: EnvironmentVariable
       variableName: POKY_SHA1
-      variableValue: 1abffc542a0571f0d1512b92c1a59d138cf3ea6a
+      variableValue: 1adc7478a0548e1ebd75d96d2b938c5852c78365
     - type: EnvironmentVariable
       variableName: OE_SHA1
-      variableValue: b2baaae2711d098c06423858662e29a8375fe6b8
+      variableValue: daa50331352c1f75da3a8ef6458ae3ddf94ef863
     - type: EnvironmentVariable
       variableName: PYTHON2_SHA1
       variableValue: 8fc9be701d430388b4c5234c97e623debd26a1df
