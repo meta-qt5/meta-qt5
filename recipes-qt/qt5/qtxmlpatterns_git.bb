@@ -28,4 +28,3 @@ EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtdeclarative', '
 SRCREV = "837fe1627fce599bfb9a906d33d14df34648ba89"
 
 BBCLASSEXTEND =+ "native nativesdk"
-

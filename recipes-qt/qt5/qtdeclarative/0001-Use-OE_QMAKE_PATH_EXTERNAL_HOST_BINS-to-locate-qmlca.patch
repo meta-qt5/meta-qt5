@@ -1,4 +1,4 @@
-From 2ca54b2296463f626f8438825907610cb22169fc Mon Sep 17 00:00:00 2001
+From d39e76b9662ea9cf236ac59749855e7da7ad29a8 Mon Sep 17 00:00:00 2001
 From: Piotr Tworek <tworaz@tworaz.net>
 Date: Wed, 3 Jul 2019 01:13:40 +0200
 Subject: [PATCH] Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS to locate qmlcachegen

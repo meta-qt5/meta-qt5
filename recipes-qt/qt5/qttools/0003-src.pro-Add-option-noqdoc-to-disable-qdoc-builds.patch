@@ -1,4 +1,4 @@
-From 623675e07231f62cdc7600dca5897a9fc70e0467 Mon Sep 17 00:00:00 2001
+From ffbd58e5a6c709592fb97a6d033820556b76ab53 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 14 Dec 2019 18:36:49 -0800
 Subject: [PATCH] src.pro: Add option noqdoc to disable qdoc builds
@@ -23,6 +23,3 @@ index 5c256ea3..196c34c7 100644
  
  !android|android_app: SUBDIRS += qtpaths
  
--- 
-2.24.1
-
