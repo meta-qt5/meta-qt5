@@ -1,4 +1,4 @@
-From 7596905dbe3ff36a129b5793966da30579d877f4 Mon Sep 17 00:00:00 2001
+From 61a5dc7d949bc0f8ff3c4a1060c91c61187e5fb2 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Fri, 24 Nov 2017 15:16:31 +0200
 Subject: [PATCH] Bootstrap without linkat feature
@@ -13,7 +13,7 @@ Upstream-Status: Inappropriate [OE specific]
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/corelib/global/qconfig-bootstrapped.h b/src/corelib/global/qconfig-bootstrapped.h
-index 283ce1ce26..dfcbb15a6b 100644
+index 575c993e68..d0c9fdfce3 100644
 --- a/src/corelib/global/qconfig-bootstrapped.h
 +++ b/src/corelib/global/qconfig-bootstrapped.h
 @@ -95,7 +95,7 @@

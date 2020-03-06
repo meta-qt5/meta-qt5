@@ -22,6 +22,9 @@ environment: &environment
       variableName: OE_SHA1
       variableValue: b2baaae2711d098c06423858662e29a8375fe6b8
     - type: EnvironmentVariable
+      variableName: PYTHON2_SHA1
+      variableValue: 8fc9be701d430388b4c5234c97e623debd26a1df
+    - type: EnvironmentVariable
       variableName: MACHINE
       variableValue: qemuarm64
       enable_if:
@@ -144,6 +147,8 @@ build_instructions:
       (cd poky; git checkout ${POKY_SHA1})
       git clone git://github.com/openembedded/meta-openembedded --reference /mnt/yocto-cache/mirror/meta-openembedded.git
       (cd meta-openembedded; git checkout ${OE_SHA1})
+      git clone git://git.openembedded.org/meta-python2 --reference /mnt/yocto-cache/mirror/meta-python2.git
+      (cd meta-python2; git checkout ${PYTHON2_SHA1})
 
       source ./poky/oe-init-build-env
       export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE SSTATE_DIR DL_DIR"
@@ -151,6 +156,7 @@ build_instructions:
       export BB_GENERATE_MIRROR_TARBALLS=1
       export SSTATE_DIR=/mnt/yocto-cache/sstate-caches/$(sed -n -e "s/DISTRO_CODENAME.*\"\(.*\)\"/\1/p" ../poky/meta-*/conf/distro/poky.conf)
       bitbake-layers add-layer ../meta-openembedded/meta-oe
+      bitbake-layers add-layer ../meta-python2
       bitbake-layers add-layer ${SOURCE_DIR}
 
       echo 'require ../world_fixes.inc' >> conf/local.conf

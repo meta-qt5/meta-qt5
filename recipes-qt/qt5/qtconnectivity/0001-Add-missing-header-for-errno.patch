@@ -1,4 +1,4 @@
-From 872f3db59b77c09b052733210e49c7770381d93a Mon Sep 17 00:00:00 2001
+From 000075567007d0ef76ef3c782fc4060f8ff8e647 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 29 Jan 2019 20:29:19 -0800
 Subject: [PATCH] Add missing header for errno
