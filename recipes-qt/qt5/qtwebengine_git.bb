@@ -145,15 +145,16 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "77-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.14
-# 5.14.meta-qt5.2
+# 5.14.meta-qt5.3
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
+    file://0002-Remove-ninja-version-test-for-now-it-fails-for-ninja.patch \
 "
 SRC_URI_append_libc-musl = "\
-    file://0002-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
-    file://0003-musl-link-against-libexecinfo.patch \
-    file://0004-mkspecs-Allow-builds-with-libc-glibc.patch \
+    file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
+    file://0004-musl-link-against-libexecinfo.patch \
+    file://0005-mkspecs-Allow-builds-with-libc-glibc.patch \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/77-based
