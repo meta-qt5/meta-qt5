@@ -53,6 +53,7 @@ PACKAGECONFIG_RELEASE ?= "release"
 PACKAGECONFIG_DEFAULT ?= "accessibility dbus udev evdev widgets tools libs freetype tests pcre \
     ${@bb.utils.contains('SELECTED_OPTIMIZATION', '-Os', 'optimize-size ltcg', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)} \
+    ${@bb.utils.filter('DISTRO_FEATURES', 'vulkan', d)} \
 "
 
 PACKAGECONFIG ?= " \
@@ -100,6 +101,7 @@ PACKAGECONFIG[pcre] = "-system-pcre,-qt-pcre,pcre2"
 PACKAGECONFIG[eglfs] = "-eglfs,-no-eglfs,drm"
 PACKAGECONFIG[gl] = "-opengl desktop,,virtual/libgl"
 PACKAGECONFIG[gles2] = "-opengl es2,,virtual/libgles2 virtual/egl"
+PACKAGECONFIG[vulkan] = "-vulkan,-no-vulkan,vulkan-headers"
 PACKAGECONFIG[no-opengl] = "-no-opengl"
 PACKAGECONFIG[tslib] = "-tslib,-no-tslib,tslib"
 PACKAGECONFIG[cups] = "-cups,-no-cups,cups"
