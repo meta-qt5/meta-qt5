@@ -11,4 +11,4 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative"
 
-SRCREV = "5bc1a1f85fedd7d65298f0a4c8ea79fb0670c0d7"
+SRCREV = "ad75d2712a838787488e817eec318fc27bae1786"

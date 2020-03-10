@@ -26,6 +26,7 @@ PV = "4.9.2+git${SRCPV}"
 SRC_URI = " \
     git://code.qt.io/qt-creator/qt-creator.git;branch=4.9 \
     file://0001-clangformat-AllowShortIfStatementsOnASingleLine-is-n.patch \
+    file://0002-Fix-QPainterPath-related-compilation-errors-in-Qt-5..patch \
 "
 SRC_URI_append_libc-musl = " file://0001-Link-with-libexecinfo-on-musl.patch"
 
