@@ -1,4 +1,4 @@
-From abaafda209061911defd5cddf9e6a93b3e8f8c98 Mon Sep 17 00:00:00 2001
+From 5f57c7ccb0f0e97ec0b33105e91e7148d4a3aa4e Mon Sep 17 00:00:00 2001
 From: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
 Date: Thu, 8 Mar 2018 15:39:55 +0100
 Subject: [PATCH] chromium: aarch64 skia build fix
@@ -28,10 +28,10 @@ Signed-off-by: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
  1 file changed, 2 insertions(+), 15 deletions(-)
 
 diff --git a/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h b/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
-index b59506dcd6d..b8f22c948c0 100644
+index 7322807095f..0d6f981e895 100644
 --- a/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
 +++ b/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
-@@ -972,13 +972,7 @@ SI F approx_powf(F x, F y) {
+@@ -986,13 +986,7 @@ SI F approx_powf(F x, F y) {
  }
  
  SI F from_half(U16 h) {
@@ -46,7 +46,7 @@ index b59506dcd6d..b8f22c948c0 100644
      return _mm256_cvtph_ps(h);
  
  #else
-@@ -995,14 +989,7 @@ SI F from_half(U16 h) {
+@@ -1009,14 +1003,7 @@ SI F from_half(U16 h) {
  }
  
  SI U16 to_half(F f) {

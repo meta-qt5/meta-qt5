@@ -157,8 +157,8 @@ SRC_URI_append_libc-musl = "\
     file://0005-mkspecs-Allow-builds-with-libc-glibc.patch \
 "
 
-# Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/77-based
-# 77-based.meta-qt5.2
+# Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/79-based
+# 79-based.meta-qt5.1
 SRC_URI += " \
     file://chromium/0001-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
     file://chromium/0002-chromium-stack-pointer-clobber.patch;patchdir=src/3rdparty \
@@ -190,8 +190,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0023-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "d9349a299f66fb154ad24f410451872a7ca253fb"
-SRCREV_chromium = "5b79320c01316f29510df90f7c6b508b9f72b8a4"
+SRCREV_qtwebengine = "71c3f0a1f8decdd6ba43afb79fa23ee2dc8c743e"
+SRCREV_chromium = "4ea2213507a2317fef895a1ab473f9a2729d74af"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

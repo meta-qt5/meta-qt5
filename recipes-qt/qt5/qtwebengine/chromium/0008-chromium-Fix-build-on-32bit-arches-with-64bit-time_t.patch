@@ -1,4 +1,4 @@
-From c7e20f2ba5481731ce0390c9faa77fc54c81093b Mon Sep 17 00:00:00 2001
+From 7b5dd7fb568f5b78588a3de3e35c28d05dc31e7e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 30 Nov 2019 10:07:43 -0800
 Subject: [PATCH] chromium: Fix build on 32bit arches with 64bit time_t
@@ -17,7 +17,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  3 files changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/chromium/ui/events/ozone/evdev/event_converter_evdev.cc b/chromium/ui/events/ozone/evdev/event_converter_evdev.cc
-index 5684f4121be..10f6357e6b5 100644
+index 9f27d39e209..f565dd2ce5c 100644
 --- a/chromium/ui/events/ozone/evdev/event_converter_evdev.cc
 +++ b/chromium/ui/events/ozone/evdev/event_converter_evdev.cc
 @@ -176,8 +176,8 @@ void EventConverterEvdev::SetPalmSuppressionCallback(
