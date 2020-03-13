@@ -1,4 +1,4 @@
-From c5c5465810c9e98b7eec3e1c017bcec14db182af Mon Sep 17 00:00:00 2001
+From 64aa17e9baa2dac2db74c9bd996526d100168b3a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Sun, 8 Mar 2020 10:51:48 +0100
 Subject: [PATCH] Remove ninja version test for now - it fails for ninja >=

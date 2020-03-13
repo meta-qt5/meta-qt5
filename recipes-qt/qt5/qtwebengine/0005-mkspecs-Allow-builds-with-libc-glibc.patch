@@ -1,4 +1,4 @@
-From 4d5fc056dffee86927b158428b44087064f70182 Mon Sep 17 00:00:00 2001
+From 731a737808672ececec3ce182a8060aa9e1a9419 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 12 Nov 2019 19:53:59 -0800
 Subject: [PATCH] mkspecs: Allow builds with libc != glibc
