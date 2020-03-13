@@ -1,4 +1,4 @@
-From a0bd9300aa9c405216f504d602c7dd8d5b35eb21 Mon Sep 17 00:00:00 2001
+From 10c1d6b749eecbb640ba62e0edba6d6dccdf265e Mon Sep 17 00:00:00 2001
 From: Jiri Slaby <jslaby@suse.cz>
 Date: Thu, 11 Jul 2019 09:35:13 +0200
 Subject: [PATCH] chromium: fix build after y2038 changes in glibc
