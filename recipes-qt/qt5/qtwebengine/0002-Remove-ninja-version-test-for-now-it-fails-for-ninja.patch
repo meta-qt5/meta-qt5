@@ -1,4 +1,4 @@
-From 5f5afe275757efe77ff48debb040e08001ea5907 Mon Sep 17 00:00:00 2001
+From c5c5465810c9e98b7eec3e1c017bcec14db182af Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Sun, 8 Mar 2020 10:51:48 +0100
 Subject: [PATCH] Remove ninja version test for now - it fails for ninja >=
@@ -24,10 +24,10 @@ Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/configure.pri b/configure.pri
-index 3a144e3f..6c3f29fd 100644
+index f89df527..2d7d2219 100644
 --- a/configure.pri
 +++ b/configure.pri
-@@ -163,8 +163,7 @@ defineTest(qtConfTest_detectNinja) {
+@@ -166,8 +166,7 @@ defineTest(qtConfTest_detectNinja) {
      !isEmpty(ninja) {
          qtLog("Found ninja from path: $$ninja")
          qtRunLoggedCommand("$$ninja --version", version)|return(false)

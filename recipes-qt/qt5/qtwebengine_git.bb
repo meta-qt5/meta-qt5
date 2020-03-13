@@ -144,8 +144,8 @@ RDEPENDS_${PN}-examples += " \
 
 QT_MODULE_BRANCH_CHROMIUM = "77-based"
 
-# Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.14
-# 5.14.meta-qt5.3
+# Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
+# 5.15.meta-qt5.1
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
