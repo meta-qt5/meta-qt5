@@ -19,7 +19,7 @@ COMPATIBLE_MACHINE_armv7a = "(.*)"
 COMPATIBLE_MACHINE_armv7ve = "(.*)"
 COMPATIBLE_MACHINE_aarch64 = "(.*)"
 
-SRCREV = "04b529214db0f20cce4d229a6035825390048217"
+SRCREV = "c6d4bb78fe59a55ffce526ff951e5c5270dd92cf"
 
 python() {
     if 'meta-python2' not in d.getVar('BBFILE_COLLECTIONS').split():
