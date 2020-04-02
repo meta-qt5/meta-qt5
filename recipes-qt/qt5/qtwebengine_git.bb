@@ -142,7 +142,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "77-based"
+QT_MODULE_BRANCH_CHROMIUM = "79-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
 # 5.15.meta-qt5.1
