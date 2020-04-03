@@ -1,4 +1,4 @@
-From c2ca4923d5e534789b205968eb01779a90ec1299 Mon Sep 17 00:00:00 2001
+From 905c5b699f97105029a498096b3b6b3c8736cfeb Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 15 Jan 2020 16:53:46 -0800
 Subject: [PATCH] chromium: Include <cstddef> and <cstdint>
@@ -13,7 +13,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  3 files changed, 3 insertions(+)
 
 diff --git a/chromium/media/cdm/supported_cdm_versions.h b/chromium/media/cdm/supported_cdm_versions.h
-index 3f220da8c71..c54e3bb7d30 100644
+index dbe59ba5ea7..5216cfe3ee9 100644
 --- a/chromium/media/cdm/supported_cdm_versions.h
 +++ b/chromium/media/cdm/supported_cdm_versions.h
 @@ -6,6 +6,7 @@

@@ -1,4 +1,4 @@
-From 76cab33f8ab2596793844846340fe35e121e2881 Mon Sep 17 00:00:00 2001
+From e4f1790fd91b5d214b5a524575d815530a587ac2 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Tue, 12 Dec 2017 16:06:14 +0200
 Subject: [PATCH] musl: don't use pvalloc as it's not available on musl
