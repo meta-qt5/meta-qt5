@@ -68,6 +68,7 @@ FILES_${PN}-dev += " \
 FILES_${PN} += " \
     ${SDKPATHNATIVE}/environment-setup.d \
     ${OE_QMAKE_PATH_PLUGINS} \
+    ${OE_QMAKE_PATH_LIBS}/metatypes \
 "
 
 # qttools binaries are placed in a subdir of bin in order to avoid
