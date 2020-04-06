@@ -145,7 +145,7 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "79-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
-# 5.15.meta-qt5.2
+# 5.15.meta-qt5.4
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
@@ -189,7 +189,7 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0025-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "3394cde4e89463ba49af379b89863c7731c4b4ac"
+SRCREV_qtwebengine = "6b62dfe7242ce0d3067aa98620664a4dc7a656d8"
 SRCREV_chromium = "9424dc7ceeccf6e6d5edc7757edb39a7ae4983ab"
 SRCREV = "${SRCREV_qtwebengine}"
 
