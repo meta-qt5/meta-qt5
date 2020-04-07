@@ -39,3 +39,9 @@ SRC_URI += "\
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
 SRCREV = "7f0503acb042d047682b432e68ed97b1644c3f59"
+
+# Temporary work around for Qt5MultimediaConfig.cmake referencing non-existent videoeglvideonode directory
+do_install_append() {
+    install -d ${D}${OE_QMAKE_PATH_PLUGINS}/videoeglvideonode
+}
+FILES_${PN} += "${OE_QMAKE_PATH_PLUGINS}/videoeglvideonode"
