@@ -1,4 +1,4 @@
-From c24673923fca116df3bf59f19f8c668973f77e4d Mon Sep 17 00:00:00 2001
+From ac2c4d67820f7d571b2b6a2b64fcb145aabb3cec Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 30 Nov 2019 10:07:43 -0800
 Subject: [PATCH] chromium: Fix build on 32bit arches with 64bit time_t
@@ -33,11 +33,11 @@ index 9f27d39e209..f565dd2ce5c 100644
    return timestamp;
  }
 diff --git a/chromium/ui/events/ozone/evdev/event_converter_evdev.h b/chromium/ui/events/ozone/evdev/event_converter_evdev.h
-index a91807b60e8..74d46cb8608 100644
+index 717410f2ebc..a4cd55ca20e 100644
 --- a/chromium/ui/events/ozone/evdev/event_converter_evdev.h
 +++ b/chromium/ui/events/ozone/evdev/event_converter_evdev.h
 @@ -20,6 +20,11 @@
- #include "ui/events/ozone/evdev/events_ozone_evdev_export.h"
+ #include "ui/events/ozone/evdev/event_dispatch_callback.h"
  #include "ui/gfx/geometry/size.h"
  
 +#ifndef input_event_sec
@@ -68,12 +68,12 @@ index 363c3183e05..4fccfd62f84 100644
    }
    file.Write(0, report_content.c_str(), report_content.length());
 diff --git a/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.h b/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.h
-index ccd3a499a38..5a2da89d09a 100644
+index 0d5b83148f6..1f17608e94d 100644
 --- a/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.h
 +++ b/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.h
 @@ -14,6 +14,11 @@
  
- #include "ui/events/ozone/evdev/events_ozone_evdev_export.h"
+ #include "base/component_export.h"
  
 +#ifndef input_event_sec
 +#define input_event_sec time.tv_sec

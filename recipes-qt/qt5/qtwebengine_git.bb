@@ -142,7 +142,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "79-based"
+QT_MODULE_BRANCH_CHROMIUM = "80-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
 # 5.15.meta-qt5.4
@@ -189,8 +189,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0025-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "3394cde4e89463ba49af379b89863c7731c4b4ac"
-SRCREV_chromium = "9424dc7ceeccf6e6d5edc7757edb39a7ae4983ab"
+SRCREV_qtwebengine = "e828423722cb57d55c0cb5fc66e3911b76197cd8"
+SRCREV_chromium = "6b151acc9f31574c7b739433c538b90b989c9a23"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
