@@ -20,6 +20,7 @@ SRC_URI += "\
     file://0006-Disable-code-related-to-HTTP-2-when-Qt-is-configured.patch \
     file://0007-Fix-compilation-with-Python-3.9-avoid-passing-encodi.patch \
     file://0008-Fix-build-with-icu-68.patch \
+    file://0009-Riscv-Add-support-for-riscv.patch \
 "
 
 inherit cmake_qt5 perlnative
@@ -57,9 +58,11 @@ EXTRA_OECMAKE += " \
 
 EXTRA_OECMAKE_append_toolchain-clang = " -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES:PATH='${STAGING_INCDIR}'"
 
-# JIT not supported on MIPS/PPC
+# JIT not supported on MIPS/PPC/RISCV
 EXTRA_OECMAKE_append_mipsarch = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
 EXTRA_OECMAKE_append_powerpc = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
+EXTRA_OECMAKE_append_riscv64 = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
+
 # Disable gold on mips64/clang
 # mips64-yoe-linux-musl-ld.gold: internal error in get_got_page_offset, at ../../gold/mips.cc:6260
 # mips-yoe-linux-musl-ld.gold: error: Can't find matching LO16 reloc
