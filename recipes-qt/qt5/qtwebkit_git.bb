@@ -12,11 +12,10 @@ DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-
 # Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.13
 # 5.13.meta-qt5.1
 SRC_URI += "\
-    file://0001-Port-build-to-python3.patch \
-    file://0002-Do-not-skip-build-for-cross-compile.patch \
-    file://0003-Fix-build-with-non-glibc-libc-on-musl.patch \
-    file://0004-Fix-build-bug-for-armv32-BE.patch \
-    file://0005-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
+    file://0001-Do-not-skip-build-for-cross-compile.patch \
+    file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
+    file://0003-Fix-build-bug-for-armv32-BE.patch \
+    file://0004-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
 "
 
 inherit cmake_qt5 perlnative
@@ -81,6 +80,6 @@ PACKAGECONFIG[hyphen] = "-DUSE_LIBHYPHEN=ON,-DUSE_LIBHYPHEN=OFF,hyphen"
 # remove default ${PN}-examples* set in qt5.inc, because they conflicts with ${PN} from separate webkit-examples recipe
 PACKAGES_remove = "${PN}-examples"
 
-QT_MODULE_BRANCH = "dev"
+QT_MODULE_BRANCH = "5.212"
 
-SRCREV = "ab1bd15209abaf7effc51dbc2f272c5681af7223"
+SRCREV = "444bd2bda5fa46c2b4b99adaf6e9b2074b03a0d1"
