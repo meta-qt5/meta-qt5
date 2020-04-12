@@ -16,6 +16,7 @@ SRC_URI += "\
     file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
     file://0003-Fix-build-bug-for-armv32-BE.patch \
     file://0004-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
+    file://0005-Riscv-Add-support-for-riscv.patch \
 "
 
 inherit cmake_qt5 perlnative
@@ -52,9 +53,11 @@ EXTRA_OECMAKE += " \
 
 EXTRA_OECMAKE_append_toolchain-clang = " -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES:PATH='${STAGING_INCDIR}'"
 
-# JIT not supported on MIPS/PPC
+# JIT not supported on MIPS/PPC/RISCV
 EXTRA_OECMAKE_append_mipsarch = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
 EXTRA_OECMAKE_append_powerpc = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
+EXTRA_OECMAKE_append_riscv64 = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
+
 # Disable gold on mips64/clang
 # mips64-yoe-linux-musl-ld.gold: internal error in get_got_page_offset, at ../../gold/mips.cc:6260
 # mips-yoe-linux-musl-ld.gold: error: Can't find matching LO16 reloc
