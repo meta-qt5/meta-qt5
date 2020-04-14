@@ -31,3 +31,5 @@ do_install_append_class-nativesdk() {
 SRCREV = "4080025fed9d43a78b578bcab67397712459d28c"
 
 BBCLASSEXTEND =+ "native nativesdk"
+
+inherit pythonnative
