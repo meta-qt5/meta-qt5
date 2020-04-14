@@ -1,4 +1,4 @@
-From 8dc7d83d58f6f036d021ed27dd05322b654e21bf Mon Sep 17 00:00:00 2001
+From af441fca2705c866fe9d6699dd2ddc388a5412e2 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Thu, 30 Mar 2017 11:37:24 +0300
 Subject: [PATCH] chromium: workaround for too long .rps file name
@@ -18,10 +18,10 @@ Change-Id: I73c5e64ae5174412be2a675e35b0b6047f2bf4c1
  1 file changed, 9 insertions(+)
 
 diff --git a/gn/tools/gn/ninja_action_target_writer.cc b/gn/tools/gn/ninja_action_target_writer.cc
-index 7e945c0de0e..3deb587668c 100644
+index 5f4fbaad882..1c074a2193b 100644
 --- a/gn/tools/gn/ninja_action_target_writer.cc
 +++ b/gn/tools/gn/ninja_action_target_writer.cc
-@@ -118,9 +118,18 @@ std::string NinjaActionTargetWriter::WriteRuleDefinition() {
+@@ -119,9 +119,18 @@ std::string NinjaActionTargetWriter::WriteRuleDefinition() {
      // strictly necessary for regular one-shot actions, but it's easier to
      // just always define unique_name.
      std::string rspfile = custom_rule_name;

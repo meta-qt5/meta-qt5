@@ -7,10 +7,9 @@ LIC_FILES_CHKSUM = " \
 "
 
 DEPENDS += "qtbase qtdeclarative qtquickcontrols2"
-ASSIMP_BRANCH = "assimp_5.0_release"
 
 SRC_URI += " \
-    git://github.com/assimp/assimp.git;name=assimp;branch=${ASSIMP_BRANCH};protocol=https;destsuffix=git/src/3rdparty/assimp/src \
+    git://github.com/assimp/assimp.git;name=assimp;branch=assimp_5.0_release;protocol=https;destsuffix=git/src/3rdparty/assimp/src \
 "
 
 PACKAGECONFIG ??= ""

@@ -128,13 +128,13 @@ FILES_${PN}-mkspecs = "\
 
 # modifications to normal packages
 FILES_${PN} += " \
+    ${OE_QMAKE_PATH_LIBS}/metatypes \
     ${OE_QMAKE_PATH_LIBS}/lib*${SOLIBS} \
     ${OE_QMAKE_PATH_LIBEXECS} \
 "
 FILES_${PN}-dev += " \
     ${OE_QMAKE_PATH_LIBS}/lib*${SOLIBSDEV} \
     ${OE_QMAKE_PATH_LIBS}/pkgconfig \
-    ${OE_QMAKE_PATH_LIBS}/metatypes \
     ${OE_QMAKE_PATH_LIBS}/cmake/* \
     ${OE_QMAKE_PATH_LIBS}/*.prl \
     ${OE_QMAKE_PATH_LIBS}/*.la \

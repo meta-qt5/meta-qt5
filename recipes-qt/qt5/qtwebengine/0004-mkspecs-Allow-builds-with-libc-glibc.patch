@@ -1,4 +1,4 @@
-From cde19c7f959ff4ea0d2aa202b9c7a048d3c7200e Mon Sep 17 00:00:00 2001
+From e6a216265bf68f600682c7d27a2542c4f385e085 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 12 Nov 2019 19:53:59 -0800
 Subject: [PATCH] mkspecs: Allow builds with libc != glibc
@@ -9,10 +9,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 5 deletions(-)
 
 diff --git a/src/buildtools/config/support.pri b/src/buildtools/config/support.pri
-index 5bdd808d..19540787 100644
+index 8077b12f..aaf4db47 100644
 --- a/src/buildtools/config/support.pri
 +++ b/src/buildtools/config/support.pri
-@@ -89,11 +89,6 @@ defineTest(qtwebengine_checkErrorForLinux) {
+@@ -97,11 +97,6 @@ defineTest(qtwebengine_checkErrorForLinux) {
          return(false)
      }
  
