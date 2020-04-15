@@ -79,22 +79,24 @@ pkg_postinst_${PN} () {
 #!/bin/sh
 # should run online
 if [ "x$D" != "x" ]; then
-    exit 1
+    :
+else
+    echo "export QT_IM_MODULE=Maliit" >> /etc/xprofile
+    ln -s /usr/share/applications/maliit-server.desktop /etc/xdg/autostart/maliit-server.desktop
 fi
-echo "export QT_IM_MODULE=Maliit" >> /etc/xprofile
-ln -s /usr/share/applications/maliit-server.desktop /etc/xdg/autostart/maliit-server.desktop
 }
 
 pkg_postrm_${PN} () {
 #!/bin/sh
 # should run online
 if [ "x$D" = "x" ]; then
-    exit 1
+    :
+else
+    if [ -e "/etc/xprofile" ]; then
+        sed -i -e "g|export QT_IM_MODULE=Maliit|d" /etc/xprofile
+    fi
+    rm -f /etc/xdg/autostart/maliit-server.desktop
 fi
-if [ -e "/etc/xprofile" ]; then
-    sed -i -e "g|export QT_IM_MODULE=Maliit|d" /etc/xprofile
-fi
-rm -f /etc/xdg/autostart/maliit-server.desktop
 }
 
 S = "${WORKDIR}/git"
