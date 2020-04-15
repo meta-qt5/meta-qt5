@@ -78,9 +78,7 @@ do_install_append() {
 pkg_postinst_${PN} () {
 #!/bin/sh
 # should run online
-if [ "x$D" != "x" ]; then
-    :
-else
+if [ "x$D" = "x" ]; then
     echo "export QT_IM_MODULE=Maliit" >> /etc/xprofile
     ln -s /usr/share/applications/maliit-server.desktop /etc/xdg/autostart/maliit-server.desktop
 fi
@@ -90,8 +88,6 @@ pkg_postrm_${PN} () {
 #!/bin/sh
 # should run online
 if [ "x$D" = "x" ]; then
-    :
-else
     if [ -e "/etc/xprofile" ]; then
         sed -i -e "g|export QT_IM_MODULE=Maliit|d" /etc/xprofile
     fi
