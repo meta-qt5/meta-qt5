@@ -163,7 +163,6 @@ build_instructions:
 
       # EXCLUDE_FROM_WORLD
       rm -f ${SOURCE_DIR}/recipes-qt/examples/qt5-opengles2-test_git.bb
-      rm -r ${SOURCE_DIR}/recipes-qt/qt5/qtwebkit_git.bb
 
       bitbake $(find ${SOURCE_DIR} -name *.bb | xargs -n1 basename | sed -e 's/\([^._]*\).*/\1/')
     filename: "{{.BuildDir}}/start-build"
