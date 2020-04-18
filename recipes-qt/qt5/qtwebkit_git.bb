@@ -12,7 +12,6 @@ DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-
 # Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.13
 # 5.13.meta-qt5.1
 SRC_URI += "\
-    file://0001-Port-build-to-python3.patch \
     file://0002-Do-not-skip-build-for-cross-compile.patch \
     file://0003-Fix-build-with-non-glibc-libc-on-musl.patch \
     file://0004-Fix-build-bug-for-armv32-BE.patch \
@@ -81,6 +80,6 @@ PACKAGECONFIG[hyphen] = "-DUSE_LIBHYPHEN=ON,-DUSE_LIBHYPHEN=OFF,hyphen"
 # remove default ${PN}-examples* set in qt5.inc, because they conflicts with ${PN} from separate webkit-examples recipe
 PACKAGES_remove = "${PN}-examples"
 
-QT_MODULE_BRANCH = "dev"
+QT_MODULE_BRANCH = "5.212"
 
-SRCREV = "ab1bd15209abaf7effc51dbc2f272c5681af7223"
+SRCREV = "10cd6a106e1c461c774ca166a67b8c835c755ef7"
