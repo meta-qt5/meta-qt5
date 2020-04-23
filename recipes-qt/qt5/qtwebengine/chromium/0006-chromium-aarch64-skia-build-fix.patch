@@ -1,4 +1,4 @@
-From dcb8f604a55c9d255102b8939dae1d5464398892 Mon Sep 17 00:00:00 2001
+From 98af1c4ce180f029e6fa1a1dfdf438296eb7dae2 Mon Sep 17 00:00:00 2001
 From: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
 Date: Thu, 8 Mar 2018 15:39:55 +0100
 Subject: [PATCH] chromium: aarch64 skia build fix
@@ -28,7 +28,7 @@ Signed-off-by: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
  1 file changed, 2 insertions(+), 15 deletions(-)
 
 diff --git a/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h b/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
-index 7322807095f..0d6f981e895 100644
+index 0d610ccfe33..c1844b61168 100644
 --- a/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
 +++ b/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
 @@ -986,13 +986,7 @@ SI F approx_powf(F x, F y) {

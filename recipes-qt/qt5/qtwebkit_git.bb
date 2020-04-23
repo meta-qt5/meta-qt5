@@ -85,4 +85,4 @@ PACKAGES_remove = "${PN}-examples"
 
 QT_MODULE_BRANCH = "5.212"
 
-SRCREV = "444bd2bda5fa46c2b4b99adaf6e9b2074b03a0d1"
+SRCREV = "10cd6a106e1c461c774ca166a67b8c835c755ef7"

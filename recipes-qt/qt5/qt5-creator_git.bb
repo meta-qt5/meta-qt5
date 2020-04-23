@@ -18,15 +18,13 @@ DEPENDS += "qtbase qtscript qtxmlpatterns qtx11extras qtdeclarative qttools qtto
 DEPENDS_append_toolchain-clang = " clang llvm-common"
 DEPENDS_append_libc-musl = " libexecinfo"
 
-SRCREV = "8181363fa90eb651591bf71e1a840e1c998429f4"
-PV = "4.9.2+git${SRCPV}"
+SRCREV = "9e057a55368286058023510efc328f68250ecb5e"
+PV = "4.12.0+git${SRCPV}"
 
 # Patches from https://github.com/meta-qt5/qtcreator/commits/b4.9.2
 # 4.9.2.meta-qt5.1
 SRC_URI = " \
-    git://code.qt.io/qt-creator/qt-creator.git;branch=4.9 \
-    file://0001-clangformat-AllowShortIfStatementsOnASingleLine-is-n.patch \
-    file://0002-Fix-QPainterPath-related-compilation-errors-in-Qt-5..patch \
+    git://code.qt.io/qt-creator/qt-creator.git;branch=4.12 \
 "
 SRC_URI_append_libc-musl = " file://0001-Link-with-libexecinfo-on-musl.patch"
 
