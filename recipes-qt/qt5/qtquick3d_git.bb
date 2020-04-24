@@ -13,7 +13,7 @@ SRC_URI += " \
 "
 
 PACKAGECONFIG ??= ""
-PACKAGECONFIG[system-assimp] = "-system-assimp,-qt-assimp,assimp"
+PACKAGECONFIG[system-assimp] = "-system-quick3d-assimp,-qt-quick3d-assimp,assimp"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
@@ -21,7 +21,7 @@ FILES_${PN}-qmlplugins += " \
   ${OE_QMAKE_PATH_QML}/QtQuick3D/Helpers/meshes/*.mesh \
 "
 
-SRCREV_qtquick3d = "6b0defe7bd0ce54bd1b830f87cff08533e4aa591"
+SRCREV_qtquick3d = "962950bfb11458cfddb3b7271ea9516c2e498cdf"
 SRCREV_assimp = "8f0c6b04b2257a520aaab38421b2e090204b69df"
 
 SRCREV_FORMAT = "qtquick3d_assimp"
