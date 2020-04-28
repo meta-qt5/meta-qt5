@@ -7,6 +7,8 @@ LIC_FILES_CHKSUM = "file://COPYING.libshiboken;md5=15a1ca44f90f3ab457d6a4fe7c0f3
 
 SRC_URI = "git://code.qt.io/pyside/pyside-setup.git;protocol=https;branch=5.13"
 
+#SRC_URI += "file://shibokenmodule-cmake.patch;subdir=git/sources/shiboken2"
+
 # Modify these as desired
 PV = "1.0+git${SRCPV}"
 SRCREV = "f5265a2ab8b19b181e7e7b8175a9598cf2a1fbc9"
@@ -14,10 +16,11 @@ SRCREV = "f5265a2ab8b19b181e7e7b8175a9598cf2a1fbc9"
 S = "${WORKDIR}/git/sources/shiboken2"
 
 # NOTE: unable to map the following CMake package dependencies: Qt5XmlPatterns
-DEPENDS = "qtbase clang-native libxslt libxml2 python3 python3-setuptools python3-wheel"
+DEPENDS = "qtbase libxslt libxml2 python3 python3-setuptools python3-wheel"
 RDEPENDS_${PN} += " qtbase python3-numpy "
 
-inherit native cmake_qt5 python3native
+inherit python3native cmake_qt5
+
 
 # Specify any options you want to pass to cmake using EXTRA_OECMAKE:
 EXTRA_OECMAKE = " \

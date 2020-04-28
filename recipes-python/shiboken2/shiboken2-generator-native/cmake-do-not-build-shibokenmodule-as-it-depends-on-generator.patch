@@ -1,0 +1,11 @@
+--- a/CMakeLists.txt.orig	2020-04-28 09:01:12.414772655 +0000
++++ b/CMakeLists.txt	2020-04-28 09:02:17.766309537 +0000
+@@ -210,7 +210,7 @@
+ # deps found, compile the generator.
+ if (Qt5Core_FOUND AND PYTHONINTERP_FOUND)
+     add_subdirectory(generator)
+-    add_subdirectory(shibokenmodule)
++    #add_subdirectory(shibokenmodule)
+ 
+     if (BUILD_TESTS)
+         enable_testing()
