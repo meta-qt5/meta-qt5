@@ -1,4 +1,9 @@
 LICENSE = "Unknown"
+LIC_FILES_CHKSUM = "file://COPYING.libshiboken;md5=15a1ca44f90f3ab457d6a4fe7c0f3a19 \
+                    file://COPYING;md5=34337af480a8c452bfafe22a78fa20cb \
+                    file://COPYING.libsample;md5=15a1ca44f90f3ab457d6a4fe7c0f3a19 \
+                    file://ApiExtractor/COPYING;md5=34337af480a8c452bfafe22a78fa20cb \
+                    file://libshiboken/embed/qt_python_license.txt;md5=72805479576a4498d9e94f8a9904a6a4"
 
 SRC_URI = "git://code.qt.io/pyside/pyside-setup.git;protocol=https;branch=5.13"
 
