@@ -14,16 +14,17 @@ SRCREV = "f5265a2ab8b19b181e7e7b8175a9598cf2a1fbc9"
 S = "${WORKDIR}/git/sources/shiboken2"
 
 # NOTE: unable to map the following CMake package dependencies: Qt5XmlPatterns
-DEPENDS = "qtbase libxslt libxml2 llvm clang python3 python3-setuptools python3-wheel"
+DEPENDS = "qtbase clang-native libxslt libxml2 python3 python3-setuptools python3-wheel"
 RDEPENDS_${PN} += " qtbase python3-numpy "
 
-inherit cmake_qt5 python3native
+inherit native cmake_qt5 python3native
 
 # Specify any options you want to pass to cmake using EXTRA_OECMAKE:
 EXTRA_OECMAKE = " \
     -DUSE_PYTHON_VERSION=3 \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_TESTS=OFF \
+    -DDISABLE_DOCSTRINGS:BOOL=ON \
 "
 
 OECMAKE_GENERATOR = "Unix Makefiles"

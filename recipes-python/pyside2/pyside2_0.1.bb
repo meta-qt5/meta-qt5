@@ -31,9 +31,11 @@ S = "${WORKDIR}/git"
 
 inherit distutils3
 
-RDEPENDS_${PN} += "shiboken2"
+DEPENDS = "qtbase shiboken2-native"
 
 inherit cmake_qt5 pkgconfig
+
+OECMAKE_GENERATOR = "Unix Makefiles"
 
 # depends on meta-clang
 TOOLCHAIN = "clang"
