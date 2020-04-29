@@ -48,6 +48,7 @@ CXXFLAGS += "-fpermissive"
 EXTRA_OECMAKE += " \
     -DPORT=Qt \
     -DCROSS_COMPILE=ON \
+    -DCMAKE_BUILD_TYPE=release \
     -DECM_MKSPECS_INSTALL_DIR=${libdir}${QT_DIR_NAME}/mkspecs/modules \
     -DQML_INSTALL_DIR=${OE_QMAKE_PATH_QML} \
     -DPYTHON_EXECUTABLE=`which python3` \
