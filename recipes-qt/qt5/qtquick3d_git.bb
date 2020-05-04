@@ -13,7 +13,7 @@ SRC_URI += " \
 "
 
 PACKAGECONFIG ??= ""
-PACKAGECONFIG[system-assimp] = "-system-assimp,-qt-assimp,assimp"
+PACKAGECONFIG[system-assimp] = "-system-quick3d-assimp,-qt-quick3d-assimp,assimp"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
