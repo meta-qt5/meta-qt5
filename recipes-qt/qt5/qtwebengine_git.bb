@@ -169,7 +169,6 @@ SRC_URI += " \
     file://chromium/0008-chromium-Fix-build-on-32bit-arches-with-64bit-time_t.patch;patchdir=src/3rdparty \
     file://chromium/0009-chromium-Include-cstddef-for-size_t-definition.patch;patchdir=src/3rdparty \
     file://chromium/0010-chromium-Move-CharAllocator-definition-to-a-header-f.patch;patchdir=src/3rdparty \
-    file://chromium/0011-chromium-Include-cstddef-and-cstdint.patch;patchdir=src/3rdparty \
     file://chromium/0012-chromium-Link-v8-with-libatomic-on-x86.patch;patchdir=src/3rdparty \
 "
 
@@ -189,8 +188,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0025-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "950e462b1d369f8140a1d54078d42b5f057adfdb"
-SRCREV_chromium = "6f260e5b2f717b9977045419f12c7c35d31f9a90"
+SRCREV_qtwebengine = "387fb9377d61683bcd0f59a637afffdd9a16912c"
+SRCREV_chromium = "623647821aa7c7565ed5153a27c5a1bb088efbe6"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
