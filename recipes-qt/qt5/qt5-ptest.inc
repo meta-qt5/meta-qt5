@@ -16,7 +16,7 @@ fakeroot do_install_ptest() {
     for var in ` find ${B}/tests/auto/ -name tst_*`; do
         if [ -z ` echo ${var##*/} | grep '\.'` ]; then
             echo ${var##*/} >> ${t}/tst_list
-            install -m 0644  ${var} ${t}
+            install -m 0744  ${var} ${t}
         fi
     done
 }
