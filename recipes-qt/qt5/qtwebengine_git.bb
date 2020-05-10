@@ -187,6 +187,7 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0023-chromium-musl-Use-_fpstate-instead-of-_libc_fpstate-.patch;patchdir=src/3rdparty \
     file://chromium/0024-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get.patch;patchdir=src/3rdparty \
     file://chromium/0025-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
+    file://chromium/0026-chromium-musl-portable-msghdr.patch;patchdir=src/3rdparty \
 "
 
 SRCREV_qtwebengine = "9e56f570e31a0ef18e544bb21dfddebfe43ec2d0"
