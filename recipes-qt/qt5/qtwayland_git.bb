@@ -16,6 +16,7 @@ LIC_FILES_CHKSUM = " \
 SRC_URI += " \
     file://0001-tst_seatv4-Include-array.patch \
     file://0002-Fix-compilation-of-linuxdmabuf-compositor-plugin.patch \
+    file://0003-Client-really-use-OpenGL-ES-2-API-for-decoration-bli.patch \
 "
 
 PACKAGECONFIG ?= " \
