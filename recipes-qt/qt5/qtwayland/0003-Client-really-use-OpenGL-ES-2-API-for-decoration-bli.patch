@@ -1,0 +1,33 @@
+From ed1f86061b66f66c0f78d185833795fd26949145 Mon Sep 17 00:00:00 2001
+From: Peter Seiderer <ps.report@gmx.net>
+Date: Tue, 26 Nov 2019 09:39:25 +0100
+Subject: [PATCH] Client: really use OpenGL ES 2 API for decoration blitter
+
+Really use (as the comment states) the OpenGL ES 2 API for
+the decoration blitter.
+
+Task-number: QTBUG-80356
+Change-Id: I4c923343e721a824521fb9b2b36be5d2de984325
+Reviewed-by: Pier Luigi Fiorini <pierluigi.fiorini@liri.io>
+Reviewed-by: Johan Helsing <johan.helsing@qt.io>
+Upstream-Status: Backport [6e9d6f166dec65e91b4dbf73ccb60170e0a56dc8]
+---
+ .../client/wayland-egl/qwaylandglcontext.cpp                    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/hardwareintegration/client/wayland-egl/qwaylandglcontext.cpp b/src/hardwareintegration/client/wayland-egl/qwaylandglcontext.cpp
+index bc1f74af..da147495 100644
+--- a/src/hardwareintegration/client/wayland-egl/qwaylandglcontext.cpp
++++ b/src/hardwareintegration/client/wayland-egl/qwaylandglcontext.cpp
+@@ -312,7 +312,7 @@ QWaylandGLContext::QWaylandGLContext(EGLDisplay eglDisplay, QWaylandDisplay *dis
+ 
+     // Create an EGL context for the decorations blitter. By using a dedicated context we don't need to make sure to not
+     // change the context state and we also use OpenGL ES 2 API independently to what the app is using to draw.
+-    QVector<EGLint> eglDecorationsContextAttrs = { EGL_CONTEXT_CLIENT_VERSION, 1, EGL_NONE };
++    QVector<EGLint> eglDecorationsContextAttrs = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
+     m_decorationsContext = eglCreateContext(m_eglDisplay, m_config, m_context, eglDecorationsContextAttrs.constData());
+     if (m_decorationsContext == EGL_NO_CONTEXT)
+         qWarning("QWaylandGLContext: Failed to create the decorations EGLContext. Decorations will not be drawn.");
+-- 
+2.25.1
+
