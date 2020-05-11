@@ -145,7 +145,7 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "80-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
-# 5.15.meta-qt5.5
+# 5.15.meta-qt5.6
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
@@ -187,11 +187,11 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0023-chromium-musl-Use-_fpstate-instead-of-_libc_fpstate-.patch;patchdir=src/3rdparty \
     file://chromium/0024-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get.patch;patchdir=src/3rdparty \
     file://chromium/0025-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
-    file://chromium/0026-chromium-musl-portable-msghdr.patch;patchdir=src/3rdparty \
+    file://chromium/0026-chromium-musl-initialize-msghdr-in-a-compatible-mann.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "9e56f570e31a0ef18e544bb21dfddebfe43ec2d0"
-SRCREV_chromium = "6564891efb850d344d852c1d941ed4e9c2a732c1"
+SRCREV_qtwebengine = "58cd21c0aa7a9dc5a18ea411dcf462a2ee8193f6"
+SRCREV_chromium = "e941f2bda154c226bd2a1fd75efc8b1b7cee6a08"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

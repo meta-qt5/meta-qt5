@@ -11,4 +11,4 @@ PACKAGECONFIG[qtdeclarative] = ",,qtdeclarative"
 
 DEPENDS += "qtbase"
 
-SRCREV = "02dbe3346c414d9c606acd5bc799a79a67ad3c1c"
+SRCREV = "27a3aee37e0c972deb04c12feddb49ac59fb9450"

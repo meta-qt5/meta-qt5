@@ -1,4 +1,4 @@
-From e8f23ce32baf1e0d9c2249e50c949c9cd86095e0 Mon Sep 17 00:00:00 2001
+From 02d503c9cbd0ab475de00df0b03e209886d5d17e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 25 Dec 2019 15:41:16 -0800
 Subject: [PATCH] chromium: Include cstddef for size_t definition
@@ -18,22 +18,9 @@ ccc
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- .../webrtc/modules/audio_processing/aec3/clockdrift_detector.h   | 1 +
  .../third_party/webrtc/modules/video_coding/decoding_state.h     | 1 +
- 2 files changed, 2 insertions(+)
+ 1 file changed, 1 insertion(+)
 
-diff --git a/chromium/third_party/webrtc/modules/audio_processing/aec3/clockdrift_detector.h b/chromium/third_party/webrtc/modules/audio_processing/aec3/clockdrift_detector.h
-index 22528c94892..69e624e8b19 100644
---- a/chromium/third_party/webrtc/modules/audio_processing/aec3/clockdrift_detector.h
-+++ b/chromium/third_party/webrtc/modules/audio_processing/aec3/clockdrift_detector.h
-@@ -12,6 +12,7 @@
- #define MODULES_AUDIO_PROCESSING_AEC3_CLOCKDRIFT_DETECTOR_H_
- 
- #include <array>
-+#include <cstddef>
- 
- namespace webrtc {
- 
 diff --git a/chromium/third_party/webrtc/modules/video_coding/decoding_state.h b/chromium/third_party/webrtc/modules/video_coding/decoding_state.h
 index b87fb2d0345..b3faffcfc79 100644
 --- a/chromium/third_party/webrtc/modules/video_coding/decoding_state.h

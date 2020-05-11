@@ -1,3 +1,8 @@
+From 80ee78bdb91db3625b62b9d5d5955cf9d2de4504 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Sun, 10 May 2020 08:16:01 -0700
+Subject: [PATCH] chromium: musl: initialize msghdr in a compatible manner
+
 initialize msghdr in a compatible manner
 
 msghdr stuct from socket.h is not same between musl and glibc
@@ -15,10 +20,15 @@ structure
 
 Upstream-Status: Pending
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ chromium/net/socket/udp_socket_posix.cc | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
+diff --git a/chromium/net/socket/udp_socket_posix.cc b/chromium/net/socket/udp_socket_posix.cc
+index 572472a6993..504fdb5d5c6 100644
 --- a/chromium/net/socket/udp_socket_posix.cc
 +++ b/chromium/net/socket/udp_socket_posix.cc
-@@ -1190,8 +1190,12 @@ SendResult UDPSocketPosixSender::Interna
+@@ -1190,8 +1190,12 @@ SendResult UDPSocketPosixSender::InternalSendmmsgBuffers(
    for (auto& buffer : buffers)
      msg_iov->push_back({const_cast<char*>(buffer->data()), buffer->length()});
    msgvec->reserve(buffers.size());
