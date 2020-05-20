@@ -83,3 +83,6 @@ RRECOMMENDS_${PN} += " \
 
 # ERROR: qt5-creator-4.5.1-r0 do_package_qa: QA Issue: No GNU_HASH in the elf binary: '/OE/build/oe-core/tmp-glibc/work/core2-64-oe-linux/qt5-creator/4.5.1-r0/packages-split/qt5-creator/usr/lib/qt5/qtcreator/libqbscore.so.1.10.1'
 INSANE_SKIP_${PN} += "ldflags"
+
+inherit features_check
+REQUIRED_DISTRO_FEATURES ?= "x11 opengl"
