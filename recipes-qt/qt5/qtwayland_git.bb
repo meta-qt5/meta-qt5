@@ -13,8 +13,8 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
 "
 
-# Patches from https://github.com/meta-qt5/qtwayland/commits/b5.14
-# 5.14.meta-qt5.1
+# Patches from https://github.com/meta-qt5/qtwayland/commits/b5.15
+# 5.15.meta-qt5.1
 SRC_URI += "file://0001-tst_seatv4-Include-array.patch"
 
 PACKAGECONFIG ?= " \
@@ -41,7 +41,7 @@ PACKAGECONFIG[wayland-libhybris-egl-server-buffer] = "-feature-wayland-libhybris
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "1a5b7938c1384381a482448cf079bc682395b54b"
+SRCREV = "0f847b7688af376c22b1d040d0b140c88444d8bc"
 
 BBCLASSEXTEND =+ "native nativesdk"
 

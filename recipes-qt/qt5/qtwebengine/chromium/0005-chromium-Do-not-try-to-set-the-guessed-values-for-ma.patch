@@ -1,4 +1,4 @@
-From bb8021c68c0feddfac6cb0df6242438af45dd58f Mon Sep 17 00:00:00 2001
+From 7cabdbd5f444dc10f4c87ed554792e97a527075b Mon Sep 17 00:00:00 2001
 From: Johannes Pointner <johannes.pointner@br-automation.com>
 Date: Fri, 3 May 2019 09:12:38 +0200
 Subject: [PATCH] chromium: Do not try to set the guessed values for

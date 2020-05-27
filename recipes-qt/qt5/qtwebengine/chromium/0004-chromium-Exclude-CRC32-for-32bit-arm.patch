@@ -1,4 +1,4 @@
-From a6750bf44f791a1a56ee9b7a7e7907e9fcd844e5 Mon Sep 17 00:00:00 2001
+From 7a778d56065b041e55c60e500d5e60c71b7e345f Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 5 Feb 2019 14:32:20 -0800
 Subject: [PATCH] chromium: Exclude CRC32 for 32bit arm

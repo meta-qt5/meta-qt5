@@ -1,4 +1,4 @@
-From 75050b24ee94d078a3e987535aef6cbaac561c69 Mon Sep 17 00:00:00 2001
+From 812ed2c2f89c6df731d7698fe2bf253e3afa179a Mon Sep 17 00:00:00 2001
 From: ibinderwolf <daniel@bluepattern.net>
 Date: Wed, 26 Jun 2019 09:46:48 +0200
 Subject: [PATCH] cmake Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS
@@ -8,7 +8,7 @@ Subject: [PATCH] cmake Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/remoteobjects/Qt5RemoteObjectsConfigExtras.cmake.in b/src/remoteobjects/Qt5RemoteObjectsConfigExtras.cmake.in
-index 4907ded..34729da 100644
+index f98c37a..0f8aee5 100644
 --- a/src/remoteobjects/Qt5RemoteObjectsConfigExtras.cmake.in
 +++ b/src/remoteobjects/Qt5RemoteObjectsConfigExtras.cmake.in
 @@ -40,7 +40,7 @@ if (NOT TARGET Qt5::repc)

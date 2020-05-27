@@ -1,4 +1,4 @@
-From b9b6172194de411c2c68e81c427a79b0a1227e3e Mon Sep 17 00:00:00 2001
+From 8e9c933cad3bd044b432b5557cf47a9ffea4e318 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Mon, 25 Nov 2019 08:27:39 -0800
 Subject: [PATCH] input: Make use of timeval portable for 64bit time_t

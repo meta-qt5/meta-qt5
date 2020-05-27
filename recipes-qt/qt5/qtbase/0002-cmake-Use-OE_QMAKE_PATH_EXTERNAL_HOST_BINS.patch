@@ -1,4 +1,4 @@
-From f05a53357489590c3cd8cd848a34f3aeb4bebe18 Mon Sep 17 00:00:00 2001
+From 826dbd9eac2b99c25e3e97f210eec3eef90941da Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH] cmake: Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS
@@ -72,7 +72,7 @@ index a814678f7b..8546e4b4dc 100644
      _qt5_DBus_check_file_exists(${imported_location})
  
 diff --git a/src/widgets/Qt5WidgetsConfigExtras.cmake.in b/src/widgets/Qt5WidgetsConfigExtras.cmake.in
-index 236d1d4159..f25a73a78b 100644
+index 83d8004a08..d0651ee44b 100644
 --- a/src/widgets/Qt5WidgetsConfigExtras.cmake.in
 +++ b/src/widgets/Qt5WidgetsConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::uic)

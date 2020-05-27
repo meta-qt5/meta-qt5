@@ -10,10 +10,10 @@ require qt5-git.inc
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns qtscxml-native"
 
-SRCREV = "db8b84e117905b4792524aacddba314ae4a2f7ba"
+SRCREV = "126e70d6247ef345b4d49de6945111883e1212aa"
 
-# Patches from https://github.com/meta-qt5/qtscxml/commits/b5.14
-# 5.14.meta-qt5.1
+# Patches from https://github.com/meta-qt5/qtscxml/commits/b5.15
+# 5.15.meta-qt5.1
 SRC_URI += "file://0001-Use-external-host-bin-path-for-cmake-file.patch"
 
 do_install_append_class-nativesdk() {

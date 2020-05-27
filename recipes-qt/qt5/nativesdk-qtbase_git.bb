@@ -23,7 +23,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.15-shared
-# 5.15.meta-qt5-shared.1
+# 5.15.meta-qt5-shared.2
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -47,7 +47,7 @@ SRC_URI += "\
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.15-native
-# 5.15.meta-qt5-native.1
+# 5.15.meta-qt5-native.2
 SRC_URI += " \
     file://0019-Always-build-uic-and-qvkgen.patch \
     file://0020-Avoid-renameeat2-for-native-sdk-builds.patch \
@@ -196,4 +196,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "538223d10d133d23133db1ec7a50cb2775aca657"
+SRCREV = "f6fe4bbab7c0a390b96098b1ccf2373547a4baf9"
