@@ -51,8 +51,9 @@ PACKAGECONFIG_DISTRO ?= ""
 PACKAGECONFIG_RELEASE ?= "release"
 # This is in qt5.inc, because qtwebkit-examples are using it to enable ca-certificates dependency
 # PACKAGECONFIG_OPENSSL ?= "openssl"
-PACKAGECONFIG_DEFAULT ?= "accessibility dbus udev evdev widgets tools libs freetype tests pcre \
+PACKAGECONFIG_DEFAULT ?= "accessibility dbus udev evdev widgets tools libs freetype pcre \
     ${@bb.utils.contains('SELECTED_OPTIMIZATION', '-Os', 'optimize-size ltcg', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'ptest', 'tests', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)} \
     ${@bb.utils.filter('DISTRO_FEATURES', 'vulkan', d)} \
 "

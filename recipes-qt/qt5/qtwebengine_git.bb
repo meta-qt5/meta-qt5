@@ -145,7 +145,7 @@ RDEPENDS_${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "80-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
-# 5.15.meta-qt5.5
+# 5.15.meta-qt5.6
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
@@ -169,6 +169,7 @@ SRC_URI += " \
     file://chromium/0008-chromium-Fix-build-on-32bit-arches-with-64bit-time_t.patch;patchdir=src/3rdparty \
     file://chromium/0009-chromium-Include-cstddef-for-size_t-definition.patch;patchdir=src/3rdparty \
     file://chromium/0010-chromium-Move-CharAllocator-definition-to-a-header-f.patch;patchdir=src/3rdparty \
+    file://chromium/0011-chromium-Include-cstddef-and-cstdint.patch;patchdir=src/3rdparty \
     file://chromium/0012-chromium-Link-v8-with-libatomic-on-x86.patch;patchdir=src/3rdparty \
 "
 
@@ -186,6 +187,7 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0023-chromium-musl-Use-_fpstate-instead-of-_libc_fpstate-.patch;patchdir=src/3rdparty \
     file://chromium/0024-chromium-musl-elf_reader.cc-include-sys-reg.h-to-get.patch;patchdir=src/3rdparty \
     file://chromium/0025-chromium-musl-pread-pwrite.patch;patchdir=src/3rdparty \
+    file://chromium/0026-chromium-musl-initialize-msghdr-in-a-compatible-mann.patch;patchdir=src/3rdparty \
 "
 
 SRCREV_qtwebengine = "387fb9377d61683bcd0f59a637afffdd9a16912c"
