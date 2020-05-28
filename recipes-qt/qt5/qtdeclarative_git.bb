@@ -16,7 +16,6 @@ LIC_FILES_CHKSUM = " \
 # 5.14.meta-qt5.1
 SRC_URI += " \
     file://0001-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-locate-qmlca.patch \
-    file://0002-Use-python3-explicitly.patch \
 "
 
 DEPENDS += "qtbase qtdeclarative-native"
@@ -31,6 +30,6 @@ do_install_append_class-nativesdk() {
     rm -rf ${D}${OE_QMAKE_PATH_QML}
 }
 
-SRCREV = "5a3d9309ec018445a3471d40366f41ee2f6ebef7"
+SRCREV = "b52e81856a1d50fc331b99ae533a474a9b4e79c3"
 
 BBCLASSEXTEND =+ "native nativesdk"

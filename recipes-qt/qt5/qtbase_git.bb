@@ -32,7 +32,6 @@ SRC_URI += "\
     file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
-    file://0017-input-Make-use-of-timeval-portable-for-64bit-time_t.patch \
     file://0018-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
 "
 
@@ -296,4 +295,4 @@ sed -i \
     $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
 }
 
-SRCREV = "ba3b53cb501a77144aa6259e48a8e0edc3d1481d"
+SRCREV = "d1361b1443578550e5c31c0e52aa237c5e1cc6e0"
