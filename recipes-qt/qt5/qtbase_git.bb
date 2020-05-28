@@ -136,6 +136,7 @@ PACKAGECONFIG[libinput] = "-libinput,-no-libinput,libinput"
 PACKAGECONFIG[journald] = "-journald,-no-journald,systemd"
 # needs kernel 3.17+
 PACKAGECONFIG[getentropy] = "-feature-getentropy,-no-feature-getentropy,"
+PACKAGECONFIG[vulkan] = "-vulkan,-no-vulkan,vulkan-headers"
 
 QT_CONFIG_FLAGS_GOLD = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', '-use-gold-linker', '-no-use-gold-linker', d)}"
 # workaround for gold bug:
