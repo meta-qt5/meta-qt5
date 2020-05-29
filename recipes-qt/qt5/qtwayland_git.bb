@@ -20,7 +20,7 @@ SRC_URI += "file://0001-tst_seatv4-Include-array.patch"
 PACKAGECONFIG ?= " \
     wayland-client \
     wayland-server \
-    wayland-egl \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'wayland-egl', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcomposite-egl xcomposite-glx', '', d)} \
 "
 PACKAGECONFIG_class-native ?= ""
