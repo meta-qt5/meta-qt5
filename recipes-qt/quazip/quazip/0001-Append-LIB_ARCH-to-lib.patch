@@ -1,0 +1,31 @@
+From 7bcf47c1d9ca5eb27da088f93387e42b55d6999c Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Thu, 19 Dec 2019 13:22:38 -0800
+Subject: [PATCH] Append LIB_ARCH to lib
+
+Creating subdir under lib is not expected in OE, instead it should be
+appending to lib so it becomes lib64 when needed and LIB_ARCH can be set
+in evnironment
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ quazip/quazip.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/quazip/quazip.pro b/quazip/quazip.pro
+index 3e10f36..1ea073e 100644
+--- a/quazip/quazip.pro
++++ b/quazip/quazip.pro
+@@ -42,7 +42,7 @@ CONFIG(debug, debug|release) {
+ unix:!symbian {
+     headers.path=$$PREFIX/include/quazip
+     headers.files=$$HEADERS
+-    target.path=$$PREFIX/lib/$${LIB_ARCH}
++    target.path=$$PREFIX/lib$${LIB_ARCH}
+     INSTALLS += headers target
+ 
+ 	OBJECTS_DIR=.obj
+-- 
+2.24.1
+

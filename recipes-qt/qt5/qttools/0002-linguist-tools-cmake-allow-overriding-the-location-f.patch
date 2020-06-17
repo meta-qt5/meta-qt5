@@ -1,4 +1,4 @@
-From 8bcf6e4204f77ec656310e5ada92c27990107477 Mon Sep 17 00:00:00 2001
+From c4d1caad764372d2a852fb837e7c37e168c65f0c Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Mon, 18 Feb 2019 10:45:03 +0200
 Subject: [PATCH] linguist-tools cmake: allow overriding the location for
@@ -9,7 +9,7 @@ Subject: [PATCH] linguist-tools cmake: allow overriding the location for
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/linguist/Qt5LinguistToolsConfig.cmake.in b/src/linguist/Qt5LinguistToolsConfig.cmake.in
-index 4318b16f..f957a384 100644
+index 2e99bc76..e6f4f7ed 100644
 --- a/src/linguist/Qt5LinguistToolsConfig.cmake.in
 +++ b/src/linguist/Qt5LinguistToolsConfig.cmake.in
 @@ -47,7 +47,7 @@ if (NOT TARGET Qt5::lrelease)

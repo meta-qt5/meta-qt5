@@ -1,0 +1,22 @@
+From 812ed2c2f89c6df731d7698fe2bf253e3afa179a Mon Sep 17 00:00:00 2001
+From: ibinderwolf <daniel@bluepattern.net>
+Date: Wed, 26 Jun 2019 09:46:48 +0200
+Subject: [PATCH] cmake Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS
+
+---
+ src/remoteobjects/Qt5RemoteObjectsConfigExtras.cmake.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/remoteobjects/Qt5RemoteObjectsConfigExtras.cmake.in b/src/remoteobjects/Qt5RemoteObjectsConfigExtras.cmake.in
+index f98c37a..0f8aee5 100644
+--- a/src/remoteobjects/Qt5RemoteObjectsConfigExtras.cmake.in
++++ b/src/remoteobjects/Qt5RemoteObjectsConfigExtras.cmake.in
+@@ -40,7 +40,7 @@ if (NOT TARGET Qt5::repc)
+ !!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
+     set(imported_location \"${_qt5RemoteObjects_install_prefix}/$${CMAKE_BIN_DIR}repc$$CMAKE_BIN_SUFFIX\")
+ !!ELSE
+-    set(imported_location \"$${CMAKE_BIN_DIR}repc$$CMAKE_BIN_SUFFIX\")
++    set(imported_location \"${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/repc${OE_QMAKE_BIN_SUFFIX}\")
+ !!ENDIF
+     _qt5_RemoteObjects_check_file_exists(${imported_location})
+ 

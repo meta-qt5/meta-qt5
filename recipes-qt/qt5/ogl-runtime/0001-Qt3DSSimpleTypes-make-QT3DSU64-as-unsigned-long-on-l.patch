@@ -1,0 +1,35 @@
+From 84a9dd3f1bce450b3a6eb589ab9794178d74d1d7 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Mon, 7 Oct 2019 11:58:21 -0700
+Subject: [PATCH] Qt3DSSimpleTypes: make QT3DSU64 as unsigned long on linux as
+ well
+
+linux 64bit platform defines uint64_t as unsigned long as well, which
+inturn is used to define GLuint64, therefore its needed to be compatible
+or else we get compile errors
+
+src/render/backends/gl/Qt3DSRenderBackendGL3.cpp:754:80: error: cannot initialize a parameter of type 'GLuint64 *' (aka 'unsigned long *') with an lvalue of type 'qt3ds::QT3DSU64 *' (aka 'unsigned long long *')
+|                     queryID, m_Conversion.fromQueryResultTypeToGL(resultType), params));
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/foundation/Qt3DSSimpleTypes.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/foundation/Qt3DSSimpleTypes.h b/src/foundation/Qt3DSSimpleTypes.h
+index 05ac8d9..adb72e9 100644
+--- a/src/foundation/Qt3DSSimpleTypes.h
++++ b/src/foundation/Qt3DSSimpleTypes.h
+@@ -54,7 +54,7 @@ typedef quint32 QT3DSU32;
+ typedef qint32 QT3DSI32;
+ 
+ // Android's definition of GLuint64 as unsigned long (64-bits) requires this workaround
+-#if Q_PROCESSOR_WORDSIZE == 8 && (defined(Q_OS_ANDROID) || defined(Q_OS_INTEGRITY))
++#if Q_PROCESSOR_WORDSIZE == 8 && (defined(Q_OS_ANDROID) || defined(Q_OS_INTEGRITY) || defined(Q_OS_LINUX))
+ typedef unsigned long QT3DSU64;
+ #else
+ typedef quint64 QT3DSU64;
+-- 
+2.23.0
+

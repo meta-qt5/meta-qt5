@@ -1,0 +1,32 @@
+From cd88a299fa46b2a1be2dbdbda7d6abd77e4edb23 Mon Sep 17 00:00:00 2001
+From: Piotr Tworek <tworaz@tworaz.net>
+Date: Wed, 3 Jul 2019 01:13:40 +0200
+Subject: [PATCH] Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS to locate qmlcachegen
+
+Without this cmake will end up using host qmlcachegen instead of
+recipe-sysroot-native one.
+
+Upstream-Status: Inappropriate [OE specific]
+
+Signed-off-by: Piotr Tworek <tworaz@tworaz.net>
+---
+ tools/qmlcachegen/Qt5QuickCompilerConfig.cmake.in | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/tools/qmlcachegen/Qt5QuickCompilerConfig.cmake.in b/tools/qmlcachegen/Qt5QuickCompilerConfig.cmake.in
+index be2113b258..ce28345cad 100644
+--- a/tools/qmlcachegen/Qt5QuickCompilerConfig.cmake.in
++++ b/tools/qmlcachegen/Qt5QuickCompilerConfig.cmake.in
+@@ -18,11 +18,7 @@ function(QTQUICK_COMPILER_ADD_RESOURCES outfiles)
+ 
+     find_package(Qt5 COMPONENTS Qml Core)
+ 
+-!!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
+-    set(compiler_path \"${_qt5Core_install_prefix}/$${CMAKE_BIN_DIR}qmlcachegen$$CMAKE_BIN_SUFFIX\")
+-!!ELSE
+-    set(compiler_path \"$${CMAKE_BIN_DIR}qmlcachegen$$CMAKE_BIN_SUFFIX\")
+-!!ENDIF
++    set(compiler_path \"${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qmlcachegen${OE_QMAKE_BIN_SUFFIX}\")
+     if(NOT EXISTS \"${compiler_path}\" )
+         message(FATAL_ERROR \"The package \\\"Qt5QuickCompilerConfig\\\" references the file
+    \\\"${compiler_path}\\\"

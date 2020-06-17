@@ -1,6 +1,5 @@
 require qt5.inc
 require qt5-git.inc
-require qt5-ptest.inc
 
 HOMEPAGE = "http://www.qt.io"
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
@@ -13,32 +12,43 @@ LIC_FILES_CHKSUM = " \
 "
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
-
-# Patches from https://github.com/meta-qt5/qttools/commits/b5.12
-# 5.12.meta-qt5.2
+# Patches from https://github.com/meta-qt5/qttools/commits/b5.15
+# 5.15.meta-qt5.1
 SRC_URI += " \
     file://0001-add-noqtwebkit-configuration.patch \
     file://0002-linguist-tools-cmake-allow-overriding-the-location-f.patch \
+    file://0003-src.pro-Add-option-noqdoc-to-disable-qdoc-builds.patch \
 "
 
 FILES_${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
 FILES_${PN}-examples = "${datadir}${QT_DIR_NAME}/examples"
 
 PACKAGECONFIG ??= ""
+PACKAGECONFIG_append_toolchain-clang = " clang"
+
 PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
+PACKAGECONFIG[clang] = ",,clang"
+
+COMPATIBLE_HOST_toolchain-clang_riscv32 = "null"
+COMPATIBLE_HOST_toolchain-clang_riscv64 = "null"
+
+export YOCTO_ALTERNATE_EXE_PATH = "${STAGING_BINDIR}/llvm-config"
+
+TOOLSTOBUILD += "linguist/lconvert linguist/lrelease linguist/lupdate pixeltool qtdiag qtpaths qtplugininfo"
+TOOLSTOBUILD += "${@bb.utils.contains('PACKAGECONFIG', 'clang', 'qdoc', '', d)}"
+TOOLSFORTARGET = "pixeltool qtdiag qtpaths qtplugininfo"
+TOOLSFORHOST = "linguist ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'qdoc', '', d)}"
 
 EXTRA_QMAKEVARS_PRE += " \
-    CONFIG-=config_clang \
     ${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)} \
+    ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=disable_external_rpath', 'CONFIG+=noqdoc', d)} \
+"
+EXTRA_QMAKEVARS_PRE_append_class-native = " CONFIG+=config_clang_done CONFIG-=config_clang"
+EXTRA_QMAKEVARS_PRE_append_class-nativesdk = " CONFIG+=config_clang_done CONFIG-=config_clang"
+EXTRA_QMAKEVARS_PRE_append_class-target = "\
+    ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=config_clang', 'CONFIG+=config_clang_done CONFIG-=config_clang', d)} \
 "
 
-SRCREV = "64280d563ed9dd7f61786eb3d07a368b22828aad"
+SRCREV = "94e861104a1d689dfd12018e7be377699ab24917"
 
 BBCLASSEXTEND = "native nativesdk"
-
-do_install_ptest() {
-    mkdir -p ${D}${PTEST_PATH}
-    t=${D}${PTEST_PATH}
-    cp ${B}/tests/auto/qtdiag/tst_tdiag $t
-    cp ${B}/tests/auto/qtattributionsscanner/tst_qtattributionsscanner $t
-}

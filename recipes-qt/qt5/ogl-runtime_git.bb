@@ -9,17 +9,20 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative qtquickcontrols2"
 
-QT_MODULE_BRANCH = "2.6"
+QT_MODULE_BRANCH = "2.5"
 QT_MODULE_BRANCH_EASTL = "master"
 QT_GIT_PROJECT = "qt3dstudio"
-PV = "2.6.0+git${SRCPV}"
+PV = "2.5.0+git${SRCPV}"
+
+COMPATIBLE_HOST = "(i.86|x86_64|aarch64|arm|powerpc64).*-linux"
 
 SRC_URI += " \
     ${QT_GIT}/qt3dstudio-eastl.git;name=EASTL;branch=${QT_MODULE_BRANCH_EASTL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/EASTL \
     file://0001-Fix-examples-build-error.patch \
+    file://0001-Qt3DSSimpleTypes-make-QT3DSU64-as-unsigned-long-on-l.patch \
 "
 
-SRCREV_ogl-runtime = "fe3ffda451732ebca0bdd7ecd19099f4cbfcfa75"
+SRCREV_ogl-runtime = "25236c672d81a73ee8754dbd764eb8a2a26d866e"
 SRCREV_EASTL = "31697c758f2ed19bd7c6bbe61f1b91f9e12035b5"
 SRCREV = "${SRCREV_ogl-runtime}"
 

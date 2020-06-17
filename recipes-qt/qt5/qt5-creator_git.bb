@@ -14,27 +14,28 @@ LIC_FILES_CHKSUM = " \
 
 inherit qmake5
 
-DEPENDS = "qtbase qtscript qtwebkit qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native"
+DEPENDS += "qtbase qtscript qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native zlib"
 DEPENDS_append_toolchain-clang = " clang llvm-common"
 DEPENDS_append_libc-musl = " libexecinfo"
 
-SRCREV = "8768e39d3c8e74e583eca3897cc6de53a99c3dde"
-PV = "4.7.1+git${SRCPV}"
+SRCREV = "9e057a55368286058023510efc328f68250ecb5e"
+PV = "4.12.0+git${SRCPV}"
 
-# Patches from https://github.com/meta-qt5/qtcreator/commits/b4.7.1
-# 4.7.1.meta-qt5.1
+# Patches from https://github.com/meta-qt5/qtcreator/commits/b4.9.2
+# 4.9.2.meta-qt5.1
 SRC_URI = " \
-    git://code.qt.io/qt-creator/qt-creator.git;branch=4.7 \
-    file://0002-botan.pro-pass-QMAKE_AR.patch \
-    file://0001-botan-Always-define-BOTAN_ARCH_SWITCH-when-cross-bui.patch \
+    git://code.qt.io/qt-creator/qt-creator.git;branch=4.12 \
 "
-SRC_URI_append_libc-musl = " file://0003-Link-with-libexecinfo-on-musl.patch"
+SRC_URI_append_libc-musl = " file://0001-Link-with-libexecinfo-on-musl.patch"
 
 S = "${WORKDIR}/git"
 
 EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 
 EXTRANATIVEPATH += "chrpath-native"
+
+COMPATIBLE_HOST_toolchain-clang_riscv32 = "null"
+COMPATIBLE_HOST_toolchain-clang_riscv64 = "null"
 
 do_configure_append() {
     # Find native tools
@@ -67,7 +68,7 @@ FILES_${PN}-dev += " \
     ${libdir}${QT_DIR_NAME}/qtcreator/*${SOLIBSDEV} \
 "
 
-RDEPENDS_${PN} += "perl python"
+RDEPENDS_${PN} += "perl python3"
 RCONFLICTS_${PN} = "qt-creator"
 
 # To give best user experience out of the box..

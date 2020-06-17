@@ -1,0 +1,27 @@
+From 2f3274c8dac49eeefa1f32b73328fabd037082c6 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Sun, 6 Oct 2019 21:44:38 -0700
+Subject: [PATCH] tst_seatv4: Include <array>
+
+build fails with libc++ otherwise
+
+tests/auto/client/seatv4/tst_seatv4.cpp:330:43: error: implicit instantiation of undefined template 'std::__1::array<const char *, 4>'
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ tests/auto/client/seatv4/tst_seatv4.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/auto/client/seatv4/tst_seatv4.cpp b/tests/auto/client/seatv4/tst_seatv4.cpp
+index 2e17bef8..df78ba69 100644
+--- a/tests/auto/client/seatv4/tst_seatv4.cpp
++++ b/tests/auto/client/seatv4/tst_seatv4.cpp
+@@ -36,7 +36,7 @@
+ #include <QtWaylandClient/private/qwaylanddisplay_p.h>
+ #include <QtWaylandClient/private/qwaylandintegration_p.h>
+ #endif
+-
++#include <array>
+ using namespace MockCompositor;
+ 
+ // wl_seat version 5 was introduced in wayland 1.10, and although that's pretty old,

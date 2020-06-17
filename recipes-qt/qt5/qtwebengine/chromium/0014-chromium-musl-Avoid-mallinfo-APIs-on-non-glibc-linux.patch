@@ -1,0 +1,52 @@
+From 5b501d5335008e32bd5a62e48a675c8fc61194a9 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Fri, 7 Jul 2017 14:09:06 -0700
+Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ chromium/base/process/process_metrics_posix.cc    | 4 ++--
+ chromium/base/trace_event/malloc_dump_provider.cc | 2 ++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/chromium/base/process/process_metrics_posix.cc b/chromium/base/process/process_metrics_posix.cc
+index 044bd8d244f..cec43e1d59b 100644
+--- a/chromium/base/process/process_metrics_posix.cc
++++ b/chromium/base/process/process_metrics_posix.cc
+@@ -110,14 +110,14 @@ size_t ProcessMetrics::GetMallocUsage() {
+   malloc_statistics_t stats = {0};
+   malloc_zone_statistics(nullptr, &stats);
+   return stats.size_in_use;
+-#elif defined(OS_LINUX) || defined(OS_ANDROID)
++#elif defined(__GLIBC__) || defined(OS_ANDROID)
+   struct mallinfo minfo = mallinfo();
+ #if BUILDFLAG(USE_TCMALLOC)
+   return minfo.uordblks;
+ #else
+   return minfo.hblkhd + minfo.arena;
+ #endif
+-#elif defined(OS_FUCHSIA)
++#else
+   // TODO(fuchsia): Not currently exposed. https://crbug.com/735087.
+   return 0;
+ #endif
+diff --git a/chromium/base/trace_event/malloc_dump_provider.cc b/chromium/base/trace_event/malloc_dump_provider.cc
+index 7e42cfc20bb..4e24fc711ad 100644
+--- a/chromium/base/trace_event/malloc_dump_provider.cc
++++ b/chromium/base/trace_event/malloc_dump_provider.cc
+@@ -77,6 +77,7 @@ MallocDumpProvider::~MallocDumpProvider() = default;
+ // the current process.
+ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
+                                       ProcessMemoryDump* pmd) {
++#if defined(__GLIBC__)
+   {
+     base::AutoLock auto_lock(emit_metrics_on_memory_dump_lock_);
+     if (!emit_metrics_on_memory_dump_)
+@@ -175,6 +176,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
+                           MemoryAllocatorDump::kUnitsBytes,
+                           resident_size - allocated_objects_size);
+   }
++#endif // __GLIBC__
+   return true;
+ }
+ 

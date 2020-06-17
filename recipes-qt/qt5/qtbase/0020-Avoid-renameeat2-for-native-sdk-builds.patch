@@ -1,0 +1,68 @@
+From db1700a72d62f7b8686f94cf262d96171c298f5f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Sun, 14 Apr 2019 13:27:58 +0200
+Subject: [PATCH] Avoid renameeat2 for native(sdk) builds
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Recently pseudo changed to not support reanameeat2 as glibc wrapper [1]. This
+causes massive failures at do_install [2] on qtbase.
+
+To work around tell Qt build configuration not to use ranameet2 independent
+of glibc version.
+
+[1] https://git.openembedded.org/openembedded-core/commit/?id=0fb257121b68f38b40c078150db8f7d0979b7ea5
+[2] https://github.com/meta-qt5/meta-qt5/issues/187
+
+Upstream-Status: Inappropriate [OE-specific]
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/corelib/global/qconfig-bootstrapped.h |  4 ++--
+ src/corelib/io/qfilesystemengine_unix.cpp | 10 ----------
+ 2 files changed, 2 insertions(+), 12 deletions(-)
+
+diff --git a/src/corelib/global/qconfig-bootstrapped.h b/src/corelib/global/qconfig-bootstrapped.h
+index b3daf43c04..e1df2ac580 100644
+--- a/src/corelib/global/qconfig-bootstrapped.h
++++ b/src/corelib/global/qconfig-bootstrapped.h
+@@ -107,7 +107,7 @@
+ #define QT_FEATURE_process -1
+ #define QT_FEATURE_regularexpression -1
+ #ifdef __GLIBC_PREREQ
+-# define QT_FEATURE_renameat2 (__GLIBC_PREREQ(2, 28) ? 1 : -1)
++# define QT_FEATURE_renameat2 -1
+ #else
+ # define QT_FEATURE_renameat2 -1
+ #endif
+@@ -115,7 +115,7 @@
+ #define QT_FEATURE_signaling_nan -1
+ #define QT_FEATURE_slog2 -1
+ #ifdef __GLIBC_PREREQ
+-# define QT_FEATURE_statx (__GLIBC_PREREQ(2, 28) ? 1 : -1)
++# define QT_FEATURE_statx -1
+ #else
+ # define QT_FEATURE_statx -1
+ #endif
+diff --git a/src/corelib/io/qfilesystemengine_unix.cpp b/src/corelib/io/qfilesystemengine_unix.cpp
+index 67cff7c68c..86e45320d5 100644
+--- a/src/corelib/io/qfilesystemengine_unix.cpp
++++ b/src/corelib/io/qfilesystemengine_unix.cpp
+@@ -1435,16 +1435,6 @@ bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSy
+     Q_CHECK_FILE_NAME(srcPath, false);
+     Q_CHECK_FILE_NAME(tgtPath, false);
+ 
+-#if defined(RENAME_NOREPLACE) && QT_CONFIG(renameat2)
+-    if (renameat2(AT_FDCWD, srcPath, AT_FDCWD, tgtPath, RENAME_NOREPLACE) == 0)
+-        return true;
+-
+-    // We can also get EINVAL for some non-local filesystems.
+-    if (errno != EINVAL) {
+-        error = QSystemError(errno, QSystemError::StandardLibraryError);
+-        return false;
+-    }
+-#endif
+ #if defined(Q_OS_DARWIN) && defined(RENAME_EXCL)
+     if (renameatx_np(AT_FDCWD, srcPath, AT_FDCWD, tgtPath, RENAME_EXCL) == 0)
+         return true;

@@ -7,18 +7,20 @@ LIC_FILES_CHKSUM = " \
     file://Source/JavaScriptCore/parser/Parser.h;endline=21;md5=bd69f72183a7af673863f057576e21ee \
 "
 
-DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-native bison-native"
+DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-native bison-native flex-native"
 
-# Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.11
-# 5.11.meta-qt5.2
+# Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.13
+# 5.13.meta-qt5.1
 SRC_URI += "\
-    file://0001-Do-not-skip-build-for-cross-compile.patch \
-    file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
+    file://0002-Do-not-skip-build-for-cross-compile.patch \
+    file://0003-Fix-build-with-non-glibc-libc-on-musl.patch \
     file://0004-Fix-build-bug-for-armv32-BE.patch \
-    file://0001-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
+    file://0005-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
 "
 
-inherit cmake_qt5 perlnative pythonnative
+inherit cmake_qt5 perlnative
+
+inherit python3native
 
 # qemuarm build fails with:
 # | {standard input}: Assembler messages:
@@ -45,13 +47,18 @@ EXTRA_OECMAKE += " \
     -DCROSS_COMPILE=ON \
     -DECM_MKSPECS_INSTALL_DIR=${libdir}${QT_DIR_NAME}/mkspecs/modules \
     -DQML_INSTALL_DIR=${OE_QMAKE_PATH_QML} \
+    -DPYTHON_EXECUTABLE=`which python3` \
 "
 
 EXTRA_OECMAKE_append_toolchain-clang = " -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES:PATH='${STAGING_INCDIR}'"
 
-# JIT not supported on MIPS64
-EXTRA_OECMAKE_append_mips64 = " -DENABLE_JIT=OFF "
-EXTRA_OECMAKE_append_mips64el = " -DENABLE_JIT=OFF "
+# JIT not supported on MIPS/PPC
+EXTRA_OECMAKE_append_mipsarch = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
+EXTRA_OECMAKE_append_powerpc = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
+# Disable gold on mips64/clang
+# mips64-yoe-linux-musl-ld.gold: internal error in get_got_page_offset, at ../../gold/mips.cc:6260
+# mips-yoe-linux-musl-ld.gold: error: Can't find matching LO16 reloc
+EXTRA_OECMAKE_append_toolchain-clang_mipsarch = " -DUSE_LD_GOLD=OFF "
 
 PACKAGECONFIG ??= "qtlocation qtmultimedia qtsensors qtwebchannel \
     ${@bb.utils.filter('DISTRO_FEATURES', 'x11', d)} \
@@ -73,6 +80,6 @@ PACKAGECONFIG[hyphen] = "-DUSE_LIBHYPHEN=ON,-DUSE_LIBHYPHEN=OFF,hyphen"
 # remove default ${PN}-examples* set in qt5.inc, because they conflicts with ${PN} from separate webkit-examples recipe
 PACKAGES_remove = "${PN}-examples"
 
-QT_MODULE_BRANCH = "dev"
+QT_MODULE_BRANCH = "5.212"
 
-SRCREV = "beaeeb99881184fd368c121fcbb1a31c78b794a3"
+SRCREV = "10cd6a106e1c461c774ca166a67b8c835c755ef7"

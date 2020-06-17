@@ -1,0 +1,25 @@
+From ff55599d0d9a5b2e31b18c415f835567f301acf2 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Sat, 14 Dec 2019 18:36:49 -0800
+Subject: [PATCH] src.pro: Add option noqdoc to disable qdoc builds
+
+it needs clang on host, so lets separate it out
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/src.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/src.pro b/src/src.pro
+index 5c256ea3..196c34c7 100644
+--- a/src/src.pro
++++ b/src/src.pro
+@@ -25,7 +25,7 @@ qtConfig(library) {
+ 
+ include($$OUT_PWD/qdoc/qtqdoc-config.pri)
+ QT_FOR_CONFIG += qdoc-private
+-qtConfig(qdoc): qtConfig(thread): SUBDIRS += qdoc
++qtConfig(qdoc): qtConfig(thread):!contains(CONFIG, noqdoc): SUBDIRS += qdoc
+ 
+ !android|android_app: SUBDIRS += qtpaths
+ 

@@ -1,4 +1,4 @@
-From c1d85b492d8e40fe37dd11f69e24a04b3f086025 Mon Sep 17 00:00:00 2001
+From 826dbd9eac2b99c25e3e97f210eec3eef90941da Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 6 Apr 2013 13:15:07 +0200
 Subject: [PATCH] cmake: Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS
@@ -19,10 +19,10 @@ Change-Id: Iacaa1c5531cd6dcc094891610c351673db55d7b2
  3 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/src/corelib/Qt5CoreConfigExtras.cmake.in b/src/corelib/Qt5CoreConfigExtras.cmake.in
-index e0652fdcf9..7b8fed8931 100644
+index 4c1c3a612b..8b0f6b16ee 100644
 --- a/src/corelib/Qt5CoreConfigExtras.cmake.in
 +++ b/src/corelib/Qt5CoreConfigExtras.cmake.in
-@@ -5,7 +5,7 @@ if (NOT TARGET Qt5::qmake)
+@@ -8,7 +8,7 @@ if (NOT TARGET Qt5::qmake)
  !!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
      set(imported_location \"${_qt5Core_install_prefix}/$${CMAKE_BIN_DIR}qmake$$CMAKE_BIN_SUFFIX\")
  !!ELSE
@@ -31,7 +31,7 @@ index e0652fdcf9..7b8fed8931 100644
  !!ENDIF
      _qt5_Core_check_file_exists(${imported_location})
  
-@@ -20,7 +20,7 @@ if (NOT TARGET Qt5::moc)
+@@ -23,7 +23,7 @@ if (NOT TARGET Qt5::moc)
  !!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
      set(imported_location \"${_qt5Core_install_prefix}/$${CMAKE_BIN_DIR}moc$$CMAKE_BIN_SUFFIX\")
  !!ELSE
@@ -40,7 +40,7 @@ index e0652fdcf9..7b8fed8931 100644
  !!ENDIF
      _qt5_Core_check_file_exists(${imported_location})
  
-@@ -37,7 +37,7 @@ if (NOT TARGET Qt5::rcc)
+@@ -40,7 +40,7 @@ if (NOT TARGET Qt5::rcc)
  !!IF isEmpty(CMAKE_BIN_DIR_IS_ABSOLUTE)
      set(imported_location \"${_qt5Core_install_prefix}/$${CMAKE_BIN_DIR}rcc$$CMAKE_BIN_SUFFIX\")
  !!ELSE
@@ -50,7 +50,7 @@ index e0652fdcf9..7b8fed8931 100644
      _qt5_Core_check_file_exists(${imported_location})
  
 diff --git a/src/dbus/Qt5DBusConfigExtras.cmake.in b/src/dbus/Qt5DBusConfigExtras.cmake.in
-index 1d947159e2..582c52169e 100644
+index a814678f7b..8546e4b4dc 100644
 --- a/src/dbus/Qt5DBusConfigExtras.cmake.in
 +++ b/src/dbus/Qt5DBusConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::qdbuscpp2xml)
@@ -72,7 +72,7 @@ index 1d947159e2..582c52169e 100644
      _qt5_DBus_check_file_exists(${imported_location})
  
 diff --git a/src/widgets/Qt5WidgetsConfigExtras.cmake.in b/src/widgets/Qt5WidgetsConfigExtras.cmake.in
-index 99d87e2e46..8fe9b3c0b5 100644
+index 83d8004a08..d0651ee44b 100644
 --- a/src/widgets/Qt5WidgetsConfigExtras.cmake.in
 +++ b/src/widgets/Qt5WidgetsConfigExtras.cmake.in
 @@ -5,7 +5,7 @@ if (NOT TARGET Qt5::uic)

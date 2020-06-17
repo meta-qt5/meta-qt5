@@ -1,0 +1,66 @@
+From 604761d49aa1d93ef5cc6d13259dc53dce7f04c4 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 16 Jul 2019 17:52:04 -0700
+Subject: [PATCH] examples/plugins: Replace obsolete screenGeometry
+
+Fixes errors like
+helloworldinputmethod.cpp:93:55: error: 'screenGeometry' is deprecated: Use QGuiApplication::screens() [-Werror,-Wdeprecated-declarations]
+    const QSize screenSize = QApplication::desktop()->screenGeometry().size();
+
+Upstream-Status: Pending
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ examples/plugins/cxx/helloworld/helloworldinputmethod.cpp | 5 +++--
+ examples/plugins/cxx/override/overrideinputmethod.cpp     | 5 +++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/examples/plugins/cxx/helloworld/helloworldinputmethod.cpp b/examples/plugins/cxx/helloworld/helloworldinputmethod.cpp
+index eb470a1f..e5e5911d 100644
+--- a/examples/plugins/cxx/helloworld/helloworldinputmethod.cpp
++++ b/examples/plugins/cxx/helloworld/helloworldinputmethod.cpp
+@@ -18,7 +18,7 @@
+ 
+ #include <QDebug>
+ #include <QApplication>
+-#include <QDesktopWidget>
++#include <QScreen>
+ 
+ namespace {
+ 
+@@ -90,7 +90,8 @@ void HelloWorldInputMethod::show()
+     }
+ 
+     // Set size of our container to screen size
+-    const QSize screenSize = QApplication::desktop()->screenGeometry().size();
++    QScreen *screen = QApplication::primaryScreen();
++    const QSize screenSize = screen->availableSize();
+     mainWidget->parentWidget()->resize(screenSize);
+ 
+     // Set size of the input method
+diff --git a/examples/plugins/cxx/override/overrideinputmethod.cpp b/examples/plugins/cxx/override/overrideinputmethod.cpp
+index c00160e4..f2f30e1d 100644
+--- a/examples/plugins/cxx/override/overrideinputmethod.cpp
++++ b/examples/plugins/cxx/override/overrideinputmethod.cpp
+@@ -18,7 +18,7 @@
+ 
+ #include <QDebug>
+ #include <QApplication>
+-#include <QDesktopWidget>
++#include <QScreen>
+ #include <QKeyEvent>
+ 
+ namespace {
+@@ -82,7 +82,8 @@ void OverrideInputMethod::show()
+     }
+ 
+     // Set size of the input method
+-    const QSize &screenSize = QApplication::desktop()->screenGeometry().size();
++    QScreen *screen = QApplication::primaryScreen();
++    const QSize screenSize = screen->availableSize();
+     const QSize size(screenSize.width() - 200, 200);
+ 
+     surface->setGeometry(QRect(QPoint((screenSize.width() - size.width()) / 2,
+-- 
+2.22.0
+

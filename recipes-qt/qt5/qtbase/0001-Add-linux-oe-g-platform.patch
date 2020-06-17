@@ -1,4 +1,4 @@
-From f474b08de99d505eb2f2b7d69fed40c4aa09ac70 Mon Sep 17 00:00:00 2001
+From 8442f94819458c79a88ad6177207c0e922a007bd Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -31,10 +31,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index ef7bad1bfc..dcca0f9135 100755
+index b6c9b462f2..4e3fcd41d1 100755
 --- a/configure
 +++ b/configure
-@@ -712,7 +712,7 @@ fi
+@@ -708,7 +708,7 @@ fi
  # is where the resulting variable is written to
  setBootstrapVariable()
  {
@@ -65,7 +65,7 @@ index 934a18a924..0f5b1b6333 100644
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
-index 89f4946c50..97c1b43ccb 100644
+index 99b7fe6562..1ddfddb2bd 100644
 --- a/mkspecs/features/qt.prf
 +++ b/mkspecs/features/qt.prf
 @@ -148,7 +148,7 @@ import_plugins:qtConfig(static) {
@@ -89,10 +89,10 @@ index 89f4946c50..97c1b43ccb 100644
      # run qmlimportscanner
      qtPrepareTool(QMLIMPORTSCANNER, qmlimportscanner, , system)
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 1903e509c8..c093dd4592 100644
+index 7777e615bd..8d792fa70a 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -69,7 +69,7 @@ defineTest(qtHaveModule) {
+@@ -87,7 +87,7 @@ defineTest(qtHaveModule) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
      isEmpty(cmd) {

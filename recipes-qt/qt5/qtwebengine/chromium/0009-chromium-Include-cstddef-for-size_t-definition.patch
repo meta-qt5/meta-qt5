@@ -1,0 +1,35 @@
+From 58783bf8f46657200643543f765f405a91699440 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Wed, 25 Dec 2019 15:41:16 -0800
+Subject: [PATCH] chromium: Include cstddef for size_t definition
+
+Include ctsdint for uintXX_t
+
+Fixes
+In file included from ../../../../git/src/3rdparty/chromium/third_party/webrtc/modules/audio_processing/aec3/clockdrift_detector.cc:10:
+../../../../git/src/3rdparty/chromium/third_party/webrtc/modules/audio_processing/aec3/clockdrift_detector.h:34:3: error: 'size_t' does not name a type
+   34 |   size_t stability_counter_;
+      |   ^~~~~~
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+ccc
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ .../third_party/webrtc/modules/video_coding/decoding_state.h     | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/chromium/third_party/webrtc/modules/video_coding/decoding_state.h b/chromium/third_party/webrtc/modules/video_coding/decoding_state.h
+index b87fb2d0345..b3faffcfc79 100644
+--- a/chromium/third_party/webrtc/modules/video_coding/decoding_state.h
++++ b/chromium/third_party/webrtc/modules/video_coding/decoding_state.h
+@@ -14,6 +14,7 @@
+ #include <map>
+ #include <set>
+ #include <vector>
++#include <cstdint>
+ 
+ namespace webrtc {
+ 

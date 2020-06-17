@@ -1,0 +1,64 @@
+From e7e0646f07d1c0dcf6502cd1c074d50839f3d461 Mon Sep 17 00:00:00 2001
+From: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
+Date: Thu, 8 Mar 2018 15:39:55 +0100
+Subject: [PATCH] chromium: aarch64 skia build fix
+
+Upstream-Status: Inappropriate
+
+GCC (tested rocko's 7.3.0) cannot find these intrinsics and the build fails:
+
+../../third_party/skia/src/opts/SkRasterPipeline_opts.h: In function 'neon::F neon::from_half(neon::U16)':
+../../third_party/skia/src/opts/SkRasterPipeline_opts.h:657:26: error: cannot convert 'neon::U16 {aka short unsigned int}' to 'float16x4_    t {aka __vector(4) __    fp16}' for argument '1' to '
+float32x4_t vcvt_f32_f16(float16x4_t)'
+     return vcvt_f32_f16(h);
+                          ^
+../../third_party/skia/src/opts/SkRasterPipeline_opts.h: In function 'neon::U16 neon::to_half(neon::F)':
+../../third_party/skia/src/opts/SkRasterPipeline_opts.h:677:26: error: cannot convert 'neon::F {aka float}' to 'float32x4_t {aka __vector    (4) float}' for argum    ent '1' to 'float16x4_t vcvt
+_f16_f32(float32x4_t)'
+     return vcvt_f16_f32(f);
+                          ^
+
+Upstream seems to have had similar issues according to
+https://skia-review.googlesource.com/c/skia/+/84222, but there is no fix at the
+moment.
+
+Signed-off-by: Raphael Kubo da Costa <raphael.kubo.da.costa@intel.com>
+---
+ .../skia/src/opts/SkRasterPipeline_opts.h       | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
+
+diff --git a/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h b/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
+index 0d610ccfe33..c1844b61168 100644
+--- a/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
++++ b/chromium/third_party/skia/src/opts/SkRasterPipeline_opts.h
+@@ -986,13 +986,7 @@ SI F approx_powf(F x, F y) {
+ }
+ 
+ SI F from_half(U16 h) {
+-#if defined(JUMPER_IS_NEON) && defined(SK_CPU_ARM64) \
+-    && !defined(SK_BUILD_FOR_GOOGLE3)  // Temporary workaround for some Google3 builds.
+-    __fp16 fp16;
+-    memcpy(&fp16, &h, sizeof(U16));
+-    return float(fp16);
+-
+-#elif defined(JUMPER_IS_HSW) || defined(JUMPER_IS_AVX512)
++#if defined(JUMPER_IS_HSW) || defined(JUMPER_IS_AVX512)
+     return _mm256_cvtph_ps(h);
+ 
+ #else
+@@ -1009,14 +1003,7 @@ SI F from_half(U16 h) {
+ }
+ 
+ SI U16 to_half(F f) {
+-#if defined(JUMPER_IS_NEON) && defined(SK_CPU_ARM64) \
+-    && !defined(SK_BUILD_FOR_GOOGLE3)  // Temporary workaround for some Google3 builds.
+-    __fp16 fp16 = __fp16(f);
+-    U16 u16;
+-    memcpy(&u16, &fp16, sizeof(U16));
+-    return u16;
+-
+-#elif defined(JUMPER_IS_HSW) || defined(JUMPER_IS_AVX512)
++#if defined(JUMPER_IS_HSW) || defined(JUMPER_IS_AVX512)
+     return _mm256_cvtps_ph(f, _MM_FROUND_CUR_DIRECTION);
+ 
+ #else

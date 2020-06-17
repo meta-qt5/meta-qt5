@@ -1,0 +1,38 @@
+From 7cabdbd5f444dc10f4c87ed554792e97a527075b Mon Sep 17 00:00:00 2001
+From: Johannes Pointner <johannes.pointner@br-automation.com>
+Date: Fri, 3 May 2019 09:12:38 +0200
+Subject: [PATCH] chromium: Do not try to set the guessed values for
+ march/mtune/float-abi OE config machinary has computed these values already
+ and fed it via compiler cmdline to chromium build
+
+I think upstream should check for the values on compiler cmdline
+before overriding these
+
+Upstream-Status: Inappropriate [OE-Specific]
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Johannes Pointner <johannes.pointner@br-automation.com>
+---
+ chromium/build/config/compiler/BUILD.gn | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/chromium/build/config/compiler/BUILD.gn b/chromium/build/config/compiler/BUILD.gn
+index 13d71d04030..3ebcf1ddbc3 100644
+--- a/chromium/build/config/compiler/BUILD.gn
++++ b/chromium/build/config/compiler/BUILD.gn
+@@ -780,15 +780,6 @@ config("compiler_cpu_abi") {
+     } else if (current_cpu == "arm") {
+       if (is_clang && !is_android && !is_nacl) {
+       }
+-      if (!is_nacl) {
+-        cflags += [
+-          "-march=$arm_arch",
+-          "-mfloat-abi=$arm_float_abi",
+-        ]
+-      }
+-      if (arm_tune != "") {
+-        cflags += [ "-mtune=$arm_tune" ]
+-      }
+     } else if (current_cpu == "arm64") {
+       if (is_clang && !is_android && !is_nacl && !is_fuchsia) {
+       }

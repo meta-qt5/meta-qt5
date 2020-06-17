@@ -19,4 +19,8 @@ COMPATIBLE_MACHINE_armv7a = "(.*)"
 COMPATIBLE_MACHINE_armv7ve = "(.*)"
 COMPATIBLE_MACHINE_aarch64 = "(.*)"
 
-SRCREV = "30edb647a64542c0f4432bd3909e3b6ae5ddcd51"
+python() {
+    if 'meta-python2' not in d.getVar('BBFILE_COLLECTIONS').split():
+        raise bb.parse.SkipRecipe('Requires meta-python2 to be present.')
+}
+SRCREV = "d2e2dbeaf681a5a1b79808e1ed982ae6e4563ae4"

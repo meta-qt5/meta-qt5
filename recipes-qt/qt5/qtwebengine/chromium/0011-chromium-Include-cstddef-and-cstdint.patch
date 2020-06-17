@@ -1,0 +1,24 @@
+From 33005dfa49d65170fb006cd4ca4dbb8c6cf901e5 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Wed, 15 Jan 2020 16:53:46 -0800
+Subject: [PATCH] chromium: Include <cstddef> and <cstdint>
+
+These headers are needed for uintXX_t and size_t definitions
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ chromium/third_party/webrtc/call/rtx_receive_stream.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/chromium/third_party/webrtc/call/rtx_receive_stream.h b/chromium/third_party/webrtc/call/rtx_receive_stream.h
+index 66cc46dc091..e8cadb2bb80 100644
+--- a/chromium/third_party/webrtc/call/rtx_receive_stream.h
++++ b/chromium/third_party/webrtc/call/rtx_receive_stream.h
+@@ -11,6 +11,7 @@
+ #ifndef CALL_RTX_RECEIVE_STREAM_H_
+ #define CALL_RTX_RECEIVE_STREAM_H_
+ 
++#include <cstdint>
+ #include <map>
+ #include <stdint.h>
+ 

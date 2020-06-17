@@ -1,0 +1,68 @@
+From c769d6be7210a2fbc866e36f87ad21bcc91e9c6e Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Sat, 30 Nov 2019 10:07:43 -0800
+Subject: [PATCH] chromium: Fix build on 32bit arches with 64bit time_t
+
+time element is deprecated on new input_event structure in kernel's
+input.h [1]
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit?id=152194fe9c3f
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ chromium/ui/events/ozone/evdev/event_converter_evdev.cc    | 4 ++--
+ chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc | 6 +++---
+ chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.h  | 5 +++++
+ 3 files changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/chromium/ui/events/ozone/evdev/event_converter_evdev.cc b/chromium/ui/events/ozone/evdev/event_converter_evdev.cc
+index 9f27d39e209..f565dd2ce5c 100644
+--- a/chromium/ui/events/ozone/evdev/event_converter_evdev.cc
++++ b/chromium/ui/events/ozone/evdev/event_converter_evdev.cc
+@@ -176,8 +176,8 @@ void EventConverterEvdev::SetPalmSuppressionCallback(
+ base::TimeTicks EventConverterEvdev::TimeTicksFromInputEvent(
+     const input_event& event) {
+   base::TimeTicks timestamp =
+-      ui::EventTimeStampFromSeconds(event.time.tv_sec) +
+-      base::TimeDelta::FromMicroseconds(event.time.tv_usec);
++      ui::EventTimeStampFromSeconds(event.input_event_sec) +
++      base::TimeDelta::FromMicroseconds(event.input_event_usec);
+   ValidateEventTimeClock(&timestamp);
+   return timestamp;
+ }
+diff --git a/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc b/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc
+index 363c3183e05..4fccfd62f84 100644
+--- a/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc
++++ b/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc
+@@ -59,11 +59,11 @@ void TouchEventLogEvdev::DumpLog(const char* filename) {
+   for (int i = 0; i < kDebugBufferSize; ++i) {
+     struct TouchEvent* te =
+         &logged_events_[(debug_buffer_tail_ + i) % kDebugBufferSize];
+-    if (te->ev.time.tv_sec == 0 && te->ev.time.tv_usec == 0)
++    if (te->ev.input_event_sec == 0 && te->ev.input_event_usec == 0)
+       continue;
+     std::string event_string = base::StringPrintf(
+-        "E: %ld.%06ld %04x %04x %d %d\n", te->ev.time.tv_sec,
+-        te->ev.time.tv_usec, te->ev.type, te->ev.code, te->ev.value, te->slot);
++        "E: %ld.%06ld %04x %04x %d %d\n", te->ev.input_event_sec,
++        te->ev.input_event_usec, te->ev.type, te->ev.code, te->ev.value, te->slot);
+     report_content += event_string;
+   }
+   file.Write(0, report_content.c_str(), report_content.length());
+diff --git a/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.h b/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.h
+index 0d5b83148f6..1f17608e94d 100644
+--- a/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.h
++++ b/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.h
+@@ -14,6 +14,11 @@
+ 
+ #include "base/component_export.h"
+ 
++#ifndef input_event_sec
++#define input_event_sec time.tv_sec
++#define input_event_usec time.tv_usec
++#endif
++
+ namespace ui {
+ 
+ class EventDeviceInfo;

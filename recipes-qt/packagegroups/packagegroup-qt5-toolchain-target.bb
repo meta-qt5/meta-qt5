@@ -3,14 +3,10 @@
 DESCRIPTION = "Target packages for Qt5 SDK"
 LICENSE = "MIT"
 
+PACKAGE_ARCH = "${TUNE_PKGARCH}"
 inherit packagegroup
 
 PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
-
-# Requires Ruby to work
-USE_RUBY = " \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtwebkit-dev', '', d)} \
-"
 
 # Requires Wayland to work
 USE_WAYLAND = " \
@@ -52,9 +48,6 @@ RDEPENDS_${PN} += " \
     qtdeclarative-tools \
     qtdeclarative-staticdev \
     qttranslations-qtdeclarative \
-    qtenginio-dev \
-    qtenginio-mkspecs \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtenginio-qmlplugins', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'qtgraphicaleffects-qmlplugins', '', d)} \
     qtimageformats-dev \
     qtimageformats-plugins \
@@ -92,7 +85,6 @@ RDEPENDS_${PN} += " \
     qttools-staticdev \
     qttools-tools \
     ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', '${USE_WAYLAND}', '', d)} \
-    ${USE_RUBY} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', '${USE_X11}', '', d)} \
     qtwebsockets-dev \
     qtwebsockets-mkspecs \
@@ -107,9 +99,15 @@ RDEPENDS_${PN} += " \
     qtquickcontrols2 \
     qtquickcontrols2-dev \
     qtquickcontrols2-mkspecs \
+    qtwebengine \
 "
+RDEPENDS_${PN}_remove_toolchain-clang_riscv32 = "qttools-dev qttools-mkspecs qttools-staticdev qttools-tools"
+RDEPENDS_${PN}_remove_toolchain-clang_riscv64 = "qttools-dev qttools-mkspecs qttools-staticdev qttools-tools"
 
 RRECOMMENDS_${PN} += " \
     qtquickcontrols-qmlplugins \
     qttools-plugins \
 "
+
+RRECOMMENDS_${PN}_remove_toolchain-clang_riscv32 = "qttools-plugins"
+RRECOMMENDS_${PN}_remove_toolchain-clang_riscv64 = "qttools-plugins"

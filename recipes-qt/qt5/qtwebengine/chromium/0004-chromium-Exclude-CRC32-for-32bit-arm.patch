@@ -1,0 +1,33 @@
+From 7a778d56065b041e55c60e500d5e60c71b7e345f Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 5 Feb 2019 14:32:20 -0800
+Subject: [PATCH] chromium: Exclude CRC32 for 32bit arm
+
+This fixes build issues during cross compiling for linux using clang
+
+Fixes
+src/3rdparty/chromium/third_party/zlib/crc32_simd.c:184: undefined reference to `__crc32d'
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ chromium/third_party/zlib/BUILD.gn | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/chromium/third_party/zlib/BUILD.gn b/chromium/third_party/zlib/BUILD.gn
+index 4422fecc0c8..1b398ad981a 100644
+--- a/chromium/third_party/zlib/BUILD.gn
++++ b/chromium/third_party/zlib/BUILD.gn
+@@ -80,8 +80,11 @@ if (use_arm_neon_optimizations) {
+     # Disabled for iPhone, as described in DDI0487C_a_armv8_arm:
+     #  "All implementations of the ARMv8.1 architecture are required to
+     #   implement the CRC32* instructions. These are optional in ARMv8.0."
++    defines = []
+     if (!is_ios) {
+-      defines = [ "CRC32_ARMV8_CRC32" ]
++      if (current_cpu == "arm64") {
++        defines += [ "CRC32_ARMV8_CRC32" ]
++      }
+       if (is_android) {
+         defines += [ "ARMV8_OS_ANDROID" ]
+       } else if (is_linux || is_chromeos) {

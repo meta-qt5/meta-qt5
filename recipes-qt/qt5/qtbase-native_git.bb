@@ -17,8 +17,8 @@ require qt5-native.inc
 require qt5-git.inc
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-shared
-# 5.12.meta-qt5-shared.9
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.15-shared
+# 5.15.meta-qt5-shared.2
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -36,20 +36,21 @@ SRC_URI += "\
     file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
-    file://0017-Fix-Wdeprecated-copy-warnings.patch \
+    file://0017-input-Make-use-of-timeval-portable-for-64bit-time_t.patch \
+    file://0018-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
-# Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-native
-# 5.12.meta-qt5-native.9
+# Patches from https://github.com/meta-qt5/qtbase/commits/b5.15-native
+# 5.15.meta-qt5-native.2
 SRC_URI += " \
-    file://0018-Always-build-uic-and-qvkgen.patch \
-    file://0019-Avoid-renameeat2-for-native-sdk-builds.patch \
+    file://0019-Always-build-uic-and-qvkgen.patch \
+    file://0020-Avoid-renameeat2-for-native-sdk-builds.patch \
 "
 
 # only for qtbase-native
 SRC_URI += " \
-    file://0020-Bootstrap-without-linkat-feature.patch \
+    file://0021-Bootstrap-without-linkat-feature.patch \
 "
 
 CLEANBROKEN = "1"
@@ -57,23 +58,25 @@ CLEANBROKEN = "1"
 XPLATFORM_toolchain-clang = "linux-oe-clang"
 XPLATFORM ?= "linux-oe-g++"
 
+PACKAGECONFIG ?= ""
+PACKAGECONFIG[gui] = "-gui -qpa offscreen,-no-gui,"
+PACKAGECONFIG[imageformats] = "-qt-libpng -qt-libjpeg -gif -ico, -no-libpng -no-libjpeg -no-ico -no-gif,"
+PACKAGECONFIG[openssl] = "-openssl,-no-openssl,openssl"
+
 QT_CONFIG_FLAGS = " \
     -sysroot ${STAGING_DIR_NATIVE} \
     -L${STAGING_LIBDIR_NATIVE} \
     -no-gcc-sysroot \
     -system-zlib \
     -qt-pcre \
-    -no-libjpeg \
-    -no-libpng \
-    -no-gif \
+    -qt-doubleconversion \
     -no-accessibility \
     -no-cups \
-    -no-gui \
     -no-sql-mysql \
     -no-sql-sqlite \
     -no-sql-psql \
     -no-opengl \
-    -no-openssl \
+    -no-vulkan \
     -no-xcb \
     -no-icu \
     -verbose \
@@ -135,11 +138,9 @@ do_install() {
         done
     fi
 
-    install -m 755 ${B}/bin/qfloat16-tables ${D}${OE_QMAKE_PATH_BINS}
-
     # since 5.9.2 something sets a very strange path to mkspec ("${_qt5Core_install_prefix}/../../../../../../../../../../usr/lib/qt5//mkspecs/linux-oe-g++")
     # override this until somebody finds a better way
     echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
-SRCREV = "08d6cb7673aa51bc0532d71db4134f4912e14769"
+SRCREV = "ba3b53cb501a77144aa6259e48a8e0edc3d1481d"

@@ -12,7 +12,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtdeclarative"
 
-PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa', '', d)} \
+PACKAGECONFIG ??= "gstreamer \
+                   ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa', '', d)} \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)}"
 PACKAGECONFIG[alsa] = "-alsa,-no-alsa,alsa-lib"
 PACKAGECONFIG[pulseaudio] = "-pulseaudio,-no-pulseaudio,pulseaudio"
@@ -27,8 +28,8 @@ EXTRA_QMAKEVARS_CONFIGURE += "${@bb.utils.contains_any('PACKAGECONFIG', 'gstream
 
 CXXFLAGS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', '-DMESA_EGL_NO_X11_HEADERS=1', d)}"
 
-# Patches from https://github.com/meta-qt5/qtmultimedia/commits/b5.12
-# 5.12.meta-qt5.3
+# Patches from https://github.com/meta-qt5/qtmultimedia/commits/b5.15
+# 5.15.meta-qt5.1
 SRC_URI += "\
     file://0001-qtmultimedia-fix-a-conflicting-declaration.patch \
 "
@@ -37,4 +38,10 @@ SRC_URI += "\
 # http://errors.yoctoproject.org/Errors/Build/44914/
 LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-SRCREV = "194b584ca1381ab5c5bdebfb455901cf2b0bad61"
+SRCREV = "83f0038fa7fd090840fdd19fd30652bd7bbb6fd3"
+
+# Temporary work around for Qt5MultimediaConfig.cmake referencing non-existent videoeglvideonode directory
+do_install_append() {
+    install -d ${D}${OE_QMAKE_PATH_PLUGINS}/videoeglvideonode
+}
+FILES_${PN} += "${OE_QMAKE_PATH_PLUGINS}/videoeglvideonode"

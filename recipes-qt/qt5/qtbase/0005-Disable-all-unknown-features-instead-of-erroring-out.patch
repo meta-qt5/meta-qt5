@@ -1,4 +1,4 @@
-From b6e5080c41557a20c85326af39323ff1ed42d944 Mon Sep 17 00:00:00 2001
+From 018b5507d9f01db2d408aaecffb837d283e9e36a Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Mon, 24 Oct 2016 09:45:18 +0300
 Subject: [PATCH] Disable all unknown features instead of erroring out
@@ -10,10 +10,10 @@ Change-Id: Ib884fe33cac74439f9592b145937f6b75ced8447
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/mkspecs/features/qt_configure.prf b/mkspecs/features/qt_configure.prf
-index 242544d41b..68a7758a9c 100644
+index 6537d98c5d..06d23e3847 100644
 --- a/mkspecs/features/qt_configure.prf
 +++ b/mkspecs/features/qt_configure.prf
-@@ -1598,7 +1598,8 @@ defineReplace(qtConfEvaluateSingleExpression) {
+@@ -1544,7 +1544,8 @@ defineReplace(qtConfEvaluateSingleExpression) {
                      error("Expression '$$1' is accessing field '$$var' of non-local feature $${feature}.")
                  return($$result)
              }

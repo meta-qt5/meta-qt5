@@ -1,0 +1,29 @@
+From 33299724b8719d53b26c9055a76a61c358270110 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 16 Jan 2018 13:26:57 +0000
+Subject: [PATCH] Link with libexecinfo on musl
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/plugins/debugger/debugger.pro | 1 +
+ 1 file changed, 1 insertion(+)
+
+--- a/src/plugins/debugger/debugger.pro
++++ b/src/plugins/debugger/debugger.pro
+@@ -139,3 +139,4 @@ include(console/console.pri)
+ include(analyzer/analyzer.pri)
+ 
+ include(shared/shared.pri)
++LIBS  *= -lexecinfo
+--- a/src/plugins/qmldesigner/qmldesignerplugin.pro
++++ b/src/plugins/qmldesigner/qmldesignerplugin.pro
+@@ -3,7 +3,7 @@ CONFIG += exceptions
+ 
+ INCLUDEPATH += $$PWD
+ 
+-unix:!openbsd:!osx: LIBS += -lrt # posix shared memory
++unix:!openbsd:!osx: LIBS += -lexecinfo -lrt # posix shared memory
+ 
+ include(../../qtcreatorplugin.pri)
+ 

@@ -1,4 +1,4 @@
-From cda33b76c273faa7d46667d8ebbdbecf12f55b30 Mon Sep 17 00:00:00 2001
+From 5cdbde95e65bf641dda1a74711fd67b3237fb410 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 3 Sep 2017 10:11:50 -0700
 Subject: [PATCH] tst_qlocale: Enable QT_USE_FENV only on glibc
@@ -7,13 +7,13 @@ musl does not have feenableexcept function
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- tests/auto/corelib/tools/qlocale/tst_qlocale.cpp | 2 +-
+ tests/auto/corelib/text/qlocale/tst_qlocale.cpp | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/auto/corelib/tools/qlocale/tst_qlocale.cpp b/tests/auto/corelib/tools/qlocale/tst_qlocale.cpp
-index 230ae4d8aa..24b86bf8d8 100644
---- a/tests/auto/corelib/tools/qlocale/tst_qlocale.cpp
-+++ b/tests/auto/corelib/tools/qlocale/tst_qlocale.cpp
+diff --git a/tests/auto/corelib/text/qlocale/tst_qlocale.cpp b/tests/auto/corelib/text/qlocale/tst_qlocale.cpp
+index 11ba032d82..027aef00fd 100644
+--- a/tests/auto/corelib/text/qlocale/tst_qlocale.cpp
++++ b/tests/auto/corelib/text/qlocale/tst_qlocale.cpp
 @@ -46,7 +46,7 @@
  #include <private/qlocale_tools_p.h>
  #include <qnumeric.h>
