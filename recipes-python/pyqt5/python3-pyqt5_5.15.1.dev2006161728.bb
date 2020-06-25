@@ -6,11 +6,11 @@ LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "\
     file://LICENSE;md5=d32239bcb673463ab874e80d47fae504 \
 "
+
 SRC_URI = "\
-    https://www.riverbankcomputing.com/static/Downloads/PyQt5/${PV}/PyQt5-${PV}.tar.gz \
+    https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5-${PV}.tar.gz \
 "
-SRC_URI[md5sum] = "c1023cb9c3d29a89fc109b163a0175c0"
-SRC_URI[sha256sum] = "adc17c077bf233987b8e43ada87d1e0deca9bd71a13e5fd5fc377482ed69c827"
+SRC_URI[sha256sum] = "b29e4771be495018faef9687919395165da49d391c840c4d1a2592c1089ce592"
 
 S = "${WORKDIR}/PyQt5-${PV}"
 
