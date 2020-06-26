@@ -17,13 +17,13 @@ environment: &environment
   instructions:
     - type: EnvironmentVariable
       variableName: POKY_SHA1
-      variableValue: 1adc7478a0548e1ebd75d96d2b938c5852c78365
+      variableValue: febbe2944c0c4a04b85fa98fdc261186115954d8
     - type: EnvironmentVariable
       variableName: OE_SHA1
-      variableValue: daa50331352c1f75da3a8ef6458ae3ddf94ef863
+      variableValue: 8a72d29e0876830ffd96b85d7d0308302eb07a5d
     - type: EnvironmentVariable
       variableName: PYTHON2_SHA1
-      variableValue: 8fc9be701d430388b4c5234c97e623debd26a1df
+      variableValue: e2ef0dd8fa13d6b96e44773b09d07e4817d0a44d
     - type: EnvironmentVariable
       variableName: MACHINE
       variableValue: qemuarm64
@@ -57,6 +57,8 @@ build_instructions:
     fileContents: |
       # https://github.com/shr-project/jenkins-jobs/blob/master/jenkins-job.sh
       INHERIT += "reproducible_build_simple"
+      # need space for dunfell build
+      INHERIT += "rm_work"
       # We want musl and glibc to share the same tmpfs, so instead of appending default "-${TCLIBC}" we append "fs"
       TCLIBCAPPEND = "fs"
       PREFERRED_PROVIDER_udev = "systemd"
@@ -95,8 +97,6 @@ build_instructions:
       RDEPENDS_${PN}-dbg_pn-x11-common = ""
       # to fix apm, fso-apm conflict in shr-image-all
       VIRTUAL-RUNTIME_apm = "fso-apm"
-      # remove qtwebkit-dev
-      USE_RUBY = ""
       # require conf/distro/include/qt5-versions.inc
       # QT5_VERSION = "5.4.0+git%"
       # for qtwebkit etc
