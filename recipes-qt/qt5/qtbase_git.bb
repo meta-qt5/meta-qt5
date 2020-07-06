@@ -27,7 +27,6 @@ SRC_URI += "\
     file://0009-Add-OE-specific-specs-for-clang-compiler.patch \
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
-    file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
     file://0013-Disable-ltcg-for-host_build.patch \
     file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
@@ -295,4 +294,4 @@ sed -i \
     $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
 }
 
-SRCREV = "de6e92e26a49de4942f006c2e70f11d1dbf600d6"
+SRCREV = "81ce2d1d6fa741de4d27b939a378147a02019ec1"
