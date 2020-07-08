@@ -1,4 +1,4 @@
-From 9e2ef02c25fedb6faad0d26ba2273297918f6399 Mon Sep 17 00:00:00 2001
+From d5eb24a355d98c8961ce4b89e0622001480f7c90 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Tue, 10 Jan 2017 15:28:26 +0200
 Subject: [PATCH] Use external host bin path for cmake file
@@ -14,7 +14,7 @@ Change-Id: Idb814be705e9cbaad7f1e68b5d7cdb79c4b65008
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/scxml/Qt5ScxmlConfigExtras.cmake.in b/src/scxml/Qt5ScxmlConfigExtras.cmake.in
-index edb320a..ce7f2df 100644
+index b9b589f..bb52533 100644
 --- a/src/scxml/Qt5ScxmlConfigExtras.cmake.in
 +++ b/src/scxml/Qt5ScxmlConfigExtras.cmake.in
 @@ -40,7 +40,7 @@ if (NOT TARGET Qt5::qscxmlc)

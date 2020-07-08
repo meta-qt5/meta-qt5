@@ -163,7 +163,8 @@ build_instructions:
 
       # EXCLUDE_FROM_WORLD
       rm -f ${SOURCE_DIR}/recipes-qt/examples/qt5-opengles2-test_git.bb
-
+      rm -r ${SOURCE_DIR}/recipes-python/pyqt5/python3-pyqt5_5.15.1.dev2006161728.bb
+      rm -r ${SOURCE_DIR}/recipes-python/pyqtchart/python3-pyqtchart_5.13.1.bb
       bitbake $(find ${SOURCE_DIR} -name *.bb | xargs -n1 basename | sed -e 's/\([^._]*\).*/\1/')
     filename: "{{.BuildDir}}/start-build"
     fileMode: 420

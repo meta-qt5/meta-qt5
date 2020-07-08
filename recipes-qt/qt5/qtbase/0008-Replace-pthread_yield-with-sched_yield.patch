@@ -1,4 +1,4 @@
-From fbe7fd996b86c087d64864bcce154d382701ab6f Mon Sep 17 00:00:00 2001
+From c4393e037ebfc6bfa1a58ceab29fdb78389cd47e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 27 Jul 2017 08:02:51 -0700
 Subject: [PATCH] Replace pthread_yield with sched_yield
@@ -36,7 +36,7 @@ index 19b3289390..4d0cdf8b5f 100644
              QMetaType info(tp);
              if (!info.isValid()) {
 diff --git a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
-index 099aa5fb51..c2d310458e 100644
+index 6dd390ccbd..43b92606d9 100644
 --- a/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
 +++ b/tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp
 @@ -78,6 +78,7 @@

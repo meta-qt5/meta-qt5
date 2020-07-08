@@ -1,4 +1,4 @@
-From e1c8cf94727583c666efe3e6852fa60fba9a652b Mon Sep 17 00:00:00 2001
+From 2f3274c8dac49eeefa1f32b73328fabd037082c6 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 6 Oct 2019 21:44:38 -0700
 Subject: [PATCH] tst_seatv4: Include <array>

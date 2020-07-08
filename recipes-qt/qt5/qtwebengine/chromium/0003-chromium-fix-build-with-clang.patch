@@ -1,4 +1,4 @@
-From 9452a795feb5891cd099419783a18550c4e03146 Mon Sep 17 00:00:00 2001
+From d3889654a28d901d345cae8fc8ec23988a085dab Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 2 Feb 2019 19:28:59 -0800
 Subject: [PATCH] chromium: fix build with clang

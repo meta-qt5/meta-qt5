@@ -1,4 +1,4 @@
-From f2324ba65bb667108a8ad2f08bc4e4b08253e38b Mon Sep 17 00:00:00 2001
+From db1700a72d62f7b8686f94cf262d96171c298f5f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Sun, 14 Apr 2019 13:27:58 +0200
 Subject: [PATCH] Avoid renameeat2 for native(sdk) builds
@@ -46,7 +46,7 @@ index b3daf43c04..e1df2ac580 100644
  # define QT_FEATURE_statx -1
  #endif
 diff --git a/src/corelib/io/qfilesystemengine_unix.cpp b/src/corelib/io/qfilesystemengine_unix.cpp
-index eaf4e2d9af..63f2f8ecb3 100644
+index 67cff7c68c..86e45320d5 100644
 --- a/src/corelib/io/qfilesystemengine_unix.cpp
 +++ b/src/corelib/io/qfilesystemengine_unix.cpp
 @@ -1435,16 +1435,6 @@ bool QFileSystemEngine::renameFile(const QFileSystemEntry &source, const QFileSy

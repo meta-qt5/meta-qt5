@@ -1,4 +1,4 @@
-From d39e76b9662ea9cf236ac59749855e7da7ad29a8 Mon Sep 17 00:00:00 2001
+From cd88a299fa46b2a1be2dbdbda7d6abd77e4edb23 Mon Sep 17 00:00:00 2001
 From: Piotr Tworek <tworaz@tworaz.net>
 Date: Wed, 3 Jul 2019 01:13:40 +0200
 Subject: [PATCH] Use OE_QMAKE_PATH_EXTERNAL_HOST_BINS to locate qmlcachegen
@@ -14,7 +14,7 @@ Signed-off-by: Piotr Tworek <tworaz@tworaz.net>
  1 file changed, 1 insertion(+), 5 deletions(-)
 
 diff --git a/tools/qmlcachegen/Qt5QuickCompilerConfig.cmake.in b/tools/qmlcachegen/Qt5QuickCompilerConfig.cmake.in
-index 75fbb0fcf3..1e949cd40c 100644
+index be2113b258..ce28345cad 100644
 --- a/tools/qmlcachegen/Qt5QuickCompilerConfig.cmake.in
 +++ b/tools/qmlcachegen/Qt5QuickCompilerConfig.cmake.in
 @@ -18,11 +18,7 @@ function(QTQUICK_COMPILER_ADD_RESOURCES outfiles)
