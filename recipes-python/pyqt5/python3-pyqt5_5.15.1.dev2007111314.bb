@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "\
 SRC_URI = "\
     https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5-${PV}.tar.gz \
 "
-SRC_URI[sha256sum] = "b29e4771be495018faef9687919395165da49d391c840c4d1a2592c1089ce592"
+SRC_URI[sha256sum] = "d0bbefff23a29c64d8fd9378389f54462029425a6765619843a2b6fc44cb167e"
 
 S = "${WORKDIR}/PyQt5-${PV}"
 
