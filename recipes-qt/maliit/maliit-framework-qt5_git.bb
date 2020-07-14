@@ -75,13 +75,11 @@ do_install_append() {
     install -m 644 ${WORKDIR}/maliit-server.desktop ${D}${datadir}/applications
 }
 
-pkg_postinst_${PN} () {
+pkg_postinst_ontarget_${PN} () {
 #!/bin/sh
 # should run online
-if [ "x$D" = "x" ]; then
-    echo "export QT_IM_MODULE=Maliit" >> /etc/xprofile
-    ln -s /usr/share/applications/maliit-server.desktop /etc/xdg/autostart/maliit-server.desktop
-fi
+echo "export QT_IM_MODULE=Maliit" >> /etc/xprofile
+ln -s /usr/share/applications/maliit-server.desktop /etc/xdg/autostart/maliit-server.desktop
 }
 
 pkg_postrm_${PN} () {
