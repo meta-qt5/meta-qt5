@@ -5,13 +5,13 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c"
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
-SRCREV = "3581a6e85561da85858e1b90bef9be88b87acc4d"
+SRCREV = "4eec0c726844b8293eeab7312c96956a77d40e90"
 SRC_URI = "git://git.merproject.org/mer-core/libqofono.git \
            file://0001-also-emit-modemRemoved-and-modemAdded.patch \
 "
 S = "${WORKDIR}/git"
 
-PV = "0.98+gitr${SRCPV}"
+PV = "0.100+gitr${SRCPV}"
 
 inherit qmake5
 
