@@ -18,13 +18,13 @@ DEPENDS += "qtbase qtscript qtxmlpatterns qtx11extras qtdeclarative qttools qtto
 DEPENDS_append_toolchain-clang = " clang llvm-common"
 DEPENDS_append_libc-musl = " libexecinfo"
 
-SRCREV = "9e057a55368286058023510efc328f68250ecb5e"
-PV = "4.12.0+git${SRCPV}"
-
+SRCREV = "501e7c2fddec6b93e273dadcac389cd8c934cf00"
+PV = "4.12.4+4.13.0+git${SRCPV}"
 # Patches from https://github.com/meta-qt5/qtcreator/commits/b4.9.2
 # 4.9.2.meta-qt5.1
 SRC_URI = " \
-    git://code.qt.io/qt-creator/qt-creator.git;branch=4.12 \
+    git://code.qt.io/qt-creator/qt-creator.git;branch=4.13 \
+    file://0001-app-Use-malloc_trim-only-on-glibc.patch \
 "
 SRC_URI_append_libc-musl = " file://0001-Link-with-libexecinfo-on-musl.patch"
 
@@ -41,10 +41,10 @@ do_configure_append() {
     # Find native tools
     sed -i 's:${STAGING_BINDIR}.*/qdoc:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qdoc:g' ${B}/Makefile
     if [ -e ${B}/share/qtcreator/translations/Makefile ]; then
-        sed -i 's:${STAGING_BINDIR}.*/lrelease:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lrelease:g' ${B}/share/qtcreator/translations/Makefile
-        sed -i 's:${STAGING_BINDIR}.*/lupdate:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lupdate:g' ${B}/share/qtcreator/translations/Makefile
-        sed -i 's:${STAGING_BINDIR}.*/xmlpatterns:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/xmlpatterns:g' ${B}/share/qtcreator/translations/Makefile
-        sed -i 's:${STAGING_BINDIR}.*/lconvert:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lconvert:g' ${B}/share/qtcreator/translations/Makefile
+        sed -i 's:${STAGING_BINDIR}/lrelease:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lrelease:g' ${B}/share/qtcreator/translations/Makefile
+        sed -i 's:${STAGING_BINDIR}/lupdate:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lupdate:g' ${B}/share/qtcreator/translations/Makefile
+        sed -i 's:${STAGING_BINDIR}/xmlpatterns:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/xmlpatterns:g' ${B}/share/qtcreator/translations/Makefile
+        sed -i 's:${STAGING_BINDIR}/lconvert:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/lconvert:g' ${B}/share/qtcreator/translations/Makefile
     fi
 }
 
