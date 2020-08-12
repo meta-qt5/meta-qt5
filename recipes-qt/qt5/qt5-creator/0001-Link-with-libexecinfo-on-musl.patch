@@ -11,16 +11,16 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 
 --- a/src/plugins/debugger/debugger.pro
 +++ b/src/plugins/debugger/debugger.pro
-@@ -139,3 +139,4 @@ include(console/console.pri)
+@@ -140,3 +140,4 @@ include(console/console.pri)
  include(analyzer/analyzer.pri)
  
  include(shared/shared.pri)
 +LIBS  *= -lexecinfo
 --- a/src/plugins/qmldesigner/qmldesignerplugin.pro
 +++ b/src/plugins/qmldesigner/qmldesignerplugin.pro
-@@ -3,7 +3,7 @@ CONFIG += exceptions
- 
+@@ -4,7 +4,7 @@ CONFIG += exceptions
  INCLUDEPATH += $$PWD
+ INCLUDEPATH += $$PWD/components
  
 -unix:!openbsd:!osx: LIBS += -lrt # posix shared memory
 +unix:!openbsd:!osx: LIBS += -lexecinfo -lrt # posix shared memory
