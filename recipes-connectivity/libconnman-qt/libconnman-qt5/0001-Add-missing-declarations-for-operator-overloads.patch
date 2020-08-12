@@ -1,0 +1,31 @@
+From 09fcee5c5750a3345e4378cd462cbb9aeba5e269 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 11 Aug 2020 22:20:17 -0700
+Subject: [PATCH] Add missing declarations for operator overloads
+
+This fixes clang-11 errors e.g.
+
+| ../../recipe-sysroot/usr/include/QtDBus/qdbusargument.h:276:13: error: invalid operands to binary expression ('const QDBusArgument' and 'RouteStructure')
+|         arg >> item;
+|         ~~~ ^  ~~~~
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ libconnman-qt/marshalutils.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+--- a/libconnman-qt/marshalutils.cpp
++++ b/libconnman-qt/marshalutils.cpp
+@@ -36,6 +36,11 @@
+ 
+ #include "marshalutils.h"
+ 
++#if defined(__clang__) &&  __clang_major__ >= 11
++Q_DBUS_EXPORT const QDBusArgument &operator>>(const QDBusArgument &a, RouteStructure &v);
++Q_DBUS_EXPORT QDBusArgument &operator<<(QDBusArgument &a, const RouteStructure &v);
++#endif
++
+ // Empty namespace for local static functions
+ namespace {
+ 
