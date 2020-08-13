@@ -172,6 +172,8 @@ QT_CONFIG_FLAGS_GOLD = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', '-
 QT_CONFIG_FLAGS_GOLD = "-no-use-gold-linker"
 LDFLAGS_append = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
+LDFLAGS_append_riscv64 = " -pthread"
+
 QT_CONFIG_FLAGS += " \
     ${QT_CONFIG_FLAGS_GOLD} \
     -shared \
