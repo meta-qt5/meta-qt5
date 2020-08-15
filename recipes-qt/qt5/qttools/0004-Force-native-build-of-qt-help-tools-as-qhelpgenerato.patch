@@ -1,0 +1,32 @@
+From 88c20560720693b6b30d48af748ab232238f9ac8 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Fri, 14 Aug 2020 21:25:27 +0200
+Subject: [PATCH] Force native build of qt-help tools as qhelpgenerato
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstrem-Statu: Inappropriate [embedded specific]
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ src/assistant/assistant.pro | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/src/assistant/assistant.pro b/src/assistant/assistant.pro
+index d34b5590..7d87ac48 100644
+--- a/src/assistant/assistant.pro
++++ b/src/assistant/assistant.pro
+@@ -14,9 +14,3 @@ SUBDIRS += \
+ 
+ assistant.depends = help
+ qhelpgenerator.depends = help
+-
+-qtNomakeTools( \
+-    assistant \
+-    qhelpgenerator \
+-    qcollectiongenerator \
+-)
+-- 
+2.26.2
+
