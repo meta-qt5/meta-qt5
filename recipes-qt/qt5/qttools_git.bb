@@ -19,6 +19,7 @@ SRC_URI += " \
     file://0002-linguist-tools-cmake-allow-overriding-the-location-f.patch \
     file://0003-src.pro-Add-option-noqdoc-to-disable-qdoc-builds.patch \
 "
+SRC_URI_append_class-native = " ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'file://0004-Force-native-build-of-qt-help-tools-as-qhelpgenerato.patch', '', d)}"
 
 FILES_${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
 FILES_${PN}-examples = "${datadir}${QT_DIR_NAME}/examples"
@@ -36,7 +37,7 @@ export YOCTO_ALTERNATE_EXE_PATH = "${STAGING_BINDIR}/llvm-config"
 
 EXTRA_QMAKEVARS_PRE += " \
     ${@bb.utils.contains('PACKAGECONFIG', 'qtwebkit', '', 'CONFIG+=noqtwebkit', d)} \
-    ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=disable_external_rpath', 'CONFIG+=noqdoc', d)} \
+    ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'CONFIG+=disable_external_rpath CONFIG+=assistant', 'CONFIG+=noqdoc', d)} \
 "
 SRCREV = "6a85b6150554111f7d473d56addfe5a8b5da4400"
 
