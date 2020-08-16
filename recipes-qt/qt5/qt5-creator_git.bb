@@ -15,7 +15,6 @@ LIC_FILES_CHKSUM = " \
 inherit qmake5 mime-xdg
 
 DEPENDS += "qtbase qtscript qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native zlib"
-DEPENDS_append_toolchain-clang = " clang llvm-common"
 DEPENDS_append_libc-musl = " libexecinfo"
 
 SRCREV = "9e057a55368286058023510efc328f68250ecb5e"
@@ -34,6 +33,13 @@ EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 
 EXTRANATIVEPATH += "chrpath-native"
 
+PACKAGECONFIG ??= ""
+PACKAGECONFIG_append_toolchain-clang = " clang"
+
+# Important note: In case clang was added to qttools' PACKAGECONFIG, it has to
+# be added here too - otherwise build fails trying to link native clang libraries
+PACKAGECONFIG[clang] = ",,clang llvm-common"
+
 COMPATIBLE_HOST_toolchain-clang_riscv32 = "null"
 COMPATIBLE_HOST_toolchain-clang_riscv64 = "null"
 
@@ -50,11 +56,11 @@ do_configure_append() {
 
 do_install() {
     oe_runmake install INSTALL_ROOT=${D}${prefix}
-}
-do_install_append_toolchain-clang () {
-    # Remove RPATHs embedded in bins
-    chrpath --delete ${D}${libdir}/qtcreator/plugins/libClang*
-    chrpath --delete ${D}${libexecdir}/qtcreator/clang*
+    if [ "${@bb.utils.contains("PACKAGECONFIG", "clang", "1", "0", d)}" = "1" ]; then
+        # Remove RPATHs embedded in bins
+        chrpath --delete ${D}${libdir}/qtcreator/plugins/libClang*
+        chrpath --delete ${D}${libexecdir}/qtcreator/clang*
+    fi
 }
 
 FILES_${PN} += " \
