@@ -50,7 +50,7 @@ index 97073f09787..5d293ca628d 100644
  # You can depend on the individually if you need to.
  group("icu") {
 @@ -1137,7 +1147,7 @@ config("system_icu_config") {
-   ]
+   }
  }
  
 -if (use_system_icu) {
