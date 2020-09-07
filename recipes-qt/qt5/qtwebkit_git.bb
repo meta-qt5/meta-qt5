@@ -16,6 +16,7 @@ SRC_URI += "\
     file://0003-Fix-build-with-non-glibc-libc-on-musl.patch \
     file://0004-Fix-build-bug-for-armv32-BE.patch \
     file://0005-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
+    file://0006-Fix-build-with-bison37.patch \
 "
 
 inherit cmake_qt5 perlnative
