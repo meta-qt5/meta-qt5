@@ -1,4 +1,4 @@
-From 5b501d5335008e32bd5a62e48a675c8fc61194a9 Mon Sep 17 00:00:00 2001
+From bbb23eb876e1f4500e7c8fd716a73351ad660725 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:09:06 -0700
 Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux

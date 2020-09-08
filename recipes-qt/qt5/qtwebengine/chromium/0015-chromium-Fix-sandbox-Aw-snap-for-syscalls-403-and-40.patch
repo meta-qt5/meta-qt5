@@ -1,7 +1,7 @@
-From 18d864774916865ec44ccd011a4caf730943f0e9 Mon Sep 17 00:00:00 2001
+From 5aa69767be0fbbc7a3a5075c6c94366a535c99a8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Mon, 20 Apr 2020 23:56:48 +0200
-Subject: [PATCH] Fix sandbox 'Aw, snap' for syscalls 403 and 407
+Subject: [PATCH] chromium: Fix sandbox 'Aw, snap' for syscalls 403 and 407
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -38,18 +38,19 @@ did before glibc 2.31.
 Upstream Status: Pending [Have no idea where to send this]
 
 Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc     | 9 ++++++++-
+ .../sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc | 9 ++++++++-
  .../syscall_parameters_restrictions_unittests.cc         | 6 ++++++
- sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc        | 6 ++++++
- sandbox/linux/system_headers/arm_linux_syscalls.h        | 8 ++++++++
- sandbox/linux/system_headers/mips_linux_syscalls.h       | 8 ++++++++
+ .../sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc    | 6 ++++++
+ .../sandbox/linux/system_headers/arm_linux_syscalls.h    | 8 ++++++++
+ .../sandbox/linux/system_headers/mips_linux_syscalls.h   | 8 ++++++++
  5 files changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc b/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
-index 768025ce1..87025d917 100644
---- a/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
-+++ b/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
+diff --git a/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc b/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
+index 768025ce192..87025d91785 100644
+--- a/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
++++ b/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
 @@ -148,7 +148,14 @@ ResultExpr EvaluateSyscallImpl(int fs_denied_errno,
      return Allow();
  #endif
@@ -66,10 +67,10 @@ index 768025ce1..87025d917 100644
      return RestrictClockID();
    }
  
-diff --git a/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc b/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
-index b6c8c6377..245bc7131 100644
---- a/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
-+++ b/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
+diff --git a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
+index 76193b62c9f..7731c697002 100644
+--- a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
++++ b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
 @@ -60,6 +60,12 @@ class RestrictClockIdPolicy : public bpf_dsl::Policy {
        case __NR_clock_gettime:
        case __NR_clock_getres:
@@ -83,10 +84,10 @@ index b6c8c6377..245bc7131 100644
          return RestrictClockID();
        default:
          return Allow();
-diff --git a/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc b/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
-index d9d18822f..8bc262235 100644
---- a/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
-+++ b/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
+diff --git a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
+index d9d18822f67..0db8745cb57 100644
+--- a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
++++ b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
 @@ -39,6 +39,12 @@ bool SyscallSets::IsAllowedGettime(int sysno) {
                                  // filtered by RestrictClokID().
      case __NR_clock_gettime:    // Parameters filtered by RestrictClockID().
@@ -100,10 +101,10 @@ index d9d18822f..8bc262235 100644
      case __NR_clock_settime:    // Privileged.
  #if defined(__i386__) || \
      (defined(ARCH_CPU_MIPS_FAMILY) && defined(ARCH_CPU_32_BITS))
-diff --git a/sandbox/linux/system_headers/arm_linux_syscalls.h b/sandbox/linux/system_headers/arm_linux_syscalls.h
-index 1addd5384..5de2162f9 100644
---- a/sandbox/linux/system_headers/arm_linux_syscalls.h
-+++ b/sandbox/linux/system_headers/arm_linux_syscalls.h
+diff --git a/chromium/sandbox/linux/system_headers/arm_linux_syscalls.h b/chromium/sandbox/linux/system_headers/arm_linux_syscalls.h
+index 1addd53843c..5de2162f981 100644
+--- a/chromium/sandbox/linux/system_headers/arm_linux_syscalls.h
++++ b/chromium/sandbox/linux/system_headers/arm_linux_syscalls.h
 @@ -1385,6 +1385,14 @@
  #define __NR_memfd_create (__NR_SYSCALL_BASE+385)
  #endif
@@ -119,10 +120,10 @@ index 1addd5384..5de2162f9 100644
  // ARM private syscalls.
  #if !defined(__ARM_NR_BASE)
  #define __ARM_NR_BASE (__NR_SYSCALL_BASE + 0xF0000)
-diff --git a/sandbox/linux/system_headers/mips_linux_syscalls.h b/sandbox/linux/system_headers/mips_linux_syscalls.h
-index ddbf97f3d..fa01b3bbc 100644
---- a/sandbox/linux/system_headers/mips_linux_syscalls.h
-+++ b/sandbox/linux/system_headers/mips_linux_syscalls.h
+diff --git a/chromium/sandbox/linux/system_headers/mips_linux_syscalls.h b/chromium/sandbox/linux/system_headers/mips_linux_syscalls.h
+index ddbf97f3d8b..fa01b3bbc66 100644
+--- a/chromium/sandbox/linux/system_headers/mips_linux_syscalls.h
++++ b/chromium/sandbox/linux/system_headers/mips_linux_syscalls.h
 @@ -1433,4 +1433,12 @@
  #define __NR_memfd_create (__NR_Linux + 354)
  #endif
@@ -136,6 +137,3 @@ index ddbf97f3d..fa01b3bbc 100644
 +#endif
 +
  #endif  // SANDBOX_LINUX_SYSTEM_HEADERS_MIPS_LINUX_SYSCALLS_H_
--- 
-2.21.1
-

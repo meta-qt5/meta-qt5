@@ -1,4 +1,4 @@
-From f2ff87552f0f2f576bda05f7ccf5855c005ed7b0 Mon Sep 17 00:00:00 2001
+From 7cf2404330f7888f3cc8a25becfe944cc2fc421e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:38:37 -0700
 Subject: [PATCH] chromium: musl: use off64_t instead of the internal __off64_t

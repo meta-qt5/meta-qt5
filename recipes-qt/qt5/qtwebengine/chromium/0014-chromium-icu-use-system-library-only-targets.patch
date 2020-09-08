@@ -1,7 +1,7 @@
-From fe811323fbe787264b15b83d027947926477f0c2 Mon Sep 17 00:00:00 2001
+From 8c9a4027426b0a2c56cc834da0dbad5b8378c2c6 Mon Sep 17 00:00:00 2001
 From: Andrej Valek <andrej.valek@siemens.com>
 Date: Fri, 17 Apr 2020 09:43:32 +0200
-Subject: [PATCH] icu: use system library only targets
+Subject: [PATCH] chromium: icu: use system library only targets
 
  - use bundled one for native/v8 internal builds
 
@@ -14,14 +14,15 @@ native artifacts. So external system ICU linking is not
 needed.
 
 Signed-off-by: Andrej Valek <andrej.valek@siemens.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- src/3rdparty/chromium/third_party/icu/BUILD.gn | 18 ++++++++++++++----
+ chromium/third_party/icu/BUILD.gn | 18 ++++++++++++++----
  1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/src/3rdparty/chromium/third_party/icu/BUILD.gn b/src/3rdparty/chromium/third_party/icu/BUILD.gn
-index 97073f09787..5d293ca628d 100644
---- a/src/3rdparty/chromium/third_party/icu/BUILD.gn
-+++ b/src/3rdparty/chromium/third_party/icu/BUILD.gn
+diff --git a/chromium/third_party/icu/BUILD.gn b/chromium/third_party/icu/BUILD.gn
+index 023d6e13a2c..312f34d6186 100644
+--- a/chromium/third_party/icu/BUILD.gn
++++ b/chromium/third_party/icu/BUILD.gn
 @@ -7,9 +7,13 @@ import("//build/config/host_byteorder.gni")
  import("//build/config/linux/pkg_config.gni")
  import("//build/shim_headers.gni")
@@ -49,7 +50,7 @@ index 97073f09787..5d293ca628d 100644
  # Meta target that includes both icuuc and icui18n. Most targets want both.
  # You can depend on the individually if you need to.
  group("icu") {
-@@ -1137,7 +1147,7 @@ config("system_icu_config") {
+@@ -1207,7 +1217,7 @@ config("system_icu_config") {
    }
  }
  
@@ -58,7 +59,7 @@ index 97073f09787..5d293ca628d 100644
    pkg_config("system_icui18n") {
      packages = [ "icu-i18n" ]
    }
-@@ -1346,7 +1356,7 @@ shim_headers("icuuc_shim") {
+@@ -1420,7 +1430,7 @@ shim_headers("icuuc_shim") {
  }
  
  config("icu_config") {
@@ -67,7 +68,7 @@ index 97073f09787..5d293ca628d 100644
      configs = [ ":system_icu_config"]
    } else {
      configs = [ ":bundled_icu_config"]
-@@ -1354,7 +1364,7 @@ config("icu_config") {
+@@ -1428,7 +1438,7 @@ config("icu_config") {
  }
  
  group("icuuc") {
@@ -76,7 +77,7 @@ index 97073f09787..5d293ca628d 100644
      deps = [ ":icuuc_shim" ]
      public_configs = [
        ":system_icu_config",
-@@ -1366,7 +1376,7 @@ group("icuuc") {
+@@ -1440,7 +1450,7 @@ group("icuuc") {
  }
  
  group("icui18n") {
@@ -85,6 +86,3 @@ index 97073f09787..5d293ca628d 100644
      deps = [ ":icui18n_shim" ]
      public_configs = [
        ":system_icu_config",
--- 
-2.20.1
-

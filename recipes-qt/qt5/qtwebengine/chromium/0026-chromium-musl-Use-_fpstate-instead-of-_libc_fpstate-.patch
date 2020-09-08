@@ -1,4 +1,4 @@
-From 2150bb364442a2a352fff1f915c387f4dc37bdef Mon Sep 17 00:00:00 2001
+From ae4187267b4d0d2ff13a6593b69ca06cee321eea Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 25 Sep 2018 12:35:07 -0700
 Subject: [PATCH] chromium: musl: Use _fpstate instead of _libc_fpstate on
