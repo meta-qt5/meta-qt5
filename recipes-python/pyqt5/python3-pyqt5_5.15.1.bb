@@ -7,10 +7,8 @@ LIC_FILES_CHKSUM = "\
     file://LICENSE;md5=d32239bcb673463ab874e80d47fae504 \
 "
 
-SRC_URI = "\
-    https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5-${PV}.tar.gz \
-"
-SRC_URI[sha256sum] = "c677f538eb52140d454b158f8916f9949737c6a31397606ddf91f4aa569f6cc4"
+SRC_URI = "https://files.pythonhosted.org/packages/1d/31/896dc3dfb6c81c70164019a6cbba6ab037e3af7653d9ca60ccc874ee4c27/PyQt5-${PV}.tar.gz"
+SRC_URI[sha256sum] = "d9a76b850246d08da9863189ecb98f6c2aa9b4d97a3e85e29330a264aed0f9a1"
 
 S = "${WORKDIR}/PyQt5-${PV}"
 
