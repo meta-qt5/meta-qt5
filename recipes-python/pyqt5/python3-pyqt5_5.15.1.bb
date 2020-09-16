@@ -1,13 +1,17 @@
 SUMMARY = "Python Qt5 Bindings"
 AUTHOR = "Phil Thomson @ riverbank.co.uk"
-HOMEPAGE = "http://riverbankcomputing.co.uk"
+HOMEPAGE = "https://www.riverbankcomputing.com/software/pyqt"
 SECTION = "devel/python"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "\
     file://LICENSE;md5=d32239bcb673463ab874e80d47fae504 \
 "
 
-SRC_URI = "https://files.pythonhosted.org/packages/1d/31/896dc3dfb6c81c70164019a6cbba6ab037e3af7653d9ca60ccc874ee4c27/PyQt5-${PV}.tar.gz"
+inherit pypi
+
+PYPI_PACKAGE = "PyQt5"
+
+SRC_URI[md5sum] = "b60f895e70d31d774e6cd374efd17c65"
 SRC_URI[sha256sum] = "d9a76b850246d08da9863189ecb98f6c2aa9b4d97a3e85e29330a264aed0f9a1"
 
 S = "${WORKDIR}/PyQt5-${PV}"
