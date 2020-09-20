@@ -1,0 +1,139 @@
+From 5aa69767be0fbbc7a3a5075c6c94366a535c99a8 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Mon, 20 Apr 2020 23:56:48 +0200
+Subject: [PATCH] chromium: Fix sandbox 'Aw, snap' for syscalls 403 and 407
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Taken as is from meta-browser. Saw my application freeze for syscall 0407
+trouble:
+
+| ../../../../git/src/3rdparty/chromium/sandbox/linux/seccomp-bpf-helpers/sigsys_handlers.cc:**CRASHING**:seccomp-bpf failure in syscall 0407
+
+Original commit message:
+
+* syscall 403: reported by ArchLinux users [1-2]
+* syscall 407: reported by me [3]
+
+Looking at [4-5] it seems that glibc (>=2.31?) introduced extra syscalls for
+32Bit systems to handle time64:
+
+* __NR_clock_gettime -> __NR_clock_gettime64
+* __NR_clock_nanosleep -> __NR_clock_nanosleep_time64
+
+To fix
+| ../../sandbox/linux/seccomp-bpf-helpers/sigsys_handlers.cc:**CRASHING**:seccomp-bpf failure in syscall 0403
+| ../../sandbox/linux/seccomp-bpf-helpers/sigsys_handlers.cc:**CRASHING**:seccomp-bpf failure in syscall 0407
+
+we handle new systemcalls in the same way as 64bit systems do and 32bit systems
+did before glibc 2.31.
+
+[1] https://bugs.archlinux32.org/index.php?do=details&task_id=105
+[2] https://bbs.archlinux32.org/viewtopic.php?id=2897
+[3] https://github.com/OSSystems/meta-browser/issues/357
+[4] https://sourceware.org/git/?p=glibc.git;a=commit;h=2e44b10b42d68d9887ccab17b76db5d7bbae4fb6
+[5] https://github.com/bminor/glibc/blob/019d828669df966dc4ef2684fce0b1c17bef9aae/sysdeps/unix/sysv/linux/clock_gettime.c#L30
+
+Upstream Status: Pending [Have no idea where to send this]
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ .../sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc | 9 ++++++++-
+ .../syscall_parameters_restrictions_unittests.cc         | 6 ++++++
+ .../sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc    | 6 ++++++
+ .../sandbox/linux/system_headers/arm_linux_syscalls.h    | 8 ++++++++
+ .../sandbox/linux/system_headers/mips_linux_syscalls.h   | 8 ++++++++
+ 5 files changed, 36 insertions(+), 1 deletion(-)
+
+diff --git a/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc b/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
+index 768025ce192..87025d91785 100644
+--- a/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
++++ b/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
+@@ -148,7 +148,14 @@ ResultExpr EvaluateSyscallImpl(int fs_denied_errno,
+     return Allow();
+ #endif
+ 
+-  if (sysno == __NR_clock_gettime || sysno == __NR_clock_nanosleep) {
++  if (sysno == __NR_clock_gettime || sysno == __NR_clock_nanosleep
++#if defined(__NR_clock_gettime64)
++                                  || sysno == __NR_clock_gettime64
++#endif
++#if defined(__NR_clock_nanosleep_time64)
++                                  || sysno == __NR_clock_nanosleep_time64
++#endif
++  ) {
+     return RestrictClockID();
+   }
+ 
+diff --git a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
+index 76193b62c9f..7731c697002 100644
+--- a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
++++ b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
+@@ -60,6 +60,12 @@ class RestrictClockIdPolicy : public bpf_dsl::Policy {
+       case __NR_clock_gettime:
+       case __NR_clock_getres:
+       case __NR_clock_nanosleep:
++#if defined(__NR_clock_nanosleep_time64)
++      case __NR_clock_nanosleep_time64:
++#endif
++#if defined(__NR_clock_gettime64)
++      case __NR_clock_gettime64:
++#endif
+         return RestrictClockID();
+       default:
+         return Allow();
+diff --git a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
+index d9d18822f67..0db8745cb57 100644
+--- a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
++++ b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
+@@ -39,6 +39,12 @@ bool SyscallSets::IsAllowedGettime(int sysno) {
+                                 // filtered by RestrictClokID().
+     case __NR_clock_gettime:    // Parameters filtered by RestrictClockID().
+     case __NR_clock_nanosleep:  // Parameters filtered by RestrictClockID().
++#if defined(__NR_clock_gettime64)
++    case __NR_clock_gettime64:  // Parameters filtered by RestrictClockID().
++#endif
++#if defined(__NR_clock_nanosleep_time64)
++    case __NR_clock_nanosleep_time64:  // Parameters filtered by RestrictClockID().
++#endif
+     case __NR_clock_settime:    // Privileged.
+ #if defined(__i386__) || \
+     (defined(ARCH_CPU_MIPS_FAMILY) && defined(ARCH_CPU_32_BITS))
+diff --git a/chromium/sandbox/linux/system_headers/arm_linux_syscalls.h b/chromium/sandbox/linux/system_headers/arm_linux_syscalls.h
+index 1addd53843c..5de2162f981 100644
+--- a/chromium/sandbox/linux/system_headers/arm_linux_syscalls.h
++++ b/chromium/sandbox/linux/system_headers/arm_linux_syscalls.h
+@@ -1385,6 +1385,14 @@
+ #define __NR_memfd_create (__NR_SYSCALL_BASE+385)
+ #endif
+ 
++#if !defined(__NR_clock_gettime64)
++#define __NR_clock_gettime64 (__NR_SYSCALL_BASE+403)
++#endif
++
++#if !defined(__NR_clock_nanosleep_time64)
++#define __NR_clock_nanosleep_time64 (__NR_SYSCALL_BASE+407)
++#endif
++
+ // ARM private syscalls.
+ #if !defined(__ARM_NR_BASE)
+ #define __ARM_NR_BASE (__NR_SYSCALL_BASE + 0xF0000)
+diff --git a/chromium/sandbox/linux/system_headers/mips_linux_syscalls.h b/chromium/sandbox/linux/system_headers/mips_linux_syscalls.h
+index ddbf97f3d8b..fa01b3bbc66 100644
+--- a/chromium/sandbox/linux/system_headers/mips_linux_syscalls.h
++++ b/chromium/sandbox/linux/system_headers/mips_linux_syscalls.h
+@@ -1433,4 +1433,12 @@
+ #define __NR_memfd_create (__NR_Linux + 354)
+ #endif
+ 
++#if !defined(__NR_clock_gettime64)
++#define __NR_clock_gettime64 (__NR_Linux + 403)
++#endif
++
++#if !defined(__NR_clock_nanosleep_time64)
++#define __NR_clock_nanosleep_time64 (__NR_Linux + 407)
++#endif
++
+ #endif  // SANDBOX_LINUX_SYSTEM_HEADERS_MIPS_LINUX_SYSCALLS_H_
