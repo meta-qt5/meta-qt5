@@ -17,8 +17,8 @@ inherit qmake5 mime-xdg
 DEPENDS += "qtbase qtscript qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native zlib"
 DEPENDS_append_libc-musl = " libexecinfo"
 
-SRCREV = "501e7c2fddec6b93e273dadcac389cd8c934cf00"
-PV = "4.12.4+4.13.0+git${SRCPV}"
+SRCREV = "1da2c1f7666ced45d6eea1cd0adfdc68a828e3a0"
+PV = "4.13.1+git${SRCPV}"
 # Patches from https://github.com/meta-qt5/qtcreator/commits/b4.9.2
 # 4.9.2.meta-qt5.1
 SRC_URI = " \
