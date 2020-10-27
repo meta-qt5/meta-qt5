@@ -38,6 +38,7 @@ SRC_URI += "\
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
     file://0017-input-Make-use-of-timeval-portable-for-64bit-time_t.patch \
     file://0018-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
+    file://0019-Define-__NR_futex-if-it-does-not-exist.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
