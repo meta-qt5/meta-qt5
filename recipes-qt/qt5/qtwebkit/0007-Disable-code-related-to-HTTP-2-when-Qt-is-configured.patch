@@ -1,0 +1,34 @@
+From 32eb0352d98fcf325b0a94a4f7e141d746938a4b Mon Sep 17 00:00:00 2001
+From: Konstantin Tokarev <annulen@yandex.ru>
+Date: Sun, 3 May 2020 18:50:24 +0300
+Subject: [PATCH] Disable code related to HTTP/2 when Qt is configured without SSL support
+
+For enabling HTTP/2 by default we check if Qt uses OpenSSL and its version
+is 1.0.2 or higher via QSslSocket API. While it would be sufficient to
+add guards just there, we are not going to enable HTTP/2 for QT_NO_SSL
+case by default anyway (note that it still can be done in application code).
+
+Change-Id: I77b4a423ff1028725ac2c0953c757dce2db23e05
+---
+Upstream-Status: Backport [https://github.com/qtwebkit/qtwebkit/commit/e7ec14144ce58418d94568c41ac94d4d87969363]
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+ Source/WebCore/platform/network/qt/ResourceRequest.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Source/WebCore/platform/network/qt/ResourceRequest.h b/Source/WebCore/platform/network/qt/ResourceRequest.h
+index 1154d56a0..87e21ec3f 100644
+--- a/Source/WebCore/platform/network/qt/ResourceRequest.h
++++ b/Source/WebCore/platform/network/qt/ResourceRequest.h
+@@ -32,7 +32,7 @@
+ // HTTP/2 is implemented since Qt 5.8, but various QtNetwork bugs make it unusable in browser with Qt < 5.10.1
+ // We also don't enable HTTP/2 for unencrypted connections because of possible compatibility issues; it can be
+ // enabled manually by user application via custom QNAM subclass
+-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 1)
++#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 1) && !defined(QT_NO_SSL)
+ #define USE_HTTP2 1
+ #endif
+ 
+-- 
+2.29.2
+
