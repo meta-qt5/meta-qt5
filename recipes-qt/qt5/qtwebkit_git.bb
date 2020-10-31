@@ -18,6 +18,7 @@ SRC_URI += "\
     file://0005-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
     file://0006-Fix-build-with-bison37.patch \
     file://0007-Disable-code-related-to-HTTP-2-when-Qt-is-configured.patch \
+    file://0008-Fix-compilation-with-Python-3.9-avoid-passing-encodi.patch \
 "
 
 inherit cmake_qt5 perlnative
