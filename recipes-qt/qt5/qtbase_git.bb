@@ -253,7 +253,7 @@ do_install_append() {
 
     echo "" >> $conf
     echo "# default compiler options which can be overwritten from the environment" >> $conf
-    echo "isEmpty(QMAKE_AR): QMAKE_AR = ${OE_QMAKE_AR} cqs" >> $conf
+    echo "count(QMAKE_AR, 1): QMAKE_AR = ${OE_QMAKE_AR} cqs" >> $conf
     echo "isEmpty(QMAKE_CC): QMAKE_CC = $OE_QMAKE_CC_NO_SYSROOT" >> $conf
     echo "isEmpty(QMAKE_CXX): QMAKE_CXX = $OE_QMAKE_CXX_NO_SYSROOT" >> $conf
     # OE_QMAKE_CFLAGS and OE_QMAKE_CXXFLAGS contain path of the build host, which is not useful for the target.
