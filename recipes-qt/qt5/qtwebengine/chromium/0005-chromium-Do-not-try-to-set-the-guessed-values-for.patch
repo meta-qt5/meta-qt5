@@ -1,7 +1,8 @@
-From 7cabdbd5f444dc10f4c87ed554792e97a527075b Mon Sep 17 00:00:00 2001
+From 0faac107930255380ea07aa75267153022de2248 Mon Sep 17 00:00:00 2001
 From: Johannes Pointner <johannes.pointner@br-automation.com>
 Date: Fri, 3 May 2019 09:12:38 +0200
 Subject: [PATCH] chromium: Do not try to set the guessed values for
+
  march/mtune/float-abi OE config machinary has computed these values already
  and fed it via compiler cmdline to chromium build
 
@@ -12,15 +13,17 @@ Upstream-Status: Inappropriate [OE-Specific]
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 Signed-off-by: Johannes Pointner <johannes.pointner@br-automation.com>
+
+%% original patch: 0005-chromium-Do-not-try-to-set-the-guessed-values-for-ma.patch
 ---
  chromium/build/config/compiler/BUILD.gn | 9 ---------
  1 file changed, 9 deletions(-)
 
 diff --git a/chromium/build/config/compiler/BUILD.gn b/chromium/build/config/compiler/BUILD.gn
-index 13d71d04030..3ebcf1ddbc3 100644
+index d3c588b21e3..6d49fde33cc 100644
 --- a/chromium/build/config/compiler/BUILD.gn
 +++ b/chromium/build/config/compiler/BUILD.gn
-@@ -780,15 +780,6 @@ config("compiler_cpu_abi") {
+@@ -777,15 +777,6 @@ config("compiler_cpu_abi") {
      } else if (current_cpu == "arm") {
        if (is_clang && !is_android && !is_nacl) {
        }
