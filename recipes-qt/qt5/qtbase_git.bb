@@ -37,6 +37,10 @@ SRC_URI += "\
     file://0019-Define-__NR_futex-if-it-does-not-exist.patch \
 "
 
+# Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
+# next major upgrade of QT
+LTO = ""
+
 # for syncqt
 RDEPENDS_${PN}-tools += "perl"
 
