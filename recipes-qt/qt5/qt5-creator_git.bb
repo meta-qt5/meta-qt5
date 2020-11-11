@@ -97,3 +97,8 @@ INSANE_SKIP_${PN} += "ldflags"
 
 inherit features_check
 REQUIRED_DISTRO_FEATURES ?= "x11 opengl"
+
+python() {
+    if 'meta-python2' not in d.getVar('BBFILE_COLLECTIONS').split():
+        raise bb.parse.SkipRecipe('Requires meta-python2 to be present.')
+}
