@@ -176,6 +176,7 @@ SRC_URI += " \
     file://chromium/0013-chromium-Fix-bison-3.7.patch;patchdir=src/3rdparty \
     file://chromium/0014-chromium-icu-use-system-library-only-targets.patch;patchdir=src/3rdparty \
     file://chromium/0015-chromium-Fix-sandbox-Aw-snap-for-syscalls-403-and-40.patch;patchdir=src/3rdparty \
+    file://chromium/0016-chromium-Fix-compiler-error-emitted-with-clang11.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/80-based
