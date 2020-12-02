@@ -1,0 +1,125 @@
+From 0e94085f74b562bf8edf5418142323785a069454 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
+Date: Wed, 2 Dec 2020 22:34:54 +0100
+Subject: [PATCH] Fix build with icu >= 68
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Pending
+
+Signed-off-by: Andreas Müller <schnitzeltony@gmail.com>
+---
+ Source/WebCore/platform/text/TextCodecICU.cpp     | 15 +++++++++++++++
+ Source/WebCore/platform/text/icu/UTextProvider.h  | 15 +++++++++++++++
+ .../platform/text/icu/UTextProviderLatin1.cpp     | 15 +++++++++++++++
+ .../platform/text/icu/UTextProviderUTF16.cpp      | 15 +++++++++++++++
+ 4 files changed, 60 insertions(+)
+
+diff --git a/Source/WebCore/platform/text/TextCodecICU.cpp b/Source/WebCore/platform/text/TextCodecICU.cpp
+index dd6ff0675..7ce8a70ef 100644
+--- a/Source/WebCore/platform/text/TextCodecICU.cpp
++++ b/Source/WebCore/platform/text/TextCodecICU.cpp
+@@ -39,6 +39,21 @@
+ #include <wtf/text/StringBuilder.h>
+ #include <wtf/unicode/CharacterNames.h>
+ 
++// Since icu 68.1 icu we have to:
++#ifndef TRUE
++// Taken from umachibe.h:
++/**
++ * The TRUE value of a UBool.
++ *
++ * @deprecated ICU 68 Use standard "true" instead.
++ */
++#   define TRUE  true
++#endif
++
++#ifndef FALSE
++#   define FALSE  false
++#endif
++
+ namespace WebCore {
+ 
+ const size_t ConversionBufferSize = 16384;
+diff --git a/Source/WebCore/platform/text/icu/UTextProvider.h b/Source/WebCore/platform/text/icu/UTextProvider.h
+index c254fc4c7..9d2ad8b8c 100644
+--- a/Source/WebCore/platform/text/icu/UTextProvider.h
++++ b/Source/WebCore/platform/text/icu/UTextProvider.h
+@@ -28,6 +28,21 @@
+ 
+ #include <unicode/utext.h>
+ 
++// Since icu 68.1 icu we have to:
++#ifndef TRUE
++// Taken from umachibe.h:
++/**
++ * The TRUE value of a UBool.
++ *
++ * @deprecated ICU 68 Use standard "true" instead.
++ */
++#   define TRUE  true
++#endif
++
++#ifndef FALSE
++#   define FALSE  false
++#endif
++
+ namespace WebCore {
+ 
+ enum class UTextProviderContext {
+diff --git a/Source/WebCore/platform/text/icu/UTextProviderLatin1.cpp b/Source/WebCore/platform/text/icu/UTextProviderLatin1.cpp
+index cd6852c71..0c95ea529 100644
+--- a/Source/WebCore/platform/text/icu/UTextProviderLatin1.cpp
++++ b/Source/WebCore/platform/text/icu/UTextProviderLatin1.cpp
+@@ -29,6 +29,21 @@
+ #include "UTextProvider.h"
+ #include <wtf/text/StringImpl.h>
+ 
++// Since icu 68.1 icu we have to:
++#ifndef TRUE
++// Taken from umachibe.h:
++/**
++ * The TRUE value of a UBool.
++ *
++ * @deprecated ICU 68 Use standard "true" instead.
++ */
++#   define TRUE  true
++#endif
++
++#ifndef FALSE
++#   define FALSE  false
++#endif
++
+ namespace WebCore {
+ 
+ // Latin1 provider
+diff --git a/Source/WebCore/platform/text/icu/UTextProviderUTF16.cpp b/Source/WebCore/platform/text/icu/UTextProviderUTF16.cpp
+index 7aaac48c8..6ac693602 100644
+--- a/Source/WebCore/platform/text/icu/UTextProviderUTF16.cpp
++++ b/Source/WebCore/platform/text/icu/UTextProviderUTF16.cpp
+@@ -28,6 +28,21 @@
+ 
+ #include "UTextProvider.h"
+ 
++// Since icu 68.1 icu we have to:
++#ifndef TRUE
++// Taken from umachibe.h:
++/**
++ * The TRUE value of a UBool.
++ *
++ * @deprecated ICU 68 Use standard "true" instead.
++ */
++#   define TRUE  true
++#endif
++
++#ifndef FALSE
++#   define FALSE  false
++#endif
++
+ namespace WebCore {
+ 
+ // UTF16ContextAware provider
+-- 
+2.26.2
+
