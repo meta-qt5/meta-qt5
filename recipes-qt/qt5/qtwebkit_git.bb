@@ -12,13 +12,11 @@ DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-
 # Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.13
 # 5.13.meta-qt5.1
 SRC_URI += "\
-    file://0002-Do-not-skip-build-for-cross-compile.patch \
-    file://0003-Fix-build-with-non-glibc-libc-on-musl.patch \
-    file://0004-Fix-build-bug-for-armv32-BE.patch \
-    file://0005-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
-    file://0006-Fix-build-with-bison37.patch \
-    file://0007-Disable-code-related-to-HTTP-2-when-Qt-is-configured.patch \
-    file://0008-Fix-compilation-with-Python-3.9-avoid-passing-encodi.patch \
+    file://0001-Do-not-skip-build-for-cross-compile.patch \
+    file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
+    file://0003-Fix-build-bug-for-armv32-BE.patch \
+    file://0004-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
+    file://0005-Riscv-Add-support-for-riscv.patch \
 "
 
 inherit cmake_qt5 perlnative
@@ -48,6 +46,7 @@ CXXFLAGS += "-fpermissive"
 EXTRA_OECMAKE += " \
     -DPORT=Qt \
     -DCROSS_COMPILE=ON \
+    -DCMAKE_BUILD_TYPE=release \
     -DECM_MKSPECS_INSTALL_DIR=${libdir}${QT_DIR_NAME}/mkspecs/modules \
     -DQML_INSTALL_DIR=${OE_QMAKE_PATH_QML} \
     -DPYTHON_EXECUTABLE=`which python3` \
@@ -55,9 +54,11 @@ EXTRA_OECMAKE += " \
 
 EXTRA_OECMAKE_append_toolchain-clang = " -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES:PATH='${STAGING_INCDIR}'"
 
-# JIT not supported on MIPS/PPC
+# JIT not supported on MIPS/PPC/RISCV
 EXTRA_OECMAKE_append_mipsarch = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
 EXTRA_OECMAKE_append_powerpc = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
+EXTRA_OECMAKE_append_riscv64 = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
+
 # Disable gold on mips64/clang
 # mips64-yoe-linux-musl-ld.gold: internal error in get_got_page_offset, at ../../gold/mips.cc:6260
 # mips-yoe-linux-musl-ld.gold: error: Can't find matching LO16 reloc

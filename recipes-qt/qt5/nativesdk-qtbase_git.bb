@@ -36,12 +36,10 @@ SRC_URI += "\
     file://0009-Add-OE-specific-specs-for-clang-compiler.patch \
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
-    file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
     file://0013-Disable-ltcg-for-host_build.patch \
     file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
-    file://0017-input-Make-use-of-timeval-portable-for-64bit-time_t.patch \
     file://0018-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
     file://0019-Define-__NR_futex-if-it-does-not-exist.patch \
 "
@@ -197,4 +195,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "f6fe4bbab7c0a390b96098b1ccf2373547a4baf9"
+SRCREV = "40143c189b7c1bf3c2058b77d00ea5c4e3be8b28"
