@@ -25,10 +25,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/chromium/net/socket/udp_socket_posix.cc b/chromium/net/socket/udp_socket_posix.cc
-index 572472a6993..504fdb5d5c6 100644
+index 7df6892d67e..030ff8896e4 100644
 --- a/chromium/net/socket/udp_socket_posix.cc
 +++ b/chromium/net/socket/udp_socket_posix.cc
-@@ -1190,8 +1190,12 @@ SendResult UDPSocketPosixSender::InternalSendmmsgBuffers(
+@@ -1199,8 +1199,12 @@ SendResult UDPSocketPosixSender::InternalSendmmsgBuffers(
    for (auto& buffer : buffers)
      msg_iov->push_back({const_cast<char*>(buffer->data()), buffer->length()});
    msgvec->reserve(buffers.size());

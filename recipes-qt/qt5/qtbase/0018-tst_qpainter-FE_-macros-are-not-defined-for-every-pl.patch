@@ -1,4 +1,4 @@
-From 557aa4d5584525cca4efcf20d6a86ad3ae99e36b Mon Sep 17 00:00:00 2001
+From 6c9e68cffb15cc1e848ca57ea12d4e5905d46507 Mon Sep 17 00:00:00 2001
 From: Nicola Lunghi <nick83ola@gmail.com>
 Date: Wed, 5 Feb 2020 15:32:25 +0000
 Subject: [PATCH] tst_qpainter: FE_ macros are not defined for every platform
@@ -13,10 +13,10 @@ Upstream-Status: submitted [https://codereview.qt-project.org/c/qt/qtbase/+/2894
  1 file changed, 37 insertions(+), 13 deletions(-)
 
 diff --git a/tests/auto/gui/painting/qpainter/tst_qpainter.cpp b/tests/auto/gui/painting/qpainter/tst_qpainter.cpp
-index 45798cc527..de3f156cae 100644
+index 42e98ce363..0ca9b87f04 100644
 --- a/tests/auto/gui/painting/qpainter/tst_qpainter.cpp
 +++ b/tests/auto/gui/painting/qpainter/tst_qpainter.cpp
-@@ -2894,19 +2894,43 @@ void tst_QPainter::monoImages()
+@@ -2931,19 +2931,43 @@ void tst_QPainter::monoImages()
  #if !defined(Q_OS_AIX) && !defined(Q_CC_MSVC) && !defined(Q_OS_SOLARIS) && !defined(__UCLIBC__)
  #include <fenv.h>
  
@@ -67,7 +67,7 @@ index 45798cc527..de3f156cae 100644
          return QLatin1String("Invalid operation");
      return QLatin1String("No exception");
  }
-@@ -2932,7 +2956,7 @@ private:
+@@ -2969,7 +2993,7 @@ private:
  
  void fpe_rasterizeLine_task232012()
  {
@@ -76,7 +76,7 @@ index 45798cc527..de3f156cae 100644
      QImage img(128, 128, QImage::Format_ARGB32_Premultiplied);
      img.fill(0x0);
      QPainter p(&img);
-@@ -2944,7 +2968,7 @@ void fpe_rasterizeLine_task232012()
+@@ -2981,7 +3005,7 @@ void fpe_rasterizeLine_task232012()
  
  void fpe_pixmapTransform()
  {
@@ -85,7 +85,7 @@ index 45798cc527..de3f156cae 100644
  
      QImage img(128, 128, QImage::Format_ARGB32_Premultiplied);
  
-@@ -2972,7 +2996,7 @@ void fpe_pixmapTransform()
+@@ -3009,7 +3033,7 @@ void fpe_pixmapTransform()
  
  void fpe_zeroLengthLines()
  {
@@ -94,7 +94,7 @@ index 45798cc527..de3f156cae 100644
  
      QImage img(128, 128, QImage::Format_ARGB32_Premultiplied);
  
-@@ -2984,7 +3008,7 @@ void fpe_zeroLengthLines()
+@@ -3021,7 +3045,7 @@ void fpe_zeroLengthLines()
  
  void fpe_divByZero()
  {
@@ -103,7 +103,7 @@ index 45798cc527..de3f156cae 100644
  
      QImage img(128, 128, QImage::Format_ARGB32_Premultiplied);
  
-@@ -3007,7 +3031,7 @@ void fpe_divByZero()
+@@ -3044,7 +3068,7 @@ void fpe_divByZero()
  
  void fpe_steepSlopes()
  {
@@ -112,7 +112,7 @@ index 45798cc527..de3f156cae 100644
  
      QImage img(1024, 1024, QImage::Format_ARGB32_Premultiplied);
  
-@@ -3026,7 +3050,7 @@ void fpe_steepSlopes()
+@@ -3063,7 +3087,7 @@ void fpe_steepSlopes()
  
  void fpe_radialGradients()
  {
