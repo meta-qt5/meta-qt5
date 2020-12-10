@@ -27,12 +27,10 @@ SRC_URI += "\
     file://0009-Add-OE-specific-specs-for-clang-compiler.patch \
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
-    file://0012-mkspecs-common-gcc-base.conf-Use-I-instead-of-isyste.patch \
     file://0013-Disable-ltcg-for-host_build.patch \
     file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
     file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
     file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
-    file://0017-input-Make-use-of-timeval-portable-for-64bit-time_t.patch \
     file://0018-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
     file://0019-Define-__NR_futex-if-it-does-not-exist.patch \
 "
@@ -60,6 +58,7 @@ PACKAGECONFIG_DEFAULT ?= "accessibility dbus udev evdev widgets tools libs freet
     ${@bb.utils.contains('SELECTED_OPTIMIZATION', '-Os', 'optimize-size ltcg', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'ptest', 'tests', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'qt5-static', 'static', '', d)} \
+    ${@bb.utils.filter('DISTRO_FEATURES', 'vulkan', d)} \
 "
 
 PACKAGECONFIG ?= " \
@@ -181,7 +180,6 @@ LDFLAGS_append_riscv64 = " -pthread"
 
 QT_CONFIG_FLAGS += " \
     ${QT_CONFIG_FLAGS_GOLD} \
-    -shared \
     -silent \
     -no-pch \
     -no-rpath \
@@ -304,4 +302,4 @@ sed -i \
     $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
 }
 
-SRCREV = "f6fe4bbab7c0a390b96098b1ccf2373547a4baf9"
+SRCREV = "40143c189b7c1bf3c2058b77d00ea5c4e3be8b28"

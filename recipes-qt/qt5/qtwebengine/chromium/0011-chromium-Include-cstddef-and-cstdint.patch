@@ -1,4 +1,4 @@
-From 33005dfa49d65170fb006cd4ca4dbb8c6cf901e5 Mon Sep 17 00:00:00 2001
+From 1b8d57ba6595bbd743f6570d834f6a08600fb117 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 15 Jan 2020 16:53:46 -0800
 Subject: [PATCH] chromium: Include <cstddef> and <cstdint>

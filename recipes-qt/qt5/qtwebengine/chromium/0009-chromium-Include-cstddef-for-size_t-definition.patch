@@ -1,4 +1,4 @@
-From 58783bf8f46657200643543f765f405a91699440 Mon Sep 17 00:00:00 2001
+From 022100d701dca71ecfe237e133712398bc1c59a7 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 25 Dec 2019 15:41:16 -0800
 Subject: [PATCH] chromium: Include cstddef for size_t definition
@@ -22,10 +22,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/chromium/third_party/webrtc/modules/video_coding/decoding_state.h b/chromium/third_party/webrtc/modules/video_coding/decoding_state.h
-index b87fb2d0345..b3faffcfc79 100644
+index ec972949d89..2a76775cfb6 100644
 --- a/chromium/third_party/webrtc/modules/video_coding/decoding_state.h
 +++ b/chromium/third_party/webrtc/modules/video_coding/decoding_state.h
-@@ -14,6 +14,7 @@
+@@ -15,6 +15,7 @@
  #include <map>
  #include <set>
  #include <vector>

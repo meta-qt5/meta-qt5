@@ -1,4 +1,4 @@
-From 8c9a4027426b0a2c56cc834da0dbad5b8378c2c6 Mon Sep 17 00:00:00 2001
+From 344e8a3945a29239dd2f27ea4969e3d64d5d8911 Mon Sep 17 00:00:00 2001
 From: Andrej Valek <andrej.valek@siemens.com>
 Date: Fri, 17 Apr 2020 09:43:32 +0200
 Subject: [PATCH] chromium: icu: use system library only targets
@@ -20,7 +20,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/chromium/third_party/icu/BUILD.gn b/chromium/third_party/icu/BUILD.gn
-index 023d6e13a2c..312f34d6186 100644
+index 73673fa20ac..a656692c7bf 100644
 --- a/chromium/third_party/icu/BUILD.gn
 +++ b/chromium/third_party/icu/BUILD.gn
 @@ -7,9 +7,13 @@ import("//build/config/host_byteorder.gni")
@@ -37,9 +37,9 @@ index 023d6e13a2c..312f34d6186 100644
  }
  
  if (is_android) {
-@@ -20,6 +24,12 @@ if (is_mac) {
-   import("//build/config/sanitizers/sanitizers.gni")
- }
+@@ -23,6 +27,12 @@ if (is_mac) {
+ assert(!icu_disable_thin_archive || !is_component_build,
+        "icu_disable_thin_archive only works in static library builds")
  
 +if (use_system_icu) {
 +  # Use system library only for target, otherwise use bundled
@@ -50,7 +50,7 @@ index 023d6e13a2c..312f34d6186 100644
  # Meta target that includes both icuuc and icui18n. Most targets want both.
  # You can depend on the individually if you need to.
  group("icu") {
-@@ -1207,7 +1217,7 @@ config("system_icu_config") {
+@@ -1222,7 +1232,7 @@ config("system_icu_config") {
    }
  }
  
@@ -59,7 +59,7 @@ index 023d6e13a2c..312f34d6186 100644
    pkg_config("system_icui18n") {
      packages = [ "icu-i18n" ]
    }
-@@ -1420,7 +1430,7 @@ shim_headers("icuuc_shim") {
+@@ -1435,7 +1445,7 @@ shim_headers("icuuc_shim") {
  }
  
  config("icu_config") {
@@ -68,7 +68,7 @@ index 023d6e13a2c..312f34d6186 100644
      configs = [ ":system_icu_config"]
    } else {
      configs = [ ":bundled_icu_config"]
-@@ -1428,7 +1438,7 @@ config("icu_config") {
+@@ -1443,7 +1453,7 @@ config("icu_config") {
  }
  
  group("icuuc") {
@@ -77,7 +77,7 @@ index 023d6e13a2c..312f34d6186 100644
      deps = [ ":icuuc_shim" ]
      public_configs = [
        ":system_icu_config",
-@@ -1440,7 +1450,7 @@ group("icuuc") {
+@@ -1455,7 +1465,7 @@ group("icuuc") {
  }
  
  group("icui18n") {
