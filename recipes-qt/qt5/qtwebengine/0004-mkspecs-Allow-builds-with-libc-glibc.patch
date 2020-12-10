@@ -5,22 +5,44 @@ Subject: [PATCH] mkspecs: Allow builds with libc != glibc
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- src/buildtools/config/support.pri | 5 -----
- 1 file changed, 5 deletions(-)
+ src/buildtools/config/support.pri | 4 ----
+ src/buildtools/configure.json     | 4 +---
+ 2 files changed, 1 insertion(+), 7 deletions(-)
 
 diff --git a/src/buildtools/config/support.pri b/src/buildtools/config/support.pri
-index 8077b12f..aaf4db47 100644
+index 6768f0a1..1885f1b4 100644
 --- a/src/buildtools/config/support.pri
 +++ b/src/buildtools/config/support.pri
-@@ -97,11 +97,6 @@ defineTest(qtwebengine_checkErrorForLinux) {
-         return(false)
-     }
+@@ -177,10 +177,6 @@ defineTest(qtwebengine_checkForHostPkgCfg) {
  
+ defineTest(qtwebengine_checkForGlibc) {
+     module = $$1
 -    !qtConfig(webengine-system-glibc) {
--        qtwebengine_skipBuild("A suitable version >= 2.27 of libc required to build QtWebEngine could not be found.")
+-        qtwebengine_skipBuild("A suitable version >= 2.27 of libc required to build $${module} could not be found.")
 -        return(false)
 -    }
--
-     !qtConfig(webengine-system-khr) {
-         qtwebengine_skipBuild("Khronos development headers required to build QtWebEngine are missing (see mesa/libegl1-mesa-dev)")
-         return(false)
+     return(true)
+ }
+ 
+diff --git a/src/buildtools/configure.json b/src/buildtools/configure.json
+index 96727a14..fef8fc5e 100644
+--- a/src/buildtools/configure.json
++++ b/src/buildtools/configure.json
+@@ -371,7 +371,6 @@
+                          && (!config.sanitizer || features.webengine-sanitizer)
+                          && (!config.linux || features.pkg-config)
+                          && (!config.linux || features.webengine-host-pkg-config)
+-                         && (!config.linux || features.webengine-system-glibc)
+                          && (!config.linux || features.webengine-system-khr)
+                          && (!config.linux || features.webengine-system-nss)
+                          && (!config.linux || features.webengine-system-dbus)
+@@ -732,8 +731,7 @@
+                         "webengine-system-fontconfig",
+                         "webengine-system-dbus",
+                         "webengine-system-nss",
+-                        "webengine-system-khr",
+-                        "webengine-system-glibc"
++                        "webengine-system-khr"
+                     ]
+                 },
+                 {

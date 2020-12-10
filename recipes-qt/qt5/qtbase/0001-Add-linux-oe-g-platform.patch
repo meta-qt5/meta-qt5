@@ -1,4 +1,4 @@
-From 8442f94819458c79a88ad6177207c0e922a007bd Mon Sep 17 00:00:00 2001
+From c97da220d95091386724e1eadc360ed16ed52dfe Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -65,10 +65,10 @@ index 934a18a924..0f5b1b6333 100644
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
-index 99b7fe6562..1ddfddb2bd 100644
+index 69d1954306..37f7c9c4a2 100644
 --- a/mkspecs/features/qt.prf
 +++ b/mkspecs/features/qt.prf
-@@ -148,7 +148,7 @@ import_plugins:qtConfig(static) {
+@@ -151,7 +151,7 @@ import_plugins:qtConfig(static) {
              plug_name = $$QMAKE_PREFIX_STATICLIB$${plug}$$qtPlatformTargetSuffix().$$QMAKE_EXTENSION_STATICLIB
              plug_path = $$eval(QT_PLUGIN.$${plug}.PATH)
              isEmpty(plug_path): \
@@ -77,7 +77,7 @@ index 99b7fe6562..1ddfddb2bd 100644
              LIBS += $$plug_path/$$plug_type/$$plug_name
          } else {
              LIBS += -l$${plug}$$qtPlatformTargetSuffix()
-@@ -271,8 +271,8 @@ for(ever) {
+@@ -274,8 +274,8 @@ for(ever) {
  # static builds: link qml import plugins into the target.
  contains(all_qt_module_deps, qml): \
          qtConfig(static):import_plugins:!host_build:!no_import_scan {

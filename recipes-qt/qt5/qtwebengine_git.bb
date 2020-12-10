@@ -23,6 +23,8 @@ DEPENDS += " \
     qtlocation \
     libdrm fontconfig pixman openssl pango cairo pciutils nss \
     libcap \
+    jpeg-native \
+    freetype-native \
     gperf-native \
     ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa-lib', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libxcomposite libxcursor libxi libxrandr libxtst', '', d)} \
@@ -43,7 +45,7 @@ SECURITY_STRINGFORMAT = ""
 
 # To use system ffmpeg you need to enable also libwebp, opus, vpx
 # Only depenedencies available in oe-core are enabled by default
-PACKAGECONFIG ??= "libwebp libevent libpng \
+PACKAGECONFIG ??= "libevent libpng \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)}"
 
 PACKAGECONFIG[icu] = "-feature-webengine-system-icu,-no-feature-webengine-system-icu,icu"
@@ -142,7 +144,7 @@ RDEPENDS_${PN}-examples += " \
     qtdeclarative-qmlplugins \
 "
 
-QT_MODULE_BRANCH_CHROMIUM = "80-based"
+QT_MODULE_BRANCH_CHROMIUM = "83-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15-glibc
 # 5.15-glibc.meta-qt5.8
@@ -165,7 +167,7 @@ SRC_URI += " \
     file://chromium/0002-chromium-stack-pointer-clobber.patch;patchdir=src/3rdparty \
     file://chromium/0003-chromium-fix-build-with-clang.patch;patchdir=src/3rdparty \
     file://chromium/0004-chromium-Exclude-CRC32-for-32bit-arm.patch;patchdir=src/3rdparty \
-    file://chromium/0005-chromium-Do-not-try-to-set-the-guessed-values-for-ma.patch;patchdir=src/3rdparty \
+    file://chromium/0005-chromium-Do-not-try-to-set-the-guessed-values-for.patch;patchdir=src/3rdparty \
     file://chromium/0006-chromium-aarch64-skia-build-fix.patch;patchdir=src/3rdparty \
     file://chromium/0007-chromium-fix-build-after-y2038-changes-in-glibc.patch;patchdir=src/3rdparty \
     file://chromium/0008-chromium-Fix-build-on-32bit-arches-with-64bit-time_t.patch;patchdir=src/3rdparty \
@@ -173,7 +175,6 @@ SRC_URI += " \
     file://chromium/0010-chromium-Move-CharAllocator-definition-to-a-header-f.patch;patchdir=src/3rdparty \
     file://chromium/0011-chromium-Include-cstddef-and-cstdint.patch;patchdir=src/3rdparty \
     file://chromium/0012-chromium-Link-v8-with-libatomic-on-x86.patch;patchdir=src/3rdparty \
-    file://chromium/0013-chromium-Fix-bison-3.7.patch;patchdir=src/3rdparty \
     file://chromium/0014-chromium-icu-use-system-library-only-targets.patch;patchdir=src/3rdparty \
     file://chromium/0015-chromium-Fix-sandbox-Aw-snap-for-syscalls-403-and-40.patch;patchdir=src/3rdparty \
     file://chromium/0016-chromium-Fix-compiler-error-emitted-with-clang11.patch;patchdir=src/3rdparty \
@@ -188,7 +189,6 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0019-chromium-musl-use-off64_t-instead-of-the-internal-__.patch;patchdir=src/3rdparty \
     file://chromium/0020-chromium-musl-linux-glibc-make-the-distinction.patch;patchdir=src/3rdparty \
     file://chromium/0021-chromium-musl-allocator-Do-not-include-glibc_weak_sy.patch;patchdir=src/3rdparty \
-    file://chromium/0022-chromium-musl-Use-correct-member-name-__si_fields-fr.patch;patchdir=src/3rdparty \
     file://chromium/0023-chromium-musl-Define-res_ninit-and-res_nclose-for-no.patch;patchdir=src/3rdparty \
     file://chromium/0024-chromium-musl-Do-not-define-__sbrk-on-musl.patch;patchdir=src/3rdparty \
     file://chromium/0025-chromium-musl-Adjust-default-pthread-stack-size.patch;patchdir=src/3rdparty \
@@ -198,8 +198,8 @@ SRC_URI_append_libc-musl = "\
     file://chromium/0029-chromium-musl-initialize-msghdr-in-a-compatible-mann.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "f5268555099a1a96f8730035a40f04a473dd396e"
-SRCREV_chromium = "7b2f027ea83c372c33d5b50deb65a2d98244aa04"
+SRCREV_qtwebengine = "5537ff4437ea7a5f9ea140071343f88bf48deddc"
+SRCREV_chromium = "fb6ab5e483876298235be1c6a6013b426c82b759"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

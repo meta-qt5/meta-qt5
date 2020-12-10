@@ -1,4 +1,4 @@
-From 99453086770508f96eeb95635dda3f9831c485bf Mon Sep 17 00:00:00 2001
+From 8dd7987fc70fd8dab4a9f7ee32334c8d28ed34e4 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 23 Dec 2018 16:58:04 -0800
 Subject: [PATCH] chromium: stack pointer clobber
@@ -17,10 +17,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/third_party/lss/linux_syscall_support.h b/chromium/third_party/lss/linux_syscall_support.h
-index 8e0cc385792..d2bd9df4d40 100644
+index d2baee9d243..fd8efdffea6 100644
 --- a/chromium/third_party/lss/linux_syscall_support.h
 +++ b/chromium/third_party/lss/linux_syscall_support.h
-@@ -2012,7 +2012,7 @@ struct kernel_statfs {
+@@ -2017,7 +2017,7 @@ struct kernel_statfs {
                               : "i" (__NR_##name), "ri" ((long)(arg1)),        \
                                 "c" ((long)(arg2)), "d" ((long)(arg3)),        \
                                 "S" ((long)(arg4)), "D" ((long)(arg5))         \
@@ -29,7 +29,7 @@ index 8e0cc385792..d2bd9df4d40 100644
          LSS_RETURN(type,__res);                                               \
        }
      #undef  _syscall6
-@@ -2034,7 +2034,7 @@ struct kernel_statfs {
+@@ -2039,7 +2039,7 @@ struct kernel_statfs {
                               : "i" (__NR_##name),  "0" ((long)(&__s)),        \
                                 "c" ((long)(arg2)), "d" ((long)(arg3)),        \
                                 "S" ((long)(arg4)), "D" ((long)(arg5))         \
@@ -38,7 +38,7 @@ index 8e0cc385792..d2bd9df4d40 100644
          LSS_RETURN(type,__res);                                               \
        }
      LSS_INLINE int LSS_NAME(clone)(int (*fn)(void *), void *child_stack,
-@@ -2120,7 +2120,7 @@ struct kernel_statfs {
+@@ -2125,7 +2125,7 @@ struct kernel_statfs {
                             : "0"(-EINVAL), "i"(__NR_clone),
                               "m"(fn), "m"(child_stack), "m"(flags), "m"(arg),
                               "m"(parent_tidptr), "m"(newtls), "m"(child_tidptr)

@@ -28,6 +28,7 @@ index c5232e116..cf5345352 100644
 +    sub_tools.depends -= sub_src
 +    SUBDIRS = sub_tools
 +}
+\ No newline at end of file
 diff --git a/src/3rdparty/assimp/assimp_dependency.pri b/src/3rdparty/assimp/assimp_dependency.pri
 index 8ba2d9a41..e973d93dd 100644
 --- a/src/3rdparty/assimp/assimp_dependency.pri
