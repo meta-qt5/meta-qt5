@@ -13,4 +13,5 @@ RDEPENDS_${PN} += " \
     nativesdk-qtbase \
     nativesdk-qtbase-dev \
     nativesdk-perl-modules \
+    nativesdk-qtdeclarative-tools \
 "
