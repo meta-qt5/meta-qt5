@@ -29,7 +29,10 @@ SRC_URI_append_libc-musl = " file://0001-Link-with-libexecinfo-on-musl.patch"
 
 S = "${WORKDIR}/git"
 
-EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
+EXTRA_QMAKEVARS_PRE += " \
+    IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME} \
+    CONFIG+=disable_external_rpath \
+"
 
 EXTRANATIVEPATH += "chrpath-native"
 
