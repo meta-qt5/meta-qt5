@@ -177,7 +177,6 @@ SRC_URI += " \
     file://chromium/0012-chromium-Link-v8-with-libatomic-on-x86.patch;patchdir=src/3rdparty \
     file://chromium/0014-chromium-icu-use-system-library-only-targets.patch;patchdir=src/3rdparty \
     file://chromium/0015-chromium-Fix-sandbox-Aw-snap-for-syscalls-403-and-40.patch;patchdir=src/3rdparty \
-    file://chromium/0016-chromium-Fix-compiler-error-emitted-with-clang11.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/80-based
@@ -199,7 +198,7 @@ SRC_URI_append_libc-musl = "\
 "
 
 SRCREV_qtwebengine = "5537ff4437ea7a5f9ea140071343f88bf48deddc"
-SRCREV_chromium = "fb6ab5e483876298235be1c6a6013b426c82b759"
+SRCREV_chromium = "f5a93d251cca15cb24a3acacd2fc0f645513c56d"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
