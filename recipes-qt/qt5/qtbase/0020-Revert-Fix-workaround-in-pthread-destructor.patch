@@ -1,0 +1,67 @@
+From aeaea761f21e5430d3199d2ca4414d18ed7b0fd5 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Tue, 26 Jan 2021 08:50:45 +0100
+Subject: [PATCH] Revert "Fix workaround in pthread destructor"
+
+This reverts commit 81ce2d1d6fa741de4d27b939a378147a02019ec1.
+
+currentThreadData was reverted in 5.12 before this commit:
+
+81ce2d1d6f Fix workaround in pthread destructor
+8867e0eaa7 Revert "Remove pthread storage for thread local data"
+78665d8a0c Remove pthread storage for thread local data
+
+causing build failures in configurations which use this
+| /home/jenkins/workspace/luneos-unstable/webos-ports/tmp-glibc/work/cortexa8t2hf-neon-halium-webos-linux-gnueabi/qtbase/5.15.2+gitAUTOINC+40143c189b-r0/git/src/corelib/thread/qthread_unix.cpp: In function 'void destroy_current_thread_data(void*)':
+| /home/jenkins/workspace/luneos-unstable/webos-ports/tmp-glibc/work/cortexa8t2hf-neon-halium-webos-linux-gnueabi/qtbase/5.15.2+gitAUTOINC+40143c189b-r0/git/src/corelib/thread/qthread_unix.cpp:121:5: error: 'currentThreadData' was not declared in this scope
+|   121 |     currentThreadData = data;
+|       |     ^~~~~~~~~~~~~~~~~
+
+---
+ src/corelib/thread/qthread_unix.cpp | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
+
+diff --git a/src/corelib/thread/qthread_unix.cpp b/src/corelib/thread/qthread_unix.cpp
+index 659d5fb03c..1da68b3130 100644
+--- a/src/corelib/thread/qthread_unix.cpp
++++ b/src/corelib/thread/qthread_unix.cpp
+@@ -116,11 +116,18 @@ static pthread_key_t current_thread_data_key;
+ 
+ static void destroy_current_thread_data(void *p)
+ {
++#if defined(Q_OS_VXWORKS)
++    // Calling setspecific(..., 0) sets the value to 0 for ALL threads.
++    // The 'set to 1' workaround adds a bit of an overhead though,
++    // since this function is called twice now.
++    if (p == (void *)1)
++        return;
++#endif
++    // POSIX says the value in our key is set to zero before calling
++    // this destructor function, so we need to set it back to the
++    // right value...
++    pthread_setspecific(current_thread_data_key, p);
+     QThreadData *data = static_cast<QThreadData *>(p);
+-    // thread_local variables are set to zero before calling this destructor function,
+-    // if they are internally using pthread-specific data management,
+-    // so we need to set it back to the right value...
+-    currentThreadData = data;
+     if (data->isAdopted) {
+         QThread *thread = data->thread.loadAcquire();
+         Q_ASSERT(thread);
+@@ -131,8 +138,14 @@ static void destroy_current_thread_data(void *p)
+     data->deref();
+ 
+     // ... but we must reset it to zero before returning so we aren't
+-    // leaving a dangling pointer.
+-    currentThreadData = nullptr;
++    // called again (POSIX allows implementations to call destructor
++    // functions repeatedly until all values are zero)
++    pthread_setspecific(current_thread_data_key,
++#if defined(Q_OS_VXWORKS)
++                                                 (void *)1);
++#else
++                                                 nullptr);
++#endif
+ }
+ 
+ static void create_current_thread_data_key()
