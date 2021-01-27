@@ -1,4 +1,4 @@
-From bbb23eb876e1f4500e7c8fd716a73351ad660725 Mon Sep 17 00:00:00 2001
+From 73d501e0503fc5a9a2229933f976c713b6e7f28a Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:09:06 -0700
 Subject: [PATCH] chromium: musl: Avoid mallinfo() APIs on non-glibc/linux
@@ -31,7 +31,7 @@ index 044bd8d244f..cec43e1d59b 100644
    return 0;
  #endif
 diff --git a/chromium/base/trace_event/malloc_dump_provider.cc b/chromium/base/trace_event/malloc_dump_provider.cc
-index 7e42cfc20bb..4e24fc711ad 100644
+index 1bf34c9d9ea..00e46d30b3a 100644
 --- a/chromium/base/trace_event/malloc_dump_provider.cc
 +++ b/chromium/base/trace_event/malloc_dump_provider.cc
 @@ -77,6 +77,7 @@ MallocDumpProvider::~MallocDumpProvider() = default;
@@ -42,7 +42,7 @@ index 7e42cfc20bb..4e24fc711ad 100644
    {
      base::AutoLock auto_lock(emit_metrics_on_memory_dump_lock_);
      if (!emit_metrics_on_memory_dump_)
-@@ -175,6 +176,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
+@@ -170,6 +171,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
                            MemoryAllocatorDump::kUnitsBytes,
                            resident_size - allocated_objects_size);
    }
