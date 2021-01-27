@@ -1,4 +1,4 @@
-From 5aa69767be0fbbc7a3a5075c6c94366a535c99a8 Mon Sep 17 00:00:00 2001
+From d073427b25915e1784c3d74296b68fef0076ceb0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Mon, 20 Apr 2020 23:56:48 +0200
 Subject: [PATCH] chromium: Fix sandbox 'Aw, snap' for syscalls 403 and 407
@@ -48,7 +48,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  5 files changed, 36 insertions(+), 1 deletion(-)
 
 diff --git a/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc b/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
-index 768025ce192..87025d91785 100644
+index 712f9699a94..2a80dd2d2b3 100644
 --- a/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
 +++ b/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
 @@ -148,7 +148,14 @@ ResultExpr EvaluateSyscallImpl(int fs_denied_errno,
@@ -68,7 +68,7 @@ index 768025ce192..87025d91785 100644
    }
  
 diff --git a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
-index 76193b62c9f..7731c697002 100644
+index b6c8c637746..81972a9d998 100644
 --- a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
 +++ b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions_unittests.cc
 @@ -60,6 +60,12 @@ class RestrictClockIdPolicy : public bpf_dsl::Policy {

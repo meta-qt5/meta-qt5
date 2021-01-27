@@ -1,4 +1,4 @@
-From 7eeed60fceeca490c5252e256baff08100e13259 Mon Sep 17 00:00:00 2001
+From 1572f98f6be6ac77a45dfd5442b2f6ba1a03e360 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 5 Feb 2019 14:32:20 -0800
 Subject: [PATCH] chromium: Exclude CRC32 for 32bit arm
@@ -15,10 +15,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/chromium/third_party/zlib/BUILD.gn b/chromium/third_party/zlib/BUILD.gn
-index 00d1e7c6ca3..f2c36d72dd2 100644
+index fb2a35e87f2..6cca80181ed 100644
 --- a/chromium/third_party/zlib/BUILD.gn
 +++ b/chromium/third_party/zlib/BUILD.gn
-@@ -86,8 +86,11 @@ if (use_arm_neon_optimizations) {
+@@ -89,8 +89,11 @@ if (use_arm_neon_optimizations) {
      # Disabled for iPhone, as described in DDI0487C_a_armv8_arm:
      #  "All implementations of the ARMv8.1 architecture are required to
      #   implement the CRC32* instructions. These are optional in ARMv8.0."

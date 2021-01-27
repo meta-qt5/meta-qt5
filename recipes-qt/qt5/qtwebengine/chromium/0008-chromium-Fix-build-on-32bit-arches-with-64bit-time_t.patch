@@ -1,4 +1,4 @@
-From ddedffaeb9f04ac8530f87f5010e0008dc548b96 Mon Sep 17 00:00:00 2001
+From e61af5f5bc6a14a3e77373eee1055cd15c54797f Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 30 Nov 2019 10:07:43 -0800
 Subject: [PATCH] chromium: Fix build on 32bit arches with 64bit time_t

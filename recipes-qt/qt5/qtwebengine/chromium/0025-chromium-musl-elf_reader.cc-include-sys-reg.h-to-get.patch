@@ -1,4 +1,4 @@
-From f12f5d2dc91548ca77b296a0be3705aacc9fca33 Mon Sep 17 00:00:00 2001
+From 426b9ef79898e82ee04cfbe7c19746bdfd1c92ac Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 25 Sep 2018 12:59:05 -0700
 Subject: [PATCH] chromium: musl: elf_reader.cc: include <sys/reg.h> to get

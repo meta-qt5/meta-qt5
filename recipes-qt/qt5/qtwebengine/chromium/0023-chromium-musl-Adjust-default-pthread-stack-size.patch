@@ -1,19 +1,19 @@
-From cecdf34d89110115948cfde44c04a43c9925b24a Mon Sep 17 00:00:00 2001
+From c24db93fd5fa5728da55448865ba6bb4d6355491 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 16:41:23 -0700
 Subject: [PATCH] chromium: musl: Adjust default pthread stack size
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- chromium/base/threading/platform_thread_linux.cc               | 3 ++-
- chromium/third_party/blink/renderer/platform/wtf/stack_util.cc | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ chromium/base/threading/platform_thread_linux.cc              | 3 ++-
+ .../third_party/blink/renderer/platform/wtf/stack_util.cc     | 4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/base/threading/platform_thread_linux.cc b/chromium/base/threading/platform_thread_linux.cc
-index 74a01ad5af5..dab5773d73b 100644
+index 095c49b8dc0..d1479b54d48 100644
 --- a/chromium/base/threading/platform_thread_linux.cc
 +++ b/chromium/base/threading/platform_thread_linux.cc
-@@ -377,7 +377,8 @@ void TerminateOnThread() {}
+@@ -186,7 +186,8 @@ void TerminateOnThread() {}
  
  size_t GetDefaultThreadStackSize(const pthread_attr_t& attributes) {
  #if !defined(THREAD_SANITIZER)
@@ -24,10 +24,10 @@ index 74a01ad5af5..dab5773d73b 100644
    // ThreadSanitizer bloats the stack heavily. Evidence has been that the
    // default stack size isn't enough for some browser tests.
 diff --git a/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc b/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
-index ab1dff4167e..b0763b0bd9a 100644
+index 1aaaa1c60d2..f49152fa6ac 100644
 --- a/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
 +++ b/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
-@@ -29,7 +29,7 @@ size_t GetUnderestimatedStackSize() {
+@@ -28,7 +28,7 @@ size_t GetUnderestimatedStackSize() {
  // FIXME: On Mac OSX and Linux, this method cannot estimate stack size
  // correctly for the main thread.
  
@@ -36,7 +36,7 @@ index ab1dff4167e..b0763b0bd9a 100644
      defined(OS_FUCHSIA)
    // pthread_getattr_np() can fail if the thread is not invoked by
    // pthread_create() (e.g., the main thread of blink_unittests).
-@@ -97,7 +97,7 @@ return Threading::ThreadStackSize();
+@@ -96,7 +96,7 @@ return Threading::ThreadStackSize();
  }
  
  void* GetStackStart() {
