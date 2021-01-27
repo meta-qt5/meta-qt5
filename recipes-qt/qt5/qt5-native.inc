@@ -1,4 +1,4 @@
-inherit native qmake5_base
+inherit qmake5_base native
 
 # we don't want conflicts with qt4
 OE_QMAKE_PATH_HEADERS = "${OE_QMAKE_PATH_QT_HEADERS}"
