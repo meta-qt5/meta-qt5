@@ -27,6 +27,25 @@ PACKAGECONFIG[qml-debug] = "-qml-debug,-no-qml-debug"
 PACKAGECONFIG[qml-network] = "-qml-network, -no-qml-network"
 PACKAGECONFIG[static] = ",,qtdeclarative-native"
 
+do_install_ptest() {
+    mkdir -p ${D}${PTEST_PATH}
+    for var in `find ${B}/tests/auto/ -name tst_*`; do
+        case=$(basename ${var})
+        if [ -z `echo ${case} | grep '\.'` ]; then
+            dname=$(dirname ${var})
+            pdir=$(basename ${dname})
+            echo ${pdir}/${case} >> ${D}${PTEST_PATH}/tst_list
+
+            mkdir ${D}${PTEST_PATH}/${pdir}
+            install -m 0744 ${var} ${D}${PTEST_PATH}/${pdir}
+            data_dir=${S}/${dname##${B}}/data
+            if [ -d ${data_dir} ]; then
+                cp -r ${data_dir} ${D}${PTEST_PATH}/${pdir}
+            fi
+        fi
+    done
+}
+
 do_install_append_class-nativesdk() {
     # qml files not needed in nativesdk
     rm -rf ${D}${OE_QMAKE_PATH_QML}
