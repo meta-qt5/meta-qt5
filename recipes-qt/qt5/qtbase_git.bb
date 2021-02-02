@@ -268,6 +268,7 @@ do_install_append() {
     echo "isEmpty(QMAKE_LINK_C): QMAKE_LINK_C = $OE_QMAKE_LINK_NO_SYSROOT" >> $conf
     echo "isEmpty(QMAKE_LINK_C_SHLIB): QMAKE_LINK_C_SHLIB = $OE_QMAKE_LINK_NO_SYSROOT" >> $conf
     echo "isEmpty(QMAKE_LFLAGS): QMAKE_LFLAGS = ${OE_QMAKE_LDFLAGS}" >> $conf
+    echo "isEmpty(QMAKE_OBJCOPY): QMAKE_OBJCOPY = ${TARGET_PREFIX}objcopy" >> $conf
     echo "isEmpty(QMAKE_STRIP): QMAKE_STRIP = ${TARGET_PREFIX}strip" >> $conf
     echo "isEmpty(CC_host): CC_host = ${CC_host}" >> $conf
     echo "isEmpty(CXX_host): CXX_host = ${CXX_host}" >> $conf
