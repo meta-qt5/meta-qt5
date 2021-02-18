@@ -67,6 +67,7 @@ EXTRA_OECMAKE_append_riscv64 = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
 # mips64-yoe-linux-musl-ld.gold: internal error in get_got_page_offset, at ../../gold/mips.cc:6260
 # mips-yoe-linux-musl-ld.gold: error: Can't find matching LO16 reloc
 EXTRA_OECMAKE_append_toolchain-clang_mipsarch = " -DUSE_LD_GOLD=OFF "
+EXTRA_OECMAKE_append_toolchain-clang_riscv64 = " -DUSE_LD_GOLD=OFF "
 
 PACKAGECONFIG ??= "qtlocation qtmultimedia qtsensors qtwebchannel \
     ${@bb.utils.filter('DISTRO_FEATURES', 'x11', d)} \
