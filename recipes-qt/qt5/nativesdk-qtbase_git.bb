@@ -43,6 +43,7 @@ SRC_URI += "\
     file://0018-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
     file://0019-Define-__NR_futex-if-it-does-not-exist.patch \
     file://0020-Revert-Fix-workaround-in-pthread-destructor.patch \
+    file://0021-qfloat16-Include-limits-header.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase

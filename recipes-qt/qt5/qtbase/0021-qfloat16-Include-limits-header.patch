@@ -1,0 +1,48 @@
+From f680222892b44b3c1de129dc086613c6fe025c2d Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 2 Mar 2021 13:18:47 -0800
+Subject: [PATCH] qfloat16: Include <limits> header
+
+gcc11 complains
+ error: 'numeric_limits' is not a class template
+ |   344 | template<> class numeric_limits<const QT_PREPEND_NAMESPACE(qfloat16)>
+
+This is because its missing right header which perhaps is included
+implicitly in older compilers
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/corelib/global/qfloat16.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+--- a/src/corelib/global/qfloat16.h
++++ b/src/corelib/global/qfloat16.h
+@@ -44,6 +44,7 @@
+ #include <QtCore/qglobal.h>
+ #include <QtCore/qmetatype.h>
+ #include <string.h>
++#include <limits>
+ 
+ #if defined(QT_COMPILER_SUPPORTS_F16C) && defined(__AVX2__) && !defined(__F16C__)
+ // All processors that support AVX2 do support F16C too. That doesn't mean
+--- a/src/corelib/text/qbytearraymatcher.h
++++ b/src/corelib/text/qbytearraymatcher.h
+@@ -40,6 +40,7 @@
+ #ifndef QBYTEARRAYMATCHER_H
+ #define QBYTEARRAYMATCHER_H
+ 
++#include <limits>
+ #include <QtCore/qbytearray.h>
+ 
+ QT_BEGIN_NAMESPACE
+--- a/src/corelib/tools/qoffsetstringarray_p.h
++++ b/src/corelib/tools/qoffsetstringarray_p.h
+@@ -55,6 +55,7 @@
+ 
+ #include <tuple>
+ #include <array>
++#include <limits>
+ 
+ QT_BEGIN_NAMESPACE
+ 
