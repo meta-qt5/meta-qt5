@@ -16,6 +16,7 @@ LIC_FILES_CHKSUM = " \
 # 5.15.meta-qt5.1
 SRC_URI += " \
     file://0001-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-locate-qmlca.patch \
+    file://0001-yarr-Include-limits-for-numeric_limits.patch \
 "
 
 LDFLAGS_append_riscv64 = " -pthread"

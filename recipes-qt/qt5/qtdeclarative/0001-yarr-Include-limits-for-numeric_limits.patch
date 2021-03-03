@@ -1,0 +1,32 @@
+From d99fda38487eee9a660101ce73c488680c485668 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Wed, 3 Mar 2021 07:26:21 -0800
+Subject: [PATCH] yarr: Include <limits> for numeric_limits
+
+Fixes
+src/3rdparty/masm/yarr/Yarr.h:46:44: error: 'numeric_limits' is not a member of 'std'
+   46 | static const unsigned offsetNoMatch = std::numeric_limits<unsigned>::max();
+      |                                            ^~~~~~~~~~~~~~
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/3rdparty/masm/yarr/Yarr.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/3rdparty/masm/yarr/Yarr.h b/src/3rdparty/masm/yarr/Yarr.h
+index ccf78f9880..cbb42c60d8 100644
+--- a/src/3rdparty/masm/yarr/Yarr.h
++++ b/src/3rdparty/masm/yarr/Yarr.h
+@@ -27,7 +27,7 @@
+ 
+ #pragma once
+ 
+-#include <limits.h>
++#include <limits>
+ #include "YarrErrorCode.h"
+ 
+ namespace JSC { namespace Yarr {
+-- 
+2.30.1
+
