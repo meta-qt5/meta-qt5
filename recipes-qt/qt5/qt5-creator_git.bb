@@ -41,7 +41,7 @@ PACKAGECONFIG_append_toolchain-clang = " clang"
 
 # Important note: In case clang was added to qttools' PACKAGECONFIG, it has to
 # be added here too - otherwise build fails trying to link native clang libraries
-PACKAGECONFIG[clang] = ",,clang llvm-common"
+PACKAGECONFIG[clang] = ",,clang"
 
 COMPATIBLE_HOST_toolchain-clang_riscv32 = "null"
 COMPATIBLE_HOST_toolchain-clang_riscv64 = "null"
