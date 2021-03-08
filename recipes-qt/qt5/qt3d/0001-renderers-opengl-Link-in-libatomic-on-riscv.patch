@@ -1,0 +1,28 @@
+From b2c6dd0330d9dee417192a32ae6c636b77b6bf46 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Mon, 8 Mar 2021 15:16:01 -0800
+Subject: [PATCH] renderers/opengl: Link in libatomic on riscv
+
+GCC 11 needs this since it failing to find a builtin function
+
+Fixes
+src/plugins/renderers/opengl/renderer/renderview.cpp:107: undefined reference to `__atomic_exchange_1'
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/plugins/renderers/opengl/opengl.pri | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/plugins/renderers/opengl/opengl.pri b/src/plugins/renderers/opengl/opengl.pri
+index 1682ab7b3..31b71dd6b 100644
+--- a/src/plugins/renderers/opengl/opengl.pri
++++ b/src/plugins/renderers/opengl/opengl.pri
+@@ -39,3 +39,5 @@ qtConfig(qt3d-simd-sse2):!qtConfig(qt3d-simd-avx2) {
+     CONFIG += simd
+     QMAKE_CXXFLAGS += $$QMAKE_CFLAGS_SSE2
+ }
++
++LIBS += "-latomic"
+-- 
+2.30.1
+
