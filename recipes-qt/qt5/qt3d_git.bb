@@ -16,6 +16,8 @@ DEPENDS_class-target += "qtdeclarative qt3d-native"
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
 "
+SRC_URI_append_riscv64 = " file://0001-renderers-opengl-Link-in-libatomic-on-riscv.patch"
+SRC_URI_append_riscv32 = " file://0001-renderers-opengl-Link-in-libatomic-on-riscv.patch"
 
 PACKAGECONFIG ??= ""
 PACKAGECONFIG_class-native ??= "tools-only"
