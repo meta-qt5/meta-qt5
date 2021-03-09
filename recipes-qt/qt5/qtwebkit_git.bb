@@ -23,6 +23,9 @@ SRC_URI += "\
     file://0009-Riscv-Add-support-for-riscv.patch \
 "
 
+SRC_URI_append_riscv32 = " file://0010-webdriver-libatomic.patch "
+SRC_URI_append_riscv64 = " file://0010-webdriver-libatomic.patch "
+
 inherit cmake_qt5 perlnative
 
 inherit python3native
