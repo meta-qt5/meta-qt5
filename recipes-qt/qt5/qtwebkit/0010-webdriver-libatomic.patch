@@ -1,0 +1,23 @@
+link with libatomic
+
+This fixes build with C11
+
+lib/../Source/WTF/wtf/CMakeFiles/WTF.dir/Assertions.cpp.o:/usr/include/c++/11.0.1/bits/atomic_base.h:520: more undefined references to `__atomic_compare_exchange_1' follow
+| collect2: error: ld returned 1 exit status
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+--- a/Source/WTF/wtf/CMakeLists.txt
++++ b/Source/WTF/wtf/CMakeLists.txt
+@@ -245,6 +245,10 @@ if (NOT USE_SYSTEM_MALLOC)
+     list(APPEND WTF_LIBRARIES bmalloc)
+ endif ()
+ 
++list(APPEND WTF_LIBRARIES
++     -Wl,--as-needed -Wl,-latomic -Wl,--no-as-needed
++)
++
+ list(APPEND WTF_SOURCES
+     unicode/icu/CollatorICU.cpp
+ )
