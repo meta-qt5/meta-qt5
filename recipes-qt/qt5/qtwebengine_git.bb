@@ -17,6 +17,7 @@ DEPENDS += " \
     nspr-native \
     ninja-native \
     nasm-native \
+    nodejs-native \
     bison-native \
     qtwebchannel \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols qtquickcontrols2 \
