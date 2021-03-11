@@ -1,4 +1,4 @@
-From efcb303585f8ebae43767ab284d1e808d44d290f Mon Sep 17 00:00:00 2001
+From 083cc8263e38640dc4da53796c4c3665e5b2444c Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -19,7 +19,7 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  3 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/src/buildtools/config/linux.pri b/src/buildtools/config/linux.pri
-index 56c18bdb..ea6142a6 100644
+index 7507d51e..1e078cbf 100644
 --- a/src/buildtools/config/linux.pri
 +++ b/src/buildtools/config/linux.pri
 @@ -118,7 +118,7 @@ contains(QT_ARCH, "mips") {

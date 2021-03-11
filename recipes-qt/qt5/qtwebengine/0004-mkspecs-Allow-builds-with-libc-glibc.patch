@@ -1,4 +1,4 @@
-From b52d58e204ffcb3dcd55ddee390d256cfbb1b54b Mon Sep 17 00:00:00 2001
+From a4099f31e1850c81a27ae3572b00705431b05254 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 12 Nov 2019 19:53:59 -0800
 Subject: [PATCH] mkspecs: Allow builds with libc != glibc
@@ -10,10 +10,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 1 insertion(+), 7 deletions(-)
 
 diff --git a/src/buildtools/config/support.pri b/src/buildtools/config/support.pri
-index e192f877..49ad4bf3 100644
+index e7f869a1..f9c9c24b 100644
 --- a/src/buildtools/config/support.pri
 +++ b/src/buildtools/config/support.pri
-@@ -181,10 +181,6 @@ defineTest(qtwebengine_checkForHostPkgCfg) {
+@@ -191,10 +191,6 @@ defineTest(qtwebengine_checkForHostPkgCfg) {
  
  defineTest(qtwebengine_checkForGlibc) {
      module = $$1
@@ -25,10 +25,10 @@ index e192f877..49ad4bf3 100644
  }
  
 diff --git a/src/buildtools/configure.json b/src/buildtools/configure.json
-index 1ca6214a..b352e675 100644
+index 812a91f9..a7c3d972 100644
 --- a/src/buildtools/configure.json
 +++ b/src/buildtools/configure.json
-@@ -376,7 +376,6 @@
+@@ -373,7 +373,6 @@
                           && (!config.sanitizer || features.webengine-sanitizer)
                           && (!config.linux || features.pkg-config)
                           && (!config.linux || features.webengine-host-pkg-config)
@@ -36,7 +36,7 @@ index 1ca6214a..b352e675 100644
                           && (!config.linux || features.webengine-system-khr)
                           && (!config.linux || features.webengine-system-nss)
                           && (!config.linux || features.webengine-system-dbus)
-@@ -743,8 +742,7 @@
+@@ -770,8 +769,7 @@
                          "webengine-system-fontconfig",
                          "webengine-system-dbus",
                          "webengine-system-nss",

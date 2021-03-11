@@ -1,4 +1,4 @@
-From e61af5f5bc6a14a3e77373eee1055cd15c54797f Mon Sep 17 00:00:00 2001
+From 5fc06ad92eaeb20e3b0afbc47a2436bf9038d942 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 30 Nov 2019 10:07:43 -0800
 Subject: [PATCH] chromium: Fix build on 32bit arches with 64bit time_t
@@ -16,7 +16,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/chromium/ui/events/ozone/evdev/event_converter_evdev.h b/chromium/ui/events/ozone/evdev/event_converter_evdev.h
-index 717410f2ebc..a4cd55ca20e 100644
+index 2d184811a00..fb2ba0069f1 100644
 --- a/chromium/ui/events/ozone/evdev/event_converter_evdev.h
 +++ b/chromium/ui/events/ozone/evdev/event_converter_evdev.h
 @@ -20,6 +20,11 @@
@@ -32,10 +32,10 @@ index 717410f2ebc..a4cd55ca20e 100644
  
  namespace ui {
 diff --git a/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc b/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc
-index 01e49b7bbfd..4fccfd62f84 100644
+index b8d089f7381..5d2d08b1ec6 100644
 --- a/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc
 +++ b/chromium/ui/events/ozone/evdev/touch_evdev_debug_buffer.cc
-@@ -63,8 +63,7 @@ void TouchEventLogEvdev::DumpLog(const char* filename) {
+@@ -62,8 +62,7 @@ void TouchEventLogEvdev::DumpLog(const char* filename) {
        continue;
      std::string event_string = base::StringPrintf(
          "E: %ld.%06ld %04x %04x %d %d\n", te->ev.input_event_sec,

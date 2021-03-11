@@ -1,4 +1,4 @@
-From f0aebd4351e729d281fb597627ff87cbe8a67dd0 Mon Sep 17 00:00:00 2001
+From acdb51541e4eb73177b28c79d395d8d6964ed161 Mon Sep 17 00:00:00 2001
 From: Andrej Valek <andrej.valek@siemens.com>
 Date: Fri, 17 Apr 2020 09:43:32 +0200
 Subject: [PATCH] chromium: icu: use system library only targets
@@ -20,13 +20,13 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/chromium/third_party/icu/BUILD.gn b/chromium/third_party/icu/BUILD.gn
-index 73673fa20ac..a656692c7bf 100644
+index 2430d3e48e5..5d00226667d 100644
 --- a/chromium/third_party/icu/BUILD.gn
 +++ b/chromium/third_party/icu/BUILD.gn
-@@ -7,9 +7,13 @@ import("//build/config/host_byteorder.gni")
- import("//build/config/linux/pkg_config.gni")
+@@ -8,9 +8,13 @@ import("//build/config/linux/pkg_config.gni")
  import("//build/shim_headers.gni")
  import("//third_party/icu/config.gni")
+ import("//third_party/icu/sources.gni")
 +import("//v8/gni/snapshot_toolchain.gni")
  
  declare_args() {
@@ -37,7 +37,7 @@ index 73673fa20ac..a656692c7bf 100644
  }
  
  if (is_android) {
-@@ -23,6 +27,12 @@ if (is_mac) {
+@@ -24,6 +28,12 @@ if (is_mac && !icu_is_in_fuchsia) {
  assert(!icu_disable_thin_archive || !is_component_build,
         "icu_disable_thin_archive only works in static library builds")
  
@@ -50,7 +50,7 @@ index 73673fa20ac..a656692c7bf 100644
  # Meta target that includes both icuuc and icui18n. Most targets want both.
  # You can depend on the individually if you need to.
  group("icu") {
-@@ -1222,7 +1232,7 @@ config("system_icu_config") {
+@@ -413,7 +423,7 @@ config("system_icu_config") {
    }
  }
  
@@ -59,7 +59,7 @@ index 73673fa20ac..a656692c7bf 100644
    pkg_config("system_icui18n") {
      packages = [ "icu-i18n" ]
    }
-@@ -1435,7 +1445,7 @@ shim_headers("icuuc_shim") {
+@@ -626,7 +636,7 @@ shim_headers("icuuc_shim") {
  }
  
  config("icu_config") {
@@ -68,7 +68,7 @@ index 73673fa20ac..a656692c7bf 100644
      configs = [ ":system_icu_config"]
    } else {
      configs = [ ":bundled_icu_config"]
-@@ -1443,7 +1453,7 @@ config("icu_config") {
+@@ -634,7 +644,7 @@ config("icu_config") {
  }
  
  group("icuuc") {
@@ -77,7 +77,7 @@ index 73673fa20ac..a656692c7bf 100644
      deps = [ ":icuuc_shim" ]
      public_configs = [
        ":system_icu_config",
-@@ -1455,7 +1465,7 @@ group("icuuc") {
+@@ -646,7 +656,7 @@ group("icuuc") {
  }
  
  group("icui18n") {

@@ -1,4 +1,4 @@
-From ec96f37700a45c317027ad917a835e1eac2169fc Mon Sep 17 00:00:00 2001
+From 159ee1528e0870555bf1bac8f24795d84c223a56 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 2 Jan 2020 17:13:55 -0800
 Subject: [PATCH] chromium: Move CharAllocator definition to a header file
@@ -13,11 +13,11 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 255 insertions(+), 251 deletions(-)
 
 diff --git a/chromium/cc/base/list_container_helper.cc b/chromium/cc/base/list_container_helper.cc
-index 3a4c0b6a2f9..89df57a7b8e 100644
+index 7b594b4a458..9dae1c360c4 100644
 --- a/chromium/cc/base/list_container_helper.cc
 +++ b/chromium/cc/base/list_container_helper.cc
-@@ -12,259 +12,8 @@
- #include "base/logging.h"
+@@ -13,259 +13,8 @@
+ #include "base/check_op.h"
  #include "base/memory/aligned_memory.h"
  
 -namespace {

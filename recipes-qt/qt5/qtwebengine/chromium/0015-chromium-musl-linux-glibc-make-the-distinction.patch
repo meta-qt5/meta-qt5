@@ -1,4 +1,4 @@
-From 4d4ec444217441b360e0ed7d784558b8acbcd4ab Mon Sep 17 00:00:00 2001
+From a7bf393630fe1ad70cf32765c56a1a4f1c0e4d4c Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 14:54:38 -0700
 Subject: [PATCH] chromium: musl: linux != glibc, make the distinction
@@ -9,15 +9,15 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/chromium/base/allocator/allocator_check.cc b/chromium/base/allocator/allocator_check.cc
-index 5ea77ef2d27..85343a13905 100644
+index a5ca0b7191e..7017d48b5a0 100644
 --- a/chromium/base/allocator/allocator_check.cc
 +++ b/chromium/base/allocator/allocator_check.cc
 @@ -27,7 +27,7 @@ bool IsAllocatorInitialized() {
    // Set by allocator_shim_override_ucrt_symbols_win.h when the
    // shimmed _set_new_mode() is called.
    return g_is_win_shim_layer_initialized;
--#elif defined(OS_LINUX) && BUILDFLAG(USE_TCMALLOC) && \
-+#elif defined(__GLIBC__) && BUILDFLAG(USE_TCMALLOC) && \
-     !defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
+-#elif (defined(OS_LINUX) || defined(OS_CHROMEOS)) && \
++#elif (defined(__GLIBC__) || defined(OS_CHROMEOS)) && \
+     BUILDFLAG(USE_TCMALLOC) && !defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
  // From third_party/tcmalloc/chromium/src/gperftools/tcmalloc.h.
  // TODO(primiano): replace with an include once base can depend on allocator.

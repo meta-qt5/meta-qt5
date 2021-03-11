@@ -1,4 +1,4 @@
-From c24db93fd5fa5728da55448865ba6bb4d6355491 Mon Sep 17 00:00:00 2001
+From 36174b6d0a7db78739c90ab51643b68cc64c1d5e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 16:41:23 -0700
 Subject: [PATCH] chromium: musl: Adjust default pthread stack size
@@ -10,10 +10,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  2 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/base/threading/platform_thread_linux.cc b/chromium/base/threading/platform_thread_linux.cc
-index 095c49b8dc0..d1479b54d48 100644
+index c1a705e2b89..f322fdb8352 100644
 --- a/chromium/base/threading/platform_thread_linux.cc
 +++ b/chromium/base/threading/platform_thread_linux.cc
-@@ -186,7 +186,8 @@ void TerminateOnThread() {}
+@@ -377,7 +377,8 @@ void TerminateOnThread() {}
  
  size_t GetDefaultThreadStackSize(const pthread_attr_t& attributes) {
  #if !defined(THREAD_SANITIZER)
@@ -24,10 +24,10 @@ index 095c49b8dc0..d1479b54d48 100644
    // ThreadSanitizer bloats the stack heavily. Evidence has been that the
    // default stack size isn't enough for some browser tests.
 diff --git a/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc b/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
-index 1aaaa1c60d2..f49152fa6ac 100644
+index 71b901f4044..f33aba04bc3 100644
 --- a/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
 +++ b/chromium/third_party/blink/renderer/platform/wtf/stack_util.cc
-@@ -28,7 +28,7 @@ size_t GetUnderestimatedStackSize() {
+@@ -29,7 +29,7 @@ size_t GetUnderestimatedStackSize() {
  // FIXME: On Mac OSX and Linux, this method cannot estimate stack size
  // correctly for the main thread.
  
@@ -36,7 +36,7 @@ index 1aaaa1c60d2..f49152fa6ac 100644
      defined(OS_FUCHSIA)
    // pthread_getattr_np() can fail if the thread is not invoked by
    // pthread_create() (e.g., the main thread of blink_unittests).
-@@ -96,7 +96,7 @@ return Threading::ThreadStackSize();
+@@ -97,7 +97,7 @@ return Threading::ThreadStackSize();
  }
  
  void* GetStackStart() {
