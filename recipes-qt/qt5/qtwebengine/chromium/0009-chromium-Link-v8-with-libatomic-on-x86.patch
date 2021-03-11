@@ -1,4 +1,4 @@
-From 15e16b5f8405a402b94bd1be48d1eabff474795f Mon Sep 17 00:00:00 2001
+From 496d125361f53ef9b3e4e92bdcfa19aec57c0007 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 1 Feb 2020 12:17:23 -0800
 Subject: [PATCH] chromium: Link v8 with libatomic on x86
@@ -14,10 +14,10 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/chromium/v8/BUILD.gn b/chromium/v8/BUILD.gn
-index ab20142de9a..4ef4aa80cc0 100644
+index ba99c75140b..33cf943bcba 100644
 --- a/chromium/v8/BUILD.gn
 +++ b/chromium/v8/BUILD.gn
-@@ -3543,7 +3543,8 @@ v8_source_set("v8_base_without_compiler") {
+@@ -3862,7 +3862,8 @@ v8_source_set("v8_base_without_compiler") {
    if (v8_current_cpu == "mips" || v8_current_cpu == "mipsel" ||
        v8_current_cpu == "mips64" || v8_current_cpu == "mips64el" ||
        v8_current_cpu == "ppc" || v8_current_cpu == "ppc64" ||

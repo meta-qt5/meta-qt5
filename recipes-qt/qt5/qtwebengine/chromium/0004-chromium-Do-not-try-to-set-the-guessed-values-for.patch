@@ -1,4 +1,4 @@
-From 4e0bc86764ac1e324c50e698b47c630efab07632 Mon Sep 17 00:00:00 2001
+From 6c43c38e14a889950f1401d484fe16594cac2c22 Mon Sep 17 00:00:00 2001
 From: Johannes Pointner <johannes.pointner@br-automation.com>
 Date: Fri, 3 May 2019 09:12:38 +0200
 Subject: [PATCH] chromium: Do not try to set the guessed values for
@@ -20,10 +20,10 @@ Signed-off-by: Johannes Pointner <johannes.pointner@br-automation.com>
  1 file changed, 9 deletions(-)
 
 diff --git a/chromium/build/config/compiler/BUILD.gn b/chromium/build/config/compiler/BUILD.gn
-index d3c588b21e3..6d49fde33cc 100644
+index c007eab8ec9..feb4340f522 100644
 --- a/chromium/build/config/compiler/BUILD.gn
 +++ b/chromium/build/config/compiler/BUILD.gn
-@@ -777,15 +777,6 @@ config("compiler_cpu_abi") {
+@@ -783,15 +783,6 @@ config("compiler_cpu_abi") {
      } else if (current_cpu == "arm") {
        if (is_clang && !is_android && !is_nacl) {
        }

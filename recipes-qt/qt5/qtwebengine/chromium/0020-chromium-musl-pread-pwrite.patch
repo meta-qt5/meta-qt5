@@ -1,4 +1,4 @@
-From 1506681955d4f7a70372cb27bf47dddd1ca00954 Mon Sep 17 00:00:00 2001
+From dc3766d6b9c173d53027e6fddb8432afcced7398 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 23 Dec 2018 16:58:04 -0800
 Subject: [PATCH] chromium: musl: pread pwrite
@@ -10,17 +10,18 @@ libc either
 Upstream-Status: Submitted [https://codereview.chromium.org/1743093002/]
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- chromium/third_party/lss/linux_syscall_support.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ chromium/third_party/lss/linux_syscall_support.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/chromium/third_party/lss/linux_syscall_support.h b/chromium/third_party/lss/linux_syscall_support.h
-index fd8efdffea6..22a8863031c 100644
+index e4ac22644c0..f56203ccce4 100644
 --- a/chromium/third_party/lss/linux_syscall_support.h
 +++ b/chromium/third_party/lss/linux_syscall_support.h
-@@ -1244,6 +1244,11 @@ struct kernel_statfs {
- #ifndef __NR_fallocate
- #define __NR_fallocate          285
+@@ -1258,6 +1258,12 @@ struct kernel_statfs {
+ #ifndef __NR_getrandom
+ #define __NR_getrandom          318
  #endif
++
 +#undef __NR_pread
 +#define __NR_pread __NR_pread64
 +#undef __NR_pwrite

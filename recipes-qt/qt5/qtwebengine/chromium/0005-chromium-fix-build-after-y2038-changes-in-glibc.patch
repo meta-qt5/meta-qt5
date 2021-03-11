@@ -1,4 +1,4 @@
-From 3be4bd9030c774e5e06abd5e74f9f5465510b2db Mon Sep 17 00:00:00 2001
+From b2521c339d944c1f5333ccc258cbae2fd8b741a2 Mon Sep 17 00:00:00 2001
 From: Jiri Slaby <jslaby@suse.cz>
 Date: Thu, 11 Jul 2019 09:35:13 +0200
 Subject: [PATCH] chromium: fix build after y2038 changes in glibc
@@ -15,10 +15,10 @@ Upstream-Status: Pending
  1 file changed, 1 insertion(+)
 
 diff --git a/chromium/third_party/webrtc/rtc_base/physical_socket_server.cc b/chromium/third_party/webrtc/rtc_base/physical_socket_server.cc
-index 0cbcb8130c6..bc3dd3bddda 100644
+index cf6e7927951..e5df6f9d92c 100644
 --- a/chromium/third_party/webrtc/rtc_base/physical_socket_server.cc
 +++ b/chromium/third_party/webrtc/rtc_base/physical_socket_server.cc
-@@ -71,6 +71,7 @@ typedef void* SockOptArg;
+@@ -70,6 +70,7 @@ typedef void* SockOptArg;
  #endif  // WEBRTC_POSIX
  
  #if defined(WEBRTC_POSIX) && !defined(WEBRTC_MAC) && !defined(__native_client__)
