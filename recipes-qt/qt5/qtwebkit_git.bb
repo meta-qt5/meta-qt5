@@ -62,9 +62,10 @@ EXTRA_OECMAKE += " \
 EXTRA_OECMAKE_append_toolchain-clang = " -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES:PATH='${STAGING_INCDIR}'"
 
 # JIT not supported on MIPS/PPC/RISCV
-EXTRA_OECMAKE_append_mipsarch = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
-EXTRA_OECMAKE_append_powerpc = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
-EXTRA_OECMAKE_append_riscv64 = " -DENABLE_JIT=OFF -DENABLE_C_LOOP=ON "
+EXTRA_OECMAKE_append_mipsarch = " -DENABLE_JIT=OFF -DUSE_SYSTEM_MALLOC=ON -DENABLE_C_LOOP=ON "
+EXTRA_OECMAKE_append_powerpc = " -DENABLE_JIT=OFF -DUSE_SYSTEM_MALLOC=ON -DENABLE_C_LOOP=ON "
+EXTRA_OECMAKE_append_powerpc64le = " -DENABLE_JIT=OFF -DUSE_SYSTEM_MALLOC=ON -DENABLE_C_LOOP=ON "
+EXTRA_OECMAKE_append_riscv64 = " -DENABLE_JIT=OFF -DUSE_SYSTEM_MALLOC=ON -DENABLE_C_LOOP=ON "
 
 # Disable gold on mips64/clang
 # mips64-yoe-linux-musl-ld.gold: internal error in get_got_page_offset, at ../../gold/mips.cc:6260
