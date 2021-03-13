@@ -20,6 +20,7 @@ SRC_URI += " \
     ${QT_GIT}/qt3dstudio-eastl.git;name=EASTL;branch=${QT_MODULE_BRANCH_EASTL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/EASTL \
     file://0001-Fix-examples-build-error.patch \
     file://0001-Qt3DSSimpleTypes-make-QT3DSU64-as-unsigned-long-on-l.patch \
+    file://0001-Qt3D-Add-support-to-fix-build-on-ppc64.patch \
 "
 
 SRCREV_ogl-runtime = "b53aeb784f950d7b2a5ebe38ea37c5bb6f456c9c"
