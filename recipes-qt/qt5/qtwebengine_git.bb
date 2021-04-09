@@ -177,6 +177,7 @@ SRC_URI += " \
     file://chromium/0012-chromium-Link-v8-with-libatomic-on-x86.patch;patchdir=src/3rdparty \
     file://chromium/0013-chromium-icu-use-system-library-only-targets.patch;patchdir=src/3rdparty \
     file://chromium/0014-chromium-Fix-sandbox-Aw-snap-for-syscalls-403-and-40.patch;patchdir=src/3rdparty \
+    file://chromium/0015-chromium-gcc11-fixes.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/83-based

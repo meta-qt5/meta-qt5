@@ -1,0 +1,23 @@
+Include <limits> header
+
+gcc11 complains
+
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/containers/string_pool.h:256:34: error: no member named 'numeric_limits' in namespace 'std'
+    PERFETTO_DCHECK(value < std::numeric_limits<uint32_t>::max());
+
+This is because its missing right header which perhaps is included
+implicitly in older compilers
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+--- a/chromium/third_party/perfetto/src/trace_processor/containers/string_pool.h
++++ b/chromium/third_party/perfetto/src/trace_processor/containers/string_pool.h
+@@ -20,6 +20,7 @@
+ #include <stddef.h>
+ #include <stdint.h>
+ 
++#include <limits>
+ #include <unordered_map>
+ #include <vector>
+ 
