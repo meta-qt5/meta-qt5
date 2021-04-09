@@ -21,7 +21,7 @@ DEPENDS += " \
     qtwebchannel \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols qtquickcontrols2 \
     qtlocation \
-    libdrm fontconfig pixman openssl pango cairo pciutils nss \
+    libdrm libxkbcommon fontconfig pixman openssl pango cairo pciutils nss \
     libcap \
     jpeg-native \
     freetype-native \
