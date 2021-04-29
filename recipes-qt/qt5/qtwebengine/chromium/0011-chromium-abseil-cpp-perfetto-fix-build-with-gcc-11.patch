@@ -1,0 +1,59 @@
+From 504691a6e2ab928115cde1f6163661158151636b Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Thu, 29 Apr 2021 11:11:51 +0200
+Subject: [PATCH] chromium: abseil-cpp, perfetto: fix build with gcc-11
+
+* fixes abseil-cpp:
+FAILED: obj/third_party/abseil-cpp/absl/synchronization/graphcycles_internal/graphcycles.o
+/OE/build/luneos-honister/webos-ports/tmp-glibc/work/core2-64-webos-linux/qtwebengine/5.15.3+gitAUTOINC+0930b350d7_687d322fae-r0/recipe-sysroot-native/usr/bin/x86_64-webos-linux/x86_64-webos-linux-g++ -m64 -march=core2 -mtune=core2 -msse3 -mfpmath=sse --sysroot=/OE/build/luneos-honister/webos-ports/tmp-glibc/work/core2-64-webos-linux/qtwebengine/5.15.3+gitAUTOINC+0930b350d7_687d322fae-r0/recipe-sysroot -MMD -MF obj/third_party/abseil-cpp/absl/synchronization/graphcycles_internal/graphcycles.o.d -DUSE_UDEV -DUSE_AURA=1 -DUSE_NSS_CERTS=1 -DUSE_OZONE=1 -DOFFICIAL_BUILD -DTOOLKIT_QT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DNO_UNWIND_TABLES -DCR_SYSROOT_HASH=5f64b417e1018dcf8fcc81dc2714e0f264b9b911 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DABSL_ALLOCATOR_NOTHROW=1 -Igen -I../../../../git/src/3rdparty/chromium -I../../../../git/src/3rdparty/chromium/third_party/abseil-cpp -fno-strict-aliasing --param=ssp-buffer-size=4 -fstack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fPIC -pipe -pthread -m64 -O2 -fno-ident -fdata-sections -ffunction-sections -fno-omit-frame-pointer -g1 -fvisibility=hidden -Wno-unused-local-typedefs -Wno-maybe-uninitialized -Wno-deprecated-declarations -fno-delete-null-pointer-checks -Wno-comments -Wno-packed-not-aligned -Wno-dangling-else -Wno-missing-field-initializers -Wno-unused-parameter -std=gnu++14 -fno-exceptions -fno-rtti --sysroot=../../../../recipe-sysroot -fvisibility-inlines-hidden -Wno-narrowing -Wno-class-memaccess -Wno-attributes -Wno-class-memaccess -Wno-subobject-linkage -Wno-invalid-offsetof -Wno-return-type -Wno-deprecated-copy -c ../../../../git/src/3rdparty/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc -o obj/third_party/abseil-cpp/absl/synchronization/graphcycles_internal/graphcycles.o
+../../../../git/src/3rdparty/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc: In member function 'void absl::synchronization_internal::GraphCycles::RemoveNode(void*)':
+../../../../git/src/3rdparty/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc:451:26: error: 'numeric_limits' is not a member of 'std'
+  451 |   if (x->version == std::numeric_limits<uint32_t>::max()) {
+      |                          ^~~~~~~~~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc:451:49: error: expected primary-expression before '>' token
+  451 |   if (x->version == std::numeric_limits<uint32_t>::max()) {
+      |                                                 ^
+../../../../git/src/3rdparty/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc:451:52: error: '::max' has not been declared; did you mean 'std::max'?
+  451 |   if (x->version == std::numeric_limits<uint32_t>::max()) {
+      |                                                    ^~~
+      |                                                    std::max
+
+* and perfetto:
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/containers/string_pool.h:256:34: error: no member named 'numeric_limits' in namespace 'std'
+    PERFETTO_DCHECK(value < std::numeric_limits<uint32_t>::max());
+
+This is because its missing right header which perhaps is included
+implicitly in older compilers
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ .../abseil-cpp/absl/synchronization/internal/graphcycles.cc      | 1 +
+ .../perfetto/src/trace_processor/containers/string_pool.h        | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc b/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc
+index 19f9aab5b1a..ab9d7f80bc7 100644
+--- a/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc
++++ b/chromium/third_party/abseil-cpp/absl/synchronization/internal/graphcycles.cc
+@@ -36,6 +36,7 @@
+ #include "absl/synchronization/internal/graphcycles.h"
+ 
+ #include <algorithm>
++#include <limits>
+ #include <array>
+ #include "absl/base/internal/hide_ptr.h"
+ #include "absl/base/internal/raw_logging.h"
+diff --git a/chromium/third_party/perfetto/src/trace_processor/containers/string_pool.h b/chromium/third_party/perfetto/src/trace_processor/containers/string_pool.h
+index 11ae91cfeca..558ff00e8fe 100644
+--- a/chromium/third_party/perfetto/src/trace_processor/containers/string_pool.h
++++ b/chromium/third_party/perfetto/src/trace_processor/containers/string_pool.h
+@@ -20,6 +20,7 @@
+ #include <stddef.h>
+ #include <stdint.h>
+ 
++#include <limits>
+ #include <unordered_map>
+ #include <vector>
+ 

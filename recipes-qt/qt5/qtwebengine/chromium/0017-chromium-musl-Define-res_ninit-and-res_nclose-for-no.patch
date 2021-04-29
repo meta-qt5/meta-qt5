@@ -1,4 +1,4 @@
-From d9897081f0ca3b0da9fd3e6fed67a703f3848d6a Mon Sep 17 00:00:00 2001
+From 108a2e0d81870c418431c8dfb48d827f69606b6e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Fri, 7 Jul 2017 15:27:50 -0700
 Subject: [PATCH] chromium: musl: Define res_ninit and res_nclose for non-glibc
@@ -6,11 +6,27 @@ Subject: [PATCH] chromium: musl: Define res_ninit and res_nclose for non-glibc
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- chromium/net/dns/dns_reloader.cc |  4 ++++
- chromium/net/dns/resolv_compat.h | 29 +++++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
+ chromium/net/dns/dns_config_service_posix.cc |  4 +++
+ chromium/net/dns/dns_reloader.cc             |  4 +++
+ chromium/net/dns/resolv_compat.h             | 29 ++++++++++++++++++++
+ 3 files changed, 37 insertions(+)
  create mode 100644 chromium/net/dns/resolv_compat.h
 
+diff --git a/chromium/net/dns/dns_config_service_posix.cc b/chromium/net/dns/dns_config_service_posix.cc
+index 5a4aead0acf..3427923836b 100644
+--- a/chromium/net/dns/dns_config_service_posix.cc
++++ b/chromium/net/dns/dns_config_service_posix.cc
+@@ -30,6 +30,10 @@
+ #include "net/dns/public/dns_protocol.h"
+ #include "net/dns/serial_worker.h"
+ 
++#if defined(OS_LINUX) && !defined(__GLIBC__)
++#include "net/dns/resolv_compat.h"
++#endif
++
+ #if defined(OS_MAC)
+ #include "net/dns/dns_config_watcher_mac.h"
+ #endif
 diff --git a/chromium/net/dns/dns_reloader.cc b/chromium/net/dns/dns_reloader.cc
 index 0672e711afb..300f77e3b38 100644
 --- a/chromium/net/dns/dns_reloader.cc
