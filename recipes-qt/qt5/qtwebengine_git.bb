@@ -164,7 +164,7 @@ SRC_URI_append_libc-musl = "\
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based-glibc
-# 87-based-glibc.meta-qt5.2
+# 87-based-glibc.meta-qt5.3
 SRC_URI += " \
     file://chromium/0001-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
     file://chromium/0002-chromium-fix-build-with-clang.patch;patchdir=src/3rdparty \
@@ -176,11 +176,11 @@ SRC_URI += " \
     file://chromium/0008-chromium-Move-CharAllocator-definition-to-a-header-f.patch;patchdir=src/3rdparty \
     file://chromium/0009-chromium-Link-v8-with-libatomic-on-x86.patch;patchdir=src/3rdparty \
     file://chromium/0010-chromium-icu-use-system-library-only-targets.patch;patchdir=src/3rdparty \
-    file://chromium/0011-chromium-abseil-cpp-perfetto-fix-build-with-gcc-11.patch;patchdir=src/3rdparty \
+    file://chromium/0011-chromium-abseil-cpp-mojo-perfetto-fix-build-with-gcc.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based
-# 87-based.meta-qt5.2
+# 87-based.meta-qt5.4
 SRC_URI_append_libc-musl = "\
     file://chromium/0012-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch;patchdir=src/3rdparty \
     file://chromium/0013-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty \
