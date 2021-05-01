@@ -1,0 +1,58 @@
+From 0d72160c2956cc18246b198b8a752f2af146a062 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 2 Mar 2021 13:18:47 -0800
+Subject: [PATCH] qfloat16: Include <limits> header
+
+gcc11 complains
+ error: 'numeric_limits' is not a class template
+ |   344 | template<> class numeric_limits<const QT_PREPEND_NAMESPACE(qfloat16)>
+
+This is because its missing right header which perhaps is included
+implicitly in older compilers
+
+Change-Id: I29fa715399e4aa4686d01a2385fcde4ac6860cc0
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/corelib/global/qfloat16.h         | 1 +
+ src/corelib/tools/qbytearraymatcher.h | 1 +
+ src/tools/moc/generator.cpp           | 1 +
+ 3 files changed, 3 insertions(+)
+
+diff --git a/src/corelib/global/qfloat16.h b/src/corelib/global/qfloat16.h
+index b76d2b9616..66383722e6 100644
+--- a/src/corelib/global/qfloat16.h
++++ b/src/corelib/global/qfloat16.h
+@@ -43,6 +43,7 @@
+ #include <QtCore/qglobal.h>
+ #include <QtCore/qmetatype.h>
+ #include <string.h>
++#include <limits>
+ 
+ #if defined(QT_COMPILER_SUPPORTS_F16C) && defined(__AVX2__) && !defined(__F16C__)
+ // All processors that support AVX2 do support F16C too. That doesn't mean
+diff --git a/src/corelib/tools/qbytearraymatcher.h b/src/corelib/tools/qbytearraymatcher.h
+index dafaea9c12..fd9038dcc6 100644
+--- a/src/corelib/tools/qbytearraymatcher.h
++++ b/src/corelib/tools/qbytearraymatcher.h
+@@ -40,6 +40,7 @@
+ #ifndef QBYTEARRAYMATCHER_H
+ #define QBYTEARRAYMATCHER_H
+ 
++#include <limits>
+ #include <QtCore/qbytearray.h>
+ 
+ QT_BEGIN_NAMESPACE
+diff --git a/src/tools/moc/generator.cpp b/src/tools/moc/generator.cpp
+index 12ffd6ae95..a6683d303c 100644
+--- a/src/tools/moc/generator.cpp
++++ b/src/tools/moc/generator.cpp
+@@ -40,6 +40,7 @@
+ #include <QtCore/qplugin.h>
+ #include <QtCore/qstringview.h>
+ 
++#include <limits>
+ #include <math.h>
+ #include <stdio.h>
+ 

@@ -1,4 +1,4 @@
-From b6e5080c41557a20c85326af39323ff1ed42d944 Mon Sep 17 00:00:00 2001
+From 038242ebbaa2153a0ac7e81dffcac2b0b6eedc6c Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Mon, 24 Oct 2016 09:45:18 +0300
 Subject: [PATCH] Disable all unknown features instead of erroring out
@@ -10,7 +10,7 @@ Change-Id: Ib884fe33cac74439f9592b145937f6b75ced8447
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/mkspecs/features/qt_configure.prf b/mkspecs/features/qt_configure.prf
-index 242544d41b..68a7758a9c 100644
+index 850ee98057..7b591dc8bb 100644
 --- a/mkspecs/features/qt_configure.prf
 +++ b/mkspecs/features/qt_configure.prf
 @@ -1598,7 +1598,8 @@ defineReplace(qtConfEvaluateSingleExpression) {

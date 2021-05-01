@@ -1,4 +1,4 @@
-From f434ca2641a9cb93b86ad0b74fbd9b16612a2c24 Mon Sep 17 00:00:00 2001
+From e042e3feaadcd37abcb449adaaee41e16e1dfae4 Mon Sep 17 00:00:00 2001
 From: Allan Sandfeld Jensen <allan.jensen@qt.io>
 Date: Tue, 13 Nov 2018 17:14:43 +0100
 Subject: [PATCH] Fix -Wdeprecated-copy warnings
@@ -27,10 +27,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  9 files changed, 44 insertions(+), 19 deletions(-)
 
 diff --git a/mkspecs/features/qt_common.prf b/mkspecs/features/qt_common.prf
-index caecb68a84..3ef28dcb71 100644
+index 57edc8370a..689172adba 100644
 --- a/mkspecs/features/qt_common.prf
 +++ b/mkspecs/features/qt_common.prf
-@@ -99,14 +99,8 @@ clang {
+@@ -100,14 +100,8 @@ clang {
      greaterThan(QT_GCC_MAJOR_VERSION, 5): QMAKE_CXXFLAGS_WARN_ON += -Wshift-overflow=2 -Wduplicated-cond
      # GCC 7 has a lot of false positives relating to this, so disable completely
      greaterThan(QT_GCC_MAJOR_VERSION, 6): QMAKE_CXXFLAGS_WARN_ON += -Wno-stringop-overflow
@@ -46,7 +46,7 @@ index caecb68a84..3ef28dcb71 100644
  }
  
  warnings_are_errors:warning_clean {
-@@ -146,14 +140,13 @@ warnings_are_errors:warning_clean {
+@@ -147,14 +141,13 @@ warnings_are_errors:warning_clean {
  
              # GCC 7 includes -Wimplicit-fallthrough in -Wextra, but Qt is not yet free of implicit fallthroughs.
              greaterThan(QT_GCC_MAJOR_VERSION, 6): QMAKE_CXXFLAGS_WARN_ON += -Wno-error=implicit-fallthrough
