@@ -12,6 +12,7 @@ LIC_FILES_CHKSUM = " \
 "
 
 DEPENDS += " \
+    dbus \
     libpng-native \
     nss-native \
     nspr-native \
