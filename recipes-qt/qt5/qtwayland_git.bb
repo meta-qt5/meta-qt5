@@ -20,7 +20,7 @@ SRC_URI += "file://0001-tst_seatv4-Include-array.patch"
 PACKAGECONFIG ?= " \
     wayland-client \
     wayland-server \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'wayland-egl', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl wayland', 'wayland-egl', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcomposite-egl xcomposite-glx', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'vulkan', 'wayland-vulkan-server-buffer', '', d)} \
 "
