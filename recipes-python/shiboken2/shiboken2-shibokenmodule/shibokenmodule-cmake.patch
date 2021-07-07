@@ -1,0 +1,11 @@
+--- a/shibokenmodule/CMakeLists.txt	2020-04-28 08:46:37.449922818 +0000
++++ b/shibokenmodule/CMakeLists.txt	2020-04-28 08:46:43.902666101 +0000
+@@ -13,7 +13,7 @@
+ # Note: shiboken2 is an executable target. By not specifying its explicit
+ # path, CMAKE figures it out, itself!
+ # This fixes an issue with Visual Studio, see https://github.com/PySide/shiboken2/pull/11
+-COMMAND shiboken2 --project-file=${CMAKE_CURRENT_BINARY_DIR}/shibokenmodule.txt ${GENERATOR_EXTRA_FLAGS}
++COMMAND ${SHIBOKEN2_GENERATOR_EXECUTABLE} --project-file=${CMAKE_CURRENT_BINARY_DIR}/shibokenmodule.txt ${GENERATOR_EXTRA_FLAGS}
+ DEPENDS ${shibokenmodule_TYPESYSTEM}
+ WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+ COMMENT "Running generator for 'shiboken2'..."
