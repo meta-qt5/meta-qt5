@@ -1,0 +1,32 @@
+From 55b91a76172a3235b4879daf0b675519d5b02db7 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bj=C3=B6rn=20Sch=C3=A4pers?= <bjoern@hazardy.de>
+Date: Wed, 16 Jun 2021 20:59:29 +0200
+Subject: [PATCH] clangformat: Fix build with LLVM 13
+
+Change-Id: Ia9db10696fd129c8b989ecc4c9ecbb7f1f10e68c
+Reviewed-by: David Schulz <david.schulz@qt.io>
+
+Upstream-Status: Accepted [https://code.qt.io/cgit/qt-creator/qt-creator.git/commit/?id=55b91a76172a3235b4879daf0b675519d5b02db7]
+---
+ src/plugins/clangformat/clangformatutils.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/plugins/clangformat/clangformatutils.cpp b/src/plugins/clangformat/clangformatutils.cpp
+index 2f9a306b99..3905ae5f6a 100644
+--- a/src/plugins/clangformat/clangformatutils.cpp
++++ b/src/plugins/clangformat/clangformatutils.cpp
+@@ -157,7 +157,11 @@ static clang::format::FormatStyle qtcStyle()
+     style.SpaceBeforeParens = FormatStyle::SBPO_ControlStatements;
+     style.SpaceInEmptyParentheses = false;
+     style.SpacesBeforeTrailingComments = 1;
++#if LLVM_VERSION_MAJOR >= 13
++    style.SpacesInAngles = FormatStyle::SIAS_Never;
++#else
+     style.SpacesInAngles = false;
++#endif
+     style.SpacesInContainerLiterals = false;
+     style.SpacesInCStyleCastParentheses = false;
+     style.SpacesInParentheses = false;
+-- 
+2.31.1
+
