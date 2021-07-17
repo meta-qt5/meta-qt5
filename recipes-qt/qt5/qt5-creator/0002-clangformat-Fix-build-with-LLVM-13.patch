@@ -1,0 +1,49 @@
+From 14eb5b382cabf90352634393c19bf87a4c15766a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bj=C3=B6rn=20Sch=C3=A4pers?= <bjoern@hazardy.de>
+Date: Mon, 8 Mar 2021 21:56:06 +0100
+Subject: [PATCH] clangformat: Fix build with LLVM 13
+
+Change-Id: I5eaad17a6f240aa1e3f246492b69f093b4f59fee
+Reviewed-by: David Schulz <david.schulz@qt.io>
+
+Upstream-Status: Accepted [https://code.qt.io/cgit/qt-creator/qt-creator.git/commit/?id=14eb5b382cabf90352634393c19bf87a4c15766a]
+---
+ src/plugins/clangformat/clangformatbaseindenter.cpp | 4 ++++
+ src/plugins/clangformat/clangformatutils.cpp        | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/src/plugins/clangformat/clangformatbaseindenter.cpp b/src/plugins/clangformat/clangformatbaseindenter.cpp
+index fb8e693809..6378b2af53 100644
+--- a/src/plugins/clangformat/clangformatbaseindenter.cpp
++++ b/src/plugins/clangformat/clangformatbaseindenter.cpp
+@@ -42,7 +42,11 @@ void adjustFormatStyleForLineBreak(clang::format::FormatStyle &style,
+                                    ReplacementsToKeep replacementsToKeep)
+ {
+     style.MaxEmptyLinesToKeep = 100;
++#if LLVM_VERSION_MAJOR >= 13
++    style.SortIncludes = clang::format::FormatStyle::SI_Never;
++#else
+     style.SortIncludes = false;
++#endif
+     style.SortUsingDeclarations = false;
+ 
+     // This is a separate pass, don't do it unless it's the full formatting.
+diff --git a/src/plugins/clangformat/clangformatutils.cpp b/src/plugins/clangformat/clangformatutils.cpp
+index a249327d0e..770e75908c 100644
+--- a/src/plugins/clangformat/clangformatutils.cpp
++++ b/src/plugins/clangformat/clangformatutils.cpp
+@@ -145,7 +145,11 @@ static clang::format::FormatStyle qtcStyle()
+     style.PenaltyReturnTypeOnItsOwnLine = 300;
+     style.PointerAlignment = FormatStyle::PAS_Right;
+     style.ReflowComments = false;
++#ifdef LLVM_VERSION_MAJOR >= 13
++    style.SortIncludes = FormatStyle::SI_CaseSensitive;
++#else
+     style.SortIncludes = true;
++#endif
+     style.SortUsingDeclarations = true;
+     style.SpaceAfterCStyleCast = true;
+     style.SpaceAfterTemplateKeyword = false;
+-- 
+2.31.1
+
