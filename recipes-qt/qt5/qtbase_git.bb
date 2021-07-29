@@ -42,7 +42,7 @@ SRC_URI += "\
 LTO = ""
 
 # for syncqt
-RDEPENDS_${PN}-tools += "perl"
+RDEPENDS:${PN}-tools += "perl"
 
 # separate some parts of PACKAGECONFIG which are often changed
 PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gl', 'no-opengl', d)}"
@@ -165,8 +165,8 @@ QT_CONFIG_FLAGS_GOLD = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', '-
 # OE @ ~/build/oe-core/tmp-glibc/work/i586-oe-linux/qtbase/5.9.0+gitAUTOINC+f6b36eaafe-r0/build/tests/auto/corelib/kernel/qmetatype $ i586-oe-linux-g++  -m32 -march=i586 --sysroot=/OE/build/oe-core/tmp-glibc/work/i586-oe-linux/qtbase/5.9.0+gitAUTOINC+f6b36eaafe-r0/recipe-sysroot -Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed --sysroot=/OE/build/oe-core/tmp-glibc/work/i586-oe-linux/qtbase/5.9.0+gitAUTOINC+f6b36eaafe-r0/recipe-sysroot -Wl,-O1 -fuse-ld=bfd -Wl,--enable-new-dtags -o tst_qmetatype .obj/tst_qmetatype.o   -L/OE/build/oe-core/tmp-glibc/work/i586-oe-linux/qtbase/5.9.0+gitAUTOINC+f6b36eaafe-r0/build/lib -lQt5Test -lQt5Core -lpthread
 #
 # http://errors.yoctoproject.org/Errors/Details/150329/
-# QT_CONFIG_FLAGS_GOLD_x86 = "-no-use-gold-linker"
-# LDFLAGS_append_x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
+# QT_CONFIG_FLAGS_GOLD:x86 = "-no-use-gold-linker"
+# LDFLAGS:append:x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
 # since the upgrade to 5.12.2 this got worse, with gold enabled configure will no longer pass the test for xlib
 # because with full paths to libraries since qtbase commit 521a85395 it fails to link with
@@ -176,9 +176,9 @@ QT_CONFIG_FLAGS_GOLD = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', '-
 # resulting in do_configure failure:
 # http://errors.yoctoproject.org/Errors/Details/237856/
 QT_CONFIG_FLAGS_GOLD = "-no-use-gold-linker"
-LDFLAGS_append = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
+LDFLAGS:append = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-LDFLAGS_append_riscv64 = " -pthread"
+LDFLAGS:append:riscv64 = " -pthread"
 
 QT_CONFIG_FLAGS += " \
     ${QT_CONFIG_FLAGS_GOLD} \
@@ -189,9 +189,9 @@ QT_CONFIG_FLAGS += " \
     ${PACKAGECONFIG_CONFARGS} \
 "
 
-export CC_host_toolchain-clang = "clang"
-export CXX_host_toolchain-clang = "clang++"
-export LD_host_toolchain-clang = "clang++"
+export CC_host:toolchain-clang = "clang"
+export CXX_host:toolchain-clang = "clang++"
+export LD_host:toolchain-clang = "clang++"
 export CC_host ?= "gcc"
 export CXX_host ?= "g++"
 export LD_host ?= "g++"
@@ -200,13 +200,13 @@ export LD_host ?= "g++"
 # since we cannot set empty set filename to a not existent file
 deltask generate_qt_config_file
 
-XPLATFORM_toolchain-clang = "linux-oe-clang"
+XPLATFORM:toolchain-clang = "linux-oe-clang"
 XPLATFORM ?= "linux-oe-g++"
 
 # Causes qdrawhelper.s: Error: unaligned opcodes detected in executable segment
 # when building qtbase/5.6.3+gitAUTOINC+e6f8b072d2-r0/git/src/gui/painting/qdrawhelper.cpp
-ARM_INSTRUCTION_SET_armv4 = "arm"
-ARM_INSTRUCTION_SET_armv5 = "arm"
+ARM_INSTRUCTION_SET:armv4 = "arm"
+ARM_INSTRUCTION_SET:armv5 = "arm"
 
 do_configure() {
     # Regenerate header files when they are included in source tarball
@@ -244,7 +244,7 @@ do_configure() {
         ${QT_CONFIG_FLAGS}
 }
 
-do_install_append() {
+do_install:append() {
     # Avoid qmake error "Cannot read [...]/usr/lib/qt5/mkspecs/oe-device-extra.pri: No such file or directory"
     touch ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/oe-device-extra.pri
 
@@ -283,21 +283,21 @@ do_install_append() {
 }
 
 # mkspecs have mac specific scripts that depend on perl and bash
-INSANE_SKIP_${PN}-mkspecs += "file-rdeps"
+INSANE_SKIP:${PN}-mkspecs += "file-rdeps"
 
-RRECOMMENDS_${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
+RRECOMMENDS:${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
 
 TARGET_MKSPEC ?= "linux-g++"
 
 # use clean mkspecs on target
-pkg_postinst_${PN}-tools () {
+pkg_postinst:${PN}-tools () {
 sed -i \
     -e 's:HostSpec =.*:HostSpec = ${TARGET_MKSPEC}:g' \
     -e 's:TargetSpec =.*:TargetSpec = ${TARGET_MKSPEC}:g' \
     $D${OE_QMAKE_PATH_BINS}/qt.conf
 }
 
-pkg_postinst_${PN}-mkspecs () {
+pkg_postinst:${PN}-mkspecs () {
 sed -i 's: cross_compile : :g' $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qconfig.pri
 sed -i \
     -e 's: cross_compile : :g' \

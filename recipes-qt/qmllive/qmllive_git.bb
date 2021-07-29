@@ -18,4 +18,4 @@ inherit pkgconfig qmake5
 EXTRA_QMAKEVARS_PRE += "LIB_ARCH=${@d.getVar('baselib').replace('lib', '')}"
 EXTRA_QMAKEVARS_POST = "QMAKE_RPATHDIR="
 
-FILES_${PN}-dev += "${datadir}"
+FILES:${PN}-dev += "${datadir}"

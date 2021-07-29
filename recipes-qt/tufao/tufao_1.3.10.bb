@@ -10,7 +10,7 @@ SRC_URI = "git://github.com/vinipsmaker/tufao.git;protocol=http;branch=1.x \
 "
 
 # This includes bugfixes from 1.x branch
-PV_append = "+${SRCPV}"
+PV:append = "+${SRCPV}"
 
 S = "${WORKDIR}/git"
 
@@ -18,11 +18,11 @@ inherit cmake_qt5
 
 PACKAGES += "${PN}-mkspecs"
 
-FILES_${PN}-mkspecs = "\
+FILES:${PN}-mkspecs = "\
     ${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs \
 "
 
-FILES_${PN}-dev += " \
+FILES:${PN}-dev += " \
     ${OE_QMAKE_PATH_LIBS}/lib*${SOLIBSDEV} \
     ${OE_QMAKE_PATH_LIBS}/pkgconfig \
     ${OE_QMAKE_PATH_LIBS}/cmake/* \

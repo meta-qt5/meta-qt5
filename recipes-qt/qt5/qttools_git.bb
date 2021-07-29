@@ -19,19 +19,19 @@ SRC_URI += " \
     file://0002-linguist-tools-cmake-allow-overriding-the-location-f.patch \
     file://0003-src.pro-Add-option-noqdoc-to-disable-qdoc-builds.patch \
 "
-SRC_URI_append_class-native = " ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'file://0004-Force-native-build-of-qt-help-tools-as-qhelpgenerato.patch', '', d)}"
+SRC_URI:append:class-native = " ${@bb.utils.contains('PACKAGECONFIG', 'clang', 'file://0004-Force-native-build-of-qt-help-tools-as-qhelpgenerato.patch', '', d)}"
 
-FILES_${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
-FILES_${PN}-examples = "${datadir}${QT_DIR_NAME}/examples"
+FILES:${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
+FILES:${PN}-examples = "${datadir}${QT_DIR_NAME}/examples"
 
 PACKAGECONFIG ??= ""
-PACKAGECONFIG_append_toolchain-clang = " clang"
+PACKAGECONFIG:append:toolchain-clang = " clang"
 
 PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
 PACKAGECONFIG[clang] = ",,clang"
 
-COMPATIBLE_HOST_toolchain-clang_riscv32 = "null"
-COMPATIBLE_HOST_toolchain-clang_riscv64 = "null"
+COMPATIBLE_HOST:toolchain-clang:riscv32 = "null"
+COMPATIBLE_HOST:toolchain-clang:riscv64 = "null"
 
 export YOCTO_ALTERNATE_EXE_PATH = "${STAGING_BINDIR}/llvm-config"
 

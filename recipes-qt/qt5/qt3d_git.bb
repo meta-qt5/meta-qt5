@@ -9,19 +9,19 @@ LIC_FILES_CHKSUM = " \
 "
 
 DEPENDS += "qtbase"
-DEPENDS_class-target += "qtdeclarative qt3d-native"
+DEPENDS:class-target += "qtdeclarative qt3d-native"
 
 # Patches from https://github.com/meta-qt5/qt3d/commits/b5.15
 # 5.15.meta-qt5.2
 SRC_URI += " \
     file://0001-Allow-a-tools-only-build.patch \
 "
-SRC_URI_append_riscv64 = " file://0001-renderers-opengl-Link-in-libatomic-on-riscv.patch"
-SRC_URI_append_riscv32 = " file://0001-renderers-opengl-Link-in-libatomic-on-riscv.patch"
+SRC_URI:append:riscv64 = " file://0001-renderers-opengl-Link-in-libatomic-on-riscv.patch"
+SRC_URI:append:riscv32 = " file://0001-renderers-opengl-Link-in-libatomic-on-riscv.patch"
 
 PACKAGECONFIG ??= ""
-PACKAGECONFIG_class-native ??= "tools-only"
-PACKAGECONFIG_class-nativesdk ??= "tools-only"
+PACKAGECONFIG:class-native ??= "tools-only"
+PACKAGECONFIG:class-nativesdk ??= "tools-only"
 PACKAGECONFIG[tools-only] = ""
 PACKAGECONFIG[system-assimp] = "-feature-system-assimp,-no-feature-system-assimp,assimp"
 PACKAGECONFIG[qtgamepad] = ",,qtgamepad"
@@ -31,7 +31,7 @@ EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'tools-only', 'CONFIG+=tools-only QMAKE_USE_PRIVATE+=zlib', '', d)}"
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtgamepad', 'CONFIG+=OE_QTGAMEPAD_ENABLED', '', d)}"
 
-do_configure_prepend() {
+do_configure:prepend() {
     # disable qtgamepad test if it isn't enabled by PACKAGECONFIG
     sed -e 's/^\(qtHaveModule(gamepad)\)/OE_QTGAMEPAD_ENABLED:\1/' -i \
          ${S}/src/input/frontend/frontend.pri \

@@ -16,7 +16,7 @@ SRCREV = "95aa78be795a862b95371afa75e1417029ec0a16"
 # 5.15.meta-qt5.1
 SRC_URI += "file://0001-Use-external-host-bin-path-for-cmake-file.patch"
 
-do_install_append_class-nativesdk() {
+do_install:append:class-nativesdk() {
     # qml files not needed in nativesdk
     rm -rf ${D}${OE_QMAKE_PATH_QML}
 }

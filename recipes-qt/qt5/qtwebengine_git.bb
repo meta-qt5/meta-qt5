@@ -32,7 +32,7 @@ DEPENDS += " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libxcomposite libxcursor libxi libxrandr libxtst', '', d)} \
 "
 
-DEPENDS_append_libc-musl = " libexecinfo"
+DEPENDS:append:libc-musl = " libexecinfo"
 
 EXTRA_QMAKEVARS_CONFIGURE += "-feature-webengine-system-ninja -no-feature-webengine-system-gn"
 EXTRA_QMAKEVARS_PRE += "CONFIG+=force_debug_info"
@@ -72,12 +72,12 @@ PACKAGECONFIG[pulseaudio] = "-feature-webengine-pulseaudio,-no-feature-webengine
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
 COMPATIBLE_MACHINE = "(-)"
-COMPATIBLE_MACHINE_x86 = "(.*)"
-COMPATIBLE_MACHINE_x86-64 = "(.*)"
-COMPATIBLE_MACHINE_armv6 = "(.*)"
-COMPATIBLE_MACHINE_armv7a = "(.*)"
-COMPATIBLE_MACHINE_armv7ve = "(.*)"
-COMPATIBLE_MACHINE_aarch64 = "(.*)"
+COMPATIBLE_MACHINE:x86 = "(.*)"
+COMPATIBLE_MACHINE:x86-64 = "(.*)"
+COMPATIBLE_MACHINE:armv6 = "(.*)"
+COMPATIBLE_MACHINE:armv7a = "(.*)"
+COMPATIBLE_MACHINE:armv7ve = "(.*)"
+COMPATIBLE_MACHINE:aarch64 = "(.*)"
 
 inherit qmake5
 inherit gettext
@@ -120,7 +120,7 @@ do_configure() {
         ${EXTRA_QMAKEVARS_CONFIGURE}
 }
 
-do_configure_prepend_libc-musl() {
+do_configure:prepend:libc-musl() {
         for f in `find ${S}/src/3rdparty/chromium/third_party/ffmpeg/chromium/config/Chromium/linux/ -name config.h -o -name config.asm`; do
                 sed -i -e "s:define HAVE_SYSCTL 1:define HAVE_SYSCTL 0:g" $f
         done
@@ -128,17 +128,17 @@ do_configure_prepend_libc-musl() {
 
 do_compile[progress] = "outof:^\[(\d+)/(\d+)\]\s+"
 
-do_install_append() {
+do_install:append() {
     sed -i 's@ -Wl,--start-group.*-Wl,--end-group@@g; s@[^ ]*${B}[^ ]* @@g' ${D}${libdir}/pkgconfig/Qt5WebEngineCore.pc
 }
 
 # for /usr/share/qt5/qtwebengine_resources.pak
-FILES_${PN} += "${OE_QMAKE_PATH_QT_TRANSLATIONS} ${OE_QMAKE_PATH_QT_DATA}"
+FILES:${PN} += "${OE_QMAKE_PATH_QT_TRANSLATIONS} ${OE_QMAKE_PATH_QT_DATA}"
 
 # Chromium uses libpci to determine which optimizations/workarounds to apply
-RDEPENDS_${PN}_append_x86 = " libpci"
+RDEPENDS:${PN}:append:x86 = " libpci"
 
-RDEPENDS_${PN}-examples += " \
+RDEPENDS:${PN}-examples += " \
     ${PN}-qmlplugins \
     qtquickcontrols-qmlplugins \
     qtdeclarative-qmlplugins \
@@ -158,7 +158,7 @@ SRC_URI += " \
 "
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
 # 5.15.meta-qt5.12
-SRC_URI_append_libc-musl = "\
+SRC_URI:append:libc-musl = "\
     file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
     file://0004-musl-link-against-libexecinfo.patch \
     file://0005-mkspecs-Allow-builds-with-libc-glibc.patch \
@@ -182,7 +182,7 @@ SRC_URI += " \
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based
 # 87-based.meta-qt5.4
-SRC_URI_append_libc-musl = "\
+SRC_URI:append:libc-musl = "\
     file://chromium/0012-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch;patchdir=src/3rdparty \
     file://chromium/0013-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty \
     file://chromium/0014-chromium-musl-include-fcntl.h-for-loff_t.patch;patchdir=src/3rdparty \
@@ -203,4 +203,4 @@ SRCREV = "${SRCREV_qtwebengine}"
 SRCREV_FORMAT = "qtwebengine_chromium"
 
 # WARNING: qtwebengine-5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0 do_package_qa: QA Issue: ELF binary '/OE/build/oe-core/tmp-glibc/work/i586-oe-linux/qtwebengine/5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0/packages-split/qtwebengine/usr/lib/libQt5WebEngineCore.so.5.6.0' has relocations in .text [textrel]
-INSANE_SKIP_${PN} += "textrel"
+INSANE_SKIP:${PN} += "textrel"

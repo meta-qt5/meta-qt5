@@ -1,5 +1,5 @@
 # hardcode linux, because that's what 0001-Add-linux-oe-g-platform.patch adds
-XPLATFORM_toolchain-clang = "linux-oe-clang"
+XPLATFORM:toolchain-clang = "linux-oe-clang"
 XPLATFORM ?= "linux-oe-g++"
 
 OE_QMAKE_PLATFORM_NATIVE = "${XPLATFORM}"

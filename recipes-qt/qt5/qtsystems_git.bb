@@ -17,12 +17,12 @@ PACKAGECONFIG[bluez] = "CONFIG+=OE_BLUEZ_ENABLED,,bluez5"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 
-do_configure_prepend() {
+do_configure:prepend() {
     # disable bluez test if it isn't enabled by PACKAGECONFIG
     sed -i 's/^    qtCompileTest(bluez)/    OE_BLUEZ_ENABLED:qtCompileTest(bluez)/g' ${S}/qtsystems.pro
 }
 
-do_install_append() {
+do_install:append() {
     # Remove example.pro file as it is useless
     rm -f ${D}${OE_QMAKE_PATH_EXAMPLES}/examples.pro	
 }

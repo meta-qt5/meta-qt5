@@ -65,9 +65,9 @@ EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', 'CONFIG+=disable-desktop', d)}"
 
 PACKAGES += "${PN}-dictionaries"
-RRECOMMENDS_${PN} += "${PN}-dictionaries"
-FILES_${PN}-dictionaries = "${OE_QMAKE_PATH_DATA}/qtvirtualkeyboard/*/*.dat"
-FILES_${PN} += "${OE_QMAKE_PATH_DATA}/qtvirtualkeyboard/lipi_toolkit"
+RRECOMMENDS:${PN} += "${PN}-dictionaries"
+FILES:${PN}-dictionaries = "${OE_QMAKE_PATH_DATA}/qtvirtualkeyboard/*/*.dat"
+FILES:${PN} += "${OE_QMAKE_PATH_DATA}/qtvirtualkeyboard/lipi_toolkit"
 
 DEPENDS += "qtbase qtdeclarative qtmultimedia qtquickcontrols qtsvg qtxmlpatterns qtdeclarative-native"
 

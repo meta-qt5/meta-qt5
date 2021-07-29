@@ -19,8 +19,8 @@ SRC_URI += " \
 "
 
 PACKAGECONFIG ??= ""
-PACKAGECONFIG_class-native ??= "tools-only"
-PACKAGECONFIG_class-nativesdk ??= "tools-only"
+PACKAGECONFIG:class-native ??= "tools-only"
+PACKAGECONFIG:class-nativesdk ??= "tools-only"
 PACKAGECONFIG[tools-only] = "CONFIG+=tools-only"
 
 EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"

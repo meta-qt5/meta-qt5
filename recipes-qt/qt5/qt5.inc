@@ -47,36 +47,36 @@ python __anonymous() {
 
 # Many examples come with libraries installed outside of standard libdir,
 # suppress QA check complaining
-INSANE_SKIP_${PN}-dbg += "libdir"
-INSANE_SKIP_${PN}-examples += "libdir staticdev dev-so"
+INSANE_SKIP:${PN}-dbg += "libdir"
+INSANE_SKIP:${PN}-examples += "libdir staticdev dev-so"
 
 PACKAGES =. "${PN}-qmldesigner ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples "
 
-ALLOW_EMPTY_${PN} = "1"
-ALLOW_EMPTY_${PN}-plugins = "1"
-ALLOW_EMPTY_${PN}-qmlplugins = "1"
+ALLOW_EMPTY:${PN} = "1"
+ALLOW_EMPTY:${PN}-plugins = "1"
+ALLOW_EMPTY:${PN}-qmlplugins = "1"
 
-RRECOMMENDS_${PN} = " \
+RRECOMMENDS:${PN} = " \
     ${PN}-plugins \
     ${PN}-qmlplugins \
     "
-RRECOMMENDS_${PN}_class-native = ""
+RRECOMMENDS:${PN}:class-native = ""
 
-RRECOMMENDS_${PN}-dev = " \
+RRECOMMENDS:${PN}-dev = " \
     ${PN} \
     ${PN}-mkspecs \
     ${PN}-qmldesigner \
     "
 
 # extra packages
-FILES_${PN}-qmldesigner += " \
+FILES:${PN}-qmldesigner += " \
     ${OE_QMAKE_PATH_QML}/*/designer \
     ${OE_QMAKE_PATH_QML}/*/*/designer \
     ${OE_QMAKE_PATH_QML}/*/*/*/designer \
 "
 
 # qmlplugins 1-4 levels of subdirs qmldir + *{.so,*.qmltypes,*.qml,*.qmlc,*.js,*.jsc}
-FILES_${PN}-qmlplugins = " \
+FILES:${PN}-qmlplugins = " \
     ${OE_QMAKE_PATH_QML}/*.qmltypes \
     ${OE_QMAKE_PATH_QML}/*/*${SOLIBSDEV} \
     ${OE_QMAKE_PATH_QML}/*/qmldir \
@@ -114,25 +114,25 @@ FILES_${PN}-qmlplugins = " \
     ${OE_QMAKE_PATH_QML}/*/*/*/*/*/*.png \
 "
 
-FILES_${PN}-tools = " \
+FILES:${PN}-tools = " \
     ${OE_QMAKE_PATH_BINS}/* \
 "
-FILES_${PN}-plugins = " \
+FILES:${PN}-plugins = " \
     ${OE_QMAKE_PATH_PLUGINS}/*/*${SOLIBSDEV} \
     ${OE_QMAKE_PATH_PLUGINS}/*/*/*${SOLIBSDEV} \
     ${OE_QMAKE_PATH_PLUGINS}/*/*/*/*${SOLIBSDEV} \
 "
-FILES_${PN}-mkspecs = "\
+FILES:${PN}-mkspecs = "\
     ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
 "
 
 # modifications to normal packages
-FILES_${PN} += " \
+FILES:${PN} += " \
     ${OE_QMAKE_PATH_LIBS}/metatypes \
     ${OE_QMAKE_PATH_LIBS}/lib*${SOLIBS} \
     ${OE_QMAKE_PATH_LIBEXECS} \
 "
-FILES_${PN}-dev += " \
+FILES:${PN}-dev += " \
     ${OE_QMAKE_PATH_LIBS}/lib*${SOLIBSDEV} \
     ${OE_QMAKE_PATH_LIBS}/pkgconfig \
     ${OE_QMAKE_PATH_LIBS}/cmake/* \
@@ -140,7 +140,7 @@ FILES_${PN}-dev += " \
     ${OE_QMAKE_PATH_LIBS}/*.la \
     ${OE_QMAKE_PATH_HEADERS}/* \
 "
-FILES_${PN}-staticdev += " \
+FILES:${PN}-staticdev += " \
     ${OE_QMAKE_PATH_LIBS}/*.a \
     ${OE_QMAKE_PATH_PLUGINS}/*/*.a \
     ${OE_QMAKE_PATH_PLUGINS}/*/*.prl \
@@ -155,8 +155,8 @@ FILES_${PN}-staticdev += " \
     ${OE_QMAKE_PATH_QML}/*/*/*/*/*.a \
     ${OE_QMAKE_PATH_QML}/*/*/*/*/*.prl \
 "
-FILES_${PN}-examples = " \
+FILES:${PN}-examples = " \
     ${OE_QMAKE_PATH_EXAMPLES} \
 "
 
-PATH_prepend = "${STAGING_DIR_NATIVE}${OE_QMAKE_PATH_QT_BINS}:"
+PATH:prepend = "${STAGING_DIR_NATIVE}${OE_QMAKE_PATH_QT_BINS}:"

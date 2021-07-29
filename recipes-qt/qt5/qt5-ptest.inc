@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_append := ":${THISDIR}/ptest"
+FILESEXTRAPATHS:append := ":${THISDIR}/ptest"
 SRC_URI += "file://run-ptest"
 
 inherit ptest

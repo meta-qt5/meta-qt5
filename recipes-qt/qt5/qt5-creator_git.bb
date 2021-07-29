@@ -15,7 +15,7 @@ LIC_FILES_CHKSUM = " \
 inherit qmake5 mime-xdg
 
 DEPENDS += "qtbase qtscript qtxmlpatterns qtx11extras qtdeclarative qttools qttools-native qtsvg chrpath-replacement-native zlib"
-DEPENDS_append_libc-musl = " libexecinfo"
+DEPENDS:append:libc-musl = " libexecinfo"
 
 SRCREV = "94d227cd434d09717de95529e5210ec530451e1c"
 PV = "4.15.2+git${SRCPV}"
@@ -27,7 +27,7 @@ SRC_URI = " \
     file://0002-clangformat-Fix-build-with-LLVM-13.patch \
     file://0003-clangformat-Fix-build-with-LLVM-13.patch \
 "
-SRC_URI_append_libc-musl = " file://0001-Link-with-libexecinfo-on-musl.patch"
+SRC_URI:append:libc-musl = " file://0001-Link-with-libexecinfo-on-musl.patch"
 
 S = "${WORKDIR}/git"
 
@@ -39,16 +39,16 @@ EXTRA_QMAKEVARS_PRE += " \
 EXTRANATIVEPATH += "chrpath-native"
 
 PACKAGECONFIG ??= ""
-PACKAGECONFIG_append_toolchain-clang = " clang"
+PACKAGECONFIG:append:toolchain-clang = " clang"
 
 # Important note: In case clang was added to qttools' PACKAGECONFIG, it has to
 # be added here too - otherwise build fails trying to link native clang libraries
 PACKAGECONFIG[clang] = ",,clang"
 
-COMPATIBLE_HOST_toolchain-clang_riscv32 = "null"
-COMPATIBLE_HOST_toolchain-clang_riscv64 = "null"
+COMPATIBLE_HOST:toolchain-clang:riscv32 = "null"
+COMPATIBLE_HOST:toolchain-clang:riscv64 = "null"
 
-do_configure_append() {
+do_configure:append() {
     # Find native tools
     sed -i 's:${STAGING_BINDIR}.*/qdoc:${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}/qdoc:g' ${B}/Makefile
     if [ -e ${B}/share/qtcreator/translations/Makefile ]; then
@@ -68,22 +68,22 @@ do_install() {
     fi
 }
 
-FILES_${PN} += " \
+FILES:${PN} += " \
     ${datadir}/qtcreator \
     ${datadir}/metainfo \
     ${datadir}/icons \
     ${libdir}${QT_DIR_NAME}/qtcreator \
 "
 
-FILES_${PN}-dev += " \
+FILES:${PN}-dev += " \
     ${libdir}${QT_DIR_NAME}/qtcreator/*${SOLIBSDEV} \
 "
 
-RDEPENDS_${PN} += "perl python3"
-RCONFLICTS_${PN} = "qt-creator"
+RDEPENDS:${PN} += "perl python3"
+RCONFLICTS:${PN} = "qt-creator"
 
 # To give best user experience out of the box..
-RRECOMMENDS_${PN} += " \
+RRECOMMENDS:${PN} += " \
     packagegroup-qt5-toolchain-target \
     binutils \
     ccache \
@@ -98,7 +98,7 @@ RRECOMMENDS_${PN} += " \
 "
 
 # ERROR: qt5-creator-4.5.1-r0 do_package_qa: QA Issue: No GNU_HASH in the elf binary: '/OE/build/oe-core/tmp-glibc/work/core2-64-oe-linux/qt5-creator/4.5.1-r0/packages-split/qt5-creator/usr/lib/qt5/qtcreator/libqbscore.so.1.10.1'
-INSANE_SKIP_${PN} += "ldflags"
+INSANE_SKIP:${PN} += "ldflags"
 
 inherit features_check
 REQUIRED_DISTRO_FEATURES ?= "x11 opengl"

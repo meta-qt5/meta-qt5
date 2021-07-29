@@ -61,12 +61,12 @@ SRC_URI += " \
 
 PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
 
-FILES_${PN}-dev += " \
+FILES:${PN}-dev += " \
     ${OE_QMAKE_PATH_ARCHDATA}/mkspecs \
     ${OE_QMAKE_PATH_LIBS}/*.prl \
 "
 
-FILES_${PN} += " \
+FILES:${PN} += " \
     ${SDKPATHNATIVE}/environment-setup.d \
     ${OE_QMAKE_PATH_PLUGINS} \
     ${OE_QMAKE_PATH_LIBS}/metatypes \
@@ -76,7 +76,7 @@ FILES_${PN} += " \
 # collisions with qt4. This would trigger debian.bbclass to rename the
 # package, since it doesn't detect binaries in subdirs. Explicitly
 # disable package auto-renaming for the tools-package.
-DEBIAN_NOAUTONAME_${PN} = "1"
+DEBIAN_NOAUTONAME:${PN} = "1"
 
 PACKAGECONFIG ?= ""
 PACKAGECONFIG[gui] = "-gui -qpa offscreen,-no-gui,"

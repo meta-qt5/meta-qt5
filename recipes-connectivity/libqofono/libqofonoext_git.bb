@@ -13,7 +13,7 @@ PV = "1.025+gitr${SRCPV}"
 
 inherit qmake5
 
-do_install_append() {
+do_install:append() {
     if ls ${D}${libdir}/pkgconfig/qofono-qt5.pc >/dev/null 2>/dev/null; then
         sed -i "s@-L${STAGING_LIBDIR}@-L\${libdir}@g" ${D}${libdir}/pkgconfig/qofono-qt5.pc
     fi
@@ -21,7 +21,7 @@ do_install_append() {
 
 PACKAGES += "${PN}-tests"
 
-FILES_${PN} += " \
+FILES:${PN} += " \
     ${OE_QMAKE_PATH_QML}/org/nemomobile/ofono/qmldir \
     ${OE_QMAKE_PATH_QML}/org/nemomobile/ofono/plugins.qmltypes \
     ${OE_QMAKE_PATH_QML}/org/nemomobile/ofono/libqofonoextdeclarative.so \

@@ -31,7 +31,7 @@ PARALLEL_MAKEINST = ""
 
 DISABLED_FEATURES = "PyQt_Desktop_OpenGL PyQt_Accessibility PyQt_SessionManager"
 
-do_configure_prepend() {
+do_configure:prepend() {
     cd ${S}
     echo "[PyQt 5]" > pyqt.cfg
     echo "py_platform = linux" >> pyqt.cfg
@@ -44,7 +44,7 @@ do_configure_prepend() {
     echo yes | ${PYTHON} configure.py --verbose --qmake  ${STAGING_BINDIR_NATIVE}/${QT_DIR_NAME}/qmake --configuration pyqt.cfg --sysroot ${STAGING_DIR_HOST}
 }
 
-do_configure_append() {
+do_configure:append() {
     #Fix installation paths
     sed -i -e s:'$(INSTALL_ROOT)'${STAGING_EXECPREFIXDIR}:'$(INSTALL_ROOT)'${D}${exec_prefix}:g ${S}/Makefile
     sed -i -e s:'$(INSTALL_ROOT)'${STAGING_EXECPREFIXDIR}:'$(INSTALL_ROOT)'${D}${exec_prefix}:g ${S}/QtChart/Makefile
@@ -63,7 +63,7 @@ do_install() {
 }
 
 
-FILES_${PN} += "${libdir}/${PYTHON_DIR}/site-packages ${datadir}/"
+FILES:${PN} += "${libdir}/${PYTHON_DIR}/site-packages ${datadir}/"
 
-RDEPENDS_${PN} = "qtbase qtdeclarative qtquickcontrols2 qtquickcontrols2-mkspecs qtcharts"
-RDEPENDS_${PN} += "python3-core python3-sip3 python3-pyqt5"
+RDEPENDS:${PN} = "qtbase qtdeclarative qtquickcontrols2 qtquickcontrols2-mkspecs qtcharts"
+RDEPENDS:${PN} += "python3-core python3-sip3 python3-pyqt5"

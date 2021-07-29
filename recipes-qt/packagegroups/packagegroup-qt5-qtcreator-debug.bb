@@ -8,7 +8,7 @@ inherit packagegroup
 # Override by distro if needed
 VIRTUAL-RUNTIME_qtcreator-debug-ssh-daemon ?= "openssh-sshd"
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
     gdbserver \
     ${VIRTUAL-RUNTIME_qtcreator-debug-ssh-daemon} \
     openssh-sftp-server \

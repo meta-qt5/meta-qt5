@@ -8,7 +8,7 @@ inherit qmake5
 
 DEPENDS = "maliit-framework-qt5"
 
-RDEPENDS_${PN} += "qtsvg-plugins"
+RDEPENDS:${PN} += "qtsvg-plugins"
 
 SRC_URI = "git://github.com/maliit/plugins.git;branch=master \
            file://0001-Do-not-use-tr1-namespace.patch \
@@ -26,9 +26,9 @@ EXTRA_QMAKEVARS_PRE = "\
 "
 
 # tests fail to build with clang
-EXTRA_QMAKEVARS_PRE_append_toolchain-clang = " CONFIG+=notests"
+EXTRA_QMAKEVARS_PRE:append:toolchain-clang = " CONFIG+=notests"
 
-FILES_${PN} += "\
+FILES:${PN} += "\
     ${libdir}/maliit \
     ${datadir} \
 "

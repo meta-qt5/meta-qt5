@@ -23,11 +23,11 @@ inherit qmake5
 
 EXTRA_QMAKEVARS_PRE += "PREFIX=${prefix}"
 
-do_install_append() {
+do_install:append() {
     install -Dm 0644 ${WORKDIR}/${PN}.conf ${D}${sysconfdir}/${PN}.conf
 }
 
-RDEPENDS_${PN} += " \
+RDEPENDS:${PN} += " \
     liberation-fonts \
     qtdeclarative-qmlplugins \
     qtquickcontrols-qmlplugins \
@@ -35,9 +35,9 @@ RDEPENDS_${PN} += " \
     qtwebengine-qmlplugins \
 "
 COMPATIBLE_MACHINE = "(-)"
-COMPATIBLE_MACHINE_x86 = "(.*)"
-COMPATIBLE_MACHINE_x86-64 = "(.*)"
-COMPATIBLE_MACHINE_armv6 = "(.*)"
-COMPATIBLE_MACHINE_armv7a = "(.*)"
-COMPATIBLE_MACHINE_armv7ve = "(.*)"
-COMPATIBLE_MACHINE_aarch64 = "(.*)"
+COMPATIBLE_MACHINE:x86 = "(.*)"
+COMPATIBLE_MACHINE:x86-64 = "(.*)"
+COMPATIBLE_MACHINE:armv6 = "(.*)"
+COMPATIBLE_MACHINE:armv7a = "(.*)"
+COMPATIBLE_MACHINE:armv7ve = "(.*)"
+COMPATIBLE_MACHINE:aarch64 = "(.*)"
