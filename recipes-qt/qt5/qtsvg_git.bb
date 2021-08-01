@@ -12,4 +12,6 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
+SRC_URI_append = " file://CVE-2021-3481.patch"
+
 SRCREV = "52d3788c7b0116ea3db232dccca5f1e3f1e229ac"
