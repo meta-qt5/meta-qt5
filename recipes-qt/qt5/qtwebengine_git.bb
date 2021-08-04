@@ -160,6 +160,7 @@ SRC_URI += " \
     file://chromium/0021-chromium-Exclude-CRC32-for-32bit-arm.patch;patchdir=src/3rdparty \
     file://chromium/0022-chromium-Do-not-try-to-set-the-guessed-values-for-ma.patch;patchdir=src/3rdparty \
     file://chromium/0007-chromium-fix-build-after-y2038-changes-in-glibc.patch;patchdir=src/3rdparty \
+    file://chromium/0013-chromium-breakpad-fix-build-with-glibc-2.34.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI_append_libc-musl = "\
