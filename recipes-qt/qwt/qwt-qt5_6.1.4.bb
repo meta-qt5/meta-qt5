@@ -24,7 +24,7 @@ EXTRA_QMAKEVARS_PRE += " \
     QWT_CONFIG+=QwtExamples \
 "
 
-do_configure_prepend() {
+do_configure:prepend() {
     sed -i \
         -e 's:/usr/local/qwt-$$QWT_VERSION:${prefix}:' \
         -e 's:^QWT_INSTALL_LIBS.*:QWT_INSTALL_LIBS = ${libdir}:' \
@@ -32,7 +32,7 @@ do_configure_prepend() {
     export QWT_INSTALL_LIBS=${libdir}
 }
 
-do_install_append() {
+do_install:append() {
     # seems out of tree build confuses installation of examples
     # so install them manually
     install -d ${D}${bindir}/
@@ -40,13 +40,13 @@ do_install_append() {
 }
 
 
-PACKAGES_prepend = "${PN}-examples ${PN}-features ${PN}-plugins "
-FILES_${PN}-examples = "${bindir}/*"
-FILES_${PN}-features = "${prefix}/features"
-FILES_${PN}-plugins = "${prefix}/plugins/designer/*.so"
-FILES_${PN}-doc += "${prefix}/doc"
+PACKAGES:prepend = "${PN}-examples ${PN}-features ${PN}-plugins "
+FILES:${PN}-examples = "${bindir}/*"
+FILES:${PN}-features = "${prefix}/features"
+FILES:${PN}-plugins = "${prefix}/plugins/designer/*.so"
+FILES:${PN}-doc += "${prefix}/doc"
 
-INSANE_SKIP_${PN}-plugins += "libdir"
-INSANE_SKIP_${PN}-dbg += "libdir"
+INSANE_SKIP:${PN}-plugins += "libdir"
+INSANE_SKIP:${PN}-dbg += "libdir"
 
-RPROVIDES_${PN}-dev = "libqwt-qt5-dev"
+RPROVIDES:${PN}-dev = "libqwt-qt5-dev"

@@ -1,7 +1,7 @@
 # This allow reuse of Qt paths
 inherit qmake5_paths
 
-create_sdk_files_prepend () {
+create_sdk_files:prepend () {
     # Generate a qt.conf file to be deployed with the SDK
     qtconf=${SDK_OUTPUT}/${SDKPATHNATIVE}${OE_QMAKE_PATH_HOST_BINS}/qt.conf
     touch $qtconf

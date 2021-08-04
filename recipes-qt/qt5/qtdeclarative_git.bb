@@ -19,7 +19,7 @@ PACKAGECONFIG[qml-debug] = "-qml-debug,-no-qml-debug"
 PACKAGECONFIG[qml-network] = "-qml-network, -no-qml-network"
 PACKAGECONFIG[static] = ",,qtdeclarative-native"
 
-do_install_append_class-nativesdk() {
+do_install:append:class-nativesdk() {
     # qml files not needed in nativesdk
     rm -rf ${D}${OE_QMAKE_PATH_QML}
 }

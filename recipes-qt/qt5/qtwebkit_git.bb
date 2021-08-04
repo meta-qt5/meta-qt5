@@ -29,16 +29,16 @@ inherit cmake_qt5 perlnative pythonnative
 # | {standard input}: Assembler messages:
 # | {standard input}:106: Error: invalid immediate: 983040 is out of range
 # | {standard input}:106: Error: value of 983040 too large for field of 2 bytes at 146
-ARM_INSTRUCTION_SET_armv4 = "arm"
-ARM_INSTRUCTION_SET_armv5 = "arm"
+ARM_INSTRUCTION_SET:armv4 = "arm"
+ARM_INSTRUCTION_SET:armv5 = "arm"
 
 # https://bugzilla.yoctoproject.org/show_bug.cgi?id=9474
 # https://bugs.webkit.org/show_bug.cgi?id=159880
 # JSC JIT can build on ARMv7 with -marm, but doesn't work on runtime.
 # Upstream only tests regularly the JSC JIT on ARMv7 with Thumb2 (-mthumb).
-ARM_INSTRUCTION_SET_armv7a = "thumb"
-ARM_INSTRUCTION_SET_armv7r = "thumb"
-ARM_INSTRUCTION_SET_armv7ve = "thumb"
+ARM_INSTRUCTION_SET:armv7a = "thumb"
+ARM_INSTRUCTION_SET:armv7r = "thumb"
+ARM_INSTRUCTION_SET:armv7ve = "thumb"
 
 # http://errors.yoctoproject.org/Errors/Details/179245/
 # just use -fpermissive in this case like fedora did:
@@ -52,11 +52,11 @@ EXTRA_OECMAKE += " \
     -DQML_INSTALL_DIR=${OE_QMAKE_PATH_QML} \
 "
 
-EXTRA_OECMAKE_append_toolchain-clang = " -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES:PATH='${STAGING_INCDIR}'"
+EXTRA_OECMAKE:append:toolchain-clang = " -DCMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES:PATH='${STAGING_INCDIR}'"
 
 # JIT not supported on MIPS64
-EXTRA_OECMAKE_append_mips64 = " -DENABLE_JIT=OFF "
-EXTRA_OECMAKE_append_mips64el = " -DENABLE_JIT=OFF "
+EXTRA_OECMAKE:append:mips64 = " -DENABLE_JIT=OFF "
+EXTRA_OECMAKE:append:mips64el = " -DENABLE_JIT=OFF "
 
 PACKAGECONFIG ??= "qtlocation qtmultimedia qtsensors qtwebchannel \
     ${@bb.utils.filter('DISTRO_FEATURES', 'x11', d)} \
@@ -76,7 +76,7 @@ PACKAGECONFIG[fontconfig] = "-DENABLE_TEST_SUPPORT=ON,-DENABLE_TEST_SUPPORT=OFF,
 PACKAGECONFIG[hyphen] = "-DUSE_LIBHYPHEN=ON,-DUSE_LIBHYPHEN=OFF,hyphen"
 
 # remove default ${PN}-examples* set in qt5.inc, because they conflicts with ${PN} from separate webkit-examples recipe
-PACKAGES_remove = "${PN}-examples"
+PACKAGES:remove = "${PN}-examples"
 
 QT_MODULE_BRANCH = "dev"
 

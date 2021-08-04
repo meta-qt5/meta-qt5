@@ -15,4 +15,4 @@ inherit pkgconfig qmake5
 
 EXTRA_QMAKEVARS_POST = "QMAKE_RPATHDIR="
 
-FILES_${PN}-dev += "${datadir}"
+FILES:${PN}-dev += "${datadir}"

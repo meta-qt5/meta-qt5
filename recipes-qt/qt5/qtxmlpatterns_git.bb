@@ -15,10 +15,10 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase"
 
 PACKAGECONFIG ?= ""
-PACKAGECONFIG_class-target ?= "qtdeclarative"
+PACKAGECONFIG:class-target ?= "qtdeclarative"
 PACKAGECONFIG[qtdeclarative] = ",,qtdeclarative"
 
-do_configure_prepend() {
+do_configure:prepend() {
     # disable qtdeclarative test if it isn't enabled by PACKAGECONFIG
     sed -e 's/qtHaveModule(qml)/OE_QTDECLARATIVE_ENABLED/' -i ${S}/src/src.pro
 }

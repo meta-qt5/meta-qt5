@@ -25,12 +25,12 @@ PARALLEL_MAKEINST = ""
 
 DISABLED_FEATURES = "PyQt_Desktop_OpenGL PyQt_Accessibility PyQt_SessionManager"
 
-DISABLED_FEATURES_append_arm = " PyQt_qreal_double"
+DISABLED_FEATURES:append:arm = " PyQt_qreal_double"
 
 PYQT_MODULES = "QtCore QtGui QtNetwork QtWidgets"
-PYQT_MODULES_aarch64 = "QtCore QtGui QtNetwork QtWidgets"
+PYQT_MODULES:aarch64 = "QtCore QtGui QtNetwork QtWidgets"
 
-do_configure_prepend() {
+do_configure:prepend() {
     cd ${S}
     echo "py_platform = linux" > pyqt.cfg
     echo "py_inc_dir = %(sysroot)/$includedir/python%(py_major).%(py_minor)${PYTHON_ABI}" >> pyqt.cfg
@@ -58,6 +58,6 @@ do_install() {
     oe_runmake MAKEFLAGS='-j 1' install
 }
 
-FILES_${PN} += "${libdir}/${PYTHON_DIR}/site-packages ${datadir}/sip/PyQt5/"
+FILES:${PN} += "${libdir}/${PYTHON_DIR}/site-packages ${datadir}/sip/PyQt5/"
 
-RDEPENDS_${PN} = "qtbase"
+RDEPENDS:${PN} = "qtbase"

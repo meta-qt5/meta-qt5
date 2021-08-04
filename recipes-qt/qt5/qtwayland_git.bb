@@ -4,7 +4,7 @@ require qt5-git.inc
 inherit pkgconfig
 
 DEPENDS += "qtbase qtdeclarative wayland wayland-native qtwayland-native"
-DEPENDS_append_class-target = " libxkbcommon"
+DEPENDS:append:class-target = " libxkbcommon"
 
 LICENSE = "GFDL-1.3 & BSD & ( GPL-3.0 & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0+ | LGPL-3.0 | The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
@@ -21,12 +21,12 @@ PACKAGECONFIG ?= " \
     wayland-egl \
     ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'xcomposite-egl xcomposite-glx', '', d)} \
 "
-PACKAGECONFIG_class-native ?= ""
-PACKAGECONFIG_class-nativesdk ?= ""
-QMAKE_PROFILES_class-native = "${S}/src/qtwaylandscanner"
-QMAKE_PROFILES_class-nativesdk = "${S}/src/qtwaylandscanner"
-B_class-native = "${SEPB}/src/qtwaylandscanner"
-B_class-nativesdk = "${SEPB}/src/qtwaylandscanner"
+PACKAGECONFIG:class-native ?= ""
+PACKAGECONFIG:class-nativesdk ?= ""
+QMAKE_PROFILES:class-native = "${S}/src/qtwaylandscanner"
+QMAKE_PROFILES:class-nativesdk = "${S}/src/qtwaylandscanner"
+B:class-native = "${SEPB}/src/qtwaylandscanner"
+B:class-nativesdk = "${SEPB}/src/qtwaylandscanner"
 
 PACKAGECONFIG[wayland-client] = "-feature-wayland-client,-no-feature-wayland-client"
 PACKAGECONFIG[wayland-server] = "-feature-wayland-server,-no-feature-wayland-server"
@@ -45,7 +45,7 @@ BBCLASSEXTEND =+ "native nativesdk"
 
 # The same issue as in qtbase:
 # http://errors.yoctoproject.org/Errors/Details/152641/
-LDFLAGS_append = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
+LDFLAGS:append = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
 # Since version 5.11.2 some private headers are not installed. Work around
 # until fixed upstream. See https://bugreports.qt.io/browse/QTBUG-71340 for
@@ -53,7 +53,7 @@ LDFLAGS_append = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-
 QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY ?= "1"
 # First 6 characters before first + (e.g. 5.11.3-+git) or - (e.g. 5.11.3-2)
 SHRT_VER ?= "${@d.getVar('PV').split('+')[0].split('-')[0]}"
-do_install_append() {
+do_install:append() {
     if [ -d "${B}/src/client" -a "${QTWAYLAND_INSTALL_PRIVATE_HEADERS_MANUALLY}" = "1" -a -d "${D}${includedir}/QtWaylandClient/${SHRT_VER}/QtWaylandClient/private/" ]; then
         for header in `find ${B}/src/client -name '*wayland-*.h'`; do
             header_base=`basename $header`

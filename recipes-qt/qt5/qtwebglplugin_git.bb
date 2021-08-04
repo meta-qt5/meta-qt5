@@ -11,7 +11,7 @@ DEPENDS += "qtbase qtwebsockets"
 PACKAGECONFIG ?= "qtdeclarative"
 PACKAGECONFIG[qtdeclarative] = ",,qtdeclarative"
 
-do_configure_prepend() {
+do_configure:prepend() {
     # disable qtdeclarative test if it isn't enabled by PACKAGECONFIG
     sed -e 's/^\(qtHaveModule(quick)\)/OE_QTDECLARATIVE_ENABLED:\1/' -i ${S}/src/plugins/platforms/webgl/webgl.pro
 }

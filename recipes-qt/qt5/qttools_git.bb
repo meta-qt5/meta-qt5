@@ -21,8 +21,8 @@ SRC_URI += " \
     file://0002-linguist-tools-cmake-allow-overriding-the-location-f.patch \
 "
 
-FILES_${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
-FILES_${PN}-examples = "${datadir}${QT_DIR_NAME}/examples"
+FILES:${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
+FILES:${PN}-examples = "${datadir}${QT_DIR_NAME}/examples"
 
 PACKAGECONFIG ??= ""
 PACKAGECONFIG[qtwebkit] = ",,qtwebkit"
