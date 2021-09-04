@@ -1,0 +1,30 @@
+From c010cfedd13ffc57e0e6374f5662e9cdb56dd3ca Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Sat, 4 Sep 2021 12:03:32 -0700
+Subject: [PATCH] linux-dmabuf-unstable-v1: Include missing <array> header
+
+Fixes issue found with clang/libc++
+src/hardwareintegration/compositor/linux-dmabuf-unstable-v1/linuxdmabuf.h:145:40: error: implicit instantiation of undefined template 'std::array<Plane, 4>'
+    std::array<Plane, MaxDmabufPlanes> m_planes;
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ .../compositor/linux-dmabuf-unstable-v1/linuxdmabuf.h            | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/hardwareintegration/compositor/linux-dmabuf-unstable-v1/linuxdmabuf.h b/src/hardwareintegration/compositor/linux-dmabuf-unstable-v1/linuxdmabuf.h
+index 56a710c3..1beb5f76 100644
+--- a/src/hardwareintegration/compositor/linux-dmabuf-unstable-v1/linuxdmabuf.h
++++ b/src/hardwareintegration/compositor/linux-dmabuf-unstable-v1/linuxdmabuf.h
+@@ -44,6 +44,7 @@
+ #include <EGL/egl.h>
+ #include <EGL/eglext.h>
+ 
++#include <array>
+ // compatibility with libdrm <= 2.4.74
+ #ifndef DRM_FORMAT_RESERVED
+ #define DRM_FORMAT_RESERVED           ((1ULL << 56) - 1)
+-- 
+2.33.0
+

@@ -15,7 +15,9 @@ LIC_FILES_CHKSUM = " \
 
 # Patches from https://github.com/meta-qt5/qtwayland/commits/b5.15
 # 5.15.meta-qt5.1
-SRC_URI += "file://0001-tst_seatv4-Include-array.patch"
+SRC_URI += "file://0001-tst_seatv4-Include-array.patch \
+            file://0001-linux-dmabuf-unstable-v1-Include-missing-array-heade.patch \
+           "
 
 PACKAGECONFIG ?= " \
     wayland-client \
