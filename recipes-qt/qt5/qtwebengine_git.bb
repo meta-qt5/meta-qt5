@@ -34,6 +34,8 @@ DEPENDS += " \
 
 DEPENDS:append:libc-musl = " libexecinfo"
 
+inherit pkgconfig
+
 EXTRA_QMAKEVARS_CONFIGURE += "-feature-webengine-system-ninja -no-feature-webengine-system-gn"
 EXTRA_QMAKEVARS_PRE += "CONFIG+=force_debug_info"
 
