@@ -12,6 +12,8 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtdeclarative"
 
+inherit pkgconfig
+
 PACKAGECONFIG ??= "gstreamer \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa', '', d)} \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)}"
