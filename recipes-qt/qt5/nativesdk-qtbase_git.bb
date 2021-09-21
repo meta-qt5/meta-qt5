@@ -15,6 +15,8 @@ LIC_FILES_CHKSUM = " \
 
 QT_MODULE = "qtbase"
 
+inherit pkgconfig
+
 require nativesdk-qt5.inc
 require qt5-git.inc
 
