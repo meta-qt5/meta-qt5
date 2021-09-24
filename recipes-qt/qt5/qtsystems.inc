@@ -1,3 +1,5 @@
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
 require qt5.inc
 
 DEPENDS += "qtbase qtdeclarative qtjsondb udev bluez4 gconf" 
@@ -10,3 +12,7 @@ LIC_FILES_CHKSUM = "file://${S}/src/imports/systeminfo/qsysteminfo.cpp;endline=4
 "
 
 INC_PR = "r0"
+
+SRC_URI += " \
+    file://0001-qtsystems-install-files-only-once.patch \
+"
