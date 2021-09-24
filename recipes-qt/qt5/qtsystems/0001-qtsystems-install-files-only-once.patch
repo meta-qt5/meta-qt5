@@ -1,0 +1,70 @@
+From 34071f47bb5a0b1617e8cc97d8259899f7e96f9f Mon Sep 17 00:00:00 2001
+From: ansar-rasool <ansar_rasool@mentor.com>
+Date: Wed, 22 Sep 2021 10:50:42 +0500
+Subject: [PATCH] qtsystems: install files only once
+
+This fixes build error for qtsystems when it tries to
+install files multiple times and fails with error of
+"Destination file exists".
+
+Signed-off-by: ansar-rasool <ansar_rasool@mentor.com>
+---
+ examples/systeminfo/inputinfo/inputinfo.pro           | 3 +--
+ examples/systeminfo/qml-battery/qml-battery.pro       | 3 +--
+ examples/systeminfo/qml-deviceinfo/qml-deviceinfo.pro | 3 +--
+ examples/systeminfo/qml-inputinfo/qml-inputinfo.pro   | 3 +--
+ 4 files changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/examples/systeminfo/inputinfo/inputinfo.pro b/examples/systeminfo/inputinfo/inputinfo.pro
+index a5365fa..d0947e8 100644
+--- a/examples/systeminfo/inputinfo/inputinfo.pro
++++ b/examples/systeminfo/inputinfo/inputinfo.pro
+@@ -22,5 +22,4 @@ HEADERS += \
+     inputtest.h
+ 
+ target.path = $$[QT_INSTALL_EXAMPLES]/systeminfo/inputinfo
+-        app.path = $$[QT_INSTALL_EXAMPLES]/systeminfo/inputinfo
+-        INSTALLS += target app
++INSTALLS += target
+diff --git a/examples/systeminfo/qml-battery/qml-battery.pro b/examples/systeminfo/qml-battery/qml-battery.pro
+index e9e3700..7c35d53 100644
+--- a/examples/systeminfo/qml-battery/qml-battery.pro
++++ b/examples/systeminfo/qml-battery/qml-battery.pro
+@@ -7,8 +7,7 @@ app.files = \
+     $$files(*.qml) \
+ 
+ target.path = $$[QT_INSTALL_EXAMPLES]/systeminfo/qml-battery
+-app.path = $$[QT_INSTALL_EXAMPLES]/systeminfo/qml-battery
+-INSTALLS += target app
++INSTALLS += target
+ 
+ RESOURCES += \
+     qml-battery.qrc
+diff --git a/examples/systeminfo/qml-deviceinfo/qml-deviceinfo.pro b/examples/systeminfo/qml-deviceinfo/qml-deviceinfo.pro
+index 4a39200..a942272 100644
+--- a/examples/systeminfo/qml-deviceinfo/qml-deviceinfo.pro
++++ b/examples/systeminfo/qml-deviceinfo/qml-deviceinfo.pro
+@@ -7,8 +7,7 @@ app.files = \
+     $$files(*.qml)
+ 
+ target.path = $$[QT_INSTALL_EXAMPLES]/systeminfo/qml-deviceinfo
+-app.path = $$[QT_INSTALL_EXAMPLES]/systeminfo/qml-deviceinfo
+-INSTALLS += target app
++INSTALLS += target
+ 
+ RESOURCES += \
+     qml-deviceinfo.qrc
+diff --git a/examples/systeminfo/qml-inputinfo/qml-inputinfo.pro b/examples/systeminfo/qml-inputinfo/qml-inputinfo.pro
+index 4b49738..0a389e3 100644
+--- a/examples/systeminfo/qml-inputinfo/qml-inputinfo.pro
++++ b/examples/systeminfo/qml-inputinfo/qml-inputinfo.pro
+@@ -7,8 +7,7 @@ app.files = \
+     $$files(*.qml) \
+ 
+ target.path = $$[QT_INSTALL_EXAMPLES]/systeminfo/qml-inputinfo
+-app.path = $$[QT_INSTALL_EXAMPLES]/systeminfo/qml-inputinfo
+-INSTALLS += target app
++INSTALLS += target
+ 
+ RESOURCES += \
+     qml-inputinfo.qrc
