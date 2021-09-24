@@ -1,3 +1,5 @@
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
 require qt5.inc
 require qt5-git.inc
 
@@ -30,3 +32,7 @@ do_install:append() {
 QT_MODULE_BRANCH = "dev"
 
 SRCREV = "e3332ee38d27a134cef6621fdaf36687af1b6f4a"
+
+SRC_URI += " \
+    file://0001-qtsystems-install-files-only-once.patch \
+"
