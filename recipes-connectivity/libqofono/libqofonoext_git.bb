@@ -11,7 +11,7 @@ S = "${WORKDIR}/git"
 
 PV = "1.025+gitr${SRCPV}"
 
-inherit qmake5
+inherit pkgconfig qmake5
 
 do_install:append() {
     if ls ${D}${libdir}/pkgconfig/qofono-qt5.pc >/dev/null 2>/dev/null; then
