@@ -1,6 +1,8 @@
 require qt5.inc
 require qt5-git.inc
 
+inherit pkgconfig
+
 LICENSE = "BSD & LGPLv2+ | GPL-2.0"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
