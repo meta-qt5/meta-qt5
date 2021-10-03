@@ -47,7 +47,7 @@ EXTRA_QMAKEVARS_PRE += "CONFIG+=force_debug_info"
 # http://errors.yoctoproject.org/Errors/Details/150333/
 SECURITY_STRINGFORMAT = ""
 
-# To use system ffmpeg you need to enable also libwebp, opus, vpx
+# To use system ffmpeg you need to enable also libwebp, opus, libvpx
 # Only depenedencies available in oe-core are enabled by default
 PACKAGECONFIG ??= "libevent libpng \
                    ${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)}"
