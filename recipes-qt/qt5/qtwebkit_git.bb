@@ -19,6 +19,7 @@ SRC_URI += "\
     file://0004-Fix-build-bug-for-armv32-BE.patch \
     file://0001-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
     file://0008-Fix-build-with-icu-68.patch \
+    file://0001-Fix-build-with-icu-65.1-https-bugs.webkit.org-show_b.patch \
 "
 
 inherit cmake_qt5 perlnative pythonnative
