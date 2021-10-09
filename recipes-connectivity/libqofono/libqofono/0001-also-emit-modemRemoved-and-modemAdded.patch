@@ -1,4 +1,4 @@
-From 05241dc61e8c43a12f91ee9976a2ecb2337a3eaf Mon Sep 17 00:00:00 2001
+From d2ceb83fe889d7cb40ad1e0d71e75d726a87fb28 Mon Sep 17 00:00:00 2001
 From: Christophe Chapuis <chris.chapuis@gmail.com>
 Date: Sat, 13 Jul 2019 11:17:08 +0000
 Subject: [PATCH] onGetModemsFinished: also emit modemRemoved and modemAdded
@@ -7,17 +7,18 @@ VoiceCall only subscribes to these events, so we need to emit these
 more "atomic" events too.
 
 Signed-off-by: Christophe Chapuis <chris.chapuis@gmail.com>
+
 ---
  src/qofonomanager.cpp | 21 ++++++++++++++++++---
  1 file changed, 18 insertions(+), 3 deletions(-)
 
 diff --git a/src/qofonomanager.cpp b/src/qofonomanager.cpp
-index deeb946..e94a3c7 100644
+index e1da658..38cf0e4 100644
 --- a/src/qofonomanager.cpp
 +++ b/src/qofonomanager.cpp
-@@ -40,15 +40,30 @@ void QOfonoManager::Private::handleGetModemsReply(QOfonoManager* obj, ObjectPath
+@@ -88,15 +88,30 @@ void QOfonoManager::Private::handleGetModemsReply(QOfonoManager *obj, ObjectPath
  {
-     bool wasAvailable = available;
+     const bool wasAvailable = available;
      QString prevDefault = defaultModem();
 -    QStringList newModems;
 +    QStringList newModems, oldModems;
@@ -49,6 +50,3 @@ index deeb946..e94a3c7 100644
          Q_EMIT obj->modemsChanged(modems);
      }
      QString newDefault = defaultModem();
--- 
-2.23.0
-
