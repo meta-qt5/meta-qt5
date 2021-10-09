@@ -1,14 +1,14 @@
 require recipes-qt/qt5/qt5.inc
 
 SUMMARY = "Qt Library for ConnMan"
-HOMEPAGE = "https://git.merproject.org/mer-core/libconnman-qt"
+HOMEPAGE = "https://github.com/sailfishos/libconnman-qt"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://libconnman-qt/clockmodel.h;endline=8;md5=ea9f724050803f15d2d900ce3c5dac88"
 DEPENDS += "qtbase qtdeclarative"
-PV = "1.2.34+git${SRCPV}"
+PV = "1.2.35+git${SRCPV}"
 
-SRCREV = "a0b6b0d9a63f28ab41747892f415c89866d62e4a"
-SRC_URI = "git://git.merproject.org/mer-core/libconnman-qt.git;protocol=https;branch=master \
+SRCREV = "347f20fe1a03bf0624f55b9108c797611e79f7d2"
+SRC_URI = "git://github.com/sailfishos/libconnman-qt.git;protocol=https;branch=master \
     file://0001-Don-t-use-MeeGo-as-prefix-in-order-to-make-this-a-co.patch \
     file://0001-Add-missing-declarations-for-operator-overloads.patch \
 "
