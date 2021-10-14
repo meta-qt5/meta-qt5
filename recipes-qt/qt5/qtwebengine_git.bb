@@ -30,6 +30,8 @@ DEPENDS += " \
 
 DEPENDS_append_libc-musl = " libexecinfo"
 
+inherit pkgconfig
+
 EXTRA_QMAKEVARS_CONFIGURE += "-feature-webengine-system-ninja -no-feature-webengine-system-gn"
 EXTRA_QMAKEVARS_PRE += "CONFIG+=force_debug_info"
 
@@ -139,6 +141,7 @@ QT_MODULE_BRANCH_CHROMIUM = "69-based"
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
+    file://0002-Remove-ninja-version-test-for-now-it-fails-for-ninja.patch \
 "
 SRC_URI_append_libc-musl = "\
     file://0002-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
@@ -157,6 +160,7 @@ SRC_URI += " \
     file://chromium/0021-chromium-Exclude-CRC32-for-32bit-arm.patch;patchdir=src/3rdparty \
     file://chromium/0022-chromium-Do-not-try-to-set-the-guessed-values-for-ma.patch;patchdir=src/3rdparty \
     file://chromium/0007-chromium-fix-build-after-y2038-changes-in-glibc.patch;patchdir=src/3rdparty \
+    file://chromium/0013-chromium-breakpad-fix-build-with-glibc-2.34.patch;patchdir=src/3rdparty \
 "
 
 SRC_URI_append_libc-musl = "\

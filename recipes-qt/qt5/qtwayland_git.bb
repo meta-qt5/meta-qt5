@@ -1,6 +1,8 @@
 require qt5.inc
 require qt5-git.inc
 
+inherit pkgconfig
+
 DEPENDS += "qtbase qtdeclarative wayland wayland-native qtwayland-native"
 DEPENDS_append_class-target = " libxkbcommon"
 

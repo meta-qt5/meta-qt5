@@ -1,0 +1,53 @@
+From 94e71ee824df7b3dc126ff96007daaca56829924 Mon Sep 17 00:00:00 2001
+From: "commit-queue@webkit.org" <commit-queue@webkit.org>
+Date: Fri, 4 Oct 2019 21:51:37 +0000
+Subject: [PATCH] Fix build with icu 65.1
+ https://bugs.webkit.org/show_bug.cgi?id=202600
+
+Patch by Heiko Becker <heirecka@exherbo.org> on 2019-10-04
+Reviewed by Konstantin Tokarev.
+
+Source/WebCore:
+
+* dom/Document.cpp:
+(WebCore::isValidNameNonASCII):
+(WebCore::Document::parseQualifiedName):
+
+Source/WTF:
+
+* wtf/URLHelpers.cpp:
+(WTF::URLHelpers::allCharactersInIDNScriptWhiteList):
+
+git-svn-id: http://svn.webkit.org/repository/webkit/trunk@250747 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+---
+ Source/WebCore/dom/Document.cpp | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Source/WebCore/dom/Document.cpp b/Source/WebCore/dom/Document.cpp
+index 2598b0f1e..28a935b55 100644
+--- a/Source/WebCore/dom/Document.cpp
++++ b/Source/WebCore/dom/Document.cpp
+@@ -4407,12 +4407,12 @@ static bool isValidNameNonASCII(const UChar* characters, unsigned length)
+     unsigned i = 0;
+ 
+     UChar32 c;
+-    U16_NEXT(characters, i, length, c)
++    U16_NEXT(characters, i, length, c);
+     if (!isValidNameStart(c))
+         return false;
+ 
+     while (i < length) {
+-        U16_NEXT(characters, i, length, c)
++        U16_NEXT(characters, i, length, c);
+         if (!isValidNamePart(c))
+             return false;
+     }
+@@ -4474,7 +4474,7 @@ bool Document::parseQualifiedName(const String& qualifiedName, String& prefix, S
+ 
+     for (unsigned i = 0; i < length;) {
+         UChar32 c;
+-        U16_NEXT(qualifiedName, i, length, c)
++        U16_NEXT(qualifiedName, i, length, c);
+         if (c == ':') {
+             if (sawColon) {
+                 ec = NAMESPACE_ERR;

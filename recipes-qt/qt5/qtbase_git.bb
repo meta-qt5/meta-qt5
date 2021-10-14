@@ -39,6 +39,8 @@ SRC_URI += "\
 # for syncqt
 RDEPENDS_${PN}-tools += "perl"
 
+inherit pkgconfig
+
 # separate some parts of PACKAGECONFIG which are often changed
 PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gl', 'no-opengl', d)}"
 PACKAGECONFIG_FB ?= "${@bb.utils.contains('DISTRO_FEATURES', 'directfb', 'directfb', '', d)}"

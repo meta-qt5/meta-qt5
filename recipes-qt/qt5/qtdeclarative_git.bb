@@ -28,4 +28,6 @@ SRCREV = "ca5d6cccde1f977eedb46f3320fe8384ea41758e"
 
 BBCLASSEXTEND =+ "native nativesdk"
 
-SRC_URI += "file://0001-Fix-build-with-gcc-11.patch"
+SRC_URI += "file://0001-Fix-build-with-gcc-11.patch \
+    file://0001-Use-python3-explicitly.patch \
+"

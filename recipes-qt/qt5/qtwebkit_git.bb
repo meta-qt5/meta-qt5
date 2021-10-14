@@ -1,6 +1,8 @@
 require qt5.inc
 require qt5-git.inc
 
+inherit pkgconfig
+
 LICENSE = "BSD & LGPLv2+ | GPL-2.0"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPLv21;md5=58a180e1cf84c756c29f782b3a485c29 \
@@ -16,6 +18,9 @@ SRC_URI += "\
     file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
     file://0004-Fix-build-bug-for-armv32-BE.patch \
     file://0001-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
+    file://0008-Fix-build-with-icu-68.patch \
+    file://0001-Fix-build-with-icu-65.1-https-bugs.webkit.org-show_b.patch \
+    file://0006-Fix-build-with-bison37.patch \
 "
 
 inherit cmake_qt5 perlnative pythonnative
