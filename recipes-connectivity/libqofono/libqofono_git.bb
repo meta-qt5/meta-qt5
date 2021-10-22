@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c"
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns"
 
 SRCREV = "4eec0c726844b8293eeab7312c96956a77d40e90"
-SRC_URI = "git://git.merproject.org/mer-core/libqofono.git \
+SRC_URI = "git://github.com/sailfishos/libqofono.git \
            file://0001-also-emit-modemRemoved-and-modemAdded.patch \
 "
 S = "${WORKDIR}/git"

@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://src/qofonoext.cpp;;beginline=1;endline=14;md5=e78738e
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns libqofono"
 
 SRCREV = "bd0999247f3c6446463f83b1f86c3de39c1a5425"
-SRC_URI = "git://git.sailfishos.org/mer-core/libqofonoext.git;protocol=https;"
+SRC_URI = "git://github.com/sailfishos/libqofonoext.git;protocol=https;"
 S = "${WORKDIR}/git"
 
 PV = "1.025+gitr${SRCPV}"
