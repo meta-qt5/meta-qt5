@@ -1,0 +1,21 @@
+fix build on mips
+
+Fixes
+Source/WTF/wtf/Atomics.cpp:63:9: error: definition of builtin function '__sync_add_and_fetch_8'
+int64_t __sync_add_and_fetch_8(int64_t volatile* addend, int64_t value)
+Source/WTF/wtf/Atomics.cpp:68:9: error: definition of builtin function '__sync_sub_and_fetch_8'
+int64_t __sync_sub_and_fetch_8(int64_t volatile* addend, int64_t value)
+
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
+--- a/Source/WTF/wtf/Platform.h
++++ b/Source/WTF/wtf/Platform.h
+@@ -88,6 +88,7 @@
+ #else
+ #define WTF_CPU_MIPS 1
+ #define WTF_MIPS_ARCH __mips
++#define __GCC_HAVE_SYNC_COMPARE_AND_SWAP_8 1
+ #endif
+ #if defined(__MIPSEB__)
+ #define WTF_CPU_BIG_ENDIAN 1
