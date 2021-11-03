@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=5c917f6ce94ceb8d8d5e16e2fca5b9ad"
 
 inherit qmake5 qmake5_paths pkgconfig
 
-SRC_URI = "git://github.com/maliit/framework.git;branch=master \
+SRC_URI = "git://github.com/maliit/framework.git;branch=master;protocol=https \
            file://0001-Fix-MALIIT_INSTALL_PRF-to-allow-the-build-with-opene.patch \
            file://maliit-server.desktop \
            file://0001-config.pri-Use-O1-optimization-in-DEBUG-flags.patch \

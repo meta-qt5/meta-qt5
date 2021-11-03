@@ -10,7 +10,7 @@ DEPENDS = "maliit-framework-qt5"
 
 RDEPENDS:${PN} += "qtsvg-plugins"
 
-SRC_URI = "git://github.com/maliit/plugins.git;branch=master \
+SRC_URI = "git://github.com/maliit/plugins.git;branch=master;protocol=https \
            file://0001-Do-not-use-tr1-namespace.patch \
           "
 

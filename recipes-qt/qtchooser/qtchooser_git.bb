@@ -1,7 +1,7 @@
 DESCRIPTION = "Wrapper to select between Qt development binary versions"
 HOMEPAGE = "http://macieira.org/qtchooser"
 LICENSE = "LGPL-2.1 & Digia-Qt-LGPL-Exception-1.1 | GPL-3.0"
-SRC_URI = "git://code.qt.io/qtsdk/qtchooser.git"
+SRC_URI = "git://code.qt.io/qtsdk/qtchooser.git;branch=master"
 
 LIC_FILES_CHKSUM = " \
     file://LGPL_EXCEPTION.txt;md5=0145c4d1b6f96a661c2c139dfb268fb6 \
