@@ -8,7 +8,7 @@ DEPENDS += "qtbase qtdeclarative"
 PV = "1.2.34+git${SRCPV}"
 
 SRCREV = "a0b6b0d9a63f28ab41747892f415c89866d62e4a"
-SRC_URI = "git://git.merproject.org/mer-core/libconnman-qt.git;protocol=https \
+SRC_URI = "git://git.merproject.org/mer-core/libconnman-qt.git;protocol=https;branch=master \
     file://0001-Don-t-use-MeeGo-as-prefix-in-order-to-make-this-a-co.patch \
     file://0001-Add-missing-declarations-for-operator-overloads.patch \
 "

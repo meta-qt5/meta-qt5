@@ -10,7 +10,7 @@ python() {
 }
 
 SRC_URI = " \
-    git://github.com/OSSystems/qt-kiosk-browser;protocol=https \
+    git://github.com/OSSystems/qt-kiosk-browser;protocol=https;branch=master \
     file://${BPN}.conf \
 "
 

@@ -8,7 +8,8 @@ DEPENDS = "qtdeclarative qtgraphicaleffects qtsvg qtmultimedia qtxmlpatterns"
 
 SRCREV = "35d72a2eba7456a2efc5eb8b77afbc00f69ba0ac"
 QT_GIT_PROJECT = "qt-labs"
-SRC_URI = "${QT_GIT}/qt5-everywhere-demo"
+QT_MODULE_BRANCH_PARAM = "master"
+SRC_URI = "${QT_GIT}/qt5-everywhere-demo;branch=${QT_MODULE_BRANCH};protocol=${QT_GIT_PROTOCOL}"
 
 S = "${WORKDIR}/git/QtDemo"
 
