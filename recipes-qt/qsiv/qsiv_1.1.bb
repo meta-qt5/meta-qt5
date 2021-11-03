@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=11c7965a9059e287de5d93b98adf6d1a"
 DEPENDS = "qtdeclarative"
 
 SRCREV = "7b9810b0f02f9ac74fae3ead6e2e9fb5c1382173"
-SRC_URI = "git://code.ossystems.com.br/qt/qsiv;protocol=http"
+SRC_URI = "git://code.ossystems.com.br/qt/qsiv;protocol=http;branch=master"
 
 S = "${WORKDIR}/git"
 

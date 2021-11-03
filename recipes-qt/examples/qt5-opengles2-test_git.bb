@@ -12,7 +12,7 @@ DEPENDS = "qtbase qtsensors"
 # Depends on gles2 enabled and that's not default configuration
 EXCLUDE_FROM_WORLD = "1"
 
-SRC_URI = "git://github.com/smk-embedded/qt5-opengles2-test.git"
+SRC_URI = "git://github.com/smk-embedded/qt5-opengles2-test.git;branch=master;protocol=https"
 SRCREV = "938390507054ed1258345f70ed55770d2fe56176"
 S = "${WORKDIR}/git"
 

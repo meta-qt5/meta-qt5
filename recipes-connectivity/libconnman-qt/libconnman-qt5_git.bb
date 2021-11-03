@@ -8,7 +8,7 @@ DEPENDS += "qtbase qtdeclarative"
 PV = "1.2.7+git${SRCPV}"
 
 SRCREV = "ad7fef1c35a3e897913965f73b879a14d65043dd"
-SRC_URI = "git://git.merproject.org/mer-core/libconnman-qt.git;protocol=https \
+SRC_URI = "git://git.merproject.org/mer-core/libconnman-qt.git;protocol=https;branch=master \
     file://0001-Don-t-use-MeeGo-as-prefix-in-order-to-make-this-a-co.patch \
     file://0001-Fix-library-path-for-multilib-setups.patch \
 "

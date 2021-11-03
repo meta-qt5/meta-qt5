@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://COPYING.LESSER;md5=4fbd65380cdd255951079008b364516c"
 DEPENDS = "qtbase"
 
 SRCREV = "ad505c32d0ba14c3c616de8ba4c7eb79396c20a6"
-SRC_URI = "git://github.com/vinipsmaker/tufao.git;protocol=http;branch=1.x \
+SRC_URI = "git://github.com/vinipsmaker/tufao.git;protocol=http;branch=1.x;protocol=https \
     file://build-Fix-mkspecs-and-CMake-module-install-directori.patch \
     file://0001-CMakeLists.txt-fix-build-with-Qt-5.11-don-t-use-qt5_.patch \
 "
