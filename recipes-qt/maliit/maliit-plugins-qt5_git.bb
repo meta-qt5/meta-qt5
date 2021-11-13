@@ -8,6 +8,8 @@ inherit qmake5
 
 DEPENDS = "maliit-framework-qt5"
 
+inherit pkgconfig
+
 RDEPENDS:${PN} += "qtsvg-plugins"
 
 SRC_URI = "git://github.com/maliit/plugins.git;branch=master;protocol=https \
