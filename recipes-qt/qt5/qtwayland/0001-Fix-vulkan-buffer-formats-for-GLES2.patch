@@ -1,0 +1,62 @@
+From 2e1bbb5e28ccf7da4d2aba2e725baedbf511856a Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Mon, 29 Nov 2021 17:24:50 -0800
+Subject: [PATCH] Fix vulkan buffer formats for GLES2
+
+Fixes
+vulkanserverbufferintegration.cpp:163:77: error: use of undeclared identifier 'GL_RGBA8'
+    if (extraDebug) qDebug() << "format" << Qt::hex  << m_internalFormat << GL_RGBA8;
+                                                                            ^
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ .../client/vulkan-server/vulkanserverbufferintegration.cpp  | 2 +-
+ .../vulkan-server/vulkanserverbufferintegration.cpp         | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/hardwareintegration/client/vulkan-server/vulkanserverbufferintegration.cpp b/src/hardwareintegration/client/vulkan-server/vulkanserverbufferintegration.cpp
+index b4403855..3f4520e4 100644
+--- a/src/hardwareintegration/client/vulkan-server/vulkanserverbufferintegration.cpp
++++ b/src/hardwareintegration/client/vulkan-server/vulkanserverbufferintegration.cpp
+@@ -160,7 +160,7 @@ void VulkanServerBuffer::import()
+     if (extraDebug) qDebug() << "bound texture" << Qt::hex << glGetError();
+     funcs->glTexStorageMem2DEXT(GL_TEXTURE_2D, 1, m_internalFormat, m_size.width(), m_size.height(), m_memoryObject, 0 );
+     if (extraDebug) qDebug() << "glTexStorageMem2DEXT" << Qt::hex << glGetError();
+-    if (extraDebug) qDebug() << "format" << Qt::hex  << m_internalFormat << GL_RGBA8;
++    if (extraDebug) qDebug() << "format" << Qt::hex  << m_internalFormat << GL_RGBA;
+ }
+ 
+ QOpenGLTexture *VulkanServerBuffer::toOpenGlTexture()
+diff --git a/src/hardwareintegration/compositor/vulkan-server/vulkanserverbufferintegration.cpp b/src/hardwareintegration/compositor/vulkan-server/vulkanserverbufferintegration.cpp
+index 69af5f9f..558a4d62 100644
+--- a/src/hardwareintegration/compositor/vulkan-server/vulkanserverbufferintegration.cpp
++++ b/src/hardwareintegration/compositor/vulkan-server/vulkanserverbufferintegration.cpp
+@@ -141,14 +141,14 @@ VulkanServerBuffer::VulkanServerBuffer(VulkanServerBufferIntegration *integratio
+     m_format = format;
+     switch (m_format) {
+         case RGBA32:
+-            m_glInternalFormat = GL_RGBA8;
++            m_glInternalFormat = GL_RGBA;
+             break;
+         // case A8:
+         //     m_glInternalFormat = GL_R8;
+         //     break;
+         default:
+             qWarning("VulkanServerBuffer: unsupported format");
+-            m_glInternalFormat = GL_RGBA8;
++            m_glInternalFormat = GL_RGBA;
+             break;
+     }
+ 
+@@ -229,7 +229,7 @@ QOpenGLTexture *VulkanServerBuffer::toOpenGlTexture()
+     if (extraDebug) qDebug() << "bound texture" << texId << Qt::hex << glGetError();
+     funcs->glTexStorageMem2DEXT(GL_TEXTURE_2D, 1, m_glInternalFormat, m_size.width(), m_size.height(), m_memoryObject, 0 );
+     if (extraDebug) qDebug() << "glTexStorageMem2DEXT" << Qt::hex << glGetError();
+-    if (extraDebug) qDebug() << "format" << Qt::hex  << m_glInternalFormat << GL_RGBA8;
++    if (extraDebug) qDebug() << "format" << Qt::hex  << m_glInternalFormat << GL_RGBA;
+ 
+ 
+     return m_texture;
+-- 
+2.34.1
+
