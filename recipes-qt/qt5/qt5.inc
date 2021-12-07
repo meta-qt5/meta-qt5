@@ -53,6 +53,7 @@ INSANE_SKIP:${PN}-examples += "libdir staticdev dev-so"
 PACKAGES =. "${PN}-qmldesigner ${PN}-qmlplugins ${PN}-tools ${PN}-plugins ${PN}-mkspecs ${PN}-examples "
 
 ALLOW_EMPTY:${PN} = "1"
+ALLOW_EMPTY:${PN}-mkspecs = "1"
 ALLOW_EMPTY:${PN}-plugins = "1"
 ALLOW_EMPTY:${PN}-qmlplugins = "1"
 
