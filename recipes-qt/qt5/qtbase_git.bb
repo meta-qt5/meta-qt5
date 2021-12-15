@@ -36,6 +36,7 @@ SRC_URI += "\
     file://0020-Revert-Fix-workaround-in-pthread-destructor.patch \
     file://0021-qfloat16-Include-limits-header.patch \
     file://0022-fix_timezone_dst.patch \
+    file://0023-tst_QPluginLoader-Simplify-creating-a-fake-pointer-i.patch \
 "
 
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with

@@ -1,0 +1,65 @@
+From 639655f8c3c885734163f1ffd4f29e475fe7e636 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Martin=20Storsj=C3=B6?= <martin@martin.st>
+Date: Fri, 20 Aug 2021 12:10:25 +0300
+Subject: [PATCH] tst_QPluginLoader: Simplify creating a fake pointer in fakeplugin.cpp
+
+When assigning multiple variables to a specific section, both GCC
+and Clang legitimately error out if those variables wouldn't end
+up in the same section (e.g. if one of them is going to a read-only
+section while the other one is going to a read-write section).
+
+In C++, when a seemingly const variable needs dynamic initialization,
+it needs to be stored in a read-write section.
+
+Clang 13 changed internals for how some constants are materialized.
+Now, when a variable is initialized with an expression containing
+plain old fashioned casts, it is considered to be potentially
+runtime initialized (at the point when section assignment conflicts
+is evaluated). Therefore, Clang 13 errors out on fakeplugin.cpp
+with errors like:
+
+    fakeplugin.cpp:36:39: error: 'message' causes a section type conflict with 'pluginSection'
+    QT_PLUGIN_METADATA_SECTION const char message[] = "QTMETADATA";
+                                          ^
+    fakeplugin.cpp:32:40: note: declared here
+    QT_PLUGIN_METADATA_SECTION void *const pluginSection = (void*)(0xc0ffeec0ffeeL);
+                                           ^
+
+See https://bugs.llvm.org/show_bug.cgi?id=51442 for discussion
+on the matter in Clang.
+
+To simplify things, just initialize the fake pointers as regular
+uintptr_t instead, avoiding the whole matter. This produces the
+exact same contents in the section as before.
+
+For what it's worth, the actual manually constructed metadata in
+fakeplugin.cpp doesn't seem to have any effect on running the
+QPluginLoader tests on either ELF or MachO right now.
+
+Upstream-Status: Backport [https://codereview.qt-project.org/c/qt/qtbase/+/366218]
+Change-Id: Ib84a2ceb20cb8e3a1bb5132a5715538e08049616
+Pick-to: 6.2 6.1
+Reviewed-by: Thiago Macieira <thiago.macieira@intel.com>
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ tests/auto/corelib/plugin/qpluginloader/fakeplugin.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/auto/corelib/plugin/qpluginloader/fakeplugin.cpp b/tests/auto/corelib/plugin/qpluginloader/fakeplugin.cpp
+index 9e7a1f750b..a6d53f350f 100644
+--- a/tests/auto/corelib/plugin/qpluginloader/fakeplugin.cpp
++++ b/tests/auto/corelib/plugin/qpluginloader/fakeplugin.cpp
+@@ -29,8 +29,8 @@
+ #include <QtCore/qplugin.h>
+ 
+ #if QT_POINTER_SIZE == 8
+-QT_PLUGIN_METADATA_SECTION void *const pluginSection = (void*)(0xc0ffeec0ffeeL);
++QT_PLUGIN_METADATA_SECTION const uintptr_t pluginSection = 0xc0ffeec0ffeeULL;
+ #else
+-QT_PLUGIN_METADATA_SECTION void *const pluginSection = (void*)0xc0ffee;
++QT_PLUGIN_METADATA_SECTION const uintptr_t pluginSection = 0xc0ffee;
+ #endif
+ QT_PLUGIN_METADATA_SECTION const char message[] = "QTMETADATA";
+-- 
+2.34.1
+
