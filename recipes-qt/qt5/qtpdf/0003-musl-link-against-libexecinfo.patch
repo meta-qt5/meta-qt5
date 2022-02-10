@@ -1,0 +1,27 @@
+From 406fc3c6271d3f6ba5a96b019fb3bd74916745f5 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Thu, 14 Dec 2017 11:28:10 +0200
+Subject: [PATCH 3/6] musl: link against libexecinfo
+
+Change-Id: Ifada60f9c72691973612850121f6fb152d70839a
+Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+---
+ src/core/core_module.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/core/core_module.pro b/src/core/core_module.pro
+index 520b452f..d2b29b29 100644
+--- a/src/core/core_module.pro
++++ b/src/core/core_module.pro
+@@ -5,7 +5,7 @@ include($${QTWEBENGINE_ROOT}/src/buildtools/config/linking.pri)
+ 
+ api_library_name = qtwebenginecoreapi$$qtPlatformTargetSuffix()
+ api_library_path = $$OUT_PWD/api/$$getConfigDir()
+-LIBS_PRIVATE += -L$$api_library_path
++LIBS_PRIVATE += -L$$api_library_path -lexecinfo
+ CONFIG *= no_smart_library_merge
+ osx {
+     LIBS_PRIVATE += -Wl,-force_load,$${api_library_path}$${QMAKE_DIR_SEP}lib$${api_library_name}.a
+-- 
+2.34.1
+

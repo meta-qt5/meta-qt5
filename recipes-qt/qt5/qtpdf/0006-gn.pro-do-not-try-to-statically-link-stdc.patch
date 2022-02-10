@@ -1,0 +1,26 @@
+From 4d2f525ccf3255dd4a0e774d3db0533ae4aba98f Mon Sep 17 00:00:00 2001
+From: Leif Middelschulte <Leif.Middelschulte@klsmartin.com>
+Date: Tue, 8 Feb 2022 16:28:14 +0100
+Subject: [PATCH 6/6] gn.pro: do not try to statically link stdc++
+
+---
+ src/buildtools/gn.pro | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
+index a8ca6567..9632f0ef 100644
+--- a/src/buildtools/gn.pro
++++ b/src/buildtools/gn.pro
+@@ -20,7 +20,8 @@ build_pass|!debug_and_release {
+ 
+             gn_gen_args = --no-last-commit-position --out-path $$out_path \
+                           --cc \"$$which($$CC_host)\" --cxx \"$$which($$CXX_host)\" \
+-                          --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\"
++                          --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\" \
++                          --no-static-libstdc++
+ 
+             msvc:!clang_cl: gn_gen_args += --use-lto
+ 
+-- 
+2.34.1
+
