@@ -1,0 +1,42 @@
+From d94484b5c655d107eb606f28f92633ccf7f433e8 Mon Sep 17 00:00:00 2001
+From: Laszlo Agocs <laszlo.agocs@qt.io>
+Date: Wed, 29 Jul 2020 12:35:46 +0200
+Subject: [PATCH] eglfs: Prevent printing a warning in every widget-based app
+
+Upstream-Status: Backported
+
+Attempting to reflect reality with the value of AA_ShareOpenGLContexts
+was a valiant attempt, but it is not possible to do setAttribute without
+getting a warning now once QGuiApplication is constructed. So just leave
+the attribute as is, changing its value is not strictly required.
+
+Fixes: QTBUG-85796
+Change-Id: I0f0f981bb4883856b216b2a9aad3b5bf2d7da01a
+Reviewed-by: Andy Nichols <andy.nichols@qt.io>
+(cherry picked from commit a0db31ee527e58ae531375e78780e2b05ff64107)
+Reviewed-by: Qt Cherry-pick Bot <cherrypick_bot@qt-project.org>
+---
+ src/plugins/platforms/eglfs/api/qeglfswindow.cpp | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/src/plugins/platforms/eglfs/api/qeglfswindow.cpp b/src/plugins/platforms/eglfs/api/qeglfswindow.cpp
+index f7e116eb88..0d7be13a96 100644
+--- a/src/plugins/platforms/eglfs/api/qeglfswindow.cpp
++++ b/src/plugins/platforms/eglfs/api/qeglfswindow.cpp
+@@ -148,12 +148,8 @@ void QEglFSWindow::create()
+         compositor->setRotation(qEnvironmentVariableIntValue("QT_QPA_EGLFS_ROTATION"));
+         // If there is a "root" window into which raster and QOpenGLWidget content is
+         // composited, all other contexts must share with its context.
+-        if (!qt_gl_global_share_context()) {
++        if (!qt_gl_global_share_context())
+             qt_gl_set_global_share_context(m_rasterCompositingContext);
+-            // What we set up here is in effect equivalent to the application setting
+-            // AA_ShareOpenGLContexts. Set the attribute to be fully consistent.
+-            QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+-        }
+     }
+ #endif // QT_NO_OPENGL
+ }
+-- 
+2.25.1
+
