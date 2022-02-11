@@ -132,6 +132,7 @@ QT_MODULE_BRANCH_CHROMIUM = "87-based"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15-glibc
 # 5.15-glibc.meta-qt5.12
+FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtwebengine:"
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
@@ -140,9 +141,9 @@ SRC_URI += " \
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
 # 5.15.meta-qt5.12
 SRC_URI:append:libc-musl = "\
-    file://0002-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
-    file://0003-musl-link-against-libexecinfo.patch \
-    file://0004-mkspecs-Allow-builds-with-libc-glibc.patch \
+    file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
+    file://0004-musl-link-against-libexecinfo.patch \
+    file://0005-mkspecs-Allow-builds-with-libc-glibc.patch \
 "
 
 SRCREV_qtwebengine = "73e76f9e86b3fded45be6b232bdebe75e7136e4a"
@@ -162,8 +163,8 @@ INSANE_SKIP:${PN} += "textrel"
 # First patch skips "python2" dependency checks for the pdf module
 # Second patch repairs a failing build of the `gn` buildtool due to missing (host) libstdc++
 SRC_URI += " \
-    file://0005-configure.json-remove-python2-dependency.patch \
-    file://0006-gn.pro-do-not-try-to-statically-link-stdc.patch \
+    file://0001-configure.json-remove-python2-dependency.patch \
+    file://0002-gn.pro-do-not-try-to-statically-link-stdc.patch \
 "
 
 # These flags below go more into detail than qtwebengine's documentation

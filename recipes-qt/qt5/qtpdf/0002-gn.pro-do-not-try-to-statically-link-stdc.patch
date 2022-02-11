@@ -1,7 +1,7 @@
 From 4d2f525ccf3255dd4a0e774d3db0533ae4aba98f Mon Sep 17 00:00:00 2001
 From: Leif Middelschulte <Leif.Middelschulte@klsmartin.com>
 Date: Tue, 8 Feb 2022 16:28:14 +0100
-Subject: [PATCH 6/6] gn.pro: do not try to statically link stdc++
+Subject: [PATCH] gn.pro: do not try to statically link stdc++
 
 ---
  src/buildtools/gn.pro | 3 ++-
@@ -21,6 +21,3 @@ index a8ca6567..9632f0ef 100644
  
              msvc:!clang_cl: gn_gen_args += --use-lto
  
--- 
-2.34.1
-
