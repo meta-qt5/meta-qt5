@@ -85,8 +85,6 @@ CONFLICT_DISTRO_FEATURES = "qt5-static"
 def gettext_oeconf(d):
     return ""
 
-QT_MODULE = "qtwebengine"
-
 require qt5.inc
 require qt5-git.inc
 
@@ -130,16 +128,23 @@ RDEPENDS:${PN}-examples += " \
 
 QT_MODULE_BRANCH_CHROMIUM = "87-based"
 
-# Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15-glibc
-# 5.15-glibc.meta-qt5.12
+QT_MODULE_BRANCH = "5.15"
+PV = "5.15.8+git${SRCPV}"
+
+# Uses the same repository and couple patches as qtwebengine, but qtwebengine
+# still depends on python2
+QT_MODULE = "qtwebengine"
 FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtwebengine:"
+
+# Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15-glibc
+# 5.15-glibc.meta-qt5.13
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
+    file://0002-qmake.conf-lower-MODULE_VERSION-to-5.15.2.patch \
 "
-
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
-# 5.15.meta-qt5.12
+# 5.15.meta-qt5.13
 SRC_URI:append:libc-musl = "\
     file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
     file://0004-musl-link-against-libexecinfo.patch \
@@ -149,6 +154,7 @@ SRC_URI:append:libc-musl = "\
 SRCREV_qtwebengine = "73e76f9e86b3fded45be6b232bdebe75e7136e4a"
 SRCREV_chromium = "48a205f9e054b5cc3e67df2e25382da9460c0015"
 SRCREV = "${SRCREV_qtwebengine}"
+
 SRCREV_FORMAT = "qtwebengine_chromium"
 
 # WARNING: qtwebengine-5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0 do_package_qa: QA Issue: ELF binary '/OE/build/oe-core/tmp-glibc/work/i586-oe-linux/qtwebengine/5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0/packages-split/qtwebengine/usr/lib/libQt5WebEngineCore.so.5.6.0' has relocations in .text [textrel]
@@ -173,7 +179,7 @@ PACKAGECONFIG[qtpdf] = "-feature-build-qtpdf,-no-feature-build-qtpdf,python3-nat
 PACKAGECONFIG[webengine-pdf] = "-feature-webengine-python2,-no-feature-webengine-python2,python3-native"
 
 # The flags below enable just the PDF widget
-PACKAGECONFIG="no-core qtpdf"
+PACKAGECONFIG = "no-core qtpdf"
 
 # Work around gn's dependency on python (2).
 # To build qtpdf it works just as well with python3.

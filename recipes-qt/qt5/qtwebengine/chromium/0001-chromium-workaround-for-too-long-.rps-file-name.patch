@@ -1,4 +1,4 @@
-From 900b6302bdb5f55e5c65443d57c1b9889ce8b1ac Mon Sep 17 00:00:00 2001
+From 4d04aeec1a8520d5c4bcd5f49f064ea93705d7c4 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Thu, 30 Mar 2017 11:37:24 +0300
 Subject: [PATCH] chromium: workaround for too long .rps file name

@@ -1,4 +1,4 @@
-From 1dd91e504648f94a41509cde9f04b0ec2b2ad6cf Mon Sep 17 00:00:00 2001
+From a5b9a5016d985cba60fdcb99bff498b0a2573f2d Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Fri, 12 Mar 2021 15:47:50 +0100
 Subject: [PATCH] qmake.conf: lower MODULE_VERSION to 5.15.2
@@ -23,12 +23,12 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/.qmake.conf b/.qmake.conf
-index d5e64505..8de72145 100644
+index 1d0279c42..8de72145c 100644
 --- a/.qmake.conf
 +++ b/.qmake.conf
 @@ -5,4 +5,4 @@ QTWEBENGINE_OUT_ROOT = $$shadowed($$PWD)
  load(qt_build_config)
  CONFIG += warning_clean
  
--MODULE_VERSION = 5.15.4
+-MODULE_VERSION = 5.15.9
 +MODULE_VERSION = 5.15.2

@@ -1,4 +1,4 @@
-From 5047c9dfe57c29f9b39829ba6404bd23df669571 Mon Sep 17 00:00:00 2001
+From 3a29b3cfd7592518227d72a5b165a4652292a202 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Tue, 12 Dec 2017 16:06:14 +0200
 Subject: [PATCH] musl: don't use pvalloc as it's not available on musl
@@ -10,7 +10,7 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  1 file changed, 8 deletions(-)
 
 diff --git a/src/core/api/qtbug-61521.cpp b/src/core/api/qtbug-61521.cpp
-index 002a1af2..8fd2da36 100644
+index 002a1af22..8fd2da36b 100644
 --- a/src/core/api/qtbug-61521.cpp
 +++ b/src/core/api/qtbug-61521.cpp
 @@ -74,10 +74,6 @@ SHIM_SYMBOL_VERSION(valloc);
