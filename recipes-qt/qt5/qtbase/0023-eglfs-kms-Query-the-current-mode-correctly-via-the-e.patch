@@ -1,0 +1,33 @@
+From bd4a1b98b813dfbbb4a9db35a380bed8dd5f0ce3 Mon Sep 17 00:00:00 2001
+From: Laszlo Agocs <laszlo.agocs@qt.io>
+Date: Mon, 6 Jan 2020 10:50:33 +0100
+Subject: [PATCH] eglfs: kms: Query the current mode correctly via the encoder
+
+Upstream-Status: Backported
+
+...not the connector. Passing the connector id to drmModeGetEncoder()
+is clearly an oversight.
+
+Task-number: QTBUG-80976
+Change-Id: I80a6088fca558d1637bd01b0aca8c4a8ba3b25f5
+Reviewed-by: Eirik Aavitsland <eirik.aavitsland@qt.io>
+---
+ src/platformsupport/kmsconvenience/qkmsdevice.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/platformsupport/kmsconvenience/qkmsdevice.cpp b/src/platformsupport/kmsconvenience/qkmsdevice.cpp
+index b820fafd50..18f7b5e23b 100644
+--- a/src/platformsupport/kmsconvenience/qkmsdevice.cpp
++++ b/src/platformsupport/kmsconvenience/qkmsdevice.cpp
+@@ -262,7 +262,7 @@ QPlatformScreen *QKmsDevice::createScreenForConnector(drmModeResPtr resources,
+     // Get the current mode on the current crtc
+     drmModeModeInfo crtc_mode;
+     memset(&crtc_mode, 0, sizeof crtc_mode);
+-    if (drmModeEncoderPtr encoder = drmModeGetEncoder(m_dri_fd, connector->connector_id)) {
++    if (drmModeEncoderPtr encoder = drmModeGetEncoder(m_dri_fd, connector->encoder_id)) {
+         drmModeCrtcPtr crtc = drmModeGetCrtc(m_dri_fd, encoder->crtc_id);
+         drmModeFreeEncoder(encoder);
+ 
+-- 
+2.25.1
+

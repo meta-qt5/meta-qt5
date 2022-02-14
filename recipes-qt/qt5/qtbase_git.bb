@@ -35,6 +35,8 @@ SRC_URI += "\
     file://0017-eglfs-Prevent-printing-a-warning-in-every-widget-bas.patch \
     file://0018-input-Make-use-of-timeval-portable-for-64bit-time_t.patch \
     file://0022-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
+    file://0023-eglfs-kms-Query-the-current-mode-correctly-via-the-e.patch \
+    file://0024-eglfs_kms-Do-not-skip-the-initial-SetCrtc.patch \
 "
 
 # for syncqt
