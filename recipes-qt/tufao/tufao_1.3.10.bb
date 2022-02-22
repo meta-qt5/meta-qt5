@@ -1,5 +1,5 @@
 SUMMARY = "An asynchronous web framework for C++ built on top of Qt"
-LICENSE = "LGPL-2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://COPYING.LESSER;md5=4fbd65380cdd255951079008b364516c"
 DEPENDS = "qtbase"
 

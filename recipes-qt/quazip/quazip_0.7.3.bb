@@ -1,7 +1,7 @@
 SUMMARY = "Qt/C++ wrapper for ZIP/UNZIP package"
 HOMEPAGE = "http://quazip.sourceforge.net/"
 BUGTRACKER = "https://sourceforge.net/p/quazip/bugs/"
-LICENSE = "LGPLv2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=910d778aab53617cbaf13c4e1810e289"
 DEPENDS = "qtbase"
 

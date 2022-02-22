@@ -2,7 +2,7 @@ SUMMARY = "Python Qt5 Bindings"
 AUTHOR = "Phil Thomson @ riverbank.co.uk"
 HOMEPAGE = "https://www.riverbankcomputing.com/software/pyqt"
 SECTION = "devel/python"
-LICENSE = "GPLv3"
+LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "\
     file://LICENSE;md5=d32239bcb673463ab874e80d47fae504 \
 "

@@ -1,6 +1,6 @@
 DESCRIPTION = "Qt 5 bindings for the ofono dbus API for Jolla's oFono extensions"
 SECTION = "libs"
-LICENSE = "LGPLv2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://src/qofonoext.cpp;;beginline=1;endline=14;md5=e78738e9230b2e0f55eb7f63e3444df5"
 
 DEPENDS += "qtbase qtdeclarative qtxmlpatterns libqofono"

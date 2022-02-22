@@ -1,5 +1,5 @@
 DESCRIPTION = "Extra files for qt5 demo"
-LICENSE = "LGPLv2"
+LICENSE = "LGPL-2.0-only"
 S="${WORKDIR}"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=88355dc91a186cc816d9f64757793895"
 
