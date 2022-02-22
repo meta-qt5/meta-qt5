@@ -1,7 +1,7 @@
 DESCRIPTION = "A virtual keyboard for touch-screen based user interfaces"
 HOMEPAGE = "https://wiki.maliit.org/Main_Page"
 
-LICENSE = "LGPLv2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://LICENSE.LGPL;md5=5c917f6ce94ceb8d8d5e16e2fca5b9ad"
 
 inherit qmake5 qmake5_paths pkgconfig
