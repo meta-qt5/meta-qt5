@@ -179,6 +179,7 @@ SRC_URI += " \
     file://chromium/0008-chromium-Move-CharAllocator-definition-to-a-header-f.patch;patchdir=src/3rdparty \
     file://chromium/0009-chromium-Link-v8-with-libatomic-on-x86.patch;patchdir=src/3rdparty \
     file://chromium/0010-chromium-icu-use-system-library-only-targets.patch;patchdir=src/3rdparty \
+    file://chromium/0023-chromium-remove-true-to-prep-landing-of-icu68.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based
