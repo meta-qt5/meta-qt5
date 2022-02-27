@@ -151,6 +151,8 @@ SRC_URI:append:libc-musl = "\
     file://0005-mkspecs-Allow-builds-with-libc-glibc.patch \
 "
 
+SRC_URI:append:runtime-llvm = " file://native-clang.patch "
+
 SRCREV_qtwebengine = "73e76f9e86b3fded45be6b232bdebe75e7136e4a"
 SRCREV_chromium = "48a205f9e054b5cc3e67df2e25382da9460c0015"
 SRCREV = "${SRCREV_qtwebengine}"
