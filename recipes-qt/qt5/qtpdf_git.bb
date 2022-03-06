@@ -103,7 +103,7 @@ do_configure() {
         QMAKE_CFLAGS="${OE_QMAKE_CFLAGS}" \
         QMAKE_CXXFLAGS="${OE_QMAKE_CXXFLAGS}" \
         -after ${EXTRA_QMAKEVARS_POST} -- \
-        ${EXTRA_QMAKEVARS_CONFIGURE}
+        ${EXTRA_QMAKEVARS_CONFIGURE} -verbose
 }
 
 do_configure:prepend:libc-musl() {
@@ -142,6 +142,7 @@ SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
     file://0002-qmake.conf-lower-MODULE_VERSION-to-5.15.2.patch \
+    file://0002-Remove-the-GN-settings-done-for-clang-that-conflict-.patch \
 "
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
 # 5.15.meta-qt5.13
