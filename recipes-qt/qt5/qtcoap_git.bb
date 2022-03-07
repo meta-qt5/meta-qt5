@@ -11,4 +11,5 @@ PACKAGECONFIG[qtdeclarative] = ",,qtdeclarative"
 
 DEPENDS += "qtbase"
 
+QT_MODULE_BRANCH = "5.15.2"
 SRCREV = "628d3b8abd47ffde45252cf6591ed10ec2fa28ac"

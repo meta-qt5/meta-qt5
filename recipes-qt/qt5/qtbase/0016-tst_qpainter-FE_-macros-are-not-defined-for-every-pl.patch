@@ -1,4 +1,4 @@
-From 6c9e68cffb15cc1e848ca57ea12d4e5905d46507 Mon Sep 17 00:00:00 2001
+From be12f3c3a5240b8bbb6837a3b23d36b61303b455 Mon Sep 17 00:00:00 2001
 From: Nicola Lunghi <nick83ola@gmail.com>
 Date: Wed, 5 Feb 2020 15:32:25 +0000
 Subject: [PATCH] tst_qpainter: FE_ macros are not defined for every platform

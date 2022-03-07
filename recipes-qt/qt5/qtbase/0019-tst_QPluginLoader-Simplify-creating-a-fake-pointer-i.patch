@@ -1,7 +1,8 @@
-From 639655f8c3c885734163f1ffd4f29e475fe7e636 Mon Sep 17 00:00:00 2001
+From f6b67c71be078d5f58042882e801b9af6634e483 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Martin=20Storsj=C3=B6?= <martin@martin.st>
 Date: Fri, 20 Aug 2021 12:10:25 +0300
-Subject: [PATCH] tst_QPluginLoader: Simplify creating a fake pointer in fakeplugin.cpp
+Subject: [PATCH] tst_QPluginLoader: Simplify creating a fake pointer in
+ fakeplugin.cpp
 
 When assigning multiple variables to a specific section, both GCC
 and Clang legitimately error out if those variables wouldn't end
@@ -60,6 +61,3 @@ index 9e7a1f750b..a6d53f350f 100644
 +QT_PLUGIN_METADATA_SECTION const uintptr_t pluginSection = 0xc0ffee;
  #endif
  QT_PLUGIN_METADATA_SECTION const char message[] = "QTMETADATA";
--- 
-2.34.1
-

@@ -1,4 +1,4 @@
-From bf314645e665d82c65771fb0d5f58558bbe1ba87 Mon Sep 17 00:00:00 2001
+From 308746ac207de4f1c3429d6e61ff071809378b70 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Mon, 26 Oct 2020 22:10:02 -0700
 Subject: [PATCH] Define __NR_futex if it does not exist
@@ -31,6 +31,3 @@ index f287b752d7..fa5307a604 100644
  #  define QT_ALWAYS_USE_FUTEX
  
  // if not defined in linux/futex.h
--- 
-2.29.1
-

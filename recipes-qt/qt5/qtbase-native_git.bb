@@ -18,7 +18,7 @@ require qt5-git.inc
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.15-shared
-# 5.15.meta-qt5-shared.2
+# 5.15.meta-qt5-shared.3
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -31,29 +31,28 @@ SRC_URI += "\
     file://0009-Add-OE-specific-specs-for-clang-compiler.patch \
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
-    file://0013-Disable-ltcg-for-host_build.patch \
-    file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
-    file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
-    file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
-    file://0018-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
-    file://0019-Define-__NR_futex-if-it-does-not-exist.patch \
-    file://0020-Revert-Fix-workaround-in-pthread-destructor.patch \
-    file://0021-qfloat16-Include-limits-header.patch \
-    file://0022-fix_timezone_dst.patch \
-    file://0023-tst_QPluginLoader-Simplify-creating-a-fake-pointer-i.patch \
+    file://0012-Disable-ltcg-for-host_build.patch \
+    file://0013-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
+    file://0014-corelib-Include-sys-types.h-for-uint32_t.patch \
+    file://0015-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
+    file://0016-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
+    file://0017-Define-__NR_futex-if-it-does-not-exist.patch \
+    file://0018-Revert-Fix-workaround-in-pthread-destructor.patch \
+    file://0019-tst_QPluginLoader-Simplify-creating-a-fake-pointer-i.patch \
+    file://0020-qbytearraymatcher-Include-limits-header.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.15-native
-# 5.15.meta-qt5-native.2
+# 5.15.meta-qt5-native.3
 SRC_URI += " \
-    file://0019-Always-build-uic-and-qvkgen.patch \
-    file://0020-Avoid-renameeat2-for-native-sdk-builds.patch \
+    file://0021-Always-build-uic-and-qvkgen.patch \
+    file://0022-Avoid-renameeat2-for-native-sdk-builds.patch \
 "
 
 # only for qtbase-native
 SRC_URI += " \
-    file://0021-Bootstrap-without-linkat-feature.patch \
+    file://0023-Bootstrap-without-linkat-feature.patch \
 "
 
 CLEANBROKEN = "1"
@@ -146,4 +145,4 @@ do_install() {
     echo 'set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/lib${QT_DIR_NAME}/mkspecs/linux-oe-g++")' > ${D}${libdir}/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
 }
 
-SRCREV = "40143c189b7c1bf3c2058b77d00ea5c4e3be8b28"
+SRCREV = "c95f96550fc74b00bb0d3a82e7cb6b0e20bc76ac"
