@@ -1,4 +1,4 @@
-From f7b84519234ff0cecb6495d31f377910dce34b62 Mon Sep 17 00:00:00 2001
+From 168e5332f1f0dd4000f19b0ced0b1d68a1d65f16 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -24,17 +24,17 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  mkspecs/features/configure.prf       |  4 +--
  mkspecs/features/qt.prf              |  6 ++---
  mkspecs/features/qt_functions.prf    |  2 +-
- mkspecs/linux-oe-g++/qmake.conf      | 40 ++++++++++++++++++++++++++++
+ mkspecs/linux-oe-g++/qmake.conf      | 39 ++++++++++++++++++++++++++++
  mkspecs/linux-oe-g++/qplatformdefs.h |  1 +
- 6 files changed, 48 insertions(+), 7 deletions(-)
+ 6 files changed, 47 insertions(+), 7 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
 diff --git a/configure b/configure
-index f9407ef587..467f57f960 100755
+index b6c9b462f2..4e3fcd41d1 100755
 --- a/configure
 +++ b/configure
-@@ -709,7 +709,7 @@ fi
+@@ -708,7 +708,7 @@ fi
  # is where the resulting variable is written to
  setBootstrapVariable()
  {
@@ -65,10 +65,10 @@ index 934a18a924..0f5b1b6333 100644
              msg = "test $$1 succeeded"
              write_file($$QMAKE_CONFIG_LOG, msg, append)
 diff --git a/mkspecs/features/qt.prf b/mkspecs/features/qt.prf
-index 89f4946c50..97c1b43ccb 100644
+index 69d1954306..37f7c9c4a2 100644
 --- a/mkspecs/features/qt.prf
 +++ b/mkspecs/features/qt.prf
-@@ -148,7 +148,7 @@ import_plugins:qtConfig(static) {
+@@ -151,7 +151,7 @@ import_plugins:qtConfig(static) {
              plug_name = $$QMAKE_PREFIX_STATICLIB$${plug}$$qtPlatformTargetSuffix().$$QMAKE_EXTENSION_STATICLIB
              plug_path = $$eval(QT_PLUGIN.$${plug}.PATH)
              isEmpty(plug_path): \
@@ -77,7 +77,7 @@ index 89f4946c50..97c1b43ccb 100644
              LIBS += $$plug_path/$$plug_type/$$plug_name
          } else {
              LIBS += -l$${plug}$$qtPlatformTargetSuffix()
-@@ -271,8 +271,8 @@ for(ever) {
+@@ -274,8 +274,8 @@ for(ever) {
  # static builds: link qml import plugins into the target.
  contains(all_qt_module_deps, qml): \
          qtConfig(static):import_plugins:!host_build:!no_import_scan {
@@ -89,10 +89,10 @@ index 89f4946c50..97c1b43ccb 100644
      # run qmlimportscanner
      qtPrepareTool(QMLIMPORTSCANNER, qmlimportscanner, , system)
 diff --git a/mkspecs/features/qt_functions.prf b/mkspecs/features/qt_functions.prf
-index 1903e509c8..c093dd4592 100644
+index 7777e615bd..8d792fa70a 100644
 --- a/mkspecs/features/qt_functions.prf
 +++ b/mkspecs/features/qt_functions.prf
-@@ -69,7 +69,7 @@ defineTest(qtHaveModule) {
+@@ -87,7 +87,7 @@ defineTest(qtHaveModule) {
  defineTest(qtPrepareTool) {
      cmd = $$eval(QT_TOOL.$${2}.binary)
      isEmpty(cmd) {
@@ -103,10 +103,10 @@ index 1903e509c8..c093dd4592 100644
              cmd = perl -w $$system_path($${cmd}.pl)
 diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
 new file mode 100644
-index 0000000000..9275fc7d74
+index 0000000000..c202c47fa1
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qmake.conf
-@@ -0,0 +1,40 @@
+@@ -0,0 +1,39 @@
 +#
 +# qmake configuration for linux-g++ with modifications for building with OpenEmbedded
 +#
@@ -117,9 +117,8 @@ index 0000000000..9275fc7d74
 +
 +include(../common/linux.conf)
 +
-+# QMAKE_<TOOL> (moc, uic, rcc) are gone, overwrite only ar, objcopy, and strip
++# QMAKE_<TOOL> (moc, uic, rcc) are gone, overwrite only ar and strip
 +QMAKE_AR              = $$(OE_QMAKE_AR) cqs
-+QMAKE_OBJCOPY         = $$(OE_QMAKE_OBJCOPY)
 +QMAKE_STRIP           = $$(OE_QMAKE_STRIP)
 +
 +include(../common/gcc-base-unix.conf)

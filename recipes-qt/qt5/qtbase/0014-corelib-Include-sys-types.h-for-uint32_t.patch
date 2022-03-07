@@ -1,4 +1,4 @@
-From c09fe6a87c444dc20b93334a9530d5bfd9ab03ff Mon Sep 17 00:00:00 2001
+From e98382d11622179a2ab4712fa781c2b46d8b35b2 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 6 Dec 2018 11:47:52 -0800
 Subject: [PATCH] corelib: Include sys/types.h for uint32_t

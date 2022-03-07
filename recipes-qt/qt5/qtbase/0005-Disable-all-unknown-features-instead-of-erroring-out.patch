@@ -1,4 +1,4 @@
-From 018b5507d9f01db2d408aaecffb837d283e9e36a Mon Sep 17 00:00:00 2001
+From 33e847c682efe11e10a0a42a262f096343418b97 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Mon, 24 Oct 2016 09:45:18 +0300
 Subject: [PATCH] Disable all unknown features instead of erroring out

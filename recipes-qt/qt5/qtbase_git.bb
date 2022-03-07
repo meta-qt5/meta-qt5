@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.15-shared
-# 5.15.meta-qt5-shared.2
+# 5.15.meta-qt5-shared.3
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -27,16 +27,15 @@ SRC_URI += "\
     file://0009-Add-OE-specific-specs-for-clang-compiler.patch \
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
-    file://0013-Disable-ltcg-for-host_build.patch \
-    file://0014-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
-    file://0015-corelib-Include-sys-types.h-for-uint32_t.patch \
-    file://0016-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
-    file://0018-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
-    file://0019-Define-__NR_futex-if-it-does-not-exist.patch \
-    file://0020-Revert-Fix-workaround-in-pthread-destructor.patch \
-    file://0021-qfloat16-Include-limits-header.patch \
-    file://0022-fix_timezone_dst.patch \
-    file://0023-tst_QPluginLoader-Simplify-creating-a-fake-pointer-i.patch \
+    file://0012-Disable-ltcg-for-host_build.patch \
+    file://0013-Qt5GuiConfigExtras.cmake.in-cope-with-variable-path-.patch \
+    file://0014-corelib-Include-sys-types.h-for-uint32_t.patch \
+    file://0015-Define-QMAKE_CXX.COMPILER_MACROS-for-clang-on-linux.patch \
+    file://0016-tst_qpainter-FE_-macros-are-not-defined-for-every-pl.patch \
+    file://0017-Define-__NR_futex-if-it-does-not-exist.patch \
+    file://0018-Revert-Fix-workaround-in-pthread-destructor.patch \
+    file://0019-tst_QPluginLoader-Simplify-creating-a-fake-pointer-i.patch \
+    file://0020-qbytearraymatcher-Include-limits-header.patch \
 "
 
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
@@ -309,4 +308,4 @@ sed -i \
     $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
 }
 
-SRCREV = "40143c189b7c1bf3c2058b77d00ea5c4e3be8b28"
+SRCREV = "c95f96550fc74b00bb0d3a82e7cb6b0e20bc76ac"
