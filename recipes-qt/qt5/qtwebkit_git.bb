@@ -52,6 +52,7 @@ ARM_INSTRUCTION_SET:armv7ve = "thumb"
 # just use -fpermissive in this case like fedora did:
 # https://bugzilla.redhat.com/show_bug.cgi?id=1582954
 CXXFLAGS += "-fpermissive"
+CXXFLAGS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', '-DEGL_NO_X11=1', d)}"
 
 EXTRA_OECMAKE += " \
     -DPORT=Qt \
