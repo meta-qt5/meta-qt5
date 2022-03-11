@@ -23,13 +23,13 @@ DEPENDS += " \
     qtwebchannel \
     qtbase qtdeclarative qtxmlpatterns qtquickcontrols qtquickcontrols2 \
     qtlocation \
-    libdrm libxkbcommon libxkbfile fontconfig pixman openssl pango cairo pciutils nss \
+    libdrm libxkbcommon fontconfig pixman openssl pango cairo pciutils nss \
     libcap \
     jpeg-native \
     freetype-native \
     gperf-native \
     ${@bb.utils.contains('DISTRO_FEATURES', 'alsa', 'alsa-lib', '', d)} \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libxcomposite libxcursor libxi libxrandr libxtst', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libxkbfile libxcomposite libxcursor libxi libxrandr libxtst', '', d)} \
 "
 
 DEPENDS:append:libc-musl = " libexecinfo"
