@@ -10,24 +10,26 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  src/foundation/Qt3DSSystem.cpp     | 8 +++++++-
  2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/src/foundation/Qt3DSPreprocessor.h b/src/foundation/Qt3DSPreprocessor.h
-index 066a38e..98ff573 100644
 --- a/src/foundation/Qt3DSPreprocessor.h
 +++ b/src/foundation/Qt3DSPreprocessor.h
-@@ -114,7 +114,7 @@ Platform define
+@@ -112,11 +112,11 @@ Platform define
+ #define QT3DS_VMX
+ #elif defined(__x86_64__)
  #define QT3DS_X64
- #elif defined(__ppc__)
- #define QT3DS_PPC
+-#elif defined(__ppc__)
+-#define QT3DS_PPC
 -#elif defined(__ppc64__)
 +#elif defined(__powerpc64__)
  #define QT3DS_PPC
  #define QT3DS_PPC64
++#elif defined(__ppc__)
++#define QT3DS_PPC
  //#   elif defined(__aarch64__)
-diff --git a/src/foundation/Qt3DSSystem.cpp b/src/foundation/Qt3DSSystem.cpp
-index e87a25e..81f563f 100644
+ //#       define QT3DS_ARM_64
+ #else
 --- a/src/foundation/Qt3DSSystem.cpp
 +++ b/src/foundation/Qt3DSSystem.cpp
-@@ -62,6 +62,10 @@ const char *qt3ds::foundation::System::g_FloatingPointModel = "";
+@@ -62,6 +62,10 @@ const char *qt3ds::foundation::System::g
  const char *qt3ds::foundation::System::g_Processor = "x64";
  const char *qt3ds::foundation::System::g_BitWidth = "64";
  const char *qt3ds::foundation::System::g_FloatingPointModel = "";
@@ -38,15 +40,27 @@ index e87a25e..81f563f 100644
  #elif defined(QT3DS_ARM)
  #if defined(__aarch64__) || defined(__ARM64__)
  const char *qt3ds::foundation::System::g_Processor = "arm";
-@@ -97,6 +101,8 @@ const char *qt3ds::foundation::System::g_GPUType = "gles3";
+@@ -79,7 +83,7 @@ const char *qt3ds::foundation::System::g
+ #endif
+ #endif
+ #else
+-#error "Unknown Platform"
++//#error "Unknown Platform"
+ #endif
+ 
+ #if defined(QT3DS_ARM)
+@@ -97,8 +101,10 @@ const char *qt3ds::foundation::System::g
  const char *qt3ds::foundation::System::g_GPUType = "";
  #elif defined(QT3DS_X64)
  const char *qt3ds::foundation::System::g_GPUType = "";
 +#elif defined(QT3DS_PPC64)
 +const char *qt3ds::foundation::System::g_GPUType = "";
  #else
- #error "Must define a processor type (QT3DS_ARM or QT3DS_X86)"
+-#error "Must define a processor type (QT3DS_ARM or QT3DS_X86)"
++//#error "Must define a processor type (QT3DS_ARM or QT3DS_X86)"
  #endif
+ 
+ namespace {
 @@ -136,4 +142,4 @@ const char *System::getPlatformGLStr()
          strcpy(text, str.c_str());
      }
@@ -54,6 +68,3 @@ index e87a25e..81f563f 100644
 -}
 \ No newline at end of file
 +}
--- 
-2.30.2
-
