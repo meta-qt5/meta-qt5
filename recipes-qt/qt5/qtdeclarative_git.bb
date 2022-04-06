@@ -17,6 +17,8 @@ LIC_FILES_CHKSUM = " \
 SRC_URI += " \
     file://0001-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-locate-qmlca.patch \
     file://0002-Use-python3-explicitly.patch \
+    file://0003-qv4regexp_p-needs-c-limits-include-instead-of-plain-.patch \
+    file://0004-qqmlprofilerevent_p-needs-c-limits-inlcude-fixes-gcc.patch \
 "
 
 DEPENDS += "qtbase"
