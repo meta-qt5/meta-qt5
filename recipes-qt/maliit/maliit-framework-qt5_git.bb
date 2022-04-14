@@ -61,8 +61,8 @@ EXTRA_QMAKEVARS_PRE = "\
     CONFIG+=qt5-inputcontext \
 "
 
-# tests fail to build with clang
-EXTRA_QMAKEVARS_PRE:append:toolchain-clang = " CONFIG+=notests"
+# tests fail to build with gcc12/clang
+EXTRA_QMAKEVARS_PRE:append = " CONFIG+=notests"
 
 EXTRA_OEMAKE += "INSTALL_ROOT=${D}"
 
