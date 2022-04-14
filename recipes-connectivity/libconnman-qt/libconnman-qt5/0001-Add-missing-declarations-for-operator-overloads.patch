@@ -17,14 +17,12 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
 
 --- a/libconnman-qt/marshalutils.cpp
 +++ b/libconnman-qt/marshalutils.cpp
-@@ -36,6 +36,11 @@
+@@ -36,6 +36,9 @@
  
  #include "marshalutils.h"
  
-+#if defined(__clang__) &&  __clang_major__ >= 11
 +Q_DBUS_EXPORT const QDBusArgument &operator>>(const QDBusArgument &a, RouteStructure &v);
 +Q_DBUS_EXPORT QDBusArgument &operator<<(QDBusArgument &a, const RouteStructure &v);
-+#endif
 +
  // Empty namespace for local static functions
  namespace {
