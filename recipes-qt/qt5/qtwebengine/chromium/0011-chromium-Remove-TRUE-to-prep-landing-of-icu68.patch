@@ -1,7 +1,7 @@
-From e8aa87fa88f55e76ce08794690665ce30caa3183 Mon Sep 17 00:00:00 2001
+From e0b6e087562cd34c93d4a9205ea8e8b7a8a532ee Mon Sep 17 00:00:00 2001
 From: Frank Tang <ftang@chromium.org>
 Date: Tue, 20 Oct 2020 01:09:43 +0000
-Subject: [PATCH] Remove TRUE to prep landing of icu68
+Subject: [PATCH] chromium: Remove TRUE to prep landing of icu68
 
 ICU 68, to work with C++20, remove the #define of TRUE
 since the usage in libxml is as an int, use 1 instead.
@@ -9,12 +9,12 @@ since the usage in libxml is as an int, use 1 instead.
 Upstream-Status: Backport [https://github.com/chromium/chromium/commit/e8aa87fa88f55e76ce08794690665ce30caa3183]
 Signed-off-by: Andrej Valek <andrej.valek@siemens.com>
 ---
- chromium/third_party/libxml/README.chromium            |  2 ++
- chromium/third_party/libxml/src/encoding.c             |  6 ++--
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ chromium/third_party/libxml/README.chromium | 2 ++
+ chromium/third_party/libxml/src/encoding.c  | 6 +++---
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/chromium/third_party/libxml/README.chromium b/chromium/third_party/libxml/README.chromium
-index f84cc64e1f922..8da443a392c3d 100644
+index f84cc64e1f9..8da443a392c 100644
 --- a/chromium/third_party/libxml/README.chromium
 +++ b/chromium/third_party/libxml/README.chromium
 @@ -24,6 +24,8 @@ Modifications:
@@ -27,7 +27,7 @@ index f84cc64e1f922..8da443a392c3d 100644
  - Delete various unused files, see chromium/roll.py
  
 diff --git a/chromium/third_party/libxml/src/encoding.c b/chromium/third_party/libxml/src/encoding.c
-index c34aca44663c0..47be560ede472 100644
+index c34aca44663..47be560ede4 100644
 --- a/chromium/third_party/libxml/src/encoding.c
 +++ b/chromium/third_party/libxml/src/encoding.c
 @@ -1858,7 +1858,7 @@ xmlIconvWrapper(iconv_t cd, unsigned char *out, int *outlen,
