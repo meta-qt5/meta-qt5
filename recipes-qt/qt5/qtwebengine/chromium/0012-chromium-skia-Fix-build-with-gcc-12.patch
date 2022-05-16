@@ -1,0 +1,62 @@
+From 6bdd69cdfc1e6a695fbe2c4fd6929e79cc7ab3a0 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Mon, 16 May 2022 20:01:49 +0000
+Subject: [PATCH] chromium: skia: Fix build with gcc-12
+
+* fixes:
+/OE/build/test-oe-build-time/poky/build/tmp/work/core2-64-poky-linux/qtwebengine/5.15.8+gitAUTOINC+73e76f9e86_48a205f9e0-r0/recipe-sysroot-native/usr/bin/x86_64-poky-linux/x86_64-poky-linux-g++ -m64 -march=core2 -mtune=core2 -msse3 -mfpmath=sse -fstack-protector-strong -O2 -D_FORTIFY_SOURCE=2 --sysroot=/OE/build/test-oe-build-time/poky/build/tmp/work/core2-64-poky-linux/qtwebengine/5.15.8+gitAUTOINC+73e76f9e86_48a205f9e0-r0/recipe-sysroot -MMD -MF obj/skia/skia/SkParseColor.o.d -DUSE_UDEV -DUSE_AURA=1 -DUSE_NSS_CERTS=1 -DUSE_OZONE=1 -DOFFICIAL_BUILD -DTOOLKIT_QT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DNO_UNWIND_TABLES -DCR_SYSROOT_HASH=5f64b417e1018dcf8fcc81dc2714e0f264b9b911 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DSK_CODEC_DECODES_PNG -DSK_CODEC_DECODES_WEBP -DSK_ENCODE_PNG -DSK_ENCODE_WEBP -DSK_USER_CONFIG_HEADER=\"../../skia/config/SkUserConfig.h\" -DSK_GL -DSK_CODEC_DECODES_JPEG -DSK_ENCODE_JPEG -DSK_USE_LIBGIFCODEC -DSK_VULKAN_HEADER=\"../../skia/config/SkVulkanConfig.h\" -DSK_VULKAN=1 -DSK_SUPPORT_GPU=1 -DSK_GPU_WORKAROUNDS_HEADER=\"gpu/config/gpu_driver_bug_workaround_autogen.h\" -DSKIA_IMPLEMENTATION=1 -DSK_GAMMA_EXPONENT=1.2 -DSK_GAMMA_CONTRAST=0.2 -DSK_DEFAULT_FONT_CACHE_LIMIT=20971520 -DWEBP_EXTERN=extern -DUSE_SYSTEM_LIBJPEG -DU_USING_ICU_NAMESPACE=0 -DU_ENABLE_DYLOAD=0 -DUSE_CHROMIUM_ICU=1 -DU_ENABLE_TRACING=1 -DU_ENABLE_RESOURCE_TRACING=0 -DU_STATIC_IMPLEMENTATION -DICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_FILE -DUCHAR_TYPE=uint16_t -Igen -I../../../../git/src/3rdparty/chromium -I../../../../git/src/3rdparty/chromium/third_party/skia -I../../../../git/src/3rdparty/chromium/third_party/libgifcodec -I../../../../git/src/3rdparty/chromium/third_party/vulkan/include -I../../../../git/src/3rdparty/chromium/third_party/vulkan_headers/include -I../../../../git/src/3rdparty/chromium/third_party/perfetto/include -Igen/third_party/perfetto/build_config -Igen/third_party/perfetto -Igen -Igen -I../../../../git/src/3rdparty/chromium/third_party/libwebp/src -Igen -I../../../../git/src/3rdparty/chromium/third_party/abseil-cpp -I../../../../git/src/3rdparty/chromium/third_party/boringssl/src/include -I../../../../git/src/3rdparty/chromium/third_party/protobuf/src -Igen/protoc_out -I../../../../git/src/3rdparty/chromium/third_party/icu/source/common -I../../../../git/src/3rdparty/chromium/third_party/icu/source/i18n -fno-strict-aliasing --param=ssp-buffer-size=4 -fstack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fPIC -pipe -pthread -m64 -fno-omit-frame-pointer -g1 -fvisibility=hidden -Wno-unused-local-typedefs -Wno-maybe-uninitialized -Wno-deprecated-declarations -fno-delete-null-pointer-checks -Wno-comments -Wno-packed-not-aligned -Wno-dangling-else -Wno-missing-field-initializers -Wno-unused-parameter -O2 -fno-ident -fdata-sections -ffunction-sections -I/OE/build/test-oe-build-time/poky/build/tmp/work/core2-64-poky-linux/qtwebengine/5.15.8+gitAUTOINC+73e76f9e86_48a205f9e0-r0/recipe-sysroot/usr/include/libpng16 -I/OE/build/test-oe-build-time/poky/build/tmp/work/core2-64-poky-linux/qtwebengine/5.15.8+gitAUTOINC+73e76f9e86_48a205f9e0-r0/recipe-sysroot/usr/include/freetype2 -I/OE/build/test-oe-build-time/poky/build/tmp/work/core2-64-poky-linux/qtwebengine/5.15.8+gitAUTOINC+73e76f9e86_48a205f9e0-r0/recipe-sysroot/usr/include/libpng16 -std=gnu++14 -fno-exceptions -fno-rtti --sysroot=../../../../recipe-sysroot -fvisibility-inlines-hidden -std=c++17 -Wno-narrowing -Wno-class-memaccess -Wno-attributes -Wno-class-memaccess -Wno-subobject-linkage -Wno-invalid-offsetof -Wno-return-type -Wno-deprecated-copy -c ../../../../git/src/3rdparty/chromium/third_party/skia/src/utils/SkParseColor.cpp -o obj/skia/skia/SkParseColor.o
+../../../../git/src/3rdparty/chromium/third_party/skia/src/utils/SkParseColor.cpp: In static member function 'static const char* SkParse::FindNamedColor(const char*, size_t, SkColor*)':
+../../../../git/src/3rdparty/chromium/third_party/skia/src/utils/SkParseColor.cpp:300:49: error: no matching function for call to 'begin(const char* const [140])'
+  300 |     const auto rec = std::lower_bound(std::begin(gColorNames),
+      |                                       ~~~~~~~~~~^~~~~~~~~~~~~
+In file included from ../../../../recipe-sysroot/usr/include/c++/12.1.0/utility:73,
+                 from ../../../../git/src/3rdparty/chromium/third_party/skia/include/core/SkImageInfo.h:11,
+                 from ../../../../git/src/3rdparty/chromium/third_party/skia/include/core/SkColor.h:11,
+                 from ../../../../git/src/3rdparty/chromium/third_party/skia/include/utils/SkParse.h:13,
+                 from ../../../../git/src/3rdparty/chromium/third_party/skia/src/utils/SkParseColor.cpp:9:
+../../../../recipe-sysroot/usr/include/c++/12.1.0/initializer_list:90:5: note: candidate: 'template<class _Tp> constexpr const _Tp* std::begin(initializer_list<_Tp>)'
+   90 |     begin(initializer_list<_Tp> __ils) noexcept
+      |     ^~~~~
+../../../../recipe-sysroot/usr/include/c++/12.1.0/initializer_list:90:5: note:   template argument deduction/substitution failed:
+../../../../git/src/3rdparty/chromium/third_party/skia/src/utils/SkParseColor.cpp:300:49: note:   mismatched types 'std::initializer_list<_Tp>' and 'const char* const*'
+  300 |     const auto rec = std::lower_bound(std::begin(gColorNames),
+      |                                       ~~~~~~~~~~^~~~~~~~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/skia/src/utils/SkParseColor.cpp:301:49: error: no matching function for call to 'end(const char* const [140])'
+  301 |                                       std::end  (gColorNames),
+      |                                       ~~~~~~~~~~^~~~~~~~~~~~~
+../../../../recipe-sysroot/usr/include/c++/12.1.0/initializer_list:101:5: note: candidate: 'template<class _Tp> constexpr const _Tp* std::end(initializer_list<_Tp>)'
+  101 |     end(initializer_list<_Tp> __ils) noexcept
+      |     ^~~
+../../../../recipe-sysroot/usr/include/c++/12.1.0/initializer_list:101:5: note:   template argument deduction/substitution failed:
+../../../../git/src/3rdparty/chromium/third_party/skia/src/utils/SkParseColor.cpp:301:49: note:   mismatched types 'std::initializer_list<_Tp>' and 'const char* const*'
+  301 |                                       std::end  (gColorNames),
+      |                                       ~~~~~~~~~~^~~~~~~~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/skia/src/utils/SkParseColor.cpp:307:24: error: no matching function for call to 'end(const char* const [140])'
+  307 |     if (rec == std::end(gColorNames) || 0 != strcmp(name, *rec)) {
+      |                ~~~~~~~~^~~~~~~~~~~~~
+../../../../recipe-sysroot/usr/include/c++/12.1.0/initializer_list:101:5: note: candidate: 'template<class _Tp> constexpr const _Tp* std::end(initializer_list<_Tp>)'
+  101 |     end(initializer_list<_Tp> __ils) noexcept
+      |     ^~~
+../../../../recipe-sysroot/usr/include/c++/12.1.0/initializer_list:101:5: note:   template argument deduction/substitution failed:
+../../../../git/src/3rdparty/chromium/third_party/skia/src/utils/SkParseColor.cpp:307:24: note:   mismatched types 'std::initializer_list<_Tp>' and 'const char* const*'
+  307 |     if (rec == std::end(gColorNames) || 0 != strcmp(name, *rec)) {
+      |                ~~~~~~~~^~~~~~~~~~~~~
+[67/9144] CXX obj/skia/skia/GrClipStack.o
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ chromium/third_party/skia/src/utils/SkParseColor.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/chromium/third_party/skia/src/utils/SkParseColor.cpp b/chromium/third_party/skia/src/utils/SkParseColor.cpp
+index 7260365b2c6..cd07eb48650 100644
+--- a/chromium/third_party/skia/src/utils/SkParseColor.cpp
++++ b/chromium/third_party/skia/src/utils/SkParseColor.cpp
+@@ -7,6 +7,7 @@
+ 
+ 
+ #include "include/utils/SkParse.h"
++#include <vector>
+ 
+ static constexpr const char* gColorNames[] = {
+     "aliceblue",
