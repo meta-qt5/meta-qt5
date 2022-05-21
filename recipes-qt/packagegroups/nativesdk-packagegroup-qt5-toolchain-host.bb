@@ -3,6 +3,9 @@
 SUMMARY = "Host packages for the Qt5 standalone SDK or external toolchain"
 LICENSE = "MIT"
 
+# disable sanity check for allarch packagegroup
+PACKAGE_ARCH = ""
+
 inherit packagegroup nativesdk
 
 PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
