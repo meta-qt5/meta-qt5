@@ -12,6 +12,4 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase"
 
-SRC_URI:append = " file://0001-Clamp-parsed-doubles-to-float-representable-values.patch"
-
-SRCREV = "da19a7140dfd23a42792274ca4f497f20ffd29f4"
+SRCREV = "b13c2d7fe8810af13a3f9400ecff4ff7c4c7ab51"
