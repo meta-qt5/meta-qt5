@@ -20,6 +20,7 @@ LIC_FILES_CHKSUM = " \
 SRC_URI += "file://0001-tst_seatv4-Include-array.patch \
             file://0001-linux-dmabuf-unstable-v1-Include-missing-array-heade.patch \
             file://0001-Fix-vulkan-buffer-formats-for-GLES2.patch \
+            file://0001-qwaylandinputcontext-Include-missing-header-locale.h.patch \
            "
 
 PACKAGECONFIG ?= " \

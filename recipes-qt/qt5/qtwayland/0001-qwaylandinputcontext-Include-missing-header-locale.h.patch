@@ -1,0 +1,36 @@
+From 99f9a859b860b98880859bda847a341f460b9637 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 24 May 2022 13:54:17 -0700
+Subject: [PATCH] qwaylandinputcontext: Include missing header locale.h for
+ LC_CTYPE
+
+This issue is unraveled with musl, but is a general problem
+
+Fixes
+/mnt/b/yoe/master/build/tmp/work/cortexa72-yoe-linux-musl/qtwayland/5.15.4+gitAUTOINC+f1e6c8764d-r0/git/src/client/qwaylandinputcontext.cpp:584:36: error: use of undeclared identifier 'LC_CTYPE'
+    const char *locale = setlocale(LC_CTYPE, "");
+                                   ^
+/mnt/b/yoe/master/build/tmp/work/cortexa72-yoe-linux-musl/qtwayland/5.15.4+gitAUTOINC+f1e6c8764d-r0/git/src/client/qwaylandinputcontext.cpp:586:28: error: use of undeclared identifier 'LC_CTYPE'
+        locale = setlocale(LC_CTYPE, nullptr);
+                           ^
+Upstream-Status: Pending
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ src/client/qwaylandinputcontext.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/client/qwaylandinputcontext.cpp b/src/client/qwaylandinputcontext.cpp
+index ef5aa375..d8e55357 100644
+--- a/src/client/qwaylandinputcontext.cpp
++++ b/src/client/qwaylandinputcontext.cpp
+@@ -37,6 +37,7 @@
+ **
+ ****************************************************************************/
+ 
++#include <locale.h>
+ 
+ #include "qwaylandinputcontext_p.h"
+ 
+-- 
+2.36.1
+
