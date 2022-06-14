@@ -167,7 +167,7 @@ SRC_URI:append:libc-musl = "\
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based-glibc
-# 87-based-glibc.meta-qt5.8
+# 87-based-glibc.meta-qt5.9
 SRC_URI += " \
     file://chromium/0001-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
     file://chromium/0002-chromium-fix-build-with-clang.patch;patchdir=src/3rdparty \
@@ -184,7 +184,7 @@ SRC_URI += " \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based
-# 87-based.meta-qt5.8
+# 87-based.meta-qt5.9
 SRC_URI:append:libc-musl = "\
     file://chromium/0013-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch;patchdir=src/3rdparty \
     file://chromium/0014-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty \
@@ -200,7 +200,8 @@ SRC_URI:append:libc-musl = "\
 "
 
 SRCREV_qtwebengine = "c7e716ef1ffd63a8ab1f4dbf879230849eb3b505"
-SRCREV_chromium = "caba2fcb0fe8a8d213c4c79d26da3bb88eee61c7"
+# this is 3 commits ahead of what submodule in 5.15.10 uses (caba2fcb0fe8a8d213c4c79d26da3bb88eee61c7), but contains useful fix:
+SRCREV_chromium = "ecc2bb74f1f7140fc52650042299be18e826b27b"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
