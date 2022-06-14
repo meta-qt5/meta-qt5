@@ -1,0 +1,39 @@
+From a769d4c4cab7168d5e92b28790cf383985e5c177 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Sat, 26 Feb 2022 18:15:28 -0800
+Subject: [PATCH] Fix build with clang
+
+use GNU runtime when building native tools like gn
+when using native clang compiler
+
+Fixes
+| FAILED: gn
+| /mnt/b/yoe/master/build/tmp/work/core2-64-yoe-linux/qtpdf/5.15.8+gitAUTOINC+73e76f9e86_48a205f9e0-r0/recipe-sysroot-native/usr/bin/clang++ -O3 -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-stri
+p-all -Wl,--as-needed -pthread -o gn -Wl,--start-group tools/gn/gn_main.o base.a gn_lib.a -Wl,--end-group -ldl
+| /mnt/b/yoe/master/build/tmp/hosttools/ld: cannot find /usr/lib/clang/14.0.0/lib/linux/libclang_rt.builtins-x86_64.a: No such file or directory
+
+Fix building with clang from meta-clang
+
+Clang defaults to llvm runtime and this patch is needed
+for building the host tools, since its using native runtime
+
+Upstream-Status: Inappropriate [OE-Specific]
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ src/buildtools/gn.pro | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
+index 7b8365157..51574e0fd 100644
+--- a/src/buildtools/gn.pro
++++ b/src/buildtools/gn.pro
+@@ -20,7 +20,7 @@ build_pass|!debug_and_release {
+ 
+             gn_gen_args = --no-last-commit-position --out-path $$out_path \
+                           --cc \"$$which($$CC_host)\" --cxx \"$$which($$CXX_host)\" \
+-                          --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\" \
++                          --ld \"$$which($$CXX_host) -rtlib=libgcc -unwindlib=libgcc\" --ar \"$$which(ar)\" \
+                           --no-static-libstdc++
+             !isEmpty(QMAKE_AR): gn_gen_args += --ar \"$$which($$first(QMAKE_AR))\"
+ 

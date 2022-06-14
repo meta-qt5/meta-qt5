@@ -1,4 +1,4 @@
-From 988d1e3f9c4415c2a59833b74098639d3fe71524 Mon Sep 17 00:00:00 2001
+From 492221e627937ef0063a9da125a6aef847eebcef Mon Sep 17 00:00:00 2001
 From: Leif Middelschulte <Leif.Middelschulte@klsmartin.com>
 Date: Tue, 8 Feb 2022 14:14:02 +0100
 Subject: [PATCH] configure.json: remove python2 dependency
@@ -8,7 +8,7 @@ Subject: [PATCH] configure.json: remove python2 dependency
  1 file changed, 1 deletion(-)
 
 diff --git a/src/buildtools/configure.json b/src/buildtools/configure.json
-index 9eb5e8e3..ebe31c21 100644
+index 9eb5e8e33..ebe31c216 100644
 --- a/src/buildtools/configure.json
 +++ b/src/buildtools/configure.json
 @@ -399,7 +399,6 @@

@@ -1,4 +1,4 @@
-From 4d2f525ccf3255dd4a0e774d3db0533ae4aba98f Mon Sep 17 00:00:00 2001
+From 38a26f8fa1fba94c621e2eeb2428d47a4640e6fa Mon Sep 17 00:00:00 2001
 From: Leif Middelschulte <Leif.Middelschulte@klsmartin.com>
 Date: Tue, 8 Feb 2022 16:28:14 +0100
 Subject: [PATCH] gn.pro: do not try to statically link stdc++
@@ -8,7 +8,7 @@ Subject: [PATCH] gn.pro: do not try to statically link stdc++
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
-index a8ca6567..9632f0ef 100644
+index 5094574ed..7b8365157 100644
 --- a/src/buildtools/gn.pro
 +++ b/src/buildtools/gn.pro
 @@ -20,7 +20,8 @@ build_pass|!debug_and_release {
@@ -18,6 +18,6 @@ index a8ca6567..9632f0ef 100644
 -                          --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\"
 +                          --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\" \
 +                          --no-static-libstdc++
+             !isEmpty(QMAKE_AR): gn_gen_args += --ar \"$$which($$first(QMAKE_AR))\"
  
              msvc:!clang_cl: gn_gen_args += --use-lto
- 
