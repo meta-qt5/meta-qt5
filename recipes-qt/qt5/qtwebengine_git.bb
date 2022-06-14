@@ -148,18 +148,18 @@ RDEPENDS:${PN}-examples += " \
 
 QT_MODULE_BRANCH_CHROMIUM = "87-based"
 
-QT_MODULE_BRANCH = "5.15"
-PV = "5.15.8+git${SRCPV}"
+QT_MODULE_BRANCH = "5.15.10"
+PV = "5.15.10+git${SRCPV}"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15-glibc
-# 5.15-glibc.meta-qt5.13
+# 5.15-glibc.meta-qt5.14
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
-    file://0002-qmake.conf-lower-MODULE_VERSION-to-5.15.2.patch \
+    file://0002-qmake.conf-lower-MODULE_VERSION-to-5.15.4.patch \
 "
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
-# 5.15.meta-qt5.13
+# 5.15.meta-qt5.14
 SRC_URI:append:libc-musl = "\
     file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
     file://0004-musl-link-against-libexecinfo.patch \
@@ -167,7 +167,7 @@ SRC_URI:append:libc-musl = "\
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based-glibc
-# 87-based-glibc.meta-qt5.7
+# 87-based-glibc.meta-qt5.8
 SRC_URI += " \
     file://chromium/0001-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
     file://chromium/0002-chromium-fix-build-with-clang.patch;patchdir=src/3rdparty \
@@ -184,7 +184,7 @@ SRC_URI += " \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based
-# 87-based.meta-qt5.7
+# 87-based.meta-qt5.8
 SRC_URI:append:libc-musl = "\
     file://chromium/0013-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch;patchdir=src/3rdparty \
     file://chromium/0014-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty \
@@ -199,8 +199,8 @@ SRC_URI:append:libc-musl = "\
     file://chromium/0023-chromium-musl-initialize-msghdr-in-a-compatible-mann.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "73e76f9e86b3fded45be6b232bdebe75e7136e4a"
-SRCREV_chromium = "48a205f9e054b5cc3e67df2e25382da9460c0015"
+SRCREV_qtwebengine = "c7e716ef1ffd63a8ab1f4dbf879230849eb3b505"
+SRCREV_chromium = "caba2fcb0fe8a8d213c4c79d26da3bb88eee61c7"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"

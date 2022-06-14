@@ -1,4 +1,4 @@
-From a15d2e00b6e86ddf976449b60e2305dbe4519221 Mon Sep 17 00:00:00 2001
+From 4b3b7ae386d300f784d44d93c875908e082af154 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Wed, 25 Dec 2019 15:41:16 -0800
 Subject: [PATCH] chromium: Include cstddef for size_t definition
