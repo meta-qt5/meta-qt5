@@ -1,4 +1,4 @@
-From 7a41b9ef89f18b26abf6355f5193d90a38147955 Mon Sep 17 00:00:00 2001
+From 02ebd5b50c208f913213c3da32ed820fa420d8fe Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -71,7 +71,7 @@ index dd0d3e327..6312c8678 100644
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
 diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
-index 033202e6e..a8ca6567b 100644
+index f94694da0..5094574ed 100644
 --- a/src/buildtools/gn.pro
 +++ b/src/buildtools/gn.pro
 @@ -19,8 +19,8 @@ build_pass|!debug_and_release {
@@ -82,6 +82,6 @@ index 033202e6e..a8ca6567b 100644
 -                          --ld \"$$which($$QMAKE_LINK)\"
 +                          --cc \"$$which($$CC_host)\" --cxx \"$$which($$CXX_host)\" \
 +                          --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\"
+             !isEmpty(QMAKE_AR): gn_gen_args += --ar \"$$which($$first(QMAKE_AR))\"
  
              msvc:!clang_cl: gn_gen_args += --use-lto
- 
