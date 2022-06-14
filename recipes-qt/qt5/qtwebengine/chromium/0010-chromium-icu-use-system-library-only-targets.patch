@@ -1,4 +1,4 @@
-From 33aa004f686e3d0e6d9d646b911cf4eee68769d4 Mon Sep 17 00:00:00 2001
+From 8a0c927cdc9705e2a1c29d63c87d32e8cb089510 Mon Sep 17 00:00:00 2001
 From: Andrej Valek <andrej.valek@siemens.com>
 Date: Fri, 17 Apr 2020 09:43:32 +0200
 Subject: [PATCH] chromium: icu: use system library only targets

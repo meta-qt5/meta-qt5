@@ -1,4 +1,4 @@
-From 6bdd69cdfc1e6a695fbe2c4fd6929e79cc7ab3a0 Mon Sep 17 00:00:00 2001
+From 03e9ff9a00ea85e84faeb6267d60fb9ed7c0a598 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 16 May 2022 20:01:49 +0000
 Subject: [PATCH] chromium: skia: Fix build with gcc-12
