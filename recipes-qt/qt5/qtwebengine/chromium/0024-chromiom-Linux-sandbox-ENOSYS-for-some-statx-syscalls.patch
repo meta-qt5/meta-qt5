@@ -1,0 +1,63 @@
+From 308cb3c07ed8dd9b68c2a5d1537b805d492773cb Mon Sep 17 00:00:00 2001
+From: Matthew Denton <mpdenton@chromium.org>
+Date: Wed, 21 Jul 2021 17:12:27 +0000
+Subject: [PATCH] chromium: Linux sandbox: ENOSYS for some statx syscalls
+
+On some platforms, glibc will default to statx for normal stat-family
+calls. Unfortunately there's no way to rewrite statx to something safe
+using a signal handler. Returning ENOSYS will cause glibc to fallback
+to old stat paths.
+
+Upstream-Status: Backport [https://chromium-review.googlesource.com/c/chromium/src/+/2823150]
+Signed-off-by: Andrej Valek <andrej.valek@siemens.com>
+---
+
+diff --git a/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc b/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
+index 009197e..5e650d9 100644
+--- a/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
++++ b/chromium/sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc
+@@ -271,6 +271,17 @@
+     return RewriteFstatatSIGSYS(fs_denied_errno);
+   }
+ 
++  // The statx syscall is a filesystem syscall, which will be denied below with
++  // fs_denied_errno. However, on some platforms, glibc will default to statx
++  // for normal stat-family calls. Unfortunately there's no way to rewrite statx
++  // to something safe using a signal handler. Returning ENOSYS will cause glibc
++  // to fallback to old stat paths.
++  if (sysno == __NR_statx) {
++    const Arg<int> mask(3);
++    return If(mask == STATX_BASIC_STATS, Error(ENOSYS))
++        .Else(Error(fs_denied_errno));
++  }
++
+   if (SyscallSets::IsFileSystem(sysno) ||
+       SyscallSets::IsCurrentDirectory(sysno)) {
+     return Error(fs_denied_errno);
+diff --git a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
+index 2c7a9e8..d1ea8e9 100644
+--- a/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
++++ b/chromium/sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc
+@@ -154,6 +154,7 @@
+     (defined(ARCH_CPU_MIPS_FAMILY) && defined(ARCH_CPU_32_BITS))
+     case __NR_statfs64:
+ #endif
++    case __NR_statx:  // EPERM not a valid errno.
+     case __NR_symlinkat:
+     case __NR_truncate:
+ #if defined(__i386__) || defined(__arm__) || \
+diff --git a/chromium/sandbox/linux/system_headers/linux_stat.h b/chromium/sandbox/linux/system_headers/linux_stat.h
+index 83b89ef..e697dd6 100644
+--- a/chromium/sandbox/linux/system_headers/linux_stat.h
++++ b/chromium/sandbox/linux/system_headers/linux_stat.h
+@@ -161,6 +161,10 @@
+ #define AT_EMPTY_PATH 0x1000
+ #endif
+ 
++#if !defined(STATX_BASIC_STATS)
++#define STATX_BASIC_STATS 0x000007ffU
++#endif
++
+ // On 32-bit systems, we default to the 64-bit stat struct like libc
+ // implementations do. Otherwise we default to the normal stat struct which is
+ // already 64-bit.
