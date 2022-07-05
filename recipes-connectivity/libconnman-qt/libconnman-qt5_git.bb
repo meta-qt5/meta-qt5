@@ -1,15 +1,14 @@
 require recipes-qt/qt5/qt5.inc
 
-SUMMARY = "Qt Library for ConnMan"
+SUMMARY = "Qt 5/6 Library for ConnMan"
 HOMEPAGE = "https://github.com/sailfishos/libconnman-qt"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://libconnman-qt/clockmodel.h;endline=8;md5=ea9f724050803f15d2d900ce3c5dac88"
 DEPENDS += "qtbase qtdeclarative"
-PV = "1.2.45+git${SRCPV}"
+PV = "1.2.46+git${SRCPV}"
 
-SRCREV = "1b1ef5693218b3e4f398a320b91ab84ea38d87d7"
+SRCREV = "6786936cba9048ee943c0cd5d051c0b8fc70896f"
 SRC_URI = "git://github.com/sailfishos/libconnman-qt.git;protocol=https;branch=master \
-    file://0001-Add-missing-declarations-for-operator-overloads.patch \
 "
 
 S = "${WORKDIR}/git"
