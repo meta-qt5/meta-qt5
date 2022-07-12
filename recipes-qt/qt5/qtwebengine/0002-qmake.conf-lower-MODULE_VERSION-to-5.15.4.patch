@@ -1,4 +1,4 @@
-From f080d8b761542c942a3ab33a3895c9af7a0ee02a Mon Sep 17 00:00:00 2001
+From 8031326dbf1252f76f6aac9dcef5611fd7be5fa4 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Fri, 12 Mar 2021 15:47:50 +0100
 Subject: [PATCH] qmake.conf: lower MODULE_VERSION to 5.15.4

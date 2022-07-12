@@ -137,14 +137,14 @@ QT_MODULE = "qtwebengine"
 FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtwebengine:"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15-glibc
-# 5.15-glibc.meta-qt5.14
+# 5.15-glibc.meta-qt5.15
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
     file://0002-qmake.conf-lower-MODULE_VERSION-to-5.15.4.patch \
 "
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
-# 5.15.meta-qt5.14
+# 5.15.meta-qt5.15
 SRC_URI:append:libc-musl = "\
     file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
     file://0004-musl-link-against-libexecinfo.patch \
@@ -203,7 +203,7 @@ INSANE_SKIP:${PN} += "textrel"
 # First patch skips "python2" dependency checks for the pdf module
 # Second patch repairs a failing build of the `gn` buildtool due to missing (host) libstdc++
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15-qtpdf
-# 5.15-qtpdf.meta-qt5.1
+# 5.15-qtpdf.meta-qt5.2
 SRC_URI += " \
     file://0001-configure.json-remove-python2-dependency.patch \
     file://0002-gn.pro-do-not-try-to-statically-link-stdc.patch \
