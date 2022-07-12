@@ -152,14 +152,14 @@ QT_MODULE_BRANCH = "5.15.10"
 PV = "5.15.10+git${SRCPV}"
 
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15-glibc
-# 5.15-glibc.meta-qt5.14
+# 5.15-glibc.meta-qt5.15
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
     file://0002-qmake.conf-lower-MODULE_VERSION-to-5.15.4.patch \
 "
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
-# 5.15.meta-qt5.14
+# 5.15.meta-qt5.15
 SRC_URI:append:libc-musl = "\
     file://0003-musl-don-t-use-pvalloc-as-it-s-not-available-on-musl.patch \
     file://0004-musl-link-against-libexecinfo.patch \

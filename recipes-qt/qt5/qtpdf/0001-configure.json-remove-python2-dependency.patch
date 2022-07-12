@@ -1,4 +1,4 @@
-From 492221e627937ef0063a9da125a6aef847eebcef Mon Sep 17 00:00:00 2001
+From 8214eac226762702f5a652a07f3b15d60cd09c98 Mon Sep 17 00:00:00 2001
 From: Leif Middelschulte <Leif.Middelschulte@klsmartin.com>
 Date: Tue, 8 Feb 2022 14:14:02 +0100
 Subject: [PATCH] configure.json: remove python2 dependency

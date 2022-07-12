@@ -1,4 +1,4 @@
-From a769d4c4cab7168d5e92b28790cf383985e5c177 Mon Sep 17 00:00:00 2001
+From b9ebaa970dbb050a51021a013e8d5b6d5aac86ab Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 26 Feb 2022 18:15:28 -0800
 Subject: [PATCH] Fix build with clang
@@ -25,7 +25,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
-index 7b8365157..51574e0fd 100644
+index 9632f0ef7..da85f8a26 100644
 --- a/src/buildtools/gn.pro
 +++ b/src/buildtools/gn.pro
 @@ -20,7 +20,7 @@ build_pass|!debug_and_release {
@@ -35,5 +35,5 @@ index 7b8365157..51574e0fd 100644
 -                          --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\" \
 +                          --ld \"$$which($$CXX_host) -rtlib=libgcc -unwindlib=libgcc\" --ar \"$$which(ar)\" \
                            --no-static-libstdc++
-             !isEmpty(QMAKE_AR): gn_gen_args += --ar \"$$which($$first(QMAKE_AR))\"
  
+             msvc:!clang_cl: gn_gen_args += --use-lto

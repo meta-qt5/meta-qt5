@@ -1,4 +1,4 @@
-From 02ebd5b50c208f913213c3da32ed820fa420d8fe Mon Sep 17 00:00:00 2001
+From bae24edf61de8e374a43b7eede7be8c90a2a32e5 Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -15,8 +15,8 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
 ---
  src/buildtools/config/linux.pri   |  2 +-
  src/buildtools/configure_host.pro | 14 +++++++-------
- src/buildtools/gn.pro             |  4 ++--
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ src/buildtools/gn.pro             |  5 ++---
+ 3 files changed, 10 insertions(+), 11 deletions(-)
 
 diff --git a/src/buildtools/config/linux.pri b/src/buildtools/config/linux.pri
 index 7507d51ef..1e078cbfe 100644
@@ -71,17 +71,18 @@ index dd0d3e327..6312c8678 100644
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
 diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
-index f94694da0..5094574ed 100644
+index f94694da0..a8ca6567b 100644
 --- a/src/buildtools/gn.pro
 +++ b/src/buildtools/gn.pro
-@@ -19,8 +19,8 @@ build_pass|!debug_and_release {
+@@ -19,9 +19,8 @@ build_pass|!debug_and_release {
              gn_bootstrap = $$system_path($$absolute_path(gn/build/gen.py, $$src_3rd_party_dir))
  
              gn_gen_args = --no-last-commit-position --out-path $$out_path \
 -                          --cc \"$$which($$QMAKE_CC)\" --cxx \"$$which($$QMAKE_CXX)\" \
 -                          --ld \"$$which($$QMAKE_LINK)\"
+-            !isEmpty(QMAKE_AR): gn_gen_args += --ar \"$$which($$first(QMAKE_AR))\"
 +                          --cc \"$$which($$CC_host)\" --cxx \"$$which($$CXX_host)\" \
 +                          --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\"
-             !isEmpty(QMAKE_AR): gn_gen_args += --ar \"$$which($$first(QMAKE_AR))\"
  
              msvc:!clang_cl: gn_gen_args += --use-lto
+ 
