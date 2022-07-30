@@ -24,8 +24,6 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  src/buildtools/gn.pro | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
-index 7b8365157..51574e0fd 100644
 --- a/src/buildtools/gn.pro
 +++ b/src/buildtools/gn.pro
 @@ -20,7 +20,7 @@ build_pass|!debug_and_release {
@@ -34,6 +32,6 @@ index 7b8365157..51574e0fd 100644
                            --cc \"$$which($$CC_host)\" --cxx \"$$which($$CXX_host)\" \
 -                          --ld \"$$which($$CXX_host)\" --ar \"$$which(ar)\" \
 +                          --ld \"$$which($$CXX_host) -rtlib=libgcc -unwindlib=libgcc\" --ar \"$$which(ar)\" \
-                           --no-static-libstdc++
-             !isEmpty(QMAKE_AR): gn_gen_args += --ar \"$$which($$first(QMAKE_AR))\"
+ 			  --no-static-libstdc++
  
+             msvc:!clang_cl: gn_gen_args += --use-lto
