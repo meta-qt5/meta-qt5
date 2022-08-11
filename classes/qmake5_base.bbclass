@@ -46,7 +46,7 @@ export OE_QMAKE_STRIP = "echo"
 # qmake reads if from shell environment
 export OE_QMAKE_QTCONF_PATH = "${WORKDIR}/qt.conf"
 
-inherit qmake5_paths remove-libtool
+inherit qmake5_paths
 
 generate_target_qt_config_file() {
     qtconf="$1"
