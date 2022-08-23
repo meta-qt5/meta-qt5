@@ -10,6 +10,10 @@ do_compile_ptest() {
     oe_runmake
 }
 
+DEBUG_PREFIX_MAP += "\
+ -fmacro-prefix-map=${D}= \
+"
+
 fakeroot do_install_ptest() {
     mkdir -p ${D}${PTEST_PATH}
     t=${D}${PTEST_PATH}
