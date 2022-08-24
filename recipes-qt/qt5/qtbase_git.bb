@@ -36,6 +36,7 @@ SRC_URI += "\
     file://0018-Revert-Fix-workaround-in-pthread-destructor.patch \
     file://0019-tst_QPluginLoader-Simplify-creating-a-fake-pointer-i.patch \
     file://0020-qbytearraymatcher-Include-limits-header.patch \
+    file://0005-testlib-don-t-track-the-build-or-source-directories.patch \
 "
 
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
