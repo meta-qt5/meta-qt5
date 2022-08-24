@@ -1,0 +1,28 @@
+From 07f7e1ae76b24ba64cd87726c438638a8fa3eba0 Mon Sep 17 00:00:00 2001
+From: Samuli Piippo <samuli.piippo@qt.io>
+Date: Mon, 22 Aug 2022 15:01:28 +0300
+Subject: [PATCH] testlib: don't track the build or source directories
+
+Build tests without location of the build and sources directories.
+
+Upstream-Status: Inappropriate [embedded specific]
+Change-Id: I8d5add473623a3d9f481097649819c9fb906e4b2
+---
+ src/testlib/CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/testlib/CMakeLists.txt b/src/testlib/CMakeLists.txt
+index 03deb2edc9..972b366532 100644
+--- a/src/testlib/CMakeLists.txt
++++ b/src/testlib/CMakeLists.txt
+@@ -125,8 +125,8 @@ set(qt_tc_build_dir_def
+     "$<IF:${qt_bool_tc_build_dir},${qt_tc_build_dir},$<TARGET_PROPERTY:BINARY_DIR>>"
+ )
+ set_property(TARGET Test APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS
+-    QT_TESTCASE_BUILDDIR="${qt_tc_build_dir_def}"
+-    QT_TESTCASE_SOURCEDIR="$<TARGET_PROPERTY:SOURCE_DIR>"
++    QT_TESTCASE_BUILDDIR=""
++    QT_TESTCASE_SOURCEDIR=""
+ )
+ 
+ # special case begin
