@@ -246,7 +246,8 @@ qmake5_base_do_install() {
     # Replace host paths with qmake built-in properties
     find ${D} \( -name "*.pri" -or -name "*.prl" \) -exec \
         sed -i -e 's|${STAGING_DIR_NATIVE}|$$[QT_HOST_PREFIX/get]|g' \
-            -e 's|${STAGING_DIR_HOST}|$$[QT_SYSROOT]|g' {} \;
+            -e 's|${STAGING_DIR_HOST}|$$[QT_SYSROOT]|g' {} \
+            -e '/QMAKE_PRL_BUILD_DIR/d' {} \;
 
     # Replace host paths with pkg-config built-in variable
     find ${D} -name "*.pc" -exec \
