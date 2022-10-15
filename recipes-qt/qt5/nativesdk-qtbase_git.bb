@@ -53,8 +53,8 @@ SRC_URI += "\
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.15-native
 # 5.15.meta-qt5-native.3
 SRC_URI += " \
-    file://0021-Always-build-uic-and-qvkgen.patch \
-    file://0022-Avoid-renameeat2-for-native-sdk-builds.patch \
+    file://0022-Always-build-uic-and-qvkgen.patch \
+    file://0023-Avoid-renameeat2-for-native-sdk-builds.patch \
 "
 
 # CMake's toolchain configuration of nativesdk-qtbase
