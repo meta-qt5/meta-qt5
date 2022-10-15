@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = " \
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.15-shared
-# 5.15.meta-qt5-shared.3
+# 5.15.meta-qt5-shared.4
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -36,7 +36,8 @@ SRC_URI += "\
     file://0018-Revert-Fix-workaround-in-pthread-destructor.patch \
     file://0019-tst_QPluginLoader-Simplify-creating-a-fake-pointer-i.patch \
     file://0020-qbytearraymatcher-Include-limits-header.patch \
-    file://0005-testlib-don-t-track-the-build-or-source-directories.patch \
+    file://0021-rcc-Just-dcument-file-name-without-full-path-to-redu.patch \
+    file://0022-testlib-don-t-track-the-build-or-source-directories.patch \
 "
 
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
