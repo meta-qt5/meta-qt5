@@ -105,6 +105,7 @@ RDEPENDS:${PN}:remove:toolchain-clang:riscv64 = "qttools-dev qttools-mkspecs qtt
 
 RRECOMMENDS:${PN} += " \
     qtquickcontrols-qmlplugins \
+    qtquickcontrols2-qmlplugins \
     qttools-plugins \
 "
 
