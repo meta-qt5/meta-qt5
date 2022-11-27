@@ -156,7 +156,7 @@ PV = "5.15.10+git${SRCPV}"
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
-    file://0002-qmake.conf-lower-MODULE_VERSION-to-5.15.4.patch \
+    file://0002-qmake.conf-lower-MODULE_VERSION-to-5.15.X.patch \
 "
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
 # 5.15.meta-qt5.15

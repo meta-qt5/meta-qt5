@@ -16,8 +16,6 @@ LIC_FILES_CHKSUM = " \
 # 5.15.meta-qt5.1
 SRC_URI += " \
     file://0001-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-locate-qmlca.patch \
-    file://0001-yarr-Include-limits-for-numeric_limits.patch \
-    file://0001-qmldebug-Include-limits-header.patch \
 "
 
 LDFLAGS:append:riscv64 = " -pthread"
@@ -55,6 +53,6 @@ do_install:append:class-nativesdk() {
     rm -rf ${D}${OE_QMAKE_PATH_QML}
 }
 
-SRCREV = "eca023e1eb19c6d968701595e99f648efcd1c0c7"
+SRCREV = "0d60f81bf61a69bc859a269ae562b2610d224e02"
 
 BBCLASSEXTEND =+ "native nativesdk"

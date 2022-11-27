@@ -46,7 +46,6 @@ SRC_URI += "\
     file://0017-Define-__NR_futex-if-it-does-not-exist.patch \
     file://0018-Revert-Fix-workaround-in-pthread-destructor.patch \
     file://0019-tst_QPluginLoader-Simplify-creating-a-fake-pointer-i.patch \
-    file://0020-qbytearraymatcher-Include-limits-header.patch \
     file://0021-rcc-Just-dcument-file-name-without-full-path-to-redu.patch \
     file://0022-testlib-don-t-track-the-build-or-source-directories.patch \
 "
@@ -203,4 +202,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "fa9a234c10ad4499fd6b148cd4360be5a1d61ae9"
+SRCREV = "358aebba7280d6d2b59b1f740747a4a3d1b7a54a"
