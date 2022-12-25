@@ -198,3 +198,7 @@ do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
 SRCREV = "01272c0948be9f1c6b8a3eff328b931f47d38649"
+
+# v5.12.12 tag isn't included in any branch after 5.12.12 branch was deleted by stupid script from:
+# https://bugreports.qt.io/browse/QTQAINFRA-3091 Released branches should be deleted
+QT_MODULE_BRANCH_PARAM = "nobranch=1"
