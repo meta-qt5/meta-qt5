@@ -36,6 +36,8 @@ SRC_URI += "\
     file://0018-qfloat16-Include-limits-header.patch \
 "
 
+SRC_URI += "file://0023-zlib-Do-not-undefine-_FILE_OFFSET_BITS.patch"
+
 # for syncqt
 RDEPENDS:${PN}-tools += "perl"
 
