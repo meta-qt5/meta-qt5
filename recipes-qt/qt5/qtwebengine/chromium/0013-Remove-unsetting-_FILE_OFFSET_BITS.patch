@@ -1,0 +1,37 @@
+From a6ed61f9435d25abdb71c2a2b84b204f180eb822 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 3 Jan 2023 14:10:23 -0800
+Subject: [PATCH] Remove unsetting _FILE_OFFSET_BITS
+
+This does not work when enabling 64bit time_t with glibc which is enabled with -D_TIME_BITS=64, since it also needs
+_FILE_OFFSET_BITS=64 and this does not work when its undefined explicitly
+
+Upstream-Status: Submitted [https://github.com/madler/zlib/pull/764]
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ chromium/third_party/zlib/gzguts.h | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/chromium/third_party/zlib/gzguts.h b/chromium/third_party/zlib/gzguts.h
+index 990a4d25149..a03d5005070 100644
+--- a/chromium/third_party/zlib/gzguts.h
++++ b/chromium/third_party/zlib/gzguts.h
+@@ -3,15 +3,6 @@
+  * For conditions of distribution and use, see copyright notice in zlib.h
+  */
+ 
+-#ifdef _LARGEFILE64_SOURCE
+-#  ifndef _LARGEFILE_SOURCE
+-#    define _LARGEFILE_SOURCE 1
+-#  endif
+-#  ifdef _FILE_OFFSET_BITS
+-#    undef _FILE_OFFSET_BITS
+-#  endif
+-#endif
+-
+ #ifdef HAVE_HIDDEN
+ #  define ZLIB_INTERNAL __attribute__((visibility ("hidden")))
+ #else
+-- 
+2.39.0
+
