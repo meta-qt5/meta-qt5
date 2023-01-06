@@ -20,7 +20,7 @@ inherit qmake5
 inherit python3native python3-dir
 
 DEPENDS = "qtcharts"
-DEPENDS += "sip3 sip3-native python3 python3-pyqt5"
+DEPENDS += "sip sip-native python3 python3-pyqt5"
 
 export BUILD_SYS
 export HOST_SYS
@@ -66,4 +66,4 @@ do_install() {
 FILES:${PN} += "${libdir}/${PYTHON_DIR}/site-packages ${datadir}/"
 
 RDEPENDS:${PN} = "qtbase qtdeclarative qtquickcontrols2 qtquickcontrols2-mkspecs qtcharts"
-RDEPENDS:${PN} += "python3-core python3-sip3 python3-pyqt5"
+RDEPENDS:${PN} += "python3-core sip python3-pyqt5"
