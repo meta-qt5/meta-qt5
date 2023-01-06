@@ -24,6 +24,7 @@ SRC_URI += "\
     file://0008-Fix-build-with-icu-68.patch \
     file://0009-Riscv-Add-support-for-riscv.patch \
     file://mips-atomic.patch \
+    file://0001-Offlineasm-warnings-with-newer-Ruby-versions-https-b.patch \
 "
 
 SRC_URI:append:riscv32 = " file://0010-webdriver-libatomic.patch "
