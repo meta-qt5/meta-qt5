@@ -1,0 +1,60 @@
+From 85e1eb951ab3b1fda04a49e52f50bc9c50af1a13 Mon Sep 17 00:00:00 2001
+From: Peter Seiderer <ps.report@gmx.net>
+Date: Mon, 4 May 2020 23:17:45 +0200
+Subject: [PATCH] evdevkeyboard: fix input_event time related compile
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fixes:
+
+  evdevkeyboard/qevdevkeyboardhandler.cpp: In member function ‘void QEvdevKeyboardHandler::switchLed(int, bool)’:
+  evdevkeyboard/qevdevkeyboardhandler.cpp:153:28: error: ‘struct input_event’ has no member named ‘time’; did you mean ‘type’?
+       ::gettimeofday(&led_ie.time, 0);
+                              ^~~~
+                              type
+
+Task-number: QTBUG-84012
+Change-Id: I1d127561e0406ae570da656d3e31f9434c7b8798
+Reviewed-by: Laszlo Agocs <laszlo.agocs@qt.io>
+(cherry picked from commit c5b8b662105cc5ced968da9f567fe1134c52d6b5)
+
+Upstream-Status: Backport [5.15 d9b430560a6ea28fc6024cede34d765c7bd68e22]
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ .../input/evdevkeyboard/qevdevkeyboardhandler.cpp   | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/src/platformsupport/input/evdevkeyboard/qevdevkeyboardhandler.cpp b/src/platformsupport/input/evdevkeyboard/qevdevkeyboardhandler.cpp
+index ad134a825f..f2b47b82bc 100644
+--- a/src/platformsupport/input/evdevkeyboard/qevdevkeyboardhandler.cpp
++++ b/src/platformsupport/input/evdevkeyboard/qevdevkeyboardhandler.cpp
+@@ -58,6 +58,14 @@
+ #include <linux/input.h>
+ #endif
+ 
++#ifndef input_event_sec
++#define input_event_sec time.tv_sec
++#endif
++
++#ifndef input_event_usec
++#define input_event_usec time.tv_usec
++#endif
++
+ QT_BEGIN_NAMESPACE
+ 
+ Q_LOGGING_CATEGORY(qLcEvdevKey, "qt.qpa.input")
+@@ -148,8 +156,11 @@ void QEvdevKeyboardHandler::switchLed(int led, bool state)
+ {
+     qCDebug(qLcEvdevKey) << "switchLed" << led << state;
+ 
++    struct timeval tv;
++    ::gettimeofday(&tv, 0);
+     struct ::input_event led_ie;
+-    ::gettimeofday(&led_ie.time, 0);
++    led_ie.input_event_sec = tv.tv_sec;
++    led_ie.input_event_usec = tv.tv_usec;
+     led_ie.type = EV_LED;
+     led_ie.code = led;
+     led_ie.value = state;

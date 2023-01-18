@@ -1,4 +1,4 @@
-From 4e00087b393183493a0f7115fd41efc867bd3421 Mon Sep 17 00:00:00 2001
+From 86c91e5f4340ced36fb33ab380760bbccfdb84e2 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 1 Jan 2023 21:30:23 -0800
 Subject: [PATCH] zlib: Do not undefine _FILE_OFFSET_BITS
@@ -32,6 +32,3 @@ index 20de7cb4ce..f6ab9357c7 100644
  #ifndef QT_BOOTSTRAPPED
  #  include <qconfig.h>
  #endif
--- 
-2.39.0
-
