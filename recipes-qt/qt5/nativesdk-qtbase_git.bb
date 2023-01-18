@@ -25,7 +25,7 @@ FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtbase:"
 
 # common for qtbase-native, qtbase-nativesdk and qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-shared
-# 5.12.meta-qt5-shared.13
+# 5.12.meta-qt5-shared.14
 SRC_URI += "\
     file://0001-Add-linux-oe-g-platform.patch \
     file://0002-cmake-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS.patch \
@@ -47,14 +47,15 @@ SRC_URI += "\
     file://0018-qfloat16-Include-limits-header.patch \
     file://0019-zlib-Do-not-undefine-_FILE_OFFSET_BITS.patch \
     file://0020-evdevkeyboard-fix-input_event-time-related-compile.patch \
+    file://0021-evdevtouch-fix-input_event-time-related-compile.patch \
 "
 
 # common for qtbase-native and nativesdk-qtbase
 # Patches from https://github.com/meta-qt5/qtbase/commits/b5.12-native
-# 5.12.meta-qt5-native.13
+# 5.12.meta-qt5-native.14
 SRC_URI += " \
-    file://0021-Always-build-uic-and-qvkgen.patch \
-    file://0022-Avoid-renameeat2-for-native-sdk-builds.patch \
+    file://0022-Always-build-uic-and-qvkgen.patch \
+    file://0023-Avoid-renameeat2-for-native-sdk-builds.patch \
 "
 
 # CMake's toolchain configuration of nativesdk-qtbase
