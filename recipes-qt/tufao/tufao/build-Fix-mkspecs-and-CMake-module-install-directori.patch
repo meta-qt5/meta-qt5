@@ -5,7 +5,7 @@ Subject: [PATCH] build: Fix mkspecs and CMake module install directories
 
 Organization: O.S. Systems Software LTDA.
 
-Upstream-Status: Inapropriate [configuration]
+Upstream-Status: Inappropriate [configuration]
 
 Signed-off-by: Otavio Salvador <otavio@ossystems.com.br>
 Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
