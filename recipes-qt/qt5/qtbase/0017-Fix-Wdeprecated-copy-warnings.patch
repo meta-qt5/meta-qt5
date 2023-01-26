@@ -11,7 +11,7 @@ The warning is enabled with -Wextra in gcc 9
 Change-Id: Ic9be654f2a142fb186a4d5a7d6b4f7d6f4e611d8
 Reviewed-by: Thiago Macieira <thiago.macieira@intel.com>
 
-Upstream-Status: Backport from 5.13
+Upstream-Status: Backport [5.13]
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
