@@ -6,6 +6,7 @@ Subject: [PATCH] chromium: Move CharAllocator definition to a header file
 Fixes
 error: invalid application of 'sizeof' to an incomplete type 'cc::ListContainerHelper::CharAllocator'
 
+Upstream-Status: Pending
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
  chromium/cc/base/list_container_helper.cc | 251 ---------------------

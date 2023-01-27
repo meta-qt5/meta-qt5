@@ -13,6 +13,7 @@ Reported but nobody cares. [1]
 Upstream-Status: Pending
 
 This reverts commit 761dba8b23b7e558acc57b3e481648ce319a4397.
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  src/quicktemplates2/qquickpopuppositioner.cpp | 18 +++++++--------
  .../qquickpopuppositioner_p_p.h               |  1 -

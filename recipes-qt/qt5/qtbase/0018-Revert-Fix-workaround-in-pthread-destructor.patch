@@ -16,6 +16,9 @@ causing build failures in configurations which use this
 | /home/jenkins/workspace/luneos-unstable/webos-ports/tmp-glibc/work/cortexa8t2hf-neon-halium-webos-linux-gnueabi/qtbase/5.15.2+gitAUTOINC+40143c189b-r0/git/src/corelib/thread/qthread_unix.cpp:121:5: error: 'currentThreadData' was not declared in this scope
 |   121 |     currentThreadData = data;
 |       |     ^~~~~~~~~~~~~~~~~
+
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  src/corelib/thread/qthread_unix.cpp | 25 +++++++++++++++++++------
  1 file changed, 19 insertions(+), 6 deletions(-)

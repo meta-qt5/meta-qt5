@@ -5,6 +5,8 @@ Subject: [PATCH] Disable all unknown features instead of erroring out
 
 Task-number: QTBUG-56656
 Change-Id: Ib884fe33cac74439f9592b145937f6b75ced8447
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  mkspecs/features/qt_configure.prf | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)

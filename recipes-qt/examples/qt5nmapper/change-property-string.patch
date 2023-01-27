@@ -1,6 +1,7 @@
 qt5nmapper:  Change property string to onTextString 
 
 Upstream-Status: Pending
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 
 diff --git a/content_org/Switch.qml b/content/Switch.qml
 index 08a2cba..a8b8b26 100644

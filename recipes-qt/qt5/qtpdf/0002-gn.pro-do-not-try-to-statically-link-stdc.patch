@@ -3,6 +3,8 @@ From: Leif Middelschulte <Leif.Middelschulte@klsmartin.com>
 Date: Tue, 8 Feb 2022 16:28:14 +0100
 Subject: [PATCH] gn.pro: do not try to statically link stdc++
 
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  src/buildtools/gn.pro | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)

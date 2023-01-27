@@ -5,6 +5,7 @@ Subject: [PATCH] Fix test installations
 
 Qmake won't ignore install errors anymore.
 
+Upstream-Status: Pending
 Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
 ---
  .../ut_mattributeextensionmanager.pro                      | 7 ++++---

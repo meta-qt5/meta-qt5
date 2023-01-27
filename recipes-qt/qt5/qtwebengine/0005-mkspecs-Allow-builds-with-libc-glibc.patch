@@ -3,6 +3,7 @@ From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 12 Nov 2019 19:53:59 -0800
 Subject: [PATCH] mkspecs: Allow builds with libc != glibc
 
+Upstream-Status: Pending
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
  src/buildtools/config/support.pri | 4 ----

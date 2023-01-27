@@ -9,6 +9,7 @@ as a native tool when compiling the target.
 Change-Id: I257668ac28c22b192e7ec7736e6c23fa3be6bab6
 Signed-off-by: Mikko Levonmaa <mikko.levonmaa@palm.com>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+Upstream-Status: Pending
 ---
  src/src.pro | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

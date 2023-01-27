@@ -4,6 +4,7 @@ Date: Fri, 7 Jul 2017 16:41:23 -0700
 Subject: [PATCH] chromium: musl: Adjust default pthread stack size
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  chromium/base/threading/platform_thread_linux.cc              | 3 ++-
  .../third_party/blink/renderer/platform/wtf/stack_util.cc     | 4 ++--

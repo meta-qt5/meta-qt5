@@ -6,6 +6,7 @@ Subject: [PATCH] testlib: don't track the build or source directories
 Build tests without location of the build and sources directories.
 
 Upstream-Status: Inappropriate [embedded specific]
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 Change-Id: I8d5add473623a3d9f481097649819c9fb906e4b2
 ---
  mkspecs/features/testlib_defines.prf     | 2 --

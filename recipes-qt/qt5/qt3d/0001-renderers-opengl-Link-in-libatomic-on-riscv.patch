@@ -8,6 +8,7 @@ GCC 11 needs this since it failing to find a builtin function
 Fixes
 src/plugins/renderers/opengl/renderer/renderview.cpp:107: undefined reference to `__atomic_exchange_1'
 
+Upstream-Status: Pending
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
  src/plugins/renderers/opengl/opengl.pri | 2 ++

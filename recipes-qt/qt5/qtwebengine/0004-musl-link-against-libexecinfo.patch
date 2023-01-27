@@ -5,6 +5,7 @@ Subject: [PATCH] musl: link against libexecinfo
 
 Change-Id: Ifada60f9c72691973612850121f6fb152d70839a
 Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+Upstream-Status: Pending
 ---
  src/core/core_module.pro | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

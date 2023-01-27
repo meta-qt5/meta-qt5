@@ -3,6 +3,7 @@ From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 16 Jan 2018 13:26:57 +0000
 Subject: [PATCH] Link with libexecinfo on musl
 
+Upstream-Status: Pending
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
