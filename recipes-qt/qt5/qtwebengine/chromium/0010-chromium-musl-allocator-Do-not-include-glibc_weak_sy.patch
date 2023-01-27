@@ -5,6 +5,7 @@ Subject: [PATCH] chromium: musl: allocator: Do not include glibc_weak_symbols
  for musl
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  chromium/base/allocator/allocator_shim.cc | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

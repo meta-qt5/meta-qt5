@@ -10,6 +10,7 @@ Also update length of EXT_PREFIX and HOST_PREFIX now.
 
 Change-Id: If98dd57160efe9c98c36148cdf872f50b3d38118
 Signed-off-by: Denys Dmytriyenko <denys@ti.com>
+Upstream-Status: Pending
 ---
  configure.pri | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)

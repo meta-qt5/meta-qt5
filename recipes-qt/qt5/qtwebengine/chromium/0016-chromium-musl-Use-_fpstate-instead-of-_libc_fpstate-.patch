@@ -7,6 +7,7 @@ Subject: [PATCH] chromium: musl: Use _fpstate instead of _libc_fpstate on
 glibc defines both. musl libc only the former.
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  .../src/client/linux/dump_writer_common/ucontext_reader.cc    | 4 ++--
  .../src/client/linux/dump_writer_common/ucontext_reader.h     | 2 +-

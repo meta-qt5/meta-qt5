@@ -4,6 +4,7 @@ Date: Wed, 7 Jun 2017 21:00:49 +0900
 Subject: [PATCH] Delete qlonglong and qulonglong
 
 Signed-off-by: Huang Qiyu <huangqy.fnst@cn.fujitsu.com>
+Upstream-Status: Pending
 ---
  tests/auto/corelib/thread/qatomicinteger/qatomicinteger.pro | 2 --
  1 file changed, 2 deletions(-)

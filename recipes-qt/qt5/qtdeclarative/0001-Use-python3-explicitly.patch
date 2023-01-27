@@ -4,6 +4,7 @@ Date: Tue, 26 Nov 2019 21:10:03 -0800
 Subject: [PATCH] Use python3 explicitly
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  qtdeclarative.pro                         | 2 +-
  src/3rdparty/masm/masm.pri                | 4 ++--

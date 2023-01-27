@@ -3,6 +3,8 @@ From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Fri, 17 Aug 2018 13:23:58 +0300
 Subject: [PATCH] Allow a tools-only build
 
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  qt3d.pro                                  | 7 ++++++-
  src/3rdparty/assimp/assimp_dependency.pri | 2 +-

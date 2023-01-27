@@ -10,6 +10,7 @@ into debug packages.
 
 Task-number: QTBUG-71230
 Upstream-Status: Inappropriate [embedded specific]
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  mkspecs/features/ltcg.prf | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

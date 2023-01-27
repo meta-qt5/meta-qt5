@@ -5,6 +5,7 @@ Subject: [PATCH] chromium: musl: Use correct member name __si_fields from
  LinuxSigInfo
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  chromium/sandbox/linux/seccomp-bpf/trap.cc | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

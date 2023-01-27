@@ -6,6 +6,7 @@ Subject: [PATCH] botan: Always define BOTAN_ARCH_SWITCH when cross-building
 this helps in compiling botan for non-x86 architectures
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  src/libs/botan/botan.pro | 2 ++
  1 file changed, 2 insertions(+)

@@ -9,6 +9,7 @@ compiler does not like specifying absolute include paths pointing to
 build host includes
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  Source/WebKit/PlatformQt.cmake | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)

@@ -8,6 +8,7 @@ and sched_yield is available on all libc
 implementations on Linux
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  tests/auto/corelib/kernel/qmetatype/tst_qmetatype.cpp   | 4 ++--
  tests/auto/network/socket/qtcpsocket/tst_qtcpsocket.cpp | 5 +++--

@@ -4,6 +4,7 @@ Date: Fri, 7 Jul 2017 14:54:38 -0700
 Subject: [PATCH] chromium: musl: linux != glibc, make the distinction
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  chromium/base/allocator/allocator_check.cc | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

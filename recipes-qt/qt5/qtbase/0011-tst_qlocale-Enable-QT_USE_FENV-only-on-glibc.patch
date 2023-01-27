@@ -6,6 +6,7 @@ Subject: [PATCH] tst_qlocale: Enable QT_USE_FENV only on glibc
 musl does not have feenableexcept function
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  tests/auto/corelib/tools/qlocale/tst_qlocale.cpp | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

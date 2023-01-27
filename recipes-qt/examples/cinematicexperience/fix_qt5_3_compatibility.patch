@@ -1,3 +1,7 @@
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+
 Index: Qt5_CinematicExperience_rpi_1.0/content/SettingsView.qml
 ===================================================================
 --- Qt5_CinematicExperience_rpi_1.0.orig/content/SettingsView.qml

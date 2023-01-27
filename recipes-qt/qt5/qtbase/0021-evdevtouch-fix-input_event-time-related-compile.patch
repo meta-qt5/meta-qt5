@@ -21,7 +21,8 @@ Fixes:
 Task-number: QTBUG-84012
 Change-Id: Ib8d726a0baf2bdc85da9341229fffaddc0e373ee
 Reviewed-by: Laszlo Agocs <laszlo.agocs@qt.io>
-(cherry picked from commit 71fb4d081c7f3675939ac8c62063631a18175fd1)
+Upstream-Status: Backport [71fb4d081c7f3675939ac8c62063631a18175fd1]
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  .../input/evdevtouch/qevdevtouchhandler.cpp            | 10 +++++++++-
  1 file changed, 9 insertions(+), 1 deletion(-)

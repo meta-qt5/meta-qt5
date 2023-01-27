@@ -7,6 +7,7 @@ Subject: [PATCH] chromium: musl: sandbox: Define TEMP_FAILURE_RETRY if not
 Musl does not define this Macro
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  chromium/sandbox/linux/suid/sandbox.c | 9 +++++++++
  1 file changed, 9 insertions(+)

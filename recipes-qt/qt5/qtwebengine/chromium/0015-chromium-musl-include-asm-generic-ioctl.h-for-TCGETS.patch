@@ -4,6 +4,7 @@ Date: Fri, 7 Jul 2017 17:15:34 -0700
 Subject: [PATCH] chromium: musl: include asm-generic/ioctl.h for TCGETS2
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  chromium/device/serial/serial_io_handler_posix.cc | 1 +
  1 file changed, 1 insertion(+)

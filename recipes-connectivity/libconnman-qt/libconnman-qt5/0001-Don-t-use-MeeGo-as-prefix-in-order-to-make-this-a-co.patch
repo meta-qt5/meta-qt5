@@ -6,6 +6,7 @@ Subject: [PATCH] Don't use MeeGo as prefix in order to make this a common
 
 Signed-off-by: Christophe Chapuis <chris.chapuis@gmail.com>
 Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+Upstream-Status: Pending
 ---
  plugin/plugin.cpp | 2 +-
  plugin/plugin.pro | 2 +-

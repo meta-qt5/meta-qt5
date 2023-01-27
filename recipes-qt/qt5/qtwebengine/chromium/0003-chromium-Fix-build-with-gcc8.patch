@@ -3,6 +3,8 @@ From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Tue, 5 Jun 2018 13:58:16 +0000
 Subject: [PATCH] chromium: Fix build with gcc8
 
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  chromium/mojo/public/c/system/buffer.h       | 2 +-
  chromium/mojo/public/c/system/data_pipe.h    | 2 +-

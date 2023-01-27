@@ -19,6 +19,8 @@ Source/WTF:
 (WTF::URLHelpers::allCharactersInIDNScriptWhiteList):
 
 git-svn-id: http://svn.webkit.org/repository/webkit/trunk@250747 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+Upstream-Status: Backport
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  Source/WebCore/dom/Document.cpp | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)

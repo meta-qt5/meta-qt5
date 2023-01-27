@@ -5,6 +5,7 @@ Subject: [PATCH] Link with libexecinfo on musl
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+Upstream-Status: Pending
 ---
  src/plugins/debugger/debugger.pro | 1 +
  1 file changed, 1 insertion(+)

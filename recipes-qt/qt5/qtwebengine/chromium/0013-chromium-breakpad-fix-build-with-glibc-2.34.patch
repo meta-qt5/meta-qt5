@@ -53,6 +53,7 @@ In file included from ../../../../recipe-sysroot/usr/include/c++/11.2.0/algorith
       |                                         ~~~~~~~~^~~~~~~~~~~~~~~~~
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+Upstream-Status: Pending
 ---
  .../breakpad/src/client/linux/handler/exception_handler.cc      | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
