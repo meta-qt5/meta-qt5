@@ -5,6 +5,7 @@ Subject: [PATCH] chromium: musl: Define res_ninit and res_nclose for non-glibc
  platforms
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  chromium/net/dns/dns_config_service_posix.cc |  4 +++
  chromium/net/dns/dns_reloader.cc             |  4 +++

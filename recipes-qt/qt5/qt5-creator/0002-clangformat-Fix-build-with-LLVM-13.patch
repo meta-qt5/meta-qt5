@@ -7,6 +7,7 @@ Change-Id: I5eaad17a6f240aa1e3f246492b69f093b4f59fee
 Reviewed-by: David Schulz <david.schulz@qt.io>
 
 Upstream-Status: Accepted [https://code.qt.io/cgit/qt-creator/qt-creator.git/commit/?id=14eb5b382cabf90352634393c19bf87a4c15766a]
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  src/plugins/clangformat/clangformatbaseindenter.cpp | 4 ++++
  src/plugins/clangformat/clangformatutils.cpp        | 4 ++++

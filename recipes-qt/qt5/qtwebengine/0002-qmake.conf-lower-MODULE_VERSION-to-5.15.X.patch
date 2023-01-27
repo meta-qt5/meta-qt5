@@ -17,6 +17,7 @@ Call Stack (most recent call first):
   /OE/build/luneos-hardknott/webos-ports/tmp-glibc/work/core2-64-webos-linux/org.webosports.app.browser/0.5.0-14+gitAUTOINC+4b5398142b-r0/recipe-sysroot/usr/lib/cmake/Qt5WebEngine/Qt5WebEngineConfig.cmake:116 (find_package)
   CMakeLists.txt:19 (find_package)
 
+Upstream-Status: Pending
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  .qmake.conf | 2 +-

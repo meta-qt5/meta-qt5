@@ -3,6 +3,8 @@ From: Leif Middelschulte <Leif.Middelschulte@klsmartin.com>
 Date: Tue, 8 Feb 2022 14:14:02 +0100
 Subject: [PATCH] configure.json: remove python2 dependency
 
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  src/buildtools/configure.json | 1 -
  1 file changed, 1 deletion(-)

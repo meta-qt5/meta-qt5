@@ -7,6 +7,7 @@ Use lgl2.h instead of gl2.h and gl2ext.h,
 fix a "conflicting declaration" error.
 
 Signed-off-by: Wenlin Kang <wenlin.kang@windriver.com>
+Upstream-Status: Pending
 ---
  src/plugins/videonode/imx6/lgl2.h             | 46 +++++++++++++++++++
  .../imx6/qsgvivantevideomaterial.cpp          |  5 +-

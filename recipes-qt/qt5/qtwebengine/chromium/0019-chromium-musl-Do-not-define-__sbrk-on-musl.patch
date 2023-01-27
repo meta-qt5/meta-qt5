@@ -7,6 +7,7 @@ musl libc does not have sbrk. on musl libc will only work when called with 0 as
 argument, so we just let it out for now
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  .../third_party/tcmalloc/chromium/src/malloc_hook_mmap_linux.h  | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

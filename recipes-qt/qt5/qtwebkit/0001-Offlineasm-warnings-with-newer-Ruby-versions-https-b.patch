@@ -14,6 +14,8 @@ to Annotation instances, which do not define it.
 
 Canonical link: https://commits.webkit.org/219400@main
 git-svn-id: https://svn.webkit.org/repository/webkit/trunk@254637 268f45cc-cd09-0410-ab3c-d52691b4dbfc
+Upstream-Status: Backport
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  Source/JavaScriptCore/offlineasm/parser.rb | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)

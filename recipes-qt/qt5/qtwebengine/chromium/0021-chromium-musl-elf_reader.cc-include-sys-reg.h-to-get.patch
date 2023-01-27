@@ -6,6 +6,7 @@ Subject: [PATCH] chromium: musl: elf_reader.cc: include <sys/reg.h> to get
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+Upstream-Status: Pending
 ---
  chromium/third_party/breakpad/breakpad/configure.ac             | 2 +-
  .../breakpad/breakpad/src/common/dwarf/elf_reader.cc            | 2 ++

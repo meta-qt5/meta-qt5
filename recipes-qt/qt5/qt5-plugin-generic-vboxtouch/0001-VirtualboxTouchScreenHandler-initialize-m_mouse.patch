@@ -52,6 +52,7 @@ Thread 1 "luna-next" received signal SIGSEGV, Segmentation fault.
  #3  0xb7afc6c1 in qLoadPlugin<QObject, QGenericPlugin, QString const&> (key=..., loader=<optimized out>) at ../../include/QtCore/../../../git/src/corelib/kernel/qobject.h:499
 
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+Upstream-Status: Pending
 ---
  vboxtouch/vboxtouch.cpp | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

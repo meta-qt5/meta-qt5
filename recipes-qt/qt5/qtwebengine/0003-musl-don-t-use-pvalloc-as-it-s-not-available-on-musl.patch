@@ -5,6 +5,7 @@ Subject: [PATCH] musl: don't use pvalloc as it's not available on musl
 
 Change-Id: I7145463ac7b9560e7459d3384a3db108bd727403
 Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+Upstream-Status: Pending
 ---
  src/core/api/qtbug-61521.cpp | 8 --------
  1 file changed, 8 deletions(-)

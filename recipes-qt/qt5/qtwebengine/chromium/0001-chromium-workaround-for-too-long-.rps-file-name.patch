@@ -13,6 +13,8 @@ le.rsp): Unable to create file. File name too long
 
 Task-number: QTBUG-59769
 Change-Id: I73c5e64ae5174412be2a675e35b0b6047f2bf4c1
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  gn/tools/gn/ninja_action_target_writer.cc | 9 +++++++++
  1 file changed, 9 insertions(+)

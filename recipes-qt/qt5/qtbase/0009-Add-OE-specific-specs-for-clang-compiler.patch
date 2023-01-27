@@ -4,6 +4,7 @@ Date: Sun, 3 Sep 2017 09:11:44 -0700
 Subject: [PATCH] Add OE specific specs for clang compiler
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  mkspecs/linux-oe-clang/qmake.conf      | 39 ++++++++++++++++++++++++++
  mkspecs/linux-oe-clang/qplatformdefs.h |  1 +

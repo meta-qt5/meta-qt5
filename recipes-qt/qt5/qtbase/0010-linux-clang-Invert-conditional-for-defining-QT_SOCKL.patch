@@ -8,6 +8,7 @@ only when its glibc < 2 and not for other libcswhich may define
 it as per standards but are not glibc, e.g. musl
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Upstream-Status: Pending
 ---
  mkspecs/linux-clang/qplatformdefs.h | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)

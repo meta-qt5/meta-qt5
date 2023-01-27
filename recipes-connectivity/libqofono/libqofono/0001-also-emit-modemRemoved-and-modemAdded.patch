@@ -8,6 +8,7 @@ more "atomic" events too.
 
 Signed-off-by: Christophe Chapuis <chris.chapuis@gmail.com>
 
+Upstream-Status: Pending
 ---
  src/qofonomanager.cpp | 21 ++++++++++++++++++---
  1 file changed, 18 insertions(+), 3 deletions(-)

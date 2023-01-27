@@ -5,6 +5,7 @@ Subject: [PATCH] src.pro: Add option noqdoc to disable qdoc builds
 
 it needs clang on host, so lets separate it out
 
+Upstream-Status: Pending
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
  src/src.pro | 2 +-

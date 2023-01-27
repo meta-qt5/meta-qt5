@@ -13,6 +13,7 @@ On the other hand webenegine does not produce external
 native artifacts. So external system ICU linking is not
 needed.
 
+Upstream-Status: Pending
 Signed-off-by: Andrej Valek <andrej.valek@siemens.com>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---

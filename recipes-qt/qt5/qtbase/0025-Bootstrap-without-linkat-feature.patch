@@ -7,6 +7,7 @@ qmake does not work together with pseudo when unnamed temporary files
 are used with linkat.
 
 Upstream-Status: Inappropriate [OE specific]
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 [YOCTO #11996]
 ---
  src/corelib/global/qconfig-bootstrapped.h | 2 +-

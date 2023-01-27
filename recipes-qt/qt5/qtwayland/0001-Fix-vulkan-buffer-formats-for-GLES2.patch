@@ -8,6 +8,7 @@ vulkanserverbufferintegration.cpp:163:77: error: use of undeclared identifier 'G
     if (extraDebug) qDebug() << "format" << Qt::hex  << m_internalFormat << GL_RGBA8;
                                                                             ^
 
+Upstream-Status: Pending
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
  .../client/vulkan-server/vulkanserverbufferintegration.cpp  | 2 +-

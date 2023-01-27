@@ -6,6 +6,7 @@ Subject: [PATCH] Fix examples build error
 Add workaround for QTBUG-77288 which causes examples to fail to build
 
 Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
+Upstream-Status: Pending
 ---
  examples/studio3d/cppdatainput/cppdatainput.pro     | 1 +
  examples/studio3d/dynamicelement/dynamicelement.pro | 1 +
