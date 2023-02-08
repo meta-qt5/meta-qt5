@@ -6,6 +6,8 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
 "
 
+SRC_URI += "file://0001-replace-deprecated-std-auto_ptr-with-std-unique_ptr.patch"
+
 # To enabled Nuance T9 Write support, you need to provide the licensed components
 # and enable "t9write" in PACKAGECONFIG. This can be done in a separate .bbappend file.
 # for example:
