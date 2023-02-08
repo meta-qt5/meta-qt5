@@ -1,0 +1,66 @@
+From fe4546abf79cf2e93e151fe8cd771901f9b768d3 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 7 Feb 2023 23:11:18 -0800
+Subject: [PATCH] replace deprecated std::auto_ptr with std::unique_ptr
+
+auto_ptr is gone with c++17
+
+Upstream-Status: Pending
+
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+---
+ .../lipi-toolkit/src/util/lib/LTKLoggerUtil.cpp        | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/plugins/lipi-toolkit/3rdparty/lipi-toolkit/src/util/lib/LTKLoggerUtil.cpp b/src/plugins/lipi-toolkit/3rdparty/lipi-toolkit/src/util/lib/LTKLoggerUtil.cpp
+index 1971a69d..894028e4 100644
+--- a/src/plugins/lipi-toolkit/3rdparty/lipi-toolkit/src/util/lib/LTKLoggerUtil.cpp
++++ b/src/plugins/lipi-toolkit/3rdparty/lipi-toolkit/src/util/lib/LTKLoggerUtil.cpp
+@@ -96,7 +96,7 @@ LTKLoggerUtil::LTKLoggerUtil(){}
+ int LTKLoggerUtil::createLogger(const string& lipiLibPath)
+ {
+     void* functionHandle = NULL; 
+-    auto_ptr<LTKOSUtil> a_ptrOSUtil(LTKOSUtilFactory::getInstance());
++    unique_ptr<LTKOSUtil> a_ptrOSUtil(LTKOSUtilFactory::getInstance());
+ 
+     int iErrorCode = a_ptrOSUtil->loadSharedLib(lipiLibPath,
+                                                 LOGGER_MODULE_STR, 
+@@ -159,7 +159,7 @@ int LTKLoggerUtil::createLogger(const string& lipiLibPath)
+ *****************************************************************************/
+ int LTKLoggerUtil::destroyLogger()
+ {
+-    auto_ptr<LTKOSUtil> a_ptrOSUtil(LTKOSUtilFactory::getInstance());
++    unique_ptr<LTKOSUtil> a_ptrOSUtil(LTKOSUtilFactory::getInstance());
+ 
+     if (module_destroyLogger != NULL )
+     {
+@@ -196,7 +196,7 @@ int LTKLoggerUtil::configureLogger(const string& logFile, LTKLogger::EDebugLevel
+         LTKReturnError(ELOGGER_LIBRARY_NOT_LOADED);
+     }
+     
+-    auto_ptr<LTKOSUtil> a_ptrOSUtil(LTKOSUtilFactory::getInstance());
++    unique_ptr<LTKOSUtil> a_ptrOSUtil(LTKOSUtilFactory::getInstance());
+ 
+     if ( logFile.length() != 0 )
+     {
+@@ -257,7 +257,7 @@ int LTKLoggerUtil::getAddressLoggerFunctions()
+     void* functionHandle = NULL; 
+     int returnVal = SUCCESS;
+ 
+-    auto_ptr<LTKOSUtil> a_ptrOSUtil;
++    unique_ptr<LTKOSUtil> a_ptrOSUtil;
+ 
+     //start log
+     
+@@ -323,7 +323,7 @@ ostream& LTKLoggerUtil::logMessage(LTKLogger::EDebugLevel logLevel, string inStr
+ {
+ 	if (m_libHandleLogger == NULL)
+ 	{
+-        auto_ptr<LTKOSUtil> a_ptrOSUtil(LTKOSUtilFactory::getInstance());
++        unique_ptr<LTKOSUtil> a_ptrOSUtil(LTKOSUtilFactory::getInstance());
+         m_libHandleLogger = a_ptrOSUtil->getLibraryHandle(LOGGER_MODULE_STR);
+ 
+ 		if (m_libHandleLogger == NULL)
+-- 
+2.39.1
+
