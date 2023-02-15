@@ -1,22 +1,23 @@
-From d47ae4638bf698c39225ff94dfb9f03ba4261b42 Mon Sep 17 00:00:00 2001
+From 9bf5632187b8f17cc0d626926df2784c38059875 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 3 Sep 2017 09:11:44 -0700
 Subject: [PATCH] Add OE specific specs for clang compiler
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
+
 ---
- mkspecs/linux-oe-clang/qmake.conf      | 39 ++++++++++++++++++++++++++
+ mkspecs/linux-oe-clang/qmake.conf      | 40 ++++++++++++++++++++++++++
  mkspecs/linux-oe-clang/qplatformdefs.h |  1 +
- 2 files changed, 40 insertions(+)
+ 2 files changed, 41 insertions(+)
  create mode 100644 mkspecs/linux-oe-clang/qmake.conf
  create mode 100644 mkspecs/linux-oe-clang/qplatformdefs.h
 
 diff --git a/mkspecs/linux-oe-clang/qmake.conf b/mkspecs/linux-oe-clang/qmake.conf
 new file mode 100644
-index 0000000000..db02ab5215
+index 0000000000..c09b132ac8
 --- /dev/null
 +++ b/mkspecs/linux-oe-clang/qmake.conf
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,40 @@
 +#
 +# qmake configuration for linux-g++ with modifications for building with OpenEmbedded
 +#
@@ -27,8 +28,9 @@ index 0000000000..db02ab5215
 +
 +include(../common/linux.conf)
 +
-+# QMAKE_<TOOL> (moc, uic, rcc) are gone, overwrite only ar and strip
++# QMAKE_<TOOL> (moc, uic, rcc) are gone, overwrite only ar, objcopy and strip
 +QMAKE_AR              = $$(OE_QMAKE_AR) cqs
++QMAKE_OBJCOPY         = $$(OE_QMAKE_OBJCOPY)
 +QMAKE_STRIP           = $$(OE_QMAKE_STRIP)
 +
 +include(../common/gcc-base-unix.conf)

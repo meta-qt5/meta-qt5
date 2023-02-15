@@ -1,4 +1,4 @@
-From 168e5332f1f0dd4000f19b0ced0b1d68a1d65f16 Mon Sep 17 00:00:00 2001
+From 8f7ac021d483eca1b181fd9f0551f317aa7c5965 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Mon, 15 Apr 2013 04:29:32 +0200
 Subject: [PATCH] Add linux-oe-g++ platform
@@ -19,14 +19,15 @@ Upstream-Status: Inappropriate [embedded specific]
 
 Change-Id: I0591ed5da0d61d7cf1509d420e6b293582f1863c
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+
 ---
  configure                            |  2 +-
  mkspecs/features/configure.prf       |  4 +--
  mkspecs/features/qt.prf              |  6 ++---
  mkspecs/features/qt_functions.prf    |  2 +-
- mkspecs/linux-oe-g++/qmake.conf      | 39 ++++++++++++++++++++++++++++
+ mkspecs/linux-oe-g++/qmake.conf      | 40 ++++++++++++++++++++++++++++
  mkspecs/linux-oe-g++/qplatformdefs.h |  1 +
- 6 files changed, 47 insertions(+), 7 deletions(-)
+ 6 files changed, 48 insertions(+), 7 deletions(-)
  create mode 100644 mkspecs/linux-oe-g++/qmake.conf
  create mode 100644 mkspecs/linux-oe-g++/qplatformdefs.h
 
@@ -103,10 +104,10 @@ index 7777e615bd..8d792fa70a 100644
              cmd = perl -w $$system_path($${cmd}.pl)
 diff --git a/mkspecs/linux-oe-g++/qmake.conf b/mkspecs/linux-oe-g++/qmake.conf
 new file mode 100644
-index 0000000000..c202c47fa1
+index 0000000000..087e13bb91
 --- /dev/null
 +++ b/mkspecs/linux-oe-g++/qmake.conf
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,40 @@
 +#
 +# qmake configuration for linux-g++ with modifications for building with OpenEmbedded
 +#
@@ -117,8 +118,9 @@ index 0000000000..c202c47fa1
 +
 +include(../common/linux.conf)
 +
-+# QMAKE_<TOOL> (moc, uic, rcc) are gone, overwrite only ar and strip
++# QMAKE_<TOOL> (moc, uic, rcc) are gone, overwrite only ar, objcopy and strip
 +QMAKE_AR              = $$(OE_QMAKE_AR) cqs
++QMAKE_OBJCOPY         = $$(OE_QMAKE_OBJCOPY)
 +QMAKE_STRIP           = $$(OE_QMAKE_STRIP)
 +
 +include(../common/gcc-base-unix.conf)
