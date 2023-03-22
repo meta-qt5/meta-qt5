@@ -18,8 +18,6 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  src/buildtools/gn.pro             |  5 ++---
  3 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/src/buildtools/config/linux.pri b/src/buildtools/config/linux.pri
-index 7507d51ef..1e078cbfe 100644
 --- a/src/buildtools/config/linux.pri
 +++ b/src/buildtools/config/linux.pri
 @@ -118,7 +118,7 @@ contains(QT_ARCH, "mips") {
@@ -31,8 +29,6 @@ index 7507d51ef..1e078cbfe 100644
      gn_args += host_cpu=\"$$GN_HOST_CPU\"
      # Don't bother trying to use system libraries in this case
      gn_args += use_glib=false
-diff --git a/src/buildtools/configure_host.pro b/src/buildtools/configure_host.pro
-index dd0d3e327..6312c8678 100644
 --- a/src/buildtools/configure_host.pro
 +++ b/src/buildtools/configure_host.pro
 @@ -4,7 +4,7 @@ TEMPLATE = aux
@@ -44,7 +40,15 @@ index dd0d3e327..6312c8678 100644
  !isEmpty(QT_TARGET_ARCH): GN_TARGET_CPU = $$gnArch($$QT_TARGET_ARCH)
  else: GN_TARGET_CPU = $$GN_HOST_CPU
  GN_OS = $$gnOS()
-@@ -31,9 +31,9 @@ GN_CONTENTS = \
+@@ -24,6 +24,7 @@ contains(GN_TARGET_CPU, "arm")|contains(
+ }
+ 
+ GN_HOST_EXTRA_CPPFLAGS = $$(GN_HOST_TOOLCHAIN_EXTRA_CPPFLAGS)
++GN_HOST_EXTRA_LDFLAGS = $$(GN_HOST_TOOLCHAIN_EXTRA_LDFLAGS)
+ 
+ # We always use the gcc_toolchain, because clang_toolchain is just
+ # a broken wrapper around it for Google's custom clang binaries.
+@@ -31,12 +32,13 @@ GN_CONTENTS = \
  "import(\"//build/config/sysroot.gni\")" \
  "import(\"//build/toolchain/gcc_toolchain.gni\")" \
  "gcc_toolchain(\"host\") {" \
@@ -57,7 +61,11 @@ index dd0d3e327..6312c8678 100644
  "  ar = \"$$which(ar)\" " \
  "  nm = \"$$which(nm)\" " \
  "  extra_cppflags = \"$$GN_HOST_EXTRA_CPPFLAGS\" " \
-@@ -45,9 +45,9 @@ GN_CONTENTS = \
++"  extra_ldflags = \"$$GN_HOST_EXTRA_LDFLAGS\" " \
+ "  toolchain_args = { " \
+ "    current_os = \"$$GN_OS\" " \
+ "    current_cpu = \"$$GN_HOST_CPU\" " \
+@@ -45,9 +47,9 @@ GN_CONTENTS = \
  "  } " \
  "}" \
  "gcc_toolchain(\"v8_snapshot\") {" \
@@ -70,8 +78,6 @@ index dd0d3e327..6312c8678 100644
  "  ar = \"$$which(ar)\" " \
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
-diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
-index f94694da0..a8ca6567b 100644
 --- a/src/buildtools/gn.pro
 +++ b/src/buildtools/gn.pro
 @@ -19,9 +19,8 @@ build_pass|!debug_and_release {
