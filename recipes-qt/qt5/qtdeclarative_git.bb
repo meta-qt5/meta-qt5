@@ -29,9 +29,10 @@ SRCREV = "824570979e211171f158e7fcab15c599c5e7ca4e"
 BBCLASSEXTEND =+ "native nativesdk"
 
 # Patches from https://github.com/meta-qt5/qtdeclarative/commits/b5.12
-# 5.12.meta-qt5.8
+# 5.12.meta-qt5.9
 SRC_URI += " \
     file://0001-Fix-build-with-gcc-11.patch \
     file://0002-Examples-Fix-double-installation-of-.qml-files.patch \
     file://0003-Use-python3-explicitly.patch \
+    file://0004-simplematerial-example-Fix-double-installation-of-ma.patch \
 "

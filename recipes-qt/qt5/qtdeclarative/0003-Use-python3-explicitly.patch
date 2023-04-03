@@ -4,8 +4,9 @@ Date: Tue, 26 Nov 2019 21:10:03 -0800
 Subject: [PATCH] Use python3 explicitly
 
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
-Upstream-Status: Pending
 ---
+Upstream-Status: Backport [5.15 has slightly different implementation https://codereview.qt-project.org/c/qt/qtdeclarative/+/300934]
+
  qtdeclarative.pro                         | 2 +-
  src/3rdparty/masm/masm.pri                | 4 ++--
  tests/auto/qml/ecmascripttests/test262.py | 2 +-

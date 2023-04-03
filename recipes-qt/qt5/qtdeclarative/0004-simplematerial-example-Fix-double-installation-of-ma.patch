@@ -1,0 +1,33 @@
+From 0b50d9925f1770a7bcb005732acfc7d13cdd64fd Mon Sep 17 00:00:00 2001
+From: Alexander Volkov <avolkov@astralinux.ru>
+Date: Mon, 22 Jun 2020 13:25:06 +0300
+Subject: [PATCH] simplematerial example: Fix double installation of main.qml
+
+qt_example_installs.prf already generates install rules for all example
+sources, including content of .qrc files.
+
+This commit amends bbb6071dc69a2513d2586faaf9896841bf724786.
+
+Task-number: QTBUG-84301
+Change-Id: Idfef30501dfaaaddebf773aaa690206eedb458fc
+Reviewed-by: Kai Koehne <kai.koehne@qt.io>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+Upstream-Status: Backport [5.15 https://codereview.qt-project.org/c/qt/qtdeclarative/+/305178]
+
+ examples/quick/scenegraph/simplematerial/simplematerial.pro | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/examples/quick/scenegraph/simplematerial/simplematerial.pro b/examples/quick/scenegraph/simplematerial/simplematerial.pro
+index 6ae935f357..12b1c43226 100644
+--- a/examples/quick/scenegraph/simplematerial/simplematerial.pro
++++ b/examples/quick/scenegraph/simplematerial/simplematerial.pro
+@@ -6,7 +6,4 @@ SOURCES += \
+ RESOURCES += simplematerial.qrc
+ 
+ target.path = $$[QT_INSTALL_EXAMPLES]/quick/scenegraph/simplematerial
+-qml.files = main.qml
+-qml.path = $$[QT_INSTALL_EXAMPLES]/quick/scenegraph/simplematerial
+-
+-INSTALLS += target qml
++INSTALLS += target
