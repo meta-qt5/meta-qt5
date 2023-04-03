@@ -1,4 +1,4 @@
-From aca2df64cd0cb6c4a8c03dc564c59f2a805dda7c Mon Sep 17 00:00:00 2001
+From b94e624ddf82c4d25df23ce3681ea6a64df99878 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 4 Mar 2021 14:37:06 -0800
 Subject: [PATCH] Fix build with gcc-11

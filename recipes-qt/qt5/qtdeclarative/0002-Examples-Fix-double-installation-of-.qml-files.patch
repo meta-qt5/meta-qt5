@@ -1,0 +1,93 @@
+From 621aa22cdac3901200180903433ae443ec94f158 Mon Sep 17 00:00:00 2001
+From: Kai Koehne <kai.koehne@qt.io>
+Date: Wed, 27 May 2020 11:55:05 +0200
+Subject: [PATCH] Examples: Fix double installation of .qml files
+
+qt_example_installs.prf already generates install rules for all example
+sources, including content of .qrc files.
+
+Pick-to: 5.15
+Fixes: QTBUG-84301
+Change-Id: I3454b19849af489c5819c51867781cc97f1eb285
+Reviewed-by: Joerg Bornemann <joerg.bornemann@qt.io>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+Upstream-Status: Backport [5.15 https://codereview.qt-project.org/c/qt/qtdeclarative/+/302578]
+
+ .../extending-qml/chapter1-basics/chapter1-basics.pro       | 6 +-----
+ .../extending-qml/chapter2-methods/chapter2-methods.pro     | 6 +-----
+ .../extending-qml/chapter3-bindings/chapter3-bindings.pro   | 6 +-----
+ .../chapter4-customPropertyTypes.pro                        | 6 +-----
+ .../chapter5-listproperties/chapter5-listproperties.pro     | 6 +-----
+ 5 files changed, 5 insertions(+), 25 deletions(-)
+
+diff --git a/examples/qml/tutorials/extending-qml/chapter1-basics/chapter1-basics.pro b/examples/qml/tutorials/extending-qml/chapter1-basics/chapter1-basics.pro
+index 9911e02484..8b862bdae9 100644
+--- a/examples/qml/tutorials/extending-qml/chapter1-basics/chapter1-basics.pro
++++ b/examples/qml/tutorials/extending-qml/chapter1-basics/chapter1-basics.pro
+@@ -8,8 +8,4 @@ RESOURCES += chapter1-basics.qrc
+ 
+ DESTPATH = $$[QT_INSTALL_EXAMPLES]/qml/tutorials/extending-qml/chapter1-basics
+ target.path = $$DESTPATH
+-
+-qml.files = *.qml
+-qml.path = $$DESTPATH
+-
+-INSTALLS += target qml
++INSTALLS += target
+diff --git a/examples/qml/tutorials/extending-qml/chapter2-methods/chapter2-methods.pro b/examples/qml/tutorials/extending-qml/chapter2-methods/chapter2-methods.pro
+index 7fd850ce36..15b790d24f 100644
+--- a/examples/qml/tutorials/extending-qml/chapter2-methods/chapter2-methods.pro
++++ b/examples/qml/tutorials/extending-qml/chapter2-methods/chapter2-methods.pro
+@@ -8,8 +8,4 @@ RESOURCES += chapter2-methods.qrc
+ 
+ DESTPATH = $$[QT_INSTALL_EXAMPLES]/qml/tutorials/extending-qml/chapter2-methods
+ target.path = $$DESTPATH
+-
+-qml.files = *.qml
+-qml.path = $$DESTPATH
+-
+-INSTALLS += target qml
++INSTALLS += target
+diff --git a/examples/qml/tutorials/extending-qml/chapter3-bindings/chapter3-bindings.pro b/examples/qml/tutorials/extending-qml/chapter3-bindings/chapter3-bindings.pro
+index 1ae83f71eb..ab1ae7a790 100644
+--- a/examples/qml/tutorials/extending-qml/chapter3-bindings/chapter3-bindings.pro
++++ b/examples/qml/tutorials/extending-qml/chapter3-bindings/chapter3-bindings.pro
+@@ -8,8 +8,4 @@ RESOURCES += chapter3-bindings.qrc
+ 
+ DESTPATH = $$[QT_INSTALL_EXAMPLES]/qml/tutorials/extending-qml/chapter3-bindings
+ target.path = $$DESTPATH
+-
+-qml.files = *.qml
+-qml.path = $$DESTPATH
+-
+-INSTALLS += target qml
++INSTALLS += target
+diff --git a/examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/chapter4-customPropertyTypes.pro b/examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/chapter4-customPropertyTypes.pro
+index 12dfbd6280..05ca3495cb 100644
+--- a/examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/chapter4-customPropertyTypes.pro
++++ b/examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/chapter4-customPropertyTypes.pro
+@@ -10,8 +10,4 @@ RESOURCES += chapter4-customPropertyTypes.qrc
+ 
+ DESTPATH = $$[QT_INSTALL_EXAMPLES]/qml/tutorials/extending-qml/chapter4-customPropertyTypes
+ target.path = $$DESTPATH
+-
+-qml.files = *.qml
+-qml.path = $$DESTPATH
+-
+-INSTALLS += target qml
++INSTALLS += target
+diff --git a/examples/qml/tutorials/extending-qml/chapter5-listproperties/chapter5-listproperties.pro b/examples/qml/tutorials/extending-qml/chapter5-listproperties/chapter5-listproperties.pro
+index 67d1cd35c3..7f9ff55a93 100644
+--- a/examples/qml/tutorials/extending-qml/chapter5-listproperties/chapter5-listproperties.pro
++++ b/examples/qml/tutorials/extending-qml/chapter5-listproperties/chapter5-listproperties.pro
+@@ -10,8 +10,4 @@ RESOURCES += chapter5-listproperties.qrc
+ 
+ DESTPATH = $$[QT_INSTALL_EXAMPLES]/qml/tutorials/extending-qml/chapter5-listproperties
+ target.path = $$DESTPATH
+-
+-qml.files = *.qml
+-qml.path = $$DESTPATH
+-
+-INSTALLS += target qml
++INSTALLS += target
