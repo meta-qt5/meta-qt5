@@ -200,7 +200,7 @@ SRC_URI:append:libc-musl = "\
     file://chromium/0023-chromium-musl-initialize-msghdr-in-a-compatible-mann.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "c7e716ef1ffd63a8ab1f4dbf879230849eb3b505"
+SRCREV_qtwebengine = "4f570bd7add21725d66ac8396dcf21917c3a603f"
 # this is 3 commits ahead of what submodule in 5.15.10 uses (caba2fcb0fe8a8d213c4c79d26da3bb88eee61c7), but contains useful fix:
 SRCREV_chromium = "ecc2bb74f1f7140fc52650042299be18e826b27b"
 SRCREV = "${SRCREV_qtwebengine}"
