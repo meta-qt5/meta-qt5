@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
-    file://LICENSE.QT-LICENSE-AGREEMENT;md5=c8b6dd132d52c6e5a545df07a4e3e283 \
+    file://LICENSE.QT-LICENSE-AGREEMENT;md5=71469b4021772fca0f18e08b1ef8ac7e \
 "
 
 QT_MODULE = "qtbase"
@@ -202,4 +202,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "358aebba7280d6d2b59b1f740747a4a3d1b7a54a"
+SRCREV = "42e4ae042a4c86e58bcb8b6d2d59ba4a988285b4"
