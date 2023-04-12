@@ -1,0 +1,865 @@
+From 7b5789af04925751f0d498f70916ebd336240060 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Wed, 12 Apr 2023 17:53:00 +0200
+Subject: [PATCH] Fix build with gcc-13
+
+* Fixes:
+  http://errors.yoctoproject.org/Errors/Details/699654/
+
+In file included from ../../../../git/src/3rdparty/chromium/third_party/abseil-cpp/absl/strings/internal/str_format/extension.cc:16:
+../../../../git/src/3rdparty/chromium/third_party/abseil-cpp/absl/strings/internal/str_format/extension.h:34:6: warning: elaborated-type-specifier for a scoped enum must not use the 'class' keyword
+   34 | enum class FormatConversionChar : uint8_t;
+      | ~~~~ ^~~~~
+      |      -----
+
+  src/3rdparty/chromium/base/check.h:61:34: error: expected primary-expression before '(' token
+  src/3rdparty/chromium/base/debug/profiler.h:56:21: error: 'ReturnAddressLocationResolver' was not declared in this scope
+  src/3rdparty/chromium/base/debug/profiler.h:56:9: error: ISO C++ forbids declaration of 'uintptr_t' with no type [-fpermissive]
+  src/3rdparty/chromium/base/debug/profiler.h:56:9: error: typedef 'base::debug::uintptr_t' is initialized (use 'decltype' instead)
+  src/3rdparty/chromium/base/debug/profiler.h:69:13: error: 'ReturnAddressLocationResolver' does not name a type
+  src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h:33:36: error: 'uint64_t' was not declared in this scope
+  src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h:35:73: error: expression list treated as compound expression in functional cast [-fpermissive]
+  src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h:35:74: error: template argument 1 is invalid
+  src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h:42:7: error: 'uint64_t' has not been declared
+  src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h:49:11: error: 'EmbedderOriginTypeMatcher' does not name a type
+  src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h:60:7: error: 'uint64_t' has not been declared
+  src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h:62:7: error: 'uint64_t' has not been declared
+  src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h:63:53: error: 'uint64_t' was not declared in this scope
+  src/3rdparty/chromium/content/public/browser/browsing_data_remover_delegate.h:63:62: error: template argument 1 is invalid
+  src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.cc:14:34: error: 'uintptr_t' in namespace 'std' does not name a type
+  src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.cc:14:34: error: 'uintptr_t' is not a member of 'std'
+  src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.cc:15:34: error: 'uintptr_t' in namespace 'std' does not name a type
+  src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.cc:15:34: error: 'uintptr_t' is not a member of 'std'
+  src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.cc:26:34: error: 'uintptr_t' in namespace 'std' does not name a type
+  src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.cc:26:34: error: 'uintptr_t' is not a member of 'std'
+  src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.cc:27:34: error: 'uintptr_t' in namespace 'std' does not name a type
+  src/3rdparty/chromium/device/base/synchronization/one_writer_seqlock.cc:27:34: error: 'uintptr_t' is not a member of 'std'
+  src/3rdparty/chromium/device/bluetooth/public/cpp/bluetooth_uuid.h:88:15: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/device/bluetooth/public/cpp/bluetooth_uuid.h:88:22: error: template argument 1 is invalid
+  src/3rdparty/chromium/device/bluetooth/public/cpp/bluetooth_uuid.h:88:22: error: template argument 2 is invalid
+  src/3rdparty/chromium/gpu/command_buffer/common/webgpu_cmd_enums.h:11:12: error: 'PowerPreference' has not been declared
+  src/3rdparty/chromium/gpu/command_buffer/common/webgpu_cmd_enums.h:11:28: error: found ':' in nested-name-specifier, expected '::'
+  src/3rdparty/chromium/gpu/command_buffer/common/webgpu_cmd_enums.h:11:39: error: expected unqualified-id before '{' token
+  src/3rdparty/chromium/gpu/command_buffer/common/webgpu_cmd_enums.h:18:12: error: 'DawnReturnDataType' has not been declared
+  src/3rdparty/chromium/gpu/command_buffer/common/webgpu_cmd_enums.h:18:31: error: found ':' in nested-name-specifier, expected '::'
+  src/3rdparty/chromium/gpu/command_buffer/common/webgpu_cmd_enums.h:18:42: error: expected unqualified-id before '{' token
+  src/3rdparty/chromium/gpu/command_buffer/common/webgpu_cmd_format.h:21:3: error: 'DawnReturnDataType' does not name a type; did you mean 'DawnReturnDataHeader'?
+  src/3rdparty/chromium/gpu/command_buffer/common/webgpu_cmd_format.h:29:46: error: 'DawnReturnDataType' has not been declared
+  src/3rdparty/chromium/gpu/command_buffer/common/webgpu_cmd_format.h:46:7: error: 'DawnReturnDataType' has not been declared
+  src/3rdparty/chromium/gpu/command_buffer/common/webgpu_cmd_format.h:64:7: error: 'DawnReturnDataType' has not been declared
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:134:3: error: 'GrContextType' does not name a type; did you mean 'ContextType'?
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:302:3: error: 'GrContextType' does not name a type; did you mean 'ContextType'?
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:77:39: error: 'GrContextType' has not been declared
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:77:7: error: 'GrContextType' has not been declared
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:90:12: error: 'gr_context_type_' was not declared in this scope; did you mean 'gr_context_'?
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:90:32: error: 'GrContextType' has not been declared
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:93:12: error: 'gr_context_type_' was not declared in this scope; did you mean 'gr_context_'?
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:93:32: error: 'GrContextType' has not been declared
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:96:12: error: 'gr_context_type_' was not declared in this scope; did you mean 'gr_context_'?
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:96:32: error: 'GrContextType' has not been declared
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:99:12: error: 'gr_context_type_' was not declared in this scope; did you mean 'gr_context_'?
+  src/3rdparty/chromium/gpu/command_buffer/service/shared_context_state.h:99:32: error: 'GrContextType' has not been declared
+  src/3rdparty/chromium/gpu/command_buffer/service/skia_utils.cc:72:18: error: redefinition of 'GrContextOptions gpu::GetDefaultGrContextOptions'
+  src/3rdparty/chromium/gpu/command_buffer/service/skia_utils.cc:72:45: error: 'GrContextType' was not declared in this scope; did you mean 'ContextType'?
+  src/3rdparty/chromium/gpu/command_buffer/service/skia_utils.h:49:28: error: 'GrContextType' was not declared in this scope; did you mean 'GrContext'?
+  src/3rdparty/chromium/gpu/command_buffer/service/webgpu_cmd_validation_autogen.h:14:16: error: 'PowerPreference' was not declared in this scope
+  src/3rdparty/chromium/gpu/command_buffer/service/webgpu_cmd_validation_autogen.h:14:31: error: template argument 1 is invalid
+  src/3rdparty/chromium/gpu/command_buffer/service/webgpu_cmd_validation_implementation_autogen.h:14:14: error: 'PowerPreference' does not name a type
+  src/3rdparty/chromium/gpu/command_buffer/service/webgpu_cmd_validation_implementation_autogen.h:21:24: error: 'valid_power_preference_table' was not declared in this scope
+  src/3rdparty/chromium/gpu/command_buffer/service/webgpu_cmd_validation_implementation_autogen.h:21:7: error: expression list treated as compound expression in mem-initializer [-fpermissive]
+  src/3rdparty/chromium/gpu/config/device_perf_info.h:48:3: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/gpu/config/device_perf_info.h:49:3: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/gpu/config/device_perf_info.h:50:3: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/gpu/config/gpu_feature_info.h:62:15: error: 'uint32_t' was not declared in this scope
+  src/3rdparty/chromium/gpu/config/gpu_feature_info.h:62:23: error: template argument 1 is invalid
+  src/3rdparty/chromium/gpu/config/gpu_feature_info.h:62:23: error: template argument 2 is invalid
+  src/3rdparty/chromium/gpu/config/gpu_feature_info.h:64:15: error: 'uint32_t' was not declared in this scope
+  src/3rdparty/chromium/gpu/config/gpu_feature_info.h:64:23: error: template argument 1 is invalid
+  src/3rdparty/chromium/gpu/config/gpu_feature_info.h:64:23: error: template argument 2 is invalid
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:139:3: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:142:3: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:145:3: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:148:3: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:212:3: error: 'GrContextType' does not name a type
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:215:3: error: 'VulkanImplementationName' does not name a type
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:32:12: error: 'VulkanImplementationName' has not been declared
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:32:37: error: found ':' in nested-name-specifier, expected '::'
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:32:48: error: expected unqualified-id before '{' token
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:40:12: error: 'GrContextType' has not been declared
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:40:26: error: found ':' in nested-name-specifier, expected '::'
+  src/3rdparty/chromium/gpu/config/gpu_preferences.h:40:37: error: expected unqualified-id before '{' token
+  src/3rdparty/chromium/gpu/config/gpu_util.cc:590:76: error: cannot convert 'const std::vector<unsigned int>' to 'int' in assignment
+  src/3rdparty/chromium/gpu/config/gpu_util.cc:661:31: error: cannot convert 'const std::vector<unsigned int>' to 'int' in assignment
+  src/3rdparty/chromium/gpu/config/gpu_util.cc:716:53: error: no match for call to '(std::string {aka std::__cxx11::basic_string<char>}) (const gpu::GPUInfo&)'
+  src/3rdparty/chromium/gpu/config/gpu_util.cc:821:60: error: 'gpu::IntelGpuSeriesType gpu::GetIntelGpuSeriesType(uint32_t, uint32_t)' redeclared as different kind of entity
+  src/3rdparty/chromium/gpu/config/gpu_util.cc:904:73: error: 'std::string gpu::GetIntelGpuGeneration(uint32_t, uint32_t)' redeclared as different kind of entity
+  src/3rdparty/chromium/gpu/config/gpu_util.cc:906:58: error: 'gpu::GetIntelGpuSeriesType' cannot be used as a function
+  src/3rdparty/chromium/gpu/config/gpu_util.cc:945:65: error: 'gpu::IntelGpuGeneration gpu::GetIntelGpuGeneration(const GPUInfo&)' redeclared as different kind of entity
+  src/3rdparty/chromium/gpu/config/gpu_util.cc:959:53: error: no match for call to '(std::string {aka std::__cxx11::basic_string<char>}) (const uint32_t&, uint32_t&)'
+  src/3rdparty/chromium/gpu/config/gpu_util.h:79:53: error: 'uint32_t' was not declared in this scope
+  src/3rdparty/chromium/gpu/config/gpu_util.h:80:53: error: 'uint32_t' was not declared in this scope
+  src/3rdparty/chromium/gpu/config/gpu_util.h:80:71: error: expression list treated as compound expression in initializer [-fpermissive]
+  src/3rdparty/chromium/gpu/config/gpu_util.h:82:46: error: 'uint32_t' was not declared in this scope
+  src/3rdparty/chromium/gpu/config/gpu_util.h:83:46: error: 'uint32_t' was not declared in this scope
+  src/3rdparty/chromium/gpu/config/gpu_util.h:86:76: error: 'gpu::IntelGpuGeneration gpu::GetIntelGpuGeneration(const GPUInfo&)' redeclared as different kind of entity
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:128:10: error: 'struct gpu::GpuPreferences' has no member named 'force_gpu_mem_available_bytes'
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:129:10: error: 'struct gpu::GpuPreferences' has no member named 'force_gpu_mem_discardable_limit_bytes'
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:131:10: error: 'struct gpu::GpuPreferences' has no member named 'force_max_texture_size'
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:132:10: error: 'struct gpu::GpuPreferences' has no member named 'gpu_program_cache_size'
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:161:40: error: 'struct gpu::GpuPreferences' has no member named 'gr_context_type'
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:163:36: error: 'struct gpu::GpuPreferences' has no member named 'use_vulkan'
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:23:51: error: 'GrContextType' is not a member of 'gpu'; did you mean 'gpu::mojom::GrContextType'?
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:23:64: error: template argument 2 is invalid
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:265:18: error: 'const struct gpu::GpuPreferences' has no member named 'force_gpu_mem_available_bytes'
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:269:18: error: 'const struct gpu::GpuPreferences' has no member named 'force_gpu_mem_discardable_limit_bytes'
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:272:18: error: 'const struct gpu::GpuPreferences' has no member named 'force_max_texture_size'
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:275:18: error: 'const struct gpu::GpuPreferences' has no member named 'gpu_program_cache_size'
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:325:15: error: 'GrContextType' in namespace 'gpu' does not name a type
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:328:15: error: 'VulkanImplementationName' in namespace 'gpu' does not name a type
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:60:24: error: 'VulkanImplementationName' is not a member of 'gpu'; did you mean 'gpu::mojom::VulkanImplementationName'?
+  src/3rdparty/chromium/gpu/ipc/common/gpu_preferences_mojom_traits.h:60:48: error: template argument 2 is invalid
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:106:11: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:110:10: error: 'warning_reasons_' was not declared in this scope; did you mean 'WarningReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:114:10: error: 'warning_reasons_' was not declared in this scope; did you mean 'WarningReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:144:3: error: 'warning_reasons_' was not declared in this scope; did you mean 'WarningReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:148:3: error: 'warning_reasons_' was not declared in this scope; did you mean 'WarningReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:25:31: error: class 'net::CookieInclusionStatus' does not have any field named 'warning_reasons_'
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:25:7: error: class 'net::CookieInclusionStatus' does not have any field named 'exclusion_reasons_'
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:265:28: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:266:26: error: 'warning_reasons_' was not declared in this scope; did you mean 'WarningReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:272:19: error: 'class net::CookieInclusionStatus' has no member named 'exclusion_reasons_'; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:272:41: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:278:19: error: 'class net::CookieInclusionStatus' has no member named 'warning_reasons_'; did you mean 'WarningReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:278:39: error: 'warning_reasons_' was not declared in this scope; did you mean 'WarningReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:28:7: error: class 'net::CookieInclusionStatus' does not have any field named 'exclusion_reasons_'
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:32:7: error: class 'net::CookieInclusionStatus' does not have any field named 'exclusion_reasons_'
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:33:7: error: class 'net::CookieInclusionStatus' does not have any field named 'warning_reasons_'
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:37:10: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:37:38: error: 'const class net::CookieInclusionStatus' has no member named 'exclusion_reasons_'; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:38:10: error: 'warning_reasons_' was not declared in this scope; did you mean 'WarningReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:38:36: error: 'const class net::CookieInclusionStatus' has no member named 'warning_reasons_'; did you mean 'WarningReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:47:10: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:51:10: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:56:10: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:60:3: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:67:3: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:74:7: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.cc:86:7: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'ExclusionReason'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h:228:3: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h:229:30: error: 'uint32_t' has not been declared
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h:230:5: error: 'exclusion_reasons_' was not declared in this scope; did you mean 'exclusion_reasons'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h:233:3: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h:234:28: error: 'uint32_t' has not been declared
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h:235:5: error: 'warning_reasons_' was not declared in this scope; did you mean 'warning_reasons'?
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h:266:3: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/net/cookies/cookie_inclusion_status.h:269:3: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:111:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:115:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:123:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:132:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:135:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:138:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:144:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:151:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:155:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:159:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:164:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:169:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:173:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:177:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:182:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:187:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:192:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:196:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:200:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:204:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:208:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:216:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:220:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:224:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:228:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:237:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:247:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:251:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:259:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:263:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:268:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:271:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:275:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:278:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:283:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:290:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:293:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:298:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:301:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:304:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:308:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:313:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:316:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:320:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:325:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:330:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:334:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:337:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:340:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:343:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:636:14: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:82:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:83:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:84:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:85:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:86:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:87:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:88:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderLang.h:97:7: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderVars.h:125:70: error: 'uint32_t' has not been declared
+  src/3rdparty/chromium/third_party/angle/include/GLSLANG/ShaderVars.h:19:26: error: 'uint64_t' does not name a type
+  src/3rdparty/chromium/third_party/angle/src/common/angleutils.h:201:15: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/third_party/angle/src/common/angleutils.h:202:66: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/common/angleutils.h:202:66: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+  src/3rdparty/chromium/third_party/angle/src/common/angleutils.h:202:66: error: expected '(' before 'uint8_t'
+  src/3rdparty/chromium/third_party/angle/src/common/angleutils.h:202:66: error: expected '>' before 'uint8_t'
+  src/3rdparty/chromium/third_party/angle/src/common/angleutils.h:202:75: error: expected primary-expression before '>' token
+  src/3rdparty/chromium/third_party/angle/src/common/angleutils.h:202:78: error: 'kEndiannessTest' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/common/angleutils.h:202:99: error: expected ')' before ';' token
+  src/3rdparty/chromium/third_party/angle/src/common/angleutils.h:54:14: error: 'uintptr_t' does not name a type
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:124:22: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:129:27: error: 'SH_REMOVE_INVARIANT_AND_CENTROID_FOR_ESSL3' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:1385:40: error: 'ShCompileOptions' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:1385:6: error: 'bool sh::TCompiler::shouldCollectVariables' is not a static data member of 'class sh::TCompiler'
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:1478:29: error: 'ShCompileOptions' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:1478:6: error: variable or field 'writePragma' declared void
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:1528:30: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:1538:26: error: 'SH_INITIALIZE_BUILTINS_FOR_INSTANCED_MULTIVIEW' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:1543:49: error: 'SH_SELECT_VIEW_IN_NV_GLSL_VERTEX_SHADER' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:304:7: error: class 'sh::TCompiler' does not have any field named 'mCompileOptions'
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:309:52: error: 'ShCompileOptions' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:309:6: error: 'bool sh::TCompiler::shouldRunLoopAndIndexingValidation' is not a static data member of 'class sh::TCompiler'
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:336:48: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:343:48: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:346:5: error: 'mCompileOptions' was not declared in this scope; did you mean 'compileOptions'?
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:358:54: error: 'SH_EMULATE_GL_DRAW_ID' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:369:27: error: 'SH_EMULATE_GL_BASE_VERTEX_BASE_INSTANCE' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:381:26: error: 'SH_SOURCE_PATH' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:506:10: error: 'mCompileOptions' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:506:28: error: 'SH_VALIDATE_AST' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:521:37: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:524:27: error: 'SH_LIMIT_EXPRESSION_COMPLEXITY' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:563:27: error: 'SH_INITIALIZE_UNINITIALIZED_LOCALS' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:564:55: error: 'SH_DONT_USE_LOOPS_TO_INITIALIZE_VARIABLES' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:582:27: error: 'SH_LIMIT_CALL_STACK_DEPTH' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:595:28: error: 'SH_DONT_PRUNE_UNUSED_FUNCTIONS' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:627:26: error: 'SH_CLAMP_INDIRECT_ARRAY_BOUNDS' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:632:27: error: 'SH_INITIALIZE_BUILTINS_FOR_INSTANCED_MULTIVIEW' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:645:26: error: 'SH_REWRITE_DO_WHILE_LOOPS' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:653:26: error: 'SH_ADD_AND_TRUE_TO_LOOP_CONDITION' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:661:26: error: 'SH_UNFOLD_SHORT_CIRCUIT' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:669:26: error: 'SH_REMOVE_POW_WITH_CONSTANT_EXPONENT' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:677:26: error: 'SH_REGENERATE_STRUCT_NAMES' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:690:31: error: 'SH_EMULATE_GL_DRAW_ID' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:703:31: error: 'SH_EMULATE_GL_BASE_VERTEX_BASE_INSTANCE' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:707:67: error: 'SH_ADD_BASE_VERTEX_TO_VERTEX_ID' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:725:48: error: 'SH_SCALARIZE_VEC_AND_MAT_CONSTRUCTOR_ARGS' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:802:30: error: 'SH_USE_UNUSED_STANDARD_SHARED_BLOCKS' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:809:30: error: 'SH_ENFORCE_PACKING_RESTRICTIONS' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:820:31: error: 'SH_INIT_OUTPUT_VARIABLES' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:843:28: error: 'SH_INIT_GL_POSITION' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:894:66: error: 'SH_CLAMP_POINT_SIZE' was not declared in this scope; did you mean 'GL_POINT_SIZE'?
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:902:68: error: 'SH_CLAMP_FRAG_DEPTH' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:910:26: error: 'SH_REWRITE_REPEATED_ASSIGN_TO_SWIZZLED' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:918:26: error: 'SH_REWRITE_VECTOR_SCALAR_ARITHMETIC' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:926:26: error: 'SH_REMOVE_DYNAMIC_INDEXING_OF_SWIZZLED_VECTOR' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:935:26: error: 'SH_EARLY_FRAGMENT_TESTS_OPTIMIZATION' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:949:25: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:959:5: error: 'ShCompileOptions' was not declared in this scope; did you mean 'compileOptionsIn'?
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:965:27: error: 'SH_FLATTEN_PRAGMA_STDGL_INVARIANT_ALL' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:965:9: error: 'compileOptions' was not declared in this scope; did you mean 'compileOptionsIn'?
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:969:69: error: 'compileOptions' was not declared in this scope; did you mean 'compileOptionsIn'?
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:973:30: error: 'SH_INTERMEDIATE_TREE' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:978:30: error: 'SH_OBJECT_CODE' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:991:36: error: 'SH_EMULATE_GL_DRAW_ID' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.cpp:995:36: error: 'SH_EMULATE_GL_BASE_VERTEX_BASE_INSTANCE' was not declared in this scope
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:131:45: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:157:46: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:161:45: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:167:22: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:176:41: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:235:41: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:247:30: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:305:5: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:323:30: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:52:22: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:91:41: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Compiler.h:95:18: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/Initialize.h:26:35: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/ParseContext.h:40:19: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/ParseContext.h:620:5: error: 'ShCompileOptions' does not name a type
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/TranslatorESSL.h:22:38: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/TranslatorESSL.h:25:37: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/TranslatorESSL.h:30:33: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/TranslatorGLSL.h:22:38: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/TranslatorGLSL.h:25:37: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/TranslatorGLSL.h:28:33: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/TranslatorGLSL.h:32:52: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/TranslatorVulkan.h:29:37: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/TranslatorVulkan.h:39:41: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/angle/src/compiler/translator/tree_ops/DeclareAndInitBuiltinsForInstancedMultiview.h:45:67: error: 'ShCompileOptions' has not been declared
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.cc:48:7: error: class 'google_breakpad::MinidumpDescriptor' does not have any field named 'address_within_principal_mapping_'
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.cc:49:22: error: 'const class google_breakpad::MinidumpDescriptor' has no member named 'address_within_principal_mapping_'; did you mean 'set_address_within_principal_mapping'?
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.cc:74:3: error: 'address_within_principal_mapping_' was not declared in this scope; did you mean 'set_address_within_principal_mapping'?
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.cc:75:18: error: 'const class google_breakpad::MinidumpDescriptor' has no member named 'address_within_principal_mapping_'; did you mean 'set_address_within_principal_mapping'?
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h:115:3: error: 'uintptr_t' does not name a type
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h:119:7: error: 'uintptr_t' has not been declared
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h:120:5: error: 'address_within_principal_mapping_' was not declared in this scope; did you mean 'address_within_principal_mapping'?
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h:171:3: error: 'uintptr_t' does not name a type
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h:57:9: error: class 'google_breakpad::MinidumpDescriptor' does not have any field named 'address_within_principal_mapping_'
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h:66:9: error: class 'google_breakpad::MinidumpDescriptor' does not have any field named 'address_within_principal_mapping_'
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h:77:9: error: class 'google_breakpad::MinidumpDescriptor' does not have any field named 'address_within_principal_mapping_'
+  src/3rdparty/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h:87:9: error: class 'google_breakpad::MinidumpDescriptor' does not have any field named 'address_within_principal_mapping_'
+  src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h:34:14: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h:34:25: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h:35:20: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h:35:31: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h:43:27: error: request for member 'data' in '((const perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h:49:27: error: request for member 'data' in '((const perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h:57:44: error: request for member 'data' in '((perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h:58:44: error: request for member 'data' in '((perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h:64:14: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h:64:25: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:38:9: error: invalid types 'int[size_t {aka long unsigned int}]' for array subscript
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:41:18: error: invalid types 'int[int]' for array subscript
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:41:7: error: invalid types 'int[int]' for array subscript
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:43:18: error: invalid types 'int[int]' for array subscript
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:43:7: error: invalid types 'int[int]' for array subscript
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:51:36: error: request for member 'size' in '((perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:52:16: error: request for member 'data' in '((perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:60:58: error: request for member 'data' in '((const perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:60:73: error: request for member 'size' in '((const perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:64:23: error: request for member 'size' in '((const perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:67:32: error: request for member 'size' in '((const perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:70:41: error: request for member 'size' in '((const perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/perfetto/src/base/uuid.cc:71:45: error: request for member 'size' in '((const perfetto::base::Uuid*)this)->perfetto::base::Uuid::data_', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:106:38: error: request for member 'empty' in 'criteria.webrtc::RtpDemuxerCriteria::payload_types', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:106:65: error: request for member 'empty' in 'criteria.webrtc::RtpDemuxerCriteria::ssrcs', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:134:33: error: 'begin' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:134:33: error: 'end' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:135:19: error: request for member 'emplace' in '((webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::sink_by_ssrc_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:138:40: error: 'begin' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:138:40: error: 'end' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:139:18: error: request for member 'emplace' in '((webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::sinks_by_pt_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:188:33: error: 'begin' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:188:33: error: 'end' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:189:45: error: request for member 'find' in '((const webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::sink_by_ssrc_', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:190:39: error: request for member 'end' in '((const webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::sink_by_ssrc_', which is of non-class type 'const int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:217:6: error: no declaration matches 'bool webrtc::RtpDemuxer::AddSink(uint32_t, webrtc::RtpPacketSinkInterface*)'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:26:28: error: request for member 'begin' in '* multimap', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:26:53: error: request for member 'end' in '* multimap', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:281:17: error: invalid types 'int[uint32_t {aka unsigned int}]' for array subscript
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:286:34: error: request for member 'find' in '((webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::mid_by_ssrc_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:287:28: error: request for member 'end' in '((webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::mid_by_ssrc_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:28:22: error: request for member 'erase' in '* multimap', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:294:18: error: invalid types 'int[uint32_t {aka unsigned int}]' for array subscript
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:299:35: error: request for member 'find' in '((webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::rsid_by_ssrc_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:300:29: error: request for member 'end' in '((webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::rsid_by_ssrc_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:344:43: error: request for member 'find' in '((webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::sink_by_ssrc_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:345:37: error: request for member 'end' in '((webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::sink_by_ssrc_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:353:25: error: no declaration matches 'webrtc::RtpPacketSinkInterface* webrtc::RtpDemuxer::ResolveSinkByMid(const std::string&, uint32_t)'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:364:25: error: no declaration matches 'webrtc::RtpPacketSinkInterface* webrtc::RtpDemuxer::ResolveSinkByMidRsid(const std::string&, const std::string&, uint32_t)'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:377:25: error: no declaration matches 'webrtc::RtpPacketSinkInterface* webrtc::RtpDemuxer::ResolveSinkByRsid(const std::string&, uint32_t)'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:388:25: error: no declaration matches 'webrtc::RtpPacketSinkInterface* webrtc::RtpDemuxer::ResolveSinkByPayloadType(uint8_t, uint32_t)'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:404:6: error: no declaration matches 'void webrtc::RtpDemuxer::AddSsrcSinkBinding(uint32_t, webrtc::RtpPacketSinkInterface*)'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:40:23: error: request for member 'begin' in '* map', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:40:43: error: request for member 'end' in '* map', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:42:17: error: request for member 'erase' in '* map', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:61:20: error: 'begin' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:61:20: error: 'end' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:67:18: error: 'begin' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:67:18: error: 'end' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:98:28: error: request for member 'empty' in '((webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::sink_by_ssrc_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.cc:99:27: error: request for member 'empty' in '((webrtc::RtpDemuxer*)this)->webrtc::RtpDemuxer::sinks_by_pt_', which is of non-class type 'int'
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:121:16: error: 'uint32_t' has not been declared
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:152:44: error: 'uint32_t' has not been declared
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:155:48: error: 'uint32_t' has not been declared
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:157:45: error: 'uint32_t' has not been declared
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:158:52: error: 'uint8_t' has not been declared
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:159:52: error: 'uint32_t' has not been declared
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:173:12: error: 'uint32_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:173:45: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:173:45: error: template argument 3 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:173:45: error: template argument 4 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:174:17: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:174:49: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:174:49: error: template argument 3 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:174:49: error: template argument 4 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:188:12: error: 'uint32_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:188:33: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:188:33: error: template argument 3 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:188:33: error: template argument 4 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:189:12: error: 'uint32_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:189:33: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:189:33: error: template argument 3 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:189:33: error: template argument 4 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:192:27: error: 'uint32_t' has not been declared
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:42:12: error: 'uint32_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:42:20: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:42:20: error: template argument 2 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:42:20: error: template argument 3 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:45:12: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:45:19: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:45:19: error: template argument 2 is invalid
+  src/3rdparty/chromium/third_party/webrtc/call/rtp_demuxer.h:45:19: error: template argument 3 is invalid
+  src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.cc:214:37: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.cc:214:44: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.cc:214:44: error: template argument 2 is invalid
+  src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.cc:216:41: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.cc:216:41: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.cc:216:41: error: template argument 2 is invalid
+  src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.cc:216:50: error: no matching function for call to 'rtc::Base64::DecodeFromArrayTemplate<<expression error> >(const char*&, size_t&, rtc::Base64::DecodeFlags&, int*&, size_t*&)'
+  src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.cc:216:50: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.h:77:43: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.h:77:50: error: template argument 1 is invalid
+  src/3rdparty/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.h:77:50: error: template argument 2 is invalid
+  src/3rdparty/chromium/v8/src/base/address-region.h:22:16: error: 'class v8::base::AddressRegion' has no member named 'begin'
+  src/3rdparty/chromium/v8/src/base/address-region.h:22:28: error: 'class v8::base::AddressRegion' has no member named 'begin'
+  src/3rdparty/chromium/v8/src/base/address-region.h:26:19: error: 'uintptr_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/address-region.h:30:34: error: expected ')' before 'address'
+  src/3rdparty/chromium/v8/src/base/address-region.h:33:3: error: 'Address' does not name a type
+  src/3rdparty/chromium/v8/src/base/address-region.h:34:3: error: 'Address' does not name a type
+  src/3rdparty/chromium/v8/src/base/address-region.h:41:17: error: 'Address' has not been declared
+  src/3rdparty/chromium/v8/src/base/address-region.h:42:36: error: 'Address' was not declared in this scope; did you mean 'address'?
+  src/3rdparty/chromium/v8/src/base/address-region.h:42:43: error: template argument 1 is invalid
+  src/3rdparty/chromium/v8/src/base/address-region.h:43:23: error: 'begin' was not declared in this scope; did you mean 'std::begin'?
+  src/3rdparty/chromium/v8/src/base/address-region.h:46:17: error: 'Address' has not been declared
+  src/3rdparty/chromium/v8/src/base/address-region.h:47:36: error: 'Address' was not declared in this scope; did you mean 'address'?
+  src/3rdparty/chromium/v8/src/base/address-region.h:47:43: error: template argument 1 is invalid
+  src/3rdparty/chromium/v8/src/base/address-region.h:48:13: error: expected ';' before 'offset'
+  src/3rdparty/chromium/v8/src/base/address-region.h:49:13: error: 'offset' was not declared in this scope; did you mean 'off_t'?
+  src/3rdparty/chromium/v8/src/base/address-region.h:53:28: error: 'class v8::base::AddressRegion' has no member named 'address_'
+  src/3rdparty/chromium/v8/src/base/address-region.h:57:5: error: 'Address' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/address-region.h:58:13: error: expected ';' before 'overlap_end'
+  src/3rdparty/chromium/v8/src/base/address-region.h:60:13: error: 'overlap_start' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/address-region.h:60:28: error: 'overlap_end' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/address-region.h:60:55: error: could not convert '{<expression error>, <expression error>}' from '<brace-enclosed initializer list>' to 'v8::base::AddressRegion'
+  src/3rdparty/chromium/v8/src/base/address-region.h:64:12: error: 'address_' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/address-region.h:64:30: error: 'class v8::base::AddressRegion' has no member named 'address_'
+  src/3rdparty/chromium/v8/src/base/address-region.h:68:12: error: 'address_' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/address-region.h:68:30: error: 'class v8::base::AddressRegion' has no member named 'address_'
+  src/3rdparty/chromium/v8/src/base/address-region.h:72:3: error: 'Address' does not name a type
+  src/3rdparty/chromium/v8/src/base/address-region.h:83:23: error: expected ';' before '{' token
+  src/3rdparty/chromium/v8/src/base/address-region.h:83:23: error: expected primary-expression before '{' token
+  src/3rdparty/chromium/v8/src/base/address-region.h:83:56: error: 'Address' in 'class v8::base::AddressRegion' does not name a type
+  src/3rdparty/chromium/v8/src/base/address-region.h:83:56: error: 'Address' is not a member of 'v8::base::AddressRegion'
+  src/3rdparty/chromium/v8/src/base/address-region.h:84:52: error: expected ';' before '}' token
+  src/3rdparty/chromium/v8/src/base/address-region.h:88:55: error: 'class v8::base::AddressRegion' has no member named 'begin'
+  src/3rdparty/chromium/v8/src/base/logging.h:176:34: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/logging.h:176:41: error: template argument 2 is invalid
+  src/3rdparty/chromium/v8/src/base/logging.h:176:51: error: 'uint16_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/logging.h:178:61: error: template argument 1 is invalid
+  src/3rdparty/chromium/v8/src/base/logging.h:178:61: error: template argument 2 is invalid
+  src/3rdparty/chromium/v8/src/base/logging.h:178:62: error: '<declaration error>' is not a template [-fpermissive]
+  src/3rdparty/chromium/v8/src/base/logging.h:179:40: error: 'int_t' does not name a type; did you mean 'wint_t'?
+  src/3rdparty/chromium/v8/src/base/macros.h:104:30: error: static assertion failed: source and dest must be same size
+  src/3rdparty/chromium/v8/src/base/macros.h:107:17: error: invalid conversion from 'long int (*)()' to 'const void*' [-fpermissive]
+  src/3rdparty/chromium/v8/src/base/macros.h:329:8: error: 'uint64_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/macros.h:335:25: error: 'intptr_t' has not been declared
+  src/3rdparty/chromium/v8/src/base/macros.h:341:11: error: 'intptr_t' has not been declared
+  src/3rdparty/chromium/v8/src/base/macros.h:345:17: error: 'm' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/macros.h:351:23: error: 'intptr_t' has not been declared
+  src/3rdparty/chromium/v8/src/base/macros.h:355:11: error: 'intptr_t' has not been declared
+  src/3rdparty/chromium/v8/src/base/macros.h:358:20: error: 'm' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/macros.h:369:51: error: 'uintptr_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/macros.h:370:47: error: 'uintptr_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:124:18: error: 'Address' in 'class v8::base::RegionAllocator' does not name a type
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:143:18: error: 'Address' in 'class v8::base::RegionAllocator' does not name a type
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:162:40: error: 'Address' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:162:6: error: 'bool v8::base::RegionAllocator::AllocateRegionAt' is not a static data member of 'class v8::base::RegionAllocator'
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:162:74: error: expected primary-expression before 'size'
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:163:52: error: expected primary-expression before 'region_state'
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:163:64: error: expression list treated as compound expression in initializer [-fpermissive]
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:203:36: error: 'Address' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:203:60: error: expected primary-expression before 'new_size'
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:203:68: error: expression list treated as compound expression in initializer [-fpermissive]
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:203:8: error: 'size_t v8::base::RegionAllocator::TrimRegion' is not a static data member of 'class v8::base::RegionAllocator'
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:21:33: error: expected constructor, destructor, or type conversion before '(' token
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:255:37: error: 'Address' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:255:8: error: 'size_t v8::base::RegionAllocator::CheckRegion' is not a static data member of 'class v8::base::RegionAllocator'
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:267:30: error: 'Address' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:267:54: error: expected primary-expression before 'size'
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:267:58: error: expression list treated as compound expression in initializer [-fpermissive]
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:267:6: error: 'bool v8::base::RegionAllocator::IsFree' is not a static data member of 'class v8::base::RegionAllocator'
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:294:16: error: 'begin' was not declared in this scope; did you mean 'std::begin'?
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:294:35: error: 'end' was not declared in this scope; did you mean 'std::end'?
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:301:33: error: 'begin' was not declared in this scope; did you mean 'std::begin'?
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:301:52: error: 'end' was not declared in this scope; did you mean 'std::end'?
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:49:42: error: 'std::set<v8::base::RegionAllocator::Region*, v8::base::RegionAllocator::AddressEndOrder>::iterator v8::base::RegionAllocator::FindRegion' is not a static data member of 'class v8::base::RegionAllocator'
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:50:22: error: expected ',' or ';' before '{' token
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:50:5: error: 'Address' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:69:41: error: no matching function for call to 'v8::base::RegionAllocator::Region::Region(int, size_t&, v8::base::RegionAllocator::RegionState)'
+  src/3rdparty/chromium/v8/src/base/region-allocator.cc:94:26: error: 'class v8::base::RegionAllocator::Region' has no member named 'begin'; did you mean 'Region'?
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:104:19: error: expected ')' before 'address'
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:138:17: error: 'const class v8::base::RegionAllocator::Region' has no member named 'end'
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:138:28: error: 'const class v8::base::RegionAllocator::Region' has no member named 'end'
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:148:17: error: 'const class v8::base::RegionAllocator::Region' has no member named 'begin'; did you mean 'Region'?
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:148:30: error: 'const class v8::base::RegionAllocator::Region' has no member named 'begin'; did you mean 'Region'?
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:155:38: error: 'Address' has not been declared
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:28:19: error: 'uintptr_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:30:20: error: 'Address' does not name a type
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:41:26: error: expected ')' before 'address'
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:46:3: error: 'Address' does not name a type
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:48:3: error: 'Address' does not name a type
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:59:25: error: 'Address' has not been declared
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:65:21: error: 'Address' has not been declared
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:71:21: error: 'Address' has not been declared
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:75:22: error: 'Address' has not been declared
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:78:15: error: 'Address' has not been declared
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:80:3: error: 'Address' does not name a type
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:81:3: error: 'Address' does not name a type
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:84:17: error: 'Address' has not been declared
+  src/3rdparty/chromium/v8/src/base/region-allocator.h:88:17: error: 'Address' has not been declared
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:109:16: error: 'state0_' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:109:26: error: 'state1_' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:115:16: error: 'state0_' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:115:26: error: 'state1_' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:138:23: error: no declaration matches 'std::vector<long unsigned int> v8::base::RandomNumberGenerator::NextSample(uint64_t, size_t)'
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:171:23: error: no declaration matches 'std::vector<long unsigned int> v8::base::RandomNumberGenerator::NextSampleSlow(uint64_t, size_t, const std::unordered_set<long unsigned int>&)'
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:209:16: error: 'state0_' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:209:26: error: 'state1_' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:216:13: error: 'MurmurHash3' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:216:3: error: 'state0_' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:217:3: error: 'state1_' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.cc:222:10: error: no declaration matches 'uint64_t v8::base::RandomNumberGenerator::MurmurHash3(uint64_t)'
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:100:15: error: 'uint64_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:100:23: error: template argument 1 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:100:23: error: template argument 2 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:101:7: error: 'uint64_t' has not been declared
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:102:32: error: 'uint64_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:102:40: error: template argument 1 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:102:40: error: template argument 2 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:102:40: error: template argument 3 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:102:40: error: template argument 4 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:103:30: error: 'uint64_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:103:38: error: template argument 1 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:103:38: error: template argument 2 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:103:38: error: template argument 3 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:103:38: error: template argument 4 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:111:33: error: 'uint64_t' has not been declared
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:113:18: error: 'uint64_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:114:5: error: 'uint64_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:119:34: error: 'uint64_t' has not been declared
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:119:52: error: 'uint64_t' has not been declared
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:120:5: error: 'uint64_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:121:14: error: expected ';' before 's0'
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:122:15: error: 's0' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:123:5: error: 's1' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:130:10: error: 'uint64_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:140:3: error: 'uint64_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:141:3: error: 'uint64_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:90:15: error: 'uint64_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:90:23: error: template argument 1 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:90:23: error: template argument 2 is invalid
+  src/3rdparty/chromium/v8/src/base/utils/random-number-generator.h:90:36: error: 'uint64_t' has not been declared
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:28:11: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:29:11: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:30:11: error: 'uint32_t' does not name a type
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:32:26: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:35:36: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:35:8: error: redefinition of 'int8_t v8::base::charToDigitDecodeForTesting'
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:38:3: error: 'uint32_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:39:3: error: 'uint64_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:46:47: error: 'v8::base::{anonymous}::charToDigitDecode' cannot be used as a function
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:47:26: error: 'shift' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:47:34: error: 'kContinueShift' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:51:21: error: 'kDataMask' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:51:5: error: 'res' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:54:20: error: 'kContinueMask' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/vlq-base64.cc:55:11: error: 'res' was not declared in this scope
+  src/3rdparty/chromium/v8/src/base/vlq-base64.h:14:51: error: 'uint8_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/heap/cppgc/object-allocator.h:82:38: error: no matching function for call to 'RoundUp<cppgc::internal::kAllocationGranularity>(size_t)'
+  src/3rdparty/chromium/v8/src/heap/cppgc/object-allocator.h:93:38: error: no matching function for call to 'RoundUp<cppgc::internal::kAllocationGranularity>(size_t)'
+  src/3rdparty/chromium/v8/src/inspector/v8-string-conversions.cc:390:26: error: ambiguating new declaration of 'std::__cxx11::basic_string<short unsigned int> v8_inspector::UTF8ToUTF16(const char*, size_t)'
+  src/3rdparty/chromium/v8/src/inspector/v8-string-conversions.h:13:19: error: 'uint16_t' was not declared in this scope
+  src/3rdparty/chromium/v8/src/inspector/v8-string-conversions.h:13:27: error: template argument 1 is invalid
+  src/3rdparty/chromium/v8/src/inspector/v8-string-conversions.h:13:27: error: template argument 2 is invalid
+  src/3rdparty/chromium/v8/src/inspector/v8-string-conversions.h:13:27: error: template argument 3 is invalid
+  src/3rdparty/chromium/v8/src/inspector/v8-string-conversions.h:14:31: error: 'uint16_t' does not name a type
+  src/3rdparty/chromium/base/debug/profiler.cc:91:1: error: 'ReturnAddressLocationResolver' does not name a type
+  src/core/browsing_data_remover_delegate_qt.cpp:61:39: error: 'EmbedderOriginTypeMatcher' in 'class content::BrowsingDataRemoverDelegate' does not name a type
+  src/core/browsing_data_remover_delegate_qt.cpp:71:6: error: no declaration matches 'void QtWebEngineCore::BrowsingDataRemoverDelegateQt::RemoveEmbedderData(const base::Time&, const base::Time&, uint64_t, content::BrowsingDataFilterBuilder*, uint64_t, base::OnceCallback<void(long unsigned int)>)'
+  src/core/browsing_data_remover_delegate_qt.cpp:89:26: error: no declaration matches 'std::vector<std::__cxx11::basic_string<char> > QtWebEngineCore::BrowsingDataRemoverDelegateQt::GetDomainsForDeferredCookieDeletion(uint64_t)'
+  src/core/browsing_data_remover_delegate_qt.h:53:43: error: 'EmbedderOriginTypeMatcher' in 'class content::BrowsingDataRemoverDelegate' does not name a type
+  src/core/browsing_data_remover_delegate_qt.h:58:9: error: 'uint64_t' has not been declared
+  src/core/browsing_data_remover_delegate_qt.h:60:9: error: 'uint64_t' has not been declared
+  src/core/browsing_data_remover_delegate_qt.h:61:55: error: 'uint64_t' was not declared in this scope
+  src/core/browsing_data_remover_delegate_qt.h:61:64: error: template argument 1 is invalid
+  src/core/browsing_data_remover_delegate_qt.h:62:66: error: 'uint64_t' has not been declared
+  gen/gpu/ipc/common/gpu_preferences.mojom-shared.h:453:32: error: 'gr_context_type' is not a member of 'mojo::internal::Serializer<gpu::mojom::GpuPreferencesDataView, gpu::GpuPreferences>::Traits' {aka 'mojo::StructTraits<gpu::mojom::GpuPreferencesDataView, gpu::GpuPreferences>'}
+  gen/gpu/ipc/common/gpu_preferences.mojom-shared.h:455:27: error: 'use_vulkan' is not a member of 'mojo::internal::Serializer<gpu::mojom::GpuPreferencesDataView, gpu::GpuPreferences>::Traits' {aka 'mojo::StructTraits<gpu::mojom::GpuPreferencesDataView, gpu::GpuPreferences>'}
+  gen/ui/gfx/x/present.h:223:16: error: declaration of 'x11::Future<void> x11::Present::Pixmap(const PixmapRequest&)' changes meaning of 'Pixmap' [-Wchanges-meaning]
+
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ chromium/base/debug/profiler.h                                  | 1 +
+ .../content/public/browser/browsing_data_remover_delegate.h     | 1 +
+ chromium/device/base/synchronization/one_writer_seqlock.cc      | 1 +
+ chromium/device/bluetooth/public/cpp/bluetooth_uuid.h           | 1 +
+ chromium/gpu/command_buffer/common/webgpu_cmd_enums.h           | 2 ++
+ chromium/gpu/config/device_perf_info.h                          | 1 +
+ chromium/gpu/config/gpu_feature_info.h                          | 1 +
+ chromium/gpu/config/gpu_preferences.h                           | 1 +
+ chromium/net/cookies/cookie_inclusion_status.h                  | 1 +
+ .../abseil-cpp/absl/strings/internal/str_format/extension.h     | 1 +
+ chromium/third_party/angle/include/GLSLANG/ShaderVars.h         | 1 +
+ chromium/third_party/angle/src/common/angleutils.h              | 1 +
+ .../breakpad/src/client/linux/handler/minidump_descriptor.h     | 1 +
+ chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h  | 1 +
+ chromium/third_party/webrtc/call/rtp_demuxer.h                  | 1 +
+ .../third_party/webrtc/rtc_base/third_party/base64/base64.h     | 1 +
+ chromium/third_party/xcbproto/src/src/present.xml               | 2 +-
+ chromium/v8/src/base/logging.h                                  | 1 +
+ chromium/v8/src/base/macros.h                                   | 1 +
+ chromium/v8/src/inspector/v8-string-conversions.h               | 1 +
+ 20 files changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/chromium/base/debug/profiler.h b/chromium/base/debug/profiler.h
+index 1229e06234c..5f15e2aa1f0 100644
+--- a/chromium/base/debug/profiler.h
++++ b/chromium/base/debug/profiler.h
+@@ -7,6 +7,7 @@
+ 
+ #include <stddef.h>
+ 
++#include <cstdint>
+ #include <string>
+ 
+ #include "base/base_export.h"
+diff --git a/chromium/content/public/browser/browsing_data_remover_delegate.h b/chromium/content/public/browser/browsing_data_remover_delegate.h
+index 3896bc6e786..b93843dc16b 100644
+--- a/chromium/content/public/browser/browsing_data_remover_delegate.h
++++ b/chromium/content/public/browser/browsing_data_remover_delegate.h
+@@ -5,6 +5,7 @@
+ #ifndef CONTENT_PUBLIC_BROWSER_BROWSING_DATA_REMOVER_DELEGATE_H_
+ #define CONTENT_PUBLIC_BROWSER_BROWSING_DATA_REMOVER_DELEGATE_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ #include "base/callback_forward.h"
+diff --git a/chromium/device/base/synchronization/one_writer_seqlock.cc b/chromium/device/base/synchronization/one_writer_seqlock.cc
+index 213b6301c05..9332e37e6f8 100644
+--- a/chromium/device/base/synchronization/one_writer_seqlock.cc
++++ b/chromium/device/base/synchronization/one_writer_seqlock.cc
+@@ -3,6 +3,7 @@
+ // found in the LICENSE file.
+ 
+ #include "device/base/synchronization/one_writer_seqlock.h"
++#include <cstdint>
+ 
+ namespace device {
+ 
+diff --git a/chromium/device/bluetooth/public/cpp/bluetooth_uuid.h b/chromium/device/bluetooth/public/cpp/bluetooth_uuid.h
+index 0c27ae71059..b64f82f7548 100644
+--- a/chromium/device/bluetooth/public/cpp/bluetooth_uuid.h
++++ b/chromium/device/bluetooth/public/cpp/bluetooth_uuid.h
+@@ -5,6 +5,7 @@
+ #ifndef DEVICE_BLUETOOTH_PUBLIC_CPP_BLUETOOTH_UUID_H_
+ #define DEVICE_BLUETOOTH_PUBLIC_CPP_BLUETOOTH_UUID_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff --git a/chromium/gpu/command_buffer/common/webgpu_cmd_enums.h b/chromium/gpu/command_buffer/common/webgpu_cmd_enums.h
+index 83615b30c8a..8fa9fb1f6d5 100644
+--- a/chromium/gpu/command_buffer/common/webgpu_cmd_enums.h
++++ b/chromium/gpu/command_buffer/common/webgpu_cmd_enums.h
+@@ -5,6 +5,8 @@
+ #ifndef GPU_COMMAND_BUFFER_COMMON_WEBGPU_CMD_ENUMS_H_
+ #define GPU_COMMAND_BUFFER_COMMON_WEBGPU_CMD_ENUMS_H_
+ 
++#include <cstdint>
++
+ namespace gpu {
+ namespace webgpu {
+ 
+diff --git a/chromium/gpu/config/device_perf_info.h b/chromium/gpu/config/device_perf_info.h
+index e33874ba3bd..824a207a224 100644
+--- a/chromium/gpu/config/device_perf_info.h
++++ b/chromium/gpu/config/device_perf_info.h
+@@ -5,6 +5,7 @@
+ #ifndef GPU_CONFIG_DEVICE_PERF_INFO_H_
+ #define GPU_CONFIG_DEVICE_PERF_INFO_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff --git a/chromium/gpu/config/gpu_feature_info.h b/chromium/gpu/config/gpu_feature_info.h
+index 027f1a5af3e..70759b2ae47 100644
+--- a/chromium/gpu/config/gpu_feature_info.h
++++ b/chromium/gpu/config/gpu_feature_info.h
+@@ -5,6 +5,7 @@
+ #ifndef GPU_CONFIG_GPU_FEATURE_INFO_H_
+ #define GPU_CONFIG_GPU_FEATURE_INFO_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff --git a/chromium/gpu/config/gpu_preferences.h b/chromium/gpu/config/gpu_preferences.h
+index 6b8587151d6..57bda1f99d3 100644
+--- a/chromium/gpu/config/gpu_preferences.h
++++ b/chromium/gpu/config/gpu_preferences.h
+@@ -6,6 +6,7 @@
+ #define GPU_CONFIG_GPU_PREFERENCES_H_
+ 
+ #include <stddef.h>
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff --git a/chromium/net/cookies/cookie_inclusion_status.h b/chromium/net/cookies/cookie_inclusion_status.h
+index 9e506b55501..cfb03bfe2b3 100644
+--- a/chromium/net/cookies/cookie_inclusion_status.h
++++ b/chromium/net/cookies/cookie_inclusion_status.h
+@@ -5,6 +5,7 @@
+ #ifndef NET_COOKIES_COOKIE_INCLUSION_STATUS_H_
+ #define NET_COOKIES_COOKIE_INCLUSION_STATUS_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff --git a/chromium/third_party/abseil-cpp/absl/strings/internal/str_format/extension.h b/chromium/third_party/abseil-cpp/absl/strings/internal/str_format/extension.h
+index a9b9e137deb..6f1122c42b1 100644
+--- a/chromium/third_party/abseil-cpp/absl/strings/internal/str_format/extension.h
++++ b/chromium/third_party/abseil-cpp/absl/strings/internal/str_format/extension.h
+@@ -19,6 +19,7 @@
+ #include <limits.h>
+ 
+ #include <cstddef>
++#include <cstdint>
+ #include <cstring>
+ #include <ostream>
+ 
+diff --git a/chromium/third_party/angle/include/GLSLANG/ShaderVars.h b/chromium/third_party/angle/include/GLSLANG/ShaderVars.h
+index 9911546b90d..48b660db36b 100644
+--- a/chromium/third_party/angle/include/GLSLANG/ShaderVars.h
++++ b/chromium/third_party/angle/include/GLSLANG/ShaderVars.h
+@@ -12,6 +12,7 @@
+ 
+ #include <algorithm>
+ #include <array>
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff --git a/chromium/third_party/angle/src/common/angleutils.h b/chromium/third_party/angle/src/common/angleutils.h
+index f669d7df308..fb9a44225c4 100644
+--- a/chromium/third_party/angle/src/common/angleutils.h
++++ b/chromium/third_party/angle/src/common/angleutils.h
+@@ -18,6 +18,7 @@
+ #include <climits>
+ #include <cstdarg>
+ #include <cstddef>
++#include <cstdint>
+ #include <set>
+ #include <sstream>
+ #include <string>
+diff --git a/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h b/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h
+index c7e4f2b3787..e491a1f6845 100644
+--- a/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h
++++ b/chromium/third_party/breakpad/breakpad/src/client/linux/handler/minidump_descriptor.h
+@@ -33,6 +33,7 @@
+ #include <assert.h>
+ #include <sys/types.h>
+ 
++#include <cstdint>
+ #include <string>
+ 
+ #include "client/linux/handler/microdump_extra_info.h"
+diff --git a/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h b/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h
+index 1b4c53815bc..472042fabc4 100644
+--- a/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h
++++ b/chromium/third_party/perfetto/include/perfetto/ext/base/uuid.h
+@@ -18,6 +18,7 @@
+ #define INCLUDE_PERFETTO_EXT_BASE_UUID_H_
+ 
+ #include <array>
++#include <cstdint>
+ #include <string>
+ 
+ #include "perfetto/ext/base/optional.h"
+diff --git a/chromium/third_party/webrtc/call/rtp_demuxer.h b/chromium/third_party/webrtc/call/rtp_demuxer.h
+index 3aa7e9df268..3cfc8d6a3e9 100644
+--- a/chromium/third_party/webrtc/call/rtp_demuxer.h
++++ b/chromium/third_party/webrtc/call/rtp_demuxer.h
+@@ -11,6 +11,7 @@
+ #ifndef CALL_RTP_DEMUXER_H_
+ #define CALL_RTP_DEMUXER_H_
+ 
++#include <cstdint>
+ #include <map>
+ #include <set>
+ #include <string>
+diff --git a/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.h b/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.h
+index 7a936f23e78..21951a1d240 100644
+--- a/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.h
++++ b/chromium/third_party/webrtc/rtc_base/third_party/base64/base64.h
+@@ -12,6 +12,7 @@
+ #ifndef RTC_BASE_THIRD_PARTY_BASE64_BASE64_H_
+ #define RTC_BASE_THIRD_PARTY_BASE64_BASE64_H_
+ 
++#include <cstdint>
+ #include <string>
+ #include <vector>
+ 
+diff --git a/chromium/third_party/xcbproto/src/src/present.xml b/chromium/third_party/xcbproto/src/src/present.xml
+index fb06e73f02f..f20c11eb2c0 100644
+--- a/chromium/third_party/xcbproto/src/src/present.xml
++++ b/chromium/third_party/xcbproto/src/src/present.xml
+@@ -89,7 +89,7 @@ OF THIS SOFTWARE.
+     </reply>
+   </request>
+ 
+-  <request name="Pixmap" opcode="1">
++  <request name="PresentPixmap" opcode="1">
+     <required_start_align align="8" />
+     <field type="WINDOW" name="window" />
+     <field type="PIXMAP" name="pixmap" />
+diff --git a/chromium/v8/src/base/logging.h b/chromium/v8/src/base/logging.h
+index fe39f988225..dbe130581cb 100644
+--- a/chromium/v8/src/base/logging.h
++++ b/chromium/v8/src/base/logging.h
+@@ -5,6 +5,7 @@
+ #ifndef V8_BASE_LOGGING_H_
+ #define V8_BASE_LOGGING_H_
+ 
++#include <cstdint>
+ #include <cstring>
+ #include <sstream>
+ #include <string>
+diff --git a/chromium/v8/src/base/macros.h b/chromium/v8/src/base/macros.h
+index 37cab78f08f..4220eacbbbf 100644
+--- a/chromium/v8/src/base/macros.h
++++ b/chromium/v8/src/base/macros.h
+@@ -5,6 +5,7 @@
+ #ifndef V8_BASE_MACROS_H_
+ #define V8_BASE_MACROS_H_
+ 
++#include <cstdint>
+ #include <limits>
+ #include <type_traits>
+ 
+diff --git a/chromium/v8/src/inspector/v8-string-conversions.h b/chromium/v8/src/inspector/v8-string-conversions.h
+index c1d69c18f0a..eb33c6816a5 100644
+--- a/chromium/v8/src/inspector/v8-string-conversions.h
++++ b/chromium/v8/src/inspector/v8-string-conversions.h
+@@ -5,6 +5,7 @@
+ #ifndef V8_INSPECTOR_V8_STRING_CONVERSIONS_H_
+ #define V8_INSPECTOR_V8_STRING_CONVERSIONS_H_
+ 
++#include <cstdint>
+ #include <string>
+ 
+ // Conversion routines between UT8 and UTF16, used by string-16.{h,cc}. You may
