@@ -7,7 +7,7 @@ the FE_INEXACT, FE_UNDERFLOW, FE_OVERFLOW, FE_DIVBYZERO, FE_INVALID are defined
 only for platforms with fp engine.
 
 Signed-off-by: Nicola Lunghi <nick83ola@gmail.com>
-Upstream-Status: submitted [https://codereview.qt-project.org/c/qt/qtbase/+/289447]
+Upstream-Status: Submitted [https://codereview.qt-project.org/c/qt/qtbase/+/289447]
 ---
  .../gui/painting/qpainter/tst_qpainter.cpp    | 50 ++++++++++++++-----
  1 file changed, 37 insertions(+), 13 deletions(-)
