@@ -167,7 +167,7 @@ SRC_URI:append:libc-musl = "\
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based-glibc
-# 87-based-glibc.meta-qt5.10
+# 87-based-glibc.meta-qt5.11
 SRC_URI += " \
     file://chromium/0001-chromium-workaround-for-too-long-.rps-file-name.patch;patchdir=src/3rdparty \
     file://chromium/0002-chromium-fix-build-with-clang.patch;patchdir=src/3rdparty \
@@ -181,10 +181,11 @@ SRC_URI += " \
     file://chromium/0010-chromium-icu-use-system-library-only-targets.patch;patchdir=src/3rdparty \
     file://chromium/0011-chromium-skia-Fix-build-with-gcc-12.patch;patchdir=src/3rdparty \
     file://chromium/0012-Remove-unsetting-_FILE_OFFSET_BITS.patch;patchdir=src/3rdparty \
+    file://chromium/0013-Fix-build-with-gcc-13.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based
-# 87-based.meta-qt5.10
+# 87-based.meta-qt5.11
 SRC_URI:append:libc-musl = "\
     file://chromium/0013-chromium-musl-sandbox-Define-TEMP_FAILURE_RETRY-if-n.patch;patchdir=src/3rdparty \
     file://chromium/0014-chromium-musl-Avoid-mallinfo-APIs-on-non-glibc-linux.patch;patchdir=src/3rdparty \
