@@ -1,4 +1,4 @@
-From d92b11fea65364fefa700249bd3340e0cd4c5b31 Mon Sep 17 00:00:00 2001
+From b579ee43a3f832e9b3785ed4cb03284cbc142ef1 Mon Sep 17 00:00:00 2001
 From: Dmitry Shachnev <mitya57@gmail.com>
 Date: Tue, 4 Aug 2020 21:04:06 +0300
 Subject: [PATCH] Let Bison generate the header directly, to fix build with
@@ -21,10 +21,10 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 20 deletions(-)
 
 diff --git a/Source/WebCore/css/makegrammar.pl b/Source/WebCore/css/makegrammar.pl
-index 5d63b08102eb..9435701c7061 100644
+index 5d63b0810..9435701c7 100644
 --- a/Source/WebCore/css/makegrammar.pl
 +++ b/Source/WebCore/css/makegrammar.pl
-@@ -73,25 +73,6 @@
+@@ -73,25 +73,6 @@ if ($suffix eq ".y.in") {
  }
  
  my $fileBase = File::Spec->join($outputDir, $filename);

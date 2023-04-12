@@ -1,4 +1,4 @@
-From 83aa5b3265d7c9f64e754cb890988cf8a5669ce7 Mon Sep 17 00:00:00 2001
+From 597d54c6553cd9ffbf08e40a7a706096b8990399 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Mon, 24 Sep 2018 02:11:10 -0700
 Subject: [PATCH] PlatformQt.cmake: Do not generate hardcoded include paths
@@ -15,10 +15,10 @@ Upstream-Status: Pending
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Source/WebKit/PlatformQt.cmake b/Source/WebKit/PlatformQt.cmake
-index 9aed9906e..48638aef4 100644
+index 65c1ff1c1..b7ef82f4e 100644
 --- a/Source/WebKit/PlatformQt.cmake
 +++ b/Source/WebKit/PlatformQt.cmake
-@@ -512,7 +512,7 @@ if (NOT MACOS_BUILD_FRAMEWORKS)
+@@ -511,7 +511,7 @@ if (NOT MACOS_BUILD_FRAMEWORKS)
      install(FILES ${WebKit_PKGCONFIG_FILENAME} DESTINATION ${ECM_PKGCONFIG_INSTALL_DIR} COMPONENT Data)
  endif ()
  
@@ -27,7 +27,7 @@ index 9aed9906e..48638aef4 100644
      set(WebKit_PRI_ARGUMENTS
          BIN_INSTALL_DIR "$$QT_MODULE_BIN_BASE"
          LIB_INSTALL_DIR "$$QT_MODULE_LIB_BASE"
-@@ -737,7 +737,7 @@ if (NOT MACOS_BUILD_FRAMEWORKS)
+@@ -741,7 +741,7 @@ if (NOT MACOS_BUILD_FRAMEWORKS)
      install(FILES ${WebKitWidgets_PKGCONFIG_FILENAME} DESTINATION ${ECM_PKGCONFIG_INSTALL_DIR} COMPONENT Data)
  endif ()
  

@@ -1,4 +1,4 @@
-From 0e94085f74b562bf8edf5418142323785a069454 Mon Sep 17 00:00:00 2001
+From 934ff3e2768a4ef2f1b21ee883acb56cb8ae898b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Wed, 2 Dec 2020 22:34:54 +0100
 Subject: [PATCH] Fix build with icu >= 68
@@ -120,6 +120,3 @@ index 7aaac48c8..6ac693602 100644
  namespace WebCore {
  
  // UTF16ContextAware provider
--- 
-2.26.2
-

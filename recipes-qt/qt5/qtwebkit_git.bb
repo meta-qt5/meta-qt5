@@ -11,24 +11,25 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-native bison-native flex-native"
 
-# Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.13
-# 5.13.meta-qt5.1
+# Patches from https://github.com/meta-qt5/qtwebkit/commits/b5.212
+# 5.212.meta-qt5.1
 SRC_URI += "\
     file://0001-Do-not-skip-build-for-cross-compile.patch \
     file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
     file://0003-Fix-build-bug-for-armv32-BE.patch \
     file://0004-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
-    file://0005-Fix-build-with-bison37.patch \
+    file://0005-Let-Bison-generate-the-header-directly-to-fix-build-.patch \
     file://0006-Disable-code-related-to-HTTP-2-when-Qt-is-configured.patch \
     file://0007-Fix-compilation-with-Python-3.9-avoid-passing-encodi.patch \
     file://0008-Fix-build-with-icu-68.patch \
     file://0009-Riscv-Add-support-for-riscv.patch \
-    file://mips-atomic.patch \
-    file://0001-Offlineasm-warnings-with-newer-Ruby-versions-https-b.patch \
+    file://0010-Fix-build-on-mips.patch \
+    file://0011-Offlineasm-warnings-with-newer-Ruby-versions.patch \
+    file://0012-Fix-build-with-gcc-13.patch \
 "
 
-SRC_URI:append:riscv32 = " file://0010-webdriver-libatomic.patch "
-SRC_URI:append:riscv64 = " file://0010-webdriver-libatomic.patch "
+SRC_URI:append:riscv32 = " file://0013-link-with-libatomic.patch"
+SRC_URI:append:riscv64 = " file://0013-link-with-libatomic.patch"
 
 inherit cmake_qt5 perlnative
 

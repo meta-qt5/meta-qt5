@@ -1,0 +1,34 @@
+From 8a82826054f55d17d9b765bc383418b750ed836b Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Wed, 12 Apr 2023 16:07:40 +0200
+Subject: [PATCH] Fix build with gcc-13
+
+* fixes:
+  http://errors.yoctoproject.org/Errors/Details/699653/
+
+  TOPDIR/tmp-glibc/work/core2-64-oe-linux/qtwebkit/5.15.9+gitAUTOINC+10cd6a106e-r0/git/Source/ThirdParty/ANGLE/src/common/mathutil.h:575:8: error: 'uint32_t' does not name a type
+    575 | inline uint32_t RotL(uint32_t x, int8_t r)
+        |        ^~~~~~~~
+  TOPDIR/tmp-glibc/work/core2-64-oe-linux/qtwebkit/5.15.9+gitAUTOINC+10cd6a106e-r0/git/Source/ThirdParty/ANGLE/src/common/mathutil.h:19:1: note: 'uint32_t' is defined in header '<cstdint>'; did you forget to '#include <cstdint>'?
+     18 | #include <stdlib.h>
+    +++ |+#include <cstdint>
+     19 |
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+Upstream-Status: Pending
+---
+ Source/ThirdParty/ANGLE/src/common/mathutil.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Source/ThirdParty/ANGLE/src/common/mathutil.h b/Source/ThirdParty/ANGLE/src/common/mathutil.h
+index 7959da8bd..6a8e77b4d 100644
+--- a/Source/ThirdParty/ANGLE/src/common/mathutil.h
++++ b/Source/ThirdParty/ANGLE/src/common/mathutil.h
+@@ -12,6 +12,7 @@
+ #include "common/debug.h"
+ #include "common/platform.h"
+ 
++#include <cstdint>
+ #include <limits>
+ #include <algorithm>
+ #include <string.h>

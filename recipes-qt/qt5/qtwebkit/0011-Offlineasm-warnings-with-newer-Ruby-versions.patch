@@ -1,8 +1,9 @@
-From 330bdeeaa4389225c27d27188499543ddd184f69 Mon Sep 17 00:00:00 2001
+From 3d3a5974ff31e55651bb0c47278bd15734d60be4 Mon Sep 17 00:00:00 2001
 From: Adrian Perez de Castro <aperez@igalia.com>
 Date: Wed, 15 Jan 2020 22:15:38 +0000
 Subject: [PATCH] Offlineasm warnings with newer Ruby versions
- https://bugs.webkit.org/show_bug.cgi?id=206233
+
+https://bugs.webkit.org/show_bug.cgi?id=206233
 
 Reviewed by Yusuke Suzuki.
 
@@ -44,6 +45,3 @@ index b44511245..cd1cffaec 100644
              elsif @tokens[@idx] == "\n"
                  # ignore
                  @idx += 1
--- 
-2.39.0
-

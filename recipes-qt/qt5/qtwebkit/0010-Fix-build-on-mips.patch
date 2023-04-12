@@ -1,4 +1,7 @@
-fix build on mips
+From 7e3e0ca548cc9c92705308dd2e0f88ada544e794 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Tue, 26 Oct 2021 11:03:25 -0700
+Subject: [PATCH] Fix build on mips
 
 Fixes
 Source/WTF/wtf/Atomics.cpp:63:9: error: definition of builtin function '__sync_add_and_fetch_8'
@@ -7,8 +10,15 @@ Source/WTF/wtf/Atomics.cpp:68:9: error: definition of builtin function '__sync_s
 int64_t __sync_sub_and_fetch_8(int64_t volatile* addend, int64_t value)
 
 Upstream-Status: Pending
-Signed-off-by: Khem Raj <raj.khem@gmail.com>
 
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ Source/WTF/wtf/Platform.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Source/WTF/wtf/Platform.h b/Source/WTF/wtf/Platform.h
+index 8fac85f72..5b8bbcb18 100644
 --- a/Source/WTF/wtf/Platform.h
 +++ b/Source/WTF/wtf/Platform.h
 @@ -88,6 +88,7 @@

@@ -1,4 +1,7 @@
-link with libatomic
+From 999affc771f761894b6fd6e491c6adac7861fcf2 Mon Sep 17 00:00:00 2001
+From: Khem Raj <raj.khem@gmail.com>
+Date: Mon, 8 Mar 2021 18:15:47 -0800
+Subject: [PATCH] link with libatomic
 
 This fixes build with C11
 
@@ -6,8 +9,15 @@ lib/../Source/WTF/wtf/CMakeFiles/WTF.dir/Assertions.cpp.o:/usr/include/c++/11.0.
 | collect2: error: ld returned 1 exit status
 
 Upstream-Status: Pending
-Signed-off-by: Khem Raj <raj.khem@gmail.com>
 
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ Source/WTF/wtf/CMakeLists.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Source/WTF/wtf/CMakeLists.txt b/Source/WTF/wtf/CMakeLists.txt
+index 297589b90..5b8d8c71b 100644
 --- a/Source/WTF/wtf/CMakeLists.txt
 +++ b/Source/WTF/wtf/CMakeLists.txt
 @@ -245,6 +245,10 @@ if (NOT USE_SYSTEM_MALLOC)
