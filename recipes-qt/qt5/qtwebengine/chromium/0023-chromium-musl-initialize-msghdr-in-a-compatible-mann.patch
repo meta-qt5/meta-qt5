@@ -1,4 +1,4 @@
-From e0b5335ced4cbc78847e63cc98e9c1a78f426c99 Mon Sep 17 00:00:00 2001
+From 78eae00a5c53cd44a4b73e6ba357088a82dd4b84 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sun, 10 May 2020 08:16:01 -0700
 Subject: [PATCH] chromium: musl: initialize msghdr in a compatible manner

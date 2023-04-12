@@ -1,4 +1,4 @@
-From a6ed61f9435d25abdb71c2a2b84b204f180eb822 Mon Sep 17 00:00:00 2001
+From 3332ea15dfd4024eb7b95ebd1b26bf76f592b23f Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 3 Jan 2023 14:10:23 -0800
 Subject: [PATCH] Remove unsetting _FILE_OFFSET_BITS
@@ -13,7 +13,7 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
  1 file changed, 9 deletions(-)
 
 diff --git a/chromium/third_party/zlib/gzguts.h b/chromium/third_party/zlib/gzguts.h
-index 990a4d25149..a03d5005070 100644
+index 57faf37165a..3747f3c449d 100644
 --- a/chromium/third_party/zlib/gzguts.h
 +++ b/chromium/third_party/zlib/gzguts.h
 @@ -3,15 +3,6 @@
@@ -32,6 +32,3 @@ index 990a4d25149..a03d5005070 100644
  #ifdef HAVE_HIDDEN
  #  define ZLIB_INTERNAL __attribute__((visibility ("hidden")))
  #else
--- 
-2.39.0
-

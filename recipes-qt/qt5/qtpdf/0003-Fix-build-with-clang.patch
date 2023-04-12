@@ -1,4 +1,4 @@
-From b9ebaa970dbb050a51021a013e8d5b6d5aac86ab Mon Sep 17 00:00:00 2001
+From 9e1036a25207f9013a13b23401feacd72866be4c Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 26 Feb 2022 18:15:28 -0800
 Subject: [PATCH] Fix build with clang
@@ -21,9 +21,11 @@ Upstream-Status: Inappropriate [OE-Specific]
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
- src/buildtools/gn.pro | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ src/buildtools/gn.pro | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
+diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
+index 9632f0ef7..5ff50cca1 100644
 --- a/src/buildtools/gn.pro
 +++ b/src/buildtools/gn.pro
 @@ -20,8 +20,7 @@ build_pass|!debug_and_release {

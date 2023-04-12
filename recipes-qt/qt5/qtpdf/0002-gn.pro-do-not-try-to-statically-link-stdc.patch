@@ -1,4 +1,4 @@
-From f98019bb6712fdfa1f3387baefe6b604e6191a88 Mon Sep 17 00:00:00 2001
+From 6e25650c829bf1052f607b3f3edbdf88f163efe0 Mon Sep 17 00:00:00 2001
 From: Leif Middelschulte <Leif.Middelschulte@klsmartin.com>
 Date: Tue, 8 Feb 2022 16:28:14 +0100
 Subject: [PATCH] gn.pro: do not try to statically link stdc++

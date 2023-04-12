@@ -1,4 +1,4 @@
-From da832c778d013f4217e2d704c27c1d2e19a9364c Mon Sep 17 00:00:00 2001
+From 50f862c3bed6f13932d43da5c992d3dacfdfe00e Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 2 Jan 2020 17:13:55 -0800
 Subject: [PATCH] chromium: Move CharAllocator definition to a header file

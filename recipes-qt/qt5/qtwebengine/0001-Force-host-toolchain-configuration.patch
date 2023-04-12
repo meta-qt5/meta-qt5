@@ -1,4 +1,4 @@
-From bae24edf61de8e374a43b7eede7be8c90a2a32e5 Mon Sep 17 00:00:00 2001
+From ecde45984c610529c25257324252fb2ba01fe4ca Mon Sep 17 00:00:00 2001
 From: Samuli Piippo <samuli.piippo@qt.io>
 Date: Wed, 15 Mar 2017 13:53:28 +0200
 Subject: [PATCH] Force host toolchain configuration
@@ -14,10 +14,12 @@ Upstream-Status: Inappropriate [OE specific]
 Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
 ---
  src/buildtools/config/linux.pri   |  2 +-
- src/buildtools/configure_host.pro | 14 +++++++-------
+ src/buildtools/configure_host.pro | 16 +++++++++-------
  src/buildtools/gn.pro             |  5 ++---
- 3 files changed, 10 insertions(+), 11 deletions(-)
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
+diff --git a/src/buildtools/config/linux.pri b/src/buildtools/config/linux.pri
+index 7507d51ef..1e078cbfe 100644
 --- a/src/buildtools/config/linux.pri
 +++ b/src/buildtools/config/linux.pri
 @@ -118,7 +118,7 @@ contains(QT_ARCH, "mips") {
@@ -29,6 +31,8 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
      gn_args += host_cpu=\"$$GN_HOST_CPU\"
      # Don't bother trying to use system libraries in this case
      gn_args += use_glib=false
+diff --git a/src/buildtools/configure_host.pro b/src/buildtools/configure_host.pro
+index dd0d3e327..3d39198f3 100644
 --- a/src/buildtools/configure_host.pro
 +++ b/src/buildtools/configure_host.pro
 @@ -4,7 +4,7 @@ TEMPLATE = aux
@@ -40,7 +44,7 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  !isEmpty(QT_TARGET_ARCH): GN_TARGET_CPU = $$gnArch($$QT_TARGET_ARCH)
  else: GN_TARGET_CPU = $$GN_HOST_CPU
  GN_OS = $$gnOS()
-@@ -24,6 +24,7 @@ contains(GN_TARGET_CPU, "arm")|contains(
+@@ -24,6 +24,7 @@ contains(GN_TARGET_CPU, "arm")|contains(GN_TARGET_CPU, "mipsel")|contains(GN_TAR
  }
  
  GN_HOST_EXTRA_CPPFLAGS = $$(GN_HOST_TOOLCHAIN_EXTRA_CPPFLAGS)
@@ -78,6 +82,8 @@ Signed-off-by: Samuli Piippo <samuli.piippo@qt.io>
  "  ar = \"$$which(ar)\" " \
  "  nm = \"$$which(nm)\" " \
  "  toolchain_args = { " \
+diff --git a/src/buildtools/gn.pro b/src/buildtools/gn.pro
+index f94694da0..a8ca6567b 100644
 --- a/src/buildtools/gn.pro
 +++ b/src/buildtools/gn.pro
 @@ -19,9 +19,8 @@ build_pass|!debug_and_release {

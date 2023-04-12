@@ -1,4 +1,4 @@
-From 7f9421b4609d8a1f9590152fb3976de22e9a1b12 Mon Sep 17 00:00:00 2001
+From df7f7525ece62cde56de905098bd6000483f10d2 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Sat, 1 Feb 2020 12:17:23 -0800
 Subject: [PATCH] chromium: Link v8 with libatomic on x86

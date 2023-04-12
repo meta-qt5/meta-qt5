@@ -1,4 +1,4 @@
-From b2e7a10448d984eb62810ad5c41720d61599cecc Mon Sep 17 00:00:00 2001
+From cf19db916e8566a8c19e9a5aeeb6a9e6a7f08111 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 5 Feb 2019 14:32:20 -0800
 Subject: [PATCH] chromium: Exclude CRC32 for 32bit arm
@@ -11,20 +11,20 @@ src/3rdparty/chromium/third_party/zlib/crc32_simd.c:184: undefined reference to 
 Upstream-Status: Pending
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 ---
- chromium/third_party/zlib/BUILD.gn | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ chromium/third_party/zlib/BUILD.gn | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/chromium/third_party/zlib/BUILD.gn b/chromium/third_party/zlib/BUILD.gn
-index 891c2c34bfb..5ab519bd133 100644
+index 44b827155b2..16892b8d284 100644
 --- a/chromium/third_party/zlib/BUILD.gn
 +++ b/chromium/third_party/zlib/BUILD.gn
-@@ -115,8 +115,11 @@ if (use_arm_neon_optimizations) {
+@@ -129,8 +129,12 @@ if (use_arm_neon_optimizations) {
      # Disabled for iPhone, as described in DDI0487C_a_armv8_arm:
      #  "All implementations of the ARMv8.1 architecture are required to
      #   implement the CRC32* instructions. These are optional in ARMv8.0."
 +    defines = []
-     if (!is_ios) {
--      defines = [ "CRC32_ARMV8_CRC32" ]
+     if (!is_ios && !use_qt) {
+       defines = [ "CRC32_ARMV8_CRC32" ]
 +      if (current_cpu == "arm64") {
 +        defines += [ "CRC32_ARMV8_CRC32" ]
 +      }

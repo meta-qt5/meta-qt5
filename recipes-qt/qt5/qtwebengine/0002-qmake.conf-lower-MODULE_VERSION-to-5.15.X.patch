@@ -1,7 +1,7 @@
-From 8031326dbf1252f76f6aac9dcef5611fd7be5fa4 Mon Sep 17 00:00:00 2001
+From cf79bf0fbd89a7273420f6dfb7715c18cc56729b Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Fri, 12 Mar 2021 15:47:50 +0100
-Subject: [PATCH] qmake.conf: lower MODULE_VERSION to 5.15.9
+Subject: [PATCH] qmake.conf: lower MODULE_VERSION to 5.15.X
 
 * to avoid incompatibility when searching for qtwebchannel:
 
@@ -24,12 +24,12 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/.qmake.conf b/.qmake.conf
-index 83823ceee..d5e64505d 100644
+index 461e9c733..1d0279c42 100644
 --- a/.qmake.conf
 +++ b/.qmake.conf
 @@ -5,4 +5,4 @@ QTWEBENGINE_OUT_ROOT = $$shadowed($$PWD)
  load(qt_build_config)
  CONFIG += warning_clean
  
--MODULE_VERSION = 5.15.10
+-MODULE_VERSION = 5.15.14
 +MODULE_VERSION = 5.15.9
