@@ -1,0 +1,26 @@
+Remove unsetting _FILE_OFFSET_BITS
+This does not work when enabling 64bit time_t with glibc which is
+enabled with -D_TIME_BITS=64, since it also needs
+_FILE_OFFSET_BITS=64 and this does not work when its undefined
+explicitly
+
+Upstream-Status: Submitted [https://github.com/madler/zlib/pull/764]
+Signed-off-by: Khem Raj <raj.khem@gmail.com>
+--- a/src/3rdparty/zlib/src/gzguts.h
++++ b/src/3rdparty/zlib/src/gzguts.h
+@@ -22,15 +22,6 @@
+ #define HAVE_HIDDEN
+ #endif
+ 
+-#ifdef _LARGEFILE64_SOURCE
+-#  ifndef _LARGEFILE_SOURCE
+-#    define _LARGEFILE_SOURCE 1
+-#  endif
+-#  ifdef _FILE_OFFSET_BITS
+-#    undef _FILE_OFFSET_BITS
+-#  endif
+-#endif
+-
+ #ifdef HAVE_HIDDEN
+ #  define ZLIB_INTERNAL __attribute__((visibility ("hidden")))
+ #else
