@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://COPYING.DOC;md5=ad1419ecc56e060eccf8184a87c4285f \
 
 DEPENDS = "qtdeclarative qtgraphicaleffects"
 
-SRC_URI = "http://share.basyskom.com/demos/smarthome_src.tar.gz"
+SRC_URI = "https://artifacts.toradex.com/artifactory/tdxref-oe-prod-frankfurt/dunfell-5.x.y/release/4/sources/smarthome_src.tar.gz"
 SRC_URI[md5sum] = "883b0376239baec20ebec072e938a995"
 SRC_URI[sha256sum] = "fceaa813c33e462bad6c0383eaef81a6f6e586c15d1fa73898173b517fc1cda6"
 
