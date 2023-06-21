@@ -24,6 +24,10 @@ SRC_URI:append:class-native = " ${@bb.utils.contains('PACKAGECONFIG', 'clang', '
 FILES:${PN}-tools += "${datadir}${QT_DIR_NAME}/phrasebooks"
 FILES:${PN}-examples = "${datadir}${QT_DIR_NAME}/examples"
 
+# Without "opengl" in DISTRO_FEATURES, the libQt5UiTools.a library isn't generated, but qttools-staticdev
+# is required by packagegroup-qt5-toolchain-target.
+ALLOW_EMPTY:${PN}-staticdev = "1"
+
 PACKAGECONFIG ??= ""
 PACKAGECONFIG:append:toolchain-clang = " clang"
 
