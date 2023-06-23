@@ -38,6 +38,7 @@ SRC_URI += "\
     file://0021-rcc-Just-dcument-file-name-without-full-path-to-redu.patch \
     file://0022-testlib-don-t-track-the-build-or-source-directories.patch \
     file://0023-Remove-unsetting-_FILE_OFFSET_BITS.patch \
+    file://0026-qsql_odbc-Patch-for-CVE-2023-24607.patch \
 "
 
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
