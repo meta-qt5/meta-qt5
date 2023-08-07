@@ -40,6 +40,9 @@ SRC_URI += "\
     file://0023-zlib-Do-not-undefine-_FILE_OFFSET_BITS.patch \
 "
 
+# Support OpenSSL 3.x
+SRC_URI += "file://0001-qsslsocket_openssl_symbols-Really-support-OpenSSL-3.patch"
+
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
 # next major upgrade of QT
 LTO = ""
