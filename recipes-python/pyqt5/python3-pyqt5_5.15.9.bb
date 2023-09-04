@@ -47,11 +47,11 @@ do_configure:prepend() {
     cd ${S}
 
     for i in ${DISABLED_FEATURES}; do
-        extra_args+=" --disabled-feature=${i}"
+        extra_args="${extra_args} --disabled-feature=${i}"
     done
 
     for i in ${PYQT_MODULES}; do
-        extra_args+=" --enable=${i}"
+        extra_args="${extra_args} --enable=${i}"
     done
 
     sip-build \
