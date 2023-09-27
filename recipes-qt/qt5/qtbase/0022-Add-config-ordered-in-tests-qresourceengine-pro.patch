@@ -1,0 +1,26 @@
+From 4aec28bcedcfe792875a00d261131f08d9640c92 Mon Sep 17 00:00:00 2001
+From: "mark.yang" <mark.yang@lge.com>
+Date: Wed, 27 Sep 2023 11:37:23 +0900
+Subject: [PATCH] Add config ordered in qresourceengine.pro
+
+Add patch to solve build error
+
+QT Parallel build causes errors
+http://gecko.lge.com:8000/Builds/Details/1727813
+
+Resolve by specifying the build order.
+
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <martin.jansa@gmail.com>
+---
+ tests/auto/corelib/io/qresourceengine/qresourceengine.pro | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/auto/corelib/io/qresourceengine/qresourceengine.pro b/tests/auto/corelib/io/qresourceengine/qresourceengine.pro
+index 1e12a41dea..5db9225282 100644
+--- a/tests/auto/corelib/io/qresourceengine/qresourceengine.pro
++++ b/tests/auto/corelib/io/qresourceengine/qresourceengine.pro
+@@ -1,2 +1,3 @@
+ TEMPLATE = subdirs
+ SUBDIRS = staticplugin qresourceengine_test.pro
++CONFIG += ordered

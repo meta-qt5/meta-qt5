@@ -37,6 +37,7 @@ SRC_URI += "\
     file://0019-zlib-Do-not-undefine-_FILE_OFFSET_BITS.patch \
     file://0020-evdevkeyboard-fix-input_event-time-related-compile.patch \
     file://0021-evdevtouch-fix-input_event-time-related-compile.patch \
+    file://0022-Add-config-ordered-in-tests-qresourceengine-pro.patch \
 "
 
 # for syncqt
