@@ -121,7 +121,7 @@ PACKAGECONFIG[xcb] = "-xcb -xcb-xlib -no-bundled-xcb-xinput -DUSE_X11=ON,-no-xcb
 PACKAGECONFIG[sql-ibase] = "-sql-ibase,-no-sql-ibase"
 PACKAGECONFIG[sql-mysql] = "-sql-mysql -mysql_config ${STAGING_BINDIR_CROSS}/mysql_config,-no-sql-mysql,mysql5"
 PACKAGECONFIG[sql-psql] = "-sql-psql,-no-sql-psql,postgresql"
-PACKAGECONFIG[sql-odbc] = "-sql-odbc,-no-sql-odbc"
+PACKAGECONFIG[sql-odbc] = "-sql-odbc,-no-sql-odbc,unixodbc"
 PACKAGECONFIG[sql-oci] = "-sql-oci,-no-sql-oci"
 PACKAGECONFIG[sql-tds] = "-sql-tds,-no-sql-tds"
 PACKAGECONFIG[sql-db2] = "-sql-db2,-no-sql-db2"
