@@ -42,6 +42,7 @@ SRC_URI += "\
     file://CVE-2023-32762.patch \
     file://CVE-2023-32763-qtbase-5.15.diff \
     file://CVE-2023-33285-qtbase-5.15.diff \
+    file://CVE-2023-34410-qtbase-5.15.diff \
 "
 
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
