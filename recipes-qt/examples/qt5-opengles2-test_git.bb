@@ -13,7 +13,7 @@ DEPENDS = "qtbase qtsensors"
 EXCLUDE_FROM_WORLD = "1"
 
 SRC_URI = "git://github.com/smk-embedded/qt5-opengles2-test.git;branch=master;protocol=https"
-SRCREV = "938390507054ed1258345f70ed55770d2fe56176"
+SRCREV = "293ae5cfedf48c97178057932d06db409117e4ad"
 S = "${WORKDIR}/git"
 
 inherit qmake5
