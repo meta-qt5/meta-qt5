@@ -46,6 +46,7 @@ SRC_URI += "\
     file://CVE-2023-37369-qtbase-5.15.diff \
     file://CVE-2023-38197-qtbase-5.15.diff \
     file://CVE-2023-43114-5.15.patch \
+    file://0027-xkb-fix-build-with-libxkbcommon-1.6.0-and-later.patch \
 "
 
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
