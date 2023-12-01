@@ -1,0 +1,55 @@
+From 8946e4874d0e071b182ba5ac438fb4d52d2a44d0 Mon Sep 17 00:00:00 2001
+From: Mark Hatle <mark.hatle@amd.com>
+Date: Fri, 1 Dec 2023 08:17:51 -0700
+Subject: [PATCH] xkb: fix build with libxkbcommon 1.6.0 and later
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Disable the 4 XKB_KEY_dead functions to support libxkbcommon 1.6.0.  See:
+
+https://gitlab.freedesktop.org/xorg/proto/xorgproto/-/merge_requests/70
+
+The above URL points to a commit in qt which was used as a basis for the fix.
+
+Upstream-Status: Backport
+[https://github.com/qt/qtbase/commit/8af35d27e8f02bbb99aef4ac495ed406e50e3cca]
+
+  xkb: fix build with libxkbcommon 1.6.0 and later
+
+  A few XKB_KEY_dead_* defines got removed from 1.6.0. See also
+  https://github.com/xkbcommon/libxkbcommon/blob/6073565903488cb5b9a8d37fdc4a7c2f9d7ad04d/NEWS#L9-L14
+  https://gitlab.freedesktop.org/xorg/proto/xorgproto/-/merge_requests/70/diffs?commit_id=cb44799b72f611eb4c9d7cc185bc3b09e070be08
+
+  Pick-to: 6.6 6.5 6.2 5.15
+  Fixes: QTBUG-117950
+  Change-Id: I55861868f2bb29c553d68365fa9b9b6ed01c9aea
+  Reviewed-by: Tor Arne Vestbø <tor.arne.vestbo@qt.io>
+
+Signed-off-by: Mark Hatle <mark.hatle@amd.com>
+---
+ src/platformsupport/input/xkbcommon/qxkbcommon.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/platformsupport/input/xkbcommon/qxkbcommon.cpp b/src/platformsupport/input/xkbcommon/qxkbcommon.cpp
+index b713c19447..ecf02de6db 100644
+--- a/src/platformsupport/input/xkbcommon/qxkbcommon.cpp
++++ b/src/platformsupport/input/xkbcommon/qxkbcommon.cpp
+@@ -273,10 +273,14 @@ static constexpr const auto KeyTbl = qMakeArray(
+         Xkb2Qt<XKB_KEY_dead_small_schwa,        Qt::Key_Dead_Small_Schwa>,
+         Xkb2Qt<XKB_KEY_dead_capital_schwa,      Qt::Key_Dead_Capital_Schwa>,
+         Xkb2Qt<XKB_KEY_dead_greek,              Qt::Key_Dead_Greek>,
++/* The following four XKB_KEY_dead keys got removed in libxkbcommon 1.6.0
++   The define check is kind of version check here. */
++#ifdef XKB_KEY_dead_lowline
+         Xkb2Qt<XKB_KEY_dead_lowline,            Qt::Key_Dead_Lowline>,
+         Xkb2Qt<XKB_KEY_dead_aboveverticalline,  Qt::Key_Dead_Aboveverticalline>,
+         Xkb2Qt<XKB_KEY_dead_belowverticalline,  Qt::Key_Dead_Belowverticalline>,
+         Xkb2Qt<XKB_KEY_dead_longsolidusoverlay, Qt::Key_Dead_Longsolidusoverlay>,
++#endif
+ 
+         // Special keys from X.org - This include multimedia keys,
+         // wireless/bluetooth/uwb keys, special launcher keys, etc.
+-- 
+2.34.1
+
