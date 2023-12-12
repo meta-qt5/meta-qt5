@@ -1,0 +1,114 @@
+From 40c11752580802521d2fa10e4e036df61083ca42 Mon Sep 17 00:00:00 2001
+From: Timur Pocheptsov <timur.pocheptsov@qt.io>
+Date: Mon, 30 May 2022 06:59:21 +0200
+Subject: [PATCH] QSslSocket: make it work with OpenSSL v3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+v3 made some functions into macros and thus symbol resolving fails.
+Fixing this allows 5.15.x to work with OpenSSL in compat. mode.
+
+Fixes: QTBUG-103820
+Change-Id: Ic30a322d69d980d20040b2aa8162a060f76dd775
+Reviewed-by: Edward Welbourne <edward.welbourne@qt.io>
+Reviewed-by: Mårten Nordheim <marten.nordheim@qt.io>
+Upstream-Status: Backport[https://code.qt.io/cgit/qt/qtbase.git/commit/?id=40c11752580802521d2fa10e4e036df61083ca42]
+---
+ src/network/ssl/qsslsocket_openssl_symbols.cpp | 18 ++++++++++++++++--
+ src/network/ssl/qsslsocket_openssl_symbols_p.h | 13 +++++++++++--
+ 2 files changed, 27 insertions(+), 4 deletions(-)
+
+diff --git a/src/network/ssl/qsslsocket_openssl_symbols.cpp b/src/network/ssl/qsslsocket_openssl_symbols.cpp
+index 675343abd4..197fc149ec 100644
+--- a/src/network/ssl/qsslsocket_openssl_symbols.cpp
++++ b/src/network/ssl/qsslsocket_openssl_symbols.cpp
+@@ -148,7 +148,6 @@ DEFINEFUNC(int, EVP_PKEY_up_ref, EVP_PKEY *a, a, return 0, return)
+ DEFINEFUNC2(EVP_PKEY_CTX *, EVP_PKEY_CTX_new, EVP_PKEY *pkey, pkey, ENGINE *e, e, return nullptr, return)
+ DEFINEFUNC(int, EVP_PKEY_param_check, EVP_PKEY_CTX *ctx, ctx, return 0, return)
+ DEFINEFUNC(void, EVP_PKEY_CTX_free, EVP_PKEY_CTX *ctx, ctx, return, return)
+-DEFINEFUNC(int, EVP_PKEY_base_id, EVP_PKEY *a, a, return NID_undef, return)
+ DEFINEFUNC(int, RSA_bits, RSA *a, a, return 0, return)
+ DEFINEFUNC(int, DSA_bits, DSA *a, a, return 0, return)
+ DEFINEFUNC(int, OPENSSL_sk_num, OPENSSL_STACK *a, a, return -1, return)
+@@ -371,7 +370,15 @@ DEFINEFUNC(const SSL_CIPHER *, SSL_get_current_cipher, SSL *a, a, return nullptr
+ DEFINEFUNC(int, SSL_version, const SSL *a, a, return 0, return)
+ DEFINEFUNC2(int, SSL_get_error, SSL *a, a, int b, b, return -1, return)
+ DEFINEFUNC(STACK_OF(X509) *, SSL_get_peer_cert_chain, SSL *a, a, return nullptr, return)
++
++#if defined(OPENSSL_VERSION_MAJOR) && OPENSSL_VERSION_MAJOR >= 3
++DEFINEFUNC(X509 *, SSL_get1_peer_certificate, SSL *a, a, return nullptr, return)
++DEFINEFUNC(int, EVP_PKEY_get_base_id, const EVP_PKEY *pkey, pkey, return -1, return)
++#else
+ DEFINEFUNC(X509 *, SSL_get_peer_certificate, SSL *a, a, return nullptr, return)
++DEFINEFUNC(int, EVP_PKEY_base_id, EVP_PKEY *a, a, return NID_undef, return)
++#endif // OPENSSL_VERSION_MAJOR >= 3
++
+ DEFINEFUNC(long, SSL_get_verify_result, const SSL *a, a, return -1, return)
+ DEFINEFUNC(SSL *, SSL_new, SSL_CTX *a, a, return nullptr, return)
+ DEFINEFUNC(SSL_CTX *, SSL_get_SSL_CTX, SSL *a, a, return nullptr, return)
+@@ -868,7 +875,6 @@ bool q_resolveOpenSslSymbols()
+     RESOLVEFUNC(EVP_PKEY_CTX_new)
+     RESOLVEFUNC(EVP_PKEY_param_check)
+     RESOLVEFUNC(EVP_PKEY_CTX_free)
+-    RESOLVEFUNC(EVP_PKEY_base_id)
+     RESOLVEFUNC(RSA_bits)
+     RESOLVEFUNC(OPENSSL_sk_new_null)
+     RESOLVEFUNC(OPENSSL_sk_push)
+@@ -1107,7 +1113,15 @@ bool q_resolveOpenSslSymbols()
+     RESOLVEFUNC(SSL_version)
+     RESOLVEFUNC(SSL_get_error)
+     RESOLVEFUNC(SSL_get_peer_cert_chain)
++
++#if defined(OPENSSL_VERSION_MAJOR) && OPENSSL_VERSION_MAJOR >= 3
++    RESOLVEFUNC(SSL_get1_peer_certificate)
++    RESOLVEFUNC(EVP_PKEY_get_base_id)
++#else
+     RESOLVEFUNC(SSL_get_peer_certificate)
++    RESOLVEFUNC(EVP_PKEY_base_id)
++#endif // OPENSSL_VERSION_MAJOR >= 3
++
+     RESOLVEFUNC(SSL_get_verify_result)
+     RESOLVEFUNC(SSL_new)
+     RESOLVEFUNC(SSL_get_SSL_CTX)
+diff --git a/src/network/ssl/qsslsocket_openssl_symbols_p.h b/src/network/ssl/qsslsocket_openssl_symbols_p.h
+index 43b5bf6d3e..71608252f7 100644
+--- a/src/network/ssl/qsslsocket_openssl_symbols_p.h
++++ b/src/network/ssl/qsslsocket_openssl_symbols_p.h
+@@ -237,7 +237,6 @@ Q_AUTOTEST_EXPORT int q_EVP_PKEY_up_ref(EVP_PKEY *a);
+ EVP_PKEY_CTX *q_EVP_PKEY_CTX_new(EVP_PKEY *pkey, ENGINE *e);
+ void q_EVP_PKEY_CTX_free(EVP_PKEY_CTX *ctx);
+ int q_EVP_PKEY_param_check(EVP_PKEY_CTX *ctx);
+-int q_EVP_PKEY_base_id(EVP_PKEY *a);
+ int q_RSA_bits(RSA *a);
+ Q_AUTOTEST_EXPORT int q_OPENSSL_sk_num(OPENSSL_STACK *a);
+ Q_AUTOTEST_EXPORT void q_OPENSSL_sk_pop_free(OPENSSL_STACK *a, void (*b)(void *));
+@@ -383,6 +382,17 @@ const EC_GROUP* q_EC_KEY_get0_group(const EC_KEY* k);
+ int q_EC_GROUP_get_degree(const EC_GROUP* g);
+ #endif // OPENSSL_NO_EC
+ 
++// Here we have the ones that make difference between OpenSSL pre/post v3:
++#if defined(OPENSSL_VERSION_MAJOR) && OPENSSL_VERSION_MAJOR >= 3
++X509 *q_SSL_get1_peer_certificate(SSL *a);
++#define q_SSL_get_peer_certificate q_SSL_get1_peer_certificate
++int q_EVP_PKEY_get_base_id(const EVP_PKEY *pkey);
++#define q_EVP_PKEY_base_id q_EVP_PKEY_get_base_id
++#else
++X509 *q_SSL_get_peer_certificate(SSL *a);
++int q_EVP_PKEY_base_id(EVP_PKEY *a);
++#endif // OPENSSL_VERSION_MAJOR >= 3
++
+ DSA *q_DSA_new();
+ void q_DSA_free(DSA *a);
+ X509 *q_d2i_X509(X509 **a, const unsigned char **b, long c);
+@@ -510,7 +520,6 @@ const SSL_CIPHER *q_SSL_get_current_cipher(SSL *a);
+ int q_SSL_version(const SSL *a);
+ int q_SSL_get_error(SSL *a, int b);
+ STACK_OF(X509) *q_SSL_get_peer_cert_chain(SSL *a);
+-X509 *q_SSL_get_peer_certificate(SSL *a);
+ long q_SSL_get_verify_result(const SSL *a);
+ SSL *q_SSL_new(SSL_CTX *a);
+ SSL_CTX *q_SSL_get_SSL_CTX(SSL *a);
+-- 
+2.34.1
+
