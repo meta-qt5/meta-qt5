@@ -39,6 +39,8 @@ SRC_URI += "\
     file://0022-testlib-don-t-track-the-build-or-source-directories.patch \
     file://0023-zlib-Do-not-undefine-_FILE_OFFSET_BITS.patch \
     file://0026-QSslSocket-make-it-work-with-OpenSSL-v3.patch \
+    file://0001-CVE-2023-51714-qtbase-5.15.diff \
+    file://0002-CVE-2023-51714-qtbase-5.15.diff \
 "
 
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
