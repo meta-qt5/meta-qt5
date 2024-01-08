@@ -7,7 +7,7 @@ Subject: [PATCH] qmake.conf: lower MODULE_VERSION to 5.15.X
 
 CMake Error at /OE/build/luneos-hardknott/webos-ports/tmp-glibc/work/core2-64-webos-linux/org.webosports.app.browser/0.5.0-14+gitAUTOINC+4b5398142b-r0/recipe-sysroot/usr/lib/cmake/Qt5WebEngineCore/Qt5WebEngineCoreConfig.cmake:116 (find_package):
   Could not find a configuration file for package "Qt5WebChannel" that is
-  compatible with requested version "5.15.11".
+  compatible with requested version "5.15.9".
 
   The following configuration files were considered but not accepted:
 
@@ -32,4 +32,4 @@ index 461e9c733..1d0279c42 100644
  CONFIG += warning_clean
  
 -MODULE_VERSION = 5.15.14
-+MODULE_VERSION = 5.15.11
++MODULE_VERSION = 5.15.9
