@@ -36,7 +36,7 @@ SRC_URI += " \
     file://0001-mapbox-gl-explicitly-include-cstdint-header.patch;patchdir=src/3rdparty/mapbox-gl-native \
 "
 
-SRCREV_qtlocation = "e3e9f9bf42c22565f226b3431cb8c17502cc2e7a"
+SRCREV_qtlocation = "b6d96559cb9f5e0d79936c89887ea924b2c3514a"
 SRCREV_qtlocation-mapboxgl = "d3101bbc22edd41c9036ea487d4a71eabd97823d"
 
 SRCREV_FORMAT = "qtlocation_qtlocation-mapboxgl"

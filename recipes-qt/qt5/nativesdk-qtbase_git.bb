@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL3;md5=d32239bcb673463ab874e80d47fae504 \
     file://LICENSE.GPL3-EXCEPT;md5=763d8c535a234d9a3fb682c7ecb6c073 \
     file://LICENSE.FDL;md5=6d9f2a9af4c8b8c3c769f6cc1b6aaf7e \
-    file://LICENSE.QT-LICENSE-AGREEMENT;md5=71469b4021772fca0f18e08b1ef8ac7e \
+    file://LICENSE.QT-LICENSE-AGREEMENT;md5=38de3b110ade3b6ee2f0b6a95ab16f1a \
 "
 
 QT_MODULE = "qtbase"
@@ -34,7 +34,6 @@ SRC_URI += "\
     file://0005-Disable-all-unknown-features-instead-of-erroring-out.patch \
     file://0006-Pretend-Qt5-wasn-t-found-if-OE_QMAKE_PATH_EXTERNAL_H.patch \
     file://0007-Delete-qlonglong-and-qulonglong.patch \
-    file://0008-Replace-pthread_yield-with-sched_yield.patch \
     file://0009-Add-OE-specific-specs-for-clang-compiler.patch \
     file://0010-linux-clang-Invert-conditional-for-defining-QT_SOCKL.patch \
     file://0011-tst_qlocale-Enable-QT_USE_FENV-only-on-glibc.patch \
@@ -202,4 +201,4 @@ fakeroot do_generate_qt_environment_file() {
 do_generate_qt_environment_file[umask] = "022"
 addtask generate_qt_environment_file after do_install before do_package
 
-SRCREV = "42e4ae042a4c86e58bcb8b6d2d59ba4a988285b4"
+SRCREV = "e4391422574aa9aa89fece74f16c07c609cbbae2"

@@ -18,4 +18,4 @@ RDEPENDS:${PN}-dev = ""
 # http://errors.yoctoproject.org/Errors/Build/44912/
 LDFLAGS:append:x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-SRCREV = "06cfcbb6940d2729f5a6575e264873ce65ac99c3"
+SRCREV = "e33716bd6bb8926688fef20cb568e11618d08a35"
