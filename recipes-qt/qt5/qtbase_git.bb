@@ -37,7 +37,6 @@ SRC_URI += "\
     file://0021-rcc-Just-dcument-file-name-without-full-path-to-redu.patch \
     file://0022-testlib-don-t-track-the-build-or-source-directories.patch \
     file://0023-Remove-unsetting-_FILE_OFFSET_BITS.patch \
-    file://0026-qsql_odbc-Patch-for-CVE-2023-24607.patch \
     file://CVE-2023-32762.patch \
     file://CVE-2023-32763-qtbase-5.15.diff \
     file://CVE-2023-33285-qtbase-5.15.diff \
@@ -320,4 +319,4 @@ sed -i \
     $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
 }
 
-SRCREV = "e4391422574aa9aa89fece74f16c07c609cbbae2"
+SRCREV = "4e158f6bfa7d0747d8da70b3b15a44b52e35bb8a"
