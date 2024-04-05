@@ -1,0 +1,57 @@
+Remove ptests that leak host paths via SRCDIR
+The host paths are not useful on the target and may cause security concerns.
+Some auto tests run as ptests include references to external resources via
+SRCDIR and fail today.
+
+Remove the problematic tests since they won't pass completely anyway.
+
+Upstream-Status: Inappropriate [embedded specific]
+Signed-off-by: James Minor <james.minor@ni.com>
+Index: git/tests/auto/corelib/tools/tools.pro
+===================================================================
+--- git.orig/tests/auto/corelib/tools/tools.pro
++++ git/tests/auto/corelib/tools/tools.pro
+@@ -36,7 +36,6 @@ SUBDIRS=\
+     qscopedvaluerollback \
+     qscopeguard \
+     qset \
+-    qsharedpointer \
+     qsize \
+     qsizef \
+     qstl \
+Index: git/tests/auto/other/other.pro
+===================================================================
+--- git.orig/tests/auto/other/other.pro
++++ git/tests/auto/other/other.pro
+@@ -4,7 +4,6 @@ QT_FOR_CONFIG += gui-private
+ SUBDIRS=\
+    compiler \
+    gestures \
+-   lancelot \
+    languagechange \
+    macgui \
+    #macnativeevents \
+Index: git/tests/auto/widgets/dialogs/dialogs.pro
+===================================================================
+--- git.orig/tests/auto/widgets/dialogs/dialogs.pro
++++ git/tests/auto/widgets/dialogs/dialogs.pro
+@@ -3,7 +3,6 @@ SUBDIRS=\
+    qcolordialog \
+    qdialog \
+    qerrormessage \
+-   qfiledialog \
+    qfiledialog2 \
+    qfilesystemmodel \
+    qfontdialog \
+Index: git/tests/auto/widgets/itemviews/itemviews.pro
+===================================================================
+--- git.orig/tests/auto/widgets/itemviews/itemviews.pro
++++ git/tests/auto/widgets/itemviews/itemviews.pro
+@@ -3,7 +3,6 @@ SUBDIRS=\
+    qabstractitemview \
+    qcolumnview \
+    qdatawidgetmapper \
+-   qdirmodel \
+    qfileiconprovider \
+    qheaderview \
+    qitemdelegate \

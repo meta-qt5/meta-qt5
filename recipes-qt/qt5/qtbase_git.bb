@@ -48,6 +48,7 @@ SRC_URI += "\
     file://0001-CVE-2023-51714-qtbase-5.15.diff \
     file://0002-CVE-2023-51714-qtbase-5.15.diff \
     file://0028-Remove-host-paths-from-qmake.patch \
+    file://0029-Remove-ptests-with-SRCDIR.patch \
 "
 
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
