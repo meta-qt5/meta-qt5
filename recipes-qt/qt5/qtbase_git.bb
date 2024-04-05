@@ -47,6 +47,7 @@ SRC_URI += "\
     file://0027-xkb-fix-build-with-libxkbcommon-1.6.0-and-later.patch \
     file://0001-CVE-2023-51714-qtbase-5.15.diff \
     file://0002-CVE-2023-51714-qtbase-5.15.diff \
+    file://0028-Remove-host-paths-from-qmake.patch \
 "
 
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
