@@ -6,7 +6,7 @@ Subject: [PATCH] clangformat: Fix build with LLVM 13
 Change-Id: Ia9db10696fd129c8b989ecc4c9ecbb7f1f10e68c
 Reviewed-by: David Schulz <david.schulz@qt.io>
 
-Upstream-Status: Accepted [https://code.qt.io/cgit/qt-creator/qt-creator.git/commit/?id=55b91a76172a3235b4879daf0b675519d5b02db7]
+Upstream-Status: Backport [https://code.qt.io/cgit/qt-creator/qt-creator.git/commit/?id=55b91a76172a3235b4879daf0b675519d5b02db7]
 Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
 ---
  src/plugins/clangformat/clangformatutils.cpp | 4 ++++
