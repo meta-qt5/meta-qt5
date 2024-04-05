@@ -1,0 +1,43 @@
+Remove host paths from qmake
+The host paths are not useful on the target and may cause security concerns.
+
+Instead set them to extprefix or just plain "/" to at least remove host paths.
+
+Upstream-Status: Inappropriate [embedded specific]
+Signed-off-by: James Minor <james.minor@ni.com>
+--- a/configure.pri
++++ b/configure.pri
+@@ -854,7 +854,7 @@ defineTest(qtConfOutput_preparePaths) {
+     export(config.qtbase.features.shared.available)
+ 
+     hostbindir_absolute_path = $$absolute_path($$config.rel_input.hostbindir, $$config.input.hostprefix)
+-    config.input.hostbindir_to_hostprefix = $$relative_path($$config.input.hostprefix, $$hostbindir_absolute_path)
++    config.input.hostbindir_to_hostprefix = $$relative_path($$config.input.extprefix, $$hostbindir_absolute_path)
+     config.input.hostbindir_to_extprefix = $$relative_path($$config.input.extprefix, $$hostbindir_absolute_path)
+ 
+     !isEmpty(PREFIX_COMPLAINTS) {
+@@ -889,11 +889,11 @@ defineTest(qtConfOutput_preparePaths) {
+     QT_CONFIGURE_STR_OFFSETS =
+     QT_CONFIGURE_STRS =
+ 
+-    addConfStr($$config.input.sysroot)
++    addConfStr("/")
+     addConfStr($$qmake_sysrootify)
+-    addConfStr($$config.rel_input.hostbindir)
+-    addConfStr($$config.rel_input.hostlibdir)
+-    addConfStr($$config.rel_input.hostdatadir)
++    addConfStr($$config.rel_input.bindir)
++    addConfStr($$config.rel_input.libdir)
++    addConfStr($$config.rel_input.datadir)
+     addConfStr($$XSPEC)
+     addConfStr($$[QMAKE_SPEC])
+ 
+@@ -902,7 +902,7 @@ defineTest(qtConfOutput_preparePaths) {
+         "static const char qt_configure_prefix_path_str  [12+512] = \"qt_prfxpath=$$config.input.prefix\";" \
+         "$${LITERAL_HASH}ifdef QT_BUILD_QMAKE" \
+         "static const char qt_configure_ext_prefix_path_str   [12+512] = \"qt_epfxpath=$$config.input.extprefix\";" \
+-        "static const char qt_configure_host_prefix_path_str  [12+512] = \"qt_hpfxpath=$$config.input.hostprefix\";" \
++        "static const char qt_configure_host_prefix_path_str  [12+512] = \"qt_hpfxpath=$$config.input.extprefix\";" \
+         "$${LITERAL_HASH}endif" \
+         "" \
+         "static const short qt_configure_str_offsets[] = {" \
