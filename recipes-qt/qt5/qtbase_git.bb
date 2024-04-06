@@ -51,6 +51,10 @@ SRC_URI += "\
     file://0029-Remove-ptests-with-SRCDIR.patch \
 "
 
+# usually pulled by one of the optional dependencies in PACKAGECONFIG, but with very limited PACKAGECONFIG fails with:
+# src/corelib/io/qresource.cpp:68:12: fatal error: zstd.h: No such file or directory
+DEPENDS = "zstd"
+
 # Disable LTO for now, QT5 patches are being worked upstream, perhaps revisit with
 # next major upgrade of QT
 LTO = ""
