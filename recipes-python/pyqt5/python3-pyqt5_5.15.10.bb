@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=d32239bcb673463ab874e80d47fae504"
 
 inherit pypi python3-dir python3native qmake5 qmake5_paths
 
-SRC_URI[sha256sum] = "dc41e8401a90dc3e2b692b411bd5492ab559ae27a27424eed4bd3915564ec4c0"
+SRC_URI[sha256sum] = "d46b7804b1b10a4ff91753f8113e5b5580d2b4462f3226288e2d84497334898a"
 PYPI_PACKAGE = "PyQt5"
 
 S = "${WORKDIR}/PyQt5-${PV}"
@@ -81,9 +81,9 @@ do_install:append() {
 }
 
 pyqt_fix_sources() {
-    find ${PKGD}/usr/src/debug/${PN} -type f -exec sed -i "s,\(${B}\|${S}\),/usr/src/debug/${PN}/${PV},g" {} \;
+    find ${PKGD}${TARGET_DBGSRC_DIR} -type f -exec sed -i "s,\(${B}\|${S}\),${TARGET_DBGSRC_DIR},g" {} \;
 }
-PACKAGESPLITFUNCS += "pyqt_fix_sources"
+PACKAGESPLITFUNCS =+ "pyqt_fix_sources"
 
 FILES:${PN} += "${PYTHON_SITEPACKAGES_DIR} ${OE_QMAKE_PATH_PLUGINS}"
 RDEPENDS:${PN} = " \
