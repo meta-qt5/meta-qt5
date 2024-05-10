@@ -49,6 +49,7 @@ SRC_URI += "\
     file://0002-CVE-2023-51714-qtbase-5.15.diff \
     file://0028-Remove-host-paths-from-qmake.patch \
     file://0029-Remove-ptests-with-SRCDIR.patch \
+    file://CVE-2024-25580.patch \
 "
 
 # usually pulled by one of the optional dependencies in PACKAGECONFIG, but with very limited PACKAGECONFIG fails with:
