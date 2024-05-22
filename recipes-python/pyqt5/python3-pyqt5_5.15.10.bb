@@ -41,17 +41,16 @@ PYQT_MODULES = " \
 "
 
 do_configure:prepend() {
-    local i
-    local extra_args
+    extra_args=""
 
     cd ${S}
 
     for i in ${DISABLED_FEATURES}; do
-        extra_args="${extra_args} --disabled-feature=${i}"
+        extra_args="$extra_args --disabled-feature=$i"
     done
 
     for i in ${PYQT_MODULES}; do
-        extra_args="${extra_args} --enable=${i}"
+        extra_args="$extra_args --enable=$i"
     done
 
     sip-build \
@@ -67,7 +66,7 @@ do_configure:prepend() {
         --enable=Qt \
         --enable=QtCore \
         --no-dbus-python \
-        ${extra_args}
+        $extra_args
 
     QMAKE_PROFILES=${B}/PyQt5.pro
 }
