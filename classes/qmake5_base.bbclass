@@ -50,7 +50,7 @@ inherit qmake5_paths
 
 generate_target_qt_config_file() {
     qtconf="$1"
-    cat > "${qtconf}" <<EOF
+    cat > "$qtconf" <<EOF
 [Paths]
 Prefix = ${OE_QMAKE_PATH_PREFIX}
 Headers = ${OE_QMAKE_PATH_HEADERS}
@@ -220,9 +220,9 @@ qmake5_base_fix_install() {
         rm -rf ${D}${STAGING_PATH}
         # remove empty dirs
         TMP=`dirname ${D}${STAGING_PATH}`
-        while test ${TMP} != ${D}; do
-            rmdir ${TMP}
-            TMP=`dirname ${TMP}`;
+        while test $TMP != ${D}; do
+            rmdir $TMP
+            TMP=`dirname $TMP`;
         done
     fi
 }
