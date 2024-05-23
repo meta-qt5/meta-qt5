@@ -1,7 +1,9 @@
 DESCRIPTION = "Extra files for qt5 demo"
 LICENSE = "LGPL-2.0-only"
-S="${WORKDIR}"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=88355dc91a186cc816d9f64757793895"
+
+S = "${WORKDIR}/sources"
+UNPACKDIR = "${S}"
 
 SRC_URI += "file://cinematicexperience.desktop \
             file://cinematicexperience.png \
@@ -38,32 +40,32 @@ inherit allarch
 do_install () {
     install -d ${D}/${datadir}/pixmaps
     install -d ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/cinematicexperience.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/cinematicexperience.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/hellogl_es2.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/hellogl_es2.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/hellowindow.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/hellowindow.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/qt5everywheredemo.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qt5everywheredemo.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/qt5nmapcarousedemo.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qt5nmapcarousedemo.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/qt5nmapper.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qt5nmapper.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/qtledbillboard.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qtledbillboard.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/qtledcombo.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qtledcombo.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/qtsmarthome.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qtsmarthome.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/quitbattery.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/quitbattery.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/quitindicators.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/quitindicators.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/qt5basket.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qt5basket.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/qt5nesting.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qt5nesting.desktop ${D}/${datadir}/applications
-    install -m 0644 ${WORKDIR}/qt5solarsystem.png ${D}/${datadir}/pixmaps
-    install -m 0644 ${WORKDIR}/qt5solarsystem.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/cinematicexperience.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/cinematicexperience.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/hellogl_es2.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/hellogl_es2.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/hellowindow.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/hellowindow.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/qt5everywheredemo.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/qt5everywheredemo.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/qt5nmapcarousedemo.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/qt5nmapcarousedemo.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/qt5nmapper.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/qt5nmapper.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/qtledbillboard.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/qtledbillboard.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/qtledcombo.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/qtledcombo.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/qtsmarthome.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/qtsmarthome.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/quitbattery.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/quitbattery.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/quitindicators.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/quitindicators.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/qt5basket.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/qt5basket.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/qt5nesting.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/qt5nesting.desktop ${D}/${datadir}/applications
+    install -m 0644 ${UNPACKDIR}/qt5solarsystem.png ${D}/${datadir}/pixmaps
+    install -m 0644 ${UNPACKDIR}/qt5solarsystem.desktop ${D}/${datadir}/applications
 }
