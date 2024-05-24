@@ -161,7 +161,7 @@ do_install() {
 
     # Install CMake's toolchain configuration
     mkdir -p ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
-    install -m 644 ${WORKDIR}/OEQt5Toolchain.cmake ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
+    install -m 644 ${UNPACKDIR}/OEQt5Toolchain.cmake ${D}${datadir}/cmake/OEToolchainConfig.cmake.d/
 
     # Fix up absolute paths in scripts
     sed -i -e '1s,#!/usr/bin/python,#! ${USRBINPATH}/env python,' \
