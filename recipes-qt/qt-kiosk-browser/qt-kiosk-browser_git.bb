@@ -24,7 +24,7 @@ inherit qmake5
 EXTRA_QMAKEVARS_PRE += "PREFIX=${prefix}"
 
 do_install:append() {
-    install -Dm 0644 ${WORKDIR}/${PN}.conf ${D}${sysconfdir}/${PN}.conf
+    install -Dm 0644 ${UNPACKDIR}/${PN}.conf ${D}${sysconfdir}/${PN}.conf
 }
 
 RDEPENDS:${PN} += " \
