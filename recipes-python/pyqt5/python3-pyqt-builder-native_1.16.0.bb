@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://pyproject.toml;md5=62537c8c9cf72be020148e3adc658ce3;b
 
 SRC_URI[sha256sum] = "47bbd2cfa5430020108f9f40301e166cbea98b6ef3e53953350bdd4c6b31ab18"
 
-inherit pypi ${@'setuptools3' if (d.getVar('LAYERSERIES_CORENAMES') in ["dunfell"]) else 'python_setuptools_build_meta'} native
+inherit pypi python_setuptools_build_meta native
 
 PYPI_PACKAGE = "PyQt-builder"
 
