@@ -72,7 +72,7 @@ do_install:append() {
     sed -i -e "s|/usr|${STAGING_DIR_TARGET}${prefix}|" ${D}/${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/maliit-plugins.prf
 
     install -d ${D}${datadir}/applications
-    install -m 644 ${WORKDIR}/maliit-server.desktop ${D}${datadir}/applications
+    install -m 644 ${UNPACKDIR}/maliit-server.desktop ${D}${datadir}/applications
 }
 
 pkg_postinst_ontarget:${PN} () {
