@@ -1,1 +1,0 @@
-inherit_defer nativesdk
