@@ -1,4 +1,4 @@
-From a454e27d7993de8a3aa7e5cc37d7e16803da4271 Mon Sep 17 00:00:00 2001
+From 02b6ec61436e87751e68936d9298677600d69291 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Thu, 23 Aug 2018 04:06:17 +0000
 Subject: [PATCH] Fix build with non-glibc libc on musl

@@ -18,14 +18,11 @@ SRC_URI += "\
     file://0002-Fix-build-with-non-glibc-libc-on-musl.patch \
     file://0003-Fix-build-bug-for-armv32-BE.patch \
     file://0004-PlatformQt.cmake-Do-not-generate-hardcoded-include-p.patch \
-    file://0005-Let-Bison-generate-the-header-directly-to-fix-build-.patch \
-    file://0006-Disable-code-related-to-HTTP-2-when-Qt-is-configured.patch \
-    file://0007-Fix-compilation-with-Python-3.9-avoid-passing-encodi.patch \
-    file://0008-Fix-build-with-icu-68.patch \
-    file://0009-Riscv-Add-support-for-riscv.patch \
-    file://0010-Fix-build-on-mips.patch \
-    file://0011-Offlineasm-warnings-with-newer-Ruby-versions.patch \
-    file://0012-Fix-build-with-gcc-13.patch \
+    file://0005-Fix-build-with-icu-68.patch \
+    file://0006-Riscv-Add-support-for-riscv.patch \
+    file://0007-Fix-build-on-mips.patch \
+    file://0008-Offlineasm-warnings-with-newer-Ruby-versions.patch \
+    file://0009-Fix-build-with-gcc-13.patch \
 "
 
 SRC_URI:append:riscv32 = " file://0013-link-with-libatomic.patch"
@@ -103,4 +100,4 @@ PACKAGES:remove = "${PN}-examples"
 
 QT_MODULE_BRANCH = "5.212"
 
-SRCREV = "10cd6a106e1c461c774ca166a67b8c835c755ef7"
+SRCREV = "ac8ebc6c3a56064f88f5506e5e3783ab7bee2456"

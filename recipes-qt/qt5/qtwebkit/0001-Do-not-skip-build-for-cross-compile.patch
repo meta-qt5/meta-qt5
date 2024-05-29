@@ -1,4 +1,4 @@
-From 34100abf0a24b3d2dadebe90926eea98d50a43b8 Mon Sep 17 00:00:00 2001
+From f8390ffbc711e39be3412655ff9ab28f74075f4c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Mon, 4 Jun 2018 10:35:46 +0200
 Subject: [PATCH] Do not skip build for cross-compile

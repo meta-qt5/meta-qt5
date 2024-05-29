@@ -1,4 +1,4 @@
-From 3d3a5974ff31e55651bb0c47278bd15734d60be4 Mon Sep 17 00:00:00 2001
+From 2ff0ffddcc20fae227cb8546841b1b0de6cf3cdb Mon Sep 17 00:00:00 2001
 From: Adrian Perez de Castro <aperez@igalia.com>
 Date: Wed, 15 Jan 2020 22:15:38 +0000
 Subject: [PATCH] Offlineasm warnings with newer Ruby versions
