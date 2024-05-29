@@ -1,0 +1,31 @@
+From 92a3b4d729ae2626ad77f00c2223e23b1f92e003 Mon Sep 17 00:00:00 2001
+From: Chenxi Mao <chenxi.mao2013@gmail.com>
+Date: Fri, 3 Apr 2020 08:33:10 +0800
+Subject: [PATCH] Riscv: Add support for riscv
+
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <martin.jansa@gmail.com>
+---
+ Source/WTF/wtf/Platform.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/Source/WTF/wtf/Platform.h b/Source/WTF/wtf/Platform.h
+index 7aefa1bab..89d988231 100644
+--- a/Source/WTF/wtf/Platform.h
++++ b/Source/WTF/wtf/Platform.h
+@@ -354,7 +354,14 @@
+ 
+ #endif /* ARM */
+ 
+-#if CPU(ARM) || CPU(MIPS) || CPU(SH4) || CPU(ALPHA) || CPU(HPPA)
++#if defined(__riscv)
++#define WTF_CPU_RISCV 1
++#if __riscv_xlen == 64
++#define WTF_CPU_RISCV64 1
++#endif
++#endif
++
++#if CPU(ARM) || CPU(MIPS) || CPU(SH4) || CPU(ALPHA) || CPU(HPPA) || CPU(RISCV)
+ #define WTF_CPU_NEEDS_ALIGNED_ACCESS 1
+ #endif
+ 
