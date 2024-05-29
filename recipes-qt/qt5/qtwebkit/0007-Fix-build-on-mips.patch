@@ -1,4 +1,4 @@
-From 7e3e0ca548cc9c92705308dd2e0f88ada544e794 Mon Sep 17 00:00:00 2001
+From 580cc23fd90c15259fbb999a8e8d82a93abdcc31 Mon Sep 17 00:00:00 2001
 From: Khem Raj <raj.khem@gmail.com>
 Date: Tue, 26 Oct 2021 11:03:25 -0700
 Subject: [PATCH] Fix build on mips
@@ -18,7 +18,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/Source/WTF/wtf/Platform.h b/Source/WTF/wtf/Platform.h
-index 8fac85f72..5b8bbcb18 100644
+index 89d988231..3746c957a 100644
 --- a/Source/WTF/wtf/Platform.h
 +++ b/Source/WTF/wtf/Platform.h
 @@ -88,6 +88,7 @@

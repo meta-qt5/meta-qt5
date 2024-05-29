@@ -1,4 +1,4 @@
-From 934ff3e2768a4ef2f1b21ee883acb56cb8ae898b Mon Sep 17 00:00:00 2001
+From 69f77144eeec90c01754698363e1259f43074b47 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@gmail.com>
 Date: Wed, 2 Dec 2020 22:34:54 +0100
 Subject: [PATCH] Fix build with icu >= 68
