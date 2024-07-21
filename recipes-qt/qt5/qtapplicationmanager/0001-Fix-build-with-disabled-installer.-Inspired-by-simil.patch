@@ -1,0 +1,67 @@
+From ab15f0bce9ebd1212387b6f501f9bbb18de50c29 Mon Sep 17 00:00:00 2001
+From: Viktor Leniviy <viktor.lv@thundercomm.com>
+Date: Tue, 9 Jul 2024 16:46:35 +0300
+Subject: [PATCH] Fix build with disabled installer. Inspired by similar fix in
+ Qt6 branches.
+
+---
+ examples/applicationmanager/applicationmanager.pro | 1 -
+ src/main-lib/main.cpp                              | 2 +-
+ src/manager-lib/manager-lib.pro                    | 2 +-
+ src/tools/appman/appman.cpp                        | 2 +-
+ 4 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/examples/applicationmanager/applicationmanager.pro b/examples/applicationmanager/applicationmanager.pro
+index 5b6c5fc3..f100ee2a 100644
+--- a/examples/applicationmanager/applicationmanager.pro
++++ b/examples/applicationmanager/applicationmanager.pro
+@@ -1,7 +1,6 @@
+ load(am-config)
+ 
+ requires(!headless)
+-requires(!disable-installer)
+ 
+ TEMPLATE = subdirs
+ 
+diff --git a/src/main-lib/main.cpp b/src/main-lib/main.cpp
+index f548b1d7..bdaa4403 100644
+--- a/src/main-lib/main.cpp
++++ b/src/main-lib/main.cpp
+@@ -103,9 +103,9 @@
+ #include "packagedatabase.h"
+ #include "installationreport.h"
+ #include "yamlpackagescanner.h"
++#  include "sudo.h"
+ #if !defined(AM_DISABLE_INSTALLER)
+ #  include "applicationinstaller.h"
+-#  include "sudo.h"
+ #  include "packageutilities.h"
+ #endif
+ #include "runtimefactory.h"
+diff --git a/src/manager-lib/manager-lib.pro b/src/manager-lib/manager-lib.pro
+index f00a968d..9ee181d9 100644
+--- a/src/manager-lib/manager-lib.pro
++++ b/src/manager-lib/manager-lib.pro
+@@ -97,7 +97,7 @@ qtHaveModule(qml):SOURCES += \
+     qmlinprocessruntime.cpp \
+     qmlinprocessapplicationinterface.cpp \
+ 
+-qtHaveModule(waylandcompositor)|!disable-installer {
++qtHaveModule(waylandcompositor) {
+     HEADERS += \
+         sudo.h \
+ 
+diff --git a/src/tools/appman/appman.cpp b/src/tools/appman/appman.cpp
+index 8a18d7de..a45e2371 100644
+--- a/src/tools/appman/appman.cpp
++++ b/src/tools/appman/appman.cpp
+@@ -50,8 +50,8 @@
+ #include "main.h"
+ #include "configuration.h"
+ #include "packageutilities.h"
+-#if !defined(AM_DISABLE_INSTALLER)
+ #  include "sudo.h"
++#if !defined(AM_DISABLE_INSTALLER)
+ #endif
+ #include "startuptimer.h"
+ #include "exception.h"
