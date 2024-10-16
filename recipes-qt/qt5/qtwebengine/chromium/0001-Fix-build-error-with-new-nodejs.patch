@@ -1,0 +1,36 @@
+From 4062376f1be9b38ee525522b4267a5f48cde3c9a Mon Sep 17 00:00:00 2001
+From: Lei Maohui <leimaohui@fujitsu.com>
+Date: Thu, 25 Jul 2024 00:19:51 +0000
+Subject: [PATCH] Fix build error with new nodejs.
+
+./../../../../git/src/3rdparty/chromium/third_party/blink/renderer/core/typed_arrays/dom_array_buffer.cc:186:24: error: 'class v8::ArrayBuffer' has no member named 'WasDetached'
+  186 |     if (buffer_handle->WasDetached()) {
+      |                        ^~~~~~~~~~~
+[3/5705] CXX obj/third_party/blink/renderer/bindings/core/v8/v8/v8_jumbo_37.o
+
+Reference to https://github.com/nodejs/node/commit/1a92c88418, nodejs
+has deprecated `GetContents()` in favour of `GetBackingStore()`.
+
+Upstream-Status: Backport
+
+Signed-off-by: Lei Maohui <leimaohui@fujitsu.com>
+---
+ .../blink/renderer/core/typed_arrays/dom_array_buffer.cc        | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/chromium/third_party/blink/renderer/core/typed_arrays/dom_array_buffer.cc b/chromium/third_party/blink/renderer/core/typed_arrays/dom_array_buffer.cc
+index 69e332272dd..145ee2e1eb2 100644
+--- a/chromium/third_party/blink/renderer/core/typed_arrays/dom_array_buffer.cc
++++ b/chromium/third_party/blink/renderer/core/typed_arrays/dom_array_buffer.cc
+@@ -183,7 +183,7 @@ bool DOMArrayBuffer::IsDetached() const {
+   int detached_count = 0;
+ 
+   for (const auto& buffer_handle : buffer_handles) {
+-    if (buffer_handle->WasDetached()) {
++    if (buffer_handle->GetBackingStore()) {
+       ++detached_count;
+     } else {
+       ++nondetached_count;
+-- 
+2.34.1
+

@@ -86,13 +86,6 @@ inherit gettext
 inherit perlnative
 inherit features_check
 
-inherit ${@bb.utils.contains("BBFILE_COLLECTIONS", "meta-python2", "pythonnative", "", d)}
-
-python() {
-    if 'meta-python2' not in d.getVar('BBFILE_COLLECTIONS').split():
-        raise bb.parse.SkipRecipe('Requires meta-python2 to be present.')
-}
-
 
 # Static builds of QtWebEngine aren't supported.
 CONFLICT_DISTRO_FEATURES = "qt5-static"
@@ -107,9 +100,11 @@ require qt5-git.inc
 export GN_PKG_CONFIG_HOST = "${STAGING_BINDIR_NATIVE}/pkg-config-native"
 export GN_HOST_TOOLCHAIN_EXTRA_CPPFLAGS = "-I${STAGING_DIR_NATIVE}/usr/include"
 export NINJAFLAGS="${PARALLEL_MAKE}"
+#export NODE_OPTIONS = " --openssl-legacy-provider"
+#EXTRA_QMAKEVARS_CONFIGURE += "-webengine-python="python3""
+#EXTRA_QMAKEVARS_CONFIGURE += "-webengine-webrtc-pipewire"
 
 do_configure() {
-
     # qmake can't find the OE_QMAKE_* variables on it's own so directly passing them as
     # arguments here
     ${OE_QMAKE_QMAKE} ${EXTRA_QMAKEVARS_PRE} ${S} \
@@ -156,7 +151,6 @@ PV = "5.15.13+git${SRCPV}"
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
-    file://0002-qmake.conf-lower-MODULE_VERSION-to-5.15.X.patch \
 "
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
 # 5.15.meta-qt5.17
@@ -181,8 +175,7 @@ SRC_URI += " \
     file://chromium/0010-chromium-icu-use-system-library-only-targets.patch;patchdir=src/3rdparty \
     file://chromium/0011-chromium-skia-Fix-build-with-gcc-12.patch;patchdir=src/3rdparty \
     file://chromium/0012-Remove-unsetting-_FILE_OFFSET_BITS.patch;patchdir=src/3rdparty \
-    file://chromium/0013-Fix-build-with-gcc-13.patch;patchdir=src/3rdparty \
-    file://chromium/0014-avcodec-x86-mathops-clip-constants-used-with-shift-i.patch;patchdir=src/3rdparty \
+    file://chromium/0001-Fix-build-error-with-new-nodejs.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based
@@ -201,8 +194,10 @@ SRC_URI:append:libc-musl = "\
     file://chromium/0023-chromium-musl-initialize-msghdr-in-a-compatible-mann.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "d15a42baae7141952e91665bed22a7c7cfb54b95"
-SRCREV_chromium = "fb66d7ca9641724670c96e999ad5b0fd6eb78d46"
+#SRCREV_qtwebengine = "d15a42baae7141952e91665bed22a7c7cfb54b95"
+SRCREV_qtwebengine = "63d4e58009c7f069ace14b64f1528ba2664272e9"
+#SRCREV_chromium = "fb66d7ca9641724670c96e999ad5b0fd6eb78d46"
+SRCREV_chromium = "91b3c705d739f6b6c58da6133e8e818e06dfcaa3"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
