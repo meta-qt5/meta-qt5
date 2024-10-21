@@ -204,3 +204,4 @@ SRCREV_FORMAT = "qtwebengine_chromium"
 
 # WARNING: qtwebengine-5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0 do_package_qa: QA Issue: ELF binary '/OE/build/oe-core/tmp-glibc/work/i586-oe-linux/qtwebengine/5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0/packages-split/qtwebengine/usr/lib/libQt5WebEngineCore.so.5.6.0' has relocations in .text [textrel]
 INSANE_SKIP:${PN} += "textrel"
+INSANE_SKIP:${PN}-dbg += "buildpaths"

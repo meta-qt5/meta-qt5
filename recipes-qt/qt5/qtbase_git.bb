@@ -302,6 +302,9 @@ do_install:append() {
     # Fix up absolute paths in scripts and use python3 instead of python
     sed -i -e '1s,#!/usr/bin/python$,#! ${USRBINPATH}/env python3,' \
         ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
+    # Fix do_package_qa error that contains reference to TMPDIR [buildpaths]
+    sed -i -e 's|${S}||g' ${B}/tests/auto/dbus/qdbusabstractinterface/qdbusabstractinterface/pinger_interface.cpp
+    sed -i -e 's|${S}||g' ${B}/tests/auto/dbus/qdbusabstractinterface/qdbusabstractinterface/pinger_interface.h
 }
 
 # mkspecs have mac specific scripts that depend on perl and bash
