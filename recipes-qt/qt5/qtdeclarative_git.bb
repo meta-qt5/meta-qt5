@@ -29,6 +29,10 @@ PACKAGECONFIG[static] = ",,qtdeclarative-native"
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
+do_install:append:class-target() {
+     sed -i -e 's|${TMPDIR}||g' ${D}/usr/include/QtQml/5.15.13/QtQml/private/qqmljsparser_p.h
+}
+
 do_install_ptest() {
     mkdir -p ${D}${PTEST_PATH}
     for var in `find ${B}/tests/auto/ -name tst_*`; do
@@ -54,5 +58,5 @@ do_install:append:class-nativesdk() {
 }
 
 SRCREV = "6ab9856ef379fc3fe44d5fac03a83f679f398511"
-
+INSANE_SKIP:${PN}-ptest += "buildpaths"
 BBCLASSEXTEND =+ "native nativesdk"

@@ -41,3 +41,8 @@ SRCREV_qtlocation = "f6953a8d604b906b170fb4610e124e7c31260a18"
 SRCREV_qtlocation-mapboxgl = "d3101bbc22edd41c9036ea487d4a71eabd97823d"
 
 SRCREV_FORMAT = "qtlocation_qtlocation-mapboxgl"
+
+do_install:append:class-target() {
+    sed -i -e 's|${TMPDIR}||g' ${B}/src/plugins/position/geoclue/*
+    sed -i -e 's|${TMPDIR}||g' ${B}/src/plugins/position/geoclue2/*
+}

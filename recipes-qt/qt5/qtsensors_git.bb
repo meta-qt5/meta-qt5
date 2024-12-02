@@ -13,3 +13,8 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase qtdeclarative"
 
 SRCREV = "7f8b55744f87155a4979dd8ba405bd7feec03042"
+
+do_install:append:class-target() {
+    sed -i -e 's|${TMPDIR}||g' ${B}/src/plugins/sensors/iio-sensor-proxy/*
+}
+
