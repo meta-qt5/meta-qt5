@@ -310,6 +310,20 @@ do_install:append() {
     # Remove references to buildmachine paths in examples target files
     sed -i -e "s:${B}:${prefix}:g" ${D}${datadir}/examples/widgets/tools/plugandpaint/plugins/libpnp_basictools.prl
 }
+
+PACKAGE_PREPROCESS_FUNCS += "qt_package_preprocess"
+
+qt_package_preprocess () {
+    # Remove references to buildmachine paths in the comment headers of the examples source files
+    sed -i -e 's:${WORKDIR}::g' \
+        ${B}/examples/dbus/chat/chat_interface.cpp \
+        ${B}/examples/dbus/chat/chat_interface.h \
+        ${B}/examples/dbus/chat/chat_adaptor.cpp \
+        ${B}/examples/dbus/chat/chat_adaptor.h \
+        ${B}/examples/dbus/remotecontrolledcar/car/car_adaptor.cpp \
+        ${B}/examples/dbus/remotecontrolledcar/car/car_adaptor.h \
+        ${B}/examples/dbus/remotecontrolledcar/controller/car_interface.cpp \
+        ${B}/examples/dbus/remotecontrolledcar/controller/car_interface.h
 }
 
 # mkspecs have mac specific scripts that depend on perl and bash
