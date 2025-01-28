@@ -53,6 +53,12 @@ do_install:append:class-nativesdk() {
     rm -rf ${D}${OE_QMAKE_PATH_QML}
 }
 
+do_install:append() {
+    # Remove references to buildmachine paths
+    qtversion=$(echo ${PV} | cut -d+ -f1)
+    sed -i -e "s:${S}::g" ${D}${includedir}/QtQml/$qtversion/QtQml/private/qqmljsparser_p.h
+}
+
 SRCREV = "6ab9856ef379fc3fe44d5fac03a83f679f398511"
 
 BBCLASSEXTEND =+ "native nativesdk"
