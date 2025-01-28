@@ -263,6 +263,10 @@ do_configure() {
         -platform ${OE_QMAKE_PLATFORM_NATIVE} \
         -xplatform ${XPLATFORM} \
         ${QT_CONFIG_FLAGS}
+
+    # Remove reference to SRCDIR in widgets example
+    sed -i -e 's:QLatin1String(SRCDIR) + QLatin1String("/images"):QLatin1String("${datadir}/examples/widgets/widgets/icons/images"):g' \
+        ${S}/examples/widgets/widgets/icons/mainwindow.cpp
 }
 
 do_install:append() {
