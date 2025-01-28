@@ -263,6 +263,10 @@ do_configure() {
         -platform ${OE_QMAKE_PLATFORM_NATIVE} \
         -xplatform ${XPLATFORM} \
         ${QT_CONFIG_FLAGS}
+
+    # Remove reference to SRCDIR in widgets example
+    sed -i -e 's:QLatin1String(SRCDIR) + QLatin1String("/images"):QLatin1String("${datadir}/examples/widgets/widgets/icons/images"):g' \
+        ${S}/examples/widgets/widgets/icons/mainwindow.cpp
 }
 
 do_install:append() {
@@ -302,6 +306,24 @@ do_install:append() {
     # Fix up absolute paths in scripts and use python3 instead of python
     sed -i -e '1s,#!/usr/bin/python$,#! ${USRBINPATH}/env python3,' \
         ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
+
+    # Remove references to buildmachine paths in examples target files
+    sed -i -e "s:${B}:${prefix}:g" ${D}${datadir}/examples/widgets/tools/plugandpaint/plugins/libpnp_basictools.prl
+}
+
+PACKAGE_PREPROCESS_FUNCS += "qt_package_preprocess"
+
+qt_package_preprocess () {
+    # Remove references to buildmachine paths in the comment headers of the examples source files
+    sed -i -e 's:${WORKDIR}::g' \
+        ${B}/examples/dbus/chat/chat_interface.cpp \
+        ${B}/examples/dbus/chat/chat_interface.h \
+        ${B}/examples/dbus/chat/chat_adaptor.cpp \
+        ${B}/examples/dbus/chat/chat_adaptor.h \
+        ${B}/examples/dbus/remotecontrolledcar/car/car_adaptor.cpp \
+        ${B}/examples/dbus/remotecontrolledcar/car/car_adaptor.h \
+        ${B}/examples/dbus/remotecontrolledcar/controller/car_interface.cpp \
+        ${B}/examples/dbus/remotecontrolledcar/controller/car_interface.h
 }
 
 # mkspecs have mac specific scripts that depend on perl and bash
