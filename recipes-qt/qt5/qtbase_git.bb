@@ -306,6 +306,10 @@ do_install:append() {
     # Fix up absolute paths in scripts and use python3 instead of python
     sed -i -e '1s,#!/usr/bin/python$,#! ${USRBINPATH}/env python3,' \
         ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
+
+    # Remove references to buildmachine paths in examples target files
+    sed -i -e "s:${B}:${prefix}:g" ${D}${datadir}/examples/widgets/tools/plugandpaint/plugins/libpnp_basictools.prl
+}
 }
 
 # mkspecs have mac specific scripts that depend on perl and bash
