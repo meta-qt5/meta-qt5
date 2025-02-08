@@ -41,3 +41,28 @@ SRCREV_qtlocation = "f6953a8d604b906b170fb4610e124e7c31260a18"
 SRCREV_qtlocation-mapboxgl = "d3101bbc22edd41c9036ea487d4a71eabd97823d"
 
 SRCREV_FORMAT = "qtlocation_qtlocation-mapboxgl"
+
+PACKAGE_PREPROCESS_FUNCS += "qtlocation_package_preprocess"
+
+qtlocation_package_preprocess () {
+    # Remove references to buildmachine paths in the comment headers of the examples source files
+    sed -i -e 's:${WORKDIR}::g' \
+        ${B}/src/plugins/position/geoclue/geoclue_interface.cpp \
+        ${B}/src/plugins/position/geoclue/master_interface.cpp \
+        ${B}/src/plugins/position/geoclue/satellite_interface.h \
+        ${B}/src/plugins/position/geoclue/geoclue_interface.h \
+        ${B}/src/plugins/position/geoclue/position_interface.cpp \
+        ${B}/src/plugins/position/geoclue/masterclient_interface.h \
+        ${B}/src/plugins/position/geoclue/velocity_interface.h \
+        ${B}/src/plugins/position/geoclue/master_interface.h \
+        ${B}/src/plugins/position/geoclue/position_interface.h \
+        ${B}/src/plugins/position/geoclue/satellite_interface.cpp \
+        ${B}/src/plugins/position/geoclue/velocity_interface.cpp \
+        ${B}/src/plugins/position/geoclue/masterclient_interface.cpp \
+        ${B}/src/plugins/position/geoclue2/location_interface.h \
+        ${B}/src/plugins/position/geoclue2/manager_interface.h \
+        ${B}/src/plugins/position/geoclue2/client_interface.cpp \
+        ${B}/src/plugins/position/geoclue2/client_interface.h \
+        ${B}/src/plugins/position/geoclue2/manager_interface.cpp \
+        ${B}/src/plugins/position/geoclue2/location_interface.cpp
+}
