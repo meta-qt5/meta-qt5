@@ -59,6 +59,6 @@ do_install:append() {
     sed -i -e "s:${S}::g" ${D}${includedir}/QtQml/$qtversion/QtQml/private/qqmljsparser_p.h
 }
 
-SRCREV = "6ab9856ef379fc3fe44d5fac03a83f679f398511"
+SRCREV = "abe4729ea8db32124c36dc33fc32eb629df03043"
 
 BBCLASSEXTEND =+ "native nativesdk"
