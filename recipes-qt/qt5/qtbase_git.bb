@@ -36,15 +36,6 @@ SRC_URI += "\
     file://0019-tst_QPluginLoader-Simplify-creating-a-fake-pointer-i.patch \
     file://0021-rcc-Just-dcument-file-name-without-full-path-to-redu.patch \
     file://0022-testlib-don-t-track-the-build-or-source-directories.patch \
-    file://0023-Remove-unsetting-_FILE_OFFSET_BITS.patch \
-    file://CVE-2023-32762.patch \
-    file://CVE-2023-32763-qtbase-5.15.diff \
-    file://CVE-2023-33285-qtbase-5.15.diff \
-    file://CVE-2023-34410-qtbase-5.15.diff \
-    file://CVE-2023-37369-qtbase-5.15.diff \
-    file://CVE-2023-38197-qtbase-5.15.diff \
-    file://CVE-2023-43114-5.15.patch \
-    file://0027-xkb-fix-build-with-libxkbcommon-1.6.0-and-later.patch \
     file://0001-CVE-2023-51714-qtbase-5.15.diff \
     file://0002-CVE-2023-51714-qtbase-5.15.diff \
     file://0028-Remove-host-paths-from-qmake.patch \
