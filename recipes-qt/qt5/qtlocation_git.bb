@@ -37,7 +37,7 @@ SRC_URI += " \
     file://gcc14-const.patch;patchdir=src/3rdparty/mapbox-gl-native/deps/rapidjson/1.1.0 \
 "
 
-SRCREV_qtlocation = "f6953a8d604b906b170fb4610e124e7c31260a18"
+SRCREV_qtlocation = "2bcec6f629de7a504bac6c742114e95eb00ed721"
 SRCREV_qtlocation-mapboxgl = "d3101bbc22edd41c9036ea487d4a71eabd97823d"
 
 SRCREV_FORMAT = "qtlocation_qtlocation-mapboxgl"

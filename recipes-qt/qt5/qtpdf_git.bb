@@ -131,7 +131,7 @@ RDEPENDS:${PN}-examples += " \
 QT_MODULE_BRANCH_CHROMIUM = "87-based"
 
 QT_MODULE_BRANCH = "5.15"
-PV = "5.15.13+git${SRCPV}"
+PV = "5.15.16+git${SRCPV}"
 
 # Uses the same repository and couple patches as qtwebengine, but qtwebengine
 # still depends on python2
@@ -187,7 +187,7 @@ SRC_URI:append:libc-musl = "\
     file://chromium/0023-chromium-musl-initialize-msghdr-in-a-compatible-mann.patch;patchdir=src/3rdparty \
 "
 
-SRCREV_qtwebengine = "d15a42baae7141952e91665bed22a7c7cfb54b95"
+SRCREV_qtwebengine = "224806a7022eed6d5c75b486bec8715a618cb314"
 SRCREV_chromium = "fb66d7ca9641724670c96e999ad5b0fd6eb78d46"
 SRCREV = "${SRCREV_qtwebengine}"
 
