@@ -13,7 +13,3 @@ LIC_FILES_CHKSUM = " \
 DEPENDS += "qtbase"
 
 SRCREV = "ba3671e467d952f9d47649654082143582984e1d"
-
-SRC_URI += "\
-    file://CVE-2023-32573-qtsvg-5.15.diff \
-"
