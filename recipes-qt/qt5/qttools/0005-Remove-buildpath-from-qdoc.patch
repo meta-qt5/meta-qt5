@@ -1,0 +1,25 @@
+Remove buildpath from qdoc
+
+The buildpath to the clang include directory in the recipe-sysroot was
+being included in the qdoc binary.
+
+Forcibly replacing this with a hardcoded libdir was deemed the least
+disruptive option.
+
+Upstream-Status: Inappropriate [oe specific]
+
+Signed-off-by: Rob Woolley <rob.woolley@windriver.com>
+
+diff --git a/src/qdoc/qdoc.pro b/src/qdoc/qdoc.pro
+index db4b25cf1..70241bb4a 100644
+--- a/src/qdoc/qdoc.pro
++++ b/src/qdoc/qdoc.pro
+@@ -20,7 +20,7 @@ LIBS += $$CLANG_LIBS
+ DEFINES += $$CLANG_DEFINES
+ 
+ !contains(QMAKE_DEFAULT_LIBDIRS, $$CLANG_LIBDIR):!disable_external_rpath: QMAKE_RPATHDIR += $$CLANG_LIBDIR
+-DEFINES += $$shell_quote(CLANG_RESOURCE_DIR=\"$${CLANG_LIBDIR}/clang/$${CLANG_VERSION}/include\")
++DEFINES += $$shell_quote(CLANG_RESOURCE_DIR=\"/usr/lib/clang/$${CLANG_VERSION}/include\")
+ 
+ INCLUDEPATH += $$QT_SOURCE_TREE/src/tools/qdoc \
+                $$QT_SOURCE_TREE/src/tools/qdoc/qmlparser
