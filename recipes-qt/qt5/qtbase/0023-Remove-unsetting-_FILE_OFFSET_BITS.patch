@@ -8,7 +8,7 @@ Upstream-Status: Submitted [https://github.com/madler/zlib/pull/764]
 Signed-off-by: Khem Raj <raj.khem@gmail.com>
 --- a/src/3rdparty/zlib/src/gzguts.h
 +++ b/src/3rdparty/zlib/src/gzguts.h
-@@ -22,15 +22,6 @@
+@@ -22,14 +22,6 @@
  #define HAVE_HIDDEN
  #endif
  
@@ -16,9 +16,8 @@ Signed-off-by: Khem Raj <raj.khem@gmail.com>
 -#  ifndef _LARGEFILE_SOURCE
 -#    define _LARGEFILE_SOURCE 1
 -#  endif
--#  ifdef _FILE_OFFSET_BITS
--#    undef _FILE_OFFSET_BITS
--#  endif
+-#  undef _FILE_OFFSET_BITS
+-#  undef _TIME_BITS
 -#endif
 -
  #ifdef HAVE_HIDDEN
