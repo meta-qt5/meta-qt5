@@ -29,7 +29,7 @@ do_install:append() {
 
 QT_MODULE_BRANCH = "dev"
 
-SRCREV = "434af789f0d56ca7a521ca2d9ec8cf3b1057fd37"
+SRCREV = "81e08ee508d0a49c588705cc9c47568b09a258db"
 
 SRC_URI += " \
     file://0001-qtsystems-install-files-only-once.patch \
