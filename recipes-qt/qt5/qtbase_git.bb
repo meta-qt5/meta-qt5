@@ -298,11 +298,13 @@ do_install:append() {
     sed -i -e '1s,#!/usr/bin/python$,#! ${USRBINPATH}/env python3,' \
         ${D}${OE_QMAKE_PATH_QT_ARCHDATA}/mkspecs/features/uikit/devices.py
 
-    # Remove references to buildmachine paths in examples target files
-    sed -i -e "s:${B}:${prefix}:g" ${D}${datadir}/examples/widgets/tools/plugandpaint/plugins/libpnp_basictools.prl
+    # Remove references to buildmachine paths in examples target files if examples feature is enabled
+    if ${@bb.utils.contains('PACKAGECONFIG', 'examples', 'true', 'false', d)}; then
+        sed -i -e "s:${B}:${prefix}:g" ${D}${datadir}/examples/widgets/tools/plugandpaint/plugins/libpnp_basictools.prl
+    fi
 }
 
-PACKAGE_PREPROCESS_FUNCS += "qt_package_preprocess"
+PACKAGE_PREPROCESS_FUNCS += "${@bb.utils.contains('PACKAGECONFIG', 'examples', 'qt_package_preprocess', '', d)}"
 
 qt_package_preprocess () {
     # Remove references to buildmachine paths in the comment headers of the examples source files
