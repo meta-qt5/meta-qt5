@@ -304,9 +304,10 @@ do_install:append() {
     fi
 }
 
-PACKAGE_PREPROCESS_FUNCS += "${@bb.utils.contains('PACKAGECONFIG', 'examples', 'qt_package_preprocess', '', d)}"
+PACKAGE_PREPROCESS_FUNCS += "${@bb.utils.contains('PACKAGECONFIG', 'examples', 'qt_package_preprocess_examples', '', d)}"
+PACKAGE_PREPROCESS_FUNCS += "${@bb.utils.contains('PACKAGECONFIG', 'tests', 'qt_package_preprocess_tests', '', d)}"
 
-qt_package_preprocess () {
+qt_package_preprocess_examples () {
     # Remove references to buildmachine paths in the comment headers of the examples source files
     sed -i -e 's:${WORKDIR}::g' \
         ${B}/examples/dbus/chat/chat_interface.cpp \
@@ -317,6 +318,13 @@ qt_package_preprocess () {
         ${B}/examples/dbus/remotecontrolledcar/car/car_adaptor.h \
         ${B}/examples/dbus/remotecontrolledcar/controller/car_interface.cpp \
         ${B}/examples/dbus/remotecontrolledcar/controller/car_interface.h
+}
+
+qt_package_preprocess_tests () {
+    # Remove references to buildmachine paths in the comment headers of the tests source files
+    sed -i -e 's:${WORKDIR}::g' \
+        ${B}/tests/auto/dbus/qdbusabstractinterface/qdbusabstractinterface/pinger_interface.h \
+        ${B}/tests/auto/dbus/qdbusabstractinterface/qdbusabstractinterface/pinger_interface.cpp
 }
 
 # mkspecs have mac specific scripts that depend on perl and bash
