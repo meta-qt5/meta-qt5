@@ -28,3 +28,5 @@ EXTRA_QMAKEVARS_PRE += "${@bb.utils.contains('PACKAGECONFIG', 'qtdeclarative', '
 SRCREV = "43996a4e543fa22b345c03ba3a1a41b1aba4b454"
 
 BBCLASSEXTEND =+ "native nativesdk"
+
+INSANE_SKIP:${PN}-ptest += "buildpaths"
