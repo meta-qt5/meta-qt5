@@ -1,0 +1,34 @@
+From 6219b245114586e5117367362a381524bc5f65ca Mon Sep 17 00:00:00 2001
+From: Lei Maohui <leimaohui@fujitsu.com>
+Date: Wed, 26 Mar 2025 07:54:50 +0000
+Subject: [PATCH] configure.json: remove python2 dependency
+
+Upstream-Status: Pending
+Signed-off-by: Lei Maohui <leimaohui@fujitsu.com>
+---
+ src/buildtools/configure.json | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/src/buildtools/configure.json b/src/buildtools/configure.json
+index 9e7a0c570..d971d51ae 100644
+--- a/src/buildtools/configure.json
++++ b/src/buildtools/configure.json
+@@ -395,7 +395,6 @@
+                          && features.webengine-gperf
+                          && features.webengine-bison
+                          && features.webengine-flex
+-                         && features.webengine-python2
+                          && features.webengine-nodejs
+                          && (!config.sanitizer || features.webengine-sanitizer)
+                          && (!config.linux || features.pkg-config)
+@@ -421,7 +420,6 @@
+                          && features.webengine-gperf
+                          && features.webengine-bison
+                          && features.webengine-flex
+-                         && features.webengine-python2
+                          && (!config.sanitizer || features.webengine-sanitizer)
+                          && (!config.linux || features.pkg-config)
+                          && (!config.linux || features.webengine-host-pkg-config)
+-- 
+2.43.0
+
