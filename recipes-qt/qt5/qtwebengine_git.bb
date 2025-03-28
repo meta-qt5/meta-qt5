@@ -38,6 +38,9 @@ inherit pkgconfig
 
 EXTRA_QMAKEVARS_CONFIGURE += "-feature-webengine-system-ninja -no-feature-webengine-system-gn"
 EXTRA_QMAKEVARS_PRE += "CONFIG+=force_debug_info"
+# Work around gn's dependency on python (2).
+# To build qtpdf it works just as well with python3.
+EXTRA_QMAKEVARS_PRE += "QMAKE_PYTHON2=python3"
 
 # chromium/third_party/openh264/openh264.gyp adds
 # -Wno-format to openh264_cflags_add
@@ -85,14 +88,6 @@ inherit qmake5
 inherit gettext
 inherit perlnative
 inherit features_check
-
-inherit ${@bb.utils.contains("BBFILE_COLLECTIONS", "meta-python2", "pythonnative", "", d)}
-
-python() {
-    if 'meta-python2' not in d.getVar('BBFILE_COLLECTIONS').split():
-        raise bb.parse.SkipRecipe('Requires meta-python2 to be present.')
-}
-
 
 # Static builds of QtWebEngine aren't supported.
 CONFLICT_DISTRO_FEATURES = "qt5-static"
@@ -156,6 +151,7 @@ PV = "5.15.16+git${SRCPV}"
 SRC_URI += " \
     ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
+    file://0001-configure.json-remove-python2-dependency.patch \
 "
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15
 # 5.15.meta-qt5.17
@@ -180,8 +176,6 @@ SRC_URI += " \
     file://chromium/0010-chromium-icu-use-system-library-only-targets.patch;patchdir=src/3rdparty \
     file://chromium/0011-chromium-skia-Fix-build-with-gcc-12.patch;patchdir=src/3rdparty \
     file://chromium/0012-Remove-unsetting-_FILE_OFFSET_BITS.patch;patchdir=src/3rdparty \
-    file://chromium/0013-Fix-build-with-gcc-13.patch;patchdir=src/3rdparty \
-    file://chromium/0014-avcodec-x86-mathops-clip-constants-used-with-shift-i.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based
@@ -201,10 +195,12 @@ SRC_URI:append:libc-musl = "\
 "
 
 SRCREV_qtwebengine = "4d9691515f99553d8d67781ece49a16039e628a1"
-SRCREV_chromium = "fb66d7ca9641724670c96e999ad5b0fd6eb78d46"
+SRCREV_chromium = "480e246dfe9d9dffc3c18585ed53ec51eb8abfbd"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
 
 # WARNING: qtwebengine-5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0 do_package_qa: QA Issue: ELF binary '/OE/build/oe-core/tmp-glibc/work/i586-oe-linux/qtwebengine/5.5.99+5.6.0-rc+gitAUTOINC+3f02c25de4_779a2388fc-r0/packages-split/qtwebengine/usr/lib/libQt5WebEngineCore.so.5.6.0' has relocations in .text [textrel]
 INSANE_SKIP:${PN} += "textrel"
+
+INSANE_SKIP:${PN}-dbg += "buildpaths"
