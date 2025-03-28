@@ -133,8 +133,6 @@ QT_MODULE_BRANCH_CHROMIUM = "87-based"
 QT_MODULE_BRANCH = "5.15"
 PV = "5.15.16+git${SRCPV}"
 
-# Uses the same repository and couple patches as qtwebengine, but qtwebengine
-# still depends on python2
 QT_MODULE = "qtwebengine"
 FILESEXTRAPATHS =. "${FILE_DIRNAME}/qtwebengine:"
 
@@ -167,7 +165,6 @@ SRC_URI += " \
     file://chromium/0010-chromium-icu-use-system-library-only-targets.patch;patchdir=src/3rdparty \
     file://chromium/0011-chromium-skia-Fix-build-with-gcc-12.patch;patchdir=src/3rdparty \
     file://chromium/0012-Remove-unsetting-_FILE_OFFSET_BITS.patch;patchdir=src/3rdparty \
-    file://chromium/0013-Fix-build-with-gcc-13.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based
@@ -187,7 +184,7 @@ SRC_URI:append:libc-musl = "\
 "
 
 SRCREV_qtwebengine = "4d9691515f99553d8d67781ece49a16039e628a1"
-SRCREV_chromium = "fb66d7ca9641724670c96e999ad5b0fd6eb78d46"
+SRCREV_chromium = "480e246dfe9d9dffc3c18585ed53ec51eb8abfbd"
 SRCREV = "${SRCREV_qtwebengine}"
 
 SRCREV_FORMAT = "qtwebengine_chromium"
@@ -201,12 +198,10 @@ INSANE_SKIP:${PN} += "textrel"
 ### There were only some (build) dependencies removed.
 ###
 
-# First patch skips "python2" dependency checks for the pdf module
 # Second patch repairs a failing build of the `gn` buildtool due to missing (host) libstdc++
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15-qtpdf
 # 5.15-qtpdf.meta-qt5.5
 SRC_URI += " \
-    file://0001-configure.json-remove-python2-dependency.patch \
     file://0002-gn.pro-do-not-try-to-statically-link-stdc.patch \
 "
 SRC_URI:append:toolchain-clang:runtime-llvm = " file://0003-Fix-build-with-clang.patch"
