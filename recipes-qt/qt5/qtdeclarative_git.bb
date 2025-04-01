@@ -62,3 +62,4 @@ do_install:append() {
 SRCREV = "abe4729ea8db32124c36dc33fc32eb629df03043"
 
 BBCLASSEXTEND =+ "native nativesdk"
+INSANE_SKIP:${PN}-ptest += "buildpaths"
