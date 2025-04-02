@@ -33,6 +33,6 @@ FILES:${PN} += "\
     ${datadir} \
 "
 
-S= "${WORKDIR}/git"
+S = "${WORKDIR}/git"
 
 EXTRA_OEMAKE += "INSTALL_ROOT=${D}"
