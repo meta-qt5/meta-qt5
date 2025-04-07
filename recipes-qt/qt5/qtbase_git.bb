@@ -300,7 +300,7 @@ do_install:append() {
 
     # Remove references to buildmachine paths in examples target files if examples feature is enabled
     if ${@bb.utils.contains('PACKAGECONFIG', 'examples', 'true', 'false', d)}; then
-        sed -i -e "s:${B}:${prefix}:g" ${D}${datadir}/examples/widgets/tools/plugandpaint/plugins/libpnp_basictools.prl
+        sed -i -e "s:${B}:${prefix}:g" ${D}${OE_QMAKE_PATH_EXAMPLES}/widgets/tools/plugandpaint/plugins/libpnp_basictools.prl
     fi
 }
 
