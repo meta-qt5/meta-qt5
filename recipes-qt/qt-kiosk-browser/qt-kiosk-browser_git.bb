@@ -4,10 +4,6 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=1ebbd3e34237af26da5dc08a4e440464"
 LICENSE = "GPL-3.0-only"
 
 DEPENDS = "qtwebengine"
-python() {
-    if 'meta-python2' not in d.getVar('BBFILE_COLLECTIONS').split():
-        raise bb.parse.SkipRecipe('qtwebengine dependency requires meta-python2 to be present.')
-}
 
 SRC_URI = " \
     git://github.com/OSSystems/qt-kiosk-browser;protocol=https;branch=master \
