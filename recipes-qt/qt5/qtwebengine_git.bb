@@ -101,7 +101,7 @@ require qt5-git.inc
 
 export GN_PKG_CONFIG_HOST = "${STAGING_BINDIR_NATIVE}/pkg-config-native"
 export GN_HOST_TOOLCHAIN_EXTRA_CPPFLAGS = "-I${STAGING_DIR_NATIVE}/usr/include"
-export NINJAFLAGS="${PARALLEL_MAKE}"
+export NINJAFLAGS = "${PARALLEL_MAKE}"
 
 do_configure() {
 
