@@ -56,6 +56,7 @@ SRC_URI += "\
 SRC_URI += " \
     file://0023-Always-build-uic-and-qvkgen.patch \
     file://0024-Avoid-renameeat2-for-native-sdk-builds.patch \
+    file://0028-Remove-host-paths-from-qmake.patch \
 "
 
 # CMake's toolchain configuration of nativesdk-qtbase
