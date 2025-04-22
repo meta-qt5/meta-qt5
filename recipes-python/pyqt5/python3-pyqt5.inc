@@ -11,6 +11,11 @@ PYPI_PACKAGE = "PyQt5"
 
 S = "${WORKDIR}/PyQt5-${PV}"
 
+python() {
+    if 'meta-python' not in d.getVar('BBFILE_COLLECTIONS').split():
+        raise bb.parse.SkipRecipe('Requires meta-python to be present to provide python3-toml-native.')
+}
+
 DEPENDS = " \
     python3 \
     python3-ply-native \
