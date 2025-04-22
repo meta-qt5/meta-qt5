@@ -23,6 +23,7 @@ SRC_URI += "\
     file://0007-Fix-build-on-mips.patch \
     file://0008-Offlineasm-warnings-with-newer-Ruby-versions.patch \
     file://0009-Fix-build-with-gcc-13.patch \
+    file://0010-Partial-backport-of-r260554-79fe19caf.patch \
 "
 
 SRC_URI:append:riscv32 = " file://0013-link-with-libatomic.patch"
