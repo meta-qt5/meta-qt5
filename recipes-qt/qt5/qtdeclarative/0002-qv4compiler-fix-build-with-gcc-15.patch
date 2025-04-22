@@ -1,0 +1,47 @@
+From b09bc3fc6259252460277c34d175a3d60e87416e Mon Sep 17 00:00:00 2001
+From: Martin Jansa <martin.jansa@gmail.com>
+Date: Tue, 22 Apr 2025 14:05:27 +0200
+Subject: [PATCH] qv4compiler: fix build with gcc-15
+
+* fixes:
+  http://errors.yoctoproject.org/Errors/Details/852830/
+
+In file included from TOPDIR/tmp/work/x86_64-nativesdk-oesdk-linux/nativesdk-qtdeclarative/5.15.16+git/recipe-sysroot/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-oesdk-linux/usr/include/QtCore/qchar.h:43,
+                 from TOPDIR/tmp/work/x86_64-nativesdk-oesdk-linux/nativesdk-qtdeclarative/5.15.16+git/recipe-sysroot/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-oesdk-linux/usr/include/QtCore/qstring.h:49,
+                 from TOPDIR/tmp/work/x86_64-nativesdk-oesdk-linux/nativesdk-qtdeclarative/5.15.16+git/git/src/qml/compiler/qv4compiler_p.h:53,
+                 from TOPDIR/tmp/work/x86_64-nativesdk-oesdk-linux/nativesdk-qtdeclarative/5.15.16+git/git/src/qml/compiler/qv4compiler.cpp:40:
+TOPDIR/tmp/work/x86_64-nativesdk-oesdk-linux/nativesdk-qtdeclarative/5.15.16+git/git/src/qml/compiler/qv4compiler.cpp: In member function 'void QV4::Compiler::StringTableGenerator::serialize(QV4::CompiledData::Unit*)':
+TOPDIR/tmp/work/x86_64-nativesdk-oesdk-linux/nativesdk-qtdeclarative/5.15.16+git/git/src/qml/compiler/qv4compiler.cpp:110:35: error: 'uintptr_t' does not name a type
+  110 |         Q_ASSERT(reinterpret_cast<uintptr_t>(s) % alignof(QV4::CompiledData::String) == 0);
+      |                                   ^~~~~~~~~
+TOPDIR/tmp/work/x86_64-nativesdk-oesdk-linux/nativesdk-qtdeclarative/5.15.16+git/git/src/qml/compiler/qv4compiler.cpp:50:1: note: 'uintptr_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+   49 | #include <QCryptographicHash>
+  +++ |+#include <cstdint>
+   50 |
+TOPDIR/tmp/work/x86_64-nativesdk-oesdk-linux/nativesdk-qtdeclarative/5.15.16+git/git/src/qml/compiler/qv4compiler.cpp: In member function 'void QV4::Compiler::JSUnitGenerator::writeFunction(char*, QV4::Compiler::Context*) const':
+TOPDIR/tmp/work/x86_64-nativesdk-oesdk-linux/nativesdk-qtdeclarative/5.15.16+git/git/src/qml/compiler/qv4compiler.cpp:427:62: error: 'uint32_t' was not declared in this scope
+  427 |                                        : std::numeric_limits<uint32_t>::max();
+      |                                                              ^~~~~~~~
+TOPDIR/tmp/work/x86_64-nativesdk-oesdk-linux/nativesdk-qtdeclarative/5.15.16+git/git/src/qml/compiler/qv4compiler.cpp:427:62: note: 'uint32_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+TOPDIR/tmp/work/x86_64-nativesdk-oesdk-linux/nativesdk-qtdeclarative/5.15.16+git/git/src/qml/compiler/qv4compiler.cpp:427:70: error: template argument 1 is invalid
+  427 |                                        : std::numeric_limits<uint32_t>::max();
+      |                                                                      ^
+
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <martin.jansa@gmail.com>
+---
+ src/qml/compiler/qv4compiler.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/qml/compiler/qv4compiler.cpp b/src/qml/compiler/qv4compiler.cpp
+index 18e19cf01c..e4a070a7da 100644
+--- a/src/qml/compiler/qv4compiler.cpp
++++ b/src/qml/compiler/qv4compiler.cpp
+@@ -37,6 +37,7 @@
+ **
+ ****************************************************************************/
+ 
++#include <cstdint>
+ #include <qv4compiler_p.h>
+ #include <qv4codegen_p.h>
+ #include <private/qv4compileddata_p.h>

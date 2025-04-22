@@ -17,6 +17,7 @@ LIC_FILES_CHKSUM = " \
 SRC_URI += " \
     file://0001-Use-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-to-locate-qmlca.patch \
 "
+SRC_URI += "file://0002-qv4compiler-fix-build-with-gcc-15.patch"
 
 LDFLAGS:append:riscv64 = " -pthread"
 
