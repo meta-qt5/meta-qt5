@@ -1,0 +1,268 @@
+From a78fde6cef58b7cfd148a4e2340ffa8e315101e2 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <martin.jansa@gmail.com>
+Date: Tue, 22 Apr 2025 15:48:35 +0200
+Subject: [PATCH] webrtc: task_queue: fix build with gcc-15
+
+* fixes:
+  http://errors.yoctoproject.org/Errors/Details/852838/
+
+FAILED: obj/third_party/webrtc/api/task_queue/task_queue/task_queue_base.o
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/recipe-sysroot-native/usr/bin/x86_64-oe-linux/x86_64-oe-linux-g++ -m64 -march=core2 -mtune=core2 -msse3 -mfpmath=sse -fstack-protector-all -O2 -D_FORTIFY_SOURCE=2 --sysroot=TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/recipe-sysroot -MMD -MF obj/third_party/webrtc/api/task_queue/task_queue/task_queue_base.o.d -DUSE_UDEV -DUSE_AURA=1 -DUSE_NSS_CERTS=1 -DUSE_OZONE=1 -DOFFICIAL_BUILD -DTOOLKIT_QT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DNO_UNWIND_TABLES -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DCR_SYSROOT_HASH=5f64b417e1018dcf8fcc81dc2714e0f264b9b911 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DWEBRTC_ENABLE_PROTOBUF=1 -DRTC_ENABLE_VP9 -DHAVE_SCTP -DENABLE_EXTERNAL_AUTH -DHAVE_WEBRTC_VIDEO -DLOGGING_INSIDE_WEBRTC -DWEBRTC_LIBRARY_IMPL -DWEBRTC_NON_STATIC_TRACE_EVENT_HANDLERS=0 -DWEBRTC_CHROMIUM_BUILD -DWEBRTC_POSIX -DWEBRTC_LINUX -DABSL_ALLOCATOR_NOTHROW=1 -Igen -I../../../../git/src/3rdparty/chromium -I../../../../git/src/3rdparty/chromium/third_party/webrtc_overrides -I../../../../git/src/3rdparty/chromium/third_party/webrtc -Igen/third_party/webrtc -I../../../../git/src/3rdparty/chromium/third_party/abseil-cpp -fno-strict-aliasing --param=ssp-buffer-size=4 -fstack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fPIC -pipe -pthread -m64 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Wno-unused-local-typedefs -Wno-maybe-uninitialized -Wno-deprecated-declarations -fno-delete-null-pointer-checks -Wno-comments -Wno-packed-not-aligned -Wno-dangling-else -Wno-missing-field-initializers -Wno-unused-parameter -O2 -fno-ident -fdata-sections -ffunction-sections -fno-omit-frame-pointer -g1 -fvisibility=hidden -std=gnu++14 -Wno-narrowing -Wno-class-memaccess -Wno-attributes -Wno-class-memaccess -Wno-subobject-linkage -Wno-invalid-offsetof -Wno-return-type -Wno-deprecated-copy -fno-exceptions -fno-rtti --sysroot=../../../../recipe-sysroot -fvisibility-inlines-hidden -c ../../../../git/src/3rdparty/chromium/third_party/webrtc/api/task_queue/task_queue_base.cc -o obj/third_party/webrtc/api/task_queue/task_queue/task_queue_base.o
+In file included from ../../../../git/src/3rdparty/chromium/third_party/webrtc/api/task_queue/task_queue_base.cc:10:
+../../../../git/src/3rdparty/chromium/third_party/webrtc/api/task_queue/task_queue_base.h:53:32: error: 'uint32_t' has not been declared
+   53 |                                uint32_t milliseconds) = 0;
+      |                                ^~~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/webrtc/api/task_queue/task_queue_base.h:18:1: note: 'uint32_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+   17 | #include "rtc_base/thread_annotations.h"
+  +++ |+#include <cstdint>
+   18 |
+
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:33:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:34:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:36:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:37:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:41:50: error: 'uint8_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:43:33: error: 'uint8_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:45:27: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:46:27: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:48:25: error: 'uint32_t' was not declared in this scope
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:48:33: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:48:61: error: 'uint8_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:56:35: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.h:57:35: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.cc:36:37: error: no declaration matches 'absl::optional<webrtc::PpsParser::PpsState> webrtc::PpsParser::ParsePps(const uint8_t*, size_t)'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.cc:46:6: error: no declaration matches 'bool webrtc::PpsParser::ParsePpsIds(const uint8_t*, size_t, uint32_t*, uint32_t*)'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.cc:60:26: error: no declaration matches 'absl::optional<unsigned int> webrtc::PpsParser::ParsePpsIdFromSlice(const uint8_t*, size_t)'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.cc:83:61: error: 'struct webrtc::PpsParser::PpsState' has no member named 'id'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.cc:83:70: error: 'struct webrtc::PpsParser::PpsState' has no member named 'sps_id'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.cc:165:50: error: 'struct webrtc::PpsParser::PpsState' has no member named 'weighted_bipred_idc'; did you mean 'weighted_pred_flag'?
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.cc:184:33: error: 'struct webrtc::PpsParser::PpsState' has no member named 'redundant_pic_cnt_present_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/pps_parser.cc:189:6: error: no declaration matches 'bool webrtc::PpsParser::ParsePpsIdsInternal(rtc::BitBuffer*, uint32_t*, uint32_t*)'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:32:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:33:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:34:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:35:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:36:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:37:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:38:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:39:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:40:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:41:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:42:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:46:50: error: 'uint8_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:42:37: error: no declaration matches 'absl::optional<webrtc::SpsParser::SpsState> webrtc::SpsParser::ParseSps(const uint8_t*, size_t)'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:81:59: error: 'struct webrtc::SpsParser::SpsState' has no member named 'id'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:82:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'separate_colour_plane_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:93:33: error: 'struct webrtc::SpsParser::SpsState' has no member named 'separate_colour_plane_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:147:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'log2_max_frame_num'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:150:59: error: 'struct webrtc::SpsParser::SpsState' has no member named 'pic_order_cnt_type'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:151:11: error: 'struct webrtc::SpsParser::SpsState' has no member named 'pic_order_cnt_type'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:158:9: error: 'struct webrtc::SpsParser::SpsState' has no member named 'log2_max_pic_order_cnt_lsb'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:159:18: error: 'struct webrtc::SpsParser::SpsState' has no member named 'pic_order_cnt_type'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:162:31: error: 'struct webrtc::SpsParser::SpsState' has no member named 'delta_pic_order_always_zero_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:177:59: error: 'struct webrtc::SpsParser::SpsState' has no member named 'max_num_ref_frames'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:194:46: error: 'struct webrtc::SpsParser::SpsState' has no member named 'frame_mbs_only_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:195:12: error: 'struct webrtc::SpsParser::SpsState' has no member named 'frame_mbs_only_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:222:46: error: 'struct webrtc::SpsParser::SpsState' has no member named 'vui_params_present'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:227:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'width'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:228:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'height'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:229:21: error: 'struct webrtc::SpsParser::SpsState' has no member named 'frame_mbs_only_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:233:11: error: 'struct webrtc::SpsParser::SpsState' has no member named 'separate_colour_plane_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:234:42: error: 'struct webrtc::SpsParser::SpsState' has no member named 'frame_mbs_only_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:235:39: error: 'struct webrtc::SpsParser::SpsState' has no member named 'frame_mbs_only_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:236:19: error: 'struct webrtc::SpsParser::SpsState' has no member named 'separate_colour_plane_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:249:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'width'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:250:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'height'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:32:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:33:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:34:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:35:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:36:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:37:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:38:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:39:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:40:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:41:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:42:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.h:46:50: error: 'uint8_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:42:37: error: no declaration matches 'absl::optional<webrtc::SpsParser::SpsState> webrtc::SpsParser::ParseSps(const uint8_t*, size_t)'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:81:59: error: 'struct webrtc::SpsParser::SpsState' has no member named 'id'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:82:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'separate_colour_plane_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:93:33: error: 'struct webrtc::SpsParser::SpsState' has no member named 'separate_colour_plane_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:147:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'log2_max_frame_num'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:150:59: error: 'struct webrtc::SpsParser::SpsState' has no member named 'pic_order_cnt_type'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:151:11: error: 'struct webrtc::SpsParser::SpsState' has no member named 'pic_order_cnt_type'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:158:9: error: 'struct webrtc::SpsParser::SpsState' has no member named 'log2_max_pic_order_cnt_lsb'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:159:18: error: 'struct webrtc::SpsParser::SpsState' has no member named 'pic_order_cnt_type'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:162:31: error: 'struct webrtc::SpsParser::SpsState' has no member named 'delta_pic_order_always_zero_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:177:59: error: 'struct webrtc::SpsParser::SpsState' has no member named 'max_num_ref_frames'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:194:46: error: 'struct webrtc::SpsParser::SpsState' has no member named 'frame_mbs_only_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:195:12: error: 'struct webrtc::SpsParser::SpsState' has no member named 'frame_mbs_only_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:222:46: error: 'struct webrtc::SpsParser::SpsState' has no member named 'vui_params_present'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:227:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'width'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:228:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'height'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:229:21: error: 'struct webrtc::SpsParser::SpsState' has no member named 'frame_mbs_only_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:233:11: error: 'struct webrtc::SpsParser::SpsState' has no member named 'separate_colour_plane_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:234:42: error: 'struct webrtc::SpsParser::SpsState' has no member named 'frame_mbs_only_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:235:39: error: 'struct webrtc::SpsParser::SpsState' has no member named 'frame_mbs_only_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:236:19: error: 'struct webrtc::SpsParser::SpsState' has no member named 'separate_colour_plane_flag'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:249:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'width'
+src/3rdparty/chromium/third_party/webrtc/common_video/h264/sps_parser.cc:250:7: error: 'struct webrtc::SpsParser::SpsState' has no member named 'height'
+src/3rdparty/chromium/third_party/webrtc/api/fec_controller.h:30:33: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/api/fec_controller.h:31:33: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/api/fec_controller.h:32:33: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/api/fec_controller.h:70:11: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:43:41: error: 'uint32_t' was not declared in this scope [-Wtemplate-body]
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:43:49: error: template argument 1 is invalid [-Wtemplate-body]
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:83:43: error: 'uint16_t' was not declared in this scope
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:83:51: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:84:38: error: 'uint32_t' was not declared in this scope
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:84:46: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:88:35: error: 'uint16_t' was not declared in this scope
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:89:35: error: 'uint16_t' was not declared in this scope
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:89:64: error: expression list treated as compound expression in initializer [-fpermissive]
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:95:30: error: 'uint32_t' was not declared in this scope
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:95:50: error: 'uint32_t' was not declared in this scope
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:95:73: error: expression list treated as compound expression in initializer [-fpermissive]
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:99:8: error: 'uint16_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/modules/include/module_common_types_public.h:106:8: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/modules/rtp_rtcp/source/receive_statistics_impl.h:86:3: error: 'SequenceNumberUnwrapper' does not name a type; did you mean 'SequenceNumberAssigner'?
+src/3rdparty/chromium/third_party/webrtc/modules/rtp_rtcp/source/receive_statistics_impl.cc:113:7: error: 'seq_unwrapper_' was not declared in this scope
+src/3rdparty/chromium/third_party/webrtc/modules/video_coding/timestamp_map.h:25:12: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/modules/video_coding/timestamp_map.h:26:28: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/modules/video_coding/timestamp_map.h:30:5: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/webrtc/modules/video_coding/timestamp_map.cc:27:6: error: no declaration matches 'void webrtc::VCMTimestampMap::Add(uint32_t, webrtc::VCMFrameInformation*)'
+src/3rdparty/chromium/third_party/webrtc/modules/video_coding/timestamp_map.cc:38:22: error: no declaration matches 'webrtc::VCMFrameInformation* webrtc::VCMTimestampMap::Pop(uint32_t)'
+src/3rdparty/chromium/third_party/webrtc/api/network_state_predictor.h:42:33: error: 'int64_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/api/network_state_predictor.h:43:33: error: 'int64_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/video/stats_counter.h:118:28: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/video/stats_counter.h:119:32: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/video/stats_counter.h:277:28: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/video/stats_counter.h:281:32: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/webrtc/video/stats_counter.cc:245:6: error: no declaration matches 'void webrtc::StatsCounter::Set(int64_t, uint32_t)'
+src/3rdparty/chromium/third_party/webrtc/video/stats_counter.cc:255:6: error: no declaration matches 'void webrtc::StatsCounter::SetLast(int64_t, uint32_t)'
+src/3rdparty/chromium/third_party/webrtc/video/stats_counter.cc:442:6: error: no declaration matches 'void webrtc::RateAccCounter::Set(int64_t, uint32_t)'
+src/3rdparty/chromium/third_party/webrtc/video/stats_counter.cc:446:6: error: no declaration matches 'void webrtc::RateAccCounter::SetLast(int64_t, uint32_t)'
+
+Upstream-Status: Pending [uint32_t is no longer used here after "Bump to WebRTC M120 release" https://gitlab.freedesktop.org/pulseaudio/webrtc-audio-processing/-/commit/c6abf6cd3fbd688b111b339775cbd2d66d509ddc?page=2#66fd3af91f4a7b8a1dafa8180959efa4e32ac2f0]
+Signed-off-by: Martin Jansa <martin.jansa@gmail.com>
+---
+ chromium/third_party/webrtc/api/fec_controller.h                 | 1 +
+ chromium/third_party/webrtc/api/network_state_predictor.h        | 1 +
+ chromium/third_party/webrtc/api/task_queue/task_queue_base.h     | 1 +
+ chromium/third_party/webrtc/common_video/h264/pps_parser.h       | 1 +
+ chromium/third_party/webrtc/common_video/h264/sps_parser.h       | 1 +
+ .../webrtc/modules/include/module_common_types_public.h          | 1 +
+ .../webrtc/modules/rtp_rtcp/source/receive_statistics_impl.h     | 1 +
+ chromium/third_party/webrtc/modules/video_coding/timestamp_map.h | 1 +
+ chromium/third_party/webrtc/video/stats_counter.h                | 1 +
+ 9 files changed, 9 insertions(+)
+
+diff --git a/chromium/third_party/webrtc/api/fec_controller.h b/chromium/third_party/webrtc/api/fec_controller.h
+index 3e5f7bb2168..87777a53f1c 100644
+--- a/chromium/third_party/webrtc/api/fec_controller.h
++++ b/chromium/third_party/webrtc/api/fec_controller.h
+@@ -11,6 +11,7 @@
+ #ifndef API_FEC_CONTROLLER_H_
+ #define API_FEC_CONTROLLER_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <vector>
+ 
+diff --git a/chromium/third_party/webrtc/api/network_state_predictor.h b/chromium/third_party/webrtc/api/network_state_predictor.h
+index 9cf5ab6f022..2d165baa5da 100644
+--- a/chromium/third_party/webrtc/api/network_state_predictor.h
++++ b/chromium/third_party/webrtc/api/network_state_predictor.h
+@@ -11,6 +11,7 @@
+ #ifndef API_NETWORK_STATE_PREDICTOR_H_
+ #define API_NETWORK_STATE_PREDICTOR_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <vector>
+ 
+diff --git a/chromium/third_party/webrtc/api/task_queue/task_queue_base.h b/chromium/third_party/webrtc/api/task_queue/task_queue_base.h
+index 90b1efd31eb..63526a7383b 100644
+--- a/chromium/third_party/webrtc/api/task_queue/task_queue_base.h
++++ b/chromium/third_party/webrtc/api/task_queue/task_queue_base.h
+@@ -10,6 +10,7 @@
+ #ifndef API_TASK_QUEUE_TASK_QUEUE_BASE_H_
+ #define API_TASK_QUEUE_TASK_QUEUE_BASE_H_
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ #include "api/task_queue/queued_task.h"
+diff --git a/chromium/third_party/webrtc/common_video/h264/pps_parser.h b/chromium/third_party/webrtc/common_video/h264/pps_parser.h
+index d6c31b06887..324a432ef3f 100644
+--- a/chromium/third_party/webrtc/common_video/h264/pps_parser.h
++++ b/chromium/third_party/webrtc/common_video/h264/pps_parser.h
+@@ -11,6 +11,7 @@
+ #ifndef COMMON_VIDEO_H264_PPS_PARSER_H_
+ #define COMMON_VIDEO_H264_PPS_PARSER_H_
+ 
++#include <cstdint>
+ #include "absl/types/optional.h"
+ 
+ namespace rtc {
+diff --git a/chromium/third_party/webrtc/common_video/h264/sps_parser.h b/chromium/third_party/webrtc/common_video/h264/sps_parser.h
+index 76e627d27a3..35bd6471a6d 100644
+--- a/chromium/third_party/webrtc/common_video/h264/sps_parser.h
++++ b/chromium/third_party/webrtc/common_video/h264/sps_parser.h
+@@ -11,6 +11,7 @@
+ #ifndef COMMON_VIDEO_H264_SPS_PARSER_H_
+ #define COMMON_VIDEO_H264_SPS_PARSER_H_
+ 
++#include <cstdint>
+ #include "absl/types/optional.h"
+ 
+ namespace rtc {
+diff --git a/chromium/third_party/webrtc/modules/include/module_common_types_public.h b/chromium/third_party/webrtc/modules/include/module_common_types_public.h
+index 345e45ce127..8338a514624 100644
+--- a/chromium/third_party/webrtc/modules/include/module_common_types_public.h
++++ b/chromium/third_party/webrtc/modules/include/module_common_types_public.h
+@@ -11,6 +11,7 @@
+ #ifndef MODULES_INCLUDE_MODULE_COMMON_TYPES_PUBLIC_H_
+ #define MODULES_INCLUDE_MODULE_COMMON_TYPES_PUBLIC_H_
+ 
++#include <cstdint>
+ #include <limits>
+ 
+ #include "absl/types/optional.h"
+diff --git a/chromium/third_party/webrtc/modules/rtp_rtcp/source/receive_statistics_impl.h b/chromium/third_party/webrtc/modules/rtp_rtcp/source/receive_statistics_impl.h
+index 41830b0b488..cc414f20082 100644
+--- a/chromium/third_party/webrtc/modules/rtp_rtcp/source/receive_statistics_impl.h
++++ b/chromium/third_party/webrtc/modules/rtp_rtcp/source/receive_statistics_impl.h
+@@ -12,6 +12,7 @@
+ #define MODULES_RTP_RTCP_SOURCE_RECEIVE_STATISTICS_IMPL_H_
+ 
+ #include <algorithm>
++#include <cstdint>
+ #include <map>
+ #include <vector>
+ 
+diff --git a/chromium/third_party/webrtc/modules/video_coding/timestamp_map.h b/chromium/third_party/webrtc/modules/video_coding/timestamp_map.h
+index c85666c9aa0..dfb90e447d8 100644
+--- a/chromium/third_party/webrtc/modules/video_coding/timestamp_map.h
++++ b/chromium/third_party/webrtc/modules/video_coding/timestamp_map.h
+@@ -11,6 +11,7 @@
+ #ifndef MODULES_VIDEO_CODING_TIMESTAMP_MAP_H_
+ #define MODULES_VIDEO_CODING_TIMESTAMP_MAP_H_
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ namespace webrtc {
+diff --git a/chromium/third_party/webrtc/video/stats_counter.h b/chromium/third_party/webrtc/video/stats_counter.h
+index fb6017f415f..ed5530ca0f7 100644
+--- a/chromium/third_party/webrtc/video/stats_counter.h
++++ b/chromium/third_party/webrtc/video/stats_counter.h
+@@ -11,6 +11,7 @@
+ #ifndef VIDEO_STATS_COUNTER_H_
+ #define VIDEO_STATS_COUNTER_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <string>
+ 
