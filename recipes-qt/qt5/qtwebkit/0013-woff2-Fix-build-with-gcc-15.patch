@@ -1,0 +1,48 @@
+From bfcc89da0b07485c93df26f26549a665756f70fc Mon Sep 17 00:00:00 2001
+From: Martin Jansa <martin.jansa@gmail.com>
+Date: Tue, 22 Apr 2025 15:54:09 +0200
+Subject: [PATCH] woff2: Fix build with gcc-15
+
+* fixes:
+http://errors.yoctoproject.org/Errors/Details/852837/
+FAILED: Source/ThirdParty/woff2/CMakeFiles/woff2.dir/src/woff2_out.cc.o
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/recipe-sysroot-native/usr/bin/x86_64-oe-linux/x86_64-oe-linux-g++ --sysroot=TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/recipe-sysroot -DBUILDING_QT__=1 -DBUILDING_WITH_CMAKE=1 -DHAVE_CONFIG_H=1 -DQT_ASCII_CAST_WARNINGS -DQT_DEPRECATED_WARNINGS -DQT_DISABLE_DEPRECATED_BEFORE=0x050000 -DQT_NO_CAST_TO_ASCII -DQT_NO_DYNAMIC_CAST -DQT_NO_EXCEPTIONS -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT -DQT_USE_QSTRINGBUILDER -ITOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/build/Source/ThirdParty/woff2 -ITOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/woff2 -ITOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/brotli/include -ITOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/woff2/include -ITOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/woff2/src -fvisibility=hidden -fvisibility-inlines-hidden  -m64 -march=core2 -mtune=core2 -msse3 -mfpmath=sse -fstack-protector-all  -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security  --sysroot=TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/recipe-sysroot  -O2 -g -fcanon-prefix-map  -fmacro-prefix-map=TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git=/usr/src/debug/qtwebkit/5.15.16+git  -fdebug-prefix-map=TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git=/usr/src/debug/qtwebkit/5.15.16+git  -fmacro-prefix-map=TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/build=/usr/src/debug/qtwebkit/5.15.16+git  -fdebug-prefix-map=TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/build=/usr/src/debug/qtwebkit/5.15.16+git  -fdebug-prefix-map=TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/recipe-sysroot=  -fmacro-prefix-map=TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/recipe-sysroot=  -fdebug-prefix-map=TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/recipe-sysroot-native=  -fmacro-prefix-map=TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/recipe-sysroot-native=  -pipe -fvisibility-inlines-hidden -fpermissive  -fno-exceptions -fno-strict-aliasing -fno-rtti -std=c++11 -Wno-expansion-to-defined -DNDEBUG -ffunction-sections -fdata-sections -Wall -Wextra -Wcast-align -Wformat-security -Wmissing-format-attribute -Wpointer-arith -Wundef -Wwrite-strings -fPIC  -Wno-sign-compare -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable -MD -MT Source/ThirdParty/woff2/CMakeFiles/woff2.dir/src/woff2_out.cc.o -MF Source/ThirdParty/woff2/CMakeFiles/woff2.dir/src/woff2_out.cc.o.d -o Source/ThirdParty/woff2/CMakeFiles/woff2.dir/src/woff2_out.cc.o -c TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/woff2/src/woff2_out.cc
+In file included from TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/woff2/src/woff2_out.cc:9:
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/woff2/include/woff2/output.h:73:25: error: expected ')' before '*' token
+   73 |   WOFF2MemoryOut(uint8_t* buf, size_t buf_size);
+      |                 ~       ^
+      |                         )
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/woff2/include/woff2/output.h:79:3: error: 'uint8_t' does not name a type
+   79 |   uint8_t* buf_;
+      |   ^~~~~~~
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/woff2/include/woff2/output.h:16:1: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+   15 | #include <string>
+  +++ |+#include <cstdint>
+   16 |
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/woff2/src/woff2_out.cc:48:31: error: expected constructor, destructor, or type conversion before '(' token
+   48 | WOFF2MemoryOut::WOFF2MemoryOut(uint8_t* buf, size_t buf_size)
+      |                               ^
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/woff2/src/woff2_out.cc: In member function 'virtual bool woff2::WOFF2MemoryOut::Write(const void*, size_t, size_t)':
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebkit/5.15.16+git/git/Source/ThirdParty/woff2/src/woff2_out.cc:61:15: error: 'buf_' was not declared in this scope; did you mean 'buf'?
+   61 |   std::memcpy(buf_ + offset, buf, n);
+      |               ^~~~
+      |               buf
+
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <martin.jansa@gmail.com>
+---
+ Source/ThirdParty/woff2/include/woff2/output.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Source/ThirdParty/woff2/include/woff2/output.h b/Source/ThirdParty/woff2/include/woff2/output.h
+index c325f67be..5c4dc4d18 100644
+--- a/Source/ThirdParty/woff2/include/woff2/output.h
++++ b/Source/ThirdParty/woff2/include/woff2/output.h
+@@ -10,6 +10,7 @@
+ #define WOFF2_WOFF2_OUT_H_
+ 
+ #include <algorithm>
++#include <cstdint>
+ #include <cstring>
+ #include <memory>
+ #include <string>
