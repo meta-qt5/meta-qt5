@@ -178,6 +178,10 @@ SRC_URI += " \
     file://chromium/0012-Remove-unsetting-_FILE_OFFSET_BITS.patch;patchdir=src/3rdparty \
     file://chromium/0013-webrtc-task_queue-fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
     file://chromium/0014-gzip-fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
+    file://chromium/0015-perfetto-fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
+    file://chromium/0016-gpu-fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
+    file://chromium/0017-woff2-fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
+    file://chromium/0018-pdfium-fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based

@@ -1,0 +1,139 @@
+From 6d91684419633f847cad4356ca173b7b46bb561e Mon Sep 17 00:00:00 2001
+From: Martin Jansa <martin.jansa@gmail.com>
+Date: Tue, 22 Apr 2025 16:30:46 +0200
+Subject: [PATCH] perfetto: fix build with gcc-15
+
+* fixes:
+  http://errors.yoctoproject.org/Errors/Details/852840/
+
+FAILED: obj/third_party/perfetto/src/tracing/core/core/trace_packet.o
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/recipe-sysroot-native/usr/bin/x86_64-oe-linux/x86_64-oe-linux-g++ -m64 -march=core2 -mtune=core2 -msse3 -mfpmath=sse -fstack-protector-all -O2 -D_FORTIFY_SOURCE=2 --sysroot=TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/recipe-sysroot -MMD -MF obj/third_party/perfetto/src/tracing/core/core/trace_packet.o.d -DUSE_UDEV -DUSE_AURA=1 -DUSE_NSS_CERTS=1 -DUSE_OZONE=1 -DOFFICIAL_BUILD -DTOOLKIT_QT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DNO_UNWIND_TABLES -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DCR_SYSROOT_HASH=5f64b417e1018dcf8fcc81dc2714e0f264b9b911 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DPERFETTO_IMPLEMENTATION -Igen -I../../../../git/src/3rdparty/chromium -I../../../../git/src/3rdparty/chromium/third_party/protobuf/src -Igen/protoc_out -I../../../../git/src/3rdparty/chromium/third_party/perfetto -I../../../../git/src/3rdparty/chromium/third_party/perfetto/include -Igen/third_party/perfetto/build_config -Igen/third_party/perfetto -fno-strict-aliasing --param=ssp-buffer-size=4 -fstack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fPIC -pipe -pthread -m64 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Wno-unused-local-typedefs -Wno-maybe-uninitialized -Wno-deprecated-declarations -fno-delete-null-pointer-checks -Wno-comments -Wno-packed-not-aligned -Wno-dangling-else -Wno-missing-field-initializers -Wno-unused-parameter -O2 -fno-ident -fdata-sections -ffunction-sections -fno-omit-frame-pointer -g1 -fvisibility=hidden -std=gnu++14 -Wno-narrowing -Wno-class-memaccess -Wno-attributes -Wno-class-memaccess -Wno-subobject-linkage -Wno-invalid-offsetof -Wno-return-type -Wno-deprecated-copy -fno-exceptions -fno-rtti --sysroot=../../../../recipe-sysroot -fvisibility-inlines-hidden -c ../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/core/trace_packet.cc -o obj/third_party/perfetto/src/tracing/core/core/trace_packet.o
+In file included from ../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/trace_packet.h:26,
+                 from ../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/core/trace_packet.cc:17:
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:47:3: error: 'uint8_t' does not name a type
+   47 |   uint8_t* own_data() {
+      |   ^~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:26:1: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+   25 | #include <vector>
+  +++ |+#include <cstdint>
+   26 |
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:59:19: error: 'uint8_t' was not declared in this scope
+   59 |   std::unique_ptr<uint8_t[]> own_data_;
+      |                   ^~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:59:19: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:59:28: error: template argument 1 is invalid
+   59 |   std::unique_ptr<uint8_t[]> own_data_;
+      |                            ^
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:59:28: error: template argument 2 is invalid
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h: In static member function 'static perfetto::Slice perfetto::Slice::Allocate(size_t)':
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:41:21: error: request for member 'reset' in 'slice.perfetto::Slice::own_data_', which is of non-class type 'int'
+   41 |     slice.own_data_.reset(new uint8_t[size]);
+      |                     ^~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:41:31: error: 'uint8_t' does not name a type
+   41 |     slice.own_data_.reset(new uint8_t[size]);
+      |                               ^~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:41:31: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:42:35: error: invalid types 'int[int]' for array subscript
+   42 |     slice.start = &slice.own_data_[0];
+      |                                   ^
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/trace_packet.h: At global scope:
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/trace_packet.h:43:20: error: 'uint32_t' does not name a type
+   43 |   static constexpr uint32_t kPacketFieldNumber = 1;
+      |                    ^~~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/trace_packet.h:27:1: note: 'uint32_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+   26 | #include "perfetto/ext/tracing/core/slice.h"
+  +++ |+#include <cstdint>
+   27 |
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/core/trace_packet.cc: In member function 'std::tuple<char*, long unsigned int> perfetto::TracePacket::GetProtoPreamble()':
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/core/trace_packet.cc:54:50: error: 'kPacketFieldNumber' was not declared in this scope
+   54 |   constexpr uint8_t tag = MakeTagLengthDelimited(kPacketFieldNumber);
+      |                                                  ^~~~~~~~~~~~~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/core/trace_packet.cc:55:21: error: non-constant condition for static assertion
+   55 |   static_assert(tag < 0x80, "TracePacket tag should fit in one byte");
+      |                 ~~~~^~~~~~
+
+FAILED: obj/third_party/perfetto/src/tracing/core/service/packet_stream_validator.o
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/recipe-sysroot-native/usr/bin/x86_64-oe-linux/x86_64-oe-linux-g++ -m64 -march=core2 -mtune=core2 -msse3 -mfpmath=sse -fstack-protector-all -O2 -D_FORTIFY_SOURCE=2 --sysroot=TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/recipe-sysroot -MMD -MF obj/third_party/perfetto/src/tracing/core/service/packet_stream_validator.o.d -DUSE_UDEV -DUSE_AURA=1 -DUSE_NSS_CERTS=1 -DUSE_OZONE=1 -DOFFICIAL_BUILD -DTOOLKIT_QT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DNO_UNWIND_TABLES -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DCR_SYSROOT_HASH=5f64b417e1018dcf8fcc81dc2714e0f264b9b911 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DPERFETTO_IMPLEMENTATION -Igen -I../../../../git/src/3rdparty/chromium -I../../../../git/src/3rdparty/chromium/third_party/protobuf/src -Igen/protoc_out -I../../../../git/src/3rdparty/chromium/third_party/perfetto -I../../../../git/src/3rdparty/chromium/third_party/perfetto/include -Igen/third_party/perfetto/build_config -Igen/third_party/perfetto -fno-strict-aliasing --param=ssp-buffer-size=4 -fstack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fPIC -pipe -pthread -m64 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Wno-unused-local-typedefs -Wno-maybe-uninitialized -Wno-deprecated-declarations -fno-delete-null-pointer-checks -Wno-comments -Wno-packed-not-aligned -Wno-dangling-else -Wno-missing-field-initializers -Wno-unused-parameter -O2 -fno-ident -fdata-sections -ffunction-sections -fno-omit-frame-pointer -g1 -fvisibility=hidden -std=gnu++14 -Wno-narrowing -Wno-class-memaccess -Wno-attributes -Wno-class-memaccess -Wno-subobject-linkage -Wno-invalid-offsetof -Wno-return-type -Wno-deprecated-copy -fno-exceptions -fno-rtti --sysroot=../../../../recipe-sysroot -fvisibility-inlines-hidden -c ../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/core/packet_stream_validator.cc -o obj/third_party/perfetto/src/tracing/core/service/packet_stream_validator.o
+In file included from ../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/core/packet_stream_validator.h:20,
+                 from ../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/core/packet_stream_validator.cc:17:
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:47:3: error: 'uint8_t' does not name a type
+   47 |   uint8_t* own_data() {
+      |   ^~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:28:1: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+   27 | #include "perfetto/base/logging.h"
+  +++ |+#include <cstdint>
+   28 |
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:59:19: error: 'uint8_t' was not declared in this scope
+   59 |   std::unique_ptr<uint8_t[]> own_data_;
+      |                   ^~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:59:19: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:59:28: error: template argument 1 is invalid
+   59 |   std::unique_ptr<uint8_t[]> own_data_;
+      |                            ^
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:59:28: error: template argument 2 is invalid
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h: In static member function 'static perfetto::Slice perfetto::Slice::Allocate(size_t)':
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:41:21: error: request for member 'reset' in 'slice.perfetto::Slice::own_data_', which is of non-class type 'int'
+   41 |     slice.own_data_.reset(new uint8_t[size]);
+      |                     ^~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:41:31: error: 'uint8_t' does not name a type
+   41 |     slice.own_data_.reset(new uint8_t[size]);
+      |                               ^~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:41:31: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h:42:35: error: invalid types 'int[int]' for array subscript
+   42 |     slice.start = &slice.own_data_[0];
+      |                                   ^
+
+FAILED: obj/third_party/perfetto/src/tracing/in_process_backend/in_process_tracing_backend.o
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/recipe-sysroot-native/usr/bin/x86_64-oe-linux/x86_64-oe-linux-g++ -m64 -march=core2 -mtune=core2 -msse3 -mfpmath=sse -fstack-protector-all -O2 -D_FORTIFY_SOURCE=2 --sysroot=TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/recipe-sysroot -MMD -MF obj/third_party/perfetto/src/tracing/in_process_backend/in_process_tracing_backend.o.d -DUSE_UDEV -DUSE_AURA=1 -DUSE_NSS_CERTS=1 -DUSE_OZONE=1 -DOFFICIAL_BUILD -DTOOLKIT_QT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DNO_UNWIND_TABLES -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DCR_SYSROOT_HASH=5f64b417e1018dcf8fcc81dc2714e0f264b9b911 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DPERFETTO_IMPLEMENTATION -Igen -I../../../../git/src/3rdparty/chromium -I../../../../git/src/3rdparty/chromium/third_party/protobuf/src -Igen/protoc_out -I../../../../git/src/3rdparty/chromium/third_party/perfetto -I../../../../git/src/3rdparty/chromium/third_party/perfetto/include -Igen/third_party/perfetto/build_config -Igen/third_party/perfetto -fno-strict-aliasing --param=ssp-buffer-size=4 -fstack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fPIC -pipe -pthread -m64 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Wno-unused-local-typedefs -Wno-maybe-uninitialized -Wno-deprecated-declarations -fno-delete-null-pointer-checks -Wno-comments -Wno-packed-not-aligned -Wno-dangling-else -Wno-missing-field-initializers -Wno-unused-parameter -O2 -fno-ident -fdata-sections -ffunction-sections -fno-omit-frame-pointer -g1 -fvisibility=hidden -std=gnu++14 -Wno-narrowing -Wno-class-memaccess -Wno-attributes -Wno-class-memaccess -Wno-subobject-linkage -Wno-invalid-offsetof -Wno-return-type -Wno-deprecated-copy -fno-exceptions -fno-rtti --sysroot=../../../../recipe-sysroot -fvisibility-inlines-hidden -c ../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/internal/in_process_tracing_backend.cc -o obj/third_party/perfetto/src/tracing/in_process_backend/in_process_tracing_backend.o
+In file included from ../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/tracing/internal/in_process_tracing_backend.h:21,
+                 from ../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/internal/in_process_tracing_backend.cc:17:
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/tracing/tracing_backend.h:69:5: error: 'uint32_t' does not name a type
+   69 |     uint32_t shmem_size_hint_bytes = 0;
+      |     ^~~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/tracing/tracing_backend.h:22:1: note: 'uint32_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+   21 | #include <string>
+  +++ |+#include <cstdint>
+   22 |
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/tracing/tracing_backend.h:70:5: error: 'uint32_t' does not name a type
+   70 |     uint32_t shmem_page_size_hint_bytes = 0;
+      |     ^~~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/include/perfetto/tracing/tracing_backend.h:70:5: note: 'uint32_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/internal/in_process_tracing_backend.cc: In member function 'virtual std::unique_ptr<perfetto::ProducerEndpoint> perfetto::internal::InProcessTracingBackend::ConnectProducer(const perfetto::TracingBackend::ConnectProducerArgs&)':
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/internal/in_process_tracing_backend.cc:100:30: error: 'const struct perfetto::TracingBackend::ConnectProducerArgs' has no member named 'shmem_size_hint_bytes'
+  100 |                         args.shmem_size_hint_bytes,
+      |                              ^~~~~~~~~~~~~~~~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/tracing/internal/in_process_tracing_backend.cc:103:30: error: 'const struct perfetto::TracingBackend::ConnectProducerArgs' has no member named 'shmem_page_size_hint_bytes'
+  103 |                         args.shmem_page_size_hint_bytes);
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <martin.jansa@gmail.com>
+---
+ .../perfetto/include/perfetto/ext/tracing/core/slice.h           | 1 +
+ .../perfetto/include/perfetto/tracing/tracing_backend.h          | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h b/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h
+index 4ce66fdeadc..3f3932b2287 100644
+--- a/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h
++++ b/chromium/third_party/perfetto/include/perfetto/ext/tracing/core/slice.h
+@@ -20,6 +20,7 @@
+ #include <stddef.h>
+ #include <string.h>
+ 
++#include <cstdint>
+ #include <memory>
+ #include <string>
+ #include <vector>
+diff --git a/chromium/third_party/perfetto/include/perfetto/tracing/tracing_backend.h b/chromium/third_party/perfetto/include/perfetto/tracing/tracing_backend.h
+index 67b0d2eb51e..3c2462de588 100644
+--- a/chromium/third_party/perfetto/include/perfetto/tracing/tracing_backend.h
++++ b/chromium/third_party/perfetto/include/perfetto/tracing/tracing_backend.h
+@@ -17,6 +17,7 @@
+ #ifndef INCLUDE_PERFETTO_TRACING_TRACING_BACKEND_H_
+ #define INCLUDE_PERFETTO_TRACING_TRACING_BACKEND_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <string>
+ 
