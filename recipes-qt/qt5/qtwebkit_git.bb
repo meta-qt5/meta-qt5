@@ -24,6 +24,7 @@ SRC_URI += "\
     file://0008-Offlineasm-warnings-with-newer-Ruby-versions.patch \
     file://0009-Fix-build-with-gcc-13.patch \
     file://0010-Partial-backport-of-r260554-79fe19caf.patch \
+    file://0011-Disable-ICU-C-header-only-APIs-introduced-in-ICU-76.patch \
 "
 
 SRC_URI:append:riscv32 = " file://0013-link-with-libatomic.patch"
