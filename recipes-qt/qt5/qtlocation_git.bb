@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = " \
 
 DEPENDS += "qtbase qtxmlpatterns qtdeclarative qtquickcontrols"
 
-PACKAGECONFIG ??= "geoservices_mapboxgl"
+PACKAGECONFIG ??= ""
 PACKAGECONFIG[geoclue] = ",,,geoclue"
 PACKAGECONFIG[gypsy] = "-feature-gypsy,-no-feature-gypsy,gconf gypsy"
 PACKAGECONFIG[geoservices_here] = "-feature-geoservices_here,-no-feature-geoservices_here"
