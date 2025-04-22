@@ -28,3 +28,7 @@ EXTRA_QMAKEVARS_PRE += "${PACKAGECONFIG_CONFARGS}"
 SRCREV = "aa61cc683979ea1413222e64a03aae9971392e3d"
 
 BBCLASSEXTEND += "native nativesdk"
+
+# http://errors.yoctoproject.org/Errors/Details/852836/
+# ERROR: QA Issue: File /usr/bin/repc in package qtremoteobjects-tools contains reference to TMPDIR [buildpaths]
+INSANE_SKIP:${PN}-tools += "buildpaths"
