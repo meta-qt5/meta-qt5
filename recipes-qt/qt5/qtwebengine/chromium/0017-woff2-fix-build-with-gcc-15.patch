@@ -1,0 +1,29 @@
+From 404ed52cbf8fbd3656e1ceecb77e6aec3eaf2116 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <martin.jansa@gmail.com>
+Date: Tue, 22 Apr 2025 16:51:47 +0200
+Subject: [PATCH] woff2: fix build with gcc-15
+
+* fixes:
+src/3rdparty/chromium/third_party/woff2/include/woff2/output.h:73:25: error: expected ')' before '*' token
+src/3rdparty/chromium/third_party/woff2/include/woff2/output.h:79:3: error: 'uint8_t' does not name a type
+src/3rdparty/chromium/third_party/woff2/src/woff2_out.cc:48:31: error: expected constructor, destructor, or type conversion before '(' token
+src/3rdparty/chromium/third_party/woff2/src/woff2_out.cc:61:15: error: 'buf_' was not declared in this scope; did you mean 'buf'?
+
+Upstream-Status: Pending
+Signed-off-by: Martin Jansa <martin.jansa@gmail.com>
+---
+ chromium/third_party/woff2/include/woff2/output.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/chromium/third_party/woff2/include/woff2/output.h b/chromium/third_party/woff2/include/woff2/output.h
+index c325f67be72..5c4dc4d1850 100644
+--- a/chromium/third_party/woff2/include/woff2/output.h
++++ b/chromium/third_party/woff2/include/woff2/output.h
+@@ -10,6 +10,7 @@
+ #define WOFF2_WOFF2_OUT_H_
+ 
+ #include <algorithm>
++#include <cstdint>
+ #include <cstring>
+ #include <memory>
+ #include <string>

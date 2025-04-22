@@ -1,0 +1,191 @@
+From f8147bb63a85524286c86bd7318fb6cfab35267e Mon Sep 17 00:00:00 2001
+From: Martin Jansa <martin.jansa@gmail.com>
+Date: Tue, 22 Apr 2025 17:11:48 +0200
+Subject: [PATCH] pdfium: fix build with gcc-15
+
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:16:35: error: 'uint32_t' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:16:45: error: 'uint32_t' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:16:53: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:16:53: error: template argument 2 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:18:15: error: 'CJBig2_CacheKey' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:18:65: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:26:13: error: 'CJBig2_CachePair' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:26:29: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:26:29: error: template argument 2 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:31:13: error: 'CJBig2_CachePair' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:31:29: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h:31:29: error: template argument 2 is invalid
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:314:12: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:314:19: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:315:34: error: ISO C++ forbids declaration of 'type name' with no type [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:315:34: error: expected '>' before 'uint8_t' [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:320:6: error: 'uint8_t' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:320:13: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:321:28: error: 'uint8_t' does not name a type [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:321:35: error: expected '>' before '*' token [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:27:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:28:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:29:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:30:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:31:22: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:31:29: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:32:22: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:32:29: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:33:3: error: 'uint8_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:34:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:43:7: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:44:7: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:45:26: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:45:33: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:45:26: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:45:33: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:45:26: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:45:33: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:45:15: error: 'pdfium::span' is not a type
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.h:45:19: error: expected ',' or '...' before '<' token
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.cpp:25:35: error: 'class fxcodec::Jbig2Context' has no member named 'm_height'
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.cpp:25:61: error: 'class fxcodec::Jbig2Context' has no member named 'm_dest_pitch'
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.cpp:26:68: error: 'class fxcodec::Jbig2Context' has no member named 'm_dest_buf'
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jbig2/jbig2_decoder.cpp:46:16: error: no declaration matches 'FXCODEC_STATUS fxcodec::Jbig2Decoder::StartDecode(fxcodec::Jbig2Context*, std::unique_ptr<JBig2_DocumentContext>*, uint32_t, uint32_t, pdfium::span<const unsigned char>, uint32_t, pdfium::span<const unsigned char>, uint32_t, uint8_t*, uint32_t, PauseIndicatorIface*)'
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:314:12: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:314:19: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:315:34: error: ISO C++ forbids declaration of 'type name' with no type [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:315:34: error: expected '>' before 'uint8_t' [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:320:6: error: 'uint8_t' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:320:13: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:321:28: error: 'uint8_t' does not name a type [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:321:35: error: expected '>' before '*' token [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:314:12: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:314:19: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:315:34: error: ISO C++ forbids declaration of 'type name' with no type [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:315:34: error: expected '>' before 'uint8_t' [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:320:6: error: 'uint8_t' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:320:13: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:321:28: error: 'uint8_t' does not name a type [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/third_party/base/span.h:321:35: error: expected '>' before '*' token [-Wtemplate-body]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:37:26: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:37:33: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:37:26: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:37:33: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:37:26: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:37:33: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:37:15: error: 'pdfium::span' is not a type
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:37:19: error: expected ',' or '...' before '<' token
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:43:62: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:43:69: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:43:62: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:43:69: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:43:62: error: ISO C++ forbids declaration of 'type name' with no type [-fpermissive]
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:43:69: error: template argument 1 is invalid
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:43:51: error: 'pdfium::span' is not a type
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h:43:55: error: expected ',' or '...' before '<' token
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.cpp:380:34: error: no declaration matches 'std::unique_ptr<fxcodec::ScanlineDecoder> fxcodec::JpegModule::CreateDecoder(pdfium::span<const unsigned char>, int, int, int, bool)'
+src/3rdparty/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.cpp:396:37: error: no declaration matches 'Optional<fxcodec::JpegModule::JpegImageInfo> fxcodec::JpegModule::LoadInfo(pdfium::span<const unsigned char>)'
+
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:35:13: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:38:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:39:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:64:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:65:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_expintfunc.h:25:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_expintfunc.cpp:33:18: error: 'm_nOutputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_expintfunc.cpp:35:7: error: 'm_nOutputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_expintfunc.cpp:39:43: error: 'm_nOutputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_expintfunc.cpp:47:15: error: 'm_nInputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_expintfunc.cpp:51:3: error: 'm_nOrigOutputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_expintfunc.cpp:57:28: error: 'm_nInputs' was not declared in this scope; did you mean 'inputs'?
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_expintfunc.cpp:58:30: error: 'm_nOrigOutputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:35:13: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:38:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:39:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:64:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:65:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_expintfunc.h:25:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.cpp:93:3: error: 'm_nInputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.cpp:101:3: error: 'm_nOutputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.cpp:127:6: error: no declaration matches 'bool CPDF_Function::Call(const float*, uint32_t, float*, int*) const'
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:35:13: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:38:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:39:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:64:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:65:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_psfunc.cpp:25:28: error: 'm_nInputs' was not declared in this scope; did you mean 'inputs'?
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_psfunc.cpp:28:29: error: 'm_nOutputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_psfunc.cpp:30:28: error: 'm_nOutputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:35:13: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:38:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:39:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:64:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:65:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_stitchfunc.cpp:28:7: error: 'm_nInputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_stitchfunc.cpp:80:18: error: 'class CPDF_Function' has no member named 'CountInputs'
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_stitchfunc.cpp:83:38: error: 'class CPDF_Function' has no member named 'CountOutputs'
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_stitchfunc.cpp:96:5: error: 'm_nOutputs' was not declared in this scope; did you mean 'nOutputs'?
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:35:13: error: 'uint32_t' has not been declared
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:38:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:39:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:64:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h:65:3: error: 'uint32_t' does not name a type
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_sampledfunc.cpp:59:23: error: 'm_nOutputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_sampledfunc.cpp:61:23: error: 'm_nInputs' was not declared in this scope
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_sampledfunc.cpp:104:49: error: 'm_nInputs' was not declared in this scope; did you mean 'inputs'?
+src/3rdparty/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_sampledfunc.cpp:121:34: error: 'm_nOutputs' was not declared in this scope
+
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <martin.jansa@gmail.com>
+---
+ chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h    | 1 +
+ .../pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h            | 1 +
+ chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h       | 1 +
+ chromium/third_party/pdfium/third_party/base/span.h              | 1 +
+ 4 files changed, 4 insertions(+)
+
+diff --git a/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h b/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h
+index fd68b6b49d3..dc7c015d56c 100644
+--- a/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h
++++ b/chromium/third_party/pdfium/core/fpdfapi/page/cpdf_function.h
+@@ -7,6 +7,7 @@
+ #ifndef CORE_FPDFAPI_PAGE_CPDF_FUNCTION_H_
+ #define CORE_FPDFAPI_PAGE_CPDF_FUNCTION_H_
+ 
++#include <cstdint>
+ #include <memory>
+ #include <set>
+ #include <vector>
+diff --git a/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h b/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h
+index 9bcdd371e79..5921794f1f3 100644
+--- a/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h
++++ b/chromium/third_party/pdfium/core/fxcodec/jbig2/JBig2_DocumentContext.h
+@@ -7,6 +7,7 @@
+ #ifndef CORE_FXCODEC_JBIG2_JBIG2_DOCUMENTCONTEXT_H_
+ #define CORE_FXCODEC_JBIG2_JBIG2_DOCUMENTCONTEXT_H_
+ 
++#include <cstdint>
+ #include <list>
+ #include <memory>
+ #include <utility>
+diff --git a/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h b/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h
+index 98adbef2e87..99439cd4f11 100644
+--- a/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h
++++ b/chromium/third_party/pdfium/core/fxcodec/jpeg/jpegmodule.h
+@@ -7,6 +7,7 @@
+ #ifndef CORE_FXCODEC_JPEG_JPEGMODULE_H_
+ #define CORE_FXCODEC_JPEG_JPEGMODULE_H_
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ #include "build/build_config.h"
+diff --git a/chromium/third_party/pdfium/third_party/base/span.h b/chromium/third_party/pdfium/third_party/base/span.h
+index bb07f43a021..0b7daf77588 100644
+--- a/chromium/third_party/pdfium/third_party/base/span.h
++++ b/chromium/third_party/pdfium/third_party/base/span.h
+@@ -9,6 +9,7 @@
+ 
+ #include <algorithm>
+ #include <array>
++#include <cstdint>
+ #include <iterator>
+ #include <type_traits>
+ #include <utility>
