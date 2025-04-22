@@ -1,0 +1,74 @@
+From 09a62e07c28cfdedb7474546ca7d0c573f2a6722 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <martin.jansa@gmail.com>
+Date: Tue, 22 Apr 2025 16:18:46 +0200
+Subject: [PATCH] gzip: fix build with gcc-15
+
+* fixes:
+http://errors.yoctoproject.org/Errors/Details/852839/
+
+FAILED: obj/third_party/perfetto/src/trace_processor/storage_minimal/gzip_utils.o
+TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/recipe-sysroot-native/usr/bin/x86_64-oe-linux/x86_64-oe-linux-g++ -m64 -march=core2 -mtune=core2 -msse3 -mfpmath=sse -fstack-protector-all -O2 -D_FORTIFY_SOURCE=2 --sysroot=TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/recipe-sysroot -MMD -MF obj/third_party/perfetto/src/trace_processor/storage_minimal/gzip_utils.o.d -DUSE_UDEV -DUSE_AURA=1 -DUSE_NSS_CERTS=1 -DUSE_OZONE=1 -DOFFICIAL_BUILD -DTOOLKIT_QT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -DNO_UNWIND_TABLES -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DCR_SYSROOT_HASH=5f64b417e1018dcf8fcc81dc2714e0f264b9b911 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0 -DPERFETTO_IMPLEMENTATION -Igen -I../../../../git/src/3rdparty/chromium -I../../../../git/src/3rdparty/chromium/third_party/protobuf/src -Igen/protoc_out -I../../../../git/src/3rdparty/chromium/third_party/perfetto -I../../../../git/src/3rdparty/chromium/third_party/perfetto/include -Igen/third_party/perfetto/build_config -Igen/third_party/perfetto -I../../../../git/src/3rdparty/chromium/third_party/jsoncpp/source/include -I../../../../git/src/3rdparty/chromium/third_party/zlib -fno-strict-aliasing --param=ssp-buffer-size=4 -fstack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables -fPIC -pipe -pthread -m64 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Wno-unused-local-typedefs -Wno-maybe-uninitialized -Wno-deprecated-declarations -fno-delete-null-pointer-checks -Wno-comments -Wno-packed-not-aligned -Wno-dangling-else -Wno-missing-field-initializers -Wno-unused-parameter -O2 -fno-ident -fdata-sections -ffunction-sections -fno-omit-frame-pointer -g1 -fvisibility=hidden -std=gnu++14 -Wno-narrowing -Wno-class-memaccess -Wno-attributes -Wno-class-memaccess -Wno-subobject-linkage -Wno-invalid-offsetof -Wno-return-type -Wno-deprecated-copy -fno-exceptions -fno-rtti --sysroot=../../../../recipe-sysroot -fvisibility-inlines-hidden -Wno-deprecated-declarations -c ../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc -o obj/third_party/perfetto/src/trace_processor/storage_minimal/gzip_utils.o
+In file included from ../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:17:
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.h:57:23: error: 'uint8_t' does not name a type
+   57 |   void SetInput(const uint8_t* data, size_t size);
+      |                       ^~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.h:21:1: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+   20 | #include <memory>
+  +++ |+#include <cstdint>
+   21 |
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.h:60:21: error: 'uint8_t' has not been declared
+   60 |   Result Decompress(uint8_t* out, size_t out_size);
+      |                     ^~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.h:60:21: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:67:39: error: 'uint8_t' does not name a type
+   67 | void GzipDecompressor::SetInput(const uint8_t* data, size_t size) {
+      |                                       ^~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:25:1: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+   24 | #include <zlib.h>
+  +++ |+#include <cstdint>
+   25 | #else
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc: In member function 'void perfetto::trace_processor::GzipDecompressor::SetInput(const int*, size_t)':
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:72:35: error: 'uint8_t' does not name a type
+   72 |   z_stream_->next_in = const_cast<uint8_t*>(data);
+      |                                   ^~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:72:35: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:72:42: error: expected '>' before '*' token
+   72 |   z_stream_->next_in = const_cast<uint8_t*>(data);
+      |                                          ^
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc: At global scope:
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:80:26: error: 'perfetto::trace_processor::GzipDecompressor::Result perfetto::trace_processor::GzipDecompressor::Decompress' is not a static data member of 'class perfetto::trace_processor::GzipDecompressor'
+   80 | GzipDecompressor::Result GzipDecompressor::Decompress(uint8_t* out,
+      |                          ^~~~~~~~~~~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:80:55: error: 'uint8_t' was not declared in this scope
+   80 | GzipDecompressor::Result GzipDecompressor::Decompress(uint8_t* out,
+      |                                                       ^~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:80:55: note: 'uint8_t' is defined in header '<cstdint>'; this is probably fixable by adding '#include <cstdint>'
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:80:64: error: 'out' was not declared in this scope
+   80 | GzipDecompressor::Result GzipDecompressor::Decompress(uint8_t* out,
+      |                                                                ^~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:81:62: error: expected primary-expression before 'out_size'
+   81 |                                                       size_t out_size) {
+      |                                                              ^~~~~~~~
+../../../../git/src/3rdparty/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.cc:81:72: error: expected ',' or ';' before '{' token
+   81 |                                                       size_t out_size) {
+      |                                                                        ^
+
+Upstream-Status: Pending
+
+Signed-off-by: Martin Jansa <martin.jansa@gmail.com>
+---
+ .../perfetto/src/trace_processor/importers/gzip/gzip_utils.h     | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.h b/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.h
+index 624363ff66f..6d717fba418 100644
+--- a/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.h
++++ b/chromium/third_party/perfetto/src/trace_processor/importers/gzip/gzip_utils.h
+@@ -17,6 +17,7 @@
+ #ifndef SRC_TRACE_PROCESSOR_IMPORTERS_GZIP_GZIP_UTILS_H_
+ #define SRC_TRACE_PROCESSOR_IMPORTERS_GZIP_GZIP_UTILS_H_
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ struct z_stream_s;
