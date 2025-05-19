@@ -84,6 +84,8 @@ COMPATIBLE_MACHINE:armv7a = "(.*)"
 COMPATIBLE_MACHINE:armv7ve = "(.*)"
 COMPATIBLE_MACHINE:aarch64 = "(.*)"
 
+LDFLAGS:append:aarch64 = " -Wl,-z,gcs-report-dynamic=none"
+
 inherit qmake5
 inherit gettext
 inherit perlnative
