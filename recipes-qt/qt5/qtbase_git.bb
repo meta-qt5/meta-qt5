@@ -281,14 +281,14 @@ do_install:append() {
     echo "isEmpty(QMAKE_CC): QMAKE_CC = $OE_QMAKE_CC_NO_SYSROOT" >> $conf
     echo "isEmpty(QMAKE_CXX): QMAKE_CXX = $OE_QMAKE_CXX_NO_SYSROOT" >> $conf
     # OE_QMAKE_CFLAGS and OE_QMAKE_CXXFLAGS contain path of the build host, which is not useful for the target.
-    echo "isEmpty(QMAKE_CFLAGS): QMAKE_CFLAGS = ${OE_QMAKE_CFLAGS}" | sed -e 's/-fdebug-prefix-map=[^ ]*//g' | sed -e 's/-fmacro-prefix-map=[^ ]*//g' >> $conf
-    echo "isEmpty(QMAKE_CXXFLAGS): QMAKE_CXXFLAGS = ${OE_QMAKE_CXXFLAGS}" | sed -e 's/-fdebug-prefix-map=[^ ]*//g' | sed -e 's/-fmacro-prefix-map=[^ ]*//g' >> $conf
+    echo "isEmpty(QMAKE_CFLAGS): QMAKE_CFLAGS = ${OE_QMAKE_CFLAGS}" | sed -e 's/-fdebug-prefix-map=[^ ]*//g' | sed -e 's/-fmacro-prefix-map=[^ ]*//g' | sed -e 's/-ffile-prefix-map=[^ ]*//g' >> $conf
+    echo "isEmpty(QMAKE_CXXFLAGS): QMAKE_CXXFLAGS = ${OE_QMAKE_CXXFLAGS}" | sed -e 's/-fdebug-prefix-map=[^ ]*//g' | sed -e 's/-fmacro-prefix-map=[^ ]*//g' | sed -e 's/-ffile-prefix-map=[^ ]*//g' >> $conf
     echo "isEmpty(QMAKE_LINK): QMAKE_LINK = $OE_QMAKE_LINK_NO_SYSROOT" >> $conf
     echo "isEmpty(QMAKE_LINK_SHLIB): QMAKE_LINK_SHLIB = $OE_QMAKE_LINK_NO_SYSROOT" >> $conf
     echo "isEmpty(QMAKE_LINK_C): QMAKE_LINK_C = $OE_QMAKE_LINK_NO_SYSROOT" >> $conf
     echo "isEmpty(QMAKE_LINK_C_SHLIB): QMAKE_LINK_C_SHLIB = $OE_QMAKE_LINK_NO_SYSROOT" >> $conf
     # OE_QMAKE_LFLAGS contains path of the build host, which is not useful for the target.
-    echo "isEmpty(QMAKE_LFLAGS): QMAKE_LFLAGS = ${OE_QMAKE_LDFLAGS}" | sed -e 's/-fdebug-prefix-map=[^ ]*//g' | sed -e 's/-fmacro-prefix-map=[^ ]*//g' >> $conf
+    echo "isEmpty(QMAKE_LFLAGS): QMAKE_LFLAGS = ${OE_QMAKE_LDFLAGS}" | sed -e 's/-fdebug-prefix-map=[^ ]*//g' | sed -e 's/-fmacro-prefix-map=[^ ]*//g' | sed -e 's/-ffile-prefix-map=[^ ]*//g' >> $conf
     echo "isEmpty(QMAKE_OBJCOPY): QMAKE_OBJCOPY = ${TARGET_PREFIX}objcopy" >> $conf
     echo "isEmpty(QMAKE_STRIP): QMAKE_STRIP = ${TARGET_PREFIX}strip" >> $conf
     echo "isEmpty(CC_host): CC_host = ${CC_host}" >> $conf
