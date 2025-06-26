@@ -9,7 +9,6 @@ PV = "5.12+git${SRCPV}"
 QT_GIT_PROJECT = "qt-apps"
 SRC_URI = "${QT_GIT}/qmllive.git;branch=dev"
 SRCREV = "0c7bf141b08aa9e757e91a4a05769257d043eab2"
-S = "${WORKDIR}/git"
 
 inherit pkgconfig qmake5
 

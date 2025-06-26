@@ -33,7 +33,7 @@ LDFLAGS:append:x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -f
 QT_MODULE_BRANCH_MAPBOXGL = "upstream/qt-staging"
 
 SRC_URI += " \
-    ${QT_GIT}/qtlocation-mapboxgl.git;name=qtlocation-mapboxgl;branch=${QT_MODULE_BRANCH_MAPBOXGL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/mapbox-gl-native \
+    ${QT_GIT}/qtlocation-mapboxgl.git;name=qtlocation-mapboxgl;branch=${QT_MODULE_BRANCH_MAPBOXGL};protocol=${QT_GIT_PROTOCOL};destsuffix=${BB_GIT_DEFAULT_DESTSUFFIX}/src/3rdparty/mapbox-gl-native \
 "
 
 SRCREV_qtlocation = "1731750f2907c3498a06c02f9f271b392a9501fb"

@@ -9,7 +9,6 @@ SRCREV = "3581a6e85561da85858e1b90bef9be88b87acc4d"
 SRC_URI = "git://git.merproject.org/mer-core/libqofono.git;branch=master \
            file://0001-also-emit-modemRemoved-and-modemAdded.patch \
 "
-S = "${WORKDIR}/git"
 
 PV = "0.98+gitr${SRCPV}"
 

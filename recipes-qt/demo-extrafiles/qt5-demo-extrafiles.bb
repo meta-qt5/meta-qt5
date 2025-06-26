@@ -1,7 +1,8 @@
 DESCRIPTION = "Extra files for qt5 demo"
 LICENSE = "LGPL-2.0-only"
-S="${WORKDIR}"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=88355dc91a186cc816d9f64757793895"
+
+S = "${UNPACKDIR}"
 
 SRC_URI += "file://cinematicexperience.desktop \
             file://cinematicexperience.png \

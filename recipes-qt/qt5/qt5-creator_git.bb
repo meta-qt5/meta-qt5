@@ -30,7 +30,6 @@ SRC_URI = " \
 "
 SRC_URI:append:libc-musl = " file://0003-Link-with-libexecinfo-on-musl.patch"
 
-S = "${WORKDIR}/git"
 
 EXTRA_QMAKEVARS_PRE += "IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME}"
 

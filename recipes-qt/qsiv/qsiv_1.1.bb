@@ -7,7 +7,6 @@ DEPENDS = "qtdeclarative"
 SRCREV = "7b9810b0f02f9ac74fae3ead6e2e9fb5c1382173"
 SRC_URI = "git://code.ossystems.io/qt/qsiv;protocol=https;branch=master"
 
-S = "${WORKDIR}/git"
 
 inherit qmake5
 

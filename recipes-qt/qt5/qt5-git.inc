@@ -12,6 +12,4 @@ SRC_URI = " \
 
 CVE_PRODUCT = "qt"
 
-S = "${WORKDIR}/git"
-
 PV = "5.12.12+git${SRCPV}"

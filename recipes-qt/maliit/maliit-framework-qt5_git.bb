@@ -95,4 +95,7 @@ fi
 rm -f /etc/xdg/autostart/maliit-server.desktop
 }
 
-S = "${WORKDIR}/git"
+# http://errors.yoctoproject.org/Errors/Details/852835/
+# ERROR: QA Issue: File /usr/lib/mkspecs/features/maliit-framework.prf in package maliit-framework-qt5-dev contains reference to TMPDIR [buildpaths]
+# ERROR: QA Issue: File /usr/lib/mkspecs/features/maliit-plugins.prf in package maliit-framework-qt5-dev contains reference to TMPDIR [buildpaths]
+INSANE_SKIP:${PN}-dev += "buildpaths"

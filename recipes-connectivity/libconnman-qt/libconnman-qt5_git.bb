@@ -13,7 +13,6 @@ SRC_URI = "git://git.merproject.org/mer-core/libconnman-qt.git;protocol=https;br
     file://0001-Fix-library-path-for-multilib-setups.patch \
 "
 
-S = "${WORKDIR}/git"
 
 inherit pkgconfig
 

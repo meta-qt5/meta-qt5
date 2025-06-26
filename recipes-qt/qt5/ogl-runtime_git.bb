@@ -15,7 +15,7 @@ QT_GIT_PROJECT = "qt3dstudio"
 PV = "2.8.0+git${SRCPV}"
 
 SRC_URI += " \
-    ${QT_GIT}/qt3dstudio-eastl.git;name=EASTL;branch=${QT_MODULE_BRANCH_EASTL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/EASTL \
+    ${QT_GIT}/qt3dstudio-eastl.git;name=EASTL;branch=${QT_MODULE_BRANCH_EASTL};protocol=${QT_GIT_PROTOCOL};destsuffix=${BB_GIT_DEFAULT_DESTSUFFIX}/src/3rdparty/EASTL \
     file://0001-Fix-examples-build-error.patch \
 "
 
