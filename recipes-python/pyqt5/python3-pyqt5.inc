@@ -9,7 +9,7 @@ inherit pypi python3-dir python3native qmake5 qmake5_paths
 SRC_URI[sha256sum] = "d46b7804b1b10a4ff91753f8113e5b5580d2b4462f3226288e2d84497334898a"
 PYPI_PACKAGE = "PyQt5"
 
-S = "${WORKDIR}/PyQt5-${PV}"
+S = "${UNPACKDIR}/PyQt5-${PV}"
 
 python() {
     if 'meta-python' not in d.getVar('BBFILE_COLLECTIONS').split():

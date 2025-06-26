@@ -32,7 +32,7 @@ LDFLAGS:append:x86 = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -f
 QT_MODULE_BRANCH_MAPBOXGL = "upstream/qt-staging"
 
 SRC_URI += " \
-    ${QT_GIT}/qtlocation-mapboxgl.git;name=qtlocation-mapboxgl;branch=${QT_MODULE_BRANCH_MAPBOXGL};protocol=${QT_GIT_PROTOCOL};destsuffix=git/src/3rdparty/mapbox-gl-native \
+    ${QT_GIT}/qtlocation-mapboxgl.git;name=qtlocation-mapboxgl;branch=${QT_MODULE_BRANCH_MAPBOXGL};protocol=${QT_GIT_PROTOCOL};destsuffix=${BP}/src/3rdparty/mapbox-gl-native \
     file://0001-mapbox-gl-explicitly-include-cstdint-header.patch;patchdir=src/3rdparty/mapbox-gl-native \
     file://gcc14-const.patch;patchdir=src/3rdparty/mapbox-gl-native/deps/rapidjson/1.1.0 \
 "
@@ -46,7 +46,7 @@ PACKAGE_PREPROCESS_FUNCS += "qtlocation_package_preprocess"
 
 qtlocation_package_preprocess () {
     # Remove references to buildmachine paths in the comment headers of the examples source files
-    sed -i -e 's:${WORKDIR}::g' \
+    sed -i -e 's:${S}::g' \
         ${B}/src/plugins/position/geoclue/geoclue_interface.cpp \
         ${B}/src/plugins/position/geoclue/master_interface.cpp \
         ${B}/src/plugins/position/geoclue/satellite_interface.h \

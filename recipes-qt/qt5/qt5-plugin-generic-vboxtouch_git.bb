@@ -21,7 +21,7 @@ SRC_URI = "git://github.com/nemomobile/qt5-plugin-generic-vboxtouch.git;branch=m
            file://0001-include-errno.h-for-errno-definition.patch;patchdir=.. \
            "
 SRCREV = "3f2bdb5a1d346f02d5ab185522271ba2288a42bb"
-S = "${WORKDIR}/git/vboxtouch"
+S = "${UNPACKDIR}/${BP}/vboxtouch"
 
 inherit qmake5
 

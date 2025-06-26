@@ -19,7 +19,7 @@ SRC_URI += " \
 
 # For assimp submodule
 SRC_URI += " \
-    git://code.qt.io/qt/qtquick3d-assimp.git;name=assimp;branch=qt6_assimp;protocol=https;destsuffix=git/src/3rdparty/assimp/src \
+    git://code.qt.io/qt/qtquick3d-assimp.git;name=assimp;branch=qt6_assimp;protocol=https;destsuffix=${BP}/src/3rdparty/assimp/src \
 "
 
 SRC_URI:append:riscv64 = " file://0001-renderers-opengl-Link-in-libatomic-on-riscv.patch"

@@ -10,7 +10,6 @@ SRCREV = "047b667f18ca73cb7f884f174d1d164a616d6814"
 SRC_URI = "git://github.com/sailfishos/libqofono.git;protocol=https;branch=master \
            file://0001-also-emit-modemRemoved-and-modemAdded.patch \
 "
-S = "${WORKDIR}/git"
 
 PV = "0.103+gitr${SRCPV}"
 
