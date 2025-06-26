@@ -19,7 +19,7 @@ SRC_URI = " \
 "
 SRC_URI[qwt.sha256sum] = "4076de63ec2b5e84379ddfebf27c7b29b8dc9074f3db7e2ca61d11a1d8adc041"
 
-S = "${WORKDIR}/qwt-${PV}"
+S = "${UNPACKDIR}/qwt-${PV}"
 
 EXTRA_QMAKEVARS_PRE += " \
     QWT_CONFIG+=QwtPkgConfig \

@@ -93,7 +93,6 @@ if [ "x$D" = "x" ]; then
 fi
 }
 
-S = "${WORKDIR}/git"
 
 # http://errors.yoctoproject.org/Errors/Details/852835/
 # ERROR: QA Issue: File /usr/lib/mkspecs/features/maliit-framework.prf in package maliit-framework-qt5-dev contains reference to TMPDIR [buildpaths]

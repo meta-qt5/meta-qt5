@@ -12,7 +12,6 @@ SRC_URI = "git://github.com/vinipsmaker/tufao.git;protocol=http;branch=1.x;proto
 # This includes bugfixes from 1.x branch
 PV:append = "+${SRCPV}"
 
-S = "${WORKDIR}/git"
 
 inherit cmake_qt5
 

@@ -14,7 +14,7 @@ PYPI_PACKAGE = "PyQtChart"
 SRC_URI[md5sum] = "8a36bc796b0d9a2301e613c382336b0e"
 SRC_URI[sha256sum] = "8d976b3dbfb233fb0123129323c68adb9d3693c945bba1e227e004208f0747bc"
 
-S = "${WORKDIR}/PyQtChart-${PV}"
+S = "${UNPACKDIR}/PyQtChart-${PV}"
 
 inherit qmake5
 inherit python3native python3-dir

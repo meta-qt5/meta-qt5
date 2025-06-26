@@ -9,7 +9,7 @@ SRC_URI = "http://quitcoding.com/download/QUItIndicators_1.0.1.tar.gz"
 SRC_URI[md5sum] = "85ec60b553e181c55b331a9921d1b9a0"
 SRC_URI[sha256sum] = "db84112adbde9b6f28c129e8fb37a6912f4bc34bed18e57f570fb78ea0cb6ae2"
 
-S = "${WORKDIR}/QUItIndicators_1.0.1"
+S = "${UNPACKDIR}/QUItIndicators_1.0.1"
 
 require recipes-qt/qt5/qt5.inc
 
