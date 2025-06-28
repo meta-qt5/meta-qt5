@@ -8,7 +8,6 @@ LIC_FILES_CHKSUM = " \
     file://LICENSE.GPL;md5=d32239bcb673463ab874e80d47fae504 \
     file://LICENSE.LGPL;md5=4193e7f1d47a858f6b7c0f1ee66161de \
 "
-S = "${WORKDIR}/git"
 SRCREV = "71750df4f0c6bbadcd422cdf7fe360ad033bbd14"
 PV = "39+git${SRCPV}"
 

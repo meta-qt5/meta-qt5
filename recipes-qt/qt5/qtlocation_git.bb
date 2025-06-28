@@ -46,7 +46,7 @@ PACKAGE_PREPROCESS_FUNCS += "qtlocation_package_preprocess"
 
 qtlocation_package_preprocess () {
     # Remove references to buildmachine paths in the comment headers of the examples source files
-    sed -i -e 's:${WORKDIR}::g' \
+    sed -i -e 's:${UNPACKDIR}::g' \
         ${B}/src/plugins/position/geoclue/geoclue_interface.cpp \
         ${B}/src/plugins/position/geoclue/master_interface.cpp \
         ${B}/src/plugins/position/geoclue/satellite_interface.h \

@@ -11,7 +11,7 @@ SRC_URI = "https://artifacts.toradex.com/artifactory/tdxref-oe-prod-frankfurt/du
 SRC_URI[md5sum] = "883b0376239baec20ebec072e938a995"
 SRC_URI[sha256sum] = "fceaa813c33e462bad6c0383eaef81a6f6e586c15d1fa73898173b517fc1cda6"
 
-S = "${WORKDIR}/smarthome_src"
+S = "${UNPACKDIR}/smarthome_src"
 
 require recipes-qt/qt5/qt5.inc
 

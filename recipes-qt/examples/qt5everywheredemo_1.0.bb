@@ -11,7 +11,7 @@ QT_GIT_PROJECT = "qt-labs"
 QT_MODULE_BRANCH = "master"
 SRC_URI = "${QT_GIT}/qt5-everywhere-demo;branch=${QT_MODULE_BRANCH};protocol=${QT_GIT_PROTOCOL}"
 
-S = "${WORKDIR}/git/QtDemo"
+S = "${UNPACKDIR}/git/QtDemo"
 
 require recipes-qt/qt5/qt5.inc
 

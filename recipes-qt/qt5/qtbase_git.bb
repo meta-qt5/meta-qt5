@@ -312,7 +312,7 @@ PACKAGE_PREPROCESS_FUNCS += "${@bb.utils.contains('PACKAGECONFIG', 'tests', 'qt_
 
 qt_package_preprocess_examples () {
     # Remove references to buildmachine paths in the comment headers of the examples source files
-    sed -i -e 's:${WORKDIR}::g' \
+    sed -i -e 's:${UNPACKDIR}::g' \
         ${B}/examples/dbus/chat/chat_interface.cpp \
         ${B}/examples/dbus/chat/chat_interface.h \
         ${B}/examples/dbus/chat/chat_adaptor.cpp \
@@ -325,7 +325,7 @@ qt_package_preprocess_examples () {
 
 qt_package_preprocess_tests () {
     # Remove references to buildmachine paths in the comment headers of the tests source files
-    sed -i -e 's:${WORKDIR}::g' \
+    sed -i -e 's:${UNPACKDIR}::g' \
         ${B}/tests/auto/dbus/qdbusabstractinterface/qdbusabstractinterface/pinger_interface.h \
         ${B}/tests/auto/dbus/qdbusabstractinterface/qdbusabstractinterface/pinger_interface.cpp
 }

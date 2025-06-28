@@ -14,6 +14,5 @@ EXCLUDE_FROM_WORLD = "1"
 
 SRC_URI = "git://github.com/smk-embedded/qt5-opengles2-test.git;branch=master;protocol=https"
 SRCREV = "293ae5cfedf48c97178057932d06db409117e4ad"
-S = "${WORKDIR}/git"
 
 inherit qmake5
