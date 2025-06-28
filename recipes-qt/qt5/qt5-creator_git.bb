@@ -29,7 +29,6 @@ SRC_URI = " \
 "
 SRC_URI:append:libc-musl = " file://0001-Link-with-libexecinfo-on-musl.patch"
 
-
 EXTRA_QMAKEVARS_PRE += " \
     IDE_LIBRARY_BASENAME=${baselib}${QT_DIR_NAME} \
     CONFIG+=disable_external_rpath \

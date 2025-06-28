@@ -12,7 +12,6 @@ PV = "${VERSION}+git${SRCPV}"
 SRCREV = "6786936cba9048ee943c0cd5d051c0b8fc70896f"
 SRC_URI = "git://github.com/sailfishos/libconnman-qt.git;protocol=https;branch=master"
 
-
 inherit pkgconfig
 
 EXTRA_QMAKEVARS_PRE = "CONFIG+=no-module-prefix VERSION=${VERSION}"

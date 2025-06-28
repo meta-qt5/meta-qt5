@@ -18,7 +18,6 @@ SRC_URI = "git://github.com/maliit/framework.git;branch=master;protocol=https \
 SRCREV = "60b1b10de14f932420313c547ab801daf522d539"
 PV = "0.99.0+git${SRCPV}"
 
-
 PACKAGES =+ "${PN}-gtk"
 GTKIMMODULES_PACKAGES = "${PN}-gtk"
 
@@ -92,7 +91,6 @@ if [ "x$D" = "x" ]; then
     rm -f /etc/xdg/autostart/maliit-server.desktop
 fi
 }
-
 
 # http://errors.yoctoproject.org/Errors/Details/852835/
 # ERROR: QA Issue: File /usr/lib/mkspecs/features/maliit-framework.prf in package maliit-framework-qt5-dev contains reference to TMPDIR [buildpaths]

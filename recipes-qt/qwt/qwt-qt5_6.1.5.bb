@@ -41,7 +41,6 @@ do_install:append() {
     cp ${B}/examples/bin/* ${D}${bindir}/
 }
 
-
 PACKAGES:prepend = "${PN}-examples ${PN}-features ${PN}-plugins "
 FILES:${PN}-examples = "${bindir}/*"
 FILES:${PN}-features = "${prefix}/features"

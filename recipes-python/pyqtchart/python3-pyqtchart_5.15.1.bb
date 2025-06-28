@@ -62,7 +62,6 @@ do_install() {
     oe_runmake MAKEFLAGS='-j 1' install
 }
 
-
 FILES:${PN} += "${libdir}/${PYTHON_DIR}/site-packages ${datadir}/"
 
 RDEPENDS:${PN} = "qtbase qtdeclarative qtquickcontrols2 qtquickcontrols2-mkspecs qtcharts"

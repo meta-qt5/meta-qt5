@@ -10,5 +10,4 @@ SRC_URI = "git://github.com/pol51/libvcard.git;protocol=https;branch=master"
 
 PV = "1.0+gitr${SRCPV}"
 
-
 inherit cmake_qt5

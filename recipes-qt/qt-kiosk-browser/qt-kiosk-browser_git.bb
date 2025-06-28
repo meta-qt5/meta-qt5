@@ -13,7 +13,6 @@ SRC_URI = " \
 PV = "0.0+git${SRCPV}"
 SRCREV = "d42b7d9050b5445e2b9430022a46d5d583581631"
 
-
 inherit qmake5
 
 EXTRA_QMAKEVARS_PRE += "PREFIX=${prefix}"

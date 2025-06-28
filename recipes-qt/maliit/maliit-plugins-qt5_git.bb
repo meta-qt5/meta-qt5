@@ -35,5 +35,4 @@ FILES:${PN} += "\
     ${datadir} \
 "
 
-
 EXTRA_OEMAKE += "INSTALL_ROOT=${D}"

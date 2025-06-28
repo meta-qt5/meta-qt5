@@ -78,7 +78,6 @@ inherit gettext
 inherit perlnative
 inherit features_check
 
-
 # Static builds of QtWebEngine aren't supported.
 CONFLICT_DISTRO_FEATURES = "qt5-static"
 
