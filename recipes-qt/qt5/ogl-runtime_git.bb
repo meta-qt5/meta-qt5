@@ -17,7 +17,7 @@ PV = "2.8.0+git${SRCPV}"
 COMPATIBLE_HOST = "(i.86|x86_64|aarch64|arm|powerpc64).*-linux"
 
 SRC_URI += " \
-    ${QT_GIT}/qt3dstudio-eastl.git;name=EASTL;branch=${QT_MODULE_BRANCH_EASTL};protocol=${QT_GIT_PROTOCOL};destsuffix=${BP}/src/3rdparty/EASTL \
+    ${QT_GIT}/qt3dstudio-eastl.git;name=EASTL;branch=${QT_MODULE_BRANCH_EASTL};protocol=${QT_GIT_PROTOCOL};destsuffix=${BB_GIT_DEFAULT_DESTSUFFIX}/src/3rdparty/EASTL \
     file://0001-Fix-examples-build-error.patch \
     file://0001-Qt3DSSimpleTypes-make-QT3DSU64-as-unsigned-long-on-l.patch \
     file://0001-Qt3D-Add-support-to-fix-build-on-ppc64.patch \

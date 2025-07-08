@@ -151,7 +151,7 @@ PV = "5.15.16+git${SRCPV}"
 # Patches from https://github.com/meta-qt5/qtwebengine/commits/b5.15-glibc
 # 5.15-glibc.meta-qt5.17
 SRC_URI += " \
-    ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=${BP}/src/3rdparty \
+    ${QT_GIT}/qtwebengine-chromium.git;name=chromium;branch=${QT_MODULE_BRANCH_CHROMIUM};protocol=${QT_GIT_PROTOCOL};destsuffix=${BB_GIT_DEFAULT_DESTSUFFIX}/src/3rdparty \
     file://0001-Force-host-toolchain-configuration.patch \
     file://0001-configure.json-remove-python2-dependency.patch \
 "
