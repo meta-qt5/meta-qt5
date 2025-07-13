@@ -1,0 +1,51 @@
+From a8c8a74659d9cad02f38b9bb55617694bbc2b0bc Mon Sep 17 00:00:00 2001
+From: WXbet <57314510+WXbet@users.noreply.github.com>
+Date: Sun, 13 Jul 2025 22:22:54 +0200
+Subject: [PATCH] Fix rollup3 incompatibility of loadCSS.rollup.js file
+
+Fixes:
+http://errors.yoctoproject.org/Errors/Details/864778/
+
+FAILED: resources/inspector_overlay/common.css resources/inspector_overlay/tool_distances.js resources/inspector_overlay/tool_highlight_grid.js resources/inspector_overlay/tool_highlight.js resources/inspector_overlay/tool_paused.js resources/inspector_overlay/tool_screenshot.js resources/inspector_overlay/tool_source_order.js resources/inspector_overlay/tool_viewport_size.js
+python3 ../../../../sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/scripts/build/build_inspector_overlay.py common.css 1200 tool_highlight.js 90000 tool_highlight_grid.js 70000 tool_distances.js 5000 tool_paused.js 10000 tool_screenshot.js 5000 tool_viewport_size.js 5000 tool_source_order.js 11000 --input_path gen/third_party/devtools-frontend/src/inspector_overlay --output_path resources/inspector_overlay --rollup_plugin ../../../../sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/inspector_overlay/loadCSS.rollup.js
+Usage: ../../../../sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/scripts/build/build_inspector_overlay.py filename_1 max_size_1 filename_2 max_size_2 ... filename_N max_size_N --input_path <input_path> --output_path <output_path>
+Traceback (most recent call last):
+  File "TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/build/src/core/release/../../../../sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/scripts/build/build_inspector_overlay.py", line 107, in <module>
+    sys.exit(main(sys.argv))
+             ~~~~^^^^^^^^^^
+  File "TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/build/src/core/release/../../../../sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/scripts/build/build_inspector_overlay.py", line 92, in main
+    rollup(input_path, output_path, filename, max_size,
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           rollup_plugin)
+           ^^^^^^^^^^^^^^
+  File "TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/build/src/core/release/../../../../sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/scripts/build/build_inspector_overlay.py", line 64, in rollup
+    raise Exception("rollup failed: " + error)
+Exception: rollup failed: [!] Error: Invalid --plugin argument format: "../../../../sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/inspector_overlay/loadCSS.rollup.js"
+Error: Invalid --plugin argument format: "../../../../sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/inspector_overlay/loadCSS.rollup.js"
+    at loadAndRegisterPlugin (TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/rollup/dist/shared/commandPlugins.js:413:19)
+    at TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/rollup/dist/shared/commandPlugins.js:392:55
+    at Array.forEach (<anonymous>)
+    at Object.addCommandPluginsToInputOptions (TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/rollup/dist/shared/commandPlugins.js:392:35)
+    at loadConfigFromCommand (TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/rollup/dist/bin/rollup:1655:20)
+    at getConfigs (TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/rollup/dist/bin/rollup:2139:12)
+    at runRollup (TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/rollup/dist/bin/rollup:2117:49)
+    at Object.<anonymous> (TOPDIR/tmp/work/core2-64-oe-linux/qtwebengine/5.15.16+git/sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/rollup/dist/bin/rollup:2159:5)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+
+Signed-off-by: Martin Jansa <martin.jansa@gmail.com>
+
+Upstream-Status: Inappropriate [OE-Specific]
+---
+diff --git a/chromium/third_party/devtools-frontend/src/inspector_overlay/BUILD.gn b/chromium/third_party/devtools-frontend/src/inspector_overlay/BUILD.gn
+index 83041bcb8..2c1adcdf4 100644
+--- a/chromium/third_party/devtools-frontend/src/inspector_overlay/BUILD.gn
++++ b/chromium/third_party/devtools-frontend/src/inspector_overlay/BUILD.gn
+@@ -72,7 +72,7 @@ action("build_inspector_overlay") {
+   ]
+   if (use_rollup) {
+     args += [
+-      "--rollup_plugin",
++      "--bundleConfigAsCjs --rollup_plugin",
+       rebase_path("loadCSS.rollup.js", root_build_dir),
+     ]
