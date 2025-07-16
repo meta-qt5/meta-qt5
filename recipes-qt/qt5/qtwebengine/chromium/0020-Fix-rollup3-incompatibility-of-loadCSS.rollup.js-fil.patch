@@ -1,4 +1,4 @@
-From a8c8a74659d9cad02f38b9bb55617694bbc2b0bc Mon Sep 17 00:00:00 2001
+From a5c0c3afcaa857fded610e64cdab1524d614abfa Mon Sep 17 00:00:00 2001
 From: WXbet <57314510+WXbet@users.noreply.github.com>
 Date: Sun, 13 Jul 2025 22:22:54 +0200
 Subject: [PATCH] Fix rollup3 incompatibility of loadCSS.rollup.js file
@@ -37,8 +37,11 @@ Signed-off-by: Martin Jansa <martin.jansa@gmail.com>
 
 Upstream-Status: Inappropriate [OE-Specific]
 ---
+ .../devtools-frontend/src/inspector_overlay/BUILD.gn            | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/chromium/third_party/devtools-frontend/src/inspector_overlay/BUILD.gn b/chromium/third_party/devtools-frontend/src/inspector_overlay/BUILD.gn
-index 83041bcb8..2c1adcdf4 100644
+index 83041bcb8b2..2c1adcdf452 100644
 --- a/chromium/third_party/devtools-frontend/src/inspector_overlay/BUILD.gn
 +++ b/chromium/third_party/devtools-frontend/src/inspector_overlay/BUILD.gn
 @@ -72,7 +72,7 @@ action("build_inspector_overlay") {
@@ -49,3 +52,4 @@ index 83041bcb8..2c1adcdf4 100644
 +      "--bundleConfigAsCjs --rollup_plugin",
        rebase_path("loadCSS.rollup.js", root_build_dir),
      ]
+   }

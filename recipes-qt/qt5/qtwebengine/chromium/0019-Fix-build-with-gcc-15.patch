@@ -1,4 +1,4 @@
-From fb1763f462aba38baf2ee29a1fed2917e8bfdeb2 Mon Sep 17 00:00:00 2001
+From af831f5f76a86b25d079d44f068780a18a5e940f Mon Sep 17 00:00:00 2001
 From: Martin Jansa <martin.jansa@gmail.com>
 Date: Sat, 28 Jun 2025 22:58:13 +0000
 Subject: [PATCH] Fix build with gcc-15

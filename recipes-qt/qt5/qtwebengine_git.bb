@@ -184,8 +184,8 @@ SRC_URI += " \
     file://chromium/0016-gpu-fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
     file://chromium/0017-woff2-fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
     file://chromium/0018-pdfium-fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
-    file://chromium/0001-Fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
-    file://chromium/0024-chromium-rollup3-compatibility.patch;patchdir=src/3rdparty \
+    file://chromium/0019-Fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
+    file://chromium/0020-Fix-rollup3-incompatibility-of-loadCSS.rollup.js-fil.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based
