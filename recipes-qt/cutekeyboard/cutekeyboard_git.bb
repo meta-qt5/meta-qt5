@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=2f6f4d4f7d76b223f08e17122d04010f"
 
 DEPENDS += "qtbase qtdeclarative qtmultimedia qtquickcontrols qtsvg qtxmlpatterns"
 
-SRCREV = "ec47129142ac27ffeecf904bfe66be0e3a21783b"
+SRCREV = "e022ab3a95111bb12d07d1700d02a6f7a79fed7d"
 SRC_URI = "git://github.com/amarula/cutekeyboard.git;protocol=https;branch=main"
 
 QMAKE_PROFILES += "${S}/src/src.pro"
