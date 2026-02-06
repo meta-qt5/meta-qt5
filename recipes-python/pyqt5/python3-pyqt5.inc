@@ -67,10 +67,6 @@ do_configure:prepend() {
     QMAKE_PROFILES=${B}/PyQt5.pro
 }
 
-do_compile:class-target:append() {
-    sed -i "s,${STAGING_DIR_TARGET},," ${B}/inventory.txt
-}
-
 do_install:append() {
     sed -i "s,exec .*nativepython3,exec ${bindir}/python3," ${D}/${bindir}/*
 
