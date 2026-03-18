@@ -78,7 +78,9 @@ do_install:append() {
 }
 
 pyqt_fix_sources() {
-    find ${PKGD}${TARGET_DBGSRC_DIR} -type f -exec sed -i "s,\(${B}\|${S}\),${TARGET_DBGSRC_DIR},g" {} \;
+    if [ -d "${PKGD}${TARGET_DBGSRC_DIR}" ]; then
+        find ${PKGD}${TARGET_DBGSRC_DIR} -type f -exec sed -i "s,\(${B}\|${S}\),${TARGET_DBGSRC_DIR},g" {} \;
+    fi
 }
 PACKAGESPLITFUNCS =+ "pyqt_fix_sources"
 
