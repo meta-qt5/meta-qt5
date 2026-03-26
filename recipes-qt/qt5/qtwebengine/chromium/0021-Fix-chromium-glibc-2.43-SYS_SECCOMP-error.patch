@@ -1,0 +1,39 @@
+From 0e6d91f2d24855a6b936d881055c31ab2738579d Mon Sep 17 00:00:00 2001
+From: Zheng Ruoqin <zhengrq.fnst@fujitsu.com>
+Date: Thu, 26 Mar 2026 02:37:45 +0000
+Subject: [PATCH] Fix chromium glibc 2.43 SYS_SECCOMP error
+
+This patch fix build ERROR with glibc 2.43 as following:
+
+  |                  from ../../../../sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/sandbox/linux/syscall_broker/broker_process.cc:5:
+  | ../../../../sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/sandbox/linux/system_headers/linux_seccomp.h:224:39: error: expected identifier before numeric constant
+  |   224 | #define SYS_SECCOMP                   1
+  |       |                                       ^
+  | ../../../../sources/qtwebengine-5.15.16+git/src/3rdparty/chromium/sandbox/linux/system_headers/linux_seccomp.h:224:39: error: expected '}' before numeric constant
+
+Upstream-Status: Backport [https://src.fedoraproject.org/rpms/chromium/blob/51dc9ee3be3e3cc512c7583cabc3e0853b2816a5/f/chromium-141-glibc-2.42-SYS_SECCOMP.patch]
+
+Signed-off-by: Zheng Ruoqin <zhengrq.fnst@fujitsu.com>
+---
+ chromium/sandbox/linux/system_headers/linux_seccomp.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/chromium/sandbox/linux/system_headers/linux_seccomp.h b/chromium/sandbox/linux/system_headers/linux_seccomp.h
+index 1fa47ed09ff..dd052fd627e 100644
+--- a/chromium/sandbox/linux/system_headers/linux_seccomp.h
++++ b/chromium/sandbox/linux/system_headers/linux_seccomp.h
+@@ -220,8 +220,11 @@ struct seccomp_notif_addfd {
+ #define SECCOMP_RET_INVALID 0x00010000U  // Illegal return value
+ #endif
+ 
++// check glibc version < 2.42
++#if (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 42)
+ #ifndef SYS_SECCOMP
+ #define SYS_SECCOMP                   1
+ #endif
++#endif
+ 
+ #endif  // SANDBOX_LINUX_SYSTEM_HEADERS_LINUX_SECCOMP_H_
+-- 
+2.43.0
+
