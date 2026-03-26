@@ -186,6 +186,7 @@ SRC_URI += " \
     file://chromium/0018-pdfium-fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
     file://chromium/0019-Fix-build-with-gcc-15.patch;patchdir=src/3rdparty \
     file://chromium/0020-Fix-rollup3-incompatibility-of-loadCSS.rollup.js-fil.patch;patchdir=src/3rdparty \
+    file://chromium/0021-Fix-chromium-glibc-2.43-SYS_SECCOMP-error.patch;patchdir=src/3rdparty \
 "
 
 # Patches from https://github.com/meta-qt5/qtwebengine-chromium/commits/87-based
