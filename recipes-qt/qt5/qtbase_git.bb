@@ -307,7 +307,10 @@ do_install:append() {
 # mkspecs have mac specific scripts that depend on perl and bash
 INSANE_SKIP:${PN}-mkspecs += "file-rdeps"
 
-RRECOMMENDS:${PN}-plugins += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)}"
+RRECOMMENDS:${PN}-plugins += " \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'libx11-locale', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'qtwayland', '', d)} \
+"
 
 TARGET_MKSPEC ?= "linux-g++"
 
