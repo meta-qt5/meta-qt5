@@ -194,6 +194,7 @@ QT_CONFIG_FLAGS_GOLD = "-no-use-gold-linker"
 LDFLAGS:append = "${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
 LDFLAGS:append:riscv64 = " -pthread"
+CXXFLAGS:append:class-target = " -fno-char8_t"
 
 QT_CONFIG_FLAGS += " \
     ${QT_CONFIG_FLAGS_GOLD} \
