@@ -6,7 +6,7 @@ inherit pkgconfig
 DEPENDS += "qtbase qtdeclarative wayland wayland-native qtwayland-native"
 DEPENDS:append:class-target = " libxkbcommon"
 
-LICENSE = "GFDL-1.3 & BSD-3-Clause & ( GPL-3.0-only & The-Qt-Company-GPL-Exception-1.0 | The-Qt-Company-Commercial ) & ( GPL-2.0-or-later | LGPL-3.0-only | The-Qt-Company-Commercial )"
+LICENSE = "GFDL-1.3-only AND BSD-3-Clause AND ( GPL-3.0-only AND LicenseRef-The-Qt-Company-GPL-Exception-1.0 OR LicenseRef-The-Qt-Company-Commercial ) AND ( GPL-2.0-or-later OR LGPL-3.0-only OR LicenseRef-The-Qt-Company-Commercial )"
 LIC_FILES_CHKSUM = " \
     file://LICENSE.LGPL3;md5=e6a600fd5e1d9cbde2d983680233ad02 \
     file://LICENSE.GPL2;md5=b234ee4d69f5fce4486a80fdaf4a4263 \
