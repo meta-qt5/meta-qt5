@@ -3,7 +3,7 @@ SECTION = "libs"
 HOMEPAGE = "http://qwt.sourceforge.net/index.html"
 
 # LGPLv2.1 + some exceptions
-LICENSE = "QWTv1.0"
+LICENSE = "LicenseRef-QWTv1.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=dac2743472b0462ff3cfb4af42051c88"
 
 DEPENDS = "qtbase qtsvg qttools"
