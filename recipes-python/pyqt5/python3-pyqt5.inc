@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=d32239bcb673463ab874e80d47fae504"
 
 inherit pypi python3-dir python3native qmake5 qmake5_paths
 
-SRC_URI[sha256sum] = "d46b7804b1b10a4ff91753f8113e5b5580d2b4462f3226288e2d84497334898a"
+SRC_URI[sha256sum] = "fda45743ebb4a27b4b1a51c6d8ef455c4c1b5d610c90d2934c7802b5c1557c52"
 PYPI_PACKAGE = "PyQt5"
 
 S = "${UNPACKDIR}/PyQt5-${PV}"
