@@ -46,23 +46,28 @@ PACKAGE_PREPROCESS_FUNCS += "qtlocation_package_preprocess"
 
 qtlocation_package_preprocess () {
     # Remove references to buildmachine paths in the comment headers of the examples source files
-    sed -i -e 's:${S}::g' \
-        ${B}/src/plugins/position/geoclue/geoclue_interface.cpp \
-        ${B}/src/plugins/position/geoclue/master_interface.cpp \
-        ${B}/src/plugins/position/geoclue/satellite_interface.h \
-        ${B}/src/plugins/position/geoclue/geoclue_interface.h \
-        ${B}/src/plugins/position/geoclue/position_interface.cpp \
-        ${B}/src/plugins/position/geoclue/masterclient_interface.h \
-        ${B}/src/plugins/position/geoclue/velocity_interface.h \
-        ${B}/src/plugins/position/geoclue/master_interface.h \
-        ${B}/src/plugins/position/geoclue/position_interface.h \
-        ${B}/src/plugins/position/geoclue/satellite_interface.cpp \
-        ${B}/src/plugins/position/geoclue/velocity_interface.cpp \
-        ${B}/src/plugins/position/geoclue/masterclient_interface.cpp \
-        ${B}/src/plugins/position/geoclue2/location_interface.h \
-        ${B}/src/plugins/position/geoclue2/manager_interface.h \
-        ${B}/src/plugins/position/geoclue2/client_interface.cpp \
-        ${B}/src/plugins/position/geoclue2/client_interface.h \
-        ${B}/src/plugins/position/geoclue2/manager_interface.cpp \
-        ${B}/src/plugins/position/geoclue2/location_interface.cpp
+    if [ -d "${B}/src/plugins/position/geoclue" ]; then
+        sed -i -e 's:${S}::g' \
+            ${B}/src/plugins/position/geoclue/geoclue_interface.cpp \
+            ${B}/src/plugins/position/geoclue/master_interface.cpp \
+            ${B}/src/plugins/position/geoclue/satellite_interface.h \
+            ${B}/src/plugins/position/geoclue/geoclue_interface.h \
+            ${B}/src/plugins/position/geoclue/position_interface.cpp \
+            ${B}/src/plugins/position/geoclue/masterclient_interface.h \
+            ${B}/src/plugins/position/geoclue/velocity_interface.h \
+            ${B}/src/plugins/position/geoclue/master_interface.h \
+            ${B}/src/plugins/position/geoclue/position_interface.h \
+            ${B}/src/plugins/position/geoclue/satellite_interface.cpp \
+            ${B}/src/plugins/position/geoclue/velocity_interface.cpp \
+            ${B}/src/plugins/position/geoclue/masterclient_interface.cpp
+    fi
+    if [ -d "${B}/src/plugins/position/geoclue2" ]; then
+        sed -i -e 's:${S}::g' \
+            ${B}/src/plugins/position/geoclue2/location_interface.h \
+            ${B}/src/plugins/position/geoclue2/manager_interface.h \
+            ${B}/src/plugins/position/geoclue2/client_interface.cpp \
+            ${B}/src/plugins/position/geoclue2/client_interface.h \
+            ${B}/src/plugins/position/geoclue2/manager_interface.cpp \
+            ${B}/src/plugins/position/geoclue2/location_interface.cpp
+    fi
 }
