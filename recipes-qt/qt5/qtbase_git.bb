@@ -44,6 +44,7 @@ SRC_URI += "\
     file://0028-Remove-host-paths-from-qmake.patch \
     file://0029-Remove-ptests-with-SRCDIR.patch \
     file://CVE-2024-25580.patch \
+    file://0001-Reach-ASN1_STRING-through-its-accessors-not-its-stru.patch \
 "
 
 # usually pulled by one of the optional dependencies in PACKAGECONFIG, but with very limited PACKAGECONFIG fails with:
