@@ -64,3 +64,12 @@ SRCREV = "abe4729ea8db32124c36dc33fc32eb629df03043"
 
 BBCLASSEXTEND =+ "native nativesdk"
 INSANE_SKIP:${PN}-ptest += "buildpaths"
+
+qtdeclarative_strip_buildpaths() {
+    # Remove references to buildmachine paths in the comment headers of the examples source files
+    if [ -f "${B}/src/qmldevtools/qqmljsparser.cpp" ]; then
+        sed -i -e 's:${S}::g' "${B}/src/qmldevtools/qqmljsparser.cpp"
+    fi
+}
+
+PACKAGE_PREPROCESS_FUNCS += "qtdeclarative_strip_buildpaths"
