@@ -4,7 +4,10 @@ PYQT_MODULES += " \
     QtNetwork \
     QtQml \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'QtQuick QtWidgets QtQuickWidgets', '', d)} \
+    QtSvg \
 "
+
+DEPENDS += "qtsvg"
 
 do_compile:prepend() {
     for pro_file in $(find ${B} -name "*.pro"); do
