@@ -58,6 +58,7 @@ CXXFLAGS += "-fpermissive"
 CXXFLAGS += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', '-DEGL_NO_X11=1', d)}"
 
 EXTRA_OECMAKE += " \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -DPORT=Qt \
     -DCROSS_COMPILE=ON \
     -DCMAKE_BUILD_TYPE=release \
