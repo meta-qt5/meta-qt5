@@ -27,6 +27,7 @@ SRC_URI += "\
     file://0011-Disable-ICU-C-header-only-APIs-introduced-in-ICU-76.patch \
     file://0012-ContentSecurityPolicy-fix-build-with-gcc-14.patch \
     file://0013-woff2-Fix-build-with-gcc-15.patch \
+    file://0001-SourceProvider-avoid-typeinfo-linker-error.patch \
 "
 
 SRC_URI:append:riscv32 = " file://0013-link-with-libatomic.patch"
