@@ -12,4 +12,4 @@ SRC_URI = " \
 
 CVE_PRODUCT:append = " qt"
 
-PV = "5.15.16+git${SRCPV}"
+PV = "5.15.19+git${SRCPV}"

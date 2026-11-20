@@ -39,12 +39,9 @@ SRC_URI += "\
     file://0023-qdbusxml2cpp-don-t-track-command-line.patch \
 "
 SRC_URI += "\
-    file://0001-CVE-2023-51714-qtbase-5.15.diff \
-    file://0002-CVE-2023-51714-qtbase-5.15.diff \
     file://0028-Remove-host-paths-from-qmake.patch \
     file://0029-Remove-ptests-with-SRCDIR.patch \
     file://0030-network-ssl-use-ASN1_STRING-accessors-for-OpenSSL-4.patch \
-    file://CVE-2024-25580.patch \
 "
 
 # usually pulled by one of the optional dependencies in PACKAGECONFIG, but with very limited PACKAGECONFIG fails with:
@@ -355,4 +352,4 @@ sed -i \
     $D${OE_QMAKE_PATH_ARCHDATA}/mkspecs/qmodule.pri
 }
 
-SRCREV = "8ad94db938533e1b7a96f9baddffbcdbae6909d3"
+SRCREV = "c68297f66533200c9ff626b056d096c78b4b94db"

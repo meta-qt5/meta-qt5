@@ -49,7 +49,7 @@ PACKAGECONFIG[wayland-vulkan-server-buffer] = "-feature-wayland-vulkan-server-bu
 
 EXTRA_QMAKEVARS_CONFIGURE += "${PACKAGECONFIG_CONFARGS}"
 
-SRCREV = "7558876d0fca798be4371c0a2a448a478f74a187"
+SRCREV = "a0e9561ac7bc47997b6ecf75f87fea22d497b382"
 
 BBCLASSEXTEND =+ "native nativesdk"
 
