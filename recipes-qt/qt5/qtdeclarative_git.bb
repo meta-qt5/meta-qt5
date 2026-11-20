@@ -60,7 +60,7 @@ do_install:append() {
     sed -i -e "s:${S}::g" ${D}${OE_QMAKE_PATH_HEADERS}/QtQml/$qtversion/QtQml/private/qqmljsparser_p.h
 }
 
-SRCREV = "abe4729ea8db32124c36dc33fc32eb629df03043"
+SRCREV = "dbb2e3b6bc9b51f76f241c7d108c466d78ef5695"
 
 BBCLASSEXTEND =+ "native nativesdk"
 INSANE_SKIP:${PN}-ptest += "buildpaths"
